@@ -1,0 +1,1 @@
+{"method":"POST","url":"/auth/register","parameters":{"body":{"name":"John Doe","email":"johndoe123@mail.com","password":"password123","phone":{"code":"CM","number":"string"},"dateOfBirth":"2024-10-11"}}}

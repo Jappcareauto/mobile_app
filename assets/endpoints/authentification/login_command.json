@@ -1,0 +1,1 @@
+{"method":"POST","url":"/auth/login","parameters":{"body":{"email":"johndoe123","password":"password123","??extend":true}}}
