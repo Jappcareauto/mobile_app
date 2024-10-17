@@ -23,36 +23,48 @@ class DashboardScreen extends GetView<DashboardController> {
             ][controller.selectedIndex.value],
           )),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
+            backgroundColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
             showUnselectedLabels: true,
             iconSize: 25,
             unselectedItemColor: const Color(0xFF111111),
-            items: const <BottomNavigationBarItem>[
+            items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(
-                  FluentIcons.home_24_regular,
+                  controller.selectedIndex.value == 0
+                      ? FluentIcons.home_24_filled
+                      : FluentIcons.home_24_regular,
                 ),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.access_time_rounded,
+                  controller.selectedIndex.value == 1
+                      ? FluentIcons.clock_24_filled
+                      : FluentIcons.clock_24_regular,
                 ),
                 label: 'Activities',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.maps_home_work_outlined),
+                icon: Icon(
+                  controller.selectedIndex.value == 2
+                      ? FluentIcons.home_garage_24_filled
+                      : FluentIcons.home_garage_24_regular,
+                ),
                 label: 'Workshops',
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  FluentIcons.store_microsoft_24_regular,
+                  controller.selectedIndex.value == 3
+                      ? FluentIcons.building_shop_24_filled
+                      : FluentIcons.building_shop_24_regular,
                 ),
                 label: 'Shop',
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.directions_car_filled_outlined,
-                ),
+                icon: Icon(controller.selectedIndex.value == 4
+                    ? FluentIcons.vehicle_cab_24_filled
+                    : FluentIcons.vehicle_cab_24_regular),
                 label: 'Garage',
               ),
             ],
