@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
 
 class ChipWidget extends StatelessWidget {
   const ChipWidget({
@@ -14,20 +15,20 @@ class ChipWidget extends StatelessWidget {
     Color chipTextColor;
 
     if (status == 'In Progress') {
-      chipColor = const Color(0xFFFFEDE6);
-      chipTextColor = Colors.orange;
+      chipColor = AppColors.orange.withOpacity(.1);
+      chipTextColor = AppColors.orange;
     } else if (status == 'Completed') {
-      chipColor = const Color(0xFFC4FFCD);
+      chipColor = AppColors.green.withOpacity(.1);
       chipTextColor = Colors.green;
     } else {
-      chipColor = const Color(0xFFE0E0E0);
+      chipColor = AppColors.green;
       chipTextColor = Colors.black;
     }
     return Chip(
       backgroundColor: chipColor,
       label: Text(
         status,
-        style: TextStyle(color: chipTextColor),
+        style: TextStyle(color: chipTextColor, fontWeight: FontWeight.bold),
       ),
       elevation: 0,
       shape: RoundedRectangleBorder(

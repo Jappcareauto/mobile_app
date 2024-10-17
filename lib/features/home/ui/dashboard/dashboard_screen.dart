@@ -1,5 +1,6 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/features/home/ui/home/home_screen.dart';
 import 'controllers/dashboard_controller.dart';
 import 'package:get/get.dart';
@@ -11,15 +12,16 @@ class DashboardScreen extends GetView<DashboardController> {
       backgroundColor: Get.theme.primaryColor,
       body: Obx(() => Container(
             child: [
-              HomeScreen(),
+              const HomeScreen(),
               Container(),
               Container(),
               Container(),
-              Container(),
+              if (Get.isRegistered<FeatureWidgetInterface>(tag: 'GarageScreen'))
+                Get.find<FeatureWidgetInterface>(tag: 'GarageScreen')
+                    .buildView(),
               // const ActivitiesHome(),
               // const WorkshopHome(),
               // const HomeShopScreen(),
-              // const MyGarage(),
             ][controller.selectedIndex.value],
           )),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
@@ -61,12 +63,13 @@ class DashboardScreen extends GetView<DashboardController> {
                 ),
                 label: 'Shop',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(controller.selectedIndex.value == 4
-                    ? FluentIcons.vehicle_cab_24_filled
-                    : FluentIcons.vehicle_cab_24_regular),
-                label: 'Garage',
-              ),
+              if (Get.isRegistered<FeatureWidgetInterface>(tag: 'GarageScreen'))
+                BottomNavigationBarItem(
+                  icon: Icon(controller.selectedIndex.value == 4
+                      ? FluentIcons.vehicle_cab_24_filled
+                      : FluentIcons.vehicle_cab_24_regular),
+                  label: 'Garage',
+                ),
             ],
             currentIndex: controller.selectedIndex.value,
             selectedItemColor: Get.theme.primaryColor,

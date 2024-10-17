@@ -6,6 +6,7 @@ class AppImages {
   static const String car2 = "assets/images/car2.png";
   static const String auth = "assets/images/onboard.png";
   static const String car = "assets/images/car.png";
+  static const String carWhite = "assets/images/car_white.png";
 
   //Icons
   static const String logo = "assets/icons/logo.png";

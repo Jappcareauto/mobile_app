@@ -17,21 +17,22 @@ class CarContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => const DetailsCarPage()),
-        // );
-      },
-      child: Container(
-        width: Get.width * .85,
-        padding: const EdgeInsets.all(16),
-        margin: const EdgeInsets.only(right: 12),
-        decoration: BoxDecoration(
-          color: principalColor,
-          borderRadius: BorderRadius.circular(24),
-        ),
+    return Container(
+      width: Get.width * .85,
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(right: 12),
+      decoration: BoxDecoration(
+        color: principalColor,
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(24),
+        onTap: () {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => const DetailsCarPage()),
+          // );
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,9 +49,9 @@ class CarContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-               const Padding(
-                  padding:  EdgeInsets.only(bottom: 16),
-                  child:  Icon(
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 16),
+                  child: Icon(
                     Icons.arrow_back,
                     textDirection: TextDirection.rtl,
                     color: Colors.white,

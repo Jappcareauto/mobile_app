@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
-class GarageController extends GetxController {
+class VehicleDetailsController extends GetxController {
   final AppNavigation _appNavigation;
-  GarageController(this._appNavigation);
+  VehicleDetailsController(this._appNavigation);
 
   @override
   void onInit() {
@@ -11,10 +11,7 @@ class GarageController extends GetxController {
     super.onInit();
   }
 
-
   void goBack(){
     _appNavigation.goBack();
   }
-
-  
 }

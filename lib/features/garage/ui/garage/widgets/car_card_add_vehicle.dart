@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'dart:ui';
 
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
 
 class CarCardAddVehicle extends StatelessWidget {
   final String carName;
@@ -9,28 +11,30 @@ class CarCardAddVehicle extends StatelessWidget {
   final String imagePath;
 
   const CarCardAddVehicle({
-    Key? key,
+    super.key,
     required this.carName,
     required this.carDetails,
     required this.imagePath,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => AddVehicle()),
-        // );
-      },
-      child: Container(
-        margin: const EdgeInsets.only(right: 12),
-        width: 360,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: const Color.fromARGB(255, 207, 207, 207)),
-        ),
+    return Container(
+      margin: const EdgeInsets.only(right: 12),
+      width: 360,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        color: Get.theme.primaryColor.withOpacity(.1),
+        border: Border.all(color: AppColors.lightBorder),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(24),
+        onTap: () {
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => AddVehicle()),
+          // );
+        },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
           child: Stack(
@@ -41,14 +45,6 @@ class CarCardAddVehicle extends StatelessWidget {
                 width: 250,
                 height: 120,
               ),
-              BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
-                  ),
-                ),
-              ),
               Positioned(
                 top: 16,
                 left: 16,
@@ -58,31 +54,25 @@ class CarCardAddVehicle extends StatelessWidget {
                     const Text(
                       'Porsche 911 GT3RS',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
                       ),
                     ),
-                    Text(
-                      '2024, RWD',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[700],
-                      ),
-                    ),
+                    Text('2024, RWD', style: Get.textTheme.bodyMedium),
                   ],
                 ),
               ),
               BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.7),
+                    color: Colors.white.withOpacity(0.5),
                   ),
                 ),
               ),
-              const Positioned(
-                bottom: 100,
+              Positioned(
+                bottom: 0,
+                top: 0,
                 left: 16,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -93,9 +83,8 @@ class CarCardAddVehicle extends StatelessWidget {
                       children: [
                         Text(
                           '+ Add Vehicle',
-                          style: TextStyle(
-                            color: Color(0xFFFF6F20),
-                            fontSize: 20,
+                          style: Get.textTheme.bodyLarge?.copyWith(
+                            color: Get.theme.primaryColor,
                           ),
                         ),
                       ],
