@@ -1,4 +1,6 @@
 import '../../../features/home/navigation/home_public_routes.dart';
+import '../../../features/garage/navigation/garage_public_routes.dart';
+  
 import '../../../features/authentification/navigation/authentification_public_routes.dart';
   
   
@@ -13,4 +15,6 @@ class AppRoutes {
   static const home = HomePublicRoutes.home;
   //Authentification Public Routes
   static const authentification = AuthentificationPublicRoutes.home;
+  //Garage Public Routes
+  static const garage = GaragePublicRoutes.home;
 }

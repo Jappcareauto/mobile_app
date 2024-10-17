@@ -1,14 +1,15 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/home/ui/home/widgets/app_bar_with_salutation.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/title_section.dart';
 import 'controllers/home_controller.dart';
-import 'widgets/car_card_widget.dart';
-import 'widgets/car_container_widget.dart';
+import '../../../garage/ui/garage/widgets/car_card_widget.dart';
+import '../../../garage/ui/garage/widgets/car_container_widget.dart';
 import 'widgets/notification_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -48,33 +49,12 @@ class HomeScreen extends GetView<HomeController> {
                 icon: FluentIcons.question_16_filled,
                 onTap: controller.openTipModal,
               ),
-              const TitleSection(nameSection: 'My Garage'),
-              const SizedBox(
-                height: 5,
-              ),
-              SizedBox(
-                height: 190,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    // const CarCardAddVehicle(
-                    //   carName: 'Porsche 911 GT3RS',
-                    //   carDetails: '2024, RWD',
-                    //   imagePath: AppImages.car,
-                    // ),
-                    CarContainer(
-                        carName: 'Avensis Turbo',
-                        carDetails: 'DW056663',
-                        imagePath: AppImages.car,
-                        principalColor: Get.theme.primaryColor),
-                    CarContainer(
-                        carName: 'Avensis Turbo',
-                        carDetails: 'DW056663',
-                        imagePath: AppImages.car,
-                        principalColor: Get.theme.primaryColor),
-                  ],
-                ),
-              ),
+
+              if (Get.isRegistered<FeatureWidgetInterface>(
+                  tag: 'ListVehicleWidget'))
+                Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+                    .buildView(),
+              const SizedBox(height: 5),
               const TitleSection(nameSection: 'Upcoming Activities'),
               /*  SizedBox(height: 500, child: HorizontalListView()), */
               const CarCardWidget(
@@ -157,34 +137,12 @@ class HomeScreen extends GetView<HomeController> {
                   ),
                 ],
               ),
-              const TitleSection(nameSection: 'Recent Activities'),
-              const CarCardWidget(
-                date: '02/02/23',
-                time: '00:02',
-                localisation: 'Yaoundé',
-                nameCar: 'Turbo Moteur',
-                pathImageCar:
-                    'https://s3-alpha-sig.figma.com/img/1a76/2a6f/5e8173900d54188840dcc505afaab0b3?Expires=1730073600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Rub6vLCB3USasOCi8DKeP~0uJcH131QNXWNteLu00apeGOD2N4Nzb1aNIqeMh~0DHvoJA8N2j5ekuCKwFGpW31N9IDWtAOur5zTByAEX66zsr2eALqm5ra1i1l7cIoPG8JbwegYa3a1eN72m59UJGaCzo7b2TM~rVVvN2Pign1rgPAEHppzwnmeGQaaDkf2vf-xR5WSqmbuMPP3pLOG8j9YxoHMgIdzKExKghycrIoEnL3-FqgCXW4lbnIWNhw06iD7toWwFgKjQuYexAcFh-S~CfuTz8cUq7bhh7cyEx8zRuRhvaFgLixqymuCwqxMbPGFop3t1PUWaw5OWVAfajw__',
-                status: 'Completed',
-              ),
-              const CarCardWidget(
-                date: '02/02/23',
-                time: '00:02',
-                localisation: 'Yaoundé',
-                nameCar: 'Turbo Moteur',
-                pathImageCar:
-                    'https://s3-alpha-sig.figma.com/img/1a76/2a6f/5e8173900d54188840dcc505afaab0b3?Expires=1730073600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Rub6vLCB3USasOCi8DKeP~0uJcH131QNXWNteLu00apeGOD2N4Nzb1aNIqeMh~0DHvoJA8N2j5ekuCKwFGpW31N9IDWtAOur5zTByAEX66zsr2eALqm5ra1i1l7cIoPG8JbwegYa3a1eN72m59UJGaCzo7b2TM~rVVvN2Pign1rgPAEHppzwnmeGQaaDkf2vf-xR5WSqmbuMPP3pLOG8j9YxoHMgIdzKExKghycrIoEnL3-FqgCXW4lbnIWNhw06iD7toWwFgKjQuYexAcFh-S~CfuTz8cUq7bhh7cyEx8zRuRhvaFgLixqymuCwqxMbPGFop3t1PUWaw5OWVAfajw__',
-                status: 'Completed',
-              ),
-              const CarCardWidget(
-                date: '02/02/23',
-                time: '00:02',
-                localisation: 'Yaoundé',
-                nameCar: 'Turbo Moteur',
-                pathImageCar:
-                    'https://s3-alpha-sig.figma.com/img/1a76/2a6f/5e8173900d54188840dcc505afaab0b3?Expires=1730073600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Rub6vLCB3USasOCi8DKeP~0uJcH131QNXWNteLu00apeGOD2N4Nzb1aNIqeMh~0DHvoJA8N2j5ekuCKwFGpW31N9IDWtAOur5zTByAEX66zsr2eALqm5ra1i1l7cIoPG8JbwegYa3a1eN72m59UJGaCzo7b2TM~rVVvN2Pign1rgPAEHppzwnmeGQaaDkf2vf-xR5WSqmbuMPP3pLOG8j9YxoHMgIdzKExKghycrIoEnL3-FqgCXW4lbnIWNhw06iD7toWwFgKjQuYexAcFh-S~CfuTz8cUq7bhh7cyEx8zRuRhvaFgLixqymuCwqxMbPGFop3t1PUWaw5OWVAfajw__',
-                status: 'Completed',
-              ),
+              const SizedBox(height: 20),
+              //RecentActivitiesWidget
+              if (Get.isRegistered<FeatureWidgetInterface>(
+                  tag: 'RecentActivitiesWidget'))
+                Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
+                    .buildView(),
             ],
           ),
         ),

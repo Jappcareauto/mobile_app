@@ -16,6 +16,9 @@ import '../../features/home/navigation/private/home_pages.dart';
 import '../../features/authentification/dependences/authentification_dependencies.dart';
 import '../../features/authentification/navigation/private/authentification_pages.dart';
 
+import '../../features/garage/dependences/garage_dependencies.dart';
+import '../../features/garage/navigation/private/garage_pages.dart';
+
 class AppDependency {
   static Future<void> init() async {
     // Initialize GetStorage
@@ -23,6 +26,7 @@ class AppDependency {
 
     // initialize all pages
     final featuresPages = [
+      GaragePages(),
       AuthentificationPages(),
       HomePages(),
       //Add features pages here
@@ -46,5 +50,6 @@ class AppDependency {
     //Chargement des dependances de features
     HomeDependencies.init();
     AuthentificationDependencies.init();
-  }
+      GarageDependencies.init();
+ }
 }

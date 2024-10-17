@@ -55,7 +55,7 @@ class AuthentificationScreen extends GetView<AuthentificationController>
   }
 
   @override
-  Widget buildView() {
+  Widget buildView([args]) {
     return this;
   }
 }

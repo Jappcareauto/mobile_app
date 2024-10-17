@@ -9,7 +9,7 @@ class AppColors {
   static const Color red = Color(0xFFD50000); // Red
   static const Color lightBackground = Colors.white;
   static const Color lightSurface = Color(0xFFF1F3F4); // Neutral95
-  static const Color lightBorder =  Color(0xFFF4F0EF); // Neutral20
+  static const Color lightBorder = Color(0xFFE5E2E1); // Neutral20
 
   // Couleurs pour le thème sombre
   static const Color darkBackground = Color(0xFF121212); // Black/Neutral05

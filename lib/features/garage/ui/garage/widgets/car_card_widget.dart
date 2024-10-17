@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/chip_widget.dart';
 
 class CarCardWidget extends StatelessWidget {
@@ -33,38 +34,35 @@ class CarCardWidget extends StatelessWidget {
       width: widthCard,
       height: heightCard,
       margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color.fromARGB(255, 207, 207, 207)),
+        border: Border.all(color: AppColors.lightBorder),
       ),
-      child: ListTile(
-        shape: const CircleBorder(),
-        title: Container(
-          margin: const EdgeInsets.only(bottom: 25),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'BodyShop Appointment',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.orange),
-                  ),
-                  Text(
-                    'Japcare AutoShop',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
-              ChipWidget(
-                status: status,
-              ),
-            ],
-          ),
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'BodyShop Appointment',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.orange),
+                ),
+                Text(
+                  'Japcare AutoShop',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
+            ChipWidget(
+              status: status,
+            ),
+          ],
         ),
-        subtitle: Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
@@ -118,7 +116,7 @@ class CarCardWidget extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      ]),
     );
   }
 }
