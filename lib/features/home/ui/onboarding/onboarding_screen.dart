@@ -2,8 +2,8 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_dimensions.dart';
-import 'package:jappcare/core/utils/app_images.dart';
 import '../../../../core/ui/interfaces/feature_widget_interface.dart';
+import '../../../../core/utils/app_images.dart';
 import 'controllers/onboarding_controller.dart';
 import 'package:get/get.dart';
 

@@ -26,9 +26,9 @@ class AppThemeDark {
       displayMedium: TextStyle(fontSize: 45, fontWeight: FontWeight.normal),
       displaySmall: TextStyle(fontSize: 36, fontWeight: FontWeight.normal),
       headlineLarge: TextStyle(fontSize: 32, fontWeight: FontWeight.normal),
-      headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.normal),
+      headlineMedium: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
       headlineSmall: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
-      bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+      bodyLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       bodyMedium: TextStyle(fontSize: 14, fontWeight: FontWeight.normal),
       bodySmall: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
     );

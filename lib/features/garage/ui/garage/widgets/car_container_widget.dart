@@ -6,6 +6,7 @@ class CarContainer extends StatelessWidget {
   final String carDetails;
   final String imagePath;
   final Color principalColor;
+  final Function()? onPressed;
 
   const CarContainer({
     Key? key,
@@ -13,6 +14,7 @@ class CarContainer extends StatelessWidget {
     required this.carDetails,
     required this.imagePath,
     required this.principalColor,
+     this.onPressed,
   }) : super(key: key);
 
   @override
@@ -27,12 +29,7 @@ class CarContainer extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
-        onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const DetailsCarPage()),
-          // );
-        },
+        onTap: onPressed,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

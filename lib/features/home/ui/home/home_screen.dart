@@ -3,13 +3,12 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
-import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/home/ui/home/widgets/app_bar_with_salutation.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/title_section.dart';
+import '../../../../core/utils/app_images.dart';
 import 'controllers/home_controller.dart';
 import '../../../garage/ui/garage/widgets/car_card_widget.dart';
-import '../../../garage/ui/garage/widgets/car_container_widget.dart';
 import 'widgets/notification_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -76,11 +75,6 @@ class HomeScreen extends GetView<HomeController> {
                       text: 'VIN\nLookup',
                       imagePath: AppImages.vin,
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => const HomeLocatorScreen()),
-                        // );
                       },
                     ),
                   ),
@@ -91,11 +85,6 @@ class HomeScreen extends GetView<HomeController> {
                       text: 'Service\nLocator',
                       imagePath: AppImages.service,
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => const HomeLocatorScreen()),
-                        // );
                       },
                     ),
                   ),
@@ -110,12 +99,6 @@ class HomeScreen extends GetView<HomeController> {
                       text: 'Vehicles\nReports',
                       imagePath: AppImages.vehicule,
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           const VehicleReportScreen()),
-                        // );
                       },
                     ),
                   ),
@@ -126,12 +109,6 @@ class HomeScreen extends GetView<HomeController> {
                       text: 'Emergency\nAssistance',
                       imagePath: AppImages.emergency,
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           const FirstHomeAssistanceScreen()),
-                        // );
                       },
                     ),
                   ),

@@ -9,12 +9,14 @@ class CarCardAddVehicle extends StatelessWidget {
   final String carName;
   final String carDetails;
   final String imagePath;
+  final Function()? onPressed;
 
   const CarCardAddVehicle({
     super.key,
     required this.carName,
     required this.carDetails,
     required this.imagePath,
+    this.onPressed,
   });
 
   @override
@@ -29,12 +31,7 @@ class CarCardAddVehicle extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
-        onTap: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => AddVehicle()),
-          // );
-        },
+        onTap: onPressed,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
           child: Stack(

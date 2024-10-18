@@ -3,7 +3,6 @@ import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/list_veehicle_widget.dart';
 import '../../../../core/ui/interfaces/feature_widget_interface.dart';
-import '../../../../core/ui/widgets/custom_tab_bar.dart';
 import 'controllers/garage_controller.dart';
 import 'package:get/get.dart';
 

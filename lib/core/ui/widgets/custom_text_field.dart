@@ -1,5 +1,6 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../core/utils/app_dimensions.dart';
 
@@ -24,6 +25,7 @@ class CustomFormField extends StatefulWidget {
   final Color labelColor;
   final EdgeInsetsGeometry contentPadding;
   final int? maxLength;
+  final bool forceUpperCase;
 
   const CustomFormField({
     Key? key,
@@ -47,6 +49,7 @@ class CustomFormField extends StatefulWidget {
     this.labelColor = Colors.black,
     this.contentPadding = const EdgeInsets.all(12),
     this.maxLength,
+    this.forceUpperCase = false,
   }) : super(key: key);
 
   @override
@@ -85,6 +88,13 @@ class _CustomFormFieldState extends State<CustomFormField> {
           style: Theme.of(context).textTheme.bodyMedium,
           onChanged: widget.onChanged,
           maxLength: widget.maxLength,
+          inputFormatters: widget.forceUpperCase
+              ? [
+                  TextInputFormatter.withFunction((oldValue, newValue) {
+                    return newValue.copyWith(text: newValue.text.toUpperCase());
+                  })
+                ]
+              : null,
           decoration: InputDecoration(
             counter: const SizedBox(),
             fillColor: Get.theme.primaryColor.withOpacity(.1),

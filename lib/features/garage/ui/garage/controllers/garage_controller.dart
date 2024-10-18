@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import '../../../../../core/navigation/app_navigation.dart';
+import '../../../navigation/private/garage_private_routes.dart';
 
 class GarageController extends GetxController {
   final AppNavigation _appNavigation;
@@ -16,5 +17,11 @@ class GarageController extends GetxController {
     _appNavigation.goBack();
   }
 
-  
+  void goToAddVehicle(){
+    _appNavigation.toNamed(GaragePrivateRoutes.addVehicle);
+  }
+
+  void goToVehicleDetails() {
+    _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails);
+  }
 }
