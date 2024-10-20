@@ -39,8 +39,6 @@ class ShopController extends GetxController {
     },
   ];
 
-  final selectedCategoryIndex = 0.obs;
-
   @override
   void onInit() {
     // Generate by Menosi_cli

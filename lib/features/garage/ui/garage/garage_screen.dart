@@ -30,10 +30,7 @@ class GarageScreen extends GetView<GarageController>
           children: [
             const ListVehicleWidget(haveTitle: false),
             const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: const RecentActivitiesWidget(haveTabBar: true),
-            ),
+            const RecentActivitiesWidget(haveTabBar: true),
           ],
         ),
       ),

@@ -26,7 +26,7 @@ class CategoryShopItemWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(right: 8),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(25)),
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
         border: isSelected
             ? Border.all(width: 1, color: Get.theme.primaryColor)
             : null,
@@ -35,7 +35,7 @@ class CategoryShopItemWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(
               color: color ?? Get.theme.primaryColor.withOpacity(.1),

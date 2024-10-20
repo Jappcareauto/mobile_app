@@ -35,7 +35,7 @@ class CarCardWidget extends StatelessWidget {
     return Container(
       width: widthCard,
       height: heightCard,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 12, left: 20),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),

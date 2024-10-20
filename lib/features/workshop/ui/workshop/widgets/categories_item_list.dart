@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jappcare/features/shop/ui/shop/controllers/shop_controller.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
+import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
 
 import '../../../../../core/utils/app_images.dart';
 import 'category_shop_item_widget.dart';
 
-class CategoriesItemList extends StatelessWidget {
-  const CategoriesItemList({super.key});
+class CategoriesItemList extends StatelessWidget
+    implements FeatureWidgetInterface {
+  CategoriesItemList({super.key, this.title = "Category"});
+
+  String title;
 
   @override
   Widget build(BuildContext context) {
+    Get.put(WorkshopController(Get.find()));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 20),
-          child: Text("Category", style: Get.textTheme.bodyLarge),
+          child: Text(title, style: Get.textTheme.bodyLarge),
         ),
         const SizedBox(height: 10),
         SizedBox(
             height: 150,
             width: Get.width,
-            child: MixinBuilder<ShopController>(
+            child: MixinBuilder<WorkshopController>(
               builder: (_) {
                 return ListView(
                   scrollDirection: Axis.horizontal,
@@ -50,5 +55,13 @@ class CategoriesItemList extends StatelessWidget {
             )),
       ],
     );
+  }
+
+  @override
+  Widget buildView([args]) {
+    if (args != null && args is String) {
+      title = args;
+    }
+    return this;
   }
 }

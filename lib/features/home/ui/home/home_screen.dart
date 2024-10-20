@@ -22,106 +22,111 @@ class HomeScreen extends GetView<HomeController> {
         greetingMessage: 'Good Morning',
         userName: 'James',
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ImageComponent(
-                  imageUrl: "https://www.gstatic.com/webp/gallery/2.jpg",
-                  width: Get.width,
-                  borderRadius: 20,
-                  height: 160),
-              const SizedBox(height: 30),
-              NotificationWidget(
-                title: "Notification",
-                bodyText:
-                    'Your repair from the Japcare Autotech shop is ready, and available for pickup',
-                coloriage: Get.theme.primaryColor,
-                icon: FluentIcons.alert_16_filled,
-              ),
-              NotificationWidget(
-                title: "Tip",
-                bodyText:
-                    'Rotate your tires regulary to ensure they wear evenly and last longer.',
-                coloriage: Get.theme.colorScheme.secondary,
-                icon: FluentIcons.question_16_filled,
-                onTap: controller.openTipModal,
-              ),
-
-              if (Get.isRegistered<FeatureWidgetInterface>(
-                  tag: 'ListVehicleWidget'))
-                Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
-                    .buildView(),
-              const SizedBox(height: 5),
-              const TitleSection(nameSection: 'Upcoming Activities'),
-              /*  SizedBox(height: 500, child: HorizontalListView()), */
-              const CarCardWidget(
-                date: '02/02/23',
-                time: '00:02',
-                localisation: 'Yaoundé',
-                nameCar: 'Turbo Moteur',
-                pathImageCar:
-                    'https://s3-alpha-sig.figma.com/img/1a76/2a6f/5e8173900d54188840dcc505afaab0b3?Expires=1730073600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Rub6vLCB3USasOCi8DKeP~0uJcH131QNXWNteLu00apeGOD2N4Nzb1aNIqeMh~0DHvoJA8N2j5ekuCKwFGpW31N9IDWtAOur5zTByAEX66zsr2eALqm5ra1i1l7cIoPG8JbwegYa3a1eN72m59UJGaCzo7b2TM~rVVvN2Pign1rgPAEHppzwnmeGQaaDkf2vf-xR5WSqmbuMPP3pLOG8j9YxoHMgIdzKExKghycrIoEnL3-FqgCXW4lbnIWNhw06iD7toWwFgKjQuYexAcFh-S~CfuTz8cUq7bhh7cyEx8zRuRhvaFgLixqymuCwqxMbPGFop3t1PUWaw5OWVAfajw__',
-                status: 'Completed',
-              ),
-              /*** */
-              const TitleSection(nameSection: 'Services'),
-              Row(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: CustomCardService(
-                      color: Color(0xFFF4EEFF),
-                      text: 'VIN\nLookup',
-                      imagePath: AppImages.vin,
-                      onTap: () {
-                      },
-                    ),
+                  ImageComponent(
+                      imageUrl: "https://www.gstatic.com/webp/gallery/2.jpg",
+                      width: Get.width,
+                      borderRadius: 20,
+                      height: 160),
+                  const SizedBox(height: 30),
+                  NotificationWidget(
+                    title: "Notification",
+                    bodyText:
+                        'Your repair from the Japcare Autotech shop is ready, and available for pickup',
+                    coloriage: Get.theme.primaryColor,
+                    icon: FluentIcons.alert_16_filled,
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: CustomCardService(
-                      color: Color(0xFFFFEDE6),
-                      text: 'Service\nLocator',
-                      imagePath: AppImages.service,
-                      onTap: () {
-                      },
-                    ),
+                  NotificationWidget(
+                    title: "Tip",
+                    bodyText:
+                        'Rotate your tires regulary to ensure they wear evenly and last longer.',
+                    coloriage: Get.theme.colorScheme.secondary,
+                    icon: FluentIcons.question_16_filled,
+                    onTap: controller.openTipModal,
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Row(
+            ),
+            const SizedBox(height: 12),
+            if (Get.isRegistered<FeatureWidgetInterface>(
+                tag: 'ListVehicleWidget'))
+              Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+                  .buildView(),
+            const SizedBox(height: 20),
+            if (Get.isRegistered<FeatureWidgetInterface>(
+                tag: 'RecentActivitiesWidget'))
+              Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
+                  .buildView({
+                'haveTabBar': false,
+                'haveTitle': true,
+                'title': 'Upcoming Activities',
+                'status': 'Completed',
+                'isHorizontal': true
+              }),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
                 children: [
-                  Expanded(
-                    child: CustomCardService(
-                      color: Color(0xFFC4FFCD),
-                      text: 'Vehicles\nReports',
-                      imagePath: AppImages.vehicule,
-                      onTap: () {
-                      },
-                    ),
+                  const TitleSection(nameSection: 'Services'),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomCardService(
+                          color: Color(0xFFF4EEFF),
+                          text: 'VIN\nLookup',
+                          imagePath: AppImages.vin,
+                          onTap: () {},
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: CustomCardService(
+                          color: Color(0xFFFFEDE6),
+                          text: 'Service\nLocator',
+                          imagePath: AppImages.service,
+                          onTap: () {},
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: CustomCardService(
-                      color: Color(0xFFFFDAD4),
-                      text: 'Emergency\nAssistance',
-                      imagePath: AppImages.emergency,
-                      onTap: () {
-                      },
-                    ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomCardService(
+                          color: Color(0xFFC4FFCD),
+                          text: 'Vehicles\nReports',
+                          imagePath: AppImages.vehicule,
+                          onTap: () {},
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: CustomCardService(
+                          color: Color(0xFFFFDAD4),
+                          text: 'Emergency\nAssistance',
+                          imagePath: AppImages.emergency,
+                          onTap: () {},
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              //RecentActivitiesWidget
-              if (Get.isRegistered<FeatureWidgetInterface>(
-                  tag: 'RecentActivitiesWidget'))
-                Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
-                    .buildView(),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+            //RecentActivitiesWidget
+            if (Get.isRegistered<FeatureWidgetInterface>(
+                tag: 'RecentActivitiesWidget'))
+              Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
+                  .buildView(),
+          ],
         ),
       ),
     );

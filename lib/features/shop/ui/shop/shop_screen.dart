@@ -7,8 +7,6 @@ import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'controllers/shop_controller.dart';
 import 'package:get/get.dart';
 
-import 'widgets/categories_item_list.dart';
-
 class ShopScreen extends GetView<ShopController>
     implements FeatureWidgetInterface {
   const ShopScreen({super.key});
@@ -20,17 +18,21 @@ class ShopScreen extends GetView<ShopController>
       appBar: const CustomAppBar(title: "Shop"),
       body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Column(
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomFormField(
                     hintText: "Search Centers",
                     prefix: Icon(FluentIcons.search_24_regular),
                   ),
                 ),
-                CategoriesItemList(),
+                const SizedBox(height: 20),
+                if (Get.isRegistered<FeatureWidgetInterface>(
+                    tag: "CategoriesItemList"))
+                  Get.find<FeatureWidgetInterface>(tag: "CategoriesItemList")
+                      .buildView(),
                 SizedBox(height: 20),
               ],
             ),
