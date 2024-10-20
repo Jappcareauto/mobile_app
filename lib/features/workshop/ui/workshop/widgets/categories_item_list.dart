@@ -6,11 +6,11 @@ import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_cont
 import '../../../../../core/utils/app_images.dart';
 import 'category_shop_item_widget.dart';
 
-class CategoriesItemList extends StatelessWidget
+class SelectServiceItemList extends StatelessWidget
     implements FeatureWidgetInterface {
-  CategoriesItemList({super.key, this.title = "Category"});
+  const SelectServiceItemList({super.key, this.title = "Select Service"});
 
-  String title;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class CategoriesItemList extends StatelessWidget
   @override
   Widget buildView([args]) {
     if (args != null && args is String) {
-      title = args;
+      return SelectServiceItemList(title: args);
     }
     return this;
   }
