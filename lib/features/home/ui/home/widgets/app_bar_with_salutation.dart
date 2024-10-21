@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:get/get.dart';
+import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
 
 class AppBarWithAvatarAndSalutation extends StatelessWidget
     implements PreferredSizeWidget {
@@ -8,10 +9,10 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
   final String greetingMessage;
 
   const AppBarWithAvatarAndSalutation({
-    Key? key,
+    super.key,
     required this.userName,
     required this.greetingMessage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +29,8 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            GestureDetector(
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => const HomeProfilScreen()),
-                  // );
-                },
-                child: ImageComponent(
-                  imageUrl: 'https://i.pravatar.cc/300',
-                  width: 55,
-                  height: 55,
-                  borderRadius: 50,
-                )),
+            if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
+              Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
             const SizedBox(width: 5),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

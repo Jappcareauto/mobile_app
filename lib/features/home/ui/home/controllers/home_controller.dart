@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../widgets/tip_modal_bottom.dart';
 
@@ -26,4 +27,6 @@ class HomeController extends GetxController {
           return const TipModalBottomWidget();
         });
   }
+
+  void goToVehicleReport()=> _appNavigation.toNamed(AppRoutes.generateVehicleReport);
 }

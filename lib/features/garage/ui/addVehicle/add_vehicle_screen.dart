@@ -29,7 +29,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                       CustomFormField(
                         label: "Vehicel Registration Number",
                         hintText: "Ex. SV30-0169266",
-                        forceUpperCase: true,
+                        forceUpperCase: true, 
                       ),
                     ],
                   ))),

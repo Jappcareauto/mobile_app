@@ -8,7 +8,6 @@ import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/title_section.dart';
 import '../../../../core/utils/app_images.dart';
 import 'controllers/home_controller.dart';
-import '../../../garage/ui/garage/widgets/car_card_widget.dart';
 import 'widgets/notification_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -103,7 +102,7 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFC4FFCD),
                           text: 'Vehicles\nReports',
                           imagePath: AppImages.vehicule,
-                          onTap: () {},
+                          onTap: controller.goToVehicleReport,
                         ),
                       ),
                       const SizedBox(width: 10),

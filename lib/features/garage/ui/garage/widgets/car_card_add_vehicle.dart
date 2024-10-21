@@ -10,13 +10,14 @@ class CarCardAddVehicle extends StatelessWidget {
   final String carDetails;
   final String imagePath;
   final Function()? onPressed;
+  final bool? isSelected;
 
   const CarCardAddVehicle({
     super.key,
     required this.carName,
     required this.carDetails,
     required this.imagePath,
-    this.onPressed,
+    this.onPressed, this.isSelected,
   });
 
   @override

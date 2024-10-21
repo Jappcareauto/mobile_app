@@ -9,7 +9,15 @@ import 'car_container_widget.dart';
 class ListVehicleWidget extends StatelessWidget
     implements FeatureWidgetInterface {
   final bool haveTitle;
-  const ListVehicleWidget({super.key, this.haveTitle = true});
+  final String title;
+  final Function(int index)? onSelected;
+  final int? selectedIndex;
+  const ListVehicleWidget(
+      {super.key,
+      this.haveTitle = true,
+      this.title = "My Garage",
+      this.onSelected,
+      this.selectedIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +31,11 @@ class ListVehicleWidget extends StatelessWidget
             if (haveTitle)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text("My Garage",
+                child: Text(title,
                     style: Get.textTheme.bodyLarge
                         ?.copyWith(fontWeight: FontWeight.bold)),
               ),
-            if (haveTitle)
-              const SizedBox(
-                height: 5,
-              ),
+            if (haveTitle) const SizedBox(height: 5),
             SizedBox(
               height: 190,
               child: ListView(
@@ -42,19 +47,29 @@ class ListVehicleWidget extends StatelessWidget
                     carDetails: 'DW056663',
                     imagePath: AppImages.car,
                     principalColor: Get.theme.primaryColor,
-                    onPressed: _.goToVehicleDetails,
+                    isSelected:
+                        selectedIndex != null ? selectedIndex == 0 : null,
+                    onPressed: onSelected != null
+                        ? () => onSelected!(0)
+                        : _.goToVehicleDetails,
                   ),
                   CarContainer(
                     carName: 'Avensis Turbo',
                     carDetails: 'DW056663',
                     imagePath: AppImages.car,
                     principalColor: Get.theme.primaryColor,
-                    onPressed: _.goToVehicleDetails,
+                    isSelected:
+                        selectedIndex != null ? selectedIndex == 1 : null,
+                    onPressed: onSelected != null
+                        ? () => onSelected!(1)
+                        : _.goToVehicleDetails,
                   ),
                   CarCardAddVehicle(
                     carName: 'Porsche 911 GT3RS',
                     carDetails: '2024, RWD',
                     imagePath: AppImages.carWhite,
+                    isSelected:
+                        selectedIndex != null ? selectedIndex == 2 : null,
                     onPressed: _.goToAddVehicle,
                   ),
                 ],

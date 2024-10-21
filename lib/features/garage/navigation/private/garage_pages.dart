@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import '../bindings/generate_vehicle_report_controller_binding.dart';
+import '../../ui/generateVehicleReport/generate_vehicle_report_screen.dart';
+
 import '../bindings/vehicle_details_controller_binding.dart';
 import '../../ui/vehicleDetails/vehicle_details_screen.dart';
 
@@ -27,6 +30,11 @@ class GaragePages implements FeaturePages {
       name: GaragePrivateRoutes.vehicleDetails,
       page: () => VehicleDetailsScreen(),
       binding: VehicleDetailsControllerBinding(),
+    ),
+    GetPage(
+      name: GaragePrivateRoutes.generateVehicleReport,
+      page: () => GenerateVehicleReportScreen(),
+      binding: GenerateVehicleReportControllerBinding(),
     ),
     // Add other routes here
   ];
