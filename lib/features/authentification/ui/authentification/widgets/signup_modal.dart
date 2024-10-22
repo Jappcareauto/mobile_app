@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../../core/ui/widgets/custom_button.dart';
 import '../../../../../core/ui/widgets/image_component.dart';
 import '../../../../../core/utils/app_images.dart';

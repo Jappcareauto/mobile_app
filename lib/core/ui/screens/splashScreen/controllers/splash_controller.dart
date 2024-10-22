@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import '../../../../../features/home/navigation/private/home_private_routes.dart';
 import '../../../../navigation/app_navigation.dart';
-import '../../../../navigation/routes/app_routes.dart';
 import '../../../../services/localServices/local_storage_service.dart';
 import '../../../../utils/app_constants.dart';
 

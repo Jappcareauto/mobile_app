@@ -13,9 +13,16 @@ class DashboardScreen extends GetView<DashboardController> {
       body: Obx(() => Container(
             child: [
               const HomeScreen(),
-              Container(),
-              Container(),
-              Container(),
+              if (Get.isRegistered<FeatureWidgetInterface>(
+                  tag: 'ActivitiesScreen'))
+                Get.find<FeatureWidgetInterface>(tag: 'ActivitiesScreen')
+                    .buildView(),
+              if (Get.isRegistered<FeatureWidgetInterface>(
+                  tag: 'WorkshopScreen'))
+                Get.find<FeatureWidgetInterface>(tag: 'WorkshopScreen')
+                    .buildView(),
+              if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ShopScreen'))
+                Get.find<FeatureWidgetInterface>(tag: 'ShopScreen').buildView(),
               if (Get.isRegistered<FeatureWidgetInterface>(tag: 'GarageScreen'))
                 Get.find<FeatureWidgetInterface>(tag: 'GarageScreen')
                     .buildView(),
@@ -39,30 +46,35 @@ class DashboardScreen extends GetView<DashboardController> {
                 ),
                 label: 'Home',
               ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  controller.selectedIndex.value == 1
-                      ? FluentIcons.clock_24_filled
-                      : FluentIcons.clock_24_regular,
+              if (Get.isRegistered<FeatureWidgetInterface>(
+                  tag: 'ActivitiesScreen'))
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    controller.selectedIndex.value == 1
+                        ? FluentIcons.clock_24_filled
+                        : FluentIcons.clock_24_regular,
+                  ),
+                  label: 'Activities',
                 ),
-                label: 'Activities',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  controller.selectedIndex.value == 2
-                      ? FluentIcons.home_garage_24_filled
-                      : FluentIcons.home_garage_24_regular,
+              if (Get.isRegistered<FeatureWidgetInterface>(
+                  tag: 'WorkshopScreen'))
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    controller.selectedIndex.value == 2
+                        ? FluentIcons.home_garage_24_filled
+                        : FluentIcons.home_garage_24_regular,
+                  ),
+                  label: 'Workshops',
                 ),
-                label: 'Workshops',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  controller.selectedIndex.value == 3
-                      ? FluentIcons.building_shop_24_filled
-                      : FluentIcons.building_shop_24_regular,
+              if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ShopScreen'))
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    controller.selectedIndex.value == 3
+                        ? FluentIcons.building_shop_24_filled
+                        : FluentIcons.building_shop_24_regular,
+                  ),
+                  label: 'Shop',
                 ),
-                label: 'Shop',
-              ),
               if (Get.isRegistered<FeatureWidgetInterface>(tag: 'GarageScreen'))
                 BottomNavigationBarItem(
                   icon: Icon(controller.selectedIndex.value == 4

@@ -15,6 +15,7 @@ class CarCardWidget extends StatelessWidget {
     required this.pathImageCar,
     this.widthCard,
     this.heightCard,
+    this.onPressed,
   });
 
   final String date;
@@ -25,6 +26,7 @@ class CarCardWidget extends StatelessWidget {
   final String pathImageCar;
   final double? widthCard;
   final double? heightCard;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -33,90 +35,93 @@ class CarCardWidget extends StatelessWidget {
     return Container(
       width: widthCard,
       height: heightCard,
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 12, left: 20),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppColors.lightBorder),
       ),
-      child: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'BodyShop Appointment',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.orange),
-                ),
-                Text(
-                  'Japcare AutoShop',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ],
-            ),
-            ChipWidget(
-              status: status,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      FluentIcons.calendar_ltr_12_regular,
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(date),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    const Icon(
-                      FluentIcons.clock_12_regular,
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(time),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    const Icon(
-                      FluentIcons.location_12_regular,
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(localisation),
-                  ],
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                ImageComponent(
-                  imageUrl: pathImageCar,
-                  width: 200,
-                ),
-                Text(
-                  nameCar,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ]),
+      child: InkWell(
+        onTap: onPressed,
+        child: Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'BodyShop Appointment',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.orange),
+                  ),
+                  Text(
+                    'Japcare AutoShop',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ],
+              ),
+              ChipWidget(
+                status: status,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(
+                        FluentIcons.calendar_ltr_12_regular,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(date),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Icon(
+                        FluentIcons.clock_12_regular,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(time),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Icon(
+                        FluentIcons.location_12_regular,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(localisation),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  ImageComponent(
+                    imageUrl: pathImageCar,
+                    width: 200,
+                  ),
+                  Text(
+                    nameCar,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ]),
+      ),
     );
   }
 }

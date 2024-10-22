@@ -19,6 +19,18 @@ import '../../features/authentification/navigation/private/authentification_page
 import '../../features/garage/dependences/garage_dependencies.dart';
 import '../../features/garage/navigation/private/garage_pages.dart';
 
+import '../../features/shop/dependences/shop_dependencies.dart';
+import '../../features/shop/navigation/private/shop_pages.dart';
+
+import '../../features/activities/dependences/activities_dependencies.dart';
+import '../../features/activities/navigation/private/activities_pages.dart';
+
+import '../../features/workshop/dependences/workshop_dependencies.dart';
+import '../../features/workshop/navigation/private/workshop_pages.dart';
+
+import '../../features/profile/dependences/profile_dependencies.dart';
+import '../../features/profile/navigation/private/profile_pages.dart';
+
 class AppDependency {
   static Future<void> init() async {
     // Initialize GetStorage
@@ -26,6 +38,10 @@ class AppDependency {
 
     // initialize all pages
     final featuresPages = [
+      ProfilePages(),
+      WorkshopPages(),
+      ActivitiesPages(),
+      ShopPages(),
       GaragePages(),
       AuthentificationPages(),
       HomePages(),
@@ -51,5 +67,9 @@ class AppDependency {
     HomeDependencies.init();
     AuthentificationDependencies.init();
       GarageDependencies.init();
+     ShopDependencies.init();
+     ActivitiesDependencies.init();
+     WorkshopDependencies.init();
+     ProfileDependencies.init();
  }
 }

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
-import 'package:jappcare/core/utils/app_images.dart';
+import '../../../utils/app_images.dart';
 import 'controllers/splash_controller.dart';
 
 class SplashScreen extends GetView<SplashController> {
