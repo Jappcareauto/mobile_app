@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:jappcare/features/home/navigation/private/home_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
@@ -19,18 +17,6 @@ class SelectLanguageController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
-    loading.value = true;
-    if (_localService.read(AppConstants.languageKey) != null) {
-      selectedLanguage = _localService.read(AppConstants.languageKey);
-      Timer(const Duration(seconds: 1), () {
-        _appNavigation.toNamed(
-            _localService.read(AppConstants.firstOpen) != null
-                ? HomePrivateRoutes.dashboard
-                : HomePrivateRoutes.onboarding);
-      });
-    } else {
-      loading.value = false;
-    }
   }
 
   void goBack() {
@@ -48,6 +34,6 @@ class SelectLanguageController extends GetxController {
 
   void goToNextPage() {
     _localService.write(AppConstants.languageKey, selectedLanguage);
-    _appNavigation.toNamed(HomePrivateRoutes.onboarding);
+    _appNavigation.toNamedAndReplaceAll(HomePrivateRoutes.onboarding);
   }
 }

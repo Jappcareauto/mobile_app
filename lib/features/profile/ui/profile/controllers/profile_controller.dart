@@ -21,4 +21,8 @@ class ProfileController extends GetxController {
   void goToProfile() {
     _appNavigation.toNamed(ProfilePrivateRoutes.home);
   }
+
+  void goToSettings() {
+    _appNavigation.toNamed(ProfilePrivateRoutes.settings);
+  }
 }

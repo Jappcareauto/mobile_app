@@ -6,7 +6,8 @@ import 'package:jappcare/features/profile/ui/profile/controllers/profile_control
 import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
 
 class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
-  const AvatarWidget({super.key});
+  final double size;
+  const AvatarWidget({super.key, this.size = 55});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +18,8 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
         return ImageComponent(
           imageUrl: _.imageUrl.value,
           onTap: _.goToProfile,
-          width: 55,
-          height: 55,
+          width: size,
+          height: size,
           borderRadius: 50,
         );
       },
