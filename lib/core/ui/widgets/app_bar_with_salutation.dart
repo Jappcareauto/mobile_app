@@ -2,16 +2,15 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/features/home/ui/home/controllers/home_controller.dart';
-import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
+import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+import '../interfaces/feature_widget_interface.dart';
 
 class AppBarWithAvatarAndSalutation extends StatelessWidget
     implements PreferredSizeWidget {
-  final String userName;
   final String greetingMessage;
 
   const AppBarWithAvatarAndSalutation({
     super.key,
-    required this.userName,
     required this.greetingMessage,
   });
 
@@ -45,10 +44,13 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
                     color: Color(0xFFADAAAA),
                   ),
                 ),
-                Text(
-                  userName,
-                  style: const TextStyle(fontSize: 20),
-                ),
+                Obx(() => Get.find<ProfileController>().loading.value
+                    ? const SizedBox()
+                    : Text(
+                        Get.find<ProfileController>().userInfos?.name ??
+                            'Guest',
+                        style: const TextStyle(fontSize: 20),
+                      )),
               ],
             ),
           ],

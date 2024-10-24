@@ -9,7 +9,12 @@ import '../../../../../core/services/form/form_helper.dart';
 import '../../../domain/core/exceptions/authentification_exception.dart';
 import '../views/email_verify_successfully.dart';
 
+import '../../../application/usecases/resend_otp_usecase.dart';
+import '../../../application/usecases/resend_otp_command.dart';
+
 class VerifyYourEmailController extends GetxController {
+  final ResendOtpUseCase _resendOtpUseCase = Get.find();
+
   final VerifyEmailUseCase _verifyEmailUseCase = Get.find();
   late FormHelper verifyEmailFormHelper;
 
@@ -45,7 +50,20 @@ class VerifyYourEmailController extends GetxController {
     _appNavigation.goBack();
   }
 
-  void goToHome(){
+  void goToHome() {
     _appNavigation.toNamed(AppRoutes.home);
+  }
+
+  Future<void> resendOtp() async {
+    Get.showLoader();
+    final result = await _resendOtpUseCase.call(ResendOtpCommand(email: email));
+    result.fold(
+      (e) {
+        Get.closeLoader();
+      },
+      (success) {
+        Get.closeLoader();
+      },
+    );
   }
 }

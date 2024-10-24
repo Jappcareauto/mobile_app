@@ -2,6 +2,7 @@
 
 class AppImages {
   //Images
+  static const String noImage = "assets/images/noimage.jpg";
   static const String car1 = "assets/images/car1.png";
   static const String car2 = "assets/images/car2.png";
   static const String auth = "assets/images/onboard.png";

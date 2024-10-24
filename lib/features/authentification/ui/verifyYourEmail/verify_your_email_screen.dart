@@ -102,8 +102,8 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                                     children: [
                                       const Text("Didn't get the code?"),
                                       TextButton(
-                                        onPressed: () {},
-                                        child: Text(
+                                        onPressed: _.resendOtp,
+                                        child: const Text(
                                           "Resend it",
                                         ),
                                       ),

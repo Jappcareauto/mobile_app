@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:jappcare/core/utils/app_images.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -118,7 +119,7 @@ class ImageComponent extends StatelessWidget {
 
   Widget _buildDefaultImage() {
     return Image.asset(
-      'assets/images/default_image.png', // Chemin de l'image par défaut
+      AppImages.noImage, // Chemin de l'image par défaut
       width: width,
       height: height,
       fit: BoxFit.cover,

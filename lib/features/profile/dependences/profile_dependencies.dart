@@ -5,6 +5,8 @@ import '../domain/repositories/profile_repository.dart';
 import '../infrastructure/repositoriesImpl/profile_repository_impl.dart';
 import '../ui/profile/widgets/avatar_widget.dart';
 
+import '../application/usecases/get_user_infos_usecase.dart';
+
 class ProfileDependencies {
   static void init() {
     Get.lazyPut<ProfileRepository>(
@@ -13,5 +15,6 @@ class ProfileDependencies {
 
     Get.lazyPut<FeatureWidgetInterface>(() => const AvatarWidget(),
         tag: 'AvatarWidget', fenix: true);
-  }
+      Get.lazyPut(() => GetUserInfosUseCase(Get.find()), fenix: true);
+}
 }
