@@ -34,6 +34,7 @@ dependencies:
   fl_chart: ^0.69.0
 
 dev_dependencies: 
+  icons_launcher: ^2.1.7
   flutter_lints: 4.0.0
   flutter_test: 
     sdk: flutter
@@ -48,5 +49,13 @@ flutter:
       fonts:
         - asset: assets/fonts/PlusJakarta.ttf
   uses-material-design: true
+
+icons_launcher:
+  image_path: "assets/icons/icon_launcher.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
 
 
