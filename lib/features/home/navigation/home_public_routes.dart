@@ -1,6 +1,6 @@
 import 'private/home_private_routes.dart';
 
 class HomePublicRoutes {
-  static const home =  HomePrivateRoutes.selectLanguage;
+  static const home = HomePrivateRoutes.home;
   // Add other publics routes here
 }
