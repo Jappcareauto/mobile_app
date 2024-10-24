@@ -28,5 +28,8 @@ class HomeController extends GetxController {
         });
   }
 
-  void goToVehicleReport()=> _appNavigation.toNamed(AppRoutes.generateVehicleReport);
+  void goToVehicleReport() =>
+      _appNavigation.toNamed(AppRoutes.generateVehicleReport);
+
+  void goToNotifications() => _appNavigation.toNamed(AppRoutes.notifications);
 }

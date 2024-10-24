@@ -31,6 +31,9 @@ import '../../features/workshop/navigation/private/workshop_pages.dart';
 import '../../features/profile/dependences/profile_dependencies.dart';
 import '../../features/profile/navigation/private/profile_pages.dart';
 
+import '../../features/notifications/dependences/notifications_dependencies.dart';
+import '../../features/notifications/navigation/private/notifications_pages.dart';
+
 class AppDependency {
   static Future<void> init() async {
     // Initialize GetStorage
@@ -38,6 +41,7 @@ class AppDependency {
 
     // initialize all pages
     final featuresPages = [
+      NotificationsPages(),
       ProfilePages(),
       WorkshopPages(),
       ActivitiesPages(),
@@ -71,5 +75,6 @@ class AppDependency {
      ActivitiesDependencies.init();
      WorkshopDependencies.init();
      ProfileDependencies.init();
+     NotificationsDependencies.init();
  }
 }
