@@ -13,7 +13,12 @@ import '../../application/usecases/register_command.dart';
 
 
 
+
+
+
+
 abstract class
+
 
 
  AuthentificationRepository {
@@ -24,6 +29,9 @@ abstract class
 
   Future<Either<AuthentificationException, bool>> verifyEmail(String code);
 
+  Future<Either<AuthentificationException, bool>> resendOtp(String email);
+
 }
+
 
 

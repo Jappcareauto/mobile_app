@@ -1,6 +1,14 @@
 import 'package:dartz/dartz.dart';
 
-abstract class ProfileRepository {
+import '../core/exceptions/profile_exception.dart';
+import '../entities/get_user_infos.dart';
+
+
+abstract class
+ ProfileRepository {
   //Add methods here
+  Future<Either<ProfileException, GetUserInfos>> getUserInfos();
+
 }
+
 

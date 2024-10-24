@@ -1,0 +1,1 @@
+{"method":"POST","url":"/auth/register/verify-resend","parameters":{"body":{"email":"String"}}}

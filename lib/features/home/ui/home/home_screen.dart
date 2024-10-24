@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
-import 'package:jappcare/features/home/ui/home/widgets/app_bar_with_salutation.dart';
+import 'package:jappcare/core/ui/widgets/app_bar_with_salutation.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/title_section.dart';
 import '../../../../core/utils/app_images.dart';
@@ -18,8 +18,7 @@ class HomeScreen extends GetView<HomeController> {
     Get.put(HomeController(Get.find()));
     return Scaffold(
       appBar: const AppBarWithAvatarAndSalutation(
-        greetingMessage: 'Good Morning',
-        userName: 'James',
+        greetingMessage: 'Good Morning'
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -28,24 +28,28 @@ class ProfileScreen extends GetView<ProfileController> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "James Mann",
-                          style: Get.textTheme.headlineLarge
-                              ?.copyWith(fontWeight: FontWeight.w700),
-                        ),
-                        const SizedBox(height: 8),
-                        SizedBox(
-                          width: 130,
-                          child: CustomButton(
-                              text: "Manage",
-                              onPressed: controller.goToSettings,
-                              borderRadius: BorderRadius.circular(30),
-                              haveBorder: true),
-                        ),
-                      ],
+                    child: Obx(
+                      () => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          controller.loading.value
+                              ? const SizedBox()
+                              : Text(
+                                  controller.userInfos?.name ?? "Unknown name",
+                                  style: Get.textTheme.headlineLarge
+                                      ?.copyWith(fontWeight: FontWeight.w700),
+                                ),
+                          const SizedBox(height: 8),
+                          SizedBox(
+                            width: 130,
+                            child: CustomButton(
+                                text: "Manage",
+                                onPressed: controller.goToSettings,
+                                borderRadius: BorderRadius.circular(30),
+                                haveBorder: true),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const AvatarWidget(size: 100)

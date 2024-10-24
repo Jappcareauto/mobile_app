@@ -8,4 +8,5 @@ class AuthentificationConstants {
   static const String loginPostUri = '/auth/login';
   static const String registerPostUri = '/auth/register';
   static const String verifyEmailPostUri = '/auth/verify';
+  static const String resendOtpPostUri = '/auth/register/verify-resend';
 }
