@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/features/home/ui/home/controllers/home_controller.dart';
 import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
 
 class AppBarWithAvatarAndSalutation extends StatelessWidget
@@ -58,9 +59,7 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
           padding: const EdgeInsets.all(10),
           child: InkWell(
             splashColor: Colors.transparent,
-            onTap: () {
-              // Action à effectuer sur le clic
-            },
+            onTap: Get.find<HomeController>().goToNotifications,
             child: const Icon(
               FluentIcons.alert_24_regular,
               size: 30,
