@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/features/home/ui/home/controllers/home_controller.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+import 'package:shimmer/shimmer.dart';
 import '../interfaces/feature_widget_interface.dart';
 
 class AppBarWithAvatarAndSalutation extends StatelessWidget
@@ -45,7 +46,11 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
                   ),
                 ),
                 Obx(() => Get.find<ProfileController>().loading.value
-                    ? const SizedBox()
+                    ? Shimmer.fromColors(
+                        baseColor: Colors.grey,
+                        highlightColor: Colors.white,
+                        child: const Text('Name', style: TextStyle(fontSize: 20)),
+                      )
                     : Text(
                         Get.find<ProfileController>().userInfos?.name ??
                             'Guest',

@@ -1,6 +1,7 @@
 //Don't translate me
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import '../events/app_events_service.dart';
 import '../navigation/app_navigation.dart';
 import '../navigation/getx_navigation_impl.dart';
 import '../navigation/routes/app_pages.dart';
@@ -67,14 +68,17 @@ class AppDependency {
     await dioNetworkService.init();
     Get.lazyPut<NetworkService>(() => dioNetworkService, fenix: true);
 
+    // Events
+    Get.lazyPut<AppEventService>(() => AppEventService(), fenix: true);
+
     //Chargement des dependances de features
     HomeDependencies.init();
     AuthentificationDependencies.init();
-      GarageDependencies.init();
-     ShopDependencies.init();
-     ActivitiesDependencies.init();
-     WorkshopDependencies.init();
-     ProfileDependencies.init();
-     NotificationsDependencies.init();
- }
+    GarageDependencies.init();
+    ShopDependencies.init();
+    ActivitiesDependencies.init();
+    WorkshopDependencies.init();
+    ProfileDependencies.init();
+    NotificationsDependencies.init();
+  }
 }

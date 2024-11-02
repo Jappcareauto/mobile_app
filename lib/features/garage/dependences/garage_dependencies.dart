@@ -9,6 +9,10 @@ import '../ui/garage/widgets/recent_activities_widget.dart';
 
 import '../application/usecases/get_garage_by_owner_id_usecase.dart';
 
+import '../application/usecases/get_vehicle_list_usecase.dart';
+
+import '../application/usecases/add_vehicle_usecase.dart';
+
 class GarageDependencies {
   static void init() {
     Get.lazyPut<GarageRepository>(
@@ -23,6 +27,8 @@ class GarageDependencies {
         () => const RecentActivitiesWidget(haveTabBar: false),
         tag: 'RecentActivitiesWidget',
         fenix: true);
-      Get.lazyPut(() => GetGarageByOwnerIdUseCase(Get.find()), fenix: true);
-}
+    Get.lazyPut(() => GetGarageByOwnerIdUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => GetVehicleListUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => AddVehicleUseCase(Get.find()), fenix: true);
+  }
 }
