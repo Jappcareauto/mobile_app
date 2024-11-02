@@ -35,7 +35,7 @@ class DioNetworkService extends NetworkService {
     // Configuration des options de cache
     _cacheOptions = CacheOptions(
       store: _cacheStore,
-      policy: CachePolicy.refreshForceCache,
+      policy: CachePolicy.forceCache,
       hitCacheOnErrorExcept: [401, 403],
       priority: CachePriority.normal,
       maxStale: const Duration(days: 3),

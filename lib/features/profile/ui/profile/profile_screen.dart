@@ -19,55 +19,59 @@ class ProfileScreen extends GetView<ProfileController> {
               icon: const Icon(FluentIcons.settings_24_regular))
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Obx(
-                      () => Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          controller.loading.value
-                              ? const SizedBox()
-                              : Text(
-                                  controller.userInfos?.name ?? "Unknown name",
-                                  style: Get.textTheme.headlineLarge
-                                      ?.copyWith(fontWeight: FontWeight.w700),
-                                ),
-                          const SizedBox(height: 8),
-                          SizedBox(
-                            width: 130,
-                            child: CustomButton(
-                                text: "Manage",
-                                onPressed: controller.goToSettings,
-                                borderRadius: BorderRadius.circular(30),
-                                haveBorder: true),
-                          ),
-                        ],
+      body: RefreshIndicator(
+        onRefresh: controller.getUserInfos,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Obx(
+                        () => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            controller.loading.value
+                                ? const SizedBox()
+                                : Text(
+                                    controller.userInfos?.name ??
+                                        "Unknown name",
+                                    style: Get.textTheme.headlineLarge
+                                        ?.copyWith(fontWeight: FontWeight.w700),
+                                  ),
+                            const SizedBox(height: 8),
+                            SizedBox(
+                              width: 130,
+                              child: CustomButton(
+                                  text: "Manage",
+                                  onPressed: controller.goToSettings,
+                                  borderRadius: BorderRadius.circular(30),
+                                  haveBorder: true),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const AvatarWidget(size: 100)
-                ],
+                    const AvatarWidget(size: 100, canEdit: true)
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            if (Get.isRegistered<FeatureWidgetInterface>(
-                tag: 'ListVehicleWidget'))
-              Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
-                  .buildView(),
-            const SizedBox(height: 20),
-            if (Get.isRegistered<FeatureWidgetInterface>(
-                tag: 'RecentActivitiesWidget'))
-              Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
-                  .buildView(true),
-            const SizedBox(height: 100),
-          ],
+              const SizedBox(height: 20),
+              if (Get.isRegistered<FeatureWidgetInterface>(
+                  tag: 'ListVehicleWidget'))
+                Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+                    .buildView(),
+              const SizedBox(height: 20),
+              if (Get.isRegistered<FeatureWidgetInterface>(
+                  tag: 'RecentActivitiesWidget'))
+                Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
+                    .buildView(true),
+              const SizedBox(height: 100),
+            ],
+          ),
         ),
       ),
     );

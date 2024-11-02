@@ -1,0 +1,1 @@
+{"method":"PUT","url":"/user","parameters":{"query":{"userId":"userId"},"body":{"file":"<binary>"}}}

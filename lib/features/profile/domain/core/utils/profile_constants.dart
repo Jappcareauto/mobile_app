@@ -6,4 +6,5 @@ class ProfileConstants {
 
   // Add other constants here
   static const String getUserInfosGetUri = '/user/logged-in';
+  static const String updateProfileImagePutUri = '/user';
 }
