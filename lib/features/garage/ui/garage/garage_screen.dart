@@ -11,24 +11,33 @@ class GarageScreen extends GetView<GarageController>
     implements FeatureWidgetInterface {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:  CustomAppBar(
-        title: "My Garage",
-        canBack: true,
-        actions: [
-          if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
-            Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const ListVehicleWidget(haveTitle: false),
-            const SizedBox(height: 20),
-            const RecentActivitiesWidget(haveTabBar: true),
-          ],
-        ),
-      ),
+    return GetBuilder<GarageController>(
+      init: GarageController(Get.find()),
+      initState: (_) {},
+      builder: (_) {
+        return Scaffold(
+            appBar: CustomAppBar(
+              title: controller.loading.value
+                  ? "My Garage"
+                  : controller.myGarage?.name ?? "My Garage",
+              canBack: true,
+              actions: [
+                if (Get.isRegistered<FeatureWidgetInterface>(
+                    tag: 'AvatarWidget'))
+                  Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
+                      .buildView(),
+              ],
+            ),
+            body: const SingleChildScrollView(
+              child: Column(
+                children: [
+                  ListVehicleWidget(haveTitle: false),
+                  SizedBox(height: 20),
+                  RecentActivitiesWidget(haveTabBar: true),
+                ],
+              ),
+            ));
+      },
     );
   }
 
