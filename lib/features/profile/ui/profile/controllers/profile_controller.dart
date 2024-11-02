@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
+import 'package:jappcare/core/services/localServices/local_storage_service.dart';
+import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/profile/navigation/private/profile_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
-import '../../../../../core/utils/getx_extensions.dart';
 import '../../../application/usecases/get_user_infos_usecase.dart';
 import '../../../domain/entities/get_user_infos.dart';
 
@@ -13,6 +14,8 @@ class ProfileController extends GetxController {
 
   GetUserInfos? userInfos;
   final loading = false.obs;
+
+  final _localStorageService = Get.find<LocalStorageService>();
 
   @override
   void onInit() {
@@ -43,6 +46,7 @@ class ProfileController extends GetxController {
       (success) {
         loading.value = false;
         userInfos = success;
+        _localStorageService.write(AppConstants.userIdKey, userInfos!.id);
         update();
       },
     );

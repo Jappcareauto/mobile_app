@@ -24,37 +24,39 @@ class _SuccessVerifiedMailScreenState extends State<SuccessVerifiedMailScreen> {
         child: SizedBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 30,
-              ),
-              const Expanded(
-                  child: Center(
-                child: ImageComponent(
-                  assetPath: AppImages.logoWithName,
-                  height: 400,
-                ),
-              )),
-              const Center(
-                child: Text(
-                  'Email Verified\nSuccessfully',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 35, color: Colors.white),
-                ),
-              ),
               Expanded(
                   child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomButton(
-                    text: 'Continue',
-                    onPressed: () {
-                      Get.find<VerifyYourEmailController>().goToHome();
-                    },
+                  const SizedBox(height: 30),
+                  Column(
+                    children: [
+                      Center(
+                        child: ImageComponent(
+                            assetPath: AppImages.successVerify,
+                            width: Get.context!.width * .8),
+                      ),
+                      const SizedBox(height: 20),
+                      const Center(
+                        child: Text(
+                          'Email Verified\nSuccessfully',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 32, color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 30),
                 ],
-              ))
+              )),
+              CustomButton(
+                text: 'Continue',
+                onPressed: () {
+                  Get.find<VerifyYourEmailController>().goToHome();
+                },
+              ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

@@ -20,18 +20,16 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   });
 
   @override
-  Future<Either<AuthentificationException, bool>> resendOtp(String email) async {
+  Future<Either<AuthentificationException, bool>> resendOtp(
+      String email) async {
     try {
-       await networkService.post(
-        AuthentificationConstants.resendOtpPostUri,
-        body: {'email': email, },
-      );
+      await networkService
+          .post("${AuthentificationConstants.resendOtpPostUri}?email=$email");
       return const Right(true);
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
     }
   }
-
 
   @override
   Future<Either<AuthentificationException, bool>> verifyEmail(

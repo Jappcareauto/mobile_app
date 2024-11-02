@@ -1,0 +1,1 @@
+{"method":"GET","url":"/garage/by-owner-id","parameters":{"query":{"userId":"userId"}}}

@@ -7,6 +7,8 @@ import '../domain/repositories/garage_repository.dart';
 import '../infrastructure/repositoriesImpl/garage_repository_impl.dart';
 import '../ui/garage/widgets/recent_activities_widget.dart';
 
+import '../application/usecases/get_garage_by_owner_id_usecase.dart';
+
 class GarageDependencies {
   static void init() {
     Get.lazyPut<GarageRepository>(
@@ -21,5 +23,6 @@ class GarageDependencies {
         () => const RecentActivitiesWidget(haveTabBar: false),
         tag: 'RecentActivitiesWidget',
         fenix: true);
-  }
+      Get.lazyPut(() => GetGarageByOwnerIdUseCase(Get.find()), fenix: true);
+}
 }
