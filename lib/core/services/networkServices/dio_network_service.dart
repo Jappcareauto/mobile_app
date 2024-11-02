@@ -3,7 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_file_store/dio_cache_interceptor_file_store.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
+import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:path_provider/path_provider.dart';
+import '../../navigation/routes/app_routes.dart';
 import '../localServices/local_storage_service.dart';
 import 'network_service.dart';
 import 'package:talker/talker.dart';
@@ -33,10 +35,10 @@ class DioNetworkService extends NetworkService {
     // Configuration des options de cache
     _cacheOptions = CacheOptions(
       store: _cacheStore,
-      policy: CachePolicy.forceCache, // Utilise le cache si la requête échoue
+      policy: CachePolicy.refreshForceCache,
       hitCacheOnErrorExcept: [401, 403],
       priority: CachePriority.normal,
-      maxStale: const Duration(days: 7),
+      maxStale: const Duration(days: 3),
       keyBuilder: CacheOptions.defaultCacheKeyBuilder,
       allowPostMethod: false, // Désactiver la mise en cache des requêtes POST
     );
@@ -50,7 +52,7 @@ class DioNetworkService extends NetworkService {
         talker: _talker,
         settings: const TalkerDioLoggerSettings(
           printRequestHeaders: true,
-          printResponseHeaders: true,
+          printResponseHeaders: false,
           printRequestData: true,
           printResponseData: true,
         ),
@@ -73,6 +75,16 @@ class DioNetworkService extends NetworkService {
                 return handler.resolve(response);
               }
             }
+          }
+
+          // Si le jeton est invalide, redirection vers la page de connexion
+          if (error.response?.statusCode == 401) {
+            Get.showLoader();
+            await _localStorage.delete(AppConstants.tokenKey);
+            await _localStorage.delete(AppConstants.refreshTokenKey);
+            Get.closeLoader();
+            await Get.offAllNamed(AppRoutes.home);
+            Get.showCustomSnackBar("Veuillez vous reconnecter");
           }
           // Passer l'erreur au prochain intercepteur si aucune réponse de cache n'est disponible
           return handler.next(error);

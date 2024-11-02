@@ -54,7 +54,9 @@ class SignUpWithEmailController extends GetxController {
       )),
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
-        _appNavigation.toNamed(AuthentificationPrivateRoutes.verifyYourEmail, arguments: {'email': response.email});
+        _appNavigation.goBack();
+        _appNavigation.toNamed(AuthentificationPrivateRoutes.verifyYourEmail,
+            arguments: {'email': response.email});
       },
     );
   }
@@ -67,8 +69,7 @@ class SignUpWithEmailController extends GetxController {
     //TODO
   }
 
-
-  void goToLoginPage()  {
+  void goToLoginPage() {
     _appNavigation.goBack();
     _appNavigation.toNamed(AuthentificationPrivateRoutes.loginWithEmail);
   }

@@ -28,7 +28,7 @@ class GetUserInfosModel {
     return GetUserInfosModel._(
       name: json['name'],
       email: json['email'],
-      image: json['image'],
+      image: json['profileImageUrl'],
       verified: json['verified'],
       id: json['id'],
       createdBy: json['createdBy'],
@@ -42,7 +42,7 @@ class GetUserInfosModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['email'] = email;
-    if (image != null) { data['image'] = image; }
+    if (image != null) { data['profileImageUrl'] = image; }
     data['verified'] = verified;
     data['id'] = id;
     if (createdBy != null) { data['createdBy'] = createdBy; }

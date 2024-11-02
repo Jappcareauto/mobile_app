@@ -14,4 +14,5 @@ class AppConstants {
   static const String refreshTokenKey = "refreshTokenKey";
   static const String languageKey = "languageKey";
   static const String firstOpen = "firstOpenKey";
+  static const String userIdKey = "userIdKey";
 }

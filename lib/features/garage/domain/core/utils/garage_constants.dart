@@ -5,4 +5,5 @@ class GarageConstants {
   static const String featureVersion = '1.0.0';
 
   // Add other constants here
+  static const String getGarageByOwnerIdGetUri = '/garage/by-owner-id';
 }
