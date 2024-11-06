@@ -13,6 +13,8 @@ class AppImages {
   static const String shop3 = "assets/images/shop3.png";
   static const String maintenanceCar = "assets/images/body_maintenance.png";
   static const String shopCar = "assets/images/body_shop.png";
+  static const String cardPayment = "assets/images/card.png";
+  static const String momo = "assets/images/momo.png";
 
   //Icons
   static const String logo = "assets/icons/logo.png";
