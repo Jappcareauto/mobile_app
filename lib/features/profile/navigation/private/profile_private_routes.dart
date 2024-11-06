@@ -6,4 +6,6 @@ class ProfilePrivateRoutes {
   static const String editProfile = '$home/editProfile';
   static const String termsAndConditions = '$home/termsAndConditions';
   static const String privacyPolicy = '$home/privacyPolicy';
+  static const String history = '$home/history';
+  static const String payments = '$home/payments';
 }
