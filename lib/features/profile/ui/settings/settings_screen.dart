@@ -23,11 +23,11 @@ class SettingsScreen extends GetView<SettingsController> {
                 SettingItem(
                     title: "History",
                     icon: FluentIcons.history_24_regular,
-                    onTap: () {}),
+                    onTap: controller.goToHistory),
                 SettingItem(
                   title: "Payments",
                   icon: FluentIcons.wallet_24_regular,
-                  onTap: () {},
+                  onTap: controller.goToPayments,
                 ),
                 SettingItem(
                   title: "Notifications",

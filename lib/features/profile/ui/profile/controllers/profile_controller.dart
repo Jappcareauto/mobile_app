@@ -56,6 +56,7 @@ class ProfileController extends GetxController {
       (success) {
         loading.value = false;
         userInfos = success;
+        Get.find<AppEventService>().emit<String>(AppConstants.userIdEvent, '');
         Get.find<AppEventService>()
             .emit<String>(AppConstants.userIdEvent, userInfos!.id);
         update();

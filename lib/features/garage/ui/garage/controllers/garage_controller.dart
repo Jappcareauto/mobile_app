@@ -33,7 +33,7 @@ class GarageController extends GetxController {
     Get.find<AppEventService>()
         .on<String>(AppConstants.userIdEvent)
         .listen((userId) {
-      getGarageByOwnerId(userId!);
+      if (userId != '') getGarageByOwnerId(userId!);
     });
     if (Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent) !=
         null) {

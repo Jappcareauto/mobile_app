@@ -1,5 +1,11 @@
 import 'package:get/get.dart';
 
+import '../bindings/payments_controller_binding.dart';
+import '../../ui/payments/payments_screen.dart';
+
+import '../bindings/history_controller_binding.dart';
+import '../../ui/history/history_screen.dart';
+
 import '../bindings/privacy_policy_controller_binding.dart';
 import '../../ui/privacyPolicy/privacy_policy_screen.dart';
 
@@ -43,6 +49,16 @@ class ProfilePages implements FeaturePages {
       name: ProfilePrivateRoutes.privacyPolicy,
       page: () => PrivacyPolicyScreen(),
       binding: PrivacyPolicyControllerBinding(),
+    ),
+    GetPage(
+      name: ProfilePrivateRoutes.history,
+      page: () => HistoryScreen(),
+      binding: HistoryControllerBinding(),
+    ),
+    GetPage(
+      name: ProfilePrivateRoutes.payments,
+      page: () => PaymentsScreen(),
+      binding: PaymentsControllerBinding(),
     ),
     // Add other routes here
   ];

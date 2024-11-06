@@ -30,8 +30,13 @@ class SettingsController extends GetxController {
     await _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
   }
 
-  void goToTermsAndConditions()=> _appNavigation.toNamed(ProfilePrivateRoutes.termsAndConditions);
-  void goToPrivacyPolicy()=> _appNavigation.toNamed(ProfilePrivateRoutes.privacyPolicy);
-  void goToEditProfile()=> _appNavigation.toNamed(ProfilePrivateRoutes.editProfile);
-  void goToNotifications()=> _appNavigation.toNamed(AppRoutes.notifications);
+  void goToNotifications() => _appNavigation.toNamed(AppRoutes.notifications);
+  void goToTermsAndConditions() =>
+      _appNavigation.toNamed(ProfilePrivateRoutes.termsAndConditions);
+  void goToPrivacyPolicy() =>
+      _appNavigation.toNamed(ProfilePrivateRoutes.privacyPolicy);
+  void goToEditProfile() =>
+      _appNavigation.toNamed(ProfilePrivateRoutes.editProfile);
+  void goToHistory() => _appNavigation.toNamed(ProfilePrivateRoutes.history);
+  void goToPayments() => _appNavigation.toNamed(ProfilePrivateRoutes.payments);
 }

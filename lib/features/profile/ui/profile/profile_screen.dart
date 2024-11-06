@@ -55,7 +55,7 @@ class ProfileScreen extends GetView<ProfileController> {
                         ),
                       ),
                     ),
-                    const AvatarWidget(size: 100, canEdit: true)
+                    const AvatarWidget(size: 100, canEdit: false)
                   ],
                 ),
               ),
