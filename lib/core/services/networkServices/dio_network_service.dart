@@ -35,12 +35,12 @@ class DioNetworkService extends NetworkService {
     // Configuration des options de cache
     _cacheOptions = CacheOptions(
       store: _cacheStore,
-      policy: CachePolicy.forceCache,
+      policy: CachePolicy.refresh,
       hitCacheOnErrorExcept: [401, 403],
       priority: CachePriority.normal,
       maxStale: const Duration(days: 3),
       keyBuilder: CacheOptions.defaultCacheKeyBuilder,
-      allowPostMethod: false, // Désactiver la mise en cache des requêtes POST
+      allowPostMethod: false, 
     );
 
     // Ajout de l'intercepteur de cache

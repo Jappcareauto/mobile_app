@@ -1,12 +1,11 @@
 import '../../domain/entities/get_vehicle_list.dart';
 
 class GetVehicleListModel {
-
   final String garageId;
   final String name;
   final String? description;
   final String vin;
-  final DetailModel detail;
+  final DetailModel? detail;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -18,7 +17,7 @@ class GetVehicleListModel {
     required this.name,
     this.description,
     required this.vin,
-    required this.detail,
+    this.detail,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -32,7 +31,8 @@ class GetVehicleListModel {
       name: json['name'],
       description: json['description'],
       vin: json['vin'],
-      detail: DetailModel.fromJson(json['detail']),
+      detail:
+          json['detail'] != null ? DetailModel.fromJson(json['detail']) : null,
       id: json['id'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
@@ -45,12 +45,18 @@ class GetVehicleListModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['garageId'] = garageId;
     data['name'] = name;
-    if (description != null) { data['description'] = description; }
+    if (description != null) {
+      data['description'] = description;
+    }
     data['vin'] = vin;
-    data['detail'] = detail.toJson();
+    data['detail'] = detail?.toJson();
     data['id'] = id;
-    if (createdBy != null) { data['createdBy'] = createdBy; }
-    if (updatedBy != null) { data['updatedBy'] = updatedBy; }
+    if (createdBy != null) {
+      data['createdBy'] = createdBy;
+    }
+    if (updatedBy != null) {
+      data['updatedBy'] = updatedBy;
+    }
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     return data;
@@ -62,7 +68,8 @@ class GetVehicleListModel {
       name: entity.name,
       description: entity.description,
       vin: entity.vin,
-      detail: DetailModel.fromEntity(entity.detail),
+      detail:
+          entity.detail != null ? DetailModel.fromEntity(entity.detail!) : null,
       id: entity.id,
       createdBy: entity.createdBy,
       updatedBy: entity.updatedBy,
@@ -77,7 +84,7 @@ class GetVehicleListModel {
       name: name,
       description: description,
       vin: vin,
-      detail: detail.toEntity(),
+      detail: detail?.toEntity(),
       id: id,
       createdBy: createdBy,
       updatedBy: updatedBy,
@@ -86,8 +93,8 @@ class GetVehicleListModel {
     );
   }
 }
-class DetailModel {
 
+class DetailModel {
   final String? make;
   final String? model;
   final String? year;
@@ -141,18 +148,38 @@ class DetailModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    if (make != null) { data['make'] = make; }
-    if (model != null) { data['model'] = model; }
-    if (year != null) { data['year'] = year; }
-    if (trim != null) { data['trim'] = trim; }
-    if (transmission != null) { data['transmission'] = transmission; }
-    if (driveTrain != null) { data['driveTrain'] = driveTrain; }
-    if (power != null) { data['power'] = power; }
-    if (bodyType != null) { data['bodyType'] = bodyType; }
+    if (make != null) {
+      data['make'] = make;
+    }
+    if (model != null) {
+      data['model'] = model;
+    }
+    if (year != null) {
+      data['year'] = year;
+    }
+    if (trim != null) {
+      data['trim'] = trim;
+    }
+    if (transmission != null) {
+      data['transmission'] = transmission;
+    }
+    if (driveTrain != null) {
+      data['driveTrain'] = driveTrain;
+    }
+    if (power != null) {
+      data['power'] = power;
+    }
+    if (bodyType != null) {
+      data['bodyType'] = bodyType;
+    }
     data['vehicleId'] = vehicleId;
     data['id'] = id;
-    if (createdBy != null) { data['createdBy'] = createdBy; }
-    if (updatedBy != null) { data['updatedBy'] = updatedBy; }
+    if (createdBy != null) {
+      data['createdBy'] = createdBy;
+    }
+    if (updatedBy != null) {
+      data['updatedBy'] = updatedBy;
+    }
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     return data;

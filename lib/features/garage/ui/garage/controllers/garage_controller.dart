@@ -35,7 +35,8 @@ class GarageController extends GetxController {
         .listen((userId) {
       getGarageByOwnerId(userId!);
     });
-    if(Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent) != null) {
+    if (Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent) !=
+        null) {
       loading.value = false;
       vehicleLoading.value = false;
     }
@@ -63,12 +64,12 @@ class GarageController extends GetxController {
         Get.showCustomSnackBar(e.message);
       },
       (success) {
-        loading.value = false;
         myGarage = success;
         getVehicleList(myGarage!.id);
         Get.find<AppEventService>()
             .emit<String>(AppConstants.garageIdEvent, myGarage!.id);
         update();
+        loading.value = false;
       },
     );
   }
@@ -83,9 +84,9 @@ class GarageController extends GetxController {
         Get.showCustomSnackBar(e.message);
       },
       (response) {
-        vehicleLoading.value = false;
         vehicleList = response;
         update();
+        vehicleLoading.value = false;
       },
     );
   }

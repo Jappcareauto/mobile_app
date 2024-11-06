@@ -4,7 +4,7 @@ class GetVehicleList {
   final String name;
   final String? description;
   final String vin;
-  final Detail detail;
+  final Detail? detail;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -16,7 +16,7 @@ class GetVehicleList {
     required this.name,
     this.description,
     required this.vin,
-    required this.detail,
+     this.detail,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -29,7 +29,7 @@ class GetVehicleList {
     required name,
     description,
     required vin,
-    required detail,
+    Detail? detail,
     required id,
     createdBy,
     updatedBy,
