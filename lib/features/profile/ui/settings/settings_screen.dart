@@ -19,7 +19,7 @@ class SettingsScreen extends GetView<SettingsController> {
                 SettingItem(
                     title: "Edit Profile",
                     icon: FluentIcons.person_24_regular,
-                    onTap: () {}),
+                    onTap: controller.goToEditProfile),
                 SettingItem(
                     title: "History",
                     icon: FluentIcons.history_24_regular,
@@ -32,7 +32,7 @@ class SettingsScreen extends GetView<SettingsController> {
                 SettingItem(
                   title: "Notifications",
                   icon: FluentIcons.alert_24_regular,
-                  onTap: () {},
+                  onTap: controller.goToNotifications,
                 ),
                 SettingItem(
                   title: "Help & Support",
@@ -42,12 +42,12 @@ class SettingsScreen extends GetView<SettingsController> {
                 SettingItem(
                   title: "Privacy Policy",
                   icon: FluentIcons.document_24_regular,
-                  onTap: () {},
+                  onTap: controller.goToPrivacyPolicy,
                 ),
                 SettingItem(
                   title: "Terms & Conditions",
                   icon: FluentIcons.document_24_regular,
-                  onTap: () {},
+                  onTap: controller.goToTermsAndConditions,
                 ),
                 SettingItem(
                   title: "Logout",

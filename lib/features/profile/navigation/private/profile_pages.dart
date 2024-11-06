@@ -1,5 +1,14 @@
 import 'package:get/get.dart';
 
+import '../bindings/privacy_policy_controller_binding.dart';
+import '../../ui/privacyPolicy/privacy_policy_screen.dart';
+
+import '../bindings/terms_and_conditions_controller_binding.dart';
+import '../../ui/termsAndConditions/terms_and_conditions_screen.dart';
+
+import '../bindings/edit_profile_controller_binding.dart';
+import '../../ui/editProfile/edit_profile_screen.dart';
+
 import '../bindings/settings_controller_binding.dart';
 import '../../ui/settings/settings_screen.dart';
 import '../../../../core/navigation/routes/features_pages.dart';
@@ -19,6 +28,21 @@ class ProfilePages implements FeaturePages {
       name: ProfilePrivateRoutes.settings,
       page: () => SettingsScreen(),
       binding: SettingsControllerBinding(),
+    ),
+    GetPage(
+      name: ProfilePrivateRoutes.editProfile,
+      page: () => EditProfileScreen(),
+      binding: EditProfileControllerBinding(),
+    ),
+    GetPage(
+      name: ProfilePrivateRoutes.termsAndConditions,
+      page: () => TermsAndConditionsScreen(),
+      binding: TermsAndConditionsControllerBinding(),
+    ),
+    GetPage(
+      name: ProfilePrivateRoutes.privacyPolicy,
+      page: () => PrivacyPolicyScreen(),
+      binding: PrivacyPolicyControllerBinding(),
     ),
     // Add other routes here
   ];

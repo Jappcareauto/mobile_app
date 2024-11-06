@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../ui/widgets/loading_widget.dart';
+import '../ui/widgets/pick_image.dart';
 
 extension Utils on GetInterface {
   showLoader(
@@ -38,4 +41,15 @@ extension Utils on GetInterface {
             duration: const Duration(seconds: 2),
           ));
   }
+
+  Future<List<File>?> getImage({bool many = false}) {
+  return showModalBottomSheet<List<File>?>(
+      backgroundColor: Colors.transparent,
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return PickImage(
+          many: many,
+        );
+      });
+}
 }

@@ -4,19 +4,16 @@ class LoginModel {
 
   final String accessToken;
   final String refreshToken;
-  final int expiry;
 
   LoginModel._({
     required this.accessToken,
     required this.refreshToken,
-    required this.expiry,
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) {
     return LoginModel._(
       accessToken: json['accessToken'],
       refreshToken: json['refreshToken'],
-      expiry: json['expiry'],
     );
   }
 
@@ -24,7 +21,6 @@ class LoginModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['accessToken'] = accessToken;
     data['refreshToken'] = refreshToken;
-    data['expiry'] = expiry;
     return data;
   }
 
@@ -32,7 +28,6 @@ class LoginModel {
     return LoginModel._(
       accessToken: entity.accessToken,
       refreshToken: entity.refreshToken,
-      expiry: entity.expiry,
     );
   }
 
@@ -40,7 +35,6 @@ class LoginModel {
     return Login.create(
       accessToken: accessToken,
       refreshToken: refreshToken,
-      expiry: expiry,
     );
   }
 }

@@ -1,4 +1,6 @@
 //Don't translate me
+import 'dart:io';
+
 import '../../domain/repositories/profile_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
 
@@ -17,11 +19,24 @@ class ProfileRepositoryImpl implements ProfileRepository {
   });
 
   @override
+  Future<Either<ProfileException, bool>> updateProfileImage(
+      String userId, String file) async {
+    try {
+      await networkService.put(
+        "${ProfileConstants.updateProfileImagePutUri}/$userId/update-image",
+        files: {'file': File(file)},
+      );
+      return const Right(true);
+    } on BaseException catch (e) {
+      return Left(ProfileException(e.message));
+    }
+  }
+
+  @override
   Future<Either<ProfileException, GetUserInfos>> getUserInfos() async {
     try {
       final response = await networkService.get(
         ProfileConstants.getUserInfosGetUri,
-        
       );
       return Right(GetUserInfosModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
@@ -29,7 +44,5 @@ class ProfileRepositoryImpl implements ProfileRepository {
     }
   }
 
-
   //Add methods here
-
 }
