@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'custom_text_field.dart';
 
 class CustomPhoneFormField extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String? label;
   final String? hintText;
   final String? initialCountryCode;
@@ -15,7 +15,7 @@ class CustomPhoneFormField extends StatefulWidget {
 
   const CustomPhoneFormField({
     super.key,
-    required this.controller,
+     this.controller,
     this.label,
     this.hintText,
     this.initialCountryCode,

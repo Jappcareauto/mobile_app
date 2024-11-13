@@ -46,7 +46,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
             const SizedBox(height: 10),
             CustomPhoneFormField(
               controller:
-                  controller.editProfileFormHelper.controllers['phoneNumber']!,
+                  controller.editProfileFormHelper.controllers['phoneNumber'],
               label: "Phone Number",
               hintText: "Ex. 123456789",
               validator:

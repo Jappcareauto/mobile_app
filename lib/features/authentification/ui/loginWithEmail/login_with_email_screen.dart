@@ -48,7 +48,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 TextButton(
-                                    onPressed: _.navigateToForgotPassword,
+                                    onPressed: Get.find<AuthentificationController>().navigateToForgotPassword,
                                     child: const Text('Forgot Password?')),
                               ],
                             ),

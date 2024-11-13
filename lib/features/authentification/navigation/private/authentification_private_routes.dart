@@ -7,4 +7,5 @@ class AuthentificationPrivateRoutes {
   static const String signUpWithEmail = '$home/signUpWithEmail';
   static const String signUpWithPhone = '$home/signUpWithPhone';
   static const String verifyYourEmail = '$home/verifyYourEmail';
+  static const String resetPassword = '$home/resetPassword';
 }
