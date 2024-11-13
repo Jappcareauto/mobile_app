@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import '../bindings/reset_password_controller_binding.dart';
+import '../../ui/resetPassword/reset_password_screen.dart';
+
 import '../bindings/verify_your_email_controller_binding.dart';
 import '../../ui/verifyYourEmail/verify_your_email_screen.dart';
 
@@ -53,6 +56,11 @@ class AuthentificationPages implements FeaturePages {
       name: AuthentificationPrivateRoutes.verifyYourEmail,
       page: () => VerifyYourEmailScreen(),
       binding: VerifyYourEmailControllerBinding(),
+    ),
+    GetPage(
+      name: AuthentificationPrivateRoutes.resetPassword,
+      page: () => ResetPasswordScreen(),
+      binding: ResetPasswordControllerBinding(),
     ),
     // Add other routes here
   ];

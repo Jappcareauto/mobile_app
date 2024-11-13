@@ -66,5 +66,5 @@ class LoginWithEmailController extends GetxController {
     _appNavigation.toNamed(AuthentificationPrivateRoutes.signUpWithEmail);
   }
 
-  void navigateToForgotPassword() {}
+  
 }

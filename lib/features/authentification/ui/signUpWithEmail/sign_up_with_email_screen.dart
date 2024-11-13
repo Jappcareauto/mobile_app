@@ -83,7 +83,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                   ),
                                 ),
                                 TextButton(
-                                    onPressed: _.goToTermsAndConditions,
+                                    onPressed: Get.find<AuthentificationController>().goToTermsAndConditions,
                                     child: Text(
                                       'Terms and Conditions',
                                       style: Get.textTheme.bodySmall?.copyWith(

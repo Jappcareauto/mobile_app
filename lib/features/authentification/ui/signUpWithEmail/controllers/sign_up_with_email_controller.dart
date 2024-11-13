@@ -65,10 +65,6 @@ class SignUpWithEmailController extends GetxController {
     _appNavigation.goBack();
   }
 
-  void goToTermsAndConditions() {
-    //TODO
-  }
-
   void goToLoginPage() {
     _appNavigation.goBack();
     _appNavigation.toNamed(AuthentificationPrivateRoutes.loginWithEmail);
