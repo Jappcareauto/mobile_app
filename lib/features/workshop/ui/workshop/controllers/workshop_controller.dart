@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
 class WorkshopController extends GetxController {
@@ -15,5 +16,9 @@ class WorkshopController extends GetxController {
 
   void goBack() {
     _appNavigation.goBack();
+  }
+
+  void goToWorkshopDetails() {
+    _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails);
   }
 }

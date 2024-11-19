@@ -14,8 +14,9 @@ class WorkshopScreen extends GetView<WorkshopController>
     implements FeatureWidgetInterface {
   @override
   Widget build(BuildContext context) {
+    Get.put(WorkshopController(Get.find()));
     return Scaffold(
-        appBar: CustomAppBar(title: "Workshop"),
+        appBar: const CustomAppBar(title: "Workshop"),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -39,13 +40,16 @@ class WorkshopScreen extends GetView<WorkshopController>
                     title: 'Japtech Auto Shop',
                     rate: '4.5',
                     location: 'Douala, Cameroun',
+                    onTap: controller.goToWorkshopDetails,
                   ),
                   ServiceItemWidget(
                     image: AppImages.maintenanceCar,
                     title: 'Japtech Auto Shop',
                     rate: '4.5',
                     location: 'Yaoundé, Cameroun',
-                  )
+                    onTap: controller.goToWorkshopDetails,
+                  ),
+                  const SizedBox(height: 50),
                 ]),
               )
             ],

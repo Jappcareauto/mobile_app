@@ -79,7 +79,6 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
         body: {
           'email': email,
           'password': password,
-          'extend': extend,
         },
       );
       return Right(LoginModel.fromJson(response).toEntity());
