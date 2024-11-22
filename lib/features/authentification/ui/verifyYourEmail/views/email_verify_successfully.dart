@@ -51,7 +51,7 @@ class _SuccessVerifiedMailScreenState extends State<SuccessVerifiedMailScreen> {
                 ],
               )),
               CustomButton(
-                text: 'Continue',
+                text: 'Go to login',
                 onPressed: () {
                   Get.find<VerifyYourEmailController>().goToHome();
                 },

@@ -12,12 +12,46 @@ import '../../domain/entities/register.dart';
 import '../models/register_model.dart';
 import '../../application/usecases/register_command.dart';
 
+import '../../domain/entities/forgot_password.dart';
+import '../models/forgot_password_model.dart';
+
+import '../../domain/entities/reset_password.dart';
+import '../models/reset_password_model.dart';
+
 class AuthentificationRepositoryImpl implements AuthentificationRepository {
   final NetworkService networkService;
 
   AuthentificationRepositoryImpl({
     required this.networkService,
   });
+
+  @override
+  Future<Either<AuthentificationException, ResetPassword>> resetPassword(String email, String code, String newPassword) async {
+    try {
+      final response = await networkService.post(
+        AuthentificationConstants.resetPasswordPostUri,
+        body: {'email': email, 'code': code, 'newPassword': newPassword, },
+      );
+      return Right(ResetPasswordModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message));
+    }
+  }
+
+
+  @override
+  Future<Either<AuthentificationException, ForgotPassword>> forgotPassword(String email) async {
+    try {
+      final response = await networkService.post(
+        AuthentificationConstants.forgotPasswordPostUri,
+        body: {'email': email, },
+      );
+      return Right(ForgotPasswordModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message));
+    }
+  }
+
 
   @override
   Future<Either<AuthentificationException, bool>> resendOtp(

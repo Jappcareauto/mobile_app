@@ -6,8 +6,8 @@ class RegisterModel {
   final String email;
   final bool verified;
   final String id;
-  final String createdBy;
-  final String updatedBy;
+  final String? createdBy;
+  final String? updatedBy;
   final String createdAt;
   final String updatedAt;
 
@@ -16,8 +16,8 @@ class RegisterModel {
     required this.email,
     required this.verified,
     required this.id,
-    required this.createdBy,
-    required this.updatedBy,
+     this.createdBy,
+     this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
   });

@@ -9,20 +9,20 @@ class FormHelper<L, R> {
   final Map<String, String? Function(String?)?> validators = {};
   final RxBool isLoading = false.obs;
 
-  final Future<Either<L, R>> Function(Map<String, String>)? onSubmit;
+  final Future<Either<L, R>>? Function(Map<String, String>)? onSubmit;
   final void Function(R)? onSuccess;
   final void Function(L)? onError;
 
   FormHelper({
     required Map<String, String?> fields,
-     this.onSubmit,
+    this.onSubmit,
     this.onSuccess,
     this.onError,
     Map<String, String? Function(String?)?>? validators,
   }) {
     final keys = fields.keys;
     for (var k in keys) {
-      controllers[k] = TextEditingController(text:fields[k]??'');
+      controllers[k] = TextEditingController(text: fields[k] ?? '');
       this.validators[k] = validators?[k];
     }
   }
@@ -34,28 +34,32 @@ class FormHelper<L, R> {
   void submit() async {
     if (formKey.currentState?.validate() ?? false) {
       isLoading.value = true;
-      if(onSubmit == null) return;
+      if (onSubmit == null) return;
       try {
-        final data = controllers.map((key, controller) => MapEntry(key, controller.text));
+        final data = controllers
+            .map((key, controller) => MapEntry(key, controller.text));
         final result = await onSubmit!(data);
-        result.fold(
+        result?.fold(
           (error) {
             if (onError != null) {
               onError!(error);
             } else {
-              Get.snackbar('Erreur', error.toString(), snackPosition: SnackPosition.BOTTOM);
+              Get.snackbar('Erreur', error.toString(),
+                  snackPosition: SnackPosition.BOTTOM);
             }
           },
           (success) {
             if (onSuccess != null) {
               onSuccess!(success);
             } else {
-              Get.snackbar('Succès', 'Opération réussie', snackPosition: SnackPosition.BOTTOM);
+              Get.snackbar('Succès', 'Opération réussie',
+                  snackPosition: SnackPosition.BOTTOM);
             }
           },
         );
       } catch (e) {
-        Get.snackbar('Erreur', e.toString(), snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Erreur', e.toString(),
+            snackPosition: SnackPosition.BOTTOM);
       } finally {
         isLoading.value = false;
       }
@@ -64,4 +68,3 @@ class FormHelper<L, R> {
     }
   }
 }
-

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/navigation/routes/app_routes.dart';
 import '../../../../../core/utils/getx_extensions.dart';
@@ -51,7 +52,12 @@ class VerifyYourEmailController extends GetxController {
   }
 
   void goToHome() {
-    _appNavigation.toNamed(AppRoutes.home);
+    _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
+  }
+
+  void goToLogin() async {
+    await _appNavigation
+        .toNamedAndReplaceAll(AuthentificationPrivateRoutes.loginWithEmail);
   }
 
   Future<void> resendOtp() async {

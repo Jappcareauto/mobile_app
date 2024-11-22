@@ -17,7 +17,17 @@ import '../../application/usecases/register_command.dart';
 
 
 
+
+import '../entities/forgot_password.dart';
+
+
+
+import '../entities/reset_password.dart';
+
+
 abstract class
+
+
 
 
 
@@ -31,7 +41,13 @@ abstract class
 
   Future<Either<AuthentificationException, bool>> resendOtp(String email);
 
+  Future<Either<AuthentificationException, ForgotPassword>> forgotPassword(String email);
+
+  Future<Either<AuthentificationException, ResetPassword>> resetPassword(String email, String code, String newPassword);
+
 }
+
+
 
 
 
