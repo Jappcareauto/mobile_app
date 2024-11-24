@@ -30,22 +30,16 @@ extension Utils on GetInterface {
       {String title = "Error", bool isError = true, Color? color}) {
     return Get.context == null || message.isEmpty
         ? null
-        : Get.snackbar(title, message,
-            borderColor: color ??
+        : Get.showSnackbar(GetSnackBar(
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: color ??
                 (isError
                     ? Colors.red.withOpacity(.8)
                     : Get.theme.primaryColor.withOpacity(.8)),
-            snackPosition: SnackPosition.BOTTOM);
-    Get.showSnackbar(GetSnackBar(
-      snackPosition: SnackPosition.BOTTOM,
-      // backgroundColor: color ??
-      //     (isError
-      //         ? Colors.red.withOpacity(.8)
-      //         : Get.theme.primaryColor.withOpacity(.8)),
-      title: title,
-      message: message,
-      duration: const Duration(seconds: 2),
-    ));
+            title: title,
+            message: message,
+            duration: const Duration(seconds: 2),
+          ));
   }
 
   Future<List<File>?> getImage({bool many = false}) {

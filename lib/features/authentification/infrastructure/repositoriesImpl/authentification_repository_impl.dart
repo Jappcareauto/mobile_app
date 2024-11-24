@@ -26,11 +26,15 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   });
 
   @override
-  Future<Either<AuthentificationException, ResetPassword>> resetPassword(String email, String code, String newPassword) async {
+  Future<Either<AuthentificationException, ResetPassword>> resetPassword(
+      String code, String newPassword) async {
     try {
       final response = await networkService.post(
         AuthentificationConstants.resetPasswordPostUri,
-        body: {'email': email, 'code': code, 'newPassword': newPassword, },
+        body: {
+          'code': code,
+          'newPassword': newPassword,
+        },
       );
       return Right(ResetPasswordModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
@@ -38,20 +42,21 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     }
   }
 
-
   @override
-  Future<Either<AuthentificationException, ForgotPassword>> forgotPassword(String email) async {
+  Future<Either<AuthentificationException, ForgotPassword>> forgotPassword(
+      String email) async {
     try {
       final response = await networkService.post(
         AuthentificationConstants.forgotPasswordPostUri,
-        body: {'email': email, },
+        body: {
+          'email': email,
+        },
       );
       return Right(ForgotPasswordModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
     }
   }
-
 
   @override
   Future<Either<AuthentificationException, bool>> resendOtp(
