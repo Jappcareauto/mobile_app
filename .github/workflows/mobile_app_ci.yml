@@ -1,0 +1,56 @@
+name: "Jappcare Flutter Workflow"
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Flutter App
+    runs-on: ubuntu-latest
+    environment: dev-env # Specify the environment as dev-env
+
+    steps:
+      # Checkout the code from the repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Setup Java (update to a stable version for Flutter)
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11' # Flutter generally uses Java 11 for Android builds
+          distribution: 'temurin'
+
+      # Setup Flutter environment
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2 # Use the latest version of the action
+        with:
+          flutter-version: '3.24.0' # Use the latest stable version, or set a specific version
+
+      # Get dependencies
+      - name: Install Dependencies
+        run: flutter pub get
+
+      # Verify Flutter version (optional, useful for debugging)
+      - name: Check Flutter Version
+        run: flutter --version
+
+      # Build the Flutter APK
+      - name: Build APK
+        run: flutter build apk --debug --split-per-abi
+
+      # Upload artifacts (APK)
+      - name: Upload APK as a Release Artifact
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/flutter-apk/*.apk" # Corrected path to Flutter APKs
+          tag: v0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }} # Use the specified token for authentication
+          target_commitish: ${{ github.ref }}  # Tag the commit of the current branch
+          release_name: "Development Build v0.${{ github.run_number }}"
