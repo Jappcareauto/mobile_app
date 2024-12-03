@@ -10,8 +10,8 @@ class AddVehicleModel {
   final String id;
   final String? createdBy;
   final String? updatedBy;
-  final dynamic? createdAt;
-  final dynamic? updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
 
   AddVehicleModel._({
     required this.name,
