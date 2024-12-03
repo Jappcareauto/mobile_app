@@ -103,7 +103,7 @@ class DetailModel {
   final String? driveTrain;
   final String? power;
   final String? bodyType;
-  final String vehicleId;
+  final String? vehicleId;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -119,7 +119,7 @@ class DetailModel {
     this.driveTrain,
     this.power,
     this.bodyType,
-    required this.vehicleId,
+     this.vehicleId,
     required this.id,
     this.createdBy,
     this.updatedBy,

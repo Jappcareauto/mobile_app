@@ -48,7 +48,6 @@ class ResetPasswordController extends GetxController {
         "newPassword": Validators.requiredField,
       },
       onSubmit: (data) => _resetPasswordUseCase.call(ResetPasswordCommand(
-        email: email,
         code: codeController.text,
         newPassword: data['newPassword']!,
       )),
@@ -89,12 +88,12 @@ class ResetPasswordController extends GetxController {
       validators: {
         "code": Validators.requiredField,
       },
-      onSubmit: (data) {
+      onSubmit: (data) async {
+        await Future.delayed(const Duration(seconds: 2));
         codeController.text = data['code']!;
         index(2);
-        return null;
+        return Future.value(null);
       },
-      onError: (e) => Get.showCustomSnackBar(e.message),
     );
   }
 

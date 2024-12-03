@@ -11,5 +11,5 @@ class ResetPasswordUseCase {
   ResetPasswordUseCase(this.repository);
 
   Future<Either<AuthentificationException, ResetPassword>> call(ResetPasswordCommand command) async {
-    return await repository.resetPassword(command.email,command.code,command.newPassword);  }
+    return await repository.resetPassword(command.code,command.newPassword);  }
 }

@@ -27,11 +27,11 @@ class HomeScreen extends GetView<HomeController> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  ImageComponent(
-                      imageUrl: "https://www.gstatic.com/webp/gallery/2.jpg",
-                      width: Get.width,
-                      borderRadius: 20,
-                      height: 160),
+                  // ImageComponent(
+                  //     imageUrl: "https://www.gstatic.com/webp/gallery/2.jpg",
+                  //     width: Get.width,
+                  //     borderRadius: 20,
+                  //     height: 160),
                   const SizedBox(height: 30),
                   NotificationWidget(
                     title: "Notification",
