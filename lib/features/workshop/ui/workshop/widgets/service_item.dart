@@ -9,8 +9,11 @@ class ServiceItemWidget extends StatelessWidget {
   final String rate;
   final String image;
   final String location;
+  final VoidCallback? onTap;
   const ServiceItemWidget(
       {super.key,
+        this.onTap,
+
       required this.title,
       required this.rate,
       required this.image,
@@ -23,7 +26,7 @@ class ServiceItemWidget extends StatelessWidget {
       color: Get.theme.scaffoldBackgroundColor,
       child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        onTap: () {},
+        onTap: onTap,
         child: Container(
           margin: const EdgeInsets.only(bottom: 20),
           child: Column(

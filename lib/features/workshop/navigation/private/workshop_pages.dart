@@ -1,4 +1,8 @@
 import 'package:get/get.dart';
+import 'package:jappcare/features/workshop/navigation/bindings/detail_autoshop_binding.dart';
+import 'package:jappcare/features/workshop/navigation/bindings/services_locator_binding.dart';
+import 'package:jappcare/features/workshop/ui/autoshop_detail/autoshop_screen.dart';
+import 'package:jappcare/features/workshop/ui/service_center_locator/services_center_location_screen.dart';
 import '../../../../core/navigation/routes/features_pages.dart';
 import '../../ui/workshop/workshop_screen.dart';
 import '../bindings/workshop_controller_binding.dart';
@@ -13,5 +17,15 @@ class WorkshopPages implements FeaturePages {
       binding: WorkshopControllerBinding(),
     ),
     // Add other routes here
+    GetPage(
+      name: WorkshopPrivateRoutes.sevicesLocator,
+      page: () => ServicesCenterLocator(),
+      binding: ServicesLocatorBinding(),
+    ),
+    GetPage(
+      name: WorkshopPrivateRoutes.detailautoshop,
+      page: () => AutoshopScreen(),
+      binding: DetailAutoshopBinding(),
+    ),
   ];
 }

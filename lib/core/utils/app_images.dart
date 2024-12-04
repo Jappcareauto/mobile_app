@@ -15,7 +15,7 @@ class AppImages {
   static const String shopCar = "assets/images/body_shop.png";
   static const String cardPayment = "assets/images/card.png";
   static const String momo = "assets/images/momo.png";
-
+  static const String mapsquare = 'assets/icons/maps-square-01.png' ;
   //Icons
   static const String logo = "assets/icons/logo.png";
   static const String logoWithName = "assets/icons/logo_with_name.png";

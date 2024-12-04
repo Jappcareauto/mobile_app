@@ -8,20 +8,8 @@ import '../entities/login.dart';
 import '../entities/register.dart';
 import '../../application/usecases/register_command.dart';
 
-
-
-
-
-
-
-
-
-
 abstract class
-
-
-
- AuthentificationRepository {
+AuthentificationRepository {
   //Add methods here
   Future<Either<AuthentificationException, Login>> login(String email, String password, bool? extend);
 

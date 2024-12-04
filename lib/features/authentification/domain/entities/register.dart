@@ -1,5 +1,4 @@
 class Register {
-
   final String name;
   final String email;
   final bool verified;
@@ -42,5 +41,4 @@ class Register {
       updatedAt: updatedAt,
     );
   }
-
 }
