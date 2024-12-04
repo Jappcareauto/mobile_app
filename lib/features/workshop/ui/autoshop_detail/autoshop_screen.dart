@@ -1,6 +1,8 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/workshop/ui/autoshop_detail/controllers/autoshop_controller.dart';
 import 'package:jappcare/features/workshop/ui/autoshop_detail/widgets/banner_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/categories_item_list.dart';
@@ -9,7 +11,10 @@ class AutoshopScreen extends GetView<AutoShopController>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: SingleChildScrollView(
+        child:
+
+      Column(
         children: [
           BannerWidget(),
       Container(
@@ -51,28 +56,28 @@ class AutoshopScreen extends GetView<AutoShopController>{
             ),
             const SizedBox(height: 8),
             Row(
-              children: const [
+              children: [
                 Icon(
-                  Icons.location_on,
-                  color: Colors.orange,
+                  FluentIcons.location_12_regular,
+                  color: Get.theme.primaryColor,
                   size: 16,
                 ),
-                SizedBox(width: 4),
-                Text(
+                const SizedBox(width: 4),
+                const Text(
                   'Deido, Douala',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
                   ),
                 ),
-                SizedBox(width: 16),
-                Icon(
-                  Icons.star,
-                  color: Colors.orange,
+                const SizedBox(width: 16),
+                 Icon(
+                  FluentIcons.star_16_filled,
+                  color: Get.theme.primaryColor,
                   size: 16,
                 ),
-                SizedBox(width: 4),
-                Text(
+                const SizedBox(width: 4),
+                const Text(
                   '4.75',
                   style: TextStyle(
                     fontSize: 14,
@@ -93,10 +98,31 @@ class AutoshopScreen extends GetView<AutoShopController>{
         ),
       ),
           SelectServiceItemList(
-            title: 'Specialized Services',
+            title: 'Specialized Services',),
+          SizedBox(height: 20,),
+          Container(
+            height: 150,
+            decoration: BoxDecoration(
+              color: Get.theme.scaffoldBackgroundColor,
+              borderRadius: BorderRadius.circular(20),
+
+            ),
+            child: Placeholder(),
           ),
+          SizedBox(height: 20,),
+          Container(
+             margin: EdgeInsets.symmetric(horizontal: 10),
+            child:   CustomButton(
+                text: 'Book Appointment',
+
+                isLoading: controller.isLoading,
+                onPressed: (){}),
+          ),
+
+          SizedBox(height: 30,)
       ],
       ),
+      )
     );
   }
 

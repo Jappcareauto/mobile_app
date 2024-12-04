@@ -15,9 +15,14 @@ class BannerWidget extends GetView<AutoShopController> {
   Widget build(BuildContext context) {
    return Stack(
       children: [
-        ImageComponent(
-          assetPath: AppImages.shopCar,
-        ),
+
+              ImageComponent(
+                assetPath: AppImages.shopCar,
+              ),
+
+
+
+
         Positioned(
           top: MediaQuery.of(context).padding.top+20,
           left: 30,
