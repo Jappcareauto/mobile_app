@@ -9,4 +9,6 @@ class AuthentificationConstants {
   static const String registerPostUri = '/auth/register';
   static const String verifyEmailPostUri = '/auth/verify';
   static const String resendOtpPostUri = '/auth/register/verify-resend';
+  static const String forgotPasswordPostUri = '/auth/forgot-password';
+  static const String resetPasswordPostUri = '/auth/reset-password';
 }

@@ -8,8 +8,8 @@ class AddVehicle {
   final String id;
   final String? createdBy;
   final String? updatedBy;
-  final dynamic? createdAt;
-  final dynamic? updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
 
   AddVehicle._({
     required this.name,

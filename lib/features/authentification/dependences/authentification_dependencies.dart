@@ -13,6 +13,12 @@ import '../application/usecases/verify_email_usecase.dart';
 
 import '../application/usecases/resend_otp_usecase.dart';
 
+import '../application/usecases/forgot_password_usecase.dart';
+
+import '../application/usecases/forgot_password_usecase.dart';
+
+import '../application/usecases/reset_password_usecase.dart';
+
 class AuthentificationDependencies {
   static void init() {
     Get.lazyPut<AuthentificationRepository>(() => AuthentificationRepositoryImpl(
@@ -24,5 +30,8 @@ class AuthentificationDependencies {
     Get.lazyPut(() => RegisterUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => VerifyEmailUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => ResendOtpUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => ForgotPasswordUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => ForgotPasswordUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => ResetPasswordUseCase(Get.find()), fenix: true);
 }
 }

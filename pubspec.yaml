@@ -35,6 +35,10 @@ dependencies:
   pinput: ^5.0.0
   fl_chart: ^0.69.0
   image_picker: ^1.1.2
+  carousel_slider: ^5.0.0
+  google_maps_flutter: ^2.10.0
+  permission_handler: ^11.3.1
+  geolocator: ^13.0.2
 
 dev_dependencies: 
   icons_launcher: ^2.1.7

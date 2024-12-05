@@ -64,7 +64,7 @@ class ListVehicleWidget extends StatelessWidget
                                         : null,
                                     onPressed: onSelected != null
                                         ? () => onSelected!(e.key)
-                                        : _.goToVehicleDetails,
+                                        : () => _.goToVehicleDetails(e.value),
                                   )),
                         CarCardAddVehicle(
                           carName: 'Porsche 911 GT3RS',
