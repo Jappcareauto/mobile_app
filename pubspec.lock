@@ -306,10 +306,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: "9b78450b89f059e96c9ebb355fa6b3df1d6b330436e0b885fb49594c41721398"
+      sha256: "9ee02950848f61c4129af3d6ec84a1cfc0e47931abc746b03e7a3bc3e8ff6eda"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.23"
+    version: "2.0.22"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -436,10 +436,10 @@ packages:
     dependency: transitive
     description:
       name: google_maps_flutter_ios
-      sha256: "753ebf6a2bc24c5eba8e714c901345d858abd9694b1f878c43614fd3f06b8060"
+      sha256: "6f798adb0aa1db5adf551f2e39e24bd06c8c0fbe4de912fb2d9b5b3f48147b02"
       url: "https://pub.dev"
     source: hosted
-    version: "2.13.1"
+    version: "2.13.2"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
@@ -516,10 +516,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: "8faba09ba361d4b246dc0a17cb4289b3324c2b9f6db7b3d457ee69106a86bd32"
+      sha256: "8c5abf0dcc24fe6e8e0b4a5c0b51a5cf30cefdf6407a3213dae61edc75a70f56"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.12+17"
+    version: "0.8.12+12"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -740,10 +740,10 @@ packages:
     dependency: transitive
     description:
       name: permission_handler_html
-      sha256: "6b9cb54b7135073841a35513fba39e598b421702d5f4d92319992fd6eb5532a9"
+      sha256: "38f000e83355abb3392140f6bc3030660cfaef189e1f87824facb76300b4ff24"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.3+4"
+    version: "0.1.3+5"
   permission_handler_platform_interface:
     dependency: transitive
     description:
@@ -857,10 +857,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: "4058172e418eb7e7f2058dcb7657d451a8fc264afa0dea4dbd0f304a57131611"
+      sha256: "3da423ce7baf868be70e2c0976c28a1bb2f73644268b7ffa7d2e08eab71f16a4"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.4+3"
+    version: "2.5.4"
   stack_trace:
     dependency: transitive
     description:
@@ -897,10 +897,10 @@ packages:
     dependency: transitive
     description:
       name: synchronized
-      sha256: "51b08572b9f091f8c3eb4d9d4be253f196ff0075d5ec9b10a884026d5b55d7bc"
+      sha256: "539ef412b170d65ecdafd780f924e5be3f60032a1128df156adad6c5b373d558"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.0+2"
+    version: "3.1.0+1"
   talker:
     dependency: "direct main"
     description:
