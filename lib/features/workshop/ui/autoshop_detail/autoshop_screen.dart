@@ -114,9 +114,10 @@ class AutoshopScreen extends GetView<AutoShopController>{
              margin: EdgeInsets.symmetric(horizontal: 10),
             child:   CustomButton(
                 text: 'Book Appointment',
-
                 isLoading: controller.isLoading,
-                onPressed: (){}),
+                onPressed: (){
+                  controller.gotoBoockApontment();
+                }),
           ),
 
           SizedBox(height: 30,)

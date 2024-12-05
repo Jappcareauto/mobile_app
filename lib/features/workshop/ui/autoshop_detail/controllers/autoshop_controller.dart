@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
+import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 
 class AutoShopController extends GetxController{
   final AppNavigation _appNavigation;
@@ -10,5 +11,8 @@ class AutoShopController extends GetxController{
     // Generate by Menosi_cli
     super.onInit();
   }
-
+  void gotoBoockApontment(){
+    _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment);
+    print('go to appointment');
+  }
 }

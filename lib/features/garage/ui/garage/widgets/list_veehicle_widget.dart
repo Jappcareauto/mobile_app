@@ -67,6 +67,8 @@ class ListVehicleWidget extends StatelessWidget
                                         : _.goToVehicleDetails,
                                   )),
                         CarCardAddVehicle(
+                          haveBorder: false,
+                          hideblure: false,
                           carName: 'Porsche 911 GT3RS',
                           carDetails: '2024, RWD',
                           imagePath: AppImages.carWhite,

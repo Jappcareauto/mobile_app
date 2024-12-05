@@ -26,10 +26,12 @@ class CustomFormField extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
   final int? maxLength;
   final bool forceUpperCase;
+  final int? maxLine ;
   const CustomFormField({
     Key? key,
     this.controller,
     this.label,
+    this.maxLine,
     this.hintText,
     this.isPassword = false,
     this.isEnabled = true,
@@ -80,6 +82,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
           ),
         if (widget.label != null) const SizedBox(height: 8),
         TextFormField(
+          maxLines: widget.maxLine!=null ? widget.maxLine : 1 ,
           controller: widget.controller,
           obscureText: _obscureText,
           keyboardType: widget.keyboardType,
