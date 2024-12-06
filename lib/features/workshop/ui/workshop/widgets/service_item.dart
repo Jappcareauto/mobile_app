@@ -9,7 +9,7 @@ class ServiceItemWidget extends StatelessWidget {
   final String rate;
   final String image;
   final String location;
-  final VoidCallback? onTap;
+  final void Function()? onTap;
   const ServiceItemWidget(
       {super.key,
         this.onTap,

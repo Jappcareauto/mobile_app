@@ -13,6 +13,8 @@ import 'widgets/service_item.dart';
 
 class WorkshopScreen extends GetView<WorkshopController>
     implements FeatureWidgetInterface {
+  const WorkshopScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     Get.put(WorkshopController(Get.find()));
@@ -87,7 +89,6 @@ class WorkshopScreen extends GetView<WorkshopController>
                     title: 'Japtech Auto Shop',
                     rate: '4.5',
                     location: 'Douala, Cameroun',
-                    onTap: controller.goToWorkshopDetails,
                   ),
                   ServiceItemWidget(
                     onTap: (){
@@ -98,7 +99,6 @@ class WorkshopScreen extends GetView<WorkshopController>
                     title: 'Japtech Auto Shop',
                     rate: '4.5',
                     location: 'Yaoundé, Cameroun',
-                    onTap: controller.goToWorkshopDetails,
                   ),
                   const SizedBox(height: 50),
                 ]),
@@ -106,7 +106,7 @@ class WorkshopScreen extends GetView<WorkshopController>
             ],
           ),
         ));
-    ;
+    
   }
 
   @override

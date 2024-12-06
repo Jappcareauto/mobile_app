@@ -17,9 +17,9 @@ class BannerWidget extends GetView<AutoShopController> {
       children: [
 
               ImageComponent(
+
                 assetPath: AppImages.shopCar,
               ),
-
 
 
 
@@ -27,25 +27,17 @@ class BannerWidget extends GetView<AutoShopController> {
           top: MediaQuery.of(context).padding.top+20,
           left: 30,
           child:
-              GestureDetector(
-                onTap:(){
-                  Get.back();
-                },
-                  child:
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.only(right: 5),
-                    child:
-                    Icon(
-                      FluentIcons.arrow_left_24_regular,
-                      color: Colors.black,
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Get.theme.scaffoldBackgroundColor),
-                  )
-    )
-       ,)
+        Container(
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.only(right: 5),
+          child: Icon(
+            FluentIcons.arrow_left_24_regular,
+            color:Colors.black,
+          ),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: Get.theme.scaffoldBackgroundColor),
+        ),)
       ],
     );
   }
