@@ -26,7 +26,6 @@ class CustomFormField extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
   final int? maxLength;
   final bool forceUpperCase;
-
   const CustomFormField({
     Key? key,
     this.controller,
@@ -38,6 +37,7 @@ class CustomFormField extends StatefulWidget {
     this.validator,
     this.prefix,
     this.suffix,
+
     this.onSuffixIconTap,
     this.obscureText = false,
     this.onChanged,
