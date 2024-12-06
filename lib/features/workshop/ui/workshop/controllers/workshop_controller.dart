@@ -19,4 +19,8 @@ class WorkshopController extends GetxController {
   void goBack() {
     _appNavigation.goBack();
   }
+
+  void goToWorkshopDetails() {
+    _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails);
+  }
 }

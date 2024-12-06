@@ -56,7 +56,7 @@ class SignUpWithEmailController extends GetxController {
       onSuccess: (response) {
         _appNavigation.goBack();
         _appNavigation.toNamed(AuthentificationPrivateRoutes.verifyYourEmail,
-            arguments: {'email': response.email});
+            arguments: response.email);
       },
     );
   }

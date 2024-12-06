@@ -1,15 +1,14 @@
 import 'package:dartz/dartz.dart';
-
 import '../core/exceptions/authentification_exception.dart';
 import '../entities/login.dart';
-
-
-
 import '../entities/register.dart';
 import '../../application/usecases/register_command.dart';
+import '../entities/forgot_password.dart';
+import '../entities/reset_password.dart';
 
 abstract class
-AuthentificationRepository {
+
+ AuthentificationRepository {
   //Add methods here
   Future<Either<AuthentificationException, Login>> login(String email, String password, bool? extend);
 
@@ -19,7 +18,13 @@ AuthentificationRepository {
 
   Future<Either<AuthentificationException, bool>> resendOtp(String email);
 
+  Future<Either<AuthentificationException, ForgotPassword>> forgotPassword(String email);
+
+  Future<Either<AuthentificationException, ResetPassword>> resetPassword(String code, String newPassword);
+
 }
+
+
 
 
 

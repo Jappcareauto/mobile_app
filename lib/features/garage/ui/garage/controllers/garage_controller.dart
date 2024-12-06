@@ -50,8 +50,8 @@ class GarageController extends GetxController {
     _appNavigation.toNamed(GaragePrivateRoutes.addVehicle);
   }
 
-  void goToVehicleDetails() {
-    _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails);
+  void goToVehicleDetails(GetVehicleList vehicleDetails) {
+    _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails, arguments: vehicleDetails);
   }
 
   Future<void> getGarageByOwnerId(String userId) async {

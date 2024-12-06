@@ -2,6 +2,7 @@ class GetVehicleList {
 
   final String garageId;
   final String name;
+  final String? imageUrl;
   final String? description;
   final String vin;
   final Detail? detail;
@@ -15,6 +16,7 @@ class GetVehicleList {
     required this.garageId,
     required this.name,
     this.description,
+    this.imageUrl,
     required this.vin,
      this.detail,
     required this.id,
@@ -27,6 +29,7 @@ class GetVehicleList {
   factory GetVehicleList.create({
     required garageId,
     required name,
+    String? imgUrl,
     description,
     required vin,
     Detail? detail,
@@ -40,6 +43,7 @@ class GetVehicleList {
     return GetVehicleList._(
       garageId: garageId,
       name: name,
+      imageUrl: imgUrl,
       description: description,
       vin: vin,
       detail: detail,
@@ -62,7 +66,7 @@ class Detail {
   final String? driveTrain;
   final String? power;
   final String? bodyType;
-  final String vehicleId;
+  final String? vehicleId;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -78,7 +82,7 @@ class Detail {
     this.driveTrain,
     this.power,
     this.bodyType,
-    required this.vehicleId,
+     this.vehicleId,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -95,7 +99,7 @@ class Detail {
     driveTrain,
     power,
     bodyType,
-    required vehicleId,
+     vehicleId,
     required id,
     createdBy,
     updatedBy,

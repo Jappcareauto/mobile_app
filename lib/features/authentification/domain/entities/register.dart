@@ -3,8 +3,8 @@ class Register {
   final String email;
   final bool verified;
   final String id;
-  final String createdBy;
-  final String updatedBy;
+  final String? createdBy;
+  final String? updatedBy;
   final String createdAt;
   final String updatedAt;
 
@@ -13,8 +13,8 @@ class Register {
     required this.email,
     required this.verified,
     required this.id,
-    required this.createdBy,
-    required this.updatedBy,
+    this.createdBy,
+    this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -24,8 +24,8 @@ class Register {
     required email,
     required verified,
     required id,
-    required createdBy,
-    required updatedBy,
+    createdBy,
+    updatedBy,
     required createdAt,
     required updatedAt,
   }) {

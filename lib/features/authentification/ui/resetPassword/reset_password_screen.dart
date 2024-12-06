@@ -14,29 +14,51 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
       ),
       body: MixinBuilder<ResetPasswordController>(
         builder: (_) {
+          final form = _.index.value == 0
+              ? _.forgotPasswordFormHelper
+              : _.index.value == 1
+                  ? _.formHelper
+                  : _.resetPasswordFormHelper;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
-                key: _.formHelper.formKey,
-                autovalidateMode: _.formHelper.autovalidateMode.value,
+                key: form.formKey,
+                autovalidateMode: form.autovalidateMode.value,
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    CustomFormField(
-                      label: 'Password',
-                      isPassword: true,
-                      hintText: 'Enter your password',
-                      controller: _.formHelper.controllers['password'],
-                      validator: _.formHelper.validators['password'],
-                      obscureText: true,
-                    ),
+                    if (_.index.value == 1)
+                      CustomFormField(
+                        label: 'Code',
+                        hintText: 'Enter  receive by email',
+                        controller: form.controllers['code'],
+                        validator: form.validators['code'],
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                    if (_.index.value == 2)
+                      CustomFormField(
+                        label: 'Password',
+                        isPassword: true,
+                        hintText: 'Enter new password',
+                        controller: form.controllers['newPassword'],
+                        validator: form.validators['newPassword'],
+                        obscureText: true,
+                      ),
+                    if (_.index.value == 0)
+                      CustomFormField(
+                        label: 'Email',
+                        hintText: 'Enter your email',
+                        controller: form.controllers['email'],
+                        validator: form.validators['email'],
+                        keyboardType: TextInputType.emailAddress,
+                      ),
                     Spacer(),
                     Column(
                       children: [
                         CustomButton(
-                          isLoading: _.formHelper.isLoading,
-                          text: 'Login',
-                          onPressed: _.formHelper.submit,
+                          isLoading: form.isLoading,
+                          text: 'Continue',
+                          onPressed: form.submit,
                         ),
                       ],
                     ),

@@ -45,7 +45,8 @@ class LoginWithEmailController extends GetxController {
       onError: (e) {
         Get.showCustomSnackBar(e.message);
         if (e.message.contains("not verified")) {
-          _appNavigation.toNamed(AuthentificationPrivateRoutes.verifyYourEmail, arguments: loginFormHelper.controllers["email"]?.text);
+          _appNavigation.toNamed(AuthentificationPrivateRoutes.verifyYourEmail,
+              arguments: loginFormHelper.controllers["email"]?.text);
         }
       },
       onSuccess: (response) {
@@ -65,6 +66,4 @@ class LoginWithEmailController extends GetxController {
   void navigateToSignUp() {
     _appNavigation.toNamed(AuthentificationPrivateRoutes.signUpWithEmail);
   }
-
-  
 }

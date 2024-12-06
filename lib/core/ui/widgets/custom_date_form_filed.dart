@@ -38,7 +38,8 @@ class CustomDateFormField extends StatelessWidget {
                 controller: dayController,
                 keyboardType: TextInputType.number,
                 hintText: 'Day',
-                validator: validator,
+                validator: (p0) =>
+                    (int.tryParse(p0 ?? '0') ?? 0) > 31 ? "Invalid Day" : null,
                 maxLength: 2,
                 onChanged: (_) => controller?.text =
                     '${yearController.text}-${monthController.text}-${dayController.text}',
@@ -51,19 +52,26 @@ class CustomDateFormField extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 maxLength: 2,
                 hintText: 'Month',
-                validator: validator,
+                validator: (p0) => (int.tryParse(p0 ?? '0') ?? 0) > 12
+                    ? "Invalid Month"
+                    : null,
                 onChanged: (_) => controller?.text =
                     '${yearController.text}-${monthController.text}-${dayController.text}',
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Expanded(
               child: CustomFormField(
                 controller: yearController,
                 maxLength: 4,
                 keyboardType: TextInputType.number,
                 hintText: 'Year',
-                validator: validator,
+                validator: (p0) =>
+                    ((int.tryParse(p0 ?? '0') ?? 0) > DateTime.now().year ||
+                            (int.tryParse(p0 ?? '0') ?? 0) <
+                                (DateTime.now().year - 100))
+                        ? "Invalid Year"
+                        : null,
                 onChanged: (_) => controller?.text =
                     '${yearController.text}-${monthController.text}-${dayController.text}',
               ),

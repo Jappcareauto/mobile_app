@@ -17,6 +17,7 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ProfileController(Get.find()));
     return AppBar(
       automaticallyImplyLeading: false,
       scrolledUnderElevation: 0,
@@ -49,7 +50,8 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
                     ? Shimmer.fromColors(
                         baseColor: Colors.grey,
                         highlightColor: Colors.white,
-                        child: const Text('Name', style: TextStyle(fontSize: 20)),
+                        child:
+                            const Text('Name', style: TextStyle(fontSize: 20)),
                       )
                     : Text(
                         Get.find<ProfileController>().userInfos?.name ??
