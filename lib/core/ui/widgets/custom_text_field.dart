@@ -26,10 +26,12 @@ class CustomFormField extends StatefulWidget {
   final EdgeInsetsGeometry contentPadding;
   final int? maxLength;
   final bool forceUpperCase;
-  final int? maxLine ;
+  final int? maxLine;
+  final Color? filColor;
   const CustomFormField({
     Key? key,
     this.controller,
+    this.filColor,
     this.label,
     this.maxLine,
     this.hintText,
@@ -39,7 +41,6 @@ class CustomFormField extends StatefulWidget {
     this.validator,
     this.prefix,
     this.suffix,
-
     this.onSuffixIconTap,
     this.obscureText = false,
     this.onChanged,
@@ -82,7 +83,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
           ),
         if (widget.label != null) const SizedBox(height: 8),
         TextFormField(
-          maxLines: widget.maxLine!=null ? widget.maxLine : 1 ,
+          maxLines: widget.maxLine != null ? widget.maxLine : 1,
           controller: widget.controller,
           obscureText: _obscureText,
           keyboardType: widget.keyboardType,
@@ -100,7 +101,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
               : null,
           decoration: InputDecoration(
             counter: const SizedBox(),
-            fillColor: Get.theme.primaryColor.withOpacity(.1),
+            fillColor: widget.filColor ?? Get.theme.primaryColor.withOpacity(.1),
             filled: true,
             alignLabelWithHint: true,
             floatingLabelAlignment: FloatingLabelAlignment.start,

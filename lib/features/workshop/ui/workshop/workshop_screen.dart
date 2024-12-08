@@ -81,24 +81,32 @@ class WorkshopScreen extends GetView<WorkshopController>
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(children: [
-                  ServiceItemWidget(
-                    // onTap: (){
-                    //   controller.gotToServicesLocator();
-                    // },
-                    image: AppImages.shopCar,
-                    title: 'Japtech Auto Shop',
-                    rate: '4.5',
-                    location: 'Douala, Cameroun',
+                  GestureDetector(
+                    onTap: (){
+                      controller.gotToServicesLocator();
+                    },
+                    child: ServiceItemWidget(
+
+                      image: AppImages.shopCar,
+                      title: 'Japtech Auto Shop',
+                      rate: '4.5',
+                      location: 'Douala, Cameroun',
+                    ),
                   ),
-                  ServiceItemWidget(
-                    // onTap: (){
-                    //   controller.gotToServicesLocator();
-                    //   print('container typing');
-                    // },
-                    image: AppImages.maintenanceCar,
-                    title: 'Japtech Auto Shop',
-                    rate: '4.5',
-                    location: 'Yaoundé, Cameroun',
+                  GestureDetector(
+                    onTap: () {
+                      controller.gotToServicesLocator();
+                    },
+                    child: ServiceItemWidget(
+                      // onTap: (){
+                      //   controller.gotToServicesLocator();
+                      //   print('container typing');
+                      // },
+                      image: AppImages.maintenanceCar,
+                      title: 'Japtech Auto Shop',
+                      rate: '4.5',
+                      location: 'Yaoundé, Cameroun',
+                    ),
                   ),
                   const SizedBox(height: 50),
                 ]),
@@ -106,7 +114,6 @@ class WorkshopScreen extends GetView<WorkshopController>
             ],
           ),
         ));
-    
   }
 
   @override

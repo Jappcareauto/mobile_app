@@ -40,7 +40,7 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
                   ),
                 ),
                 SizedBox(height: 20,),
-                
+
               ],
             ),
           ),
