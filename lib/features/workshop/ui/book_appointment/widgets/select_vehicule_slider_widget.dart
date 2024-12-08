@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/car_card_add_vehicle.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
