@@ -7,6 +7,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/boocking_widget.dart';
+import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/estimate_inspection_fee.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/select_vehicule_slider_widget.dart';
@@ -28,15 +29,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController>{
                   title: 'Specialized Services',),
                 BookingWidget(),
                 SizedBox(height: 20,),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  height: 300,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Get.theme.primaryColor.withOpacity(0.2)
-                  ),
-                  child: Placeholder(),
-                ),
+                CustomMapWidget(),
                 SizedBox(height: 20,),
                 FormLocationWidget(),
                 SizedBox(height: 50,),

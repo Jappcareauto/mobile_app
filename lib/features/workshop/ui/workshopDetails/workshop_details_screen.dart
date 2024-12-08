@@ -43,7 +43,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                             padding: EdgeInsets.only(top: 45, left: 20),
                             child: CircleAvatar(
                               backgroundColor: Colors.white,
-                              child: Icon(Icons.arrow_back),
+                              child: Icon(Icons.arrow_back  , color: Colors.black,),
                             ),
                           ),
                         ),
@@ -149,10 +149,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                   child: CustomButton(
                     text: 'Book Appointment',
                     onPressed: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => const BookAppointment()));
+                        controller.gotoBoockApontment();
                     },
                   ),
                 ),

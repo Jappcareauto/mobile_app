@@ -5,6 +5,7 @@ import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/co
 import 'package:jappcare/features/workshop/ui/service_center_locator/controllers/services_locator_controller.dart';
 import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
 import 'package:jappcare/features/workshop/ui/workshop/workshop_screen.dart';
+import 'package:jappcare/features/workshop/ui/workshopDetails/controllers/workshop_details_controller.dart';
 import '../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../domain/repositories/workshop_repository.dart';
 import '../infrastructure/repositoriesImpl/workshop_repository_impl.dart';
@@ -18,6 +19,7 @@ class WorkshopDependencies {
     Get.lazyPut<ServicesLocatorController>(() => ServicesLocatorController(Get.find()));
     Get.lazyPut<WorkshopController>(() => WorkshopController(Get.find()));
     Get.lazyPut<ConfirmeAppointmentController>(() => ConfirmeAppointmentController(Get.find()));
+    Get.lazyPut<WorkshopDetailsController>(() => WorkshopDetailsController(Get.find()));
 
   }
 }

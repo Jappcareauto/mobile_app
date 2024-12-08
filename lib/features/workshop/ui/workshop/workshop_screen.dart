@@ -82,19 +82,19 @@ class WorkshopScreen extends GetView<WorkshopController>
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(children: [
                   ServiceItemWidget(
-                    onTap: (){
-                      controller.gotToServicesLocator();
-                    },
+                    // onTap: (){
+                    //   controller.gotToServicesLocator();
+                    // },
                     image: AppImages.shopCar,
                     title: 'Japtech Auto Shop',
                     rate: '4.5',
                     location: 'Douala, Cameroun',
                   ),
                   ServiceItemWidget(
-                    onTap: (){
-                      controller.gotToServicesLocator();
-                      print('container typing');
-                    },
+                    // onTap: (){
+                    //   controller.gotToServicesLocator();
+                    //   print('container typing');
+                    // },
                     image: AppImages.maintenanceCar,
                     title: 'Japtech Auto Shop',
                     rate: '4.5',
