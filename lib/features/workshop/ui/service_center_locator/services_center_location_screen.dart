@@ -27,7 +27,7 @@ class ServicesCenterLocator extends GetView<ServicesLocatorController>{
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: CustomFormField(
-
+                            filColor: Get.theme.scaffoldBackgroundColor,
                             hintText: "Search Centers",
                             prefix: Icon(FluentIcons.search_24_regular),
                           ),
@@ -44,7 +44,7 @@ class ServicesCenterLocator extends GetView<ServicesLocatorController>{
                         ),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            color: Get.theme.primaryColor.withOpacity(.1)),
+                            color: Get.theme.scaffoldBackgroundColor),
                       ),
                     ],
                   ),
@@ -57,7 +57,7 @@ class ServicesCenterLocator extends GetView<ServicesLocatorController>{
                         child: Icon(FluentIcons.options_16_regular),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            color: Get.theme.primaryColor.withOpacity(.1)),
+                            color: Get.theme.scaffoldBackgroundColor),
                       ),
                       SizedBox(width: 20),
                       Container(
