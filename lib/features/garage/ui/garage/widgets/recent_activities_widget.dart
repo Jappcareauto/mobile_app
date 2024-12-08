@@ -25,6 +25,7 @@ class RecentActivitiesWidget extends StatelessWidget
   Widget build(BuildContext context) {
     return GetBuilder<GarageController>(
       init: GarageController(Get.find()),
+      autoRemove: false,
       initState: (_) {},
       builder: (_) {
         var ws = _.vehicleList
@@ -44,39 +45,41 @@ class RecentActivitiesWidget extends StatelessWidget
         if (status != null) {
           ws = ws.where((w) => w.status == status).toList();
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (haveTitle)
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  title,
-                  style: Get.textTheme.bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ),
-            if (haveTitle) const SizedBox(height: 15),
-            if (haveTabBar)
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: CustomTabBar(
-                  labels: const ["All", "Ongoing", "Completed"],
-                  onTabSelected: (index) {},
-                ),
-              ),
-            if (haveTabBar) const SizedBox(height: 20),
-            isHorizontal
-                ? SizedBox(
-                    height: 220,
-                    child: ListView(
-                        scrollDirection: Axis.horizontal, children: ws))
-                : Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: Column(children: ws),
-                  )
-          ],
-        );
+        return _.vehicleList.isEmpty
+            ? const SizedBox()
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (haveTitle)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(
+                        title,
+                        style: Get.textTheme.bodyLarge
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  if (haveTitle) const SizedBox(height: 15),
+                  if (haveTabBar)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: CustomTabBar(
+                        labels: const ["All", "Ongoing", "Completed"],
+                        onTabSelected: (index) {},
+                      ),
+                    ),
+                  if (haveTabBar) const SizedBox(height: 20),
+                  isHorizontal
+                      ? SizedBox(
+                          height: 220,
+                          child: ListView(
+                              scrollDirection: Axis.horizontal, children: ws))
+                      : Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: Column(children: ws),
+                        )
+                ],
+              );
       },
     );
   }

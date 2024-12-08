@@ -16,6 +16,7 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
   @override
   Widget build(BuildContext context) {
     return MixinBuilder<ProfileController>(
+      autoRemove: false,
       init: ProfileController(Get.find()),
       initState: (_) {},
       builder: (_) {
@@ -44,6 +45,15 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                           width: size,
                           height: size,
                           borderRadius: 50,
+                          onErrorWidget: CircleAvatar(
+                            radius: size,
+                            child: Text(
+                              _.userInfos?.name[0].toUpperCase() ?? '',
+                              style: Get.textTheme.headlineLarge?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
                   if (canEdit)
                     Positioned(

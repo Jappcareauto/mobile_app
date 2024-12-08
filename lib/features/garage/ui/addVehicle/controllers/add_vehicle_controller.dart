@@ -12,7 +12,7 @@ import '../../../../../core/services/form/form_helper.dart';
 
 import '../../../domain/core/exceptions/garage_exception.dart';
 
-import '../../../domain/entities/add_vehicle.dart';
+import '../../../domain/entities/get_vehicle_list.dart';
 
 class AddVehicleController extends GetxController {
   final AddVehicleUseCase _addVehicleUseCase = Get.find();
@@ -25,17 +25,19 @@ class AddVehicleController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
-    addVehicleFormHelper = FormHelper<GarageException, AddVehicle>(
+    addVehicleFormHelper = FormHelper<GarageException, Vehicle>(
       fields: {
         "vin": null,
+        "registration": null,
       },
       validators: {
         "vin": Validators.requiredField,
+        "registration": Validators.requiredField,
       },
       onSubmit: (data) => _addVehicleUseCase.call(AddVehicleCommand(
-        garageId: Get.find<GarageController>().myGarage!.id,
-        vin: data['vin']!,
-      )),
+          garageId: Get.find<GarageController>().myGarage!.id,
+          vin: data['vin']!,
+          registrationNumber: data['registration']!)),
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
         Get.find<GarageController>()

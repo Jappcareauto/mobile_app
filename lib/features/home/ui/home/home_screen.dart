@@ -16,9 +16,8 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     Get.put(HomeController(Get.find()));
     return Scaffold(
-      appBar: const AppBarWithAvatarAndSalutation(
-        greetingMessage: 'Good Morning'
-      ),
+      appBar:
+          const AppBarWithAvatarAndSalutation(greetingMessage: 'Good Morning'),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -31,14 +30,14 @@ class HomeScreen extends GetView<HomeController> {
                   //     width: Get.width,
                   //     borderRadius: 20,
                   //     height: 160),
-                  const SizedBox(height: 30),
-                  NotificationWidget(
-                    title: "Notification",
-                    bodyText:
-                        'Your repair from the Japcare Autotech shop is ready, and available for pickup',
-                    coloriage: Get.theme.primaryColor,
-                    icon: FluentIcons.alert_16_filled,
-                  ),
+                  // const SizedBox(height: 30),
+                  // NotificationWidget(
+                  //   title: "Notification",
+                  //   bodyText:
+                  //       'Your repair from the Japcare Autotech shop is ready, and available for pickup',
+                  //   coloriage: Get.theme.primaryColor,
+                  //   icon: FluentIcons.alert_16_filled,
+                  // ),
                   NotificationWidget(
                     title: "Tip",
                     bodyText:
