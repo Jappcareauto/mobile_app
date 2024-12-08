@@ -6,7 +6,7 @@ class VehicleDetailsController extends GetxController {
   final AppNavigation _appNavigation;
   VehicleDetailsController(this._appNavigation);
 
-  late GetVehicleList vehicleModel;
+  late Vehicle vehicleModel;
 
   @override
   void onInit() {

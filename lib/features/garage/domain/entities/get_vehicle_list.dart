@@ -1,5 +1,4 @@
-class GetVehicleList {
-
+class Vehicle {
   final String garageId;
   final String name;
   final String? imageUrl;
@@ -12,13 +11,13 @@ class GetVehicleList {
   final String createdAt;
   final String updatedAt;
 
-  GetVehicleList._({
+  Vehicle._({
     required this.garageId,
     required this.name,
     this.description,
     this.imageUrl,
     required this.vin,
-     this.detail,
+    this.detail,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -26,7 +25,7 @@ class GetVehicleList {
     required this.updatedAt,
   });
 
-  factory GetVehicleList.create({
+  factory Vehicle.create({
     required garageId,
     required name,
     String? imgUrl,
@@ -40,7 +39,7 @@ class GetVehicleList {
     required updatedAt,
   }) {
     // Add any validation or business logic here
-    return GetVehicleList._(
+    return Vehicle._(
       garageId: garageId,
       name: name,
       imageUrl: imgUrl,
@@ -54,10 +53,9 @@ class GetVehicleList {
       updatedAt: updatedAt,
     );
   }
-
 }
-class Detail {
 
+class Detail {
   final String? make;
   final String? model;
   final String? year;
@@ -82,7 +80,7 @@ class Detail {
     this.driveTrain,
     this.power,
     this.bodyType,
-     this.vehicleId,
+    this.vehicleId,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -99,7 +97,7 @@ class Detail {
     driveTrain,
     power,
     bodyType,
-     vehicleId,
+    vehicleId,
     required id,
     createdBy,
     updatedBy,
@@ -124,5 +122,4 @@ class Detail {
       updatedAt: updatedAt,
     );
   }
-
 }

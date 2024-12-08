@@ -17,6 +17,7 @@ class ImageComponent extends StatelessWidget {
   final double? elevation;
   final VoidCallback? onTap;
   final Color? color;
+  final Widget? onErrorWidget;
 
   const ImageComponent({
     Key? key,
@@ -30,6 +31,7 @@ class ImageComponent extends StatelessWidget {
     this.elevation,
     this.onTap,
     this.color,
+    this.onErrorWidget,
   }) : super(key: key);
 
   @override
@@ -118,11 +120,12 @@ class ImageComponent extends StatelessWidget {
   }
 
   Widget _buildDefaultImage() {
-    return Image.asset(
-      AppImages.noImage, // Chemin de l'image par défaut
-      width: width,
-      height: height,
-      fit: BoxFit.cover,
-    );
+    return onErrorWidget ??
+        Image.asset(
+          AppImages.noImage, // Chemin de l'image par défaut
+          width: width,
+          height: height,
+          fit: BoxFit.cover,
+        );
   }
 }

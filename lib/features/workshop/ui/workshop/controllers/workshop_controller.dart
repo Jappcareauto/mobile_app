@@ -13,7 +13,9 @@ class WorkshopController extends GetxController {
     // Generate by Menosi_cli
     super.onInit();
   }
-
+  void gotToServicesLocator () {
+    _appNavigation.toNamed(WorkshopPrivateRoutes.sevicesLocator);
+  }
   void goBack() {
     _appNavigation.goBack();
   }

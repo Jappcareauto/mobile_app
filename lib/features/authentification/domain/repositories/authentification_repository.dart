@@ -6,7 +6,6 @@ import '../../application/usecases/register_command.dart';
 import '../entities/forgot_password.dart';
 import '../entities/reset_password.dart';
 
-
 abstract class
 
  AuthentificationRepository {
