@@ -9,15 +9,15 @@ class ServiceItemWidget extends StatelessWidget {
   final String rate;
   final String image;
   final String location;
-  final Function()? onTap;
-  const ServiceItemWidget({
-    super.key,
-    required this.title,
-    required this.rate,
-    required this.image,
-    required this.location,
-    this.onTap,
-  });
+  final void Function()? onTap;
+  const ServiceItemWidget(
+      {super.key,
+        this.onTap,
+
+      required this.title,
+      required this.rate,
+      required this.image,
+      required this.location});
 
   @override
   Widget build(BuildContext context) {

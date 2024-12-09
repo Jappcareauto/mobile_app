@@ -27,6 +27,7 @@ class ListVehicleWidget extends StatelessWidget
   Widget build(BuildContext context) {
     return MixinBuilder<GarageController>(
       init: GarageController(Get.find()),
+      autoRemove: false,
       initState: (_) {},
       builder: (_) {
         return Column(
@@ -67,6 +68,8 @@ class ListVehicleWidget extends StatelessWidget
                                         : () => _.goToVehicleDetails(e.value),
                                   )),
                         CarCardAddVehicle(
+                          haveBorder: false,
+                          hideblure: false,
                           carName: 'Porsche 911 GT3RS',
                           carDetails: '2024, RWD',
                           imagePath: AppImages.carWhite,

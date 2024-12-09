@@ -2,8 +2,9 @@
 
 class AppConstants {
   static const String appVersion = "1.0.0";
-  static const String baseUrl =
-      "http://ec2-3-23-222-64.us-east-2.compute.amazonaws.com:8555/api/v1"; // "https://japcare-be.onrender.com/api/v1";
+  static const String baseUrl = "https://api.jappcare.com/api/v1";
+  //"https://japcare-be.onrender.com/api/v1";
+  // "http://ec2-3-23-222-64.us-east-2.compute.amazonaws.com:8555/api/v1";
   static const String notFoundScreen = "/404";
   static const String splashScreen = "/splash";
 

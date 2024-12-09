@@ -28,9 +28,9 @@ class WorkshopCustomMapView extends StatelessWidget implements FeatureWidgetInte
                     _.mapController.complete(c);
                   },
                 )
-              : Center(
+              : const Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
+                    padding: EdgeInsets.symmetric(
                         horizontal:50),
                     child: Text(
                       "Location permission is required",
@@ -42,9 +42,6 @@ class WorkshopCustomMapView extends StatelessWidget implements FeatureWidgetInte
       },
     ));
   }
-
-  @override
-  String get name => "CustomMapView";
   
   @override
   Widget buildView([args]) {

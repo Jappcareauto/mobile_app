@@ -1,6 +1,6 @@
 import '../../domain/entities/get_vehicle_list.dart';
 
-class GetVehicleListModel {
+class VehicleModel {
   final String garageId;
   final String name;
   final String? description;
@@ -12,7 +12,7 @@ class GetVehicleListModel {
   final String createdAt;
   final String updatedAt;
 
-  GetVehicleListModel._({
+  VehicleModel._({
     required this.garageId,
     required this.name,
     this.description,
@@ -25,8 +25,8 @@ class GetVehicleListModel {
     required this.updatedAt,
   });
 
-  factory GetVehicleListModel.fromJson(Map<String, dynamic> json) {
-    return GetVehicleListModel._(
+  factory VehicleModel.fromJson(Map<String, dynamic> json) {
+    return VehicleModel._(
       garageId: json['garageId'],
       name: json['name'],
       description: json['description'],
@@ -62,8 +62,8 @@ class GetVehicleListModel {
     return data;
   }
 
-  factory GetVehicleListModel.fromEntity(GetVehicleList entity) {
-    return GetVehicleListModel._(
+  factory VehicleModel.fromEntity(Vehicle entity) {
+    return VehicleModel._(
       garageId: entity.garageId,
       name: entity.name,
       description: entity.description,
@@ -78,8 +78,8 @@ class GetVehicleListModel {
     );
   }
 
-  GetVehicleList toEntity() {
-    return GetVehicleList.create(
+  Vehicle toEntity() {
+    return Vehicle.create(
       garageId: garageId,
       name: name,
       description: description,
@@ -119,7 +119,7 @@ class DetailModel {
     this.driveTrain,
     this.power,
     this.bodyType,
-     this.vehicleId,
+    this.vehicleId,
     required this.id,
     this.createdBy,
     this.updatedBy,
