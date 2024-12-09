@@ -13,8 +13,8 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(title: 'Confirm Appointment'),
-        body:SingleChildScrollView(
-          child:  Container(
+        body: SingleChildScrollView(
+          child: Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
@@ -36,6 +36,7 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
                       text: 'Send Inspection Request',
                       onPressed: () {
                         print('send inspection');
+                        controller.openModal();
                       }
                   ),
                 ),
@@ -47,9 +48,6 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
 
 
         )
-
-
-
 
 
     );

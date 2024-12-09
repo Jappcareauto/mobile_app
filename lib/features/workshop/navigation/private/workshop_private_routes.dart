@@ -7,4 +7,6 @@ class WorkshopPrivateRoutes {
   static const String workshopDetails = '$home/workshopDetails';
   static const String bookappointment = '$home/bookappointment';
   static const String confirmappointment = '$home/confirmappointment';
+  static const String processChat = '$home/processChat';
+
 }

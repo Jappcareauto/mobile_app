@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/book_appointment_binding.dart';
+import 'package:jappcare/features/workshop/navigation/bindings/chat_appointment_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/confirme_appointement_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/detail_autoshop_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/services_locator_binding.dart';
 import 'package:jappcare/features/workshop/ui/autoshop_detail/autoshop_screen.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/book_appointment_screen.dart';
+import 'package:jappcare/features/workshop/ui/chat/chat_screen.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/confirm_appointment_screen.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/services_center_location_screen.dart';
 
@@ -48,6 +50,11 @@ class WorkshopPages implements FeaturePages {
         name: WorkshopPrivateRoutes.confirmappointment,
         page: () => ConfirmeAppointmentScreen(),
         binding: ConfirmAppointmentBinding()
+    ),
+    GetPage(
+        name: WorkshopPrivateRoutes.processChat,
+        page: () => ChatDetailsScreen(),
+        binding: ChatAppointmentBinding()
     )
   ];
 }
