@@ -24,6 +24,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                     children: [
                       Text(
                         'How would you like to pay ?',
+                        style: TextStyle(fontSize: 16 , fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -50,7 +51,9 @@ class PaymentMethodeWidget extends StatelessWidget{
                           SizedBox(width: 10,),
 
                           Text(
-                              'MTN MoMo'
+                              'MTN MoMo',
+                            style: TextStyle(color: chatController.selectedMethod == 'MTN' ? Get.theme.primaryColor : Colors.black , fontWeight: FontWeight.bold ),
+
 
                           ),
 
@@ -62,7 +65,8 @@ class PaymentMethodeWidget extends StatelessWidget{
                               print('add Number');
                             },
                             child: Text(
-                                '+ Add Number'
+                                '+ Add Number',
+                              style: TextStyle(color: chatController.selectedMethod == 'MTN' ? Get.theme.primaryColor : Colors.grey , ),
                             ),
                           )
                         ],
@@ -93,7 +97,9 @@ class PaymentMethodeWidget extends StatelessWidget{
                           SizedBox(width: 5,),
 
                           Text(
-                              'Orange Money'
+                              'Orange Money',
+                            style: TextStyle(color: chatController.selectedMethod == 'ORANGE' ? Get.theme.primaryColor :Colors.black , fontWeight: FontWeight.bold),
+
 
                           ),
 
@@ -105,7 +111,9 @@ class PaymentMethodeWidget extends StatelessWidget{
                               print('add Number');
                             },
                             child: Text(
-                                '+237 00000000'
+                                '+237 00000000',
+                              style: TextStyle(color: chatController.selectedMethod == 'ORANGE' ? Get.theme.primaryColor : Colors.grey , ),
+
                             ),
                           )
                         ],
@@ -136,7 +144,9 @@ class PaymentMethodeWidget extends StatelessWidget{
                           SizedBox(width: 10,),
 
                           Text(
-                              'Card'
+                              'Card',
+                            style: TextStyle(color: chatController.selectedMethod == 'CARD' ? Get.theme.primaryColor : Colors.black , fontWeight: FontWeight.bold),
+
 
                           ),
 
@@ -148,7 +158,9 @@ class PaymentMethodeWidget extends StatelessWidget{
                               print('add Number');
                             },
                             child: Text(
-                                '**** **** **** 1234'
+                                '**** **** **** 1234',
+                              style: TextStyle(color: chatController.selectedMethod == 'CARD' ? Get.theme.primaryColor : Colors.grey , ),
+
                             ),
                           )
                         ],
@@ -175,6 +187,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                         text: 'Confirm',
                         onPressed: (){
                           print('got to payment methode');
+                          chatController.gotToPaymentForm();
                         },
 
                         strech: false,

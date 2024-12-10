@@ -8,9 +8,11 @@ class NotificationWidget extends StatelessWidget {
       super.key,
       required this.coloriage,
       required this.icon,
+        required this.backgrounColor,
       required this.title, this.onTap});
   final IconData icon;
   final Color coloriage;
+  final Color? backgrounColor ;
   final String bodyText;
   final String title;
   final Function()? onTap;
@@ -19,6 +21,7 @@ class NotificationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: backgrounColor  ,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: AppColors.lightBorder)),
       margin: const EdgeInsets.only(bottom: 10),

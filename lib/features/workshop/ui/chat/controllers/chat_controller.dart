@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/functions.dart';
+import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
 class ChatController extends GetxController {
   final AppNavigation _appNavigation;
@@ -109,5 +110,13 @@ class ChatController extends GetxController {
   }
   void selectMethode (String methode){
       selectedMethod.value = methode ;
+  }
+  void gotToPaymentForm(){
+      if(selectedMethod.value == 'CARD'){
+        _appNavigation.toNamed(WorkshopPrivateRoutes.payWithCard);
+      }
+      if(selectedMethod.value == 'MTN' || selectedMethod.value == 'ORANGE'){
+        _appNavigation.toNamed(WorkshopPrivateRoutes.payWithPhone);
+      }
   }
 }
