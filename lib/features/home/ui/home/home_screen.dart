@@ -39,6 +39,7 @@ class HomeScreen extends GetView<HomeController> {
                   //   icon: FluentIcons.alert_16_filled,
                   // ),
                   NotificationWidget(
+                    backgrounColor: null,
                     title: "Tip",
                     bodyText:
                         'Rotate your tires regulary to ensure they wear evenly and last longer.',
