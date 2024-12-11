@@ -18,6 +18,7 @@ class ImageComponent extends StatelessWidget {
   final VoidCallback? onTap;
   final Color? color;
   final Widget? onErrorWidget;
+  final BoxFit fit;
 
   const ImageComponent({
     Key? key,
@@ -32,6 +33,7 @@ class ImageComponent extends StatelessWidget {
     this.onTap,
     this.color,
     this.onErrorWidget,
+    this.fit = BoxFit.cover,
   }) : super(key: key);
 
   @override
@@ -61,7 +63,7 @@ class ImageComponent extends StatelessWidget {
           imageUrl!,
           color: color,
           placeholderBuilder: (context) => _buildShimmer(),
-          fit: BoxFit.cover,
+          fit: fit,
           width: width,
           height: height,
         );
@@ -70,7 +72,7 @@ class ImageComponent extends StatelessWidget {
           imageUrl: imageUrl!,
           placeholder: (context, url) => _buildShimmer(),
           errorWidget: (context, url, error) => _buildDefaultImage(),
-          fit: BoxFit.cover,
+          fit: fit,
         );
       }
     } else if (file != null) {
@@ -78,7 +80,7 @@ class ImageComponent extends StatelessWidget {
         file!,
         width: width,
         height: height,
-        fit: BoxFit.cover,
+        fit: fit,
         errorBuilder: (context, error, stackTrace) => _buildDefaultImage(),
       );
     } else if (assetPath != null) {
@@ -86,7 +88,7 @@ class ImageComponent extends StatelessWidget {
         return SvgPicture.asset(
           assetPath!,
           color: color,
-          fit: BoxFit.cover,
+          fit: fit,
           width: width,
           height: height,
           placeholderBuilder: (context) => _buildShimmer(),
@@ -96,7 +98,7 @@ class ImageComponent extends StatelessWidget {
           assetPath!,
           width: width,
           height: height,
-          fit: BoxFit.cover,
+          fit: fit,
           errorBuilder: (context, error, stackTrace) => _buildDefaultImage(),
           color: color,
           colorBlendMode: BlendMode.color,
@@ -125,7 +127,7 @@ class ImageComponent extends StatelessWidget {
           AppImages.noImage, // Chemin de l'image par défaut
           width: width,
           height: height,
-          fit: BoxFit.cover,
+          fit: fit,
         );
   }
 }

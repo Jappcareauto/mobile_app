@@ -16,6 +16,12 @@ class AppImages {
   static const String cardPayment = "assets/images/card.png";
   static const String momo = "assets/images/momo.png";
   static const String mapsquare = 'assets/icons/maps-square-01.png' ;
+  static const String processChat = 'assets/images/process_chat.png' ;
+  static const String avatar = "assets/images/avatar.png";
+  static const String mtnLogo = "assets/icons/mtn-logo.png";
+  static const String orangeLogo = "assets/icons/orange.png";
+  static const String cardLogo = "assets/icons/card-logo.png";
+
   //Icons
   static const String logo = "assets/icons/logo.png";
   static const String logoWithName = "assets/icons/logo_with_name.png";

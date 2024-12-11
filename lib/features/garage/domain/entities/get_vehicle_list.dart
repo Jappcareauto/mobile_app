@@ -6,6 +6,7 @@ class Vehicle {
   final String vin;
   final Detail? detail;
   final String id;
+  final List<Media>? media;
   final String? createdBy;
   final String? updatedBy;
   final String createdAt;
@@ -19,6 +20,7 @@ class Vehicle {
     required this.vin,
     this.detail,
     required this.id,
+    this.media,
     this.createdBy,
     this.updatedBy,
     required this.createdAt,
@@ -33,6 +35,7 @@ class Vehicle {
     required vin,
     Detail? detail,
     required id,
+    List<Media>? media,
     createdBy,
     updatedBy,
     required createdAt,
@@ -47,6 +50,7 @@ class Vehicle {
       vin: vin,
       detail: detail,
       id: id,
+      media: media,
       createdBy: createdBy,
       updatedBy: updatedBy,
       createdAt: createdAt,
@@ -115,6 +119,63 @@ class Detail {
       power: power,
       bodyType: bodyType,
       vehicleId: vehicleId,
+      id: id,
+      createdBy: createdBy,
+      updatedBy: updatedBy,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+}
+
+class Media {
+  final String sourceUrl;
+  final String? capturedUrl;
+  final String? type;
+  final String? mediaId;
+  final String? fileId;
+  final String? fileUrl;
+  final String id;
+  final String? createdBy;
+  final String? updatedBy;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  Media._({ 
+    required this.sourceUrl,
+    this.capturedUrl,
+    this.type,
+    this.mediaId,
+    this.fileId,
+    this.fileUrl,
+    required this.id,
+    this.createdBy,
+    this.updatedBy,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Media.create({
+    required sourceUrl,
+    capturedUrl,
+    type,
+    mediaId,
+    fileId,
+    fileUrl,
+    required id,
+    createdBy,
+    updatedBy,
+    createdAt,
+    updatedAt,
+  }) {
+    // Add any validation or business logic here
+    return Media._(
+      sourceUrl: sourceUrl,
+      capturedUrl: capturedUrl,
+      type: type,
+      mediaId: mediaId,
+      fileId: fileId,
+      fileUrl: fileUrl,
       id: id,
       createdBy: createdBy,
       updatedBy: updatedBy,

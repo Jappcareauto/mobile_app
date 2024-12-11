@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/utils/app_images.dart';
 
 class CarContainer extends StatelessWidget {
   final String carName;
   final String carDetails;
-  final String imagePath;
+  final String? imagePath;
   final Color principalColor;
   final Function()? onPressed;
   final bool? isSelected;
@@ -13,7 +15,7 @@ class CarContainer extends StatelessWidget {
     Key? key,
     required this.carName,
     required this.carDetails,
-    required this.imagePath,
+    this.imagePath,
     required this.principalColor,
     this.onPressed,
     this.isSelected,
@@ -61,10 +63,12 @@ class CarContainer extends StatelessWidget {
                     color: isSelected != null ? null : Colors.white,
                   ),
                 ),
-                Image.asset(
-                  imagePath,
-                  fit: BoxFit.cover,
-                  width: Get.width * .58,
+                ImageComponent(
+                  imageUrl: imagePath,
+                  assetPath: imagePath != null ? null : AppImages.car,
+                  width: Get.width * .55,
+                  height: 100,
+                  fit: BoxFit.contain,
                 ),
               ],
             ),

@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'widgets/detail_item.dart';
 import 'widgets/diagram_widget.dart';
 
- class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
+class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
   const VehicleDetailsScreen({super.key});
 
   @override
@@ -38,7 +38,11 @@ import 'widgets/diagram_widget.dart';
                         fontWeight: FontWeight.bold,
                         color: Get.theme.primaryColor)),
                 Text(_vhcle.vin, style: Get.textTheme.bodyMedium),
-                const ImageComponent(assetPath: AppImages.carWhite),
+                ImageComponent(
+                  assetPath:
+                      _vhcle.imageUrl != null ? null : AppImages.carWhite,
+                  imageUrl: _vhcle.imageUrl,
+                ),
                 const SizedBox(height: 10),
                 Row(
                   children: [

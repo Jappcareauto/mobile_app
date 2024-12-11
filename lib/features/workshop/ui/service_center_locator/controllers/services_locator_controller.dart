@@ -37,7 +37,7 @@ class ServicesLocatorController extends GetxController {
   }
   void gottoautoshopDetail() {
      print('got to auto shop detail');
-     _appNavigation.toNamed(WorkshopPrivateRoutes.detailautoshop);
+     _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails);
   }
   Future<void> _checkLocationPermission() async {
     var status = await Permission.location.status;
