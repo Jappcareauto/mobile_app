@@ -28,7 +28,8 @@ class GarageRepositoryImpl implements GarageRepository {
         body: {
           'garageId': garageId,
           'vin': vin,
-          'registrationNumber': registrationNumber
+          'registrationNumber': registrationNumber,
+          'withMedia': true,
         },
       );
       return Right(VehicleModel.fromJson(response).toEntity());

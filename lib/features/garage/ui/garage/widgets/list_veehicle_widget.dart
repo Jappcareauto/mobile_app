@@ -57,8 +57,9 @@ class ListVehicleWidget extends StatelessWidget
                               .entries
                               .map((e) => CarContainer(
                                     carName: e.value.name,
-                                    carDetails: e.value.description ?? '',
-                                    imagePath: AppImages.car,
+                                    carDetails: e.value.vin,
+                                    imagePath: e.value.imageUrl ??
+                                        e.value.media?.first.sourceUrl,
                                     principalColor: Get.theme.primaryColor,
                                     isSelected: selectedIndex != null
                                         ? selectedIndex == e.key

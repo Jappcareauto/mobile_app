@@ -73,7 +73,7 @@ class AppDependency {
     Get.lazyPut<NetworkService>(() => dioNetworkService, fenix: true);
 
     // Events
-    Get.lazyPut<AppEventService>(() => AppEventService(), fenix: true);
+    Get.put(AppEventService(), permanent: true);
 
     //Chargement des dependances de features
     HomeDependencies.init();
