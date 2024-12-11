@@ -1,59 +1,65 @@
-class GetVehicleList {
-
+class Vehicle {
   final String garageId;
   final String name;
+  final String? imageUrl;
   final String? description;
   final String vin;
   final Detail? detail;
   final String id;
+  final List<Media>? media;
   final String? createdBy;
   final String? updatedBy;
   final String createdAt;
   final String updatedAt;
 
-  GetVehicleList._({
+  Vehicle._({
     required this.garageId,
     required this.name,
     this.description,
+    this.imageUrl,
     required this.vin,
-     this.detail,
+    this.detail,
     required this.id,
+    this.media,
     this.createdBy,
     this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory GetVehicleList.create({
+  factory Vehicle.create({
     required garageId,
     required name,
+    String? imgUrl,
     description,
     required vin,
     Detail? detail,
     required id,
+    List<Media>? media,
     createdBy,
     updatedBy,
     required createdAt,
     required updatedAt,
   }) {
     // Add any validation or business logic here
-    return GetVehicleList._(
+    return Vehicle._(
       garageId: garageId,
       name: name,
+      imageUrl: imgUrl,
       description: description,
       vin: vin,
       detail: detail,
       id: id,
+      media: media,
       createdBy: createdBy,
       updatedBy: updatedBy,
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
   }
-
 }
-class Detail {
 
+class Detail {
   final String? make;
   final String? model;
   final String? year;
@@ -62,7 +68,7 @@ class Detail {
   final String? driveTrain;
   final String? power;
   final String? bodyType;
-  final String vehicleId;
+  final String? vehicleId;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -78,7 +84,7 @@ class Detail {
     this.driveTrain,
     this.power,
     this.bodyType,
-    required this.vehicleId,
+    this.vehicleId,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -95,7 +101,7 @@ class Detail {
     driveTrain,
     power,
     bodyType,
-    required vehicleId,
+    vehicleId,
     required id,
     createdBy,
     updatedBy,
@@ -120,5 +126,61 @@ class Detail {
       updatedAt: updatedAt,
     );
   }
+}
 
+class Media {
+  final String sourceUrl;
+  final String? capturedUrl;
+  final String? type;
+  final String? mediaId;
+  final String? fileId;
+  final String? fileUrl;
+  final String id;
+  final String? createdBy;
+  final String? updatedBy;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  Media._({ 
+    required this.sourceUrl,
+    this.capturedUrl,
+    this.type,
+    this.mediaId,
+    this.fileId,
+    this.fileUrl,
+    required this.id,
+    this.createdBy,
+    this.updatedBy,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Media.create({
+    required sourceUrl,
+    capturedUrl,
+    type,
+    mediaId,
+    fileId,
+    fileUrl,
+    required id,
+    createdBy,
+    updatedBy,
+    createdAt,
+    updatedAt,
+  }) {
+    // Add any validation or business logic here
+    return Media._(
+      sourceUrl: sourceUrl,
+      capturedUrl: capturedUrl,
+      type: type,
+      mediaId: mediaId,
+      fileId: fileId,
+      fileUrl: fileUrl,
+      id: id,
+      createdBy: createdBy,
+      updatedBy: updatedBy,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
 }

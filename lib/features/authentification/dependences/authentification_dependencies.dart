@@ -15,8 +15,6 @@ import '../application/usecases/resend_otp_usecase.dart';
 
 import '../application/usecases/forgot_password_usecase.dart';
 
-import '../application/usecases/forgot_password_usecase.dart';
-
 import '../application/usecases/reset_password_usecase.dart';
 
 class AuthentificationDependencies {

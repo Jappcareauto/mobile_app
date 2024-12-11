@@ -24,7 +24,7 @@ class GarageController extends GetxController {
 
   GetGarageByOwnerId? myGarage;
 
-  List<GetVehicleList> vehicleList = [];
+  List<Vehicle> vehicleList = [];
 
   @override
   void onInit() {
@@ -50,8 +50,9 @@ class GarageController extends GetxController {
     _appNavigation.toNamed(GaragePrivateRoutes.addVehicle);
   }
 
-  void goToVehicleDetails() {
-    _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails);
+  void goToVehicleDetails(Vehicle vehicleDetails) {
+    _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails,
+        arguments: vehicleDetails);
   }
 
   Future<void> getGarageByOwnerId(String userId) async {

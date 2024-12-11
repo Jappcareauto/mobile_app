@@ -4,6 +4,6 @@ import '../../ui/profile/controllers/profile_controller.dart';
 class ProfileControllerBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<ProfileController>(() => ProfileController(Get.find()));
+    Get.lazyPut<ProfileController>(() => ProfileController(Get.find()), fenix: true);
   }
 }

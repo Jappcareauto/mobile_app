@@ -28,7 +28,6 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                               children: [
                                 SizedBox(height: 20),
                                 CustomFormField(
-                                  
                                   controller:
                                       _.addVehicleFormHelper.controllers['vin'],
                                   label: "VIN/Chassi Number",
@@ -37,12 +36,16 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                                   validator:
                                       _.addVehicleFormHelper.validators['vin'],
                                 ),
-                                // SizedBox(height: 20),
-                                // CustomFormField(
-                                //   label: "Vehicel Registration Number",
-                                //   hintText: "Ex. SV30-0169266",
-                                //   forceUpperCase: true,
-                                // ),
+                                SizedBox(height: 20),
+                                CustomFormField(
+                                  controller: _.addVehicleFormHelper
+                                      .controllers['registration'],
+                                  label: "Vehicel Registration Number",
+                                  hintText: "Ex. SV30-0169266",
+                                  forceUpperCase: true,
+                                  validator: _.addVehicleFormHelper
+                                      .validators['registration'],
+                                ),
                               ],
                             ))),
                   ),

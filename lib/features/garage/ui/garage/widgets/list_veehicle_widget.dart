@@ -27,6 +27,7 @@ class ListVehicleWidget extends StatelessWidget
   Widget build(BuildContext context) {
     return MixinBuilder<GarageController>(
       init: GarageController(Get.find()),
+      autoRemove: false,
       initState: (_) {},
       builder: (_) {
         return Column(
@@ -56,17 +57,20 @@ class ListVehicleWidget extends StatelessWidget
                               .entries
                               .map((e) => CarContainer(
                                     carName: e.value.name,
-                                    carDetails: e.value.description ?? '',
-                                    imagePath: AppImages.car,
+                                    carDetails: e.value.vin,
+                                    imagePath: e.value.imageUrl ??
+                                        e.value.media?.first.sourceUrl,
                                     principalColor: Get.theme.primaryColor,
                                     isSelected: selectedIndex != null
                                         ? selectedIndex == e.key
                                         : null,
                                     onPressed: onSelected != null
                                         ? () => onSelected!(e.key)
-                                        : _.goToVehicleDetails,
+                                        : () => _.goToVehicleDetails(e.value),
                                   )),
                         CarCardAddVehicle(
+                          haveBorder: false,
+                          hideblure: false,
                           carName: 'Porsche 911 GT3RS',
                           carDetails: '2024, RWD',
                           imagePath: AppImages.carWhite,

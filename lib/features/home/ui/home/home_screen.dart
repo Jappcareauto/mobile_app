@@ -2,7 +2,6 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
-import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/ui/widgets/app_bar_with_salutation.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/title_section.dart';
@@ -17,9 +16,8 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     Get.put(HomeController(Get.find()));
     return Scaffold(
-      appBar: const AppBarWithAvatarAndSalutation(
-        greetingMessage: 'Good Morning'
-      ),
+      appBar:
+          const AppBarWithAvatarAndSalutation(greetingMessage: 'Good Morning'),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -32,15 +30,16 @@ class HomeScreen extends GetView<HomeController> {
                   //     width: Get.width,
                   //     borderRadius: 20,
                   //     height: 160),
-                  const SizedBox(height: 30),
+                  // const SizedBox(height: 30),
+                  // NotificationWidget(
+                  //   title: "Notification",
+                  //   bodyText:
+                  //       'Your repair from the Japcare Autotech shop is ready, and available for pickup',
+                  //   coloriage: Get.theme.primaryColor,
+                  //   icon: FluentIcons.alert_16_filled,
+                  // ),
                   NotificationWidget(
-                    title: "Notification",
-                    bodyText:
-                        'Your repair from the Japcare Autotech shop is ready, and available for pickup',
-                    coloriage: Get.theme.primaryColor,
-                    icon: FluentIcons.alert_16_filled,
-                  ),
-                  NotificationWidget(
+                    backgrounColor: null,
                     title: "Tip",
                     bodyText:
                         'Rotate your tires regulary to ensure they wear evenly and last longer.',

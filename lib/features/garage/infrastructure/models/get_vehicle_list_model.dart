@@ -1,8 +1,9 @@
 import '../../domain/entities/get_vehicle_list.dart';
 
-class GetVehicleListModel {
+class VehicleModel {
   final String garageId;
   final String name;
+  final String? imageUrl;
   final String? description;
   final String vin;
   final DetailModel? detail;
@@ -11,10 +12,12 @@ class GetVehicleListModel {
   final String? updatedBy;
   final String createdAt;
   final String updatedAt;
+  final List<MediaModel?>? media;
 
-  GetVehicleListModel._({
+  VehicleModel._({
     required this.garageId,
     required this.name,
+    this.imageUrl,
     this.description,
     required this.vin,
     this.detail,
@@ -23,17 +26,26 @@ class GetVehicleListModel {
     this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
+    this.media,
   });
 
-  factory GetVehicleListModel.fromJson(Map<String, dynamic> json) {
-    return GetVehicleListModel._(
+  factory VehicleModel.fromJson(Map<String, dynamic> json) {
+    return VehicleModel._(
       garageId: json['garageId'],
       name: json['name'],
+      imageUrl: json['imageUrl'],
       description: json['description'],
       vin: json['vin'],
       detail:
           json['detail'] != null ? DetailModel.fromJson(json['detail']) : null,
       id: json['id'],
+      media: json['media']?["items"] != null
+          ? List.generate(
+              json['media']['items'].length,
+              (index) => json['media']['items'][index] != null
+                  ? MediaModel.fromJson(json['media']['items'][index])
+                  : null)
+          : null,
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
@@ -45,12 +57,16 @@ class GetVehicleListModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['garageId'] = garageId;
     data['name'] = name;
+    if (imageUrl != null) {
+      data['imageUrl'] = imageUrl;
+    }
     if (description != null) {
       data['description'] = description;
     }
     data['vin'] = vin;
     data['detail'] = detail?.toJson();
     data['id'] = id;
+    data['media'] = media?.map((e) => e?.toJson()).toList();
     if (createdBy != null) {
       data['createdBy'] = createdBy;
     }
@@ -62,15 +78,17 @@ class GetVehicleListModel {
     return data;
   }
 
-  factory GetVehicleListModel.fromEntity(GetVehicleList entity) {
-    return GetVehicleListModel._(
+  factory VehicleModel.fromEntity(Vehicle entity) {
+    return VehicleModel._(
       garageId: entity.garageId,
       name: entity.name,
+      imageUrl: entity.imageUrl,
       description: entity.description,
       vin: entity.vin,
       detail:
           entity.detail != null ? DetailModel.fromEntity(entity.detail!) : null,
       id: entity.id,
+      media: entity.media?.map((e) => MediaModel.fromEntity(e)).toList(),
       createdBy: entity.createdBy,
       updatedBy: entity.updatedBy,
       createdAt: entity.createdAt,
@@ -78,10 +96,11 @@ class GetVehicleListModel {
     );
   }
 
-  GetVehicleList toEntity() {
-    return GetVehicleList.create(
+  Vehicle toEntity() {
+    return Vehicle.create(
       garageId: garageId,
       name: name,
+      imgUrl: imageUrl,
       description: description,
       vin: vin,
       detail: detail?.toEntity(),
@@ -103,7 +122,7 @@ class DetailModel {
   final String? driveTrain;
   final String? power;
   final String? bodyType;
-  final String vehicleId;
+  final String? vehicleId;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -119,7 +138,7 @@ class DetailModel {
     this.driveTrain,
     this.power,
     this.bodyType,
-    required this.vehicleId,
+    this.vehicleId,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -222,4 +241,79 @@ class DetailModel {
       updatedAt: updatedAt,
     );
   }
+}
+
+class MediaModel {
+  final String sourceUrl;
+  final String? capturedUrl;
+  final String? type;
+  final String? mediaId;
+  final String? fileId;
+  final String? fileUrl;
+  final String? id;
+  final String? createdBy;
+  final String? updatedBy;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  MediaModel({
+    required this.sourceUrl,
+    this.capturedUrl,
+    this.type,
+    this.mediaId,
+    this.fileId,
+    this.fileUrl,
+    this.id,
+    this.createdBy,
+    this.updatedBy,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory MediaModel.fromJson(Map<String, dynamic> json) => MediaModel(
+        sourceUrl: json["sourceUrl"],
+        capturedUrl: json["capturedUrl"],
+        type: json["type"],
+        mediaId: json["mediaId"],
+        fileId: json["fileId"],
+        fileUrl: json["fileUrl"],
+        id: json["id"],
+        createdBy: json["createdBy"],
+        updatedBy: json["updatedBy"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+      );
+
+  factory MediaModel.fromEntity(Media entity) => MediaModel(
+        sourceUrl: entity.sourceUrl,
+        capturedUrl: entity.capturedUrl,
+        type: entity.type,
+        mediaId: entity.mediaId,
+        fileId: entity.fileId,
+        fileUrl: entity.fileUrl,
+        id: entity.id,
+        createdBy: entity.createdBy,
+        updatedBy: entity.updatedBy,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "sourceUrl": sourceUrl,
+        "capturedUrl": capturedUrl,
+        "type": type,
+        "mediaId": mediaId,
+        "fileId": fileId,
+        "fileUrl": fileUrl,
+        "id": id,
+        "createdBy": createdBy,
+        "updatedBy": updatedBy,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+      };
+
 }

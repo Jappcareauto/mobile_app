@@ -15,6 +15,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
 
   @override
   Widget build(BuildContext context) {
+    final _vhcle = controller.vehicleModel;
     return Scaffold(
       appBar: CustomAppBar(
         title: "My Garage",
@@ -32,42 +33,59 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                Text("Porsche 911 GT3RS",
+                Text(_vhcle.name,
                     style: Get.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Get.theme.primaryColor)),
-                Text("DW056663", style: Get.textTheme.bodyMedium),
-                const ImageComponent(assetPath: AppImages.carWhite),
+                Text(_vhcle.vin, style: Get.textTheme.bodyMedium),
+                ImageComponent(
+                  assetPath:
+                      _vhcle.imageUrl != null ? null : AppImages.carWhite,
+                  imageUrl: _vhcle.imageUrl,
+                ),
                 const SizedBox(height: 10),
-                const Row(
+                Row(
                   children: [
-                    DetailItem(title: "Make", value: "Porsche"),
-                    SizedBox(width: 20),
-                    DetailItem(title: "Model", value: "911"),
+                    DetailItem(
+                        title: "Make", value: _vhcle.detail?.make ?? 'Unknow'),
+                    const SizedBox(width: 20),
+                    DetailItem(
+                        title: "Model",
+                        value: _vhcle.detail?.model ?? 'Unknow'),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Row(
+                Row(
                   children: [
-                    DetailItem(title: "Trim", value: "Turbo S"),
-                    SizedBox(width: 20),
-                    DetailItem(title: "Year", value: "2024"),
+                    DetailItem(
+                        title: "Trim", value: _vhcle.detail?.trim ?? 'Unknow'),
+                    const SizedBox(width: 20),
+                    DetailItem(
+                        title: "Year", value: _vhcle.detail?.year ?? 'Unknow'),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Row(
+                Row(
                   children: [
-                    DetailItem(title: "Transmission", value: "Automatic"),
-                    SizedBox(width: 20),
-                    DetailItem(title: "Drive", value: "Electric"),
+                    DetailItem(
+                        title: "Transmission",
+                        value: _vhcle.detail?.transmission ?? 'Unknow'),
+                    const SizedBox(width: 20),
+                    DetailItem(
+                        title: "Drive",
+                        value: _vhcle.detail?.driveTrain ?? 'Unknow'),
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Row(
+                Row(
                   children: [
-                    DetailItem(title: "Power", value: "982 bhp"),
-                    SizedBox(width: 20),
-                    DetailItem(title: "Body Type", value: "Sedan"),
+                    DetailItem(
+                        title: "Power",
+                        value: _vhcle.detail?.power ?? 'Unknow'),
+                    const SizedBox(width: 20),
+                    DetailItem(
+                        title: "Body Type",
+                        value: _vhcle.detail?.bodyType ?? 'Unknow'),
                   ],
                 ),
               ],

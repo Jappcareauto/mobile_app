@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
@@ -32,6 +33,9 @@ class WorkshopDetailsController extends GetxController {
     // Generate by Menosi_cli
     super.onInit();
     getPosition();
+
+
+
   }
 
   void goBack() {
@@ -128,5 +132,9 @@ class WorkshopDetailsController extends GetxController {
       zoom: 13.4746,
     );
     controller.animateCamera(cameraUpdate);
+  }
+  void gotoBoockApontment(){
+    _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment);
+    print('go to appointment');
   }
 }

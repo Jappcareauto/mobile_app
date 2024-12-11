@@ -12,9 +12,6 @@ import '../models/get_garage_by_owner_id_model.dart';
 import '../../domain/entities/get_vehicle_list.dart';
 import '../models/get_vehicle_list_model.dart';
 
-import '../../domain/entities/add_vehicle.dart';
-import '../models/add_vehicle_model.dart';
-
 class GarageRepositoryImpl implements GarageRepository {
   final NetworkService networkService;
 
@@ -23,46 +20,52 @@ class GarageRepositoryImpl implements GarageRepository {
   });
 
   @override
-  Future<Either<GarageException, AddVehicle>> addVehicle(String garageId, String vin) async {
+  Future<Either<GarageException, Vehicle>> addVehicle(
+      String garageId, String vin, String registrationNumber) async {
     try {
       final response = await networkService.post(
         GarageConstants.addVehiclePostUri,
-        body: {'garageId': garageId, 'vin': vin, },
+        body: {
+          'garageId': garageId,
+          'vin': vin,
+          'registrationNumber': registrationNumber,
+          'withMedia': true,
+        },
       );
-      return Right(AddVehicleModel.fromJson(response).toEntity());
+      return Right(VehicleModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
   }
 
-
   @override
-  Future<Either<GarageException, List<GetVehicleList>>> getVehicleList(String garageId) async {
+  Future<Either<GarageException, List<Vehicle>>> getVehicleList(
+      String garageId) async {
     try {
       final response = await networkService.get(
         "${GarageConstants.getVehicleListGetUri}?garageId=$garageId",
-        
       );
-      return Right((response['data'] as List).map((e) => GetVehicleListModel.fromJson(e).toEntity()).toList());
+      return Right((response['data'] as List)
+          .map((e) => VehicleModel.fromJson(e).toEntity())
+          .toList());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
   }
 
-
   @override
-  Future<Either<GarageException, GetGarageByOwnerId>> getGarageByOwnerId(String userId) async {
+  Future<Either<GarageException, GetGarageByOwnerId>> getGarageByOwnerId(
+      String userId) async {
     try {
       final response = await networkService.get(
         "${GarageConstants.getGarageByOwnerIdGetUri}/$userId",
       );
-      return Right(GetGarageByOwnerIdModel.fromJson((response as List).first).toEntity());
+      return Right(GetGarageByOwnerIdModel.fromJson((response as List).first)
+          .toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
   }
 
-
   //Add methods here
-
 }
