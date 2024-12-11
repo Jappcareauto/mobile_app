@@ -1,6 +1,13 @@
 import 'package:dartz/dartz.dart';
 
-abstract class WorkshopRepository {
+import '../core/exceptions/workshop_exception.dart';
+
+
+
+abstract class
+ WorkshopRepository {
   //Add methods here
+
 }
+
 

@@ -112,7 +112,9 @@ class ChatController extends GetxController {
       selectedMethod.value = methode ;
   }
   void gotToPaymentForm(){
+    Get.back();
       if(selectedMethod.value == 'CARD'){
+
         _appNavigation.toNamed(WorkshopPrivateRoutes.payWithCard);
       }
       if(selectedMethod.value == 'MTN' || selectedMethod.value == 'ORANGE'){
