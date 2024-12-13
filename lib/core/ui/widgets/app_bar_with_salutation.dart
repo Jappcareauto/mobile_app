@@ -17,7 +17,7 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ProfileController(Get.find()));
+    Get.put(ProfileController(Get.find()), permanent: true);
     return AppBar(
       automaticallyImplyLeading: false,
       scrolledUnderElevation: 0,

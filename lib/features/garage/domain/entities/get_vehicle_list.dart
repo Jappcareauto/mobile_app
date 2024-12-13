@@ -6,7 +6,7 @@ class Vehicle {
   final String vin;
   final Detail? detail;
   final String id;
-  final List<Media>? media;
+  final List<Media?>? media;
   final String? createdBy;
   final String? updatedBy;
   final String createdAt;
@@ -35,7 +35,7 @@ class Vehicle {
     required vin,
     Detail? detail,
     required id,
-    List<Media>? media,
+    List<Media?>? media,
     createdBy,
     updatedBy,
     required createdAt,
