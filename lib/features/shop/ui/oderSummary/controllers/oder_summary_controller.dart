@@ -1,21 +1,20 @@
 import 'package:get/get.dart';
-import 'package:jappcare/features/shop/navigation/private/shop_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
-class CheckoutController extends GetxController {
+class OderSummaryController extends GetxController {
   final AppNavigation _appNavigation;
-  CheckoutController(this._appNavigation);
+  OderSummaryController(this._appNavigation);
+  final selectedMethod = 'ORANGE'.obs ;
 
   @override
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
   }
-
+  void selectMethode (String methode){
+    selectedMethod.value = methode ;
+  }
   void goBack(){
     _appNavigation.goBack();
-  }
-  void goToOderSummary(){
-    _appNavigation.toNamed(ShopPrivateRoutes.oderSummary);
   }
 }

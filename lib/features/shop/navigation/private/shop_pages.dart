@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import '../bindings/oder_summary_controller_binding.dart';
+import '../../ui/oderSummary/oder_summary_screen.dart';
+
 import '../bindings/checkout_controller_binding.dart';
 import '../../ui/checkout/checkout_screen.dart';
 
@@ -35,6 +38,11 @@ class ShopPages implements FeaturePages {
       name: ShopPrivateRoutes.checkout,
       page: () => CheckoutScreen(),
       binding: CheckoutControllerBinding(),
+    ),
+    GetPage(
+      name: ShopPrivateRoutes.oderSummary,
+      page: () => OderSummaryScreen(),
+      binding: OderSummaryControllerBinding(),
     ),
     // Add other routes here
   ];

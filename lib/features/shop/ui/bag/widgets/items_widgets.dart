@@ -10,6 +10,7 @@ class ItemContainer extends StatelessWidget {
   final RxInt quantity;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
+  final bool modifyQuantity ;
   final String assetPath ;
   const ItemContainer({
     Key? key,
@@ -20,6 +21,7 @@ class ItemContainer extends StatelessWidget {
     required this.quantity,
     required this.onIncrement,
     required this.onDecrement,
+    required this.modifyQuantity
   }) : super(key: key);
 
   @override
@@ -69,7 +71,7 @@ class ItemContainer extends StatelessWidget {
           ),
           Row(
             children: [
-              Column(
+            modifyQuantity ?Column (
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -79,20 +81,33 @@ class ItemContainer extends StatelessWidget {
                     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                 ],
-              ),
-              SizedBox(width: MediaQuery.of(context).size.width*.30,),
+              ) :
+            Row (
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Price :  ' ,  style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans' ),),
+                Text(
+                  "${NumberFormat('#,###').format(price)} Frs",
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+              ],
+            )
+              ,
+              SizedBox(width: modifyQuantity ? MediaQuery.of(context).size.width*.30 :MediaQuery.of(context).size.width*.30 ,),
 
               Row(
                 children: [
                   Text('Qty:'),
                   SizedBox(width: 5,),
-                  QuantityButton(
+                  modifyQuantity
+                      ?  QuantityButton(
                     icon: Icons.remove,
                     onPressed: () {
+                      },
+                  ):
+                  SizedBox() ,
 
-
-                    },
-                  ),
 
 
                       Padding(
@@ -106,13 +121,16 @@ class ItemContainer extends StatelessWidget {
                           ),
                         ),
                       ),
+                  modifyQuantity
+                      ?
+                    QuantityButton(
+                      icon: Icons.add,
+                      onPressed: () {
 
-                  QuantityButton(
-                    icon: Icons.add,
-                    onPressed: () {
+                      },
+                    )
+                      : SizedBox() ,
 
-                    },
-                  ),
                 ],
               )
             ],

@@ -23,6 +23,7 @@ class BagScreen extends GetView<BagController> {
             children: [
               // Liste des articles
               ItemContainer(
+                modifyQuantity: false,
                 imageUrl:
                 "https://via.placeholder.com/150",
                 assetPath: AppImages.carWhite,
