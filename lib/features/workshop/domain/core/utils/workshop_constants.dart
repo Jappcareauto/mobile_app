@@ -5,4 +5,5 @@ class WorkshopConstants {
   static const String featureVersion = '1.0.0';
 
   // Add other constants here
+  static const String getsetterPostUri = '/get/set';
 }

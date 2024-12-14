@@ -38,10 +38,15 @@ class ServicesCenterLocator extends GetView<ServicesLocatorController>{
                       Container(
                         padding: EdgeInsets.all(10),
                         margin: EdgeInsets.only(right: 5),
-                        child: Icon(
+                        child: IconButton(
+                          onPressed: (){
+                            Get.back();
+                          },
+                       icon: Icon(
                           FluentIcons.arrow_left_24_regular,
                           color: Colors.black,
                         ),
+    ),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
                             color: Get.theme.scaffoldBackgroundColor),

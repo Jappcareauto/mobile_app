@@ -32,16 +32,37 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
                 Text(_vhcle.name,
                     style: Get.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Get.theme.primaryColor)),
                 Text(_vhcle.vin, style: Get.textTheme.bodyMedium),
-                ImageComponent(
-                  assetPath:
-                      _vhcle.imageUrl != null ? null : AppImages.carWhite,
-                  imageUrl: _vhcle.imageUrl,
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: Get.width,
+                  height: 200,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: _vhcle.media
+                            ?.map((e) => Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: ImageComponent(
+                                    assetPath: _vhcle.imageUrl != null
+                                        ? null
+                                        : AppImages.carWhite,
+                                    imageUrl: _vhcle.imageUrl,
+                                    width: Get.width * .85,
+                                    borderRadius: 10,
+                                  ),
+                                ))
+                            .toList() ??
+                        [
+                          SizedBox(
+                              width: Get.width * .85,
+                              height: 200,
+                              child: const Center(child: Text("No Media")))
+                        ],
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Row(

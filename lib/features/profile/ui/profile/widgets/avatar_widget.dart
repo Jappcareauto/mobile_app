@@ -17,7 +17,6 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
   Widget build(BuildContext context) {
     return MixinBuilder<ProfileController>(
       autoRemove: false,
-      init: ProfileController(Get.find()),
       initState: (_) {},
       builder: (_) {
         return _.loading.value

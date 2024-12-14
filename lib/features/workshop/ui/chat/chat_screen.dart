@@ -1,5 +1,6 @@
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/chat/widgets/chat_input_widget.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/chat_invoice.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/resume_appointment_widget.dart';
 
@@ -141,7 +142,11 @@ class ChatDetailsScreen extends GetView<ChatController> {
                   bottom: 0,
                   right: 0,
                   left: 0,
-                  child: ChatInputField(chatController: _)),
+                  child: ChatInputWidget(
+                    chatController: controller ,
+                    onAttach: (){},
+                    onMic: (){},
+                  )),
             ],
           );
         },
