@@ -1,5 +1,20 @@
 import 'package:get/get.dart';
 
+import '../bindings/recepit_controller_binding.dart';
+import '../../ui/recepit/recepit_screen.dart';
+
+import '../bindings/confirm_transaction_controller_binding.dart';
+import '../../ui/confirmTransaction/confirm_transaction_screen.dart';
+
+import '../bindings/checkout_card_details_controller_binding.dart';
+import '../../ui/checkoutCardDetails/checkout_card_details_screen.dart';
+
+import '../bindings/checkout_phone_detail_controller_binding.dart';
+import '../../ui/checkoutPhoneDetail/checkout_phone_detail_screen.dart';
+
+import '../bindings/odersummary2_controller_binding.dart';
+import '../../ui/odersummary2/odersummary2_screen.dart';
+
 import '../bindings/oder_summary_controller_binding.dart';
 import '../../ui/oderSummary/oder_summary_screen.dart';
 
@@ -43,6 +58,31 @@ class ShopPages implements FeaturePages {
       name: ShopPrivateRoutes.oderSummary,
       page: () => OderSummaryScreen(),
       binding: OderSummaryControllerBinding(),
+    ),
+    GetPage(
+      name: ShopPrivateRoutes.odersummary2,
+      page: () => Odersummary2Screen(),
+      binding: Odersummary2ControllerBinding(),
+    ),
+    GetPage(
+      name: ShopPrivateRoutes.checkoutPhoneDetail,
+      page: () => CheckoutPhoneDetailScreen(),
+      binding: CheckoutPhoneDetailControllerBinding(),
+    ),
+    GetPage(
+      name: ShopPrivateRoutes.checkoutCardDetails,
+      page: () => CheckoutCardDetailsScreen(),
+      binding: CheckoutCardDetailsControllerBinding(),
+    ),
+    GetPage(
+      name: ShopPrivateRoutes.confirmTransaction,
+      page: () => ConfirmTransactionScreen(),
+      binding: ConfirmTransactionControllerBinding(),
+    ),
+    GetPage(
+      name: ShopPrivateRoutes.recepit,
+      page: () => RecepitScreen(),
+      binding: RecepitControllerBinding(),
     ),
     // Add other routes here
   ];

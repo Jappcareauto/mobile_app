@@ -35,4 +35,7 @@ class AppImages {
   static const String emergency = "assets/icons/emergency.png";
   static const String carBody = "assets/icons/car_body.png";
   static const String carClean = "assets/icons/car_clean.png";
+  static const String confirmTransaction = "assets/images/confirmtransaction.png";
+  static const String recepit = "assets/images/recepit.png";
+
 }

@@ -61,8 +61,8 @@ class OderSummaryScreen extends GetView<OderSummaryController> {
                 )
               ),
               SizedBox(height: 10,),
-              
-              PaymentMethodeWidget()
+
+              PaymentMethodeWidget(buttonText: 'Place Oder', ontap:(){ controller.goToOderSummary2(); },)
             ],
 
           ),

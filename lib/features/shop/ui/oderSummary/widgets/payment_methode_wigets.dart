@@ -7,6 +7,13 @@ import 'package:jappcare/features/shop/ui/oderSummary/controllers/oder_summary_c
 import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
 
 class PaymentMethodeWidget extends StatelessWidget{
+  final String buttonText ;
+  final VoidCallback ontap ;
+  PaymentMethodeWidget({
+     Key?key,
+    required this.ontap ,
+    required this.buttonText
+}): super(key: key);
   final OderSummaryController oderSummary = Get.put(OderSummaryController(Get.find()));
   @override
   Widget build(BuildContext context) {
@@ -78,7 +85,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                       oderSummary.selectMethode('ORANGE');
                     },
                     child:Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(5),
 
                       decoration: BoxDecoration(
                           color: oderSummary.selectedMethod == 'ORANGE' ? Get.theme.primaryColor.withOpacity(0.2) : null,
@@ -168,12 +175,8 @@ class PaymentMethodeWidget extends StatelessWidget{
 
                   SizedBox(height: 10,),
                       CustomButton(
-                        text: 'Confirm',
-                        onPressed: (){
-                          print('got to payment methode');
-
-                        },
-
+                        text: buttonText,
+                        onPressed:ontap ,
 
 
                       ),
