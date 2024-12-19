@@ -37,5 +37,7 @@ class AppImages {
   static const String carClean = "assets/icons/car_clean.png";
   static const String confirmTransaction = "assets/images/confirmtransaction.png";
   static const String recepit = "assets/images/recepit.png";
+  static const String boiteLettre = "assets/images/boite_lettre.png";
+  static const String charts = "assets/images/charts.png";
 
 }

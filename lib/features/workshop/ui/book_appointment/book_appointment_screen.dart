@@ -4,13 +4,13 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
+import 'package:jappcare/core/ui/widgets/select_vehicule_slider_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/boocking_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/estimate_inspection_fee.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/select_vehicule_slider_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/categories_item_list.dart';
 
 class BookAppointmentScreen extends GetView<BookAppointmentController>{
@@ -23,7 +23,13 @@ class BookAppointmentScreen extends GetView<BookAppointmentController>{
           SingleChildScrollView(
             child: Column(
               children: [
-                SelectedVehiculeWidget(),
+                SelectedVehiculeWidget(
+                  currentPage: controller.currentPage,
+                  cars: controller.cars,
+                  pageController: controller.pageController,
+                  haveAddVehicule: false,
+                  titleText: 'Selected Vehicle',
+                ),
                 SizedBox(height: 20,),
                 SelectServiceItemList(
                   title: 'Specialized Services',),

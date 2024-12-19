@@ -19,6 +19,7 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
             child: Column(
               children: [
                 CarCardAddVehicle(
+                  haveBGColor: false,
                     containerheight: 200,
                     haveBorder: false,
                     hideblure: true,
