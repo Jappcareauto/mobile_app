@@ -47,10 +47,10 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                             ?.map((e) => Padding(
                                   padding: const EdgeInsets.only(right: 10),
                                   child: ImageComponent(
-                                    assetPath: _vhcle.imageUrl != null
+                                    assetPath: e?.sourceUrl != null
                                         ? null
                                         : AppImages.carWhite,
-                                    imageUrl: _vhcle.imageUrl,
+                                    imageUrl: e?.sourceUrl,
                                     width: Get.width * .85,
                                     borderRadius: 10,
                                   ),

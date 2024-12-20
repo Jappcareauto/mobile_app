@@ -15,6 +15,7 @@ class CarCardAddVehicle extends StatelessWidget {
   final bool haveBorder ;
   final bool? isSelected;
   final bool  hideblure ;
+  final bool haveBGColor;
   final double? containerheight ;
   const CarCardAddVehicle({
     super.key,
@@ -25,6 +26,7 @@ class CarCardAddVehicle extends StatelessWidget {
     required this.carName,
     required this.carDetails,
     required this.imagePath,
+    required this.haveBGColor,
     this.onPressed, this.isSelected,
   });
 
@@ -36,7 +38,7 @@ class CarCardAddVehicle extends StatelessWidget {
       width: 360,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        color: Get.theme.primaryColor.withOpacity(.1),
+        color:  haveBGColor ? Get.theme.primaryColor : Get.theme.primaryColor.withOpacity(.1),
         border: haveBorder ? Border.all(color: Get.theme.primaryColor , width: 3) :  Border.all(color: AppColors.lightBorder),
       ),
       child: InkWell(
@@ -58,14 +60,19 @@ class CarCardAddVehicle extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Porsche 911 GT3RS',
+                    Text(
+                      carName,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
+                        color:  haveBGColor ? Colors.white : Colors.black,
                       ),
                     ),
-                    Text('2024, RWD', style: Get.textTheme.bodyMedium),
+                    Text(carDetails, style: TextStyle(
+                      color:  haveBGColor ? Colors.white : Colors.black,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14
+                    ) , ),
                   ],
                 ),
               ),
@@ -80,7 +87,7 @@ class CarCardAddVehicle extends StatelessWidget {
                         margin: EdgeInsets.only(right: 5),
                         child: Icon(
                           FluentIcons.arrow_right_24_regular,
-                          color:Colors.black,
+                          color: haveBGColor ? Colors.white: Colors.black,
                         ),
 
                       ),

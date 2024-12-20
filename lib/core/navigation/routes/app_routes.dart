@@ -1,4 +1,6 @@
 import '../../../features/home/navigation/home_public_routes.dart';
+import '../../../features/services/navigation/services_public_routes.dart';
+  
 import '../../../features/chat/navigation/chat_public_routes.dart';
   
 import '../../../features/notifications/navigation/notifications_public_routes.dart';
@@ -42,4 +44,6 @@ class AppRoutes {
   static const notifications = NotificationsPublicRoutes.home;
   //Chat Public Routes
   static const chat = ChatPublicRoutes.home;
+  //Services Public Routes
+  static const services = ServicesPublicRoutes.home;
 }
