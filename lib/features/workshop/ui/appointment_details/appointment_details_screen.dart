@@ -138,6 +138,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController>{
               ),
               SizedBox(height: 20,),
               ExpandableContainer(
+
                 onpresse: (){
                   controller.toggleExpanded();
                 },

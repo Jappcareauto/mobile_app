@@ -70,15 +70,23 @@ class HomeScreen extends GetView<HomeController> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  const TitleSection(nameSection: 'Services'),
+                  GestureDetector(
+                    onTap: (){
+                      controller.goToservices();},
+                  child:  TitleSection(nameSection: 'Services' ),
+
+                  ),
                   Row(
                     children: [
+
                       Expanded(
                         child: CustomCardService(
                           color: Color(0xFFF4EEFF),
                           text: 'VIN\nLookup',
                           imagePath: AppImages.vin,
-                          onTap: () {},
+                          onTap: () {
+
+                          },
                         ),
                       ),
                       const SizedBox(width: 10),

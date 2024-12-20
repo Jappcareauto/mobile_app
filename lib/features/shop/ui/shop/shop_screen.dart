@@ -1,9 +1,11 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/categories_item_list.dart';
 import 'controllers/shop_controller.dart';
 import 'package:get/get.dart';
 
@@ -29,10 +31,9 @@ class ShopScreen extends GetView<ShopController>
                   ),
                 ),
                 const SizedBox(height: 20),
-                if (Get.isRegistered<FeatureWidgetInterface>(
-                    tag: "CategoriesItemList"))
-                  Get.find<FeatureWidgetInterface>(tag: "CategoriesItemList")
-                      .buildView(),
+                SelectServiceItemList(
+
+                  title: 'Specialized Services',),
                 SizedBox(height: 20),
               ],
             ),
@@ -49,11 +50,12 @@ class ShopScreen extends GetView<ShopController>
                 final part = controller.parts[index];
                 return GestureDetector(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => DetailsProductShopScreen()),
-                    // );
+                    controller.goToProductDetails(
+                        part['name'],
+                        part['price'],
+                        part['imagePath'],
+                        part['description']
+                    );
                   },
                   child: Card(
                     color: Colors.transparent,
@@ -95,7 +97,7 @@ class ShopScreen extends GetView<ShopController>
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              part['price'],
+                              "${NumberFormat('#,###').format(int.parse(part['price']))} Frs",
                               style: TextStyle(
                                 color: Get.theme.primaryColor,
                                 fontSize: 14,

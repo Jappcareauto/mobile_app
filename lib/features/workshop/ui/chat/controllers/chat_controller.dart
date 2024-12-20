@@ -102,7 +102,11 @@ class ChatController extends GetxController {
         ),
         context: Get.context!,
         builder: (BuildContext context) {
-          return  PaymentMethodeWidget();
+          return  PaymentMethodeWidget(
+            onConfirm: (){
+            gotToPaymentForm();
+            },
+          );
         });
   }
   void goBack() {

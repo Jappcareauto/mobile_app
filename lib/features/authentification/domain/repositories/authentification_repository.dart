@@ -8,7 +8,7 @@ import '../entities/reset_password.dart';
 
 abstract class
 
- AuthentificationRepository {
+ AuthentificationRepository{
   //Add methods here
   Future<Either<AuthentificationException, Login>> login(String email, String password, bool? extend);
 
