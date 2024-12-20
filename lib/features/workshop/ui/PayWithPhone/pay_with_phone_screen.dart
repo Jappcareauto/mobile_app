@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
@@ -10,7 +11,14 @@ class PayWithPhoneScreen extends GetView<PayWithPhoneController> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      appBar:CustomAppBar(title: 'Phone Details'),
+      appBar:CustomAppBar(title: 'Phone Details',
+        actions: [
+          if (Get.isRegistered<FeatureWidgetInterface>(
+              tag: 'AvatarWidget'))
+            Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
+                .buildView(),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
         child: Column(

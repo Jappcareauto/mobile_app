@@ -7,7 +7,11 @@ import '../widgets/tip_modal_bottom.dart';
 class HomeController extends GetxController {
   final AppNavigation _appNavigation;
   HomeController(this._appNavigation);
+  List<String> notifications = [
+    "Your repair from the Jappcare Autotech shop is ready, and available for pickup.",
+    "Votre commande a été expédiée.",
 
+  ];
   @override
   void onInit() {
     // Generate by Menosi_cli

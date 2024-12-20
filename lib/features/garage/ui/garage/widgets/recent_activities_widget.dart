@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:jappcare/core/utils/app_images.dart';
 
 import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../../../../../core/ui/widgets/custom_tab_bar.dart';
