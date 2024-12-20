@@ -36,7 +36,10 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController>{
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 
-                      Text('Porsch Taycan Turbo S'),
+                      Text(
+                        'Porsch Taycan Turbo S' ,
+                        style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 22 , color: Color(0xFFFB7C37))
+                      ),
                       Text('2024 , RWD'),
                     ],
                   )
@@ -135,6 +138,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController>{
               ),
               SizedBox(height: 20,),
               ExpandableContainer(
+
                 onpresse: (){
                   controller.toggleExpanded();
                 },
@@ -203,7 +207,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController>{
               CustomButton(
                   text: 'Pay Invoice',
                   onPressed: (){
-
+                    controller.goToInvoice();
               }),
               SizedBox(height: 50,)
             ],

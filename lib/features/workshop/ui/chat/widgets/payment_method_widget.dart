@@ -7,12 +7,18 @@ import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.d
 
 class PaymentMethodeWidget extends StatelessWidget{
   final ChatController chatController = Get.put(ChatController(Get.find()));
+  final VoidCallback onConfirm ;
+  PaymentMethodeWidget({
+    Key?key,
+    required this.onConfirm
+}):super(key: key);
   @override
   Widget build(BuildContext context) {
     return
       Obx(() =>
           Center(
             child: Container(
+              // color: Colors.white,
               height: 300,
               margin: EdgeInsets.all(10),
 
@@ -185,10 +191,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                       ),
                       CustomButton(
                         text: 'Confirm',
-                        onPressed: (){
-                          print('got to payment methode');
-                          chatController.gotToPaymentForm();
-                        },
+                        onPressed:onConfirm,
 
                         strech: false,
                         width: 170,

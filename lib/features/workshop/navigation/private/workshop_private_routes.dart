@@ -13,4 +13,6 @@ class WorkshopPrivateRoutes {
   static const String successPayment = '$home/successPayment';
   static const String appointmentDetail = '$home/appointmentDetail';
 
+  static const String invoice = '$home/invoice';
+  static const String domaine = '$home/domaine';
 }

@@ -8,6 +8,7 @@ import 'category_shop_item_widget.dart';
 
 class SelectServiceItemList extends StatelessWidget
     implements FeatureWidgetInterface {
+
   const SelectServiceItemList({super.key, this.title = "Select Service"});
 
   final String title;

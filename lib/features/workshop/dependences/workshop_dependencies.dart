@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jappcare/features/workshop/domain/repositories/workshop_repository.dart';
 import 'package:jappcare/features/workshop/ui/PayWithCard/controllers/pay_with_card_controller.dart';
 import 'package:jappcare/features/workshop/ui/PayWithPhone/controller/pay_with_phone_controller.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/controllers/appointment_details_controller.dart';
@@ -12,7 +13,6 @@ import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_cont
 import 'package:jappcare/features/workshop/ui/workshop/workshop_screen.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/controllers/workshop_details_controller.dart';
 import '../../../core/ui/interfaces/feature_widget_interface.dart';
-import '../domain/repositories/workshop_repository.dart';
 import '../infrastructure/repositoriesImpl/workshop_repository_impl.dart';
 
 class WorkshopDependencies {

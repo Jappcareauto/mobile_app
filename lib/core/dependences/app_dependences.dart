@@ -38,6 +38,9 @@ import '../../features/notifications/navigation/private/notifications_pages.dart
 import '../../features/chat/dependences/chat_dependencies.dart';
 import '../../features/chat/navigation/private/chat_pages.dart';
 
+import '../../features/services/dependences/services_dependencies.dart';
+import '../../features/services/navigation/private/services_pages.dart';
+
 class AppDependency {
   static Future<void> init() async {
     // Initialize GetStorage
@@ -45,6 +48,7 @@ class AppDependency {
 
     // initialize all pages
     final featuresPages = [
+      ServicesPages(),
       ChatPages(),
       NotificationsPages(),
       ProfilePages(),
@@ -85,5 +89,6 @@ class AppDependency {
     ProfileDependencies.init();
     NotificationsDependencies.init();
       ChatDependencies.init();
+     ServicesDependencies.init();
  }
 }

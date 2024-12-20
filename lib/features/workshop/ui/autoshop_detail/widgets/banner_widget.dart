@@ -9,35 +9,53 @@ import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/ui/autoshop_detail/controllers/autoshop_controller.dart';
 
 class BannerWidget extends GetView<AutoShopController> {
+  final Icon leftIcon ;
+  final IconButton? RightIcon ;
+  final Widget imageComponents ;
 
+  BannerWidget({
+    Key? key,
+    required this.imageComponents,
+    required this.leftIcon,
+     this.RightIcon
+}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
    return Stack(
       children: [
-
-              ImageComponent(
-
-                assetPath: AppImages.shopCar,
-              ),
-
-
-
+        imageComponents,
         Positioned(
           top: MediaQuery.of(context).padding.top+20,
           left: 30,
           child:
-        Container(
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.only(right: 5),
-          child: Icon(
-            FluentIcons.arrow_left_24_regular,
-            color:Colors.black,
-          ),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Get.theme.scaffoldBackgroundColor),
-        ),)
+              GestureDetector(
+                onTap: (){
+                  Get.back() ;
+                },
+                child:  Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.only(right: 5),
+                  child: leftIcon,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Get.theme.scaffoldBackgroundColor),
+                ),
+              )
+       ),
+
+        Positioned(
+          top: MediaQuery.of(context).padding.top+20,
+          right: 30,
+          child:
+          Container(
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.only(right: 5),
+            child: RightIcon,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Get.theme.scaffoldBackgroundColor),
+          ),)
       ],
     );
   }

@@ -26,7 +26,9 @@ class HomeController extends GetxController {
           return const TipModalBottomWidget();
         });
   }
-
+void goToservices(){
+  _appNavigation.toNamed(AppRoutes.services);
+}
   void goToVehicleReport() =>
       _appNavigation.toNamed(AppRoutes.generateVehicleReport);
 

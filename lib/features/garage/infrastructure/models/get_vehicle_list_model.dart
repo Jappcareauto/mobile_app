@@ -88,7 +88,7 @@ class VehicleModel {
       detail:
           entity.detail != null ? DetailModel.fromEntity(entity.detail!) : null,
       id: entity.id,
-      media: entity.media?.map((e) => MediaModel.fromEntity(e)).toList(),
+      media: entity.media?.map((e) => MediaModel.fromEntity(e!)).toList(),
       createdBy: entity.createdBy,
       updatedBy: entity.updatedBy,
       createdAt: entity.createdAt,
@@ -104,6 +104,7 @@ class VehicleModel {
       description: description,
       vin: vin,
       detail: detail?.toEntity(),
+      media: media?.map((e) => e?.toEntity()).toList(),
       id: id,
       createdBy: createdBy,
       updatedBy: updatedBy,
@@ -315,5 +316,19 @@ class MediaModel {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
       };
+
+  Media toEntity() => Media.create(
+        sourceUrl: sourceUrl,
+        capturedUrl: capturedUrl,
+        type: type,
+        mediaId: mediaId,
+        fileId: fileId,
+        fileUrl: fileUrl,
+        id: id,
+        createdBy: createdBy,
+        updatedBy: updatedBy,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+      );
 
 }

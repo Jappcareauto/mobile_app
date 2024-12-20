@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
+import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/ui/autoshop_detail/controllers/autoshop_controller.dart';
 import 'package:jappcare/features/workshop/ui/autoshop_detail/widgets/banner_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/categories_item_list.dart';
@@ -16,7 +18,12 @@ class AutoshopScreen extends GetView<AutoShopController>{
 
       Column(
         children: [
-          BannerWidget(),
+          BannerWidget(
+            imageComponents: ImageComponent(
+              assetPath: AppImages.shopCar,
+            ),
+            leftIcon: Icon(FluentIcons.arrow_left_12_regular),
+          ),
       Container(
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(

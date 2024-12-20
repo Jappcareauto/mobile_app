@@ -24,6 +24,7 @@ class ConfirmeAppointmentController extends GetxController{
   }
   void goToChat(){
       print('got to chat');
+      Get.back();
       _appNavigation.toNamed(WorkshopPrivateRoutes.processChat);
   }
 }

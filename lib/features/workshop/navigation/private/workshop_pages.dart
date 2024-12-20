@@ -1,4 +1,9 @@
 import 'package:get/get.dart';
+
+
+
+import '../bindings/invoice_controller_binding.dart';
+import '../../ui/invoice/invoice_screen.dart';
 import 'package:jappcare/features/authentification/ui/verifyYourEmail/views/email_verify_successfully.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/apointment_detail_bindings.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/book_appointment_binding.dart';
@@ -39,6 +44,12 @@ class WorkshopPages implements FeaturePages {
       page: () => WorkshopDetailsScreen(),
       binding: WorkshopDetailsControllerBinding(),
     ),
+    GetPage(
+      name: WorkshopPrivateRoutes.invoice,
+      page: () => InvoiceScreen(),
+      binding: InvoiceControllerBinding(),
+    ),
+   
     // Add other routes here
     GetPage(
       name: WorkshopPrivateRoutes.sevicesLocator,
