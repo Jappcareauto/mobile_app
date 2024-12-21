@@ -39,5 +39,6 @@ class AppImages {
   static const String recepit = "assets/images/recepit.png";
   static const String boiteLettre = "assets/images/boite_lettre.png";
   static const String charts = "assets/images/charts.png";
+  static const String noActivities = "assets/images/noactivities.png";
 
 }

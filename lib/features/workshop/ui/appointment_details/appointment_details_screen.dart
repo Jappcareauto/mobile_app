@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
@@ -21,7 +22,15 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Appointment \n Details'),
+      appBar: CustomAppBar(
+          title: 'Appointment\nDetails',
+        actions: [
+          if (Get.isRegistered<FeatureWidgetInterface>(
+              tag: 'AvatarWidget'))
+            Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
+                .buildView(),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20 , vertical: 20),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
@@ -11,7 +12,14 @@ class SucessPaymentScreen extends GetView<SuccessPaymentController>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: ''),
+      appBar: CustomAppBar(title: '',
+        actions: [
+          if (Get.isRegistered<FeatureWidgetInterface>(
+              tag: 'AvatarWidget'))
+            Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
+                .buildView(),
+        ],
+      ),
       body:  Center(
 
         child:Container(
@@ -27,7 +35,7 @@ class SucessPaymentScreen extends GetView<SuccessPaymentController>{
               child: ImageComponent(
                 height: 100,
                 width: 100,
-                assetPath: AppImages.car,
+                assetPath: AppImages.recepit,
               ) ,
             ),
             SizedBox(height: 20,),

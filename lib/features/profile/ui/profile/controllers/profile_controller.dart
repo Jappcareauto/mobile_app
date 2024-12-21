@@ -31,6 +31,11 @@ class ProfileController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    Get.find<AppEventService>()
+        .on<String>(AppConstants.userLoginEvent)
+        .listen((token) {
+      if (token != '') getUserInfos();
+    });
     getUserInfos();
   }
 
