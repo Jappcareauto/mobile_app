@@ -17,7 +17,10 @@ class ShopScreen extends GetView<ShopController>
   Widget build(BuildContext context) {
     Get.put(ShopController(Get.find()));
     return Scaffold(
-      appBar: const CustomAppBar(title: "Shop"),
+      appBar: const CustomAppBar(
+        title: "Shop",
+        canBack: false,
+      ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -32,8 +35,8 @@ class ShopScreen extends GetView<ShopController>
                 ),
                 const SizedBox(height: 20),
                 SelectServiceItemList(
-
-                  title: 'Specialized Services',),
+                  title: 'Specialized Services',
+                ),
                 SizedBox(height: 20),
               ],
             ),
@@ -50,12 +53,8 @@ class ShopScreen extends GetView<ShopController>
                 final part = controller.parts[index];
                 return GestureDetector(
                   onTap: () {
-                    controller.goToProductDetails(
-                        part['name'],
-                        part['price'],
-                        part['imagePath'],
-                        part['description']
-                    );
+                    controller.goToProductDetails(part['name'], part['price'],
+                        part['imagePath'], part['description']);
                   },
                   child: Card(
                     color: Colors.transparent,

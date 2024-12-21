@@ -52,21 +52,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      actions: [
 
-        SizedBox(width: 8),
-      CircleAvatar(
-
-        backgroundColor: Colors.white,
-        child:
-      InkWell(
-                onTap: controller.openMore,
-                child: Icon(FluentIcons.more_circle_32_filled, color: Colors.black)),
-      ),
-
-        SizedBox(width: 8),
-
-      ],
     );
   }
 

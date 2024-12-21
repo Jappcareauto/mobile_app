@@ -8,11 +8,8 @@ import '../interfaces/feature_widget_interface.dart';
 
 class AppBarWithAvatarAndSalutation extends StatelessWidget
     implements PreferredSizeWidget {
-  final String greetingMessage;
-
   const AppBarWithAvatarAndSalutation({
     super.key,
-    required this.greetingMessage,
   });
 
   @override
@@ -22,7 +19,7 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
       automaticallyImplyLeading: false,
       scrolledUnderElevation: 0,
       // surfaceTintColor: Colors.white,
-      backgroundColor: Colors.white,
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       toolbarHeight: 100,
       leadingWidth: 300,
       leading: Container(
@@ -34,31 +31,21 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
             if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
               Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
             const SizedBox(width: 5),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  greetingMessage,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFFADAAAA),
-                  ),
-                ),
-                Obx(() => Get.find<ProfileController>().loading.value
-                    ? Shimmer.fromColors(
-                        baseColor: Colors.grey,
-                        highlightColor: Colors.white,
-                        child:
-                            const Text('Name', style: TextStyle(fontSize: 20)),
-                      )
-                    : Text(
-                        Get.find<ProfileController>().userInfos?.name ??
-                            'Guest',
-                        style: const TextStyle(fontSize: 20),
-                      )),
-              ],
+            Obx(
+              () => Get.find<ProfileController>().loading.value
+                  ? Shimmer.fromColors(
+                      baseColor: Colors.grey,
+                      highlightColor: Colors.white,
+                      child: const Text('Loading...',
+                          style: TextStyle(fontSize: 20)),
+                    )
+                  : Text(
+                      "Hi, ${Get.find<ProfileController>().userInfos?.name ?? ''}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
             ),
           ],
         ),

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
+import '../../../../../core/events/app_events_service.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/services/form/form_helper.dart';
 import '../../../../../core/services/form/validators.dart';
@@ -55,6 +56,8 @@ class LoginWithEmailController extends GetxController {
         _localStorageService.write(
             AppConstants.refreshTokenKey, response.refreshToken);
         _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
+        Get.find<AppEventService>()
+            .emit<String>(AppConstants.userLoginEvent, response.accessToken);
       },
     );
   }

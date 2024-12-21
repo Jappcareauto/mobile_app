@@ -15,7 +15,7 @@ class DashboardScreen extends GetView<DashboardController> {
           ? LoaderWidget(dense: true)
           : Container(
               child: [
-                const HomeScreen(),
+                 HomeScreen(),
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'ActivitiesScreen'))
                   Get.find<FeatureWidgetInterface>(tag: 'ActivitiesScreen')

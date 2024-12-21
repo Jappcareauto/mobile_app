@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 
 class CarContainer extends StatelessWidget {
@@ -28,9 +29,11 @@ class CarContainer extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
-        color: isSelected != null ? null : principalColor,
-        border: isSelected == true ? Border.all(color: principalColor) : null,
+        // color: isSelected != null ? null : principalColor,
+        border: Border.all(
+            color: isSelected == true ? principalColor : AppColors.lightBorder),
         borderRadius: BorderRadius.circular(24),
+        color: Get.theme.cardColor,
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
@@ -41,15 +44,11 @@ class CarContainer extends StatelessWidget {
           children: [
             Text(
               carName,
-              style: TextStyle(
-                  fontSize: 20,
-                  color: isSelected != null ? null : Colors.white),
+              style: TextStyle(fontSize: 20, color: Get.theme.primaryColor),
             ),
             Text(
               carDetails,
-              style: TextStyle(
-                  fontSize: 14,
-                  color: isSelected != null ? null : Colors.white70),
+              style: TextStyle(fontSize: 14, color: Colors.black),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -60,12 +59,12 @@ class CarContainer extends StatelessWidget {
                   child: Icon(
                     Icons.arrow_back,
                     textDirection: TextDirection.rtl,
-                    color: isSelected != null ? null : Colors.white,
+                    color: Colors.black,
                   ),
                 ),
                 ImageComponent(
                   imageUrl: imagePath,
-                  assetPath: imagePath != null ? null : AppImages.car,
+                  assetPath: AppImages.car,
                   width: Get.width * .55,
                   height: 100,
                   fit: BoxFit.contain,

@@ -1,8 +1,11 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/chip_widget.dart';
+
+import '../../../../../core/utils/app_images.dart';
 
 class CarCardWidget extends StatelessWidget {
   const CarCardWidget({
@@ -12,7 +15,7 @@ class CarCardWidget extends StatelessWidget {
     required this.localisation,
     required this.nameCar,
     required this.status,
-    required this.pathImageCar,
+    this.pathImageCar,
     this.widthCard,
     this.heightCard,
     this.onPressed,
@@ -23,7 +26,7 @@ class CarCardWidget extends StatelessWidget {
   final String localisation;
   final String nameCar;
   final String status;
-  final String pathImageCar;
+  final String? pathImageCar;
   final double? widthCard;
   final double? heightCard;
   final Function()? onPressed;
@@ -38,9 +41,9 @@ class CarCardWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12, left: 20),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.lightBorder),
-      ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppColors.lightBorder),
+          color: Get.theme.cardColor),
       child: InkWell(
         onTap: onPressed,
         child: Column(children: [
@@ -80,7 +83,7 @@ class CarCardWidget extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       const SizedBox(width: 10),
-                      Text(date),
+                      Text(date, style: Get.textTheme.bodySmall),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -91,7 +94,7 @@ class CarCardWidget extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       const SizedBox(width: 10),
-                      Text(time),
+                      Text(time, style: Get.textTheme.bodySmall),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -102,7 +105,7 @@ class CarCardWidget extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       const SizedBox(width: 10),
-                      Text(localisation),
+                      Text(localisation, style: Get.textTheme.bodySmall),
                     ],
                   ),
                 ],
@@ -111,7 +114,8 @@ class CarCardWidget extends StatelessWidget {
                 children: [
                   ImageComponent(
                     imageUrl: pathImageCar,
-                    width: 200,
+                    assetPath: AppImages.car,
+                    width: Get.width * 0.5,
                   ),
                   Text(
                     nameCar,
