@@ -41,6 +41,12 @@ import '../../features/chat/navigation/private/chat_pages.dart';
 import '../../features/services/dependences/services_dependencies.dart';
 import '../../features/services/navigation/private/services_pages.dart';
 
+import '../../features/emergency/dependences/emergency_dependencies.dart';
+import '../../features/emergency/navigation/private/emergency_pages.dart';
+
+import '../../features/vehicleFinder/dependences/vehicle_finder_dependencies.dart';
+import '../../features/vehicleFinder/navigation/private/vehicle_finder_pages.dart';
+
 class AppDependency {
   static Future<void> init() async {
     // Initialize GetStorage
@@ -48,6 +54,8 @@ class AppDependency {
 
     // initialize all pages
     final featuresPages = [
+      VehicleFinderPages(),
+      EmergencyPages(),
       ServicesPages(),
       ChatPages(),
       NotificationsPages(),
@@ -90,5 +98,7 @@ class AppDependency {
     NotificationsDependencies.init();
       ChatDependencies.init();
      ServicesDependencies.init();
+     EmergencyDependencies.init();
+     VehicleFinderDependencies.init();
  }
 }

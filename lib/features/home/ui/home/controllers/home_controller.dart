@@ -33,6 +33,12 @@ class HomeController extends GetxController {
 void goToservices(){
   _appNavigation.toNamed(AppRoutes.services);
 }
+  void goToEmergency(){
+    _appNavigation.toNamed(AppRoutes.emergency);
+  }
+  void goToVehicleFinder(){
+    _appNavigation.toNamed(AppRoutes.vehicleFinder);
+  }
   void goToVehicleReport() =>
       _appNavigation.toNamed(AppRoutes.generateVehicleReport);
 

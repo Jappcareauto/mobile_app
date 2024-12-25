@@ -51,6 +51,8 @@ class HomeScreen extends GetView<HomeController> {
                            controller.notifications.removeAt(index);
                          },
                          child: NotificationWidget(
+                            haveTitle: true,
+                           textSize: 16,
 
                            backgrounColor: Color(0xFFFFEDE6),
                            title: "Notification",
@@ -99,9 +101,7 @@ class HomeScreen extends GetView<HomeController> {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      controller.goToservices();
-                    },
+
                     child: TitleSection(nameSection: 'Services'),
 
                   ),
@@ -124,7 +124,9 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFFFEDE6),
                           text: 'Service\nLocator',
                           imagePath: AppImages.service,
-                          onTap: () {},
+                          onTap: () {
+                            controller.goToVehicleFinder();
+                          },
                         ),
                       ),
                     ],
@@ -137,7 +139,8 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFC4FFCD),
                           text: 'Vehicles\nReports',
                           imagePath: AppImages.vehicule,
-                          onTap: controller.goToVehicleReport,
+                          onTap: controller.goToVehicleReport
+                          ,
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -146,7 +149,9 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFFFDAD4),
                           text: 'Emergency\nAssistance',
                           imagePath: AppImages.emergency,
-                          onTap: () {},
+                          onTap: () {
+                            controller.goToEmergency();
+                          },
                         ),
                       ),
                     ],
