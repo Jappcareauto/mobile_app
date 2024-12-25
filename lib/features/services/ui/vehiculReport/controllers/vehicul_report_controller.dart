@@ -5,6 +5,7 @@ class VehiculReportController extends GetxController {
   final AppNavigation _appNavigation;
   VehiculReportController(this._appNavigation);
 RxInt selectedFilter = 0.obs ;
+var selectedTabs = ''.obs;
 List<String> texts = ["Overview", "Spec", "Purpose", "History", "Mileage" , "Damage"];
 @override
   void onInit() {

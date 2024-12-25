@@ -17,9 +17,14 @@ class ShopScreen extends GetView<ShopController>
   Widget build(BuildContext context) {
     Get.put(ShopController(Get.find()));
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: "Shop",
-        canBack: false,
+      appBar:  CustomAppBar(
+          title: "Shop",
+          actions: [
+              InkWell(
+                onTap : (){},
+                child: Icon(FluentIcons.shopping_bag_16_regular , size: 40,),
+              )
+          ],
       ),
       body: CustomScrollView(
         slivers: [
@@ -35,8 +40,8 @@ class ShopScreen extends GetView<ShopController>
                 ),
                 const SizedBox(height: 20),
                 SelectServiceItemList(
-                  title: 'Specialized Services',
-                ),
+
+                  title: 'Specialized Services',),
                 SizedBox(height: 20),
               ],
             ),
@@ -53,8 +58,12 @@ class ShopScreen extends GetView<ShopController>
                 final part = controller.parts[index];
                 return GestureDetector(
                   onTap: () {
-                    controller.goToProductDetails(part['name'], part['price'],
-                        part['imagePath'], part['description']);
+                    controller.goToProductDetails(
+                        part['name'],
+                        part['price'],
+                        part['imagePath'],
+                        part['description']
+                    );
                   },
                   child: Card(
                     color: Colors.transparent,

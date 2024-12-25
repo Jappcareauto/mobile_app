@@ -8,10 +8,9 @@ class HomeController extends GetxController {
   final AppNavigation _appNavigation;
   HomeController(this._appNavigation);
   List<String> notifications = [
-    "Your repair from the Jappcare Autotech shop is ready, and available for pickup.",
     "Votre commande a été expédiée.",
-
   ];
+
   @override
   void onInit() {
     // Generate by Menosi_cli
@@ -33,6 +32,12 @@ class HomeController extends GetxController {
 void goToservices(){
   _appNavigation.toNamed(AppRoutes.services);
 }
+  void goToEmergency(){
+    _appNavigation.toNamed(AppRoutes.emergency);
+  }
+  void goToVehicleFinder(){
+    _appNavigation.toNamed(AppRoutes.vehicleFinder);
+  }
   void goToVehicleReport() =>
       _appNavigation.toNamed(AppRoutes.generateVehicleReport);
 

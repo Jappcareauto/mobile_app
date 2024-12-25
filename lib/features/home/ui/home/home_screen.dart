@@ -36,12 +36,44 @@ class HomeScreen extends GetView<HomeController> {
                   //     borderRadius: 20,
                   //     height: 160),
                   // const SizedBox(height: 30),
+
+                 Container(
+                   child: Column(
+                     children:  controller.notifications.asMap().entries.map((entry) {
+                       final index = entry.key;
+                       final notification = entry.value;
+
+                       return Dismissible(
+                         key: Key(notification),
+                         direction: DismissDirection.endToStart,
+                         background: DismissWidget(),
+                         onDismissed: (direction) {
+                           // Action après la suppression
+                           controller.notifications.removeAt(index);
+                         },
+                         child: NotificationWidget(
+                            haveTitle: true,
+                           textSize: 16,
+
+                           backgrounColor: Color(0xFFFFEDE6),
+                           title: "Notification",
+                           bodyText: notification,
+                           coloriage: Get.theme.primaryColor,
+                           icon: FluentIcons.alert_16_filled,
+                         ),
+                       );
+                     }).toList(),
+                   ),
+                 ),
+                  SizedBox(height: 10,),
+
                   Container(
                     child: Column(
                       children:
                           controller.notifications.asMap().entries.map((entry) {
                         final index = entry.key;
                         final notification = entry.value;
+
 
                         return Dismissible(
                           key: Key(notification),
@@ -100,9 +132,7 @@ class HomeScreen extends GetView<HomeController> {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      controller.goToservices();
-                    },
+
                     child: TitleSection(nameSection: 'Services'),
                   ),
                   Row(
@@ -121,7 +151,9 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFFFEDE6),
                           text: 'Service\nLocator',
                           imagePath: AppImages.service,
-                          onTap: () {},
+                          onTap: () {
+                            controller.goToVehicleFinder();
+                          },
                         ),
                       ),
                     ],
@@ -134,7 +166,8 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFC4FFCD),
                           text: 'Vehicles\nReports',
                           imagePath: AppImages.vehicule,
-                          onTap: controller.goToVehicleReport,
+                          onTap: controller.goToVehicleReport
+                          ,
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -143,7 +176,9 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFFFDAD4),
                           text: 'Emergency\nAssistance',
                           imagePath: AppImages.emergency,
-                          onTap: () {},
+                          onTap: () {
+                            controller.goToEmergency();
+                          },
                         ),
                       ),
                     ],
