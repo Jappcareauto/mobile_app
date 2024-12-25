@@ -13,16 +13,16 @@ import 'controllers/home_controller.dart';
 import 'widgets/notification_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  final GarageController garageController = Get.put(GarageController(Get.find()));
+  final GarageController garageController =
+      Get.put(GarageController(Get.find()));
 
-   HomeScreen({super.key});
+  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController(Get.find()));
     return Scaffold(
-      appBar:
-      const AppBarWithAvatarAndSalutation(greetingMessage: 'Good Morning'),
+      appBar: const AppBarWithAvatarAndSalutation(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -36,6 +36,7 @@ class HomeScreen extends GetView<HomeController> {
                   //     borderRadius: 20,
                   //     height: 160),
                   // const SizedBox(height: 30),
+
                  Container(
                    child: Column(
                      children:  controller.notifications.asMap().entries.map((entry) {
@@ -66,12 +67,42 @@ class HomeScreen extends GetView<HomeController> {
                  ),
                   SizedBox(height: 10,),
 
+                  Container(
+                    child: Column(
+                      children:
+                          controller.notifications.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final notification = entry.value;
+
+
+                        return Dismissible(
+                          key: Key(notification),
+                          direction: DismissDirection.endToStart,
+                          background: DismissWidget(),
+                          onDismissed: (direction) {
+                            // Action après la suppression
+                            controller.notifications.removeAt(index);
+                          },
+                          child: NotificationWidget(
+                            backgrounColor: Color(0xFFFFEDE6),
+                            title: "Notification",
+                            bodyText: notification,
+                            coloriage: Get.theme.primaryColor,
+                            icon: FluentIcons.alert_16_filled,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
 
                   NotificationWidget(
-                    backgrounColor: null,
+                    backgrounColor: Get.theme.cardColor,
                     title: "Tip",
                     bodyText:
-                    'Rotate your tires regulary to ensure they wear evenly and last longer.',
+                        'Rotate your tires regulary to ensure they wear evenly and last longer.',
                     coloriage: Get.theme.colorScheme.secondary,
                     icon: FluentIcons.question_16_filled,
                     onTap: controller.openTipModal,
@@ -103,19 +134,15 @@ class HomeScreen extends GetView<HomeController> {
                   GestureDetector(
 
                     child: TitleSection(nameSection: 'Services'),
-
                   ),
                   Row(
                     children: [
-
                       Expanded(
                         child: CustomCardService(
                           color: Color(0xFFF4EEFF),
                           text: 'VIN\nLookup',
                           imagePath: AppImages.vin,
-                          onTap: () {
-
-                          },
+                          onTap: () {},
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -163,32 +190,33 @@ class HomeScreen extends GetView<HomeController> {
             //RecentActivitiesWidget
             if (Get.isRegistered<FeatureWidgetInterface>(
                 tag: 'RecentActivitiesWidget'))
-              garageController.vehicleList.isEmpty ?
-              Center(
-                child: Column(
-                  children: [
-                    ImageComponent(
-                      assetPath: AppImages.noActivities,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          'You have no recent activities',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 16),
-                        ),
-                        Text(
-                          'at the moment',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 16),
-                        )
-                      ],
+              garageController.vehicleList.isEmpty
+                  ? Center(
+                      child: Column(
+                        children: [
+                          ImageComponent(
+                            assetPath: AppImages.noActivities,
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                'You have no recent activities',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400, fontSize: 16),
+                              ),
+                              Text(
+                                'at the moment',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400, fontSize: 16),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     )
-                  ],
-                ),
-              ) :
-              Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
-                  .buildView(),
+                  : Get.find<FeatureWidgetInterface>(
+                          tag: 'RecentActivitiesWidget')
+                      .buildView(),
           ],
         ),
       ),

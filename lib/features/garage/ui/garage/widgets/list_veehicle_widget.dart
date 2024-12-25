@@ -59,7 +59,7 @@ class ListVehicleWidget extends StatelessWidget
                                     carName: e.value.name,
                                     carDetails: e.value.vin,
                                     imagePath: e.value.imageUrl ??
-                                        e.value.media?.first.sourceUrl,
+                                        e.value.media?.first?.sourceUrl,
                                     principalColor: Get.theme.primaryColor,
                                     isSelected: selectedIndex != null
                                         ? selectedIndex == e.key

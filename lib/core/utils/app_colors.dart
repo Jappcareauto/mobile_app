@@ -7,7 +7,7 @@ class AppColors {
   static const Color green = Color(0xFF00C853); // Green
   static const Color peach = Color(0xFFFFAB91); // Peach
   static const Color red = Color(0xFFD50000); // Red
-  static const Color lightBackground = Colors.white;
+  static const Color lightBackground = Color(0xFFFFF8F6); // White
   static const Color lightSurface = Color(0xFFF1F3F4); // Neutral95
   static const Color lightBorder = Color(0xFFE5E2E1); // Neutral20
   static const Color secondary = Color(0xFFFFEDE9);

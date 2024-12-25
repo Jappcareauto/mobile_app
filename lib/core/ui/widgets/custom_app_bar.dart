@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       surfaceTintColor: Colors.white,
-      backgroundColor: Colors.white,
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       automaticallyImplyLeading: false,
       toolbarHeight: 100,
       title: Row(
@@ -37,9 +37,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 Text(title,
                     style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600
-                    )),
+                        fontSize: 26, fontWeight: FontWeight.w600)),
               ],
             ),
           ),

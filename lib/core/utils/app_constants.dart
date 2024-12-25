@@ -19,6 +19,7 @@ class AppConstants {
   static const String userIdKey = "userIdKey";
 
   //Events
+  static const String userLoginEvent = "userLoginEvent";
   static const String userIdEvent = "userIdEvent";
   static const String garageIdEvent = "garageIdEvent";
 }

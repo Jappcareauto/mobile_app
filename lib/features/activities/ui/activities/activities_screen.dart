@@ -10,77 +10,76 @@ import 'package:get/get.dart';
 
 class ActivitiesScreen extends GetView<ActivitiesController>
     implements FeatureWidgetInterface {
-  final GarageController garageController = Get.put(GarageController(Get.find()));
+  final GarageController garageController =
+      Get.put(GarageController(Get.find()));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppBar(title: "Activities",
-        actions: [
-          if (Get.isRegistered<FeatureWidgetInterface>(
-              tag: 'AvatarWidget'))
-            Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
-                .buildView(),
-        ],
-      ),
-      body: Stack(
-        children: [
-          garageController.vehicleList.isEmpty ?
-          Center(
-
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ImageComponent(
-                  assetPath: AppImages.noActivities,
-                ),
-                Column(
-                  children: [
-                    Text(
-                      'You have no recent activities',
-                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+        appBar: CustomAppBar(
+          title: "Activities",
+          canBack: false,
+          actions: [
+            if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
+              Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
+          ],
+        ),
+        body: Stack(
+          children: [
+            garageController.vehicleList.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ImageComponent(
+                          assetPath: AppImages.noActivities,
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              'You have no recent activities',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400, fontSize: 16),
+                            ),
+                            Text(
+                              'at the moment',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400, fontSize: 16),
+                            )
+                          ],
+                        )
+                      ],
                     ),
-                    Text(
-                      'at the moment',
-                      style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
-                    )
-                  ],
-                )
-
-              ],
-            ),
-          )
-              :
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                if (Get.isRegistered<FeatureWidgetInterface>(
-                    tag: 'RecentActivitiesWidget'))
-                  Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
-                      .buildView({
-                    'haveTabBar': false,
-                    'haveTitle': true,
-                    'title': 'In Progress Activities',
-                    'status': 'In Progress',
-                    'isHorizontal': true
-                  }),
-                const SizedBox(height: 20),
-                //RecentActivitiesWidget
-                if (Get.isRegistered<FeatureWidgetInterface>(
-                    tag: 'RecentActivitiesWidget'))
-                  Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
-                      .buildView(),
-              ],
-            ),
-          ),
-          Positioned(
-              top: MediaQuery.of(context).size.height*0.65,
-              right: 10,
-              child: ChatWidget()
-          )
-        ],
-      )
-
-    );
+                  )
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        if (Get.isRegistered<FeatureWidgetInterface>(
+                            tag: 'RecentActivitiesWidget'))
+                          Get.find<FeatureWidgetInterface>(
+                                  tag: 'RecentActivitiesWidget')
+                              .buildView({
+                            'haveTabBar': false,
+                            'haveTitle': true,
+                            'title': 'In Progress Activities',
+                            'status': 'In Progress',
+                            'isHorizontal': true
+                          }),
+                        const SizedBox(height: 20),
+                        //RecentActivitiesWidget
+                        if (Get.isRegistered<FeatureWidgetInterface>(
+                            tag: 'RecentActivitiesWidget'))
+                          Get.find<FeatureWidgetInterface>(
+                                  tag: 'RecentActivitiesWidget')
+                              .buildView(),
+                      ],
+                    ),
+                  ),
+            Positioned(
+                top: MediaQuery.of(context).size.height * 0.65,
+                right: 10,
+                child: ChatWidget())
+          ],
+        ));
   }
 
   @override

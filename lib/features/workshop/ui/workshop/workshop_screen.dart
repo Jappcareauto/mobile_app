@@ -19,7 +19,10 @@ class WorkshopScreen extends GetView<WorkshopController>
   Widget build(BuildContext context) {
     Get.put(WorkshopController(Get.find()));
     return Scaffold(
-        appBar: const CustomAppBar(title: "Workshop"),
+        appBar: const CustomAppBar(
+          title: "Workshop",
+          canBack: false,
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -82,11 +85,10 @@ class WorkshopScreen extends GetView<WorkshopController>
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Column(children: [
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       controller.gotToServicesLocator();
                     },
                     child: ServiceItemWidget(
-
                       image: AppImages.shopCar,
                       title: 'Japtech Auto Shop',
                       rate: '4.5',
