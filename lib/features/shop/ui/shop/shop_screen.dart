@@ -23,7 +23,7 @@ class ShopScreen extends GetView<ShopController>
       ),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: Column(
               children: [
                 const Padding(
