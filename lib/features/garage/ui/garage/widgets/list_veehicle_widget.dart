@@ -26,7 +26,7 @@ class ListVehicleWidget extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return MixinBuilder<GarageController>(
-      init: GarageController(Get.find()),
+      init: GarageController(Get.find(),Get.find()),
       autoRemove: false,
       initState: (_) {},
       builder: (_) {

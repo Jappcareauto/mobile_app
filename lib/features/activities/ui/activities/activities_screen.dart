@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 class ActivitiesScreen extends GetView<ActivitiesController>
     implements FeatureWidgetInterface {
   final GarageController garageController =
-      Get.put(GarageController(Get.find()));
+      Get.put(GarageController(Get.find(),Get.find()));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +75,7 @@ class ActivitiesScreen extends GetView<ActivitiesController>
                     ),
                   ),
             Positioned(
-                top: MediaQuery.of(context).size.height * 0.65,
+                bottom:0,
                 right: 10,
                 child: ChatWidget())
           ],

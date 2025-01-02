@@ -12,7 +12,7 @@ class GarageScreen extends GetView<GarageController>
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GarageController>(
-      init: GarageController(Get.find()),
+      init: GarageController(Get.find(),Get.find()),
       autoRemove: false,
       initState: (_) {},
       builder: (_) {

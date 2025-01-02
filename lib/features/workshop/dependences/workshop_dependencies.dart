@@ -15,6 +15,8 @@ import 'package:jappcare/features/workshop/ui/workshopDetails/controllers/worksh
 import '../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../infrastructure/repositoriesImpl/workshop_repository_impl.dart';
 
+import '../application/usecases/get_all_services_center_usecase.dart';
+
 class WorkshopDependencies {
   static void init() {
     Get.lazyPut<WorkshopRepository>(() => WorkshopRepositoryImpl(networkService: Get.find()), fenix: true);
@@ -31,5 +33,6 @@ class WorkshopDependencies {
     Get.lazyPut<SuccessPaymentController>(() => SuccessPaymentController(Get.find()));
     Get.lazyPut<AppointmentDetailsController>(() => AppointmentDetailsController(Get.find()));
 
-  }
+      Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);
+}
 }

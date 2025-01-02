@@ -14,7 +14,7 @@ import 'widgets/notification_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
   final GarageController garageController =
-      Get.put(GarageController(Get.find()));
+      Get.put(GarageController(Get.find(),Get.find()));
 
   HomeScreen({super.key});
 
@@ -67,33 +67,7 @@ class HomeScreen extends GetView<HomeController> {
                  ),
                   SizedBox(height: 10,),
 
-                  Container(
-                    child: Column(
-                      children:
-                          controller.notifications.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final notification = entry.value;
 
-
-                        return Dismissible(
-                          key: Key(notification),
-                          direction: DismissDirection.endToStart,
-                          background: DismissWidget(),
-                          onDismissed: (direction) {
-                            // Action après la suppression
-                            controller.notifications.removeAt(index);
-                          },
-                          child: NotificationWidget(
-                            backgrounColor: Color(0xFFFFEDE6),
-                            title: "Notification",
-                            bodyText: notification,
-                            coloriage: Get.theme.primaryColor,
-                            icon: FluentIcons.alert_16_filled,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
                   SizedBox(
                     height: 10,
                   ),
@@ -124,7 +98,7 @@ class HomeScreen extends GetView<HomeController> {
                 'haveTitle': true,
                 'title': 'Upcoming Activities',
                 'status': 'Completed',
-                'isHorizontal': true
+                'isHorizontal': false
               }),
 
             Padding(
@@ -188,33 +162,7 @@ class HomeScreen extends GetView<HomeController> {
             ),
             const SizedBox(height: 20),
             //RecentActivitiesWidget
-            if (Get.isRegistered<FeatureWidgetInterface>(
-                tag: 'RecentActivitiesWidget'))
-              garageController.vehicleList.isEmpty
-                  ? Center(
-                      child: Column(
-                        children: [
-                          ImageComponent(
-                            assetPath: AppImages.noActivities,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                'You have no recent activities',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 16),
-                              ),
-                              Text(
-                                'at the moment',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 16),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  : Get.find<FeatureWidgetInterface>(
+           Get.find<FeatureWidgetInterface>(
                           tag: 'RecentActivitiesWidget')
                       .buildView(),
           ],

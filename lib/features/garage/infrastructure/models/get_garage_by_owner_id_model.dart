@@ -1,10 +1,10 @@
 import '../../domain/entities/get_garage_by_owner_id.dart';
+import './location_model.dart';
 
 class GetGarageByOwnerIdModel {
-
   final String name;
   final String ownerId;
-  final String? location;
+  final LocationModel? location; // Utilisation du sous-modèle
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -26,7 +26,9 @@ class GetGarageByOwnerIdModel {
     return GetGarageByOwnerIdModel._(
       name: json['name'],
       ownerId: json['ownerId'],
-      location: json['location'],
+      location: json['location'] != null
+          ? LocationModel.fromJson(json['location'])
+          : null,
       id: json['id'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
@@ -39,10 +41,16 @@ class GetGarageByOwnerIdModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['ownerId'] = ownerId;
-    if (location != null) { data['location'] = location; }
+    if (location != null) {
+      data['location'] = location!.toJson();
+    }
     data['id'] = id;
-    if (createdBy != null) { data['createdBy'] = createdBy; }
-    if (updatedBy != null) { data['updatedBy'] = updatedBy; }
+    if (createdBy != null) {
+      data['createdBy'] = createdBy;
+    }
+    if (updatedBy != null) {
+      data['updatedBy'] = updatedBy;
+    }
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     return data;
@@ -52,7 +60,18 @@ class GetGarageByOwnerIdModel {
     return GetGarageByOwnerIdModel._(
       name: entity.name,
       ownerId: entity.ownerId,
-      location: entity.location,
+      location: entity.location != null
+          ? LocationModel(
+        latitude: entity.location!.latitude,
+        longitude: entity.location!.longitude,
+        description: entity.location!.description,
+        id: entity.location!.id,
+        createdBy: entity.location!.createdBy,
+        updatedBy: entity.location!.updatedBy,
+        createdAt: entity.location!.createdAt,
+        updatedAt: entity.location!.updatedAt,
+      )
+          : null,
       id: entity.id,
       createdBy: entity.createdBy,
       updatedBy: entity.updatedBy,
@@ -65,7 +84,7 @@ class GetGarageByOwnerIdModel {
     return GetGarageByOwnerId.create(
       name: name,
       ownerId: ownerId,
-      location: location,
+      location: location, // Passez directement l'objet LocationModel ici
       id: id,
       createdBy: createdBy,
       updatedBy: updatedBy,
@@ -73,4 +92,5 @@ class GetGarageByOwnerIdModel {
       updatedAt: updatedAt,
     );
   }
+
 }

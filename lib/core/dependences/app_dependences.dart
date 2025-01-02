@@ -1,6 +1,7 @@
 //Don't translate me
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
 import '../events/app_events_service.dart';
 import '../navigation/app_navigation.dart';
 import '../navigation/getx_navigation_impl.dart';
@@ -83,7 +84,7 @@ class AppDependency {
     final dioNetworkService = DioNetworkService();
     await dioNetworkService.init();
     Get.lazyPut<NetworkService>(() => dioNetworkService, fenix: true);
-
+    Get.lazyPut(()=>GetPlaceNameUseCase(Get.find()));
     // Events
     Get.put(AppEventService(), permanent: true);
 
