@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
@@ -8,9 +9,9 @@ import '../../../application/usecases/get_all_services_center_usecase.dart';
 class WorkshopController extends GetxController {
   final GetAllServicesCenterUseCase _getAllServicesCenterUseCase = Get.find();
   final loading = false.obs;
-
+  GetAllServicesCenter? servicesCenter ;
   final AppNavigation _appNavigation;
-  WorkshopController(this._appNavigation);
+  WorkshopController(this._appNavigation );
 
   final selectedCategoryIndex = 0.obs;
 
@@ -41,6 +42,7 @@ class WorkshopController extends GetxController {
       },
       (response) {
         loading.value = false;
+        servicesCenter = response ;
         print(response);
       },
     );
