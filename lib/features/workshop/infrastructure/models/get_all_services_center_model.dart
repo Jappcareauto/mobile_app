@@ -41,24 +41,26 @@ class GetAllServicesCenterModel {
 }
 class DataModel {
 
-  final String name;
-  final String ownerId;
-  final LocationModel location;
-  final String category;
+  final String? name;
+  final String? ownerId;
+  final LocationModel? location;
+  final String? category;
   final String id;
-  final String createdBy;
-  final String updatedBy;
+  final String? createdBy;
+  final String? updatedBy;
   final String createdAt;
   final String updatedAt;
 
+
+
   DataModel._({
     required this.name,
-    required this.ownerId,
+    this.ownerId,
     required this.location,
     required this.category,
     required this.id,
-    required this.createdBy,
-    required this.updatedBy,
+    this.createdBy,
+    this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -67,7 +69,9 @@ class DataModel {
     return DataModel._(
       name: json['name'],
       ownerId: json['ownerId'],
-      location: LocationModel.fromJson(json['location']),
+      location: json['location'] != null
+          ? LocationModel.fromJson(json['location'])
+          : null, // Gestion de la valeur null pour location
       category: json['category'],
       id: json['id'],
       createdBy: json['createdBy'],
@@ -77,11 +81,12 @@ class DataModel {
     );
   }
 
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['ownerId'] = ownerId;
-    data['location'] = location.toJson();
+    data['location'] = location?.toJson(); // Utiliser l'opérateur null-aware
     data['category'] = category;
     data['id'] = id;
     data['createdBy'] = createdBy;
@@ -91,11 +96,14 @@ class DataModel {
     return data;
   }
 
+
   factory DataModel.fromEntity(Data entity) {
     return DataModel._(
       name: entity.name,
       ownerId: entity.ownerId,
-      location: LocationModel.fromEntity(entity.location),
+      location: entity.location != null
+          ? LocationModel.fromEntity(entity.location!)
+          : null, // Si location est null, on le laisse null
       category: entity.category,
       id: entity.id,
       createdBy: entity.createdBy,
@@ -109,7 +117,7 @@ class DataModel {
     return Data.create(
       name: name,
       ownerId: ownerId,
-      location: location.toEntity(),
+      location: location?.toEntity(),
       category: category,
       id: id,
       createdBy: createdBy,
@@ -121,8 +129,8 @@ class DataModel {
 }
 class LocationModel {
 
-  final int latitude;
-  final int longitude;
+  final double latitude;
+  final double longitude;
   final String description;
   final String id;
   final String createdBy;
@@ -169,8 +177,8 @@ class LocationModel {
 
   factory LocationModel.fromEntity(Location entity) {
     return LocationModel._(
-      latitude: entity.latitude,
-      longitude: entity.longitude,
+      latitude: entity.latitude.toDouble(),
+      longitude: entity.longitude.toDouble(),
       description: entity.description,
       id: entity.id,
       createdBy: entity.createdBy,

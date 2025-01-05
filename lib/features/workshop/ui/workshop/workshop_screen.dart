@@ -4,6 +4,7 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import 'controllers/workshop_controller.dart';
 import 'package:get/get.dart';
@@ -82,29 +83,51 @@ class WorkshopScreen extends GetView<WorkshopController>
                     title: 'Select Service',
                   ),
                   SizedBox(height: 20),
-                  Padding(
+                  Obx((){
+                    return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: controller.servicesCenter?.data != null
-                          ? controller.servicesCenter!.data.map<Widget>((service) {
+                    child:
+                    Column(
+                      children: controller.loading.value
+                          ? [ // Encapsuler ListVehicleShimmer dans un conteneur de hauteur définie
+                        SizedBox(
+                          height: 190, // Hauteur fixée
+                          child: ListVehicleShimmer(),
+                        ),
+                      ]
+                          : (controller.servicesCenter.value?.data != null &&
+                          controller.servicesCenter.value!.data.isNotEmpty)
+                          ? controller.servicesCenter.value!.data.map<Widget>((service) {
                         return GestureDetector(
                           onTap: () {
-                            controller.gotToServicesLocator();
+                            controller.goToWorkshopDetails(
+                              service.name ?? 'Inconnu',
+                              service.location?.description ?? 'Inconnu',
+                              service.location?.latitude ?? 0.0,
+                              service.location?.longitude ?? 0.0,
+                            );
                           },
                           child: ServiceItemWidget(
                             image: AppImages.shopCar,
-                            title: service.name,
+                            title: service.name ?? 'Inconnu',
                             rate: '4.5',
                             location: 'Douala, Cameroun',
                           ),
                         );
                       }).toList()
                           : [
-                            Text('Aucun service disponible')
-                      ], // Si `data` est null
+                        Text(
+                          'Aucun service disponible',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     )
 
-                  )
+                  );
+  })
                 ]
             )
         )

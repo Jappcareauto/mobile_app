@@ -1,3 +1,4 @@
+
 class GetAllServicesCenter {
 
   final List<Data> data;
@@ -21,25 +22,24 @@ class GetAllServicesCenter {
 
 }
 class Data {
-
-  final String name;
-  final String ownerId;
-  final Location location;
-  final String category;
+  final String? name;
+  final String? ownerId;
+  final Location? location;
+  final String? category;
   final String id;
-  final String createdBy;
-  final String updatedBy;
+  final String? createdBy;
+  final String? updatedBy;
   final String createdAt;
   final String updatedAt;
 
   Data._({
     required this.name,
-    required this.ownerId,
+    this.ownerId,
     required this.location,
     required this.category,
     required this.id,
-    required this.createdBy,
-    required this.updatedBy,
+    this.createdBy,
+    this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -72,14 +72,15 @@ class Data {
 }
 class Location {
 
-  final int latitude;
-  final int longitude;
+  final double latitude;
+  final double longitude;
   final String description;
   final String id;
   final String createdBy;
   final String updatedBy;
   final String createdAt;
   final String updatedAt;
+
 
   Location._({
     required this.latitude,

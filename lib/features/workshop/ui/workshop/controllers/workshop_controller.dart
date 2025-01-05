@@ -9,7 +9,7 @@ import '../../../application/usecases/get_all_services_center_usecase.dart';
 class WorkshopController extends GetxController {
   final GetAllServicesCenterUseCase _getAllServicesCenterUseCase = Get.find();
   final loading = false.obs;
-  GetAllServicesCenter? servicesCenter ;
+  Rxn<GetAllServicesCenter> servicesCenter = Rxn<GetAllServicesCenter>();
   final AppNavigation _appNavigation;
   WorkshopController(this._appNavigation );
 
@@ -28,8 +28,13 @@ class WorkshopController extends GetxController {
     _appNavigation.goBack();
   }
 
-  void goToWorkshopDetails() {
-    _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails);
+  void goToWorkshopDetails(String name , String description , double latitude , double longitude) {
+    _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails , arguments: {
+      "name": name ,
+      "description": description ,
+      "latitude": latitude ,
+      "longitude":longitude
+    });
   }
   Future<void> getAllServicesCenter() async {
     loading.value = true;
@@ -42,8 +47,10 @@ class WorkshopController extends GetxController {
       },
       (response) {
         loading.value = false;
-        servicesCenter = response ;
-        print(response);
+
+          servicesCenter.value = response;
+
+        print(response.data);
       },
     );
   }

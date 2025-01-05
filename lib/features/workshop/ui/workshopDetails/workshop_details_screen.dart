@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/views/workshop_custom_map_view.dart';
+import 'package:jappcare/features/workshop/ui/workshopDetails/widgets/text_shimmer.dart';
 import '../widgets/workshop_carrousel.dart';
 import '../workshop/widgets/categories_item_list.dart';
 import 'controllers/workshop_details_controller.dart';
@@ -60,7 +61,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Japtech Auto shop',
+                           controller.arguments['name'],
                             style: Get.textTheme.headlineLarge,
                           ),
                           Chip(
@@ -90,13 +91,18 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                                 color: Get.theme.primaryColor,
                               ),
                               SizedBox(width: 5),
-                              Text(
-                                'Douala, Deido',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Get.theme.primaryColor,
-                                ),
+                              Obx(() =>
+                              controller.loading.value ?
+                                  TextShimmer() :
+                                  Text(
+                                    controller.placeName.value,
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: Get.theme.primaryColor,
+                                    ),
+                                  )
                               )
+
                             ],
                           ),
                           Container(
@@ -126,8 +132,8 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                 ),
                 Container(
                   margin: const EdgeInsets.all(20),
-                  child: const Text(
-                    'Experience top-notch service at Japtech Auto shop, where we offer a wide range of basic car services to keep your vehicle running smoothly.',
+                  child:  Text(
+                    controller.arguments['description'],
                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                   ),
                 ),

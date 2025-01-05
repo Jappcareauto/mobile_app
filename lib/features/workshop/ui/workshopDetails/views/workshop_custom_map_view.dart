@@ -10,7 +10,7 @@ class WorkshopCustomMapView extends StatelessWidget implements FeatureWidgetInte
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(WorkshopDetailsController(Get.find()));
-    controller.loadCustomMarker();
+
     return Expanded(
         child: MixinBuilder<WorkshopDetailsController>(
       initState: (_) {},
@@ -20,14 +20,15 @@ class WorkshopCustomMapView extends StatelessWidget implements FeatureWidgetInte
               const BorderRadius.vertical(top: Radius.circular(32)),
           child: controller.locationPermissionGranted.value
               ? GoogleMap(
-                  mapType: MapType.normal,
-                  initialCameraPosition: _.kYaounde,
-                  markers: _.markers,
-                  polylines: _.polylines,
-                  onMapCreated: (GoogleMapController c) {
-                    _.mapController.complete(c);
-                  },
-                )
+                mapType: MapType.normal,
+                initialCameraPosition: _.kYaounde,
+                markers: _.markers, // Set de marqueurs
+                polylines: _.polylines,
+                onMapCreated: (GoogleMapController c) {
+                  _.mapController.complete(c);
+                  _.locatePoint(_.arguments['latitude'] , _.arguments['longitude']); // Exemple de coordonnées (Latitude, Longitude)
+                },
+              )
               : const Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(

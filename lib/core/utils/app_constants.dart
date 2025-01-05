@@ -22,4 +22,5 @@ class AppConstants {
   static const String userLoginEvent = "userLoginEvent";
   static const String userIdEvent = "userIdEvent";
   static const String garageIdEvent = "garageIdEvent";
+  static const String mapLocalisation = "assets/icons/maplocalisation.png";
 }
