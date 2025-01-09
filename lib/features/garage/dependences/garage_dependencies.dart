@@ -20,7 +20,7 @@ class GarageDependencies {
     Get.lazyPut<GarageRepository>(
         () => GarageRepositoryImpl(networkService: Get.find()),
         fenix: true);
-    Get.lazyPut<FeatureWidgetInterface>(() => const ListVehicleWidget(),
+    Get.lazyPut<FeatureWidgetInterface>(() =>  ListVehicleWidget(),
         tag: 'ListVehicleWidget', fenix: true);
     Get.lazyPut<FeatureWidgetInterface>(() => GarageScreen(),
         tag: 'GarageScreen', fenix: true);

@@ -18,9 +18,8 @@ class GarageScreen extends GetView<GarageController>
       builder: (_) {
         return Scaffold(
             appBar: CustomAppBar(
-              title: controller.loading.value
-                  ? "My Garage"
-                  : controller.myGarage?.name ?? "My Garage",
+              title:
+                   "My Garage",
               canBack: true,
               actions: [
                 if (Get.isRegistered<FeatureWidgetInterface>(

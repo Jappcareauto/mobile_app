@@ -12,12 +12,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        // mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SingleChildScrollView(
+      body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -67,7 +62,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                           Chip(
                             backgroundColor: const Color(0xFFC4FFCD),
                             label: const Text(
-                              'Avalaible',
+                              'Available',
                               style: TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.w600),
@@ -140,79 +135,29 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                 const SelectServiceItemList(title: 'Specialized Services'),
                 const SizedBox(height: 20),
                 SizedBox(
-                    height: Get.height * .7,
-                    child: const WorkshopCustomMapView())
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Column(
-              children: [
+                    height: 300,
+                    child: const WorkshopCustomMapView()),
+                SizedBox(height: 20),
+
                 Container(
                   width: Get.width,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: CustomButton(
                     text: 'Book Appointment',
                     onPressed: () {
-                        controller.gotoBoockApontment();
+                      controller.gotoBoockApontment();
                     },
                   ),
                 ),
                 SizedBox(height: 20),
               ],
             ),
-          )
-        ],
-      ),
+
+          ),
+
     );
   }
 
-  _BottomSheetBookAppointment() {
-    showModalBottomSheet(
-        isDismissible: true,
-        isScrollControlled: true,
-        showDragHandle: true,
-        enableDrag: true,
-        shape: const CircleBorder(),
-        context: Get.context!,
-        builder: (BuildContext context) {
-          return SizedBox(
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(),
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  )),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      child: const Row(
-                        children: [
-                          Text(
-                            "Login",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    CustomButton(
-                      text: 'Continue',
-                      onPressed: () {
-                        print('Bouton cliqué!');
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
-  }
+
+
 }

@@ -7,6 +7,7 @@ import 'package:jappcare/features/workshop/ui/PayWithPhone/controller/pay_with_p
 import 'package:jappcare/features/workshop/ui/appointment_details/controllers/appointment_details_controller.dart';
 import 'package:jappcare/features/workshop/ui/autoshop_detail/controllers/autoshop_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/book_appointment/controllers/map_controller.dart';
 import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/controllers/services_locator_controller.dart';
@@ -33,8 +34,10 @@ class WorkshopDependencies {
     Get.lazyPut<PayWithCardController>(() => PayWithCardController(Get.find()));
     Get.lazyPut<PayWithPhoneController>(() => PayWithPhoneController(Get.find()));
     Get.lazyPut<SuccessPaymentController>(() => SuccessPaymentController(Get.find()));
-    Get.lazyPut<AppointmentDetailsController>(() => AppointmentDetailsController(Get.find()));;
+    Get.lazyPut<AppointmentDetailsController>(() => AppointmentDetailsController(Get.find()));
     Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);
+    Get.lazyPut<MapController>(() => MapController(Get.find()));
+
     // Get.put(WorkshopController(Get.find<AppNavigation>(), Get.find<GetAllServicesCenter>()));
   }
 

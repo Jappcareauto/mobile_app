@@ -24,7 +24,8 @@ class HomeScreen extends GetView<HomeController> {
     return Scaffold(
       appBar: const AppBarWithAvatarAndSalutation(),
       body: SingleChildScrollView(
-        child: Column(
+        child:
+        Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -73,7 +74,8 @@ class HomeScreen extends GetView<HomeController> {
                   ),
 
                   NotificationWidget(
-                    backgrounColor: Get.theme.cardColor,
+                    haveTitle: true,
+                    backgrounColor: Color(0xFFF4EEFF),
                     title: "Tip",
                     bodyText:
                         'Rotate your tires regulary to ensure they wear evenly and last longer.',
@@ -85,10 +87,19 @@ class HomeScreen extends GetView<HomeController> {
               ),
             ),
             const SizedBox(height: 12),
+
             if (Get.isRegistered<FeatureWidgetInterface>(
                 tag: 'ListVehicleWidget'))
               Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
-                  .buildView(),
+                  .buildView({
+               "pageController": controller.pageController ,
+                "currentPage": controller.currentPage,
+                "haveAddVehicule": true,
+                "title": "My Garage",
+                "onTapeAddVehicle": (){
+                 print("clique");
+                },
+              }),
             const SizedBox(height: 20),
             if (Get.isRegistered<FeatureWidgetInterface>(
                 tag: 'RecentActivitiesWidget'))

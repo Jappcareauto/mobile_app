@@ -6,16 +6,14 @@ import 'package:shimmer/shimmer.dart';
 class TextShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors
-      (
-        child: Container(
-          width: 150,
-          child: Text(
-            ''
-          ),
-        ),
+    return  Shimmer.fromColors(
       baseColor: Colors.grey.withOpacity(.5),
       highlightColor: Colors.white,
+      child: Container(
+        width: 150,
+        height: 20, // Hauteur simulant une ligne de texte
+        color: Colors.grey, // Couleur de fond pour le shimmer
+      ),
     );
   }
 

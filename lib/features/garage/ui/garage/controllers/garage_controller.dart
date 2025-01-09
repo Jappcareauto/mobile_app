@@ -30,7 +30,7 @@ class GarageController extends GetxController {
 
   GetGarageByOwnerId? myGarage;
 
-  List<Vehicle> vehicleList = [];
+  RxList<Vehicle> vehicleList = <Vehicle>[].obs;
 
   @override
   void onInit() {
@@ -107,7 +107,10 @@ class GarageController extends GetxController {
         Get.showCustomSnackBar(e.message);
       },
       (response) {
-        vehicleList = response;
+        vehicleList.value = response;
+        print("vehicleList.toList()");
+
+
         update();
         vehicleLoading.value = false;
       },

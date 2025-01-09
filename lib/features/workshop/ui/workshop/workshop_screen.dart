@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_widgets.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import 'controllers/workshop_controller.dart';
 import 'package:get/get.dart';
@@ -21,7 +23,7 @@ class WorkshopScreen extends GetView<WorkshopController>
     Get.put(WorkshopController(Get.find(), ));
     return Scaffold(
         appBar: const CustomAppBar(
-          title: "Workshop",
+          title: "Service Centers",
           canBack: false,
         ),
         body: SingleChildScrollView(
@@ -33,36 +35,27 @@ class WorkshopScreen extends GetView<WorkshopController>
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: CustomFormField(
+                            borderRadius: 32 ,
+                            filColor: AppColors.white,
                             hintText: "Search Centers",
                             prefix: Icon(FluentIcons.search_24_regular),
                           ),
                         ),
                       ),
-
-                      //  SizedBox(width: 5),
                       Container(
                         padding: EdgeInsets.all(10),
                         margin: EdgeInsets.only(right: 5),
-                        child: ImageComponent(
-                          assetPath: AppImages.mapsquare,
-                        ),
+                        child:Icon(FluentIcons.options_16_regular),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            color: Get.theme.primaryColor.withOpacity(.1)),
+                            color: AppColors.white),
                       ),
                     ],
                   ),
                   SizedBox(height: 20),
                   Row(
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(left: 15),
-                        padding: EdgeInsets.all(5),
-                        child: Icon(FluentIcons.options_16_regular),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Get.theme.primaryColor.withOpacity(.1)),
-                      ),
+
                       SizedBox(width: 20),
                       Container(
                         padding: EdgeInsets.all(12),
@@ -92,7 +85,7 @@ class WorkshopScreen extends GetView<WorkshopController>
                           ? [ // Encapsuler ListVehicleShimmer dans un conteneur de hauteur définie
                         SizedBox(
                           height: 190, // Hauteur fixée
-                          child: ListVehicleShimmer(),
+                          child: WorkshopShimmerWidgets(),
                         ),
                       ]
                           : (controller.servicesCenter.value?.data != null &&

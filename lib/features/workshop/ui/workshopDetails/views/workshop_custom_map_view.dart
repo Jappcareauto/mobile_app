@@ -15,31 +15,35 @@ class WorkshopCustomMapView extends StatelessWidget implements FeatureWidgetInte
         child: MixinBuilder<WorkshopDetailsController>(
       initState: (_) {},
       builder: (_) {
-        return ClipRRect(
-          borderRadius:
-              const BorderRadius.vertical(top: Radius.circular(32)),
-          child: controller.locationPermissionGranted.value
-              ? GoogleMap(
-                mapType: MapType.normal,
-                initialCameraPosition: _.kYaounde,
-                markers: _.markers, // Set de marqueurs
-                polylines: _.polylines,
-                onMapCreated: (GoogleMapController c) {
-                  _.mapController.complete(c);
-                  _.locatePoint(_.arguments['latitude'] , _.arguments['longitude']); // Exemple de coordonnées (Latitude, Longitude)
-                },
-              )
-              : const Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal:50),
-                    child: Text(
-                      "Location permission is required",
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+        return Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+          child:  ClipRRect(
+            borderRadius:
+            const BorderRadius.all(Radius.circular(32)),
+            child: controller.locationPermissionGranted.value
+                ? GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: _.kYaounde,
+              markers: _.markers, // Set de marqueurs
+              polylines: _.polylines,
+              onMapCreated: (GoogleMapController c) {
+                _.mapController.complete(c);
+                _.locatePoint(_.arguments['latitude'] , _.arguments['longitude']); // Exemple de coordonnées (Latitude, Longitude)
+              },
+            )
+                : const Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal:50),
+                child: Text(
+                  "Location permission is required",
+                  textAlign: TextAlign.center,
                 ),
+              ),
+            ),
+          )
         );
+
       },
     ));
   }

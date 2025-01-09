@@ -28,15 +28,15 @@ class AddImageWidget extends GetView<BookAppointmentController>{
                  crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
                    // Affiche les autres containers uniquement si la liste n'est pas vide
-                   ...controller.images.map((imagePath) {
+                   ...controller.selectedImages.map((imagePath) {
                      return Container(
                        margin: EdgeInsets.only(right: 20), // Espacement entre les images
                        height: 100,
                        width: MediaQuery.of(context).size.width * 0.25,
                        child: ClipRRect(
                          borderRadius: BorderRadius.circular(20),
-                         child: Image.asset(
-                           imagePath,
+                         child:Image.file(
+                           imagePath, // Ajuster la taille de l'image
                            fit: BoxFit.cover,
                          ),
                        ),
@@ -47,6 +47,7 @@ class AddImageWidget extends GetView<BookAppointmentController>{
                    GestureDetector(
                      onTap: (){
                        print('Pick photo');
+                       controller.selectImagesFromGallery();
                      },
                      child: Container(
                        height: 100,

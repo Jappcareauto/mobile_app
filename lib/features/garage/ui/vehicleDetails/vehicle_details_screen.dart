@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import '../../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../../../../core/ui/widgets/custom_app_bar.dart';
 import '../../../../core/ui/widgets/image_component.dart';
@@ -131,6 +132,48 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
             ),
           ),
           const SizedBox(height: 20),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 20),
+
+          child:  Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Find a service for your car' , style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 16),)
+            ],
+          ),
+        ),
+          const SizedBox(height: 10),
+
+         Container(
+           margin: EdgeInsets.symmetric(horizontal: 20),
+
+           child:  Row(
+             children: [
+               Expanded(
+                 child: CustomCardService(
+                     color: Color(0xFFC4FFCD),
+                     text: 'Vehicles\nReports',
+                     imagePath: AppImages.vehicule,
+                     onTap: (){}
+                   // controller.goToVehicleReport
+
+                 ),
+               ),
+               const SizedBox(width: 10),
+               Expanded(
+                 child: CustomCardService(
+                   color: Color(0xFFFFDAD4),
+                   text: 'Emergency\nAssistance',
+                   imagePath: AppImages.emergency,
+                   onTap: () {
+                     // controller.goToEmergency();
+                   },
+                 ),
+               ),
+             ],
+           ),
+         ),
           const RecentActivitiesWidget(haveTabBar: false),
         ]),
       ),

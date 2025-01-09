@@ -63,7 +63,15 @@ class ProfileScreen extends GetView<ProfileController> {
               if (Get.isRegistered<FeatureWidgetInterface>(
                   tag: 'ListVehicleWidget'))
                 Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
-                    .buildView(),
+                    .buildView({
+                  "pageController": controller.pageController ,
+                  "currentPage": controller.currentPage,
+                  "haveAddVehicule": true,
+                  "title": "My Garage",
+                  "onTapeAddVehicle": (){
+                    print("clique");
+                  },
+                }),
               const SizedBox(height: 20),
               if (Get.isRegistered<FeatureWidgetInterface>(
                   tag: 'RecentActivitiesWidget'))

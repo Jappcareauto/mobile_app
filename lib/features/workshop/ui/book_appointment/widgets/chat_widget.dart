@@ -9,15 +9,6 @@ class ChatWidget extends StatelessWidget{
     return Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-          boxShadow:[
-            BoxShadow(
-                blurRadius: 25,
-                blurStyle: BlurStyle.normal,
-                color: Colors.black,
-                offset: Offset.zero,
-                spreadRadius: 2
-            ),
-          ] ,
           color: Get.theme.primaryColor,
           borderRadius: BorderRadius.circular(15)
       ),

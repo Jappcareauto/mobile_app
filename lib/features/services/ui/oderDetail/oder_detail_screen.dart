@@ -20,7 +20,7 @@ class OderDetailScreen extends GetView<OderDetailController> {
             children: [
               SelectedVehiculeWidget(
                   pageController: generateVehicleReportController.pageController,
-                  cars: generateVehicleReportController.cars[generateVehicleReportController.currentPage.value],
+                  cars: generateVehicleReportController.vehicleList,
                   currentPage: generateVehicleReportController.currentPage,
                   haveAddVehicule: false,
                   titleText: 'Generate Report for'

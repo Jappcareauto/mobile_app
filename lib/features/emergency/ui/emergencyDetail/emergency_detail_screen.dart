@@ -25,7 +25,7 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
             SizedBox(height: 20,),
             SelectedVehiculeWidget(
                 pageController: generateVehiculeReportController.pageController,
-                cars: generateVehiculeReportController.cars,
+                cars: generateVehiculeReportController.vehicleList,
                 currentPage: generateVehiculeReportController.currentPage,
                 haveAddVehicule: false,
                 titleText: 'Select Vehicle'
