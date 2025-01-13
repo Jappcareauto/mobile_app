@@ -1,8 +1,8 @@
+import '../../infrastructure/models/location_model.dart';
 class GetGarageByOwnerId {
-
   final String name;
   final String ownerId;
-  final String? location;
+  final LocationModel? location; // Changement ici
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -21,16 +21,16 @@ class GetGarageByOwnerId {
   });
 
   factory GetGarageByOwnerId.create({
-    required name,
-    required ownerId,
-    location,
-    required id,
-    createdBy,
-    updatedBy,
-    required createdAt,
-    required updatedAt,
+    required String name,
+    required String ownerId,
+    LocationModel? location, // Changement ici
+    required String id,
+    String? createdBy,
+    String? updatedBy,
+    required String createdAt,
+    required String updatedAt,
   }) {
-    // Add any validation or business logic here
+    // Ajout de la logique métier ou des validations ici, si nécessaire
     return GetGarageByOwnerId._(
       name: name,
       ownerId: ownerId,
@@ -42,5 +42,4 @@ class GetGarageByOwnerId {
       updatedAt: updatedAt,
     );
   }
-
 }

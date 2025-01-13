@@ -1,4 +1,8 @@
 import '../../../features/home/navigation/home_public_routes.dart';
+import '../../../features/vehicleFinder/navigation/vehicle_finder_public_routes.dart';
+  
+import '../../../features/emergency/navigation/emergency_public_routes.dart';
+  
 import '../../../features/services/navigation/services_public_routes.dart';
   
 import '../../../features/chat/navigation/chat_public_routes.dart';
@@ -31,13 +35,15 @@ class AppRoutes {
   static const authentification = AuthentificationPublicRoutes.home;
   //Garage Public Routes
   static const garage = GaragePublicRoutes.home;
-  static const generateVehicleReport = GaragePublicRoutes.generateVehicleReport;
+  // static const generateVehicleReport = GaragePublicRoutes.generateVehicleReport;
   //Shop Public Routes
   static const shop = ShopPublicRoutes.home;
   //Activities Public Routes
   static const activities = ActivitiesPublicRoutes.home;
   //Workshop Public Routes
   static const workshop = WorkshopPublicRoutes.home;
+  static const workshopchat = WorkshopPublicRoutes.chat;
+
   //Profile Public Routes
   static const profile = ProfilePublicRoutes.home;
   //Notifications Public Routes
@@ -46,4 +52,11 @@ class AppRoutes {
   static const chat = ChatPublicRoutes.home;
   //Services Public Routes
   static const services = ServicesPublicRoutes.home;
+  static const generateVehicleReport = ServicesPublicRoutes.generateVehiculeReport;
+
+  //Emergency Public Routes
+  static const emergency = EmergencyPublicRoutes.home;
+
+  //VehicleFinder Public Routes
+  static const vehicleFinder = VehicleFinderPublicRoutes.home;
 }

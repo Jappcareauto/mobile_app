@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
@@ -7,6 +9,8 @@ class NotificationWidget extends StatelessWidget {
       {required this.bodyText,
       super.key,
       required this.coloriage,
+        this.textSize,
+        this.haveTitle,
       required this.icon,
         required this.backgrounColor,
       required this.title, this.onTap});
@@ -14,6 +18,8 @@ class NotificationWidget extends StatelessWidget {
   final Color coloriage;
   final Color? backgrounColor ;
   final String bodyText;
+  final double? textSize ;
+  final bool? haveTitle;
   final String title;
   final Function()? onTap;
 
@@ -29,20 +35,25 @@ class NotificationWidget extends StatelessWidget {
         onTap: onTap,
         child: ListTile(
           contentPadding: const EdgeInsets.only(left: 20, right: 20),
-          title: Row(
+          title:  haveTitle == true ?
+          Row(
             children: [
-              Icon(icon, size: 24, color: coloriage),
+
+              Icon(icon, size: 24, color: coloriage) ,
+
               const SizedBox(width: 10),
               Text(
                 title,
                 style: TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.bold, color: coloriage),
+                    fontSize:16, fontWeight: FontWeight.bold, color: coloriage),
               ),
+
             ],
-          ),
+          ) :
+              SizedBox(),
           subtitle: Text(
             bodyText,
-            style: Get.textTheme.bodyLarge,
+            style: TextStyle(fontSize:  textSize != null ? textSize : 16),
           ),
           trailing: CircleAvatar(
               backgroundColor: coloriage.withOpacity(.1),

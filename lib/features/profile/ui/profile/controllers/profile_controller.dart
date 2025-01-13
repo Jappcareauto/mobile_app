@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
+import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/profile/navigation/private/profile_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
@@ -16,7 +18,9 @@ import '../../../application/usecases/update_profile_image_command.dart';
 class ProfileController extends GetxController {
   final UpdateProfileImageUseCase _updateProfileImageUseCase = Get.find();
   final loading = false.obs;
-
+  final LocalStorageService _localStorageService = Get.find();
+  final PageController pageController = PageController();
+  final RxInt currentPage = 0.obs;
   final GetUserInfosUseCase _getUserInfosUseCase = Get.find();
 
   final AppNavigation _appNavigation;
@@ -37,6 +41,12 @@ class ProfileController extends GetxController {
       if (token != '') getUserInfos();
     });
     getUserInfos();
+    pageController.addListener(() {
+      int newPage = pageController.page!.round();
+      if (currentPage.value != newPage) {
+        currentPage.value = newPage;
+      }
+    });
   }
 
   void goBack() {
@@ -61,6 +71,8 @@ class ProfileController extends GetxController {
       (success) {
         loading.value = false;
         userInfos = success;
+        _localStorageService.write(AppConstants.userId, success.id);
+
         Get.find<AppEventService>().emit<String>(AppConstants.userIdEvent, '');
         Get.find<AppEventService>()
             .emit<String>(AppConstants.userIdEvent, userInfos!.id);

@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
+import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/chip_widget.dart';
 
 import '../../../../../core/utils/app_images.dart';
 
-class CarCardWidget extends StatelessWidget {
+class CarCardWidget extends GetView<GarageController> {
   const CarCardWidget({
     super.key,
     required this.date,
@@ -15,6 +16,8 @@ class CarCardWidget extends StatelessWidget {
     required this.localisation,
     required this.nameCar,
     required this.status,
+    required this.latitude,
+    required this.longitude,
     this.pathImageCar,
     this.widthCard,
     this.heightCard,
@@ -29,13 +32,16 @@ class CarCardWidget extends StatelessWidget {
   final String? pathImageCar;
   final double? widthCard;
   final double? heightCard;
+  final  double longitude;
+  final  double latitude;
   final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     // Déterminer la couleur en fonction du statut
-
-    return Container(
+   controller.getPlaceName(longitude, latitude);
+    return Obx(()  =>
+      Container(
       width: widthCard,
       height: heightCard,
       margin: const EdgeInsets.only(bottom: 12, left: 20),
@@ -105,7 +111,8 @@ class CarCardWidget extends StatelessWidget {
                         color: Colors.grey,
                       ),
                       const SizedBox(width: 10),
-                      Text(localisation, style: Get.textTheme.bodySmall),
+                      
+                      Text(controller.placeName.value == null ? localisation : controller.placeName.value , style: Get.textTheme.bodySmall),
                     ],
                   ),
                 ],
@@ -126,6 +133,6 @@ class CarCardWidget extends StatelessWidget {
           ),
         ]),
       ),
-    );
+    ));
   }
 }

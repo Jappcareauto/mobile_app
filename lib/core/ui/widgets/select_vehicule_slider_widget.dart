@@ -3,9 +3,11 @@ import 'package:jappcare/features/garage/ui/garage/widgets/car_card_add_vehicle.
 import 'package:get/get.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 
+import '../../../features/garage/domain/entities/get_vehicle_list.dart';
+
 class SelectedVehiculeWidget extends StatelessWidget {
   final PageController pageController;
-  final dynamic cars; // Peut être une liste ou un map
+  final List<Vehicle> cars; // Peut être une liste ou un map
   final RxInt currentPage;
   final bool haveAddVehicule;
   final String titleText;
@@ -23,13 +25,7 @@ class SelectedVehiculeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Vérifier et convertir cars en liste si nécessaire
-    final List<Map<String, String>> carList = (cars is List<Map<String, String>>)
-        ? cars
-        : (cars is Map<String, String>)
-        ? [cars]
-        : []; // Si cars est autre chose, retournez une liste vide
-    print("Cars list: $carList"); // Déboguer ici
+
     return Column(
       children: [
         Row(
@@ -50,13 +46,13 @@ class SelectedVehiculeWidget extends StatelessWidget {
           height: 220, // Contraindre la hauteur du PageView
           child: PageView.builder(
             controller: pageController,
-            itemCount: carList.length + (haveAddVehicule ? 1 : 0), // Ajouter un élément si nécessaire
+            itemCount: cars.length + (haveAddVehicule ? 1 : 0), // Ajouter un élément si nécessaire
             onPageChanged: (index) {
               currentPage.value = index; // Mettre à jour la page actuelle
             },
             itemBuilder: (context, index) {
               // Dernier élément pour "Add Vehicle"
-              if (haveAddVehicule && index == carList.length) {
+              if (haveAddVehicule && index == cars.length) {
                 return GestureDetector(
                   onTap: onTapeAddVehicle,
                   child: Container(
@@ -84,13 +80,13 @@ class SelectedVehiculeWidget extends StatelessWidget {
               // Afficher les cartes normales pour les voitures
               return Obx(() {
                 return CarCardAddVehicle(
-                  key: ValueKey(carList[index]),
-                  haveBGColor: carList.length == 1 ? true : false,
+                  key: ValueKey(cars[index]),
+                  haveBGColor: haveAddVehicule ? true : false,
                   hideblure: true,
                   haveBorder: currentPage.value == index,
                   containerheight: 200,
                   next: () {
-                    if (index == carList.length - 1 && !haveAddVehicule) {
+                    if (index == cars.length - 1 && !haveAddVehicule) {
                       pageController.jumpToPage(0);
                     } else {
                       pageController.nextPage(
@@ -99,9 +95,10 @@ class SelectedVehiculeWidget extends StatelessWidget {
                       );
                     }
                   },
-                  carName: carList[index]["carName"] ?? '',
-                  carDetails: carList[index]["carDetails"] ?? '',
-                  imagePath: carList[index]["imagePath"] ?? '',
+                  carName: cars[index].name?? '',
+                  carDetails: cars[index].vin ?? '',
+                  imagePath: cars[index].imageUrl ?? '',
+                  imageUrl: cars[index].imageUrl ?? '',
                 );
               });
             },

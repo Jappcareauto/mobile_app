@@ -22,18 +22,21 @@ class TimeSlot extends StatelessWidget {
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected ? Get.theme.primaryColor.withOpacity(0.2) : Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-            color: isSelected ?Get.theme.primaryColor.withOpacity(0.2) : Colors.grey,
-          ),
+          borderRadius: BorderRadius.circular(12),
+           border: Border.all(
+              color: isSelected ? Colors.orange : Colors.grey,
+        ),
         ),
         child: Column(
           children: [
             Text(
               label,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold , color: isSelected ? Colors.orange : Colors.black),
             ),
-            Text(timeRange),
+            Text(timeRange ,
+              style: TextStyle(fontWeight: FontWeight.bold , color: isSelected ? Colors.orange : Colors.black),
+
+            ),
           ],
         ),
       ),

@@ -21,20 +21,35 @@ class CustomMapWidget extends GetView<MapController>{
 
             borderRadius:
              BorderRadius.circular(32),
-            child: workshopcontroller.locationPermissionGranted.value
-                ? GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: workshopcontroller.kYaounde,
-            )
-                : Center(
-              child: Padding(
-                padding: const EdgeInsets.all(50),
-                child: Text(
-                  "Location permission is required",
-                  textAlign: TextAlign.center,
+            child: Obx(() {
+              return controller.locationPermissionGranted.value
+                  ? GoogleMap(
+                mapType: MapType.normal,
+                initialCameraPosition: controller.kYaounde,
+                markers: controller.markers,
+
+                onMapCreated: (GoogleMapController c) {
+                  if (!controller.mapController.isCompleted) {
+                    controller.mapController.complete(c);
+                  }
+                  controller.locatePoint(
+                    controller.arguments['latitude'],
+                    controller.arguments['longitude'],
+                  );
+                },
+              )
+                  : const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(50),
+                  child: Text(
+                    "Location permission is required",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-            ),
+
+              );
+            })
+
           ) ,
         );
 

@@ -15,7 +15,7 @@ class SelectServiceItemList extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    Get.put(WorkshopController(Get.find()));
+    Get.put(WorkshopController(Get.find(),));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

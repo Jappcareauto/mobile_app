@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/views/workshop_custom_map_view.dart';
+import 'package:jappcare/features/workshop/ui/workshopDetails/widgets/text_shimmer.dart';
 import '../widgets/workshop_carrousel.dart';
 import '../workshop/widgets/categories_item_list.dart';
 import 'controllers/workshop_details_controller.dart';
@@ -11,12 +12,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        // mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SingleChildScrollView(
+      body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,13 +56,13 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Japtech Auto shop',
+                           controller.arguments['name'],
                             style: Get.textTheme.headlineLarge,
                           ),
                           Chip(
                             backgroundColor: const Color(0xFFC4FFCD),
                             label: const Text(
-                              'Avalaible',
+                              'Available',
                               style: TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.w600),
@@ -90,13 +86,18 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                                 color: Get.theme.primaryColor,
                               ),
                               SizedBox(width: 5),
-                              Text(
-                                'Douala, Deido',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Get.theme.primaryColor,
-                                ),
+                              Obx(() =>
+                              controller.loading.value ?
+                                  TextShimmer() :
+                                  Text(
+                                    controller.placeName.value,
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: Get.theme.primaryColor,
+                                    ),
+                                  )
                               )
+
                             ],
                           ),
                           Container(
@@ -126,87 +127,37 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                 ),
                 Container(
                   margin: const EdgeInsets.all(20),
-                  child: const Text(
-                    'Experience top-notch service at Japtech Auto shop, where we offer a wide range of basic car services to keep your vehicle running smoothly.',
+                  child:  Text(
+                    controller.arguments['description'],
                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                   ),
                 ),
                 const SelectServiceItemList(title: 'Specialized Services'),
                 const SizedBox(height: 20),
                 SizedBox(
-                    height: Get.height * .7,
-                    child: const WorkshopCustomMapView())
-              ],
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Column(
-              children: [
+                    height: 300,
+                    child: const WorkshopCustomMapView()),
+                SizedBox(height: 20),
+
                 Container(
                   width: Get.width,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: CustomButton(
                     text: 'Book Appointment',
                     onPressed: () {
-                        controller.gotoBoockApontment();
+                      controller.gotoBoockApontment();
                     },
                   ),
                 ),
                 SizedBox(height: 20),
               ],
             ),
-          )
-        ],
-      ),
+
+          ),
+
     );
   }
 
-  _BottomSheetBookAppointment() {
-    showModalBottomSheet(
-        isDismissible: true,
-        isScrollControlled: true,
-        showDragHandle: true,
-        enableDrag: true,
-        shape: const CircleBorder(),
-        context: Get.context!,
-        builder: (BuildContext context) {
-          return SizedBox(
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(),
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  )),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      child: const Row(
-                        children: [
-                          Text(
-                            "Login",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                    CustomButton(
-                      text: 'Continue',
-                      onPressed: () {
-                        print('Bouton cliqué!');
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
-  }
+
+
 }

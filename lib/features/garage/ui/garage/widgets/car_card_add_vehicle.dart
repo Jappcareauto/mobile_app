@@ -10,6 +10,8 @@ class CarCardAddVehicle extends StatelessWidget {
   final String carName;
   final String carDetails;
   final String imagePath;
+  final String? imageUrl;
+
   final Function()? onPressed;
   final Function()? next;
   final bool haveBorder ;
@@ -20,6 +22,7 @@ class CarCardAddVehicle extends StatelessWidget {
   const CarCardAddVehicle({
     super.key,
     this.next,
+    this.imageUrl,
     required this.haveBorder,
     this.containerheight,
     required this.hideblure,
@@ -38,8 +41,8 @@ class CarCardAddVehicle extends StatelessWidget {
       width: 360,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        color:  haveBGColor ? Get.theme.primaryColor : Get.theme.primaryColor.withOpacity(.1),
-        border: haveBorder ? Border.all(color: Get.theme.primaryColor , width: 3) :  Border.all(color: AppColors.lightBorder),
+        color:  haveBGColor ? Get.theme.primaryColor : AppColors.white,
+        border: haveBorder ? Border.all(color: Get.theme.primaryColor , width: 1) :  Border.all(color: AppColors.lightBorder),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
@@ -50,7 +53,8 @@ class CarCardAddVehicle extends StatelessWidget {
             alignment: Alignment.bottomRight,
             children: [
               ImageComponent(
-                assetPath: imagePath,
+                assetPath: imageUrl == null ? imagePath : "" ,
+                imageUrl: imageUrl ,
                 width: 250,
                 height: 120,
               ),

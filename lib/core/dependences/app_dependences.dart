@@ -1,6 +1,7 @@
 //Don't translate me
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
 import '../events/app_events_service.dart';
 import '../navigation/app_navigation.dart';
 import '../navigation/getx_navigation_impl.dart';
@@ -41,6 +42,12 @@ import '../../features/chat/navigation/private/chat_pages.dart';
 import '../../features/services/dependences/services_dependencies.dart';
 import '../../features/services/navigation/private/services_pages.dart';
 
+import '../../features/emergency/dependences/emergency_dependencies.dart';
+import '../../features/emergency/navigation/private/emergency_pages.dart';
+
+import '../../features/vehicleFinder/dependences/vehicle_finder_dependencies.dart';
+import '../../features/vehicleFinder/navigation/private/vehicle_finder_pages.dart';
+
 class AppDependency {
   static Future<void> init() async {
     // Initialize GetStorage
@@ -48,6 +55,8 @@ class AppDependency {
 
     // initialize all pages
     final featuresPages = [
+      VehicleFinderPages(),
+      EmergencyPages(),
       ServicesPages(),
       ChatPages(),
       NotificationsPages(),
@@ -75,7 +84,7 @@ class AppDependency {
     final dioNetworkService = DioNetworkService();
     await dioNetworkService.init();
     Get.lazyPut<NetworkService>(() => dioNetworkService, fenix: true);
-
+    Get.lazyPut(()=>GetPlaceNameUseCase(Get.find()));
     // Events
     Get.put(AppEventService(), permanent: true);
 
@@ -90,5 +99,7 @@ class AppDependency {
     NotificationsDependencies.init();
       ChatDependencies.init();
      ServicesDependencies.init();
+     EmergencyDependencies.init();
+     VehicleFinderDependencies.init();
  }
 }

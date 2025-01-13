@@ -14,7 +14,7 @@ import 'widgets/notification_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
   final GarageController garageController =
-      Get.put(GarageController(Get.find()));
+      Get.put(GarageController(Get.find(),Get.find()));
 
   HomeScreen({super.key});
 
@@ -24,7 +24,8 @@ class HomeScreen extends GetView<HomeController> {
     return Scaffold(
       appBar: const AppBarWithAvatarAndSalutation(),
       body: SingleChildScrollView(
-        child: Column(
+        child:
+        Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -36,38 +37,45 @@ class HomeScreen extends GetView<HomeController> {
                   //     borderRadius: 20,
                   //     height: 160),
                   // const SizedBox(height: 30),
-                  Container(
-                    child: Column(
-                      children:
-                          controller.notifications.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final notification = entry.value;
 
-                        return Dismissible(
-                          key: Key(notification),
-                          direction: DismissDirection.endToStart,
-                          background: DismissWidget(),
-                          onDismissed: (direction) {
-                            // Action après la suppression
-                            controller.notifications.removeAt(index);
-                          },
-                          child: NotificationWidget(
-                            backgrounColor: Color(0xFFFFEDE6),
-                            title: "Notification",
-                            bodyText: notification,
-                            coloriage: Get.theme.primaryColor,
-                            icon: FluentIcons.alert_16_filled,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                 Container(
+                   child: Column(
+                     children:  controller.notifications.asMap().entries.map((entry) {
+                       final index = entry.key;
+                       final notification = entry.value;
+
+                       return Dismissible(
+                         key: Key(notification),
+                         direction: DismissDirection.endToStart,
+                         background: DismissWidget(),
+                         onDismissed: (direction) {
+                           // Action après la suppression
+                           controller.notifications.removeAt(index);
+                         },
+                         child: NotificationWidget(
+                            haveTitle: true,
+                           textSize: 16,
+
+                           backgrounColor: Color(0xFFFFEDE6),
+                           title: "Notification",
+                           bodyText: notification,
+                           coloriage: Get.theme.primaryColor,
+                           icon: FluentIcons.alert_16_filled,
+                         ),
+                       );
+                     }).toList(),
+                   ),
+                 ),
+                  SizedBox(height: 10,),
+
+
                   SizedBox(
                     height: 10,
                   ),
 
                   NotificationWidget(
-                    backgrounColor: Get.theme.cardColor,
+                    haveTitle: true,
+                    backgrounColor: Color(0xFFF4EEFF),
                     title: "Tip",
                     bodyText:
                         'Rotate your tires regulary to ensure they wear evenly and last longer.',
@@ -79,10 +87,19 @@ class HomeScreen extends GetView<HomeController> {
               ),
             ),
             const SizedBox(height: 12),
+
             if (Get.isRegistered<FeatureWidgetInterface>(
                 tag: 'ListVehicleWidget'))
               Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
-                  .buildView(),
+                  .buildView({
+               "pageController": controller.pageController ,
+                "currentPage": controller.currentPage,
+                "haveAddVehicule": true,
+                "title": "My Garage",
+                "onTapeAddVehicle": (){
+                 print("clique");
+                },
+              }),
             const SizedBox(height: 20),
             if (Get.isRegistered<FeatureWidgetInterface>(
                 tag: 'RecentActivitiesWidget'))
@@ -92,7 +109,7 @@ class HomeScreen extends GetView<HomeController> {
                 'haveTitle': true,
                 'title': 'Upcoming Activities',
                 'status': 'Completed',
-                'isHorizontal': true
+                'isHorizontal': false
               }),
 
             Padding(
@@ -100,9 +117,7 @@ class HomeScreen extends GetView<HomeController> {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      controller.goToservices();
-                    },
+
                     child: TitleSection(nameSection: 'Services'),
                   ),
                   Row(
@@ -121,7 +136,9 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFFFEDE6),
                           text: 'Service\nLocator',
                           imagePath: AppImages.service,
-                          onTap: () {},
+                          onTap: () {
+                            controller.goToVehicleFinder();
+                          },
                         ),
                       ),
                     ],
@@ -134,7 +151,8 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFC4FFCD),
                           text: 'Vehicles\nReports',
                           imagePath: AppImages.vehicule,
-                          onTap: controller.goToVehicleReport,
+                          onTap: controller.goToVehicleReport
+                          ,
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -143,7 +161,9 @@ class HomeScreen extends GetView<HomeController> {
                           color: Color(0xFFFFDAD4),
                           text: 'Emergency\nAssistance',
                           imagePath: AppImages.emergency,
-                          onTap: () {},
+                          onTap: () {
+                            controller.goToEmergency();
+                          },
                         ),
                       ),
                     ],
@@ -153,33 +173,7 @@ class HomeScreen extends GetView<HomeController> {
             ),
             const SizedBox(height: 20),
             //RecentActivitiesWidget
-            if (Get.isRegistered<FeatureWidgetInterface>(
-                tag: 'RecentActivitiesWidget'))
-              garageController.vehicleList.isEmpty
-                  ? Center(
-                      child: Column(
-                        children: [
-                          ImageComponent(
-                            assetPath: AppImages.noActivities,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                'You have no recent activities',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 16),
-                              ),
-                              Text(
-                                'at the moment',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w400, fontSize: 16),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  : Get.find<FeatureWidgetInterface>(
+           Get.find<FeatureWidgetInterface>(
                           tag: 'RecentActivitiesWidget')
                       .buildView(),
           ],

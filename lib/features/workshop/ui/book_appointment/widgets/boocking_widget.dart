@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -76,13 +77,13 @@ class BookingWidget extends GetView<BookAppointmentController> {
               children: [
                 Obx(() => LocationOption(
                   label: "At Home",
-                  icon: Icons.home,
+                  icon: FluentIcons.home_12_regular,
                   isSelected: controller.selectedLocation.value == "At Home",
                   onTap: () => controller.selectLocation("At Home"),
                 )),
                 Obx(() => LocationOption(
                   label: "At the Shop",
-                  icon: Icons.store,
+                  icon: FluentIcons.home_12_regular,
                   isSelected:
                   controller.selectedLocation.value == "At the Shop",
                   onTap: () => controller.selectLocation("At the Shop"),

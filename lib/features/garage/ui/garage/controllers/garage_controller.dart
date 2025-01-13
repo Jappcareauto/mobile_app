@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
+import 'package:jappcare/features/garage/application/usecases/get_place_name_command.dart';
+import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../domain/entities/get_garage_by_owner_id.dart';
 import '../../../domain/entities/get_vehicle_list.dart';
@@ -13,18 +15,22 @@ import '../../../application/usecases/get_vehicle_list_usecase.dart';
 import '../../../application/usecases/get_vehicle_list_command.dart';
 
 class GarageController extends GetxController {
-  final GetVehicleListUseCase _getVehicleListUseCase = Get.find();
+  final GetVehicleListUseCase _getVehicleListUseCase;
+
+  final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
   final loading = true.obs;
   final vehicleLoading = true.obs;
-
+  RxDouble lat = 0.0.obs;
+  RxDouble long = 0.0.obs;
+  RxString placeName = ''.obs;
   final GetGarageByOwnerIdUseCase _getGarageByOwnerIdUseCase = Get.find();
 
   final AppNavigation _appNavigation;
-  GarageController(this._appNavigation);
+  GarageController(this._appNavigation , this._getVehicleListUseCase);
 
   GetGarageByOwnerId? myGarage;
 
-  List<Vehicle> vehicleList = [];
+  RxList<Vehicle> vehicleList = <Vehicle>[].obs;
 
   @override
   void onInit() {
@@ -56,6 +62,7 @@ class GarageController extends GetxController {
   }
 
   Future<void> getGarageByOwnerId(String userId) async {
+
     loading.value = true;
     final result = await _getGarageByOwnerIdUseCase
         .call(GetGarageByOwnerIdCommand(userId: userId));
@@ -74,6 +81,21 @@ class GarageController extends GetxController {
       },
     );
   }
+  Future<void> getPlaceName(double longitude , double latitude) async{
+    lat.value = latitude;
+    long.value = longitude;
+     final result  = await _getPlaceNameUseCase.call(GetPlaceNameCommand(longitude: longitude, latitude: latitude));
+     result.fold(
+         (error){
+           print(error.message);
+         },
+         (response){
+           placeName.value = response ;
+           update();
+         }
+
+     );
+  }
 
   Future<void> getVehicleList(String garageId) async {
     vehicleLoading.value = true;
@@ -85,7 +107,10 @@ class GarageController extends GetxController {
         Get.showCustomSnackBar(e.message);
       },
       (response) {
-        vehicleList = response;
+        vehicleList.value = response;
+        print("vehicleList.toList()");
+
+
         update();
         vehicleLoading.value = false;
       },

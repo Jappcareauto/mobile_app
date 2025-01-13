@@ -53,6 +53,7 @@ class LoginWithEmailController extends GetxController {
       onSuccess: (response) {
         print(response);
         _localStorageService.write(AppConstants.tokenKey, response.accessToken);
+        // _localStorageService.write(AppConstants.userId, response.id);
         _localStorageService.write(
             AppConstants.refreshTokenKey, response.refreshToken);
         _appNavigation.toNamedAndReplaceAll(AppRoutes.home);

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
+import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/garage/ui/garage/garage_screen.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/list_veehicle_widget.dart';
@@ -19,7 +20,7 @@ class GarageDependencies {
     Get.lazyPut<GarageRepository>(
         () => GarageRepositoryImpl(networkService: Get.find()),
         fenix: true);
-    Get.lazyPut<FeatureWidgetInterface>(() => const ListVehicleWidget(),
+    Get.lazyPut<FeatureWidgetInterface>(() =>  ListVehicleWidget(),
         tag: 'ListVehicleWidget', fenix: true);
     Get.lazyPut<FeatureWidgetInterface>(() => GarageScreen(),
         tag: 'GarageScreen', fenix: true);
@@ -31,6 +32,7 @@ class GarageDependencies {
     Get.lazyPut(() => GetGarageByOwnerIdUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetVehicleListUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => AddVehicleUseCase(Get.find()), fenix: true);
-    Get.put(GarageController(Get.find()), permanent: true);
-  }
-}
+    Get.put(GarageController(Get.find(),Get.find()), permanent: true);
+    Get.lazyPut(() => GetPlaceNameUseCase(Get.find()), fenix: true);
+
+}}

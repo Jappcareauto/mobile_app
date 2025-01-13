@@ -21,7 +21,7 @@ class LocationOption extends StatelessWidget {
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected ? Colors.orange.withOpacity(0.2) : Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: isSelected ? Colors.orange : Colors.grey,
           ),

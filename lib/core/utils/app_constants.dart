@@ -2,7 +2,7 @@
 
 class AppConstants {
   static const String appVersion = "1.0.0";
-  static const String baseUrl = "https://api.jappcare.com/api/v1";
+    static const String baseUrl = "https://api.jappcare.com/api/v1";
   //"https://japcare-be.onrender.com/api/v1";
   // "http://ec2-3-23-222-64.us-east-2.compute.amazonaws.com:8555/api/v1";
   static const String notFoundScreen = "/404";
@@ -13,6 +13,8 @@ class AppConstants {
 
   //Keys
   static const String tokenKey = "tokenKey";
+  static const String userId = "userId";
+
   static const String refreshTokenKey = "refreshTokenKey";
   static const String languageKey = "languageKey";
   static const String firstOpen = "firstOpenKey";
@@ -22,4 +24,5 @@ class AppConstants {
   static const String userLoginEvent = "userLoginEvent";
   static const String userIdEvent = "userIdEvent";
   static const String garageIdEvent = "garageIdEvent";
+  static const String mapLocalisation = "assets/icons/maplocalisation.png";
 }

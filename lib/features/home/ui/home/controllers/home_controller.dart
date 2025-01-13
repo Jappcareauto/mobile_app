@@ -7,6 +7,8 @@ import '../widgets/tip_modal_bottom.dart';
 class HomeController extends GetxController {
   final AppNavigation _appNavigation;
   HomeController(this._appNavigation);
+  final PageController pageController = PageController();
+  final RxInt currentPage = 0.obs;
   List<String> notifications = [
     "Your repair from the Jappcare Autotech shop is ready, and available for pickup.",
     "Votre commande a été expédiée.",
@@ -16,6 +18,12 @@ class HomeController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    pageController.addListener(() {
+      int newPage = pageController.page!.round();
+      if (currentPage.value != newPage) {
+        currentPage.value = newPage;
+      }
+    });
   }
 
   void goBack() {
@@ -33,6 +41,12 @@ class HomeController extends GetxController {
 void goToservices(){
   _appNavigation.toNamed(AppRoutes.services);
 }
+  void goToEmergency(){
+    _appNavigation.toNamed(AppRoutes.emergency);
+  }
+  void goToVehicleFinder(){
+    _appNavigation.toNamed(AppRoutes.vehicleFinder);
+  }
   void goToVehicleReport() =>
       _appNavigation.toNamed(AppRoutes.generateVehicleReport);
 

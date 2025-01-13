@@ -21,7 +21,7 @@ class GenerateVehiculeReportScreen extends GetView<GenerateVehiculeReportControl
               },
                 haveAddVehicule: true,
                 pageController: controller.pageController,
-                cars: controller.cars,
+                cars: controller.garageController.vehicleList,
                 currentPage: controller.currentPage,
                 titleText: 'Selected Vehicle',
 

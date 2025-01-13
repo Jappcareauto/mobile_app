@@ -26,17 +26,19 @@ class RecentActivitiesWidget extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GarageController>(
-      init: GarageController(Get.find()),
+      init: GarageController(Get.find(),Get.find()),
       autoRemove: false,
       initState: (_) {},
       builder: (_) {
         var ws = _.vehicleList
             .map(
               (e) => CarCardWidget(
-                date: '02/02/23',
-                time: '00:02',
-                localisation: 'Yaoundé',
-                nameCar: 'Turbo Moteur',
+                latitude: _.myGarage!.location!.latitude ,
+                longitude: _.myGarage!.location!.longitude,
+                date: "${DateTime.parse(_.myGarage!.location!.createdAt).year}/${DateTime.parse(_.myGarage!.location!.createdAt).month.toString().padLeft(2, '0')}/${DateTime.parse(_.myGarage!.location!.createdAt).day.toString()..toString().padLeft(2, '0')}",
+                time: "${DateTime.parse(_.myGarage!.location!.createdAt).hour.toString().padLeft(2, '0')}:${DateTime.parse(_.myGarage!.location!.createdAt).minute.toString().padLeft(2, '0')}:${DateTime.parse(_.myGarage!.location!.createdAt).second.toString().padLeft(2, '0')}",
+                localisation: _.myGarage!.location!.latitude.toString(),
+                nameCar: e.name,
                 pathImageCar: e.imageUrl,
                 status: 'Completed',
                 onPressed: () => _.goToVehicleDetails(e),
@@ -72,7 +74,8 @@ class RecentActivitiesWidget extends StatelessWidget
                   if (haveTabBar) const SizedBox(height: 20),
                   isHorizontal
                       ? SizedBox(
-                          height: 220,
+                          height: 250,
+                          width: MediaQuery.of(context).size.width,
                           child: ListView(
                               scrollDirection: Axis.horizontal, children: ws))
                       : Padding(

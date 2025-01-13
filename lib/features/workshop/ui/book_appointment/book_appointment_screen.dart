@@ -6,6 +6,8 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/select_vehicule_slider_widget.dart';
+import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/boocking_widget.dart';
@@ -18,6 +20,7 @@ import 'package:jappcare/features/workshop/ui/workshop/widgets/categories_item_l
 class BookAppointmentScreen extends GetView<BookAppointmentController>{
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: CustomAppBar(
           title: 'Book\nAppointment',
@@ -32,15 +35,24 @@ class BookAppointmentScreen extends GetView<BookAppointmentController>{
         children: [
           SingleChildScrollView(
             child: Column(
+
               children: [
-                SelectedVehiculeWidget(
-                  currentPage: controller.currentPage,
-                  cars: controller.cars,
-                  pageController: controller.pageController,
-                  haveAddVehicule: false,
-                  titleText: 'Selected Vehicle',
-                ),
-                SizedBox(height: 20,),
+                SizedBox(height: 10,),
+            if (Get.isRegistered<FeatureWidgetInterface>(
+                tag: 'ListVehicleWidget'))
+              Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+                  .buildView({
+                "pageController": controller.pageController ,
+                "currentPage": controller.currentPage,
+                "haveAddVehicule": false,
+                "title": "Select Vehicle",
+                "onTapeAddVehicle": (){
+                  print("clique");
+                },
+              }),
+
+
+    SizedBox(height: 20,),
                 SelectServiceItemList(
                   title: 'Specialized Services',),
                 BookingWidget(),
