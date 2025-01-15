@@ -201,7 +201,7 @@ class WorkshopDetailsController extends GetxController {
   }
 
   void gotoBoockApontment() {
-    _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment , arguments: {"latitude": arguments['latitude'] , "longitude":arguments['longitude'] , "name":arguments['name']});
+    _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment , arguments: {"latitude": arguments['latitude'] , "longitude":arguments['longitude'] , "name":arguments['name'] , "id":arguments['id']});
     print('go to appointment');
   }
 

@@ -11,22 +11,26 @@ class PaymentMethodeWidget extends StatelessWidget{
   PaymentMethodeWidget({
     Key?key,
     required this.onConfirm
-}):super(key: key);
+  }):super(key: key);
   @override
   Widget build(BuildContext context) {
     return
       Obx(() =>
           Center(
             child: Container(
-              // color: Colors.white,
-              height: 300,
-              margin: EdgeInsets.all(10),
+
+              height: 350,
+
 
 
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children:
+                [
+
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'How would you like to pay ?',
@@ -35,147 +39,60 @@ class PaymentMethodeWidget extends StatelessWidget{
                     ],
                   ),
                   SizedBox(height: 20,),
-                  InkWell(
-                    onTap: (){
-                      chatController.selectMethode('MTN');
-                    },
-                    child:   Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: chatController.selectedMethod == 'MTN' ? Get.theme.primaryColor.withOpacity(0.2) : null,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color:chatController.selectedMethod == 'MTN' ? Get.theme.primaryColor : Get.theme.scaffoldBackgroundColor , width: 2)
+
+                  ...List.generate(chatController.paymentDetails.length, (index) {
+                    final paymentDetail = chatController.paymentDetails[index];
+                    final isSelected = chatController.selectedMethod == paymentDetail["name"];
+
+                    return InkWell(
+                      onTap: () {
+                        chatController.selectedMethod.value = paymentDetail["name"]!;
+                        print( paymentDetail["name"]!);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        margin: EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                          color: isSelected ? Get.theme.primaryColor.withOpacity(0.2) : null,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: isSelected ? Get.theme.primaryColor : Get.theme.scaffoldBackgroundColor,
+                            width: 2,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            ImageComponent(
+                              height: 32,
+                              width: 32,
+                              assetPath: paymentDetail["icon"],
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              paymentDetail["name"]!,
+                              style: TextStyle(
+                                color: isSelected ? Get.theme.primaryColor : Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () {
+                                print('Add Number for ${paymentDetail["name"]}');
+                              },
+                              child: Text(
+                                paymentDetail["numero"]!,
+                                style: TextStyle(
+                                  color: isSelected ? Get.theme.primaryColor : Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        children: [
-
-                          ImageComponent(
-                            height: 32,
-                            width: 32,
-                            assetPath: AppImages.mtnLogo,
-                          ),
-                          SizedBox(width: 10,),
-
-                          Text(
-                              'MTN MoMo',
-                            style: TextStyle(color: chatController.selectedMethod == 'MTN' ? Get.theme.primaryColor : Colors.black , fontWeight: FontWeight.bold ),
-
-
-                          ),
-
-                          SizedBox(width: MediaQuery.of(context).size.width*.35,),
-
-
-                          GestureDetector(
-                            onTap: (){
-                              print('add Number');
-                            },
-                            child: Text(
-                                '+ Add Number',
-                              style: TextStyle(color: chatController.selectedMethod == 'MTN' ? Get.theme.primaryColor : Colors.grey , ),
-                            ),
-                          )
-                        ],
-                      ) ,
-                    ),
-                  ),
-
-                  SizedBox(height: 20,),
-                  InkWell(
-                    onTap: (){
-                      chatController.selectMethode('ORANGE');
-                    },
-                    child:Container(
-                      padding: EdgeInsets.all(10),
-
-                      decoration: BoxDecoration(
-                        color: chatController.selectedMethod == 'ORANGE' ? Get.theme.primaryColor.withOpacity(0.2) : null,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color:chatController.selectedMethod == 'ORANGE' ? Get.theme.primaryColor : Get.theme.scaffoldBackgroundColor , width: 2)),
-                      child: Row(
-                        children: [
-
-                          ImageComponent(
-                            height: 32,
-                            width: 32,
-                            assetPath: AppImages.orangeLogo,
-                          ),
-                          SizedBox(width: 5,),
-
-                          Text(
-                              'Orange Money',
-                            style: TextStyle(color: chatController.selectedMethod == 'ORANGE' ? Get.theme.primaryColor :Colors.black , fontWeight: FontWeight.bold),
-
-
-                          ),
-
-                          SizedBox(width: MediaQuery.of(context).size.width*.22,),
-
-
-                          GestureDetector(
-                            onTap: (){
-                              print('add Number');
-                            },
-                            child: Text(
-                                '+237 00000000',
-                              style: TextStyle(color: chatController.selectedMethod == 'ORANGE' ? Get.theme.primaryColor : Colors.grey , ),
-
-                            ),
-                          )
-                        ],
-                      ) ,
-                    ),
-                  ),
-
-                  SizedBox(height: 20,),
-                  InkWell(
-                    onTap: (){
-                      chatController.selectMethode('CARD');
-                    },
-                    child:Container(
-                      padding: EdgeInsets.all(5),
-
-                      decoration: BoxDecoration(
-                        color: chatController.selectedMethod == 'CARD' ? Get.theme.primaryColor.withOpacity(0.2) : null,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color:chatController.selectedMethod == 'CARD' ? Get.theme.primaryColor : Get.theme.scaffoldBackgroundColor , width: 2)),
-                      child: Row(
-                        children: [
-
-                          ImageComponent(
-                            height: 32,
-                            width: 32,
-                            assetPath: AppImages.cardLogo,
-                          ),
-                          SizedBox(width: 10,),
-
-                          Text(
-                              'Card',
-                            style: TextStyle(color: chatController.selectedMethod == 'CARD' ? Get.theme.primaryColor : Colors.black , fontWeight: FontWeight.bold),
-
-
-                          ),
-
-                          SizedBox(width: MediaQuery.of(context).size.width*.38,),
-
-
-                          GestureDetector(
-                            onTap: (){
-                              print('add Number');
-                            },
-                            child: Text(
-                                '**** **** **** 1234',
-                              style: TextStyle(color: chatController.selectedMethod == 'CARD' ? Get.theme.primaryColor : Colors.grey , ),
-
-                            ),
-                          )
-                        ],
-                      ) ,
-                    ),
-                  ),
-
-                  SizedBox(height: 10,),
-
+                    );
+                  }),
+                  SizedBox(height: 30,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -186,15 +103,17 @@ class PaymentMethodeWidget extends StatelessWidget{
                         },
                         haveBorder: true,
                         strech: false,
-                        width: 170,
+                        width: 160,
 
                       ),
+                      SizedBox(height: 5,),
+
                       CustomButton(
                         text: 'Confirm',
                         onPressed:onConfirm,
 
                         strech: false,
-                        width: 170,
+                        width: 160,
 
                       ),
                     ],

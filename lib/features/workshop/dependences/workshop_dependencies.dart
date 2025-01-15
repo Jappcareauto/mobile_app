@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
+import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.dart';
 import 'package:jappcare/features/workshop/domain/repositories/workshop_repository.dart';
 import 'package:jappcare/features/workshop/ui/PayWithCard/controllers/pay_with_card_controller.dart';
@@ -37,6 +38,7 @@ class WorkshopDependencies {
     Get.lazyPut<AppointmentDetailsController>(() => AppointmentDetailsController(Get.find()));
     Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);
     Get.lazyPut<MapController>(() => MapController(Get.find()));
+    Get.lazyPut(()=>BookAppointmentUseCase(Get.find()));
 
     // Get.put(WorkshopController(Get.find<AppNavigation>(), Get.find<GetAllServicesCenter>()));
   }

@@ -39,11 +39,14 @@ class CarCardAddVehicle extends StatelessWidget {
       height: containerheight ,
       margin: const EdgeInsets.only(right: 12),
       width: 360,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        color:  haveBGColor ? Get.theme.primaryColor : AppColors.white,
-        border: haveBorder ? Border.all(color: Get.theme.primaryColor , width: 1) :  Border.all(color: AppColors.lightBorder),
-      ),
+      decoration:
+          BoxDecoration(
+          borderRadius: BorderRadius.circular(24),
+          color:  haveBGColor ? Get.theme.primaryColor : AppColors.white,
+          border: haveBorder ? Border.all(color: Get.theme.primaryColor , width: 1) :  Border.all(color: AppColors.lightBorder),
+        ),
+
+
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
         onTap: onPressed,

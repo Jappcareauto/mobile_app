@@ -35,14 +35,14 @@ class ConfirmationAppointmentModal extends GetView<ConfirmeAppointmentController
               const SizedBox(height: 8),
 
               // Subtitle
-              const Text(
-                'Your appointment request has been sent.',
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.black54,
-                ),
-                textAlign: TextAlign.center,
-              ),
+              // const Text(
+              //   'Your appointment request has been sent.',
+              //   style: TextStyle(
+              //     fontSize: 14.0,
+              //     color: Colors.black54,
+              //   ),
+              //   textAlign: TextAlign.center,
+              // ),
               const SizedBox(height: 20),
 
               // Buttons
@@ -52,7 +52,7 @@ class ConfirmationAppointmentModal extends GetView<ConfirmeAppointmentController
                   // Cancel button
                   CustomButton(
                       strech: false,
-                      width: 170,
+                      width: 165,
 
                       haveBorder: true,
                       text: 'Cancel',
@@ -63,7 +63,7 @@ class ConfirmationAppointmentModal extends GetView<ConfirmeAppointmentController
                   CustomButton(
                     strech: false,
 
-                      width: 170,
+                      width: 165,
                       text: 'Proceed to Chat',
                       onPressed: (){
                             controller.goToChat();

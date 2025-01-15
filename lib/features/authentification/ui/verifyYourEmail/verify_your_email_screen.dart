@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/ui/widgets/image_decoration.dart';
+import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:pinput/pinput.dart';
 import '../../../../core/utils/app_images.dart';
 import 'controllers/verify_your_email_controller.dart';
@@ -55,6 +57,7 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
+                                      ImageDecoration(assetPath: AppConstants.Sms),
                                       Text(
                                         "We've sent a verification email to ",
                                         style: Get.textTheme.bodyLarge

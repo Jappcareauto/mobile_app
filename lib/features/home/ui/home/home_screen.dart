@@ -90,6 +90,7 @@ class HomeScreen extends GetView<HomeController> {
 
             if (Get.isRegistered<FeatureWidgetInterface>(
                 tag: 'ListVehicleWidget'))
+
               Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
                   .buildView({
                "pageController": controller.pageController ,
@@ -173,9 +174,11 @@ class HomeScreen extends GetView<HomeController> {
             ),
             const SizedBox(height: 20),
             //RecentActivitiesWidget
-           Get.find<FeatureWidgetInterface>(
-                          tag: 'RecentActivitiesWidget')
-                      .buildView(),
+
+            if (Get.isRegistered<FeatureWidgetInterface>(
+                tag: 'RecentActivitiesWidget'))
+              Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
+                  .buildView(),
           ],
         ),
       ),

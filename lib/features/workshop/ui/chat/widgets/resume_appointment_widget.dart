@@ -3,23 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
+import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 class ResumeAppointmentWidget extends StatelessWidget {
   final String services ;
-  final String vehicule ;
+
   final DateTime date ;
   final String note ;
   final String fee ;
   final String time ;
+  final String caseId;
     ResumeAppointmentWidget({
       Key? key,
       required this.services,
-      required this.vehicule,
+
       required this.date,
       required this.note,
       required this.fee,
-      required this.time
-
+      required this.time,
+      required this.caseId
     }):super( key:key );
   @override
   Widget build(BuildContext context) {
@@ -34,20 +37,47 @@ class ResumeAppointmentWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Services',
+              Text('Service Offered by',
                   style: TextStyle(
                       fontSize: 12, fontWeight: FontWeight.normal)),
               Text(services,
                   style: TextStyle(
                       fontSize: 14,fontWeight: FontWeight.bold )),
               SizedBox(height: 20,),
-              Text('Vehicule',
+              Text('From',
                   style: TextStyle(
                       fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
-              Text(vehicule,
+              SizedBox(height: 10,),
+
+              Row(
+                children: [
+                  if (Get.isRegistered<FeatureWidgetInterface>(
+                      tag: 'AvatarWidget'))
+                    Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
+                        .buildView({
+                      "haveName":true
+                    }),
+                  SizedBox(width: 10,),
+
+                  Text( Get.find<ProfileController>().userInfos?.name?? "Unknow",  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ],
+              ),
+              SizedBox(height: 20,),
+              Text('Estimated inspection Fee',
+                  style: TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
+              Text(fee,
                   style: TextStyle(
                       fontSize: 14, fontWeight: FontWeight.bold )),
               SizedBox(height: 20,),
+              Text('Case ID',
+                  style: TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.normal)),
+              Text(caseId,
+                  style: TextStyle(
+                      fontSize: 14,fontWeight: FontWeight.bold )),
+              SizedBox(height: 20,),
+
               Text('Date',
                   style: TextStyle(
                       fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
@@ -91,13 +121,7 @@ class ResumeAppointmentWidget extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 14, fontWeight: FontWeight.bold )),
               SizedBox(height: 20,),
-              Text('Estimated inspection Fee',
-                  style: TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
-              Text(fee,
-                  style: TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold )),
-              SizedBox(height: 20,),
+
 
              Align(
                alignment: Alignment.bottomRight,

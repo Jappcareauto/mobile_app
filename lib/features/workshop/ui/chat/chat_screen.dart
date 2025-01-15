@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/chat_input_widget.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/chat_invoice.dart';
+import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/resume_appointment_widget.dart';
 
 import 'controllers/chat_controller.dart';
@@ -58,19 +63,21 @@ class ChatDetailsScreen extends GetView<ChatController> {
 
                       Container(
                         margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width*.7
+                          left: MediaQuery.of(context).size.width*.6
                         ),
                         child: Align(
                           alignment: Alignment.topRight,
-                          child: Row(
-
+                          child:  Row(
                             children: [
-                              Text('Sara'),
-                              SizedBox(width: 5,),
-                              CircleAvatar(
+                              if (Get.isRegistered<FeatureWidgetInterface>(
+                                  tag: 'AvatarWidget'))
+                                Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
+                                    .buildView({
+                                  "haveName":true
+                                }),
+                              SizedBox(width: 10,),
 
-                                backgroundImage: AssetImage(AppImages.avatar),
-                              )
+                              Text( Get.find<ProfileController>().userInfos?.name?? "Unknow",  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
                             ],
                           ),
                         ) ,
@@ -79,10 +86,11 @@ class ChatDetailsScreen extends GetView<ChatController> {
                       SizedBox(height: 20,),
                       Obx(() =>
                           ResumeAppointmentWidget(
-                              services: 'Body Shop Appointment',
-                              vehicule: 'Posche Taycan Turbo S',
+                              services: Get.arguments['serviceName'],
+
                               date: bookController.selectedDate.value,
-                              note: 'I would like to fix a dent front bumper',
+                              caseId: bookController.vehicleVin.value,
+                              note: bookController.noteController.text,
                               fee: '5,000 Frs',
                               time: bookController.selectedTime.value
                           )
@@ -92,12 +100,15 @@ class ChatDetailsScreen extends GetView<ChatController> {
 
                       ..._.messages.map((message) {
                         return ChatMessage(
-                          text: message["text"],
-
-                          isSender: message["isSender"],
-                          images: message["images"],
+                          text: message["text"] ?? "", // Utilise une chaîne vide si "text" est null
+                          isSender: message["isSender"] ?? false, // Valeur par défaut pour "isSender"
+                          images: (message["images"] as List<dynamic>? ?? [])
+                              .map((imagePath) => File(imagePath as String)) // Conversion en File
+                              .toList(),
                         );
                       }),
+
+
                       const SizedBox(height: 20),
                       Align(
                         alignment: Alignment.topRight,
@@ -129,7 +140,7 @@ class ChatDetailsScreen extends GetView<ChatController> {
                         onViewInvoice: () {
                           // Action pour voir la facture
                           print("View Invoice clicked");
-                          controller.onpenModalPaymentMethod();
+                         onpenModalPaymentMethod(controller.gotToPaymentForm);
                         },
                       ),
                       const SizedBox(height: 100),
@@ -153,4 +164,37 @@ class ChatDetailsScreen extends GetView<ChatController> {
       ),
     );
   }
+}
+void onpenModalPaymentMethod(void onConfirm) {
+  showModalBottomSheet(
+    context: Get.context!,
+    isScrollControlled: true, // Permet un contrôle précis sur la hauteur
+    backgroundColor: Colors.transparent, // Rendre l'arrière-plan transparent
+    builder: (BuildContext context) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                offset: const Offset(0, -2),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(16), // Espacement intérieur
+          child: Wrap(
+            children: [
+              PaymentMethodeWidget(onConfirm:(){
+                onConfirm ;
+              }),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

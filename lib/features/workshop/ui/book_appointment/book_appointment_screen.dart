@@ -8,6 +8,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/select_vehicule_slider_widget.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
+import 'package:jappcare/features/services/ui/generateVehiculeReport/controllers/generate_vehicule_report_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/boocking_widget.dart';
@@ -17,76 +18,91 @@ import 'package:jappcare/features/workshop/ui/book_appointment/widgets/estimate_
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/categories_item_list.dart';
 
-class BookAppointmentScreen extends GetView<BookAppointmentController>{
+class BookAppointmentScreen extends GetView<BookAppointmentController> {
+  // final GenerateVehiculeReportController generateVehiculeReportController = GenerateVehiculeReportController(Get.find());
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: CustomAppBar(
+        appBar: CustomAppBar(
           title: 'Book\nAppointment',
           actions: [
-          if (Get.isRegistered<FeatureWidgetInterface>(
-              tag: 'AvatarWidget'))
-            Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
-                .buildView(),
-        ],
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-
-              children: [
-                SizedBox(height: 10,),
             if (Get.isRegistered<FeatureWidgetInterface>(
-                tag: 'ListVehicleWidget'))
-              Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
-                  .buildView({
-                "pageController": controller.pageController ,
-                "currentPage": controller.currentPage,
-                "haveAddVehicule": false,
-                "title": "Select Vehicle",
-                "onTapeAddVehicle": (){
-                  print("clique");
-                },
-              }),
+                tag: 'AvatarWidget'))
+              Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
+                  .buildView(),
+          ],
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+                child: Form(
+                  key: controller.formKey,
+                  child:
+                Column(
 
+                  children: [
+                    SizedBox(height: 10,),
+                    if (Get.isRegistered<FeatureWidgetInterface>(
+                        tag: 'ListVehicleWidget'))
 
-    SizedBox(height: 20,),
-                SelectServiceItemList(
-                  title: 'Specialized Services',),
-                BookingWidget(),
-                SizedBox(height: 20,),
-                CustomMapWidget(),
-                SizedBox(height: 20,),
-                FormLocationWidget(),
-                SizedBox(height: 50,),
-                AddImageWidget(),
+                      Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+                          .buildView({
+                        "pageController": controller.pageController,
+                        "currentPage": controller.currentPage,
+                        "haveAddVehicule": false,
+                        "title": "Select Vehicle",
+                        "onSelected": (selectedCar) {
+                          controller.vehicleId.value = selectedCar.id;
+                          controller.vehicleVin.value = selectedCar.vin;
+                          print("Current page: ${controller.currentPage
+                              .value}, Car ID: ${selectedCar.name}");
+                        },
 
-                EstimatedInspectionFee(),
-                SizedBox(height: 20,),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: CustomButton(
-                      text: 'Continue',
-                      onPressed:(){
-                       controller.gotToConfirmAppointment();
-                      }
-                  ),
+                      }),
+
+                    SizedBox(height: 20,),
+                    SelectServiceItemList(
+                      title: 'Specialized Services',),
+
+                    BookingWidget(),
+                    SizedBox(height: 20,),
+                    CustomMapWidget(),
+                    SizedBox(height: 20,),
+                    FormLocationWidget(),
+                    SizedBox(height: 50,),
+                    AddImageWidget(),
+                    EstimatedInspectionFee(),
+                    SizedBox(height: 20,),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomButton(
+
+                          text: 'Continue',
+                          onPressed: () {
+                            if(controller.formKey.currentState?.validate() ?? false){
+                            controller.gotToConfirmAppointment();
+                            }
+                          }
+                      ),
+                    ),
+                    SizedBox(height: 50,),
+
+                  ],
                 ),
-                SizedBox(height: 50,),
-
-              ],
+                )
             ),
-          ) ,
-          Positioned(
-              top: MediaQuery.of(context).size.height*0.7,
-              right: 10,
-              child: ChatWidget()
-          )
-        ],
-      )
-     
+            Positioned(
+                top: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.7,
+                right: 10,
+                child: ChatWidget()
+            )
+          ],
+        )
+
     );
   }
 

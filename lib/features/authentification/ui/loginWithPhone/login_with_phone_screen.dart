@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/ui/widgets/image_decoration.dart';
 import 'package:jappcare/core/ui/widgets/phone_form_field.dart';
+import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/authentification/ui/authentification/controllers/authentification_controller.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import '../../../../core/utils/app_images.dart';
@@ -24,11 +26,12 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      ImageDecoration(assetPath: AppConstants.SingUp),
                       SizedBox(
                         height: Get.height * .6,
                         child: Column(
                           children: [
-                            const SizedBox(height: 20),
+
                             CustomPhoneFormField(
                                 label: 'Phone',
                                 hintText: 'Enter your Phone',
@@ -57,13 +60,6 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                                     child: const Text('Forgot Password?')),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height * .25,
-                        child: Column(
-                          children: [
                             CustomButton(
                               isLoading: _.loginFormHelper.isLoading,
                               text: 'Login',

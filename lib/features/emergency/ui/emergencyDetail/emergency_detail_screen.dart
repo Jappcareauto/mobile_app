@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
@@ -23,13 +24,18 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
         Column(
           children: [
             SizedBox(height: 20,),
-            SelectedVehiculeWidget(
-                pageController: generateVehiculeReportController.pageController,
-                cars: generateVehiculeReportController.vehicleList,
-                currentPage: generateVehiculeReportController.currentPage,
-                haveAddVehicule: false,
-                titleText: 'Select Vehicle'
-            ),
+            if (Get.isRegistered<FeatureWidgetInterface>(
+                tag: 'ListVehicleWidget'))
+              Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+                  .buildView({
+                "pageController": generateVehiculeReportController.pageController ,
+                "currentPage": generateVehiculeReportController.currentPage,
+                "haveAddVehicule": true,
+                "title": "My Garage",
+                "onTapeAddVehicle": (){
+                  print("clique");
+                },
+              }),
             SizedBox(height: 10,),
             Container(
               margin: EdgeInsets.only(left: 20),

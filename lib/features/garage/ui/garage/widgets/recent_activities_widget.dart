@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 
@@ -30,6 +31,24 @@ class RecentActivitiesWidget extends StatelessWidget
       autoRemove: false,
       initState: (_) {},
       builder: (_) {
+        if (_.myGarage?.location == null || _.vehicleList.isEmpty) {
+          if (title == "Recent Activities") {
+            return Center(
+              child: Column(
+                children: [
+                  ImageComponent(
+                    assetPath: AppConstants.noActivities,
+                  ),
+                  Text('You have no recent activities at the moment'),
+                ],
+              ),
+            );
+
+          } else {
+            return const SizedBox();
+          }
+        }
+
         var ws = _.vehicleList
             .map(
               (e) => CarCardWidget(
