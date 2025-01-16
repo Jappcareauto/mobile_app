@@ -17,19 +17,21 @@ class ShopRepositoryImpl implements ShopRepository {
   });
 
   @override
-  Future<Either<ShopException, GetProducts>> getProducts() async {
+  Future<Either<ShopException, List<Data>>> getProducts() async {
     try {
       final response = await networkService.get(
         ShopConstants.getProductsGetUri,
-        
       );
-      return Right(GetProductsModel.fromJson(response).toEntity());
+      final List<dynamic> decodedResponse = response;
+      final products = decodedResponse.map((json) => DataModel.fromJson(json).toEntity()).toList();
+      return Right(products);
     } on BaseException catch (e) {
       return Left(ShopException(e.message));
     }
   }
 
 
-  //Add methods here
+
+//Add methods here
 
 }

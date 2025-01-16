@@ -32,107 +32,127 @@ class CarCardWidget extends GetView<GarageController> {
   final String? pathImageCar;
   final double? widthCard;
   final double? heightCard;
-  final  double longitude;
-  final  double latitude;
+  final double longitude;
+  final double latitude;
   final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     // Déterminer la couleur en fonction du statut
-   controller.getPlaceName(longitude, latitude);
-    return Obx(()  =>
-      Container(
-      width: widthCard,
-      height: heightCard,
-      margin: const EdgeInsets.only(bottom: 12, left: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.lightBorder),
-          color: Get.theme.cardColor),
-      child: InkWell(
-        onTap: onPressed,
-        child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'BodyShop Appointment',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.orange),
-                  ),
-                  Text(
-                    'Japcare AutoShop',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
-              ChipWidget(
-                status: status,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    controller.getPlaceName(longitude, latitude);
+    return Obx(() =>
+        Container(
+          width: widthCard,
+          height: heightCard,
+          margin: const EdgeInsets.only(bottom: 12, left: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: AppColors.lightBorder),
+              color: Get.theme.cardColor),
+          child: InkWell(
+            onTap: onPressed,
+            child: Column(children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(
-                        FluentIcons.calendar_ltr_12_regular,
-                        color: Colors.grey,
+                      Text(
+                        'BodyShop Appointment',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.orange),
                       ),
-                      const SizedBox(width: 10),
-                      Text(date, style: Get.textTheme.bodySmall),
+                      Text(
+                        'Japcare AutoShop',
+                        style: TextStyle(color: Colors.grey),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const Icon(
-                        FluentIcons.clock_12_regular,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(time, style: Get.textTheme.bodySmall),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const Icon(
-                        FluentIcons.location_12_regular,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(width: 10),
-                      
-                      Text(controller.placeName.value == null ? localisation : controller.placeName.value , style: Get.textTheme.bodySmall),
-                    ],
+                  ChipWidget(
+                    status: status,
                   ),
                 ],
               ),
-              Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ImageComponent(
-                    imageUrl: pathImageCar,
-                    assetPath: AppImages.car,
-                    width: Get.width * 0.5,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            FluentIcons.calendar_ltr_12_regular,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(date, style: Get.textTheme.bodySmall),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          const Icon(
+                            FluentIcons.clock_12_regular,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(time, style: Get.textTheme.bodySmall),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          const Icon(
+                            FluentIcons.location_12_regular,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(width: 10),
+
+                          Text(controller.placeName.value == null
+                              ? localisation
+                              : controller.placeName.value, style: Get.textTheme
+                              .bodySmall),
+                        ],
+                      ),
+                    ],
                   ),
-                  Text(
-                    nameCar,
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ImageComponent(
+                        imageUrl: pathImageCar,
+                        assetPath: AppImages.car,
+                        width: Get.width * 0.4,
+                      ),
+                      SizedBox(height: 8),
+                      // Ajout d'un espacement entre l'image et le texte
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: Text(
+                          nameCar,
+                          textAlign: TextAlign.center,
+                          // Centre le texte
+                          overflow: TextOverflow.ellipsis,
+                          // Tronque le texte si trop long
+                          maxLines: 1,
+                          // Limite le texte à une seule ligne
+                          style: TextStyle(
+                            fontSize: 12, // Ajuste la taille de la police
+                            fontWeight: FontWeight.bold, // Style en gras
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+
                 ],
               ),
-            ],
+            ]),
           ),
-        ]),
-      ),
-    ));
+        ));
   }
 }

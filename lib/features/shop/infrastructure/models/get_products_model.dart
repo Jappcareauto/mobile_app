@@ -1,37 +1,5 @@
 import '../../domain/entities/get_products.dart';
 
-class GetProductsModel {
-
-  final List<DataModel> data;
-
-  GetProductsModel._({
-    required this.data,
-  });
-
-  factory GetProductsModel.fromJson(Map<String, dynamic> json) {
-    return GetProductsModel._(
-      data: List<DataModel>.from(json['data'].map((x) => DataModel.fromJson(x))),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> json = <String, dynamic>{};
-    json['data'] = data.map((x) => x.toJson()).toList();
-    return json;
-  }
-
-  factory GetProductsModel.fromEntity(GetProducts entity) {
-    return GetProductsModel._(
-      data: List<DataModel>.from(entity.data.map((x) => DataModel.fromEntity(x))),
-    );
-  }
-
-  GetProducts toEntity() {
-    return GetProducts.create(
-      data: data.map((x) => x.toEntity()).toList(),
-    );
-  }
-}
 class DataModel {
 
   final String name;
@@ -62,17 +30,17 @@ class DataModel {
 
   factory DataModel.fromJson(Map<String, dynamic> json) {
     return DataModel._(
-      name: json['name'],
-      description: json['description'],
-      price: PriceModel.fromJson(json['price']),
-      stockQuantity: json['stockQuantity'],
-      active: json['active'],
-      media: MediaModel.fromJson(json['media']),
-      id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      price: PriceModel.fromJson(json['price'] ?? {}),
+      stockQuantity: json['stockQuantity'] ?? 0,
+      active: json['active'] ?? false,
+      media: MediaModel.fromJson(json['media'] ?? {}),
+      id: json['id'] ?? '',
+      createdBy: json['createdBy'] ?? '',
+      updatedBy: json['updatedBy'] ?? '',
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
     );
   }
 

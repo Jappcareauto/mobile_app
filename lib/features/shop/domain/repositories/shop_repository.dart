@@ -7,7 +7,7 @@ import '../entities/get_products.dart';
 abstract class
  ShopRepository {
   //Add methods here
-  Future<Either<ShopException, GetProducts>> getProducts();
+  Future<Either<ShopException, List<Data>>> getProducts();
 
 }
 

@@ -40,7 +40,6 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     try {
       final response = await networkService.get(
         WorkshopConstants.getAllServicesCenterGetUri,
-        
       );
       return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {

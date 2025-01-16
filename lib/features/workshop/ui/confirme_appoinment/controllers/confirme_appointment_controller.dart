@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/services/networkServices/dio_network_service.dart';
+import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
 import 'package:jappcare/features/workshop/domain/core/exceptions/workshop_exception.dart';
@@ -65,7 +66,7 @@ class ConfirmeAppointmentController extends GetxController {
         loading.value = false;
         print("erreur.vehicleId");
         print(e.message);
-        // Get.showCustomSnackBar(e.message);
+        Get.showCustomSnackBar("Une erreur s'est produite");
         return Left(WorkshopException(e.message));
       },
           (response) {

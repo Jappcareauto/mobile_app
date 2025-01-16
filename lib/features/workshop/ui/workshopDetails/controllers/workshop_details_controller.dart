@@ -43,7 +43,7 @@ class WorkshopDetailsController extends GetxController {
     // Generate by Menosi_cli
     super.onInit();
     getPosition();
-    getPlaceName();
+    // getPlaceName();
   }
 
   void goBack() {

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/shop/domain/entities/get_products.dart';
 import 'package:jappcare/features/shop/navigation/private/shop_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
@@ -9,14 +10,14 @@ import '../../../application/usecases/get_products_usecase.dart';
 
 class ShopController extends GetxController {
   final GetProductsUseCase _getProductsUseCase = Get.find();
-  final loading = false.obs;
+  final loading = true.obs;
 
   final AppNavigation _appNavigation;
   ShopController(this._appNavigation);
   List<String>  categorie = [ 'All' , 'Accesories' , 'Lubricants & Fluids' , 'Tires & Wheels'] ;
   RxInt selectedFilter = 0.obs;
   final RxString selectedCategory = 'All'.obs;
-
+  Rxn<List<Data>> products = Rxn<List<Data>>();
   final List<Map<String, dynamic>> parts = [
     {
       'imagePath': AppImages.shop1,
@@ -77,22 +78,19 @@ class ShopController extends GetxController {
     getProducts();
 
   }
-  void goToProductDetails(String name , String price , String imagePath , String description ){
+  void goToProductDetails(String id ){
       _appNavigation.toNamed(ShopPrivateRoutes.productDetails , arguments: {
-        'name': name,
-        'price': price,
-        'imagePath': imagePath,
-        'description': description
+       'id':id
       });
   }
   void goBack() {
     _appNavigation.goBack();
   }
-  List<Map<String, dynamic>> get filteredParts {
+  List<Data> get filteredParts {
     if (selectedCategory.value == 'All') {
-      return parts; // Affiche tous les produits si aucune catégorie n'est sélectionnée.
+      return products.value ?? []; // Affiche tous les produits si aucune catégorie n'est sélectionnée.
     }
-    return parts.where((part) => part['category'] == selectedCategory.value).toList();
+    return (products.value ?? []).where((product) => product.description == selectedCategory.value).toList();
   }
 
   Future<void> getProducts() async {
@@ -108,6 +106,7 @@ class ShopController extends GetxController {
       },
       (response) {
         loading.value = false;
+        products.value = response ;
         print(response);
       },
     );
