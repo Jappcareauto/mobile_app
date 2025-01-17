@@ -1,3 +1,4 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,7 @@ class ItemContainer extends GetView<BagController> {
   final VoidCallback onDecrement;
   final bool modifyQuantity ;
   final String assetPath ;
+  final VoidCallback onDelete ;
   const ItemContainer({
     Key? key,
     required this.total ,
@@ -24,12 +26,14 @@ class ItemContainer extends GetView<BagController> {
     required this.quantity,
     required this.onIncrement,
     required this.onDecrement,
-    required this.modifyQuantity
+    required this.modifyQuantity,
+   required this.onDelete
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -43,12 +47,25 @@ class ItemContainer extends GetView<BagController> {
         ],
       ),
       child: Column(
+
         children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: assetPath != null ?
+          modifyQuantity ?
+          Align(
+            alignment: Alignment.topRight,
+            child: InkWell(
+              onTap: (){
+                  onDelete();
+              },
+              child: Icon(FluentIcons.delete_12_filled),
+            ),
+          ) : SizedBox(),
+          Container(
+
+            child: Row(
+              children: [
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: assetPath != null ?
                     ImageComponent(
                       assetPath: assetPath,
                       width: 96,
@@ -59,19 +76,23 @@ class ItemContainer extends GetView<BagController> {
                       width: 96,
                       height: 96,
                     )
-              ),
-              const SizedBox(width: 16),
-              Expanded(child:
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
                 ),
-              ),
-              )
-            ],
+                const SizedBox(width: 16),
+                Expanded(child:
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                ),
+
+
+              ],
+            ),
           ),
+
           Row(
             children: [
             modifyQuantity ?Column (
@@ -156,12 +177,13 @@ class ItemContainer extends GetView<BagController> {
               SizedBox(width: MediaQuery.of(context).size.width*.5,),
     Obx(() =>
     Expanded(child:
-              Text("${NumberFormat('#,###').format(total.value)} Frs" , style: TextStyle(fontSize:14 , fontWeight: FontWeight.w600 , color: Get.theme.primaryColor ),)
+              Text("${NumberFormat('#,###').format(price*quantity.value)} Frs" , style: TextStyle(fontSize:14 , fontWeight: FontWeight.w600 , color: Get.theme.primaryColor ),)
     )
     )
             ],
           )
         ],
+
       ),
     );
   }

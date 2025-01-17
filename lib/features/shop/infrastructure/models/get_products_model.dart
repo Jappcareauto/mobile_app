@@ -209,9 +209,9 @@ class ItemsModel {
   final String sourceUrl;
   final String capturedUrl;
   final String type;
-  final String mediaId;
-  final String fileId;
-  final String fileUrl;
+  final String? mediaId;
+  final String? fileId;
+  final String? fileUrl;
   final String id;
   final String createdBy;
   final String updatedBy;
@@ -222,9 +222,9 @@ class ItemsModel {
     required this.sourceUrl,
     required this.capturedUrl,
     required this.type,
-    required this.mediaId,
-    required this.fileId,
-    required this.fileUrl,
+     this.mediaId,
+     this.fileId,
+     this.fileUrl,
     required this.id,
     required this.createdBy,
     required this.updatedBy,
@@ -237,9 +237,9 @@ class ItemsModel {
       sourceUrl: json['sourceUrl'],
       capturedUrl: json['capturedUrl'],
       type: json['type'],
-      mediaId: json['mediaId'],
-      fileId: json['fileId'],
-      fileUrl: json['fileUrl'],
+      mediaId: json['mediaId'] ?? "",
+      fileId: json['fileId'] ?? "",
+      fileUrl: json['fileUrl'] ?? "",
       id: json['id'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],

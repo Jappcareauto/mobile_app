@@ -114,15 +114,21 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
 
                   ),
                   Obx(() =>
-                      Switch(
-                        value: controller.savePhoneNumberPaymentMethod.value,
-                        onChanged: (value) {
-                          print('la valeur du switch:$value');
-                          controller.savePhoneNumberPaymentMethod.value = value ;
-                        },
-                        activeColor:Get.theme.primaryColor,
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 400),
+                  curve: Curves.linear,
+                  child:
+                  Switch(
+                    value: controller.savePhoneNumberPaymentMethod.value,
+                    onChanged: (value) {
+                      print('la valeur du switch:$value');
+                      controller.savePhoneNumberPaymentMethod.value = value ;
+                    },
+                    activeColor:Get.theme.primaryColor,
 
-                      ),
+                  ),
+                  )
+
                   )
                 ],
               ),

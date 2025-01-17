@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/ui/widgets/image_gallery.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/shop/domain/entities/cardItams.dart';
 import 'package:jappcare/features/shop/ui/bag/controllers/bag_controller.dart';
@@ -91,7 +92,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
 
                     // Appeler la méthode addToCart pour ajouter l'article au panier
                     bagController.addToCart(newItem);
-
+                    Get.snackbar('Items Add to cart', '', snackPosition: SnackPosition.BOTTOM , backgroundColor: AppColors.green , colorText: AppColors.white);
 
                 },
                 width: MediaQuery.of(context).size.width*.95,

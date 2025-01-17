@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:jappcare/core/navigation/app_navigation.dart';
+import 'package:jappcare/features/shop/ui/bag/controllers/bag_controller.dart';
 
 import '../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../domain/repositories/shop_repository.dart';
@@ -14,6 +16,7 @@ class ShopDependencies {
     Get.lazyPut<FeatureWidgetInterface>(() => ShopScreen(),
         tag: 'ShopScreen', fenix: true);
       Get.lazyPut(() => GetProductsUseCase(Get.find()), fenix: true);
+    Get.put(BagController(Get.find()), permanent: true);
 }
 }
 

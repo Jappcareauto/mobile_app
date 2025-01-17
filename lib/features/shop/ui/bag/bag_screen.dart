@@ -17,7 +17,17 @@ class BagScreen extends GetView<BagController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(title: 'Bag'),
-      body: SingleChildScrollView(
+      body: controller.cartItems.isEmpty ?
+          Center(
+
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Votre Panier est vide')
+              ],
+            ),
+          ):
+      SingleChildScrollView(
         child:  Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -37,6 +47,9 @@ class BagScreen extends GetView<BagController> {
               title: item.title,
               price: item.price.toInt(),
               quantity: item.quantity.obs,
+              onDelete: (){
+                controller.showDeleteModal(item.id);
+              },
               onIncrement: () => cartController.updateQuantity(item.id, item.quantity + 1),
               onDecrement: () => cartController.updateQuantity(item.id, item.quantity - 1),
               modifyQuantity: true,
@@ -99,7 +112,9 @@ Expanded(child:
                           .of(context)
                           .size
                           .width * .95,
-                      onPressed: () {}),
+                      onPressed: () {
+                        controller.goToCheckout();
+                      }),
                   SizedBox(height: 10,),
                   CustomButton(
                       text: 'Continue Shopping',
@@ -110,7 +125,7 @@ Expanded(child:
                           .size
                           .width * .95,
                       onPressed: () {
-                        controller.goToCheckout();
+
                       })
                 ],
               ),
