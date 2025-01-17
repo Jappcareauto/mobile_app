@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/shop/ui/bag/widgets/items_widgets.dart';
 import 'controllers/bag_controller.dart';
@@ -22,18 +23,28 @@ class BagScreen extends GetView<BagController> {
           child: Column(
             children: [
               // Liste des articles
-              ItemContainer(
-                modifyQuantity: false,
-                imageUrl:
-                "https://via.placeholder.com/150",
-                assetPath: AppImages.carWhite,
-                // Remplacer par l'URL de l'image
-                title: "Lamborghini Urus Headlight",
-                price: 125000,
-                quantity: cartController.quantity,
-                onIncrement: cartController.incrementQuantity,
-                onDecrement: cartController.decrementQuantity,
-              ),
+              Obx(
+              () => ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: cartController.cartItems.length,
+          itemBuilder: (context, index) {
+            final item = cartController.cartItems[index];
+            return ItemContainer(
+              assetPath: '',
+              total: controller.totalPrices.value.obs,
+              imageUrl: item.imageUrl,
+              title: item.title,
+              price: item.price.toInt(),
+              quantity: item.quantity.obs,
+              onIncrement: () => cartController.updateQuantity(item.id, item.quantity + 1),
+              onDecrement: () => cartController.updateQuantity(item.id, item.quantity - 1),
+              modifyQuantity: true,
+            );
+          },
+        ),
+      ),
+
               const SizedBox(height: 16),
               // Champ de saisie du coupon
 
@@ -50,7 +61,9 @@ class BagScreen extends GetView<BagController> {
                     children: [
                       Expanded(child:
                       CustomFormField(
+                        filColor: AppColors.white,
                         hintText: 'Code',
+                        borderColor: Color(0xFFE5E2E1),
                       ),
                       ),
                       SizedBox(width: 5,),
@@ -58,6 +71,7 @@ class BagScreen extends GetView<BagController> {
                           text: 'Apply Coupon',
                           strech: false,
                           haveBorder: true,
+                          borderRadius: BorderRadius.circular(30),
                           width: MediaQuery
                               .of(context)
                               .size
@@ -70,9 +84,10 @@ class BagScreen extends GetView<BagController> {
                     children: [
                       Text('Total' , style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans'),),
                       SizedBox(width: MediaQuery.of(context).size.width*.5,),
-
-                      Text("${NumberFormat('#,###').format(125000)} Frs" , style: TextStyle(fontSize:22 , fontWeight: FontWeight.w700 , color: Get.theme.primaryColor ),)
-                    ],
+Expanded(child:
+                      Text("${NumberFormat('#,###').format(controller.totalPrices.value)} Frs" , style: TextStyle(fontSize:20 , fontWeight: FontWeight.w700 , color: Get.theme.primaryColor ),)
+)
+  ],
                   ),
                   SizedBox(height: 20,),
 

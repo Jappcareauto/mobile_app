@@ -1,6 +1,6 @@
-import '../../domain/entities/get_products.dart';
+import '../../domain/entities/get_product_detail.dart';
 
-class DataModel {
+class GetProductDetailModel {
 
   final String name;
   final String description;
@@ -14,7 +14,7 @@ class DataModel {
   final String createdAt;
   final String updatedAt;
 
-  DataModel._({
+  GetProductDetailModel._({
     required this.name,
     required this.description,
     required this.price,
@@ -28,19 +28,19 @@ class DataModel {
     required this.updatedAt,
   });
 
-  factory DataModel.fromJson(Map<String, dynamic> json) {
-    return DataModel._(
-      name: json['name'] ?? '',
-      description: json['description'] ?? '',
-      price: PriceModel.fromJson(json['price'] ?? {}),
-      stockQuantity: json['stockQuantity'] ?? 0,
-      active: json['active'] ?? false,
-      media: MediaModel.fromJson(json['media'] ?? {}),
-      id: json['id'] ?? '',
-      createdBy: json['createdBy'] ?? '',
-      updatedBy: json['updatedBy'] ?? '',
-      createdAt: json['createdAt'] ?? '',
-      updatedAt: json['updatedAt'] ?? '',
+  factory GetProductDetailModel.fromJson(Map<String, dynamic> json) {
+    return GetProductDetailModel._(
+      name: json['name'],
+      description: json['description'],
+      price: PriceModel.fromJson(json['price']),
+      stockQuantity: json['stockQuantity'],
+      active: json['active'],
+      media: MediaModel.fromJson(json['media']),
+      id: json['id'],
+      createdBy: json['createdBy'],
+      updatedBy: json['updatedBy'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
     );
   }
 
@@ -60,8 +60,8 @@ class DataModel {
     return data;
   }
 
-  factory DataModel.fromEntity(Data entity) {
-    return DataModel._(
+  factory GetProductDetailModel.fromEntity(GetProductDetail entity) {
+    return GetProductDetailModel._(
       name: entity.name,
       description: entity.description,
       price: PriceModel.fromEntity(entity.price),
@@ -76,8 +76,8 @@ class DataModel {
     );
   }
 
-  Data toEntity() {
-    return Data.create(
+  GetProductDetail toEntity() {
+    return GetProductDetail.create(
       name: name,
       description: description,
       price: price.toEntity(),
@@ -94,7 +94,7 @@ class DataModel {
 }
 class PriceModel {
 
-  final double amount;
+  final int amount;
   final String currency;
 
   PriceModel._({
@@ -118,7 +118,7 @@ class PriceModel {
 
   factory PriceModel.fromEntity(Price entity) {
     return PriceModel._(
-      amount: entity.amount.toDouble(),
+      amount: entity.amount,
       currency: entity.currency,
     );
   }
@@ -135,21 +135,21 @@ class MediaModel {
   final String type;
   final String source;
   final List<ItemsModel> items;
-  final String? id;
-  final String? createdBy;
-  final String? updatedBy;
-  final String? createdAt;
-  final String? updatedAt;
+  final String id;
+  final String createdBy;
+  final String updatedBy;
+  final String createdAt;
+  final String updatedAt;
 
   MediaModel._({
     required this.type,
     required this.source,
     required this.items,
-     this.id,
-     this.createdBy,
-     this.updatedBy,
-     this.createdAt,
-     this.updatedAt,
+    required this.id,
+    required this.createdBy,
+    required this.updatedBy,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory MediaModel.fromJson(Map<String, dynamic> json) {

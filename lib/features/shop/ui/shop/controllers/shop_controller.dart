@@ -78,9 +78,12 @@ class ShopController extends GetxController {
     getProducts();
 
   }
-  void goToProductDetails(String id ){
+  void goToProductDetails(String id , String name , String description ,double amount ){
       _appNavigation.toNamed(ShopPrivateRoutes.productDetails , arguments: {
-       'id':id
+       'productId':id,
+        "name": name,
+        "description": description,
+        "price" : amount
       });
   }
   void goBack() {

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/features/shop/ui/bag/controllers/bag_controller.dart';
 import 'package:jappcare/features/shop/ui/productDetails/widgets/product_detail_widget.dart';
-class ItemContainer extends StatelessWidget {
+class ItemContainer extends GetView<BagController> {
   final String imageUrl;
   final String title;
   final int price;
+  final RxDouble total ;
   final RxInt quantity;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
@@ -14,6 +16,7 @@ class ItemContainer extends StatelessWidget {
   final String assetPath ;
   const ItemContainer({
     Key? key,
+    required this.total ,
     required this.assetPath,
     required this.imageUrl,
     required this.title,
@@ -96,41 +99,52 @@ class ItemContainer extends StatelessWidget {
               ,
               SizedBox(width: modifyQuantity ? MediaQuery.of(context).size.width*.30 :MediaQuery.of(context).size.width*.30 ,),
 
-              Row(
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Qty:'),
-                  SizedBox(width: 5,),
-                  modifyQuantity
-                      ?  QuantityButton(
-                    icon: Icons.remove,
-                    onPressed: () {
-                      },
-                  ):
-                  SizedBox() ,
+                  Text('Quantity'),
+                  SizedBox(height: 5,),
+                  Row(
+                    children: [
+                      SizedBox(width: 5,),
+                      modifyQuantity
+                          ?  QuantityButton(
+                        icon: Icons.remove,
+                        onPressed: () {
+                          onDecrement();
+                        },
+                      ):
+                      SizedBox() ,
 
 
 
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
-                          '2',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                      Obx(() =>
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              quantity.value.toString(),
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
-                        ),
                       ),
-                  modifyQuantity
-                      ?
-                    QuantityButton(
-                      icon: Icons.add,
-                      onPressed: () {
+                      modifyQuantity
+                          ?
+                      QuantityButton(
+                        icon: Icons.add,
+                        onPressed: () {
+                              onIncrement();
+                        },
+                      )
+                          : SizedBox() ,
 
-                      },
-                    )
-                      : SizedBox() ,
-
+                    ],
+                  )
                 ],
               )
             ],
@@ -140,8 +154,11 @@ class ItemContainer extends StatelessWidget {
             children: [
               Text('Total' , style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans'),),
               SizedBox(width: MediaQuery.of(context).size.width*.5,),
-
-              Text("${NumberFormat('#,###').format(price)} Frs" , style: TextStyle(fontSize:16 , fontWeight: FontWeight.w600 , color: Get.theme.primaryColor ),)
+    Obx(() =>
+    Expanded(child:
+              Text("${NumberFormat('#,###').format(total.value)} Frs" , style: TextStyle(fontSize:14 , fontWeight: FontWeight.w600 , color: Get.theme.primaryColor ),)
+    )
+    )
             ],
           )
         ],

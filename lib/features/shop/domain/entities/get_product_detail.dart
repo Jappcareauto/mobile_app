@@ -1,22 +1,4 @@
-class GetProducts {
-
-  final List<Data> data;
-
-  GetProducts._({
-    required this.data,
-  });
-
-  factory GetProducts.create({
-    required data,
-  }) {
-    // Add any validation or business logic here
-    return GetProducts._(
-      data: data,
-    );
-  }
-
-}
-class Data {
+class GetProductDetail {
 
   final String name;
   final String description;
@@ -30,7 +12,7 @@ class Data {
   final String createdAt;
   final String updatedAt;
 
-  Data._({
+  GetProductDetail._({
     required this.name,
     required this.description,
     required this.price,
@@ -44,7 +26,7 @@ class Data {
     required this.updatedAt,
   });
 
-  factory Data.create({
+  factory GetProductDetail.create({
     required name,
     required description,
     required price,
@@ -58,7 +40,7 @@ class Data {
     required updatedAt,
   }) {
     // Add any validation or business logic here
-    return Data._(
+    return GetProductDetail._(
       name: name,
       description: description,
       price: price,
@@ -76,7 +58,7 @@ class Data {
 }
 class Price {
 
-  final double amount;
+  final int amount;
   final String currency;
 
   Price._({
@@ -101,21 +83,21 @@ class Media {
   final String type;
   final String source;
   final List<Items> items;
-  final String? id;
-  final String? createdBy;
-  final String? updatedBy;
-  final String? createdAt;
-  final String? updatedAt;
+  final String id;
+  final String createdBy;
+  final String updatedBy;
+  final String createdAt;
+  final String updatedAt;
 
   Media._({
     required this.type,
     required this.source,
     required this.items,
-     this.id,
-     this.createdBy,
-     this.updatedBy,
-     this.createdAt,
-     this.updatedAt,
+    required this.id,
+    required this.createdBy,
+    required this.updatedBy,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory Media.create({

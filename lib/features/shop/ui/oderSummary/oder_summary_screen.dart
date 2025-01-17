@@ -33,6 +33,7 @@ class OderSummaryScreen extends GetView<OderSummaryController> {
               SizedBox(height: 10),
               ...List.generate(2, (index) {
                 return ItemContainer(
+                  total: 1.toDouble().obs,
                   modifyQuantity: false,
                   imageUrl: "https://via.placeholder.com/150",
                   assetPath: AppImages.carWhite,

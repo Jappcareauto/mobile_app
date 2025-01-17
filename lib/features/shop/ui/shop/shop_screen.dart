@@ -81,7 +81,7 @@ class ShopScreen extends GetView<ShopController>
                 final product = controller.products.value![index];
                 return GestureDetector(
                   onTap: () {
-                    // Naviguer vers les détails du produit
+                    controller.goToProductDetails(product.id , product.name, product.description , product.price.amount ,);
                   },
                   child: Card(
                     color: Colors.transparent,
@@ -104,9 +104,14 @@ class ShopScreen extends GetView<ShopController>
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16.0),
                               child: ImageComponent(
-                                imageUrl: product.media.items[0].sourceUrl,
-                                assetPath: product.media.items[0].sourceUrl,
+                                imageUrl: (product.media.items != null && product.media.items.isNotEmpty)
+                                    ? product.media.items[0].sourceUrl
+                                    : null,
+                                assetPath: (product.media.items != null && product.media.items.isNotEmpty)
+                                    ? product.media.items[0].sourceUrl
+                                    : null,
                               ),
+
                             ),
                           ),
                           Padding(
@@ -124,7 +129,8 @@ class ShopScreen extends GetView<ShopController>
                             padding:
                             const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              "${NumberFormat('#,###').format(int.parse(product.price.amount.toString()))}" +
+                              "${NumberFormat('#,###.##').format(product.price.amount)}"
+                                  +
                                   " ${product.price.currency}",
                               style: TextStyle(
                                 color: Get.theme.primaryColor,
