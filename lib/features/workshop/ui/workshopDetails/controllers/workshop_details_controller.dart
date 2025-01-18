@@ -50,25 +50,25 @@ class WorkshopDetailsController extends GetxController {
     _appNavigation.goBack();
   }
 
-  Future<void> getPlaceName() async {
-    loading.value = true ;
-    final result = await _getPlaceNameUseCase.call(
-        GetPlaceNameCommand(longitude: arguments['longitude'], latitude: arguments['latitude']));
-    result.fold(
-            (error) {
-          print(error.message);
-          loading.value = false ;
+  // Future<void> getPlaceName() async {
+  //   loading.value = true ;
+  //   final result = await _getPlaceNameUseCase.call(
+  //       GetPlaceNameCommand(longitude: arguments['longitude'], latitude: arguments['latitude']));
+  //   result.fold(
+  //           (error) {
+  //         print(error.message);
+  //         loading.value = false ;
 
-        },
-            (response) {
-              placeName.value = response ;
-              loading.value = false ;
+  //       },
+  //           (response) {
+  //             placeName.value = response ;
+  //             loading.value = false ;
 
-              update();
-        }
+  //             update();
+  //       }
 
-    );
-  }
+  //   );
+  // }
 
   //get position
   void getPosition() async {
