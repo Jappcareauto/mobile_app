@@ -7,6 +7,7 @@ import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_widgets.dart';
+import 'package:jappcare/features/workshop/ui/workshopDetails/widgets/text_shimmer.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import 'controllers/workshop_controller.dart';
 import 'package:get/get.dart';
@@ -85,7 +86,16 @@ class WorkshopScreen extends GetView<WorkshopController>
                           ? [ // Encapsuler ListVehicleShimmer dans un conteneur de hauteur définie
                         SizedBox(
                           height: 190, // Hauteur fixée
-                          child: WorkshopShimmerWidgets(),
+                            child:SingleChildScrollView(
+                              child:  Column(
+                                children: [
+                                  WorkshopShimmerWidgets(),
+                                  WorkshopShimmerWidgets(),
+
+                                ],
+                              ),
+                            )
+
                         ),
                       ]
                           : (controller.servicesCenter.value?.data != null &&
@@ -98,6 +108,7 @@ class WorkshopScreen extends GetView<WorkshopController>
                               service.location?.description ?? 'Inconnu',
                               service.location?.latitude ?? 0.0,
                               service.location?.longitude ?? 0.0,
+                              service.id
                             );
                           },
                           child: ServiceItemWidget(

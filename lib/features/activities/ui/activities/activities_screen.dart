@@ -74,9 +74,9 @@ class ActivitiesScreen extends GetView<ActivitiesController>
                       ],
                     ),
                   ),
-            Positioned(
-                bottom:0,
-                right: 10,
+            Container(
+
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*.65,left: MediaQuery.of(context).size.width*.85),
                 child: ChatWidget())
           ],
         ));

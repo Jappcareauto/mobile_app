@@ -18,7 +18,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
         child: Form(
             child: Column(
           children: [
-            const AvatarWidget(size: 100, canEdit: true),
+             AvatarWidget(size: 100, canEdit: true),
             const SizedBox(height: 20),
             CustomFormField(
               controller: controller.editProfileFormHelper.controllers['name'],

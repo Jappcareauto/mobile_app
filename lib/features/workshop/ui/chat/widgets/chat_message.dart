@@ -6,7 +6,7 @@ class ChatMessage extends StatelessWidget {
   final String? text;
   final bool isSender;
 
-  final List<String> images;
+  final List<File> images;
 
   const ChatMessage({
     Key? key,
@@ -72,8 +72,9 @@ class ChatMessage extends StatelessWidget {
                 spacing: 2.0,
                 runSpacing: 2.0,
                 children: images.map((imagePath) {
-                  return Image.asset(
-                    imagePath ,
+                  final imageFile = File(imagePath.path);
+                  return Image.file(
+                    imageFile ,
                     width: 150.0,
                     height: 150.0,
                     fit: BoxFit.cover,

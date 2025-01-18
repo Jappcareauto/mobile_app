@@ -12,7 +12,14 @@ import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
 class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
   final double size;
   final bool canEdit;
-  const AvatarWidget({super.key, this.size = 55, this.canEdit = false});
+  final bool? haveName ;
+  const AvatarWidget(
+      {
+        Key?key,
+        this.size = 55,
+        this.canEdit = false ,
+        this.haveName
+      }):super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +61,26 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                                 width: 2
                               )
                             ),
-                              child:  CircleAvatar(
+                              child: haveName == true ?
+                                  Row(
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: AppColors.black,
+                                        radius: size,
+                                        child: Text(
+                                          _.userInfos?.name[0].toUpperCase() ?? '',
+                                          style: Get.textTheme.headlineLarge?.copyWith(
+                                              color: Get.theme.primaryColor,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Text(
+                                        _.userInfos?.name ?? "",
+                                        style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 14 ),
+                                      )
+                                    ],
+                                  ):
+                              CircleAvatar(
                                 backgroundColor: AppColors.black,
                                 radius: size,
                                 child: Text(

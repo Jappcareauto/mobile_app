@@ -6,4 +6,5 @@ class ShopConstants {
 
   // Add other constants here
   static const String getProductsGetUri = '/product/active';
+  static const String getProductDetailGetUri = '/product';
 }

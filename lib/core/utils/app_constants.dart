@@ -25,4 +25,9 @@ class AppConstants {
   static const String userIdEvent = "userIdEvent";
   static const String garageIdEvent = "garageIdEvent";
   static const String mapLocalisation = "assets/icons/maplocalisation.png";
+  static const String noActivities = "assets/images/noactivities.png";
+  static const String Login = "assets/images/login.png";
+  static const String SingUp = "assets/images/Singup.png";
+  static const String Sms = "assets/images/sms.png";
+
 }

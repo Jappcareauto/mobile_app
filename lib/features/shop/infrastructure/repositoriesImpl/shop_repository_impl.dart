@@ -9,6 +9,9 @@ import '../../domain/core/utils/shop_constants.dart';
 import 'package:dartz/dartz.dart';
 import '../models/get_products_model.dart';
 
+import '../../domain/entities/get_product_detail.dart';
+import '../models/get_product_detail_model.dart';
+
 class ShopRepositoryImpl implements ShopRepository {
   final NetworkService networkService;
 
@@ -17,19 +20,35 @@ class ShopRepositoryImpl implements ShopRepository {
   });
 
   @override
-  Future<Either<ShopException, GetProducts>> getProducts() async {
+  Future<Either<ShopException, GetProductDetail>> getProductDetail(String productId) async {
     try {
       final response = await networkService.get(
-        ShopConstants.getProductsGetUri,
+        "${ShopConstants.getProductDetailGetUri}/$productId",
         
       );
-      return Right(GetProductsModel.fromJson(response).toEntity());
+      return Right(GetProductDetailModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(ShopException(e.message));
     }
   }
 
 
-  //Add methods here
+  @override
+  Future<Either<ShopException, List<Data>>> getProducts() async {
+    try {
+      final response = await networkService.get(
+        ShopConstants.getProductsGetUri,
+      );
+      final List<dynamic> decodedResponse = response;
+      final products = decodedResponse.map((json) => DataModel.fromJson(json).toEntity()).toList();
+      return Right(products);
+    } on BaseException catch (e) {
+      return Left(ShopException(e.message));
+    }
+  }
+
+
+
+//Add methods here
 
 }

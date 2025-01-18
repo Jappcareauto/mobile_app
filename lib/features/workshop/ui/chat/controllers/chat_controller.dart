@@ -22,43 +22,33 @@ class ChatController extends GetxController {
       {
         "text": "Hello , lorem ipsum dolors  ?",
 
-        "isSender": true,
-        "images": <String>[]
-      },
-      {
-        "text": "Bonjour, lorem ipsum dolor",
-
         "isSender": false,
-        "images": <String>[]
-      },
-      {
-        "text": "weeer mon frer depeche toi norr",
-
-        "isSender": true,
-        "images": <String>[]
-      },
-      {
-        "text": "noon madame les embouteillages",
-
-        "isSender": false,
-        "images": <String>[
-          AppImages.vehicule
-        ]
-      },
-      {
-        "text": "So explain to me more",
-        "time": "15:44",
-        "isSender": true,
-        "images": <String>[]
-      },
-      {
-        "text": "Hello, I’m fine, how can I help you?",
-        "time": "15:44",
-        "isSender": false,
-        "images": <String>[]
+        "images": <File>[]
       },
     ]);
   }
+  var paymentDetails = [
+    {
+      "name":"MTN Momo",
+      "icon":AppImages.mtnLogo,
+      "numero":"+237691121881"
+    },
+    {
+      "name":"Orange Money",
+      "icon":AppImages.orangeLogo,
+      "numero":"+237691121881"
+    },
+    {
+      "name":"Card",
+      "icon":AppImages.card,
+      "numero":"**** **** **** 7890"
+    },
+    {
+      "name":"Cash",
+      "icon":AppImages.money,
+      "numero":"mmm"
+    }
+  ];
   Future<void> pickImage() async {
     final images = await getImage(many: true);
     if (images != null) {
@@ -72,11 +62,10 @@ class ChatController extends GetxController {
     if (messageController.text.isNotEmpty || selectedImages.isNotEmpty) {
       try {
         messages.add({
-          "text":
-          messageController.text.isNotEmpty ? messageController.text : null,
+          "text": messageController.text.isNotEmpty ? messageController.text : null,
           "time": "15:45",
           "isSender": true,
-          "images": selectedImages.map((image) => image.path).toList(),
+          "images": selectedImages.map((image) => image.path).toList(), // Reste inchangé ici.
         });
         messageController.clear();
         selectedImages.clear();
@@ -86,6 +75,7 @@ class ChatController extends GetxController {
       }
     }
   }
+
   void openMore() {
     showModalBottomSheet(
       context: Get.context!,

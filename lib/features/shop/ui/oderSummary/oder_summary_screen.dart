@@ -31,18 +31,30 @@ class OderSummaryScreen extends GetView<OderSummaryController> {
                 ],
               ),
               SizedBox(height: 10),
-              ...List.generate(2, (index) {
-                return ItemContainer(
-                  modifyQuantity: false,
-                  imageUrl: "https://via.placeholder.com/150",
-                  assetPath: AppImages.carWhite,
-                  title: "Lamborghini Urus Headlight",
-                  price: 125000,
-                  quantity: cartController.quantity,
-                  onIncrement: cartController.incrementQuantity,
-                  onDecrement: cartController.decrementQuantity,
-                );
-              }),
+              Obx(
+                    () => ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: cartController.cartItems.length,
+                  itemBuilder: (context, index) {
+                    final item = cartController.cartItems[index];
+                    return ItemContainer(
+                      assetPath: '',
+                      total: cartController.totalPrices.value.obs,
+                      imageUrl: item.imageUrl,
+                      title: item.title,
+                      price: item.price.toInt(),
+                      quantity: item.quantity.obs,
+                      onDelete: (){
+                        cartController.showDeleteModal(item.id);
+                      },
+                      onIncrement: () => cartController.updateQuantity(item.id, item.quantity + 1),
+                      onDecrement: () => cartController.updateQuantity(item.id, item.quantity - 1),
+                      modifyQuantity: false,
+                    );
+                  },
+                ),
+              ),
               SizedBox(height: 10),
               Container(
 
@@ -56,7 +68,7 @@ class OderSummaryScreen extends GetView<OderSummaryController> {
                     Text('Total' , style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans'),),
                     SizedBox(width: MediaQuery.of(context).size.width*.5,),
 
-                    Text("${NumberFormat('#,###').format(1240000)} Frs" , style: TextStyle(fontSize:16 , fontWeight: FontWeight.w600 , color: Get.theme.primaryColor ),)
+                    Text("${NumberFormat('#,###').format(cartController.totalPrices.value)} Frs" , style: TextStyle(fontSize:16 , fontWeight: FontWeight.w600 , color: Get.theme.primaryColor ),)
                   ],
                 )
               ),

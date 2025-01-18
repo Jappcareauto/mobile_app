@@ -40,5 +40,7 @@ class AppImages {
   static const String boiteLettre = "assets/images/boite_lettre.png";
   static const String charts = "assets/images/charts.png";
   static const String noActivities = "assets/images/noactivities.png";
+  static const String money = "assets/icons/money.png";
+  static const String card = "assets/icons/card.png";
 
 }

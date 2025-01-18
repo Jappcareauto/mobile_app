@@ -76,7 +76,7 @@ class Data {
 }
 class Price {
 
-  final int amount;
+  final double amount;
   final String currency;
 
   Price._({
@@ -101,21 +101,21 @@ class Media {
   final String type;
   final String source;
   final List<Items> items;
-  final String id;
-  final String createdBy;
-  final String updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? id;
+  final String? createdBy;
+  final String? updatedBy;
+  final String? createdAt;
+  final String? updatedAt;
 
   Media._({
     required this.type,
     required this.source,
     required this.items,
-    required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+     this.id,
+     this.createdBy,
+     this.updatedBy,
+     this.createdAt,
+     this.updatedAt,
   });
 
   factory Media.create({

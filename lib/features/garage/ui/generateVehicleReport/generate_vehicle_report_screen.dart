@@ -19,7 +19,7 @@ class GenerateVehicleReportScreen
               ListVehicleWidget(
                 title: "Select Vehicle",
                 selectedIndex: controller.selectedIndex.value,
-                onSelected: controller.onChangeIndex,
+                // onSelected: controller.onChangeIndex,
               ),
               const Spacer(),
               Padding(

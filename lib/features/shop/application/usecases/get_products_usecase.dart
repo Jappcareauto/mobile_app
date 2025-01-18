@@ -10,6 +10,6 @@ class GetProductsUseCase {
 
   GetProductsUseCase(this.repository);
 
-  Future<Either<ShopException, GetProducts>> call() async {
+  Future<Either<ShopException, List<Data>>> call() async {
     return await repository.getProducts();  }
 }

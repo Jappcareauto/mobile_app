@@ -52,7 +52,9 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
             ],
           ),
           SizedBox(height: 10,),
-          Container(
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            curve: Curves.linear,
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -65,6 +67,7 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                 ),
               ],
             ),
+            height: controller.isExpanded.value ? MediaQuery.of(context).size.height*.7 : MediaQuery.of(context).size.height*.4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

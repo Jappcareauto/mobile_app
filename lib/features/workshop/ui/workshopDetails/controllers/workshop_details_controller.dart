@@ -43,32 +43,32 @@ class WorkshopDetailsController extends GetxController {
     // Generate by Menosi_cli
     super.onInit();
     getPosition();
-    getPlaceName();
+    // getPlaceName();
   }
 
   void goBack() {
     _appNavigation.goBack();
   }
 
-  Future<void> getPlaceName() async {
-    loading.value = true ;
-    final result = await _getPlaceNameUseCase.call(
-        GetPlaceNameCommand(longitude: arguments['longitude'], latitude: arguments['latitude']));
-    result.fold(
-            (error) {
-          print(error.message);
-          loading.value = false ;
+  // Future<void> getPlaceName() async {
+  //   loading.value = true ;
+  //   final result = await _getPlaceNameUseCase.call(
+  //       GetPlaceNameCommand(longitude: arguments['longitude'], latitude: arguments['latitude']));
+  //   result.fold(
+  //           (error) {
+  //         print(error.message);
+  //         loading.value = false ;
 
-        },
-            (response) {
-              placeName.value = response ;
-              loading.value = false ;
+  //       },
+  //           (response) {
+  //             placeName.value = response ;
+  //             loading.value = false ;
 
-              update();
-        }
+  //             update();
+  //       }
 
-    );
-  }
+  //   );
+  // }
 
   //get position
   void getPosition() async {
@@ -201,7 +201,7 @@ class WorkshopDetailsController extends GetxController {
   }
 
   void gotoBoockApontment() {
-    _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment , arguments: {"latitude": arguments['latitude'] , "longitude":arguments['longitude'] , "name":arguments['name']});
+    _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment , arguments: {"latitude": arguments['latitude'] , "longitude":arguments['longitude'] , "name":arguments['name'] , "id":arguments['id']});
     print('go to appointment');
   }
 

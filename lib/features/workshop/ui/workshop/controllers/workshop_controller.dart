@@ -28,12 +28,13 @@ class WorkshopController extends GetxController {
     _appNavigation.goBack();
   }
 
-  void goToWorkshopDetails(String name , String description , double latitude , double longitude) {
+  void goToWorkshopDetails(String name , String description , double latitude , double longitude , String id) {
     _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails , arguments: {
       "name": name ,
       "description": description ,
       "latitude": latitude ,
-      "longitude":longitude
+      "longitude":longitude,
+      "id":id
     });
   }
   Future<void> getAllServicesCenter() async {

@@ -1,37 +1,5 @@
 import '../../domain/entities/get_products.dart';
 
-class GetProductsModel {
-
-  final List<DataModel> data;
-
-  GetProductsModel._({
-    required this.data,
-  });
-
-  factory GetProductsModel.fromJson(Map<String, dynamic> json) {
-    return GetProductsModel._(
-      data: List<DataModel>.from(json['data'].map((x) => DataModel.fromJson(x))),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> json = <String, dynamic>{};
-    json['data'] = data.map((x) => x.toJson()).toList();
-    return json;
-  }
-
-  factory GetProductsModel.fromEntity(GetProducts entity) {
-    return GetProductsModel._(
-      data: List<DataModel>.from(entity.data.map((x) => DataModel.fromEntity(x))),
-    );
-  }
-
-  GetProducts toEntity() {
-    return GetProducts.create(
-      data: data.map((x) => x.toEntity()).toList(),
-    );
-  }
-}
 class DataModel {
 
   final String name;
@@ -62,17 +30,17 @@ class DataModel {
 
   factory DataModel.fromJson(Map<String, dynamic> json) {
     return DataModel._(
-      name: json['name'],
-      description: json['description'],
-      price: PriceModel.fromJson(json['price']),
-      stockQuantity: json['stockQuantity'],
-      active: json['active'],
-      media: MediaModel.fromJson(json['media']),
-      id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      price: PriceModel.fromJson(json['price'] ?? {}),
+      stockQuantity: json['stockQuantity'] ?? 0,
+      active: json['active'] ?? false,
+      media: MediaModel.fromJson(json['media'] ?? {}),
+      id: json['id'] ?? '',
+      createdBy: json['createdBy'] ?? '',
+      updatedBy: json['updatedBy'] ?? '',
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
     );
   }
 
@@ -126,7 +94,7 @@ class DataModel {
 }
 class PriceModel {
 
-  final int amount;
+  final double amount;
   final String currency;
 
   PriceModel._({
@@ -150,7 +118,7 @@ class PriceModel {
 
   factory PriceModel.fromEntity(Price entity) {
     return PriceModel._(
-      amount: entity.amount,
+      amount: entity.amount.toDouble(),
       currency: entity.currency,
     );
   }
@@ -167,21 +135,21 @@ class MediaModel {
   final String type;
   final String source;
   final List<ItemsModel> items;
-  final String id;
-  final String createdBy;
-  final String updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? id;
+  final String? createdBy;
+  final String? updatedBy;
+  final String? createdAt;
+  final String? updatedAt;
 
   MediaModel._({
     required this.type,
     required this.source,
     required this.items,
-    required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+     this.id,
+     this.createdBy,
+     this.updatedBy,
+     this.createdAt,
+     this.updatedAt,
   });
 
   factory MediaModel.fromJson(Map<String, dynamic> json) {
@@ -241,9 +209,9 @@ class ItemsModel {
   final String sourceUrl;
   final String capturedUrl;
   final String type;
-  final String mediaId;
-  final String fileId;
-  final String fileUrl;
+  final String? mediaId;
+  final String? fileId;
+  final String? fileUrl;
   final String id;
   final String createdBy;
   final String updatedBy;
@@ -254,9 +222,9 @@ class ItemsModel {
     required this.sourceUrl,
     required this.capturedUrl,
     required this.type,
-    required this.mediaId,
-    required this.fileId,
-    required this.fileUrl,
+     this.mediaId,
+     this.fileId,
+     this.fileUrl,
     required this.id,
     required this.createdBy,
     required this.updatedBy,
@@ -269,9 +237,9 @@ class ItemsModel {
       sourceUrl: json['sourceUrl'],
       capturedUrl: json['capturedUrl'],
       type: json['type'],
-      mediaId: json['mediaId'],
-      fileId: json['fileId'],
-      fileUrl: json['fileUrl'],
+      mediaId: json['mediaId'] ?? "",
+      fileId: json['fileId'] ?? "",
+      fileUrl: json['fileUrl'] ?? "",
       id: json['id'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],

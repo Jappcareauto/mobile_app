@@ -6,7 +6,7 @@ import 'package:jappcare/features/shop/ui/shop/controllers/shop_controller.dart'
 
 class ProductDetailsWidget extends GetView<ProductDetailsController> {
   final String name  ;
-  final String price ;
+  final double price ;
   final String description ;
   ProductDetailsWidget({
     Key?key,
@@ -57,7 +57,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
             SizedBox(height: 8),
             // Price
             Text(
-              price,
+              price.toString(),
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -126,7 +126,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                       icon: Icons.remove,
                       onPressed: () {
                         controller.quantity.value > 0 ?
-                        controller.removeQuantity(int.parse(price)):
+                        controller.removeQuantity(price.toDouble()):
                           null
                         ;
 
@@ -149,7 +149,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                     QuantityButton(
                       icon: Icons.add,
                       onPressed: () {
-                        controller.addQuantity(int.parse(price));
+                        controller.addQuantity(price.toDouble());
                       },
                     ),
                   ],
@@ -175,7 +175,7 @@ class QuantityButton extends StatelessWidget {
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Get.theme.primaryColor.withOpacity(.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: IconButton(

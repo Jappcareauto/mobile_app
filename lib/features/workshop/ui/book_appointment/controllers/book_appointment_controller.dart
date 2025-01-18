@@ -26,62 +26,54 @@ class BookAppointmentController extends GetxController{
   var selectedYear = DateTime.now().year.obs; // Année actuelle
   var selectedMonth = DateTime.now().month.obs; // Mois actuel
   RxString selectedTime = "Morning".obs;
+
   var selectedImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();
   final GetVehicleListUseCase _getVehicleListUseCase = Get.find();
   final LocalStorageService _localStorageService = Get.find();
-
+  final TextEditingController locationController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
   final GetGarageByOwnerIdUseCase _getGarageByOwnerIdUseCase = Get.find();
   final loading = true.obs;
   final vehicleLoading = true.obs;
-
+  final vehicleId = ''.obs ;
+  final vehicleVin = ''.obs ;
   GetGarageByOwnerId? myGarage;
-
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<Vehicle> vehicleList = [];
-  RxString selectedLocation = "At the Shop".obs;
+  RxString selectedLocation = "GARAGE".obs;
   var images = [
     AppImages.shopCar,
     AppImages.carClean,
-
-
   ].obs;
   final PageController pageController = PageController();
   final RxInt currentPage = 0.obs;
     BookAppointmentController(this._appNavigation);
-  final cars = [
-    {
-      "name": "Porshe Taycan Turbo S",
-      "vin": "2024, RWD",
-      "imageUrl": AppImages.carWhite,
-    },
-    {
-      "name": "Tesla Model S Plaid",
-      "vin": "2023, AWD",
-      "imageUrl": AppImages.carWhite,
-    },
-    {
-      "name": "Audi e-Tron GT",
-      "vin": "2023, AWD",
-      "imageUrl": AppImages.carWhite,
-    },
-  ];
-
   @override
   void onInit() {
     super.onInit();
     // Listener pour synchroniser la page actuelle
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (pageController.hasClients) {
+        pageController.jumpToPage(0); // Forcer le positionnement à la page 0
+      }
+    });
     pageController.addListener(() {
       int newPage = pageController.page!.round();
       if (currentPage.value != newPage) {
         currentPage.value = newPage;
+        print("newPage");
+
+        print(currentPage.value);
       }
     });
-    getGarageByOwnerId(_localStorageService.read(AppConstants.userId));
+
   }
 
   @override
   void dispose() {
-    pageController.dispose();
+    // pageController.dispose();
     super.dispose();
   }
 
@@ -100,7 +92,12 @@ class BookAppointmentController extends GetxController{
     selectedLocation.value = location;
   }
   void gotToConfirmAppointment () {
-    _appNavigation.toNamed(WorkshopPrivateRoutes.confirmappointment);
+    _appNavigation.toNamed(WorkshopPrivateRoutes.confirmappointment ,
+        arguments: {
+          "currentPge":currentPage,
+          "servicesName": Get.arguments['name'],
+          "servicesId":Get.arguments['id']
+    });
   }
   Future<void> selectImagesFromGallery() async {
     final List<XFile>? pickedFiles = await _picker

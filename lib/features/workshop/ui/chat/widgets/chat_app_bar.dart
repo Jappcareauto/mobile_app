@@ -1,7 +1,9 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/utils/app_dimensions.dart';
+import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 
 
 import '../controllers/chat_controller.dart';
@@ -29,27 +31,15 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       title: Row(
         children: [
+          if (Get.isRegistered<FeatureWidgetInterface>(
+              tag: 'AvatarWidget'))
+            Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
+                .buildView({
+              "haveName":true
+            }),
+          SizedBox(width: 10,),
 
-          CircleAvatar(
-            backgroundImage: AssetImage(profileImageUrl),
-          ),
-          const SizedBox(width: 8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(username,
-                  style: Get.textTheme.bodyMedium?.copyWith(
-                      color: Colors.black, fontWeight: FontWeight.normal , fontSize: 25)),
-              Row(
-                children: [
-                  const CircleAvatar(
-                      backgroundColor: Colors.white, radius: 4),
-                  const SizedBox(width:4),
-
-                ],
-              ),
-            ],
-          ),
+          Text( Get.find<ProfileController>().userInfos?.name?? "Unknow",  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
         ],
       ),
 

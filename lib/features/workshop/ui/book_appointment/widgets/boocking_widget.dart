@@ -78,15 +78,15 @@ class BookingWidget extends GetView<BookAppointmentController> {
                 Obx(() => LocationOption(
                   label: "At Home",
                   icon: FluentIcons.home_12_regular,
-                  isSelected: controller.selectedLocation.value == "At Home",
-                  onTap: () => controller.selectLocation("At Home"),
+                  isSelected: controller.selectedLocation.value == "HOME",
+                  onTap: () => controller.selectLocation("HOME"),
                 )),
                 Obx(() => LocationOption(
                   label: "At the Shop",
                   icon: FluentIcons.home_12_regular,
                   isSelected:
-                  controller.selectedLocation.value == "At the Shop",
-                  onTap: () => controller.selectLocation("At the Shop"),
+                  controller.selectedLocation.value == "GARAGE",
+                  onTap: () => controller.selectLocation("GARAGE"),
                 )),
               ],
             ),

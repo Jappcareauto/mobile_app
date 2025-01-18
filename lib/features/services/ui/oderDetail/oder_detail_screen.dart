@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/select_vehicule_slider_widget.dart';
@@ -18,13 +19,23 @@ class OderDetailScreen extends GetView<OderDetailController> {
       body: Container(
           child: Column(
             children: [
-              SelectedVehiculeWidget(
-                  pageController: generateVehicleReportController.pageController,
-                  cars: generateVehicleReportController.vehicleList,
-                  currentPage: generateVehicleReportController.currentPage,
-                  haveAddVehicule: false,
-                  titleText: 'Generate Report for'
-              ),
+              if (Get.isRegistered<FeatureWidgetInterface>(
+                  tag: 'ListVehicleWidget'))
+                Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+                    .buildView({
+                  "pageController": generateVehicleReportController.pageController ,
+                  "currentPage": generateVehicleReportController.currentPage,
+                  "haveAddVehicule": false,
+                  "isSingleCard": true,
+                  "title": "My Garage",
+                  "onSelected": (index) {
+                    print('seleccar');
+                    print(index);
+                  },
+                  "onTapeAddVehicle": (){
+                    print("clique");
+                  },
+                }),
               ResumeServicesWidget(),
               Spacer(),
               Container(

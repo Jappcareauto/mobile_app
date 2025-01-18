@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/ui/widgets/image_decoration.dart';
+import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/authentification/ui/authentification/controllers/authentification_controller.dart';
 import '../../../../core/ui/widgets/custom_button.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
@@ -23,11 +25,12 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      ImageDecoration(assetPath: AppConstants.Login),
+
                       SizedBox(
                         height: Get.height * .6,
                         child: Column(
                           children: [
-                            const SizedBox(height: 20),
                             CustomFormField(
                               label: 'Email',
                               hintText: 'Enter your email',
@@ -52,13 +55,6 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                                     child: const Text('Forgot Password?')),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height * .25,
-                        child: Column(
-                          children: [
                             CustomButton(
                               isLoading: _.loginFormHelper.isLoading,
                               text: 'Login',

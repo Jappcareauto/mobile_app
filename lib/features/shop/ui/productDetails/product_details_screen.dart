@@ -4,7 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/ui/widgets/image_gallery.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/shop/domain/entities/cardItams.dart';
+import 'package:jappcare/features/shop/ui/bag/controllers/bag_controller.dart';
 import 'package:jappcare/features/shop/ui/productDetails/widgets/product_detail_widget.dart';
 import 'package:jappcare/features/shop/ui/productDetails/widgets/testimoniale_widget.dart';
 import 'package:jappcare/features/shop/ui/shop/controllers/shop_controller.dart';
@@ -16,7 +19,7 @@ import 'package:get/get.dart';
 class ProductDetailsScreen extends GetView<ProductDetailsController> {
   final argument = Get.arguments as Map<String , dynamic> ;
   final ShopController _shopController = Get.put(ShopController(Get.find()));
-
+  final BagController bagController  = Get.put(BagController(Get.find()));
   @override
   Widget build(BuildContext context) {
     
@@ -28,7 +31,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
             BannerWidget(
               imageComponents: ImageCarousel(
                 imageUrls: [
-                  argument['imagePath']
+                  argument['imagePath'] ?? AppImages.shop1
                 ],
               ),
               RightIcon: IconButton(
@@ -40,9 +43,9 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
             ),
             SizedBox(height: 20,),
             ProductDetailsWidget(
-              description: argument['description'],
-              name: argument['name'],
-              price: argument['price'],
+              description: argument['description'] ?? "",
+              name: argument['name'] ?? "",
+              price: argument['price'] ?? "",
             ),
             SizedBox(height: 20,),
             ImageGallerry(
@@ -77,7 +80,21 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 haveBorder: true,
                 strech: false,
 
-                onPressed: (){},
+                onPressed: (){
+
+                    final newItem = CartItem(
+                      id: argument['productId'], // Identifiant unique du produit
+                      title: argument['name'],
+                      imageUrl: AppImages.shop1,
+                      price: argument['price'],
+                      quantity: controller.quantity.value,
+                    );
+
+                    // Appeler la méthode addToCart pour ajouter l'article au panier
+                    bagController.addToCart(newItem);
+                    Get.snackbar('Items Add to cart', '', snackPosition: SnackPosition.BOTTOM , backgroundColor: AppColors.green , colorText: AppColors.white);
+
+                },
                 width: MediaQuery.of(context).size.width*.95,
             ),
             SizedBox(height: 20,),
