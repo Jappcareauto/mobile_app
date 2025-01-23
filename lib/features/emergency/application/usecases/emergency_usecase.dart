@@ -17,11 +17,6 @@ class EmergencyUseCase {
         command.title,
         command.note,
         command.status,
-        command.location,
-        command.id,
-        command.createdAt,
-        command.updatedAt,
-        command.createdBy,
-        command.updatedBy
+        command.location
     );  }
 }

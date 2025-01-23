@@ -9,4 +9,5 @@ class EmergencyConstants {
   static const String addEmergencyAssistancePostUri = '/emergency-assistance';
   static const String emergencyAssistancePostUri = '/emergency-assistance';
   static const String emergencyPostUri = '/emergency-assistance';
+  static const String declinedEmergencyPatchUri = '/emergency-assistance';
 }

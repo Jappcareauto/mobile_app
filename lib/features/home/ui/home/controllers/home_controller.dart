@@ -45,7 +45,7 @@ void goToservices(){
     _appNavigation.toNamed(AppRoutes.emergency);
   }
   void goToVehicleFinder(){
-    _appNavigation.toNamed(AppRoutes.vehicleFinder);
+    _appNavigation.toNamed(AppRoutes.workshop);
   }
   void goToVehicleReport() =>
       _appNavigation.toNamed(AppRoutes.generateVehicleReport);
