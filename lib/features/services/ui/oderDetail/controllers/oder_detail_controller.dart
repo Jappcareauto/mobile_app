@@ -17,6 +17,10 @@ class OderDetailController extends GetxController {
   void goBack(){
     _appNavigation.goBack();
   }
+  void goToVehiculeReport(){
+    _appNavigation.toNamed(ServicesPrivateRoutes.generatingLoading);
+
+  }
   void onpenModalPaymentMethod() {
     showModalBottomSheet(
 

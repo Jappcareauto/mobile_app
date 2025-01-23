@@ -46,7 +46,7 @@ class ConfirmeAppointmentController extends GetxController {
 
   Future<Either<WorkshopException , BookAppointment>> booknewAppointment(String id,
       String locationType, String note, String serviceId, String vehicleId,
-      String status,String date,) async {
+      String status,DateTime date,) async {
     loading.value = true ;
     final result = await bookAppointmentUseCase.call(BookAppointmentCommand(
         id: id,
@@ -58,7 +58,7 @@ class ConfirmeAppointmentController extends GetxController {
         createdAt: DateTime.now().toUtc().toIso8601String(),
         updatedAt: DateTime.now().toUtc().toIso8601String(),
         createdBy: id,
-        date: "2024-12-30T14:57:16.490Z",
+        date: date.toUtc().toIso8601String(),
         updatedBy: id
     ));
     return result.fold(

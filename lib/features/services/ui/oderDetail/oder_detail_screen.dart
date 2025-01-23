@@ -6,6 +6,7 @@ import 'package:jappcare/core/ui/widgets/select_vehicule_slider_widget.dart';
 import 'package:jappcare/features/garage/ui/generateVehicleReport/controllers/generate_vehicle_report_controller.dart';
 import 'package:jappcare/features/services/ui/generateVehiculeReport/controllers/generate_vehicule_report_controller.dart';
 import 'package:jappcare/features/services/ui/oderDetail/widgets/resume_services_widget.dart';
+import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
 import 'controllers/oder_detail_controller.dart';
 import 'package:get/get.dart';
 
@@ -43,7 +44,7 @@ class OderDetailScreen extends GetView<OderDetailController> {
                 child: CustomButton(
                   text: 'Poceed',
                   onPressed: (){
-                    controller.onpenModalPaymentMethod();
+                    onpenModalPaymentMethod(controller.goToVehiculeReport);
                   },
                 ),
               )
@@ -52,4 +53,37 @@ class OderDetailScreen extends GetView<OderDetailController> {
         ),
       );
   }
+}
+void onpenModalPaymentMethod(void onConfirm) {
+  showModalBottomSheet(
+    context: Get.context!,
+    isScrollControlled: true, // Permet un contrôle précis sur la hauteur
+    backgroundColor: Colors.transparent, // Rendre l'arrière-plan transparent
+    builder: (BuildContext context) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                offset: const Offset(0, -2),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(16), // Espacement intérieur
+          child: Wrap(
+            children: [
+              PaymentMethodeWidget(onConfirm:(){
+                onConfirm ;
+              }),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

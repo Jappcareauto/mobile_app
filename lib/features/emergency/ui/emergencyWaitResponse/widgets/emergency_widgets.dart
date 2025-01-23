@@ -5,6 +5,9 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/emergency/domain/core/utils/emergency_enum.dart';
+import 'package:jappcare/features/emergency/ui/emergency/controllers/emergency_controller.dart';
+import 'package:jappcare/features/emergency/ui/emergencyDetail/controllers/emergency_detail_controller.dart';
 import 'package:jappcare/features/emergency/ui/emergencyWaitResponse/controllers/emergency_wait_response_controller.dart';
 import 'package:jappcare/features/emergency/ui/emergencyWaitResponse/widgets/detail_response_widgets.dart';
 import 'package:jappcare/features/home/ui/home/widgets/notification_widget.dart';
@@ -12,7 +15,9 @@ import 'package:jappcare/features/home/ui/home/widgets/notification_widget.dart'
 
 class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
   bool _isExpanded = true; // Contrôle l'affichage du Row
-
+  final argument = Get.arguments ;
+ final EmergencyDetailController emergencyDetailController = EmergencyDetailController(Get.find());
+ final EmergencyController emergencyController = EmergencyController(Get.find());
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -94,7 +99,8 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                    "Hello, Please I have a brake failure, the pedal seems very loose."),
+               argument['note'].toString() ,
+                ),
                 const SizedBox(height: 16),
                 if (controller.isExpanded.value) ...[
                   Row(
@@ -113,7 +119,7 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                               ),
                             ),
                             Text(
-                              "Break Failure",
+                             argument['issue'].toString(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -160,7 +166,7 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
 
                             ),
                           ),
-                          Text("Porsche Taycan Turbo"),
+                          Text(argument['name']),
                         ],
                       ),
                       ),
@@ -193,9 +199,10 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                         strech: false,
                         haveBorder: true,
                         width: 270,
+                        isLoading: controller.loading,
                         height: 52,
                         onPressed: () {
-
+                            controller.declinedEmergency(argument['emergencyId'], "DECLINED");
                         }),
                     SizedBox(width: 4,),
                     GestureDetector(

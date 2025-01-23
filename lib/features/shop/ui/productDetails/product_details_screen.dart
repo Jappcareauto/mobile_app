@@ -6,10 +6,12 @@ import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/ui/widgets/image_gallery.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
 import 'package:jappcare/features/shop/domain/entities/cardItams.dart';
 import 'package:jappcare/features/shop/ui/bag/controllers/bag_controller.dart';
 import 'package:jappcare/features/shop/ui/productDetails/widgets/product_detail_widget.dart';
 import 'package:jappcare/features/shop/ui/productDetails/widgets/testimoniale_widget.dart';
+import 'package:jappcare/features/shop/ui/productDetails/widgets/testimonie_shimmer.dart';
 import 'package:jappcare/features/shop/ui/shop/controllers/shop_controller.dart';
 import 'package:jappcare/features/workshop/ui/autoshop_detail/widgets/banner_widget.dart';
 import 'package:jappcare/features/workshop/ui/widgets/workshop_carrousel.dart';
@@ -42,10 +44,15 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
               leftIcon: Icon(FluentIcons.arrow_left_12_regular),
             ),
             SizedBox(height: 20,),
-            ProductDetailsWidget(
-              description: argument['description'] ?? "",
-              name: argument['name'] ?? "",
-              price: argument['price'] ?? "",
+            Obx(() =>
+              controller.reviews?.value != null ?
+              ProductDetailsWidget(
+                note: controller.calculateAverageRating(controller.reviews).toString(),
+                description: argument['description'] ?? "",
+                name: argument['name'] ?? "",
+                price: argument['price'] ?? "",
+              ):
+              SizedBox(),
             ),
             SizedBox(height: 20,),
             ImageGallerry(
@@ -53,27 +60,28 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
                 title: 'Product Gallery'
             ),
             SizedBox(height: 20,),
-            SingleChildScrollView(
+            Obx(() =>
+                controller.loadingReview.value ?
+                TestimonieShimmer() :
+                SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-
                 children: [
-                  TestTimonialWidget(
-                    name: 'Donal',
-                    text: 'These headlights look absolutely amazing! Recommend this product 100%',
-                    rate: 4,
-                    date: DateTime.now(),
-                  ),
+                  if(controller.reviews?.value != null)
+                  ...controller.reviews!.value.asMap().entries.map((review){
+                      return TestTimonialWidget(
+                        name: review.key.toString(),
+                        text: review.value.comment,
+                        rate: review.value.rating,
+                        date:DateTime.parse(review.value.createdAt),
+                      );
+                  }).toList(),
                   SizedBox(width: 16,),
-                  TestTimonialWidget(
-                    name: 'Donal',
-                    text: 'These headlights look absolutely amazing! Recommend this product 100%',
-                    rate: 4,
-                    date: DateTime.now(),
-                  ),
+
                 ],
               ),
             ),
+    ),
             SizedBox(height: 20,),
             CustomButton(
                 text: 'Add To Bag',

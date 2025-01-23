@@ -1,0 +1,1 @@
+{"method":"PATCH","url":"/emergency-assistance/{id}/status","parameters":{"query":{"id":"id"},"body":{"status":"DECLINED"}}}

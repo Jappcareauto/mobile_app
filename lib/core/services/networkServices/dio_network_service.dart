@@ -195,6 +195,9 @@ class DioNetworkService extends NetworkService {
       return response.data;
     } catch (e) {
       _handleError(e);
+      print("error in dio network services");
+      print(e);
+
     }
   }
 

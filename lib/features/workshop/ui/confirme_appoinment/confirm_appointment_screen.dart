@@ -64,7 +64,7 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
                             Get.arguments['servicesId'],
                             bookAppointmentController.vehicleId.value,
                             "NOT_STARTED",
-                            bookAppointmentController.selectedDate.value.toString()
+                            bookAppointmentController.selectedDate.value
                         );
                         if(controller.requestIsSend.value) {
                           onpenModalConfirmMethod();

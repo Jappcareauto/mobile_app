@@ -58,10 +58,10 @@ class Emergency {
 }
 class Location {
 
-  final int latitude;
-  final int longitude;
+  final double latitude;
+  final double longitude;
   final String description;
-  final String id;
+  final String? id;
   final String createdBy;
   final String updatedBy;
   final String createdAt;
@@ -71,24 +71,35 @@ class Location {
     required this.latitude,
     required this.longitude,
     required this.description,
-    required this.id,
+     this.id,
     required this.createdBy,
     required this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
   });
-
+  Map<String, dynamic> toJson() {
+    return {
+      'latitude': latitude,
+      'longitude': longitude,
+      'description': description,
+      'createdBy': createdBy,
+      'updatedBy': updatedBy,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
+    };
+  }
   factory Location.create({
     required latitude,
     required longitude,
     required description,
-    required id,
+     id,
     required createdBy,
     required updatedBy,
     required createdAt,
     required updatedAt,
   }) {
     // Add any validation or business logic here
+
     return Location._(
       latitude: latitude,
       longitude: longitude,

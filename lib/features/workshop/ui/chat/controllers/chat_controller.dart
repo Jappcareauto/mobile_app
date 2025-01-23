@@ -8,7 +8,7 @@ import 'package:jappcare/features/workshop/navigation/private/workshop_private_r
 import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
 class ChatController extends GetxController {
   final AppNavigation _appNavigation;
-  final selectedMethod = 'ORANGE'.obs ;
+  final selectedMethod = 'Orange Money'.obs ;
   ChatController(this._appNavigation);
 
   var messages = <Map<String, dynamic>>[].obs;
@@ -46,7 +46,7 @@ class ChatController extends GetxController {
     {
       "name":"Cash",
       "icon":AppImages.money,
-      "numero":"mmm"
+      "numero":""
     }
   ];
   Future<void> pickImage() async {
@@ -84,34 +84,20 @@ class ChatController extends GetxController {
       builder: (context) => Placeholder(),
     );
   }
-  void onpenModalPaymentMethod() {
-    showModalBottomSheet(
-        enableDrag: true,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-        ),
-        context: Get.context!,
-        builder: (BuildContext context) {
-          return  PaymentMethodeWidget(
-            onConfirm: (){
-            gotToPaymentForm();
-            },
-          );
-        });
-  }
+
   void goBack() {
     _appNavigation.goBack();
   }
   void selectMethode (String methode){
       selectedMethod.value = methode ;
   }
-  void gotToPaymentForm(){
+  void goToAddPaymentMethodForm(String? methode){
     Get.back();
-      if(selectedMethod.value == 'CARD'){
+      if(methode == 'Card'){
 
         _appNavigation.toNamed(WorkshopPrivateRoutes.payWithCard);
       }
-      if(selectedMethod.value == 'MTN' || selectedMethod.value == 'ORANGE'){
+      if(methode == 'MTN Momo' || methode== 'Orange Money'){
         _appNavigation.toNamed(WorkshopPrivateRoutes.payWithPhone);
       }
   }

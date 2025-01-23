@@ -140,7 +140,7 @@ class ChatDetailsScreen extends GetView<ChatController> {
                         onViewInvoice: () {
                           // Action pour voir la facture
                           print("View Invoice clicked");
-                         onpenModalPaymentMethod(controller.gotToPaymentForm);
+                         onpenModalPaymentMethod(controller.goToAddPaymentMethodForm);
                         },
                       ),
                       const SizedBox(height: 100),

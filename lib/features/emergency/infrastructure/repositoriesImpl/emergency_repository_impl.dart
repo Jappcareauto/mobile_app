@@ -10,6 +10,12 @@ import 'package:jappcare/features/emergency/infrastructure/models/emergency_mode
 
 
 
+import '../../domain/entities/declined_emergency.dart';
+import '../../../../core/exceptions/base_exception.dart';
+import '../../domain/core/exceptions/emergency_exception.dart';
+import '../../domain/core/utils/emergency_constants.dart';
+import '../models/declined_emergency_model.dart';
+
 class EmergencyRepositoryImpl implements EmergencyRepository {
   final NetworkService networkService;
 
@@ -18,8 +24,23 @@ class EmergencyRepositoryImpl implements EmergencyRepository {
   });
 
   @override
+  Future<Either<EmergencyException, DeclinedEmergency>> declinedEmergency(String id, String status) async {
+    try {
+      final response = await networkService.patch(
+        "${EmergencyConstants.declinedEmergencyPatchUri}/$id/status",
+        body: {'status': status, },
+      );
+      return Right(DeclinedEmergencyModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(EmergencyException(e.message));
+    }
+  }
+
+
+  @override
   Future<Either<EmergencyException, Emergency>> emergency(
-      String serviceCenterId , String vehicleId , String title ,String note , String status  , Location location , String id , String createdAt , String updatedAt , String createdBy , String updatedBy
+      String serviceCenterId , String vehicleId , String title ,String note , String status  ,
+      Location location
 
       ) async {
     try {
@@ -31,17 +52,14 @@ class EmergencyRepositoryImpl implements EmergencyRepository {
           'title': title,
           'note': note,
           'status': status,
-          'location': location,
-          'id': id,
-          'createdAt': createdAt,
-          'updatedAt': updatedAt,
-          'createdBy': createdBy,
-          'updatedBy': updatedBy,
-
+          'location': location.toJson(),
         },
       );
       return Right(EmergencyModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
+      print("error from repositorie");
+
+      print(e);
       return Left(EmergencyException(e.message));
     }
   }

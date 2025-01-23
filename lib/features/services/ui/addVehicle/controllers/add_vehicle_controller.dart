@@ -16,20 +16,5 @@ class AddVehicleController extends GetxController {
   void goBack(){
     _appNavigation.goBack();
   }
-  void onpenModalPaymentMethod() {
-    showModalBottomSheet(
 
-        enableDrag: true,
-        shape: const RoundedRectangleBorder(
-
-          borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-        ),
-        context: Get.context!,
-        builder: (BuildContext context) {
-          return    PaymentMethodeWidget(onConfirm: (){
-
-          },) ;
-
-        });
-  }
 }

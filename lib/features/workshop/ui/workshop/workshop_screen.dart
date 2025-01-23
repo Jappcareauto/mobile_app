@@ -25,7 +25,7 @@ class WorkshopScreen extends GetView<WorkshopController>
     return Scaffold(
         appBar: const CustomAppBar(
           title: "Service Centers",
-          canBack: false,
+          canBack: true,
         ),
         body: SingleChildScrollView(
             child: Column(
