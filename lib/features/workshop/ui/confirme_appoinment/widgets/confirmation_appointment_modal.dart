@@ -65,8 +65,10 @@ class ConfirmationAppointmentModal extends GetView<ConfirmeAppointmentController
 
                       width: 165,
                       text: 'Proceed to Chat',
+                      isLoading: controller.proceedChatLoading,
                       onPressed: (){
-                            controller.goToChat();
+                           controller.createdRoomChat();
+
                          }
                   )
                 ],

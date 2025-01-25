@@ -99,13 +99,14 @@ class ChatDetailsScreen extends GetView<ChatController> {
                     SizedBox(height: 20,),
 
                       ..._.messages.map((message) {
-                        return ChatMessage(
-                          text: message["text"] ?? "", // Utilise une chaîne vide si "text" est null
-                          isSender: message["isSender"] ?? false, // Valeur par défaut pour "isSender"
-                          images: (message["images"] as List<dynamic>? ?? [])
-                              .map((imagePath) => File(imagePath as String)) // Conversion en File
-                              .toList(),
-                        );
+                        return
+                          SingleChildScrollView(
+                        controller: controller.scrollController,
+                        child:  ChatMessage(
+                          text: message.content , // Utilise une chaîne vide si "text" est null
+                          isSender: message.senderId == Get.find<ProfileController>().userInfos?.id ? true : false, // Valeur par défaut pour "isSender"
+                        )
+                          );
                       }),
 
 
@@ -116,33 +117,33 @@ class ChatDetailsScreen extends GetView<ChatController> {
 
                           children: [
                             SizedBox(width: 5,),
-                            CircleAvatar(
-
-                              backgroundImage: AssetImage(AppImages.avatar),
-                            ),
+                            // CircleAvatar(
+                            //
+                            //   backgroundImage: AssetImage(AppImages.avatar),
+                            // ),
                             const SizedBox(width:5),
 
-                            Text('Japtech AutoShop'),
+                            // Text('Japtech AutoShop'),
 
                           ],
                         ),
                       ) ,
                       const SizedBox(height: 10),
 
-                      InvoiceCard(
-                        name: "Sara May",
-                        email: "jamesmay@gmail.com",
-                        service: "Inspection Fee",
-                        invoiceNumber: "JC564739300",
-                        dateIssued: "Oct 20, 2024",
-                        amount: "7,000 Frs",
-                        status: "Pending",
-                        onViewInvoice: () {
-                          // Action pour voir la facture
-                          print("View Invoice clicked");
-                         onpenModalPaymentMethod(controller.goToAddPaymentMethodForm);
-                        },
-                      ),
+                      // InvoiceCard(
+                      //   name: "Sara May",
+                      //   email: "jamesmay@gmail.com",
+                      //   service: "Inspection Fee",
+                      //   invoiceNumber: "JC564739300",
+                      //   dateIssued: "Oct 20, 2024",
+                      //   amount: "7,000 Frs",
+                      //   status: "Pending",
+                      //   onViewInvoice: () {
+                      //     // Action pour voir la facture
+                      //     print("View Invoice clicked");
+                      //    onpenModalPaymentMethod(controller.goToAddPaymentMethodForm);
+                      //   },
+                      // ),
                       const SizedBox(height: 100),
 
                     ],
