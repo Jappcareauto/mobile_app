@@ -124,21 +124,25 @@ class HomeScreen extends GetView<HomeController> {
                   Row(
                     children: [
                       Expanded(
-                        child: CustomCardService(
-                          color: Color(0xFFF4EEFF),
-                          text: 'VIN\nLookup',
-                          imagePath: AppImages.vin,
-                          onTap: () {},
+                        child:
+                        CustomCardService(
+                          color: Color(0xFFFFEDE6),
+                          text: 'Find a Services\nCenter',
+                          imagePath: AppImages.service,
+                          onTap: () {
+                            controller.goToVehicleFinder();
+                          },
                         ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
-                        child: CustomCardService(
-                          color: Color(0xFFFFEDE6),
-                          text: 'Service\nLocator',
-                          imagePath: AppImages.service,
+                        child:
+                        CustomCardService(
+                          color: Color(0xFFFFDAD4),
+                          text: 'Emergency\nAssistance',
+                          imagePath: AppImages.emergency,
                           onTap: () {
-                            controller.goToVehicleFinder();
+                            controller.goToEmergency();
                           },
                         ),
                       ),
@@ -148,23 +152,22 @@ class HomeScreen extends GetView<HomeController> {
                   Row(
                     children: [
                       Expanded(
-                        child: CustomCardService(
+                        child:
+                        CustomCardService(
+                          color: Color(0xFFF4EEFF),
+                          text: 'VIN\nLookup',
+                          imagePath: AppImages.vin,
+                          onTap: () {},
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child:CustomCardService(
                           color: Color(0xFFC4FFCD),
                           text: 'Vehicles\nReports',
                           imagePath: AppImages.vehicule,
                           onTap: controller.goToVehicleReport
                           ,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: CustomCardService(
-                          color: Color(0xFFFFDAD4),
-                          text: 'Emergency\nAssistance',
-                          imagePath: AppImages.emergency,
-                          onTap: () {
-                            controller.goToEmergency();
-                          },
                         ),
                       ),
                     ],

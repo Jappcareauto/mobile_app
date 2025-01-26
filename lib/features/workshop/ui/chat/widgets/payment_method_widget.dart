@@ -79,6 +79,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                             GestureDetector(
                               onTap: () {
                                 print('Add Number for ${paymentDetail["name"]}');
+                                chatController.goToAddPaymentMethodForm(paymentDetail["name"]);
                               },
                               child: Text(
                                 paymentDetail["numero"]!,
@@ -110,7 +111,11 @@ class PaymentMethodeWidget extends StatelessWidget{
 
                       CustomButton(
                         text: 'Confirm',
-                        onPressed:onConfirm,
+                        onPressed:(){
+                         chatController.goToAddPaymentMethodForm(chatController.selectedMethod.value);
+                          print('cliked');
+                        }
+                        ,
 
                         strech: false,
                         width: 160,

@@ -8,8 +8,10 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
   final String name  ;
   final double price ;
   final String description ;
+  final String note ;
   ProductDetailsWidget({
     Key?key,
+    required this.note,
     required this.name,
     required this.price,
     required this.description,
@@ -39,7 +41,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                 Row(
                   children: [
                     Text(
-                      '4.75',
+                      note,
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,

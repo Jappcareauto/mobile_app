@@ -12,12 +12,29 @@ import '../models/get_products_model.dart';
 import '../../domain/entities/get_product_detail.dart';
 import '../models/get_product_detail_model.dart';
 
+import '../../domain/entities/get_review.dart';
+import '../models/get_review_model.dart';
+
 class ShopRepositoryImpl implements ShopRepository {
   final NetworkService networkService;
 
   ShopRepositoryImpl({
     required this.networkService,
   });
+
+  @override
+  Future<Either<ShopException, GetReview>> getReview(String productId) async {
+    try {
+      final response = await networkService.get(
+        "${ShopConstants.getReviewGetUri}/$productId",
+        
+      );
+      return Right(GetReviewModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(ShopException(e.message));
+    }
+  }
+
 
   @override
   Future<Either<ShopException, GetProductDetail>> getProductDetail(String productId) async {

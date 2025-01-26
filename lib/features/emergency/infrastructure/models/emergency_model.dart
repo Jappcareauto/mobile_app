@@ -51,7 +51,7 @@ class EmergencyModel {
     data['title'] = title;
     data['note'] = note;
     data['status'] = status;
-    data['location'] = location.toJson();
+     data['location'] = location.toJson();
     data['id'] = id;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
@@ -84,20 +84,20 @@ class EmergencyModel {
       note: note,
       status: status,
       location: location.toEntity(),
-      id: id,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      createdBy: createdBy,
-      updatedBy: updatedBy,
+        id: id,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        createdBy: createdBy,
+        updatedBy: updatedBy,
     );
   }
 }
 class LocationModel {
 
-  final int latitude;
-  final int longitude;
+  final double latitude;
+  final double longitude;
   final String description;
-  final String id;
+  final String? id;
   final String createdBy;
   final String updatedBy;
   final String createdAt;
@@ -107,7 +107,7 @@ class LocationModel {
     required this.latitude,
     required this.longitude,
     required this.description,
-    required this.id,
+     this.id,
     required this.createdBy,
     required this.updatedBy,
     required this.createdAt,

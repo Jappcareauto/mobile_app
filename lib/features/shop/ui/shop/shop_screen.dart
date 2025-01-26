@@ -5,6 +5,8 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
+import 'package:jappcare/features/shop/ui/productDetails/widgets/testimonie_shimmer.dart';
 import 'package:jappcare/features/shop/ui/shop/widgets/product_list-shimmer.dart';
 import 'package:jappcare/features/shop/ui/shop/widgets/tabs_list_widgets.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/categories_item_list.dart';
@@ -41,6 +43,7 @@ class ShopScreen extends GetView<ShopController>
                       ),
                     ),
                     const SizedBox(height: 20),
+
                     TabsListWidgets(
                         tabs: controller.categorie,
                         selectedFilter: controller.selectedFilter,

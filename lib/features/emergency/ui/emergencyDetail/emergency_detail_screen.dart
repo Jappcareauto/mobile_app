@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:jappcare/core/services/form/validators.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/ui/widgets/select_vehicule_slider_widget.dart';
+import 'package:jappcare/features/emergency/domain/entities/emergency.dart';
 import 'package:jappcare/features/emergency/ui/emergency/controllers/emergency_controller.dart';
+import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/services/ui/generateVehiculeReport/controllers/generate_vehicule_report_controller.dart';
 import 'package:jappcare/features/shop/ui/shop/widgets/tabs_list_widgets.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
@@ -21,6 +25,9 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
       appBar:CustomAppBar(title: 'Emergency\nAssistance'),
       body:  SingleChildScrollView(
         child:
+        Form(
+          key: controller.formKey,
+          child:
         Column(
           children: [
             SizedBox(height: 20,),
@@ -32,6 +39,12 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
                 "currentPage": generateVehiculeReportController.currentPage,
                 "haveAddVehicule": true,
                 "title": "My Garage",
+                "onSelected" : (Vehicle selectedVehicle){
+                      controller.selectedVehicleName.value = selectedVehicle.name ;
+                      controller.selectedVehiculeUrl.value = selectedVehicle.imageUrl;
+                      controller.selectedVehiculeId.value = selectedVehicle.id ;
+
+                },
                 "onTapeAddVehicle": (){
                   print("clique");
                 },
@@ -61,6 +74,7 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
 
               child: CustomFormField(
                 maxLine: 8,
+                controller: controller.noteController,
                 hintText: 'Add a Note (Optional)',
               ) ,
             ),
@@ -78,7 +92,7 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
               ),
             ),
             SizedBox(height: 10,),
-            CustomMapWidget(),
+            // CustomMapWidget(),
             SizedBox(height: 10,),
 
             Container(
@@ -98,7 +112,8 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
               margin: EdgeInsets.symmetric(horizontal: 10),
 
               child:  CustomFormField(
-
+                validator: Validators.requiredField,
+                controller: controller.locationController,
                 hintText: 'Search for a place',
               ),
             ),
@@ -143,13 +158,36 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
               ),
               child: CustomButton(
                   text: 'Send Request',
+                  isLoading : controller.loading ,
                   onPressed: (){
-                      controller.goToWaitResponse();
+                    if(controller.formKey.currentState?.validate() ?? false){
+                      controller.emergencyAssistance(
+                          emergencyController.selectedCategorie.value,
+                          Location.create(
+                              latitude: controller.userLocation.value!.latitude,
+                              longitude: controller.userLocation.value!.longitude,
+                              description: controller.noteController.text ,
+                              createdBy:  Get.find<ProfileController>().userInfos!.id,
+                              updatedBy:  Get.find<ProfileController>().userInfos!.id,
+                              createdAt: DateTime.now().toUtc().toIso8601String(),
+                              updatedAt: DateTime.now().toUtc().toIso8601String()
+                          ),
+                              // 'servicesCenterId',
+                              controller.selectedVehiculeId.value,
+                              emergencyController.selectedCategorie.value,
+                              controller.noteController.text,
+                              "REQUESTED",
+                              Get.find<ProfileController>().userInfos!.id,
+                              Get.find<ProfileController>().userInfos!.id
+                      );
+                    }
+
                   }),
             )
 
           ],
         ),
+    )
       )
     );
   }
