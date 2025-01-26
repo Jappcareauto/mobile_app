@@ -76,18 +76,27 @@ class ChatInputField extends StatelessWidget {
                 ),
               ],
             ),
-            child: Row(
+            child:Row(
               children: [
                 SizedBox(width: 8),
                 Expanded(
-                  child: TextField(
-                    maxLines: 4,
-                    minLines: 1,
-                    controller: chatController.messageController,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    decoration: InputDecoration(
-                      hintText: "Write your message",
-                      border: InputBorder.none,
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextField(
+                      controller: chatController.messageController,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      decoration: InputDecoration(
+                        hintText: "Write your message",
+                        border: InputBorder.none,
+                      ),
+                      maxLines: null, // Permet d'ajouter autant de lignes que nécessaire
+                      keyboardType: TextInputType.multiline, // Active la saisie multiligne
+                      textInputAction: TextInputAction.newline, // Ajoute un retour à la ligne avec la touche "Entrée"
+                      scrollPhysics: NeverScrollableScrollPhysics(), // Empêche le défilement
                     ),
                   ),
                 ),
@@ -100,7 +109,9 @@ class ChatInputField extends StatelessWidget {
                   onPressed: chatController.sendMessage,
                 ),
               ],
-            ),
+            )
+
+
           ),
           const SizedBox(height:8),
         ],

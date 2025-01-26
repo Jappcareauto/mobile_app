@@ -57,18 +57,18 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
                       text: 'Send Inspection Request',
                       onPressed: () {
                         print('send inspection');
-                        controller.booknewAppointment(
-                            Get.find<ProfileController>().userInfos?.id ?? "",
-                            bookAppointmentController.selectedLocation.value ,
-                            bookAppointmentController.noteController.text ,
-                            Get.arguments['servicesId'],
-                            bookAppointmentController.vehicleId.value,
-                            "NOT_STARTED",
-                            bookAppointmentController.selectedDate.value
-                        );
-                        if(controller.requestIsSend.value) {
+                        // controller.booknewAppointment(
+                        //     Get.find<ProfileController>().userInfos?.id ?? "",
+                        //     bookAppointmentController.selectedLocation.value ,
+                        //     bookAppointmentController.noteController.text ,
+                        //     Get.arguments['servicesId'],
+                        //     bookAppointmentController.vehicleId.value,
+                        //     "NOT_STARTED",
+                        //     bookAppointmentController.selectedDate.value
+                        // );
+                        // if(controller.requestIsSend.value) {
                           onpenModalConfirmMethod();
-                        }
+                        // }
                       }
                   ),
                 ),
