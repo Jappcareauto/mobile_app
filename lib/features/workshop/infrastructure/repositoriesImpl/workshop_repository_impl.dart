@@ -14,12 +14,48 @@ import '../models/get_all_services_center_model.dart';
 import '../../domain/entities/book_appointment.dart';
 import '../models/book_appointment_model.dart';
 
+import '../../domain/entities/created_rome_chat.dart';
+import '../models/created_rome_chat_model.dart';
+
+import '../../domain/entities/send_message.dart';
+import '../models/send_message_model.dart';
+
 class WorkshopRepositoryImpl implements WorkshopRepository {
   final NetworkService networkService;
 
   WorkshopRepositoryImpl({
     required this.networkService,
   });
+
+  @override
+  Future<Either<WorkshopException, SendMessage>> sendMessage(String senderId, String content, String chatRoomId, String timestamp, String type, String appointmentId) async {
+    try {
+      final response = await networkService.post(
+        WorkshopConstants.sendMessagePostUri,
+        body: {'senderId': senderId, 'content': content, 'chatRoomId': chatRoomId, 'timestamp': timestamp, 'type': type, 'appointmentId': appointmentId, },
+      );
+      return Right(SendMessageModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(WorkshopException(e.message));
+    }
+  }
+
+
+  @override
+  Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(String name, List<String> participantUserIds) async {
+    try {
+      final response = await networkService.post(
+        WorkshopConstants.createdRomeChatPostUri,
+        body: {
+          'name': name,
+          'participantUserIds': participantUserIds, },
+      );
+      return Right(CreatedRomeChatModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(WorkshopException(e.message));
+    }
+  }
+
 
   @override
   Future<Either<WorkshopException, BookAppointment>> bookAppointment(String date, String locationType, String note, String serviceId, String vehicleId, String status, String id, String createdBy, String updatedBy, String createdAt, String updatedAt) async {

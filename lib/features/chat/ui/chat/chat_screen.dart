@@ -10,9 +10,10 @@ class ChatScreen extends GetView<ChatController> {
       appBar: AppBar(
         title:  Text('Chat Screen'),
       ),
-      body:  Center(
+      body: const Center(
         child: Text('Welcome to Chat Screen'),
       ),
     );
   }
 }
+ 

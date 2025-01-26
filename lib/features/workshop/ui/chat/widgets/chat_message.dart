@@ -6,14 +6,14 @@ class ChatMessage extends StatelessWidget {
   final String? text;
   final bool isSender;
 
-  final List<File> images;
+  final List<File>? images;
 
   const ChatMessage({
     Key? key,
     this.text,
     required this.isSender,
 
-    required this.images,
+     this.images,
   }) : super(key: key);
 
   @override
@@ -24,6 +24,7 @@ class ChatMessage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Column(
+
           crossAxisAlignment:
           isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
@@ -67,11 +68,11 @@ class ChatMessage extends StatelessWidget {
                 ],
               ),
             ),
-            if (images.isNotEmpty)
+            if (images != null)
               Wrap(
                 spacing: 2.0,
                 runSpacing: 2.0,
-                children: images.map((imagePath) {
+                children: images!.map((imagePath) {
                   final imageFile = File(imagePath.path);
                   return Image.file(
                     imageFile ,
