@@ -35,6 +35,7 @@ abstract class
   Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(String name, List<String> participantUserIds);
 
   Future<Either<WorkshopException, SendMessage>> sendMessage(String senderId, String content, String chatRoomId, String timestamp, String type, String appointmentId);
+  Future<Either<WorkshopException, List<SendMessage>>> getRealTimeMessages(String chatroom,  String token);
 
 }
 

@@ -55,14 +55,19 @@ class ConfirmeAppointmentController extends GetxController {
               proceedChatLoading.value = false;
               if(Get.context !=null)
                 Get.showCustomSnackBar(e.message);
+              proceedChatLoading.value = false;
+
             },
             (response){
               chatRoomID.value = response.id ;
               print(response.id);
               print(response);
               goToChat(response.id);
+              proceedChatLoading.value = false;
+
     });
   }
+
   void goToChat(String chatRoomId) {
     print('got to chat');
     Get.back();
