@@ -61,11 +61,11 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
 
 
   @override
-  Future<Either<WorkshopException, BookAppointment>> bookAppointment(String date, String locationType, String note, String serviceId, String vehicleId, String status, String id, String createdBy, String updatedBy, String createdAt, String updatedAt) async {
+  Future<Either<WorkshopException, BookAppointment>> bookAppointment(String date, String locationType, String note, String serviceId,  String vehicleId, String status,String timeOfDay ) async {
     try {
       final response = await networkService.post(
         WorkshopConstants.bookAppointmentPostUri,
-        body: {'date': date, 'locationType': locationType, 'note': note, 'serviceId': serviceId, 'vehicleId': vehicleId, 'status': status, 'id': id, 'createdBy': createdBy, 'updatedBy': updatedBy, 'createdAt': createdAt, 'updatedAt': updatedAt, },
+        body: {'date': date, 'locationType': locationType, 'note': note, 'serviceId': serviceId, 'vehicleId': vehicleId, 'status': status, 'id': id, 'timeOfDay': timeOfDay},
       );
       return Right(BookAppointmentModel.fromJson(response).toEntity());
     } on BaseException catch (e) {

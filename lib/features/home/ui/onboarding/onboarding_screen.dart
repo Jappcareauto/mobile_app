@@ -70,7 +70,7 @@ class OnboardingScreen extends GetView<OnboardingController> {
                           child: Padding(
                             padding: EdgeInsets.only(left: 10, top: 30),
                             child: Text(
-                              "Japcare\nAutoTech",
+                              "Jappcare\nAutoTech",
                               style:
                                   TextStyle(fontSize: 45, color: Colors.white),
                             ),

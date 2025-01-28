@@ -30,7 +30,7 @@ abstract class
 
   Future<Either<WorkshopException, GetAllServicesCenter>> getAllServicesCenter();
 
-  Future<Either<WorkshopException, BookAppointment>> bookAppointment(String date, String locationType, String note, String serviceId, String vehicleId, String status, String id, String createdBy, String updatedBy, String createdAt, String updatedAt);
+  Future<Either<WorkshopException, BookAppointment>> bookAppointment(String date, String locationType, String note, String serviceId, String vehicleId, String status, String timeOfDay  );
 
   Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(String name, List<String> participantUserIds);
 

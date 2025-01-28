@@ -1,4 +1,6 @@
 import '../../../features/home/navigation/home_public_routes.dart';
+import '../../../features/error/navigation/error_public_routes.dart';
+  
 import '../../../features/vehicleFinder/navigation/vehicle_finder_public_routes.dart';
   
 import '../../../features/emergency/navigation/emergency_public_routes.dart';
@@ -59,4 +61,10 @@ class AppRoutes {
 
   //VehicleFinder Public Routes
   static const vehicleFinder = VehicleFinderPublicRoutes.home;
+  //Error Public Routes
+  static const error = ErrorPublicRoutes.home;
+  static const commingSoon = ErrorPublicRoutes.commingSoon;
+  static const netWorkError = ErrorPublicRoutes.networkError;
+
+
 }

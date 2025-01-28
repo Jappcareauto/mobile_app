@@ -8,7 +8,7 @@ import 'package:jappcare/core/utils/app_colors.dart';
 
 class CarCardAddVehicle extends StatelessWidget {
   final String carName;
-  final String carDetails;
+  final List<String> carDetails;
   final String imagePath;
   final String? imageUrl;
 
@@ -18,6 +18,7 @@ class CarCardAddVehicle extends StatelessWidget {
   final bool? isSelected;
   final bool  hideblure ;
   final bool haveBGColor;
+
   final double? containerheight ;
   const CarCardAddVehicle({
     super.key,
@@ -75,7 +76,7 @@ class CarCardAddVehicle extends StatelessWidget {
                         color:  haveBGColor ? Colors.white : Colors.black,
                       ),
                     ),
-                    Text(carDetails, style: TextStyle(
+                    Text("${carDetails[0]} , ${carDetails[1]}" , style: TextStyle(
                       color:  haveBGColor ? Colors.white : Colors.black,
                       fontWeight: FontWeight.w400,
                       fontSize: 14

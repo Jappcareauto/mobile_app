@@ -53,13 +53,13 @@ class BookingWidget extends GetView<BookAppointmentController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Obx(() => TimeSlot(
-                  label: "Morning",
+                  label: "MORNING",
                   timeRange: "8:00 AM - 12:00 AM",
                   isSelected: controller.selectedTime.value == "Morning",
                   onTap: () => controller.selectTime("Morning"),
                 )),
                 Obx(() => TimeSlot(
-                  label: "Afternoon",
+                  label: "AFTERNOON",
                   timeRange: "12:00 PM - 5:00 PM",
                   isSelected: controller.selectedTime.value == "Afternoon",
                   onTap: () => controller.selectTime("Afternoon"),

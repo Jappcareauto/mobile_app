@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/events/app_events_service.dart';
+import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:shimmer/shimmer.dart';
@@ -12,6 +14,7 @@ import 'shimmers/garage_name_shimmer.dart';
 import 'shimmers/list_vehicle_shimmer.dart';
 
 class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterface {
+  GarageController garageController  = GarageController(Get.find(), Get.find());
   final bool haveTitle;
   final PageController? pageController;
   final RxInt? currentPage;
@@ -22,7 +25,7 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
   final Function(Vehicle selectCar)? onSelected;
   final int? selectedIndex;
 
-  const ListVehicleWidget({
+   ListVehicleWidget({
     super.key,
     this.pageController,
     this.currentPage,
@@ -129,7 +132,7 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
                       }
                     },
                     carName: vehicle.name ?? '',
-                    carDetails: vehicle.vin ?? '',
+                    carDetails:[ vehicle.detail.year ?? "Unknown" , vehicle.detail.make ?? "Unknown"] ,
                     imagePath: vehicle.imageUrl ?? '',
                     imageUrl: vehicle.imageUrl ?? '',
                   );
@@ -142,6 +145,13 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
     );
   }
 
+  @override
+  void refreshData() {
+    final lastUserId = Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
+    if (lastUserId != null) {
+      garageController.fetchData(lastUserId);
+    }
+  }
   @override
   Widget buildView([args]) {
     return ListVehicleWidget(

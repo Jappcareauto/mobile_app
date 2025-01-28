@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:jappcare/core/navigation/routes/app_routes.dart';
+import 'package:jappcare/features/error/ui/commingSoon/comming_soon_screen.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/services/localServices/local_storage_service.dart';
 import '../../../../../core/utils/app_constants.dart';
@@ -35,9 +37,20 @@ class DashboardController extends GetxController {
   }
 
   void onItemTapped(int index) {
-    selectedIndex.value = index;
-    update();
+    if (index == 3) {
+
+      Get.to(
+            () => CommingSoonScreen(),
+        transition: Transition.rightToLeft,
+      )?.then((_) {
+        selectedIndex.value = 0;
+      });
+    } else {
+      // Mets à jour l'index pour changer de page
+      selectedIndex.value = index;
+    }
   }
+
 
   void goBack() {
     _appNavigation.goBack();

@@ -26,7 +26,7 @@ class GarageDependencies {
         tag: 'GarageScreen', fenix: true);
     //RecentActivitiesWidget
     Get.lazyPut<FeatureWidgetInterface>(
-        () => const RecentActivitiesWidget(haveTabBar: false),
+        () =>  RecentActivitiesWidget(haveTabBar: false),
         tag: 'RecentActivitiesWidget',
         fenix: true);
     Get.lazyPut(() => GetGarageByOwnerIdUseCase(Get.find()), fenix: true);

@@ -34,19 +34,37 @@ class GarageController extends GetxController {
 
   @override
   void onInit() {
-    // Generate by Menosi_cli
     super.onInit();
+    // Écoute des événements
     Get.find<AppEventService>()
         .on<String>(AppConstants.userIdEvent)
         .listen((userId) {
-      if (userId != '') getGarageByOwnerId(userId!);
+      if (userId != '') fetchData(userId!);
     });
-    if (Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent) !=
-        null) {
+
+    // Chargement initial des données
+    final lastUserId = Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
+    if (lastUserId != null) {
+      fetchData(lastUserId);
+    }
+  }
+
+  // Méthode pour récupérer les données
+  Future<void> fetchData(String userId) async {
+    loading.value = true;
+    vehicleLoading.value = true;
+
+    try {
+       await getGarageByOwnerId(userId);
+       print('donner rafrechie');
+    } catch (e) {
+      print("Erreur lors de la récupération des données : $e");
+    } finally {
       loading.value = false;
       vehicleLoading.value = false;
     }
   }
+
 
   void goBack() {
     _appNavigation.goBack();

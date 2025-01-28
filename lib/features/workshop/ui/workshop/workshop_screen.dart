@@ -142,4 +142,9 @@ class WorkshopScreen extends GetView<WorkshopController>
   Widget buildView([args]) {
     return this;
   }
+
+  @override
+  void refreshData() {
+    // TODO: implement refreshData
+  }
 }

@@ -25,7 +25,7 @@ class BookAppointmentController extends GetxController{
   var selectedDate = DateTime.now().obs;
   var selectedYear = DateTime.now().year.obs; // Année actuelle
   var selectedMonth = DateTime.now().month.obs; // Mois actuel
-  RxString selectedTime = "Morning".obs;
+  RxString selectedTime = "MORNING".obs;
 
   var selectedImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();

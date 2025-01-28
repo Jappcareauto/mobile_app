@@ -21,6 +21,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: ImageCarousel(
+                        positionIndicator: MainAxisAlignment.center,
                         imageUrls: const [
                           AppImages.shopCar,
                           AppImages.carWhite,

@@ -174,7 +174,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
              ],
            ),
          ),
-          const RecentActivitiesWidget(haveTabBar: false),
+           RecentActivitiesWidget(haveTabBar: false),
         ]),
       ),
     );
