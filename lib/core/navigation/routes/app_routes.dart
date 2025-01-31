@@ -28,7 +28,7 @@ import '../../utils/app_constants.dart';
 
 class AppRoutes {
   static String get initialRoute => splash;
-  
+
   static const splash = AppConstants.splashScreen;
   static const notFoundPage = AppConstants.notFoundScreen;
   //Home Public Routes
@@ -45,6 +45,7 @@ class AppRoutes {
   //Workshop Public Routes
   static const workshop = WorkshopPublicRoutes.home;
   static const workshopchat = WorkshopPublicRoutes.chat;
+  static const appointmentDetails = WorkshopPublicRoutes.appointMentDetail;
 
   //Profile Public Routes
   static const profile = ProfilePublicRoutes.home;

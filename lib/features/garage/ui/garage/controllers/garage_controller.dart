@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
+import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_command.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
@@ -78,7 +79,9 @@ class GarageController extends GetxController {
     _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails,
         arguments: vehicleDetails);
   }
-
+void goToAppointmentDetail (Vehicle appointmentDetails){
+    _appNavigation.toNamed(AppRoutes.appointmentDetails , arguments: appointmentDetails);
+}
   Future<void> getGarageByOwnerId(String userId) async {
 
     loading.value = true;

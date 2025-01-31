@@ -4,6 +4,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/controllers/appointment_details_controller.dart';
 import 'package:jappcare/features/workshop/ui/invoice/widgets/appointment_widget.dart';
 import 'controllers/invoice_controller.dart';
@@ -110,6 +111,7 @@ class InvoiceScreen extends GetView<InvoiceController> {
                           haveBorder: true,
                           text: 'Review',
                           onPressed:(){
+                            controller.showReviemModel();
 
                           } ),
                       SizedBox(width:10,),
@@ -118,7 +120,7 @@ class InvoiceScreen extends GetView<InvoiceController> {
                           width: MediaQuery.of(context).size.width*.45,
                           text: 'Proceed Payment',
                           onPressed:(){
-                              controller.showReviemModel();
+                              onpenModalPaymentMethod((){});
                           } ),
                     ],
                   )
@@ -128,4 +130,37 @@ class InvoiceScreen extends GetView<InvoiceController> {
         )
     );
   }
+}
+void onpenModalPaymentMethod(void onConfirm) {
+  showModalBottomSheet(
+    context: Get.context!,
+    isScrollControlled: true, // Permet un contrôle précis sur la hauteur
+    backgroundColor: Colors.transparent, // Rendre l'arrière-plan transparent
+    builder: (BuildContext context) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                offset: const Offset(0, -2),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(16), // Espacement intérieur
+          child: Wrap(
+            children: [
+              PaymentMethodeWidget(onConfirm:(){
+                onConfirm ;
+              }),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

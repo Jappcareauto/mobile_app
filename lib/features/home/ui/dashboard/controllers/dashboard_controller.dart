@@ -29,7 +29,7 @@ class DashboardController extends GetxController {
     if (_localService.read(AppConstants.tokenKey) == null) {
       await Future.delayed(const Duration(seconds: 1));
       await _appNavigation.toNamedAndReplaceAll(
-          HomePrivateRoutes.onboarding);
+          HomePrivateRoutes.selectLanguage);
       loading.value = false;
     } else {
       loading.value = false;

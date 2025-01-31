@@ -115,6 +115,10 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
                   }
 
                   var vehicle = vehiclesToDisplay[index];
+                  // final  interiorMedia = vehicle.media.firstWhere(
+                  //       (media) => media.type == "INTERIOR",
+                  //   orElse: () => vehicle.media.isNotEmpty ? vehicle.media.first : null,
+                  // );
                   return CarCardAddVehicle(
                     key: ValueKey(vehicle),
                     haveBGColor: false,
@@ -122,19 +126,20 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
                     haveBorder: currentPage?.value == index,
                     containerheight: 200,
                     next: () {
-                      if (index == (vehiclesToDisplay.length - 1) && !haveAddVehicule!) {
-                        pageController?.jumpToPage(0);
-                      } else {
-                        pageController?.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
+                      _.goToVehicleDetails(vehicle);
+                      // if (index == (vehiclesToDisplay.length - 1) && !haveAddVehicule!) {
+                      //   pageController?.jumpToPage(0);
+                      // } else {
+                      //   pageController?.nextPage(
+                      //     duration: const Duration(milliseconds: 300),
+                      //     curve: Curves.easeInOut,
+                      //   );
+                      // }
                     },
-                    carName: vehicle.name ?? '',
+                    carName: vehicle.detail.model ?? '',
                     carDetails:[ vehicle.detail.year ?? "Unknown" , vehicle.detail.make ?? "Unknown"] ,
-                    imagePath: vehicle.imageUrl ?? '',
-                    imageUrl: vehicle.imageUrl ?? '',
+                    imagePath: vehicle.media[0]?.sourceUrl ?? '',
+                    imageUrl: vehicle.media[0]?.sourceUrl ?? '',
                   );
                 },
               ),

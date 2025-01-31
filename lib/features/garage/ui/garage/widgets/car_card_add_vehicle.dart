@@ -69,14 +69,14 @@ class CarCardAddVehicle extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      carName,
+                      "${carDetails[1]} ${carName}",
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color:  haveBGColor ? Colors.white : Colors.black,
                       ),
                     ),
-                    Text("${carDetails[0]} , ${carDetails[1]}" , style: TextStyle(
+                    Text("${carDetails[0]}" , style: TextStyle(
                       color:  haveBGColor ? Colors.white : Colors.black,
                       fontWeight: FontWeight.w400,
                       fontSize: 14

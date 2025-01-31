@@ -6,6 +6,8 @@ import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
+import 'package:jappcare/features/shop/ui/shop/widgets/tabs_list_widgets.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_widgets.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/widgets/text_shimmer.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
@@ -73,9 +75,9 @@ class WorkshopScreen extends GetView<WorkshopController>
                     ],
                   ),
                   SizedBox(height: 20),
-                  SelectServiceItemList(
-                    title: 'Select Service',
-                  ),
+
+                  ServicesListWidget(),
+
                   SizedBox(height: 20),
                   Obx((){
                     return Padding(

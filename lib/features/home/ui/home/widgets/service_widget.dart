@@ -37,10 +37,11 @@ class CustomCardService extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
+                  height: 100,
                   padding: const EdgeInsets.only(top: 15, left: 15),
                   child: Text(
                     text,
-                    style: const TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 20),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -50,6 +51,7 @@ class CustomCardService extends StatelessWidget {
                     ImageComponent(
                       assetPath: imagePath,
                       width: 120,
+                      height: 120,
                     ),
                   ],
                 ),

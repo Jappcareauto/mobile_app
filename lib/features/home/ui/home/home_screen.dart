@@ -25,7 +25,10 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     Get.put(HomeController(Get.find()));
     return Scaffold(
-      appBar: const AppBarWithAvatarAndSalutation(),
+      body: NestedScrollView(
+          headerSliverBuilder: (context , innerBoxIsScrolled) =>[
+            const AppBarWithAvatarAndSalutation()
+          ],
       body: RefreshIndicator(
           onRefresh: controller.refreshData ,
           color: Color(0xFFFB7C37),
@@ -39,23 +42,16 @@ class HomeScreen extends GetView<HomeController> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  // ImageComponent(
-                  //     imageUrl: "https://www.gstatic.com/webp/gallery/2.jpg",
-                  //     width: Get.width,
-                  //     borderRadius: 20,
-                  //     height: 160),
-                  // const SizedBox(height: 30),
-
-                  ImageCarousel(
-                    positionIndicator: MainAxisAlignment.start,
-                    haveBorderRadius: true,
-                    height: 144,
-                    imageUrls: [
-                      AppImages.Actualite,
-                      AppImages.Actualite,
-                      AppImages.Actualite,
-                    ],
-                  ),
+                  // ImageCarousel(
+                  //   positionIndicator: MainAxisAlignment.start,
+                  //   haveBorderRadius: true,
+                  //   height: 144,
+                  //   imageUrls: [
+                  //     AppImages.Actualite,
+                  //     AppImages.Actualite,
+                  //     AppImages.Actualite,
+                  //   ],
+                  // ),
                  SizedBox(height: 20,),
                  Container(
                    child: Column(
@@ -146,7 +142,7 @@ class HomeScreen extends GetView<HomeController> {
                         child:
                         CustomCardService(
                           color: Color(0xFFFFEDE6),
-                          text: 'Find a Services\nCenter',
+                          text: 'Find a Service\nCenter',
                           imagePath: AppImages.service,
                           onTap: () {
                             // controller.goToVehicleFinder();
@@ -171,33 +167,33 @@ class HomeScreen extends GetView<HomeController> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Expanded(
-                        child:
-                        CustomCardService(
-                          color: Color(0xFFF4EEFF),
-                          text: 'VIN\nLookup',
-                          imagePath: AppImages.vin,
-                          onTap: () {
-                            controller.navigateTCommingSoon();
-
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child:CustomCardService(
-                          color: Color(0xFFC4FFCD),
-                          text: 'Vehicles\nReports',
-                          imagePath: AppImages.vehicule,
-                          onTap: controller.navigateTCommingSoon
-
-                          ,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child:
+                  //       CustomCardService(
+                  //         color: Color(0xFFF4EEFF),
+                  //         text: 'VIN\nLookup',
+                  //         imagePath: AppImages.vin,
+                  //         onTap: () {
+                  //           controller.navigateTCommingSoon();
+                  //
+                  //         },
+                  //       ),
+                  //     ),
+                  //     const SizedBox(width: 10),
+                  //     Expanded(
+                  //       child:CustomCardService(
+                  //         color: Color(0xFFC4FFCD),
+                  //         text: 'Vehicles\nReports',
+                  //         imagePath: AppImages.vehicule,
+                  //         onTap: controller.navigateTCommingSoon
+                  //
+                  //         ,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
@@ -211,7 +207,7 @@ class HomeScreen extends GetView<HomeController> {
           ],
         ),
       ),
-          )
+          ))
     );
   }
 }

@@ -63,7 +63,7 @@ class RecentActivitiesWidget extends StatelessWidget
                 nameCar: e.name,
                 pathImageCar: e.imageUrl,
                 status: 'Completed',
-                onPressed: () => _.goToVehicleDetails(e),
+                onPressed: () => _.goToAppointmentDetail(e),
               ),
             )
             .toList();

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/shop/ui/shop/widgets/tabs_list_widgets.dart';
+import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
+import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/views/workshop_custom_map_view.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/widgets/text_shimmer.dart';
 import '../widgets/workshop_carrousel.dart';
@@ -9,6 +13,8 @@ import 'controllers/workshop_details_controller.dart';
 import 'package:get/get.dart';
 
 class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
+  final globalcontrollerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  final WorkshopController workshopController  = WorkshopController(Get.find());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +63,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                           controller.arguments['name'],
+                            globalcontrollerWorkshop.workshopData['serviceCenterName'],
                             style: Get.textTheme.headlineLarge,
                           ),
                           Chip(
@@ -129,11 +135,13 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                 Container(
                   margin: const EdgeInsets.all(20),
                   child:  Text(
-                    controller.arguments['description'],
+                    globalcontrollerWorkshop.workshopData['description'],
                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
                   ),
                 ),
-                const SelectServiceItemList(title: 'Specialized Services'),
+                ServicesListWidget(),
+
+
                 const SizedBox(height: 20),
                 SizedBox(
                     height: 300,

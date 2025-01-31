@@ -9,7 +9,9 @@ import '../widgets/tip_modal_bottom.dart';
 class HomeController extends GetxController {
   final AppNavigation _appNavigation;
   HomeController(this._appNavigation);
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(
+    viewportFraction: 0.9,
+  );
   final RxInt currentPage = 0.obs;
   List<String> notifications = [
     "Your repair from the Jappcare Autotech shop is ready, and available for pickup.",
