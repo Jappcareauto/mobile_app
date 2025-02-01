@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
 
 class TipModalBottomWidget extends StatelessWidget {
   const TipModalBottomWidget({super.key});
@@ -9,10 +10,21 @@ class TipModalBottomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: Get.width,
-        height: 370,
-        padding: const EdgeInsets.all(20),
+        height: 390,
+        padding: const EdgeInsets.symmetric(horizontal: 20 , vertical: 0),
         child: Column(
           children: [
+            Container(
+              width: 28,
+              height: 5,
+
+              decoration:BoxDecoration(
+                color: AppColors.black,
+
+                borderRadius: BorderRadius.circular(6)
+              ) ,
+            ),
+            SizedBox(height: 20,),
             Text("Tip",
                 style: Get.textTheme.titleLarge
                     ?.copyWith(fontWeight: FontWeight.bold)),
@@ -27,7 +39,11 @@ class TipModalBottomWidget extends StatelessWidget {
                 "Regularly rotating your tires is essential for maintaining even wear and extending their lifespan. By rotating your tires consistently, you can help distribute the wear more evenly across all four tires, resulting in a longer lifespan for each tire. This practice not only promotes safety but also helps you get the most out of your investment in tires.",
                 style: Get.textTheme.bodyMedium),
             const SizedBox(height: 20),
-            CustomButton(text: "Done", onPressed: Get.back),
+            CustomButton(
+                text: "Done",
+                onPressed: Get.back,
+
+            ),
           ],
         ));
   }

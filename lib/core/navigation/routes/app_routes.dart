@@ -1,4 +1,6 @@
 import '../../../features/home/navigation/home_public_routes.dart';
+import '../../../features/error/navigation/error_public_routes.dart';
+  
 import '../../../features/vehicleFinder/navigation/vehicle_finder_public_routes.dart';
   
 import '../../../features/emergency/navigation/emergency_public_routes.dart';
@@ -26,7 +28,7 @@ import '../../utils/app_constants.dart';
 
 class AppRoutes {
   static String get initialRoute => splash;
-  
+
   static const splash = AppConstants.splashScreen;
   static const notFoundPage = AppConstants.notFoundScreen;
   //Home Public Routes
@@ -43,6 +45,7 @@ class AppRoutes {
   //Workshop Public Routes
   static const workshop = WorkshopPublicRoutes.home;
   static const workshopchat = WorkshopPublicRoutes.chat;
+  static const appointmentDetails = WorkshopPublicRoutes.appointMentDetail;
 
   //Profile Public Routes
   static const profile = ProfilePublicRoutes.home;
@@ -59,4 +62,10 @@ class AppRoutes {
 
   //VehicleFinder Public Routes
   static const vehicleFinder = VehicleFinderPublicRoutes.home;
+  //Error Public Routes
+  static const error = ErrorPublicRoutes.home;
+  static const commingSoon = ErrorPublicRoutes.commingSoon;
+  static const netWorkError = ErrorPublicRoutes.networkError;
+
+
 }

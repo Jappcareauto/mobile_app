@@ -19,6 +19,7 @@ class TimeSlot extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        width: 165,
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected ? Get.theme.primaryColor.withOpacity(0.2) : Colors.white,

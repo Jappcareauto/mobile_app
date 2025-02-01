@@ -9,7 +9,9 @@ class WorkshopConstants {
   static const String getAllServicesCenterGetUri = '/service-center';
   static const String bookAppointmentPostUri = '/appointment';
   static const String createdRomeChatPostUri = '/chatroom';
-  static const String chatUri = 'wss://api.jappcare.com/chat?chatRoomId=';
+  static const String chatUri = 'wss://api.jappcare.com/api/v1/chat?chatRoomId=';
 
   static const String sendMessagePostUri = '/chat-message';
+  static const String getAllservicesGetUri = '/service/list';
+  static const String getVehiculByIdGetUri = '/vehicle/by-owner-id';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
@@ -11,12 +12,14 @@ import 'car_card_widget.dart';
 
 class RecentActivitiesWidget extends StatelessWidget
     implements FeatureWidgetInterface {
+  GarageController garageController  = GarageController(Get.find(), Get.find());
+
   final String title;
   final bool haveTitle;
   final bool haveTabBar;
   final bool isHorizontal;
   final String? status;
-  const RecentActivitiesWidget(
+   RecentActivitiesWidget(
       {super.key,
       this.title = "Recent Activities",
       this.haveTitle = true,
@@ -60,7 +63,7 @@ class RecentActivitiesWidget extends StatelessWidget
                 nameCar: e.name,
                 pathImageCar: e.imageUrl,
                 status: 'Completed',
-                onPressed: () => _.goToVehicleDetails(e),
+                onPressed: () => _.goToAppointmentDetail(e),
               ),
             )
             .toList();
@@ -106,7 +109,13 @@ class RecentActivitiesWidget extends StatelessWidget
       },
     );
   }
-
+  @override
+  void refreshData() {
+    final lastUserId = Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
+    if (lastUserId != null) {
+      garageController.fetchData(lastUserId);
+    }
+  }
   @override
   Widget buildView([args]) {
     if (args != null && args is bool) {

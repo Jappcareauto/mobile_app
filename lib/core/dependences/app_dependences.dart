@@ -48,6 +48,9 @@ import '../../features/emergency/navigation/private/emergency_pages.dart';
 import '../../features/vehicleFinder/dependences/vehicle_finder_dependencies.dart';
 import '../../features/vehicleFinder/navigation/private/vehicle_finder_pages.dart';
 
+import '../../features/error/dependences/error_dependencies.dart';
+import '../../features/error/navigation/private/error_pages.dart';
+
 class AppDependency {
   static Future<void> init() async {
     // Initialize GetStorage
@@ -55,10 +58,11 @@ class AppDependency {
 
     // initialize all pages
     final featuresPages = [
+      ErrorPages(),
       VehicleFinderPages(),
       EmergencyPages(),
       ServicesPages(),
-      ChatPages(),
+      // ChatPages(),
       NotificationsPages(),
       ProfilePages(),
       WorkshopPages(),
@@ -97,9 +101,10 @@ class AppDependency {
     WorkshopDependencies.init();
     ProfileDependencies.init();
     NotificationsDependencies.init();
-      ChatDependencies.init();
+      // ChatDependencies.init();
      ServicesDependencies.init();
      EmergencyDependencies.init();
      VehicleFinderDependencies.init();
+     ErrorDependencies.init();
  }
 }

@@ -8,14 +8,16 @@ import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/car_card_add_vehicle.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/services/ui/generateVehiculeReport/controllers/generate_vehicule_report_controller.dart';
+import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/confirmation_appointment_modal.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/summary.dart';
 
 class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
-  final BookAppointmentController bookAppointmentController = BookAppointmentController(Get.find());
-  final argument  = Get.arguments['currentPge'];
+  // final BookAppointmentController bookAppointmentController = BookAppointmentController(Get.find());
+  final argument = Get.find<GlobalcontrollerWorkshop>().workshopData;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,8 +38,8 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
                     tag: 'ListVehicleWidget'))
                   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
                       .buildView({
-                    "pageController": bookAppointmentController.pageController ,
-                    "currentPage": argument,
+                    "pageController": controller.pageController ,
+                    "currentPage": argument['currentPage'],
                     "haveAddVehicule": false,
                     "isSingleCard": true,
                     "title": "",
@@ -57,18 +59,16 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
                       text: 'Send Inspection Request',
                       onPressed: () {
                         print('send inspection');
-                        // controller.booknewAppointment(
-                        //     Get.find<ProfileController>().userInfos?.id ?? "",
-                        //     bookAppointmentController.selectedLocation.value ,
-                        //     bookAppointmentController.noteController.text ,
-                        //     Get.arguments['servicesId'],
-                        //     bookAppointmentController.vehicleId.value,
-                        //     "NOT_STARTED",
-                        //     bookAppointmentController.selectedDate.value
-                        // );
-                        // if(controller.requestIsSend.value) {
-                          onpenModalConfirmMethod();
-                        // }
+                        controller.booknewAppointment(
+                            argument['selectedDate'],
+                            argument['selectedLocation'],
+                            argument['noteController'],
+                            argument['servciceId'],
+                            argument['vehiculeId'],
+                            "NOT_STARTED",
+                            argument['selectedTime'],
+                        );
+
                       }
                   ),
                 ),
@@ -85,35 +85,4 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController>{
     );
   }
 
-}
-void onpenModalConfirmMethod() {
-  showModalBottomSheet(
-    context: Get.context!,
-    isScrollControlled: true, // Permet un contrôle précis sur la hauteur
-    backgroundColor: Colors.transparent, // Rendre l'arrière-plan transparent
-    builder: (BuildContext context) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 10,
-                offset: const Offset(0, -2),
-              ),
-            ],
-          ),
-          padding: const EdgeInsets.all(16), // Espacement intérieur
-          child: Wrap(
-            children: [
-              ConfirmationAppointmentModal()
-            ],
-          ),
-        ),
-      );
-    },
-  );
 }

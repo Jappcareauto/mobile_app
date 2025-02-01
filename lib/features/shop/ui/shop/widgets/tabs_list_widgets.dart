@@ -2,16 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_allservices.dart';
 
 class TabsListWidgets extends StatelessWidget{
   final List<String> tabs ;
+
   final RxInt selectedFilter ;
   late RxString selectedTabs ;
+  final List<Data>? data ;
   final BorderRadius borderRadius ;
   final bool haveBorder ;
+  final Function(Data selectCar)? onSelected;
   TabsListWidgets({
     Key?key,
     required this.tabs,
+    this.data,
+     this.onSelected,
     required this.selectedFilter,
     required this.selectedTabs,
     required this.borderRadius,
@@ -19,6 +25,11 @@ class TabsListWidgets extends StatelessWidget{
 }):super(key: key);
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (data!.isNotEmpty && onSelected != null) {
+        onSelected!(data![0]);
+      }
+    });
     return  SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child:  Row(
@@ -29,6 +40,7 @@ class TabsListWidgets extends StatelessWidget{
               onTap: (){
                 selectedFilter.value = index ;
                 selectedTabs.value = category ;
+                onSelected!(data![index]);
               },
               child: Container(
 

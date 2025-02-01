@@ -6,6 +6,7 @@ class BookAppointment {
   final String serviceId;
   final String vehicleId;
   final String status;
+  final String timeOfDay;
   final String id;
   final String createdBy;
   final String updatedBy;
@@ -14,6 +15,7 @@ class BookAppointment {
 
   BookAppointment._({
     required this.date,
+    required  this.timeOfDay,
     required this.locationType,
     required this.note,
     required this.serviceId,
@@ -34,6 +36,7 @@ class BookAppointment {
     required vehicleId,
     required status,
     required id,
+    required timeOfDay,
     required createdBy,
     required updatedBy,
     required createdAt,
@@ -47,6 +50,7 @@ class BookAppointment {
       serviceId: serviceId,
       vehicleId: vehicleId,
       status: status,
+      timeOfDay: timeOfDay,
       id: id,
       createdBy: createdBy,
       updatedBy: updatedBy,

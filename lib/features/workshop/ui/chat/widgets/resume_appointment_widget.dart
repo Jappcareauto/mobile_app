@@ -6,7 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
-class ResumeAppointmentWidget extends StatelessWidget {
+import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
+import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
+class ResumeAppointmentWidget extends GetView<ChatController> {
   final String services ;
 
   final DateTime date ;
@@ -62,13 +64,7 @@ class ResumeAppointmentWidget extends StatelessWidget {
                   Text( Get.find<ProfileController>().userInfos?.name?? "Unknow",  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
                 ],
               ),
-              SizedBox(height: 20,),
-              Text('Estimated inspection Fee',
-                  style: TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
-              Text(fee,
-                  style: TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold )),
+
               SizedBox(height: 20,),
               Text('Case ID',
                   style: TextStyle(
@@ -130,12 +126,14 @@ class ResumeAppointmentWidget extends StatelessWidget {
                      text: 'See Details',
                      strech: false,
                      width: 170,
+                     isLoading:controller.loading ,
                      borderRadius: BorderRadius.circular(30),
                      haveBorder: true,
                      onPressed: (){
-                   print('view detail');
-                 }
-                 )
+                          controller.goToAppointmentDetail();
+                          print('view detail');
+                         }
+                     )
 
              )
             ]

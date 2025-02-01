@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 
 class ImageCarousel extends StatefulWidget {
   final List<String> imageUrls;
-
-  ImageCarousel({required this.imageUrls});
+  final double? height ;
+  final MainAxisAlignment positionIndicator ;
+  final bool? haveBorderRadius ;
+  ImageCarousel({required this.imageUrls, this.height, required this.positionIndicator, this.haveBorderRadius});
 
   @override
   State<ImageCarousel> createState() => _ImageCarouselState();
@@ -27,7 +29,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
               height: MediaQuery.of(context).size.height / 3,
               margin: const EdgeInsets.symmetric(horizontal: 0),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(0),
+                borderRadius: BorderRadius.circular(widget.haveBorderRadius !=null ? 16 : 0),
                 child: Image.asset(
                   widget.imageUrls[index],
                   fit: BoxFit.cover,
@@ -37,7 +39,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
             );
           },
           options: CarouselOptions(
-            height: 250,
+            height: widget.height != null ? widget.height : 250,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 5),
             enlargeCenterPage: true,
@@ -54,7 +56,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
         Container(
           margin: const EdgeInsets.only(top: 20),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment:  widget.positionIndicator ,
             children: List.generate(widget.imageUrls.length, (index) {
               return Container(
                 width: 8,

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
+import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_command.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
@@ -34,19 +35,37 @@ class GarageController extends GetxController {
 
   @override
   void onInit() {
-    // Generate by Menosi_cli
     super.onInit();
+    // Écoute des événements
     Get.find<AppEventService>()
         .on<String>(AppConstants.userIdEvent)
         .listen((userId) {
-      if (userId != '') getGarageByOwnerId(userId!);
+      if (userId != '') fetchData(userId!);
     });
-    if (Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent) !=
-        null) {
+
+    // Chargement initial des données
+    final lastUserId = Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
+    if (lastUserId != null) {
+      fetchData(lastUserId);
+    }
+  }
+
+  // Méthode pour récupérer les données
+  Future<void> fetchData(String userId) async {
+    loading.value = true;
+    vehicleLoading.value = true;
+
+    try {
+       await getGarageByOwnerId(userId);
+       print('donner rafrechie');
+    } catch (e) {
+      print("Erreur lors de la récupération des données : $e");
+    } finally {
       loading.value = false;
       vehicleLoading.value = false;
     }
   }
+
 
   void goBack() {
     _appNavigation.goBack();
@@ -60,7 +79,9 @@ class GarageController extends GetxController {
     _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails,
         arguments: vehicleDetails);
   }
-
+void goToAppointmentDetail (Vehicle appointmentDetails){
+    _appNavigation.toNamed(AppRoutes.appointmentDetails , arguments: appointmentDetails);
+}
   Future<void> getGarageByOwnerId(String userId) async {
 
     loading.value = true;

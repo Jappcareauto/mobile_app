@@ -6,8 +6,7 @@ import 'package:jappcare/features/profile/ui/profile/controllers/profile_control
 import 'package:shimmer/shimmer.dart';
 import '../interfaces/feature_widget_interface.dart';
 
-class AppBarWithAvatarAndSalutation extends StatelessWidget
-    implements PreferredSizeWidget {
+class AppBarWithAvatarAndSalutation extends StatelessWidget {
   const AppBarWithAvatarAndSalutation({
     super.key,
   });
@@ -15,10 +14,9 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     Get.put(ProfileController(Get.find()), permanent: true);
-    return AppBar(
+    return SliverAppBar(
       automaticallyImplyLeading: false,
       scrolledUnderElevation: 0,
-      // surfaceTintColor: Colors.white,
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       toolbarHeight: 100,
       leadingWidth: 300,
@@ -32,20 +30,20 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
               Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
             const SizedBox(width: 5),
             Obx(
-              () => Get.find<ProfileController>().loading.value
+                  () => Get.find<ProfileController>().loading.value
                   ? Shimmer.fromColors(
-                      baseColor: Colors.grey,
-                      highlightColor: Colors.white,
-                      child: const Text('Loading...',
-                          style: TextStyle(fontSize: 20)),
-                    )
+                baseColor: Colors.grey,
+                highlightColor: Colors.white,
+                child: const Text('Loading...',
+                    style: TextStyle(fontSize: 20)),
+              )
                   : Text(
-                      "Hi, ${Get.find<ProfileController>().userInfos?.name ?? ''}",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                "Hi, ${Get.find<ProfileController>().userInfos?.name ?? ''}",
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
@@ -66,7 +64,4 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget
       ],
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(100);
 }

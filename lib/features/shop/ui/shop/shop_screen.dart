@@ -277,4 +277,9 @@ class ShopScreen extends GetView<ShopController>
   Widget buildView([args]) {
     return this;
   }
+
+  @override
+  void refreshData() {
+    // TODO: implement refreshData
+  }
 }

@@ -12,4 +12,7 @@ class SendMessageUseCase {
 
   Future<Either<WorkshopException, SendMessage>> call(SendMessageCommand command) async {
     return await repository.sendMessage(command.senderId,command.content,command.chatRoomId,command.timestamp,command.type,command.appointmentId);  }
+
+
 }
+

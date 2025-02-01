@@ -58,4 +58,9 @@ class AuthentificationScreen extends GetView<AuthentificationController>
   Widget buildView([args]) {
     return this;
   }
+
+  @override
+  void refreshData() {
+    // TODO: implement refreshData
+  }
 }

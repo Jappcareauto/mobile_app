@@ -53,5 +53,10 @@ class WorkshopCustomMapView extends StatelessWidget implements FeatureWidgetInte
     return this;
   }
 
+  @override
+  void refreshData() {
+    // TODO: implement refreshData
+  }
+
 
 }

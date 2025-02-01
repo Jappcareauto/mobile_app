@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
 import 'package:intl/intl.dart';
@@ -14,7 +15,8 @@ import 'package:intl/intl.dart';
 class Summary extends GetView<ConfirmeAppointmentController> {
   final BookAppointmentController bookController = Get.put(
       BookAppointmentController(Get.find()));
-
+  final images = Get.find<GlobalcontrollerWorkshop>().selectedImages;
+  final argument = Get.find<GlobalcontrollerWorkshop>().workshopData;
   @override
   Widget build(BuildContext context) {
     return
@@ -31,7 +33,7 @@ class Summary extends GetView<ConfirmeAppointmentController> {
           children: [
             Text('Service Offered by',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-            Text(Get.arguments['servicesName'] ?? "Unknow",
+            Text(argument['serviceCenterName'] ?? "Unknow",
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
             SizedBox(height: 20,),
             Text('Items',
@@ -52,19 +54,6 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                Text( Get.find<ProfileController>().userInfos?.name?? "Unknow",  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
               ],
             ),
-
-            SizedBox(height: 20,),
-
-            Text('Estimated inspection Fee',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-            Text('5,000 Frs',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-            SizedBox(height: 20,),
-            Text('Case ID',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-            Text(bookController.vehicleVin.value,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-
             SizedBox(height: 20,),
             Text('Date',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
@@ -79,7 +68,7 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                       Container(
                         child: Text(
                           DateFormat('EEE, MMM dd, yyyy').format(
-                              bookController.selectedDate.value),
+                              argument['selectedDate']),
                           // Format personnalisé
                           style: TextStyle(
                             fontSize: 14,
@@ -97,21 +86,21 @@ class Summary extends GetView<ConfirmeAppointmentController> {
 
                   ),
                   Obx(() =>
-                      Text(bookController.selectedTime.value, style: TextStyle(
+                      Text(argument['selectedTime'], style: TextStyle(
                           fontSize: 14, fontWeight: FontWeight.w400))
 
                   ),
                 ]
             ),
             SizedBox(height: 20,),
-            bookController.noteController.text.isEmpty ?
+            argument['noteController'].isEmpty ?
             SizedBox():
             Text('Note',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
-            Text(bookController.noteController.text,
+            Text(argument['noteController'],
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
             SizedBox(height: 20,),
-            bookController.selectedImages.isEmpty ?
+            images.isEmpty ?
             SizedBox():
             Text('Images',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
@@ -120,7 +109,7 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                 scrollDirection: Axis.horizontal,
                 child: Obx(() =>
                     Row(
-                      children: bookController.selectedImages.map((imagePath) {
+                      children: images.map((imagePath) {
                         return Container(
                           margin: EdgeInsets.only(right: 20),
                           height: 100,

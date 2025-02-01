@@ -21,6 +21,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController>{
   // final ConfirmeAppointmentController confirmAppointment = Get.put(ConfirmeAppointmentController(Get.find()));
   @override
   Widget build(BuildContext context) {
+    final _vhcle = controller.vehicleModel;
     return Scaffold(
       appBar: CustomAppBar(
           title: 'Appointment\nDetails',
@@ -46,10 +47,10 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController>{
                     children: [
 
                       Text(
-                        'Porsch Taycan Turbo S' ,
+                        "${_vhcle.detail!.make} ${_vhcle.detail!.model}" ,
                         style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 22 , color: Color(0xFFFB7C37))
                       ),
-                      Text('2024 , RWD'),
+                      Text("${_vhcle.detail!.year}"),
                     ],
                   )
                 ],
@@ -58,7 +59,8 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController>{
               SizedBox(height: 20,),
 
                   ImageComponent(
-                    assetPath: AppImages.carWhite,
+                    // assetPath: AppImages.carWhite,
+                    imageUrl: _vhcle.media![0]!.sourceUrl,
                   ),
 
 
@@ -108,7 +110,8 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController>{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                      'Body shop appointment'
+                      'General Maintenance appointment',
+                    style: TextStyle(color: AppColors.orange , fontWeight: FontWeight.w600 , fontSize: 16),
                   ),
                 ],
               ),

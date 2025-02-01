@@ -117,4 +117,9 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
   Widget buildView([args]) {
     return this;
   }
+
+  @override
+  void refreshData() {
+    // TODO: implement refreshData
+  }
 }

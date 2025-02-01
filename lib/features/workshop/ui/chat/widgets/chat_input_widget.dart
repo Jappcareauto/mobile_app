@@ -11,10 +11,10 @@ class ChatInputWidget extends GetView<ChatController> {
   final VoidCallback onAttach;
 
   final VoidCallback onMic;
-  final ChatController chatController;
+
   const ChatInputWidget({
     Key? key,
-    required this.chatController,
+
     required this.onAttach,
     required this.onMic,
   }) : super(key: key);
@@ -87,7 +87,7 @@ class ChatInputWidget extends GetView<ChatController> {
                       // Zone de texte
                       Expanded(
                         child: TextField(
-                          controller: chatController.messageController,
+                          controller: controller.messageController,
                           decoration: const InputDecoration(
                             hintText: "Write a message",
                             border: InputBorder.none,
@@ -101,7 +101,7 @@ class ChatInputWidget extends GetView<ChatController> {
                       ),
                       IconButton(
                         icon: const Icon(Icons.camera_alt),
-                        onPressed: chatController.pickImage,
+                        onPressed: controller.pickImage,
                       ),
                       IconButton(
                         icon: const Icon(Icons.mic),
@@ -115,8 +115,7 @@ class ChatInputWidget extends GetView<ChatController> {
               // Bouton d'envoi
               GestureDetector(
                 onTap: () {
-                  chatController.sendMessage() ;
-                  print('bonjour a tous');
+                  controller.sendMessage() ;
                   print(controller.messageController.text);
                 },
 
