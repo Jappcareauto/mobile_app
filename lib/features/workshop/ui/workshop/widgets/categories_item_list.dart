@@ -65,4 +65,9 @@ class SelectServiceItemList extends StatelessWidget
     }
     return this;
   }
+
+  @override
+  void refreshData() {
+    // TODO: implement refreshData
+  }
 }

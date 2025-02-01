@@ -9,6 +9,7 @@ class BookAppointmentModel {
   final String vehicleId;
   final String status;
   final String id;
+  final String timeOfDay;
   final String createdBy;
   final String updatedBy;
   final String createdAt;
@@ -22,6 +23,7 @@ class BookAppointmentModel {
     required this.vehicleId,
     required this.status,
     required this.id,
+    required this.timeOfDay,
     required this.createdBy,
     required this.updatedBy,
     required this.createdAt,
@@ -37,6 +39,7 @@ class BookAppointmentModel {
       vehicleId: json['vehicleId'],
       status: json['status'],
       id: json['id'],
+      timeOfDay: json['timeOfDay'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
@@ -53,6 +56,7 @@ class BookAppointmentModel {
     data['vehicleId'] = vehicleId;
     data['status'] = status;
     data['id'] = id;
+    data['timeOfDay'] = timeOfDay;
     data['createdBy'] = createdBy;
     data['updatedBy'] = updatedBy;
     data['createdAt'] = createdAt;
@@ -69,6 +73,7 @@ class BookAppointmentModel {
       vehicleId: entity.vehicleId,
       status: entity.status,
       id: entity.id,
+      timeOfDay: entity.timeOfDay,
       createdBy: entity.createdBy,
       updatedBy: entity.updatedBy,
       createdAt: entity.createdAt,
@@ -85,6 +90,7 @@ class BookAppointmentModel {
       vehicleId: vehicleId,
       status: status,
       id: id,
+      timeOfDay: timeOfDay,
       createdBy: createdBy,
       updatedBy: updatedBy,
       createdAt: createdAt,

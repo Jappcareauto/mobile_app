@@ -96,7 +96,10 @@ class SelectedVehiculeWidget extends StatelessWidget {
                     }
                   },
                   carName: cars[index].name?? '',
-                  carDetails: cars[index].vin ?? '',
+                  carDetails: [
+                    cars[index].name ?? 'Unknown VIN',
+                    cars[index].detail!.make ?? 'Unknown Name',
+                  ],
                   imagePath: cars[index].imageUrl ?? '',
                   imageUrl: cars[index].imageUrl ?? '',
                 );

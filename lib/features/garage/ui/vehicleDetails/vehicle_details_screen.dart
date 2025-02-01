@@ -33,11 +33,11 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(_vhcle.name,
+                Text("${_vhcle.detail!.make} ${_vhcle.detail!.model}"  ?? '',
                     style: Get.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Get.theme.primaryColor)),
-                Text(_vhcle.vin, style: Get.textTheme.bodyMedium),
+                Text(_vhcle.detail!.year ?? "",   style: Get.textTheme.bodyMedium),
                 const SizedBox(height: 10),
                 SizedBox(
                   width: Get.width,
@@ -174,7 +174,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
              ],
            ),
          ),
-          const RecentActivitiesWidget(haveTabBar: false),
+           RecentActivitiesWidget(haveTabBar: false),
         ]),
       ),
     );

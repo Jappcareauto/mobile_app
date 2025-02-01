@@ -18,11 +18,7 @@ class BookAppointmentUseCase {
         command.serviceId,
         command.vehicleId,
         command.status,
-        command.id,
-        command.createdBy,
-        command.updatedBy,
-        command.createdAt,
-        command.updatedAt
+        command.timeOfDay
     );
   }
 }

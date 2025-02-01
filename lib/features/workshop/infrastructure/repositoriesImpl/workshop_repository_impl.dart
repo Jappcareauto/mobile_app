@@ -1,4 +1,7 @@
 //Don't translate me
+import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
+
 import '../../domain/repositories/workshop_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
 
@@ -19,13 +22,50 @@ import '../models/created_rome_chat_model.dart';
 
 import '../../domain/entities/send_message.dart';
 import '../models/send_message_model.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+import '../../domain/entities/get_allservices.dart';
+import '../models/get_allservices_model.dart';
+
+import '../../domain/entities/get_vehicul_by_id.dart';
+import '../models/get_vehicul_by_id_model.dart';
 
 class WorkshopRepositoryImpl implements WorkshopRepository {
   final NetworkService networkService;
-
+  WebSocketChannel? channel;
   WorkshopRepositoryImpl({
     required this.networkService,
   });
+
+  @override
+  Future<Either<WorkshopException, Vehicle>> getVehiculById(String userId) async {
+    try {
+      final response = await networkService.get(
+        "${WorkshopConstants.getVehiculByIdGetUri}/$userId",
+        
+      );
+      return Right(VehicleModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(WorkshopException(e.message));
+    }
+  }
+
+
+  @override
+  Future<Either<WorkshopException, GetAllservices>> getAllservices() async {
+    try {
+      final response = await networkService.get(
+        WorkshopConstants.getAllservicesGetUri,
+        
+      );
+      return Right(GetAllservicesModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(WorkshopException(e.message));
+    }
+  }
+
 
   @override
   Future<Either<WorkshopException, SendMessage>> sendMessage(String senderId, String content, String chatRoomId, String timestamp, String type, String appointmentId) async {
@@ -58,17 +98,70 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
 
 
   @override
-  Future<Either<WorkshopException, BookAppointment>> bookAppointment(String date, String locationType, String note, String serviceId, String vehicleId, String status, String id, String createdBy, String updatedBy, String createdAt, String updatedAt) async {
+  Future<Either<WorkshopException, BookAppointment>> bookAppointment(String date, String locationType, String note, String serviceId,  String vehicleId, String status,String timeOfDay ) async {
     try {
       final response = await networkService.post(
         WorkshopConstants.bookAppointmentPostUri,
-        body: {'date': date, 'locationType': locationType, 'note': note, 'serviceId': serviceId, 'vehicleId': vehicleId, 'status': status, 'id': id, 'createdBy': createdBy, 'updatedBy': updatedBy, 'createdAt': createdAt, 'updatedAt': updatedAt, },
+        body: {
+          'date': date,
+          'locationType': locationType,
+          'note': note,
+          'serviceId': serviceId,
+          'vehicleId': vehicleId,
+          'status': status,
+          'timeOfDay': timeOfDay},
       );
       return Right(BookAppointmentModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
   }
+  @override
+  Future<Either<WorkshopException, List<SendMessage>>> getRealTimeMessages(
+      String chatroom, String token) async {
+    final Uri uri = Uri.parse('${WorkshopConstants.chatUri}$chatroom');
+
+    try {
+      // Crée une connexion WebSocket avec les headers nécessaires
+      final webSocket = await WebSocket.connect(
+        uri.toString(),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      // Initialise le canal WebSocket
+      channel = IOWebSocketChannel(webSocket);
+
+      // Liste pour stocker les messages reçus
+      final List<SendMessage> receivedMessages = [];
+
+      // Écoute les messages en temps réel
+      channel!.stream.listen(
+            (message) {
+          final decodedMessage = jsonDecode(message);
+          final chatMessage = SendMessageModel.fromJson(decodedMessage).toEntity();
+
+          receivedMessages.add(chatMessage);
+          print("Nouveau message reçu : $chatMessage");
+        },
+        onError: (error) {
+          print("Erreur WebSocket : $error");
+        },
+        onDone: () {
+          print("Connexion WebSocket fermée.");
+        },
+      );
+
+      // Retourne la liste des messages reçus
+      return Right(receivedMessages);
+    } on SocketException catch (e) {
+      print("Erreur réseau : $e");
+      return Left(WorkshopException('Erreur réseau : $e'));
+    } catch (e) {
+      print("Erreur inattendue : $e");
+      return Left(WorkshopException('Erreur inattendue : $e'));
+    }
+  }
+
 
 
   @override

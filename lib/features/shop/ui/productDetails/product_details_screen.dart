@@ -32,6 +32,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
           children: [
             BannerWidget(
               imageComponents: ImageCarousel(
+                positionIndicator: MainAxisAlignment.start,
                 imageUrls: [
                   argument['imagePath'] ?? AppImages.shop1
                 ],

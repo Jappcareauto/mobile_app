@@ -17,6 +17,7 @@ import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_ma
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/estimate_inspection_fee.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/categories_item_list.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 
 class BookAppointmentScreen extends GetView<BookAppointmentController> {
   // final GenerateVehiculeReportController generateVehiculeReportController = GenerateVehiculeReportController(Get.find());
@@ -55,6 +56,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                         "onSelected": (selectedCar) {
                           controller.vehicleId.value = selectedCar.id;
                           controller.vehicleVin.value = selectedCar.vin;
+                          controller.globalControllerWorkshop.addVehicle(selectedCar);
                           print("Current page: ${controller.currentPage
                               .value}, Car ID: ${selectedCar.name}");
                         },
@@ -62,8 +64,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       }),
 
                     SizedBox(height: 20,),
-                    SelectServiceItemList(
-                      title: 'Specialized Services',),
+                   ServicesListWidget(),
 
                     BookingWidget(),
                     SizedBox(height: 20,),
@@ -72,7 +73,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                     FormLocationWidget(),
                     SizedBox(height: 50,),
                     AddImageWidget(),
-                    EstimatedInspectionFee(),
+                    // EstimatedInspectionFee(),
                     SizedBox(height: 20,),
                     Container(
                       margin: EdgeInsets.symmetric(horizontal: 20),
@@ -92,14 +93,14 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                 ),
                 )
             ),
-            Positioned(
-                top: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.7,
-                right: 10,
-                child: ChatWidget()
-            )
+            // Positioned(
+            //     top: MediaQuery
+            //         .of(context)
+            //         .size
+            //         .height * 0.7,
+            //     right: 10,
+            //     child: ChatWidget()
+            // )
           ],
         )
 

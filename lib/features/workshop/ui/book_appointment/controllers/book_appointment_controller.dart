@@ -15,6 +15,7 @@ import 'package:jappcare/features/garage/domain/entities/get_garage_by_owner_id.
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -25,7 +26,7 @@ class BookAppointmentController extends GetxController{
   var selectedDate = DateTime.now().obs;
   var selectedYear = DateTime.now().year.obs; // Année actuelle
   var selectedMonth = DateTime.now().month.obs; // Mois actuel
-  RxString selectedTime = "Morning".obs;
+  RxString selectedTime = "MORNING".obs;
 
   var selectedImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();
@@ -39,6 +40,7 @@ class BookAppointmentController extends GetxController{
   final vehicleId = ''.obs ;
   final vehicleVin = ''.obs ;
   GetGarageByOwnerId? myGarage;
+  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<Vehicle> vehicleList = [];
   RxString selectedLocation = "GARAGE".obs;
@@ -46,7 +48,9 @@ class BookAppointmentController extends GetxController{
     AppImages.shopCar,
     AppImages.carClean,
   ].obs;
-  final PageController pageController = PageController();
+  final PageController pageController = PageController(
+    viewportFraction: 0.9,
+  );
   final RxInt currentPage = 0.obs;
     BookAppointmentController(this._appNavigation);
   @override
@@ -92,12 +96,17 @@ class BookAppointmentController extends GetxController{
     selectedLocation.value = location;
   }
   void gotToConfirmAppointment () {
-    _appNavigation.toNamed(WorkshopPrivateRoutes.confirmappointment ,
-        arguments: {
-          "currentPge":currentPage,
-          "servicesName": Get.arguments['name'],
-          "servicesId":Get.arguments['id']
+    _appNavigation.toNamed(WorkshopPrivateRoutes.confirmappointment);
+    globalControllerWorkshop.addMultipleData({
+      "currentPage": currentPage,
+      "selectedDate":selectedDate.value,
+      "selectedLocation" : selectedLocation.value,
+      "noteController" :noteController.text,
+      "vehiculeId": vehicleId.value ,
+      "selectedTime":selectedTime.value
     });
+    globalControllerWorkshop.addMultipleImages(selectedImages);
+
   }
   Future<void> selectImagesFromGallery() async {
     final List<XFile>? pickedFiles = await _picker

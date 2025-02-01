@@ -10,6 +10,8 @@ import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_command.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_allservices.dart';
+import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../../../../core/navigation/app_navigation.dart';
@@ -23,7 +25,9 @@ class WorkshopDetailsController extends GetxController {
   final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
   final loading = false.obs;
   final locationPermissionGranted = false.obs;
-  final arguments = Get.arguments;
+  final arguments = Get.find<GlobalcontrollerWorkshop>().workshopData;
+
+
   RxString placeName = ''.obs;
 
   //Maps initializations
@@ -201,8 +205,8 @@ class WorkshopDetailsController extends GetxController {
   }
 
   void gotoBoockApontment() {
-    _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment , arguments: {"latitude": arguments['latitude'] , "longitude":arguments['longitude'] , "name":arguments['name'] , "id":arguments['id']});
-    print('go to appointment');
+    _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment);
+
   }
 
 }

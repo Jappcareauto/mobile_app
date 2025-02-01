@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/chat_input_widget.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/chat_invoice.dart';
@@ -11,13 +12,14 @@ import 'package:jappcare/features/workshop/ui/chat/widgets/resume_appointment_wi
 
 import 'controllers/chat_controller.dart';
 import 'widgets/chat_app_bar.dart';
-import 'widgets/chat_input_field.dart';
+// import 'widgets/chat_input_field.dart';
 import 'widgets/chat_message.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class ChatDetailsScreen extends GetView<ChatController> {
   final BookAppointmentController bookController = Get.put(BookAppointmentController(Get.find()));
+  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
 
   @override
   Widget build(BuildContext context) {
@@ -86,13 +88,12 @@ class ChatDetailsScreen extends GetView<ChatController> {
                       SizedBox(height: 20,),
                       Obx(() =>
                           ResumeAppointmentWidget(
-                              services: Get.arguments['serviceName'],
-
-                              date: bookController.selectedDate.value,
-                              caseId: bookController.vehicleVin.value,
-                              note: bookController.noteController.text,
+                              services: globalControllerWorkshop.workshopData['serviceCenterName'],
+                              date: globalControllerWorkshop.workshopData['selectedDate'],
+                              caseId:  globalControllerWorkshop.workshopData['appointmentId'],
+                              note: globalControllerWorkshop.workshopData['noteController'],
                               fee: '5,000 Frs',
-                              time: bookController.selectedTime.value
+                              time: globalControllerWorkshop.workshopData['selectedTime']
                           )
                       )
                      ,
@@ -155,7 +156,6 @@ class ChatDetailsScreen extends GetView<ChatController> {
                   right: 0,
                   left: 0,
                   child: ChatInputWidget(
-                    chatController: controller ,
                     onAttach: (){},
                     onMic: (){},
                   )),

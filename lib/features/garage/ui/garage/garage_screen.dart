@@ -28,12 +28,12 @@ class GarageScreen extends GetView<GarageController>
                       .buildView(),
               ],
             ),
-            body: const SingleChildScrollView(
+            body: SingleChildScrollView(
               child: Column(
                 children: [
                   ListVehicleWidget(haveTitle: false),
-                  SizedBox(height: 20),
-                  RecentActivitiesWidget(haveTabBar: true),
+                  const SizedBox(height: 20),
+                   RecentActivitiesWidget(haveTabBar: true),
                 ],
               ),
             ));
@@ -44,5 +44,10 @@ class GarageScreen extends GetView<GarageController>
   @override
   Widget buildView([args]) {
     return this;
+  }
+
+  @override
+  void refreshData() {
+    // TODO: implement refreshData
   }
 }
