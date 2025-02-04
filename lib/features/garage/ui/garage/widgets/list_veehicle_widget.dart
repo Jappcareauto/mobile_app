@@ -138,8 +138,8 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
                     },
                     carName: vehicle.detail.model ?? '',
                     carDetails:[ vehicle.detail.year ?? "Unknown" , vehicle.detail.make ?? "Unknown"] ,
-                    imagePath: vehicle.media[0]?.sourceUrl ?? '',
-                    imageUrl: vehicle.media[0]?.sourceUrl ?? '',
+                    imagePath: vehicle.media[2]?.sourceUrl ?? '',
+                    imageUrl: vehicle.media[2]?.sourceUrl ?? '',
                   );
                 },
               ),

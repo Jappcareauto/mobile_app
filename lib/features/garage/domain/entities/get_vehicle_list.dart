@@ -135,7 +135,7 @@ class Media {
   final String? mediaId;
   final String? fileId;
   final String? fileUrl;
-  final String id;
+  final String? id;
   final String? createdBy;
   final String? updatedBy;
   final DateTime? createdAt;
@@ -148,7 +148,7 @@ class Media {
     this.mediaId,
     this.fileId,
     this.fileUrl,
-    required this.id,
+     this.id,
     this.createdBy,
     this.updatedBy,
     this.createdAt,
@@ -162,7 +162,7 @@ class Media {
     mediaId,
     fileId,
     fileUrl,
-    required id,
+     id,
     createdBy,
     updatedBy,
     createdAt,
