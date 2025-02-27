@@ -24,42 +24,42 @@ import 'services_private_routes.dart';
 
 class ServicesPages implements FeaturePages {
   @override
-  List<GetPage>  getPages() => [
-    GetPage(
-      name: ServicesPrivateRoutes.home,
-      page: () => const ServicesScreen(),
-      binding: ServicesControllerBinding(),
-    ),
-    GetPage(
-      name: ServicesPrivateRoutes.generateVehiculeReport,
-      page: () => GenerateVehiculeReportScreen(),
-      binding: GenerateVehiculeReportControllerBinding(),
-    ),
-    GetPage(
-      name: ServicesPrivateRoutes.addVehicle,
-      page: () => const AddVehicleScreen(),
-      binding: AddVehicleControllerBinding(),
-    ),
-    GetPage(
-      name: ServicesPrivateRoutes.oderDetail,
-      page: () => const OderDetailScreen(),
-      binding: OderDetailControllerBinding(),
-    ),
-    GetPage(
-      name: ServicesPrivateRoutes.generatingLoading,
-      page: () => const GeneratingLoadingScreen(),
-      binding: GeneratingLoadingControllerBinding(),
-    ),
-    GetPage(
-      name: ServicesPrivateRoutes.generatingsuccess,
-      page: () => const GeneratingsuccessScreen(),
-      binding: GeneratingsuccessControllerBinding(),
-    ),
-    GetPage(
-      name: ServicesPrivateRoutes.vehiculReport,
-      page: () => const VehiculReportScreen(),
-      binding: VehiculReportControllerBinding(),
-    ),
-    // Add other routes here
-  ];
+  List<GetPage> getPages() => [
+        GetPage(
+          name: ServicesPrivateRoutes.home,
+          page: () => const ServicesScreen(),
+          binding: ServicesControllerBinding(),
+        ),
+        GetPage(
+          name: ServicesPrivateRoutes.generateVehiculeReport,
+          page: () => GenerateVehiculeReportScreen(),
+          binding: GenerateVehiculeReportControllerBinding(),
+        ),
+        GetPage(
+          name: ServicesPrivateRoutes.addVehicle,
+          page: () => const AddVehicleScreen(),
+          binding: AddVehicleControllerBinding(),
+        ),
+        GetPage(
+          name: ServicesPrivateRoutes.oderDetail,
+          page: () => OrderDetailScreen(),
+          binding: OderDetailControllerBinding(),
+        ),
+        GetPage(
+          name: ServicesPrivateRoutes.generatingLoading,
+          page: () => const GeneratingLoadingScreen(),
+          binding: GeneratingLoadingControllerBinding(),
+        ),
+        GetPage(
+          name: ServicesPrivateRoutes.generatingsuccess,
+          page: () => const GeneratingsuccessScreen(),
+          binding: GeneratingsuccessControllerBinding(),
+        ),
+        GetPage(
+          name: ServicesPrivateRoutes.vehiculReport,
+          page: () => const VehiculReportScreen(),
+          binding: VehiculReportControllerBinding(),
+        ),
+        // Add other routes here
+      ];
 }
