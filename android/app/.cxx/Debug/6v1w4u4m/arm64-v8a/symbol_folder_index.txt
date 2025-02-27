@@ -1,0 +1,1 @@
+/home/fenyep/Bureau/Projets/jappcare_mobile_app/build/app/intermediates/cxx/Debug/6v1w4u4m/obj/arm64-v8a
