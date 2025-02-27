@@ -26,7 +26,7 @@ class ServiceWidget extends GetView<ServicesLocatorController> {
   Widget build(BuildContext context) {
     return
         Container(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
           child: Column(
             children: [
               ImageComponent(

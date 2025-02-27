@@ -23,17 +23,17 @@ class HomePages implements FeaturePages {
     ),
     GetPage(
       name: HomePrivateRoutes.dashboard,
-      page: () => DashboardScreen(),
+      page: () => const DashboardScreen(),
       binding: DashboardControllerBinding(),
     ),
     GetPage(
       name: HomePrivateRoutes.onboarding,
-      page: () => OnboardingScreen(),
+      page: () => const OnboardingScreen(),
       binding: OnboardingControllerBinding(),
     ),
     GetPage(
       name: HomePrivateRoutes.selectLanguage,
-      page: () => SelectLanguageScreen(),
+      page: () => const SelectLanguageScreen(),
       binding: SelectLanguageControllerBinding(),
     ),
     // Add other routes here

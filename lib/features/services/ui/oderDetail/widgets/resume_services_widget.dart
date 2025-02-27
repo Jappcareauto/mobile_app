@@ -20,18 +20,18 @@ class ResumeServicesWidget extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Service",
             style: TextStyle(
               fontSize: 12,
               color: Colors.black54,
             ),
           ),
-          const SizedBox(height: 4),
-          const Text(
+          SizedBox(height: 4),
+          Text(
             "Vehicle Report",
             style: TextStyle(
               fontSize: 18,
@@ -39,16 +39,16 @@ class ResumeServicesWidget extends StatelessWidget {
               color: Colors.orange,
             ),
           ),
-          const SizedBox(height: 12),
-          const Text(
+          SizedBox(height: 12),
+          Text(
             "Offered by",
             style: TextStyle(
               fontSize: 12,
               color: Colors.black54,
             ),
           ),
-          const SizedBox(height: 4),
-          const Text(
+          SizedBox(height: 4),
+          Text(
             "Jappcare Autotech",
             style: TextStyle(
               fontSize: 16,
@@ -56,16 +56,16 @@ class ResumeServicesWidget extends StatelessWidget {
               color: Colors.orange,
             ),
           ),
-          const SizedBox(height: 12),
-          const Text(
+          SizedBox(height: 12),
+          Text(
             "Fee",
             style: TextStyle(
               fontSize: 12,
               color: Colors.black54,
             ),
           ),
-          const SizedBox(height: 4),
-          const Text(
+          SizedBox(height: 4),
+          Text(
             "5,000 Frs",
             style: TextStyle(
               fontSize: 18,
@@ -73,11 +73,11 @@ class ResumeServicesWidget extends StatelessWidget {
               color: Colors.orange,
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             children: [
               Row(
-                children: const [
+                children: [
                   Icon(
                     Icons.calendar_today_outlined,
                     color: Colors.black38,
@@ -93,9 +93,9 @@ class ResumeServicesWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              const Spacer(),
+              Spacer(),
               Row(
-                children: const [
+                children: [
                   Icon(
                     Icons.access_time_outlined,
                     color: Colors.black38,

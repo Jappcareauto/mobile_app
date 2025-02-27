@@ -16,7 +16,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    final _vhcle = controller.vehicleModel;
+    final vhcle = controller.vehicleModel;
     return Scaffold(
       appBar: CustomAppBar(
         title: "My Garage",
@@ -33,18 +33,18 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${_vhcle.detail!.make} ${_vhcle.detail!.model}"  ?? '',
+                Text("${vhcle.detail!.make} ${vhcle.detail!.model}"  ?? '',
                     style: Get.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Get.theme.primaryColor)),
-                Text(_vhcle.detail!.year ?? "",   style: Get.textTheme.bodyMedium),
+                Text(vhcle.detail!.year ?? "",   style: Get.textTheme.bodyMedium),
                 const SizedBox(height: 10),
                 SizedBox(
                   width: Get.width,
                   height: 200,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    children: _vhcle.media
+                    children: vhcle.media
                             ?.map((e) => Padding(
                                   padding: const EdgeInsets.only(right: 10),
                                   child: ImageComponent(
@@ -69,21 +69,21 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                 Row(
                   children: [
                     DetailItem(
-                        title: "Make", value: _vhcle.detail?.make ?? 'Unknow'),
+                        title: "Make", value: vhcle.detail?.make ?? 'Unknow'),
                     const SizedBox(width: 20),
                     DetailItem(
                         title: "Model",
-                        value: _vhcle.detail?.model ?? 'Unknow'),
+                        value: vhcle.detail?.model ?? 'Unknow'),
                   ],
                 ),
                 const SizedBox(height: 20),
                 Row(
                   children: [
                     DetailItem(
-                        title: "Trim", value: _vhcle.detail?.trim ?? 'Unknow'),
+                        title: "Trim", value: vhcle.detail?.trim ?? 'Unknow'),
                     const SizedBox(width: 20),
                     DetailItem(
-                        title: "Year", value: _vhcle.detail?.year ?? 'Unknow'),
+                        title: "Year", value: vhcle.detail?.year ?? 'Unknow'),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -91,11 +91,11 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                   children: [
                     DetailItem(
                         title: "Transmission",
-                        value: _vhcle.detail?.transmission ?? 'Unknow'),
+                        value: vhcle.detail?.transmission ?? 'Unknow'),
                     const SizedBox(width: 20),
                     DetailItem(
                         title: "Drive",
-                        value: _vhcle.detail?.driveTrain ?? 'Unknow'),
+                        value: vhcle.detail?.driveTrain ?? 'Unknow'),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -103,11 +103,11 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                   children: [
                     DetailItem(
                         title: "Power",
-                        value: _vhcle.detail?.power ?? 'Unknow'),
+                        value: vhcle.detail?.power ?? 'Unknow'),
                     const SizedBox(width: 20),
                     DetailItem(
                         title: "Body Type",
-                        value: _vhcle.detail?.bodyType ?? 'Unknow'),
+                        value: vhcle.detail?.bodyType ?? 'Unknow'),
                   ],
                 ),
               ],
@@ -133,9 +133,9 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
           ),
           const SizedBox(height: 20),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          margin: const EdgeInsets.symmetric(horizontal: 20),
 
-          child:  Row(
+          child:  const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -146,13 +146,13 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
           const SizedBox(height: 10),
 
          Container(
-           margin: EdgeInsets.symmetric(horizontal: 20),
+           margin: const EdgeInsets.symmetric(horizontal: 20),
 
            child:  Row(
              children: [
                Expanded(
                  child: CustomCardService(
-                     color: Color(0xFFC4FFCD),
+                     color: const Color(0xFFC4FFCD),
                      text: 'Vehicles\nReports',
                      imagePath: AppImages.vehicule,
                      onTap: (){}
@@ -163,7 +163,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                const SizedBox(width: 10),
                Expanded(
                  child: CustomCardService(
-                   color: Color(0xFFFFDAD4),
+                   color: const Color(0xFFFFDAD4),
                    text: 'Emergency\nAssistance',
                    imagePath: AppImages.emergency,
                    onTap: () {

@@ -4,7 +4,7 @@ import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 
 class AppointmentDetailsController  extends GetxController{
-  AppNavigation _appNavigation ;
+  final AppNavigation _appNavigation ;
   AppointmentDetailsController(this._appNavigation);
   RxBool isExpanded = true.obs;
   RxBool isExpandedReportDetail = true.obs;
@@ -21,6 +21,7 @@ class AppointmentDetailsController  extends GetxController{
     {"name": "Wiper Blades", "quantity": 1, "price": 3500},
     {"name": "Labour Fee", "quantity": 1, "price": 20000},
   ] ;
+  @override
   void onInit(){
     super.onInit();
     vehicleModel = Get.arguments ;

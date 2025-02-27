@@ -9,13 +9,13 @@ class CustomCardService extends StatelessWidget {
   final VoidCallback onTap;
 
   const CustomCardService({
-    Key? key,
+    super.key,
     required this.color,
     required this.text,
     required this.imagePath,
     required this.onTap,
     this.widthContainer,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

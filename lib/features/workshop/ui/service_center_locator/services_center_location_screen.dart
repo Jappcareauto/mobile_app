@@ -1,92 +1,92 @@
  import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
-import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/controllers/services_locator_controller.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/widgets/map_widget.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/widgets/services.dart';
 
 class ServicesCenterLocator extends GetView<ServicesLocatorController>{
+  const ServicesCenterLocator({super.key});
+
   @override
   Widget build(BuildContext context) {
       return Scaffold(
         body: Stack(
 
           children: [
-              MapWiget(),
+              const MapWiget(),
               Column(
 
                 children: [
-                  SizedBox(height: 100,),
+                  const SizedBox(height: 100,),
                   Row(
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: CustomFormField(
                             filColor: Get.theme.scaffoldBackgroundColor,
                             hintText: "Search Centers",
-                            prefix: Icon(FluentIcons.search_24_regular),
+                            prefix: const Icon(FluentIcons.search_24_regular),
                           ),
                         ),
                       ),
 
                       //  SizedBox(width: 5),
                       Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.only(right: 5),
+                        padding: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.only(right: 5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: Get.theme.scaffoldBackgroundColor),
                         child: IconButton(
                           onPressed: (){
                             Get.back();
                           },
-                       icon: Icon(
+                       icon: const Icon(
                           FluentIcons.arrow_left_24_regular,
                           color: Colors.black,
                         ),
     ),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Get.theme.scaffoldBackgroundColor),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 15),
-                        padding: EdgeInsets.all(5),
-                        child: Icon(FluentIcons.options_16_regular),
+                        margin: const EdgeInsets.only(left: 15),
+                        padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
                             color: Get.theme.scaffoldBackgroundColor),
+                        child: const Icon(FluentIcons.options_16_regular),
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       Container(
-                        padding: EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Get.theme.primaryColor),
                         child: Text(
                           'Around Me',
                           style: Get.textTheme.bodyMedium
                               ?.copyWith(color: Get.theme.scaffoldBackgroundColor),
                         ),
+                      ),
+                      const SizedBox(width: 20) ,
+                      Container(
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Get.theme.primaryColor),
-                      ),
-                      SizedBox(width: 20) ,
-                      Container(
-                        padding: EdgeInsets.all(12),
                         child: Text(
                           'Under 5k',
                           style: Get.textTheme.bodyMedium
                               ?.copyWith(color: Get.theme.scaffoldBackgroundColor),
                         ),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Get.theme.primaryColor),
                       ),
                     ],
                   ),

@@ -18,14 +18,14 @@ class BookingWidget extends GetView<BookAppointmentController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "When",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Obx(() => CalendarDatePicker(
 
               initialDate: controller.selectedDate.value,
@@ -33,22 +33,22 @@ class BookingWidget extends GetView<BookAppointmentController> {
               lastDate: DateTime(DateTime.now().year + 1),
               onDateChanged: (date) => controller.selectDate(date),
             )),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Obx(() => Text(
               DateFormat("EEE, MMM dd, yyyy")
                   .format(controller.selectedDate.value),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.orange,
               ),
             )),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               "Time",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -66,12 +66,12 @@ class BookingWidget extends GetView<BookAppointmentController> {
                 )),
               ],
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               "Where do you want the service",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

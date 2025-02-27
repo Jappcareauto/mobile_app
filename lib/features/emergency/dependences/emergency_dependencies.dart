@@ -3,7 +3,6 @@ import 'package:jappcare/features/emergency/application/usecases/emergency_useca
 import 'package:jappcare/features/emergency/domain/entities/emergency.dart';
 import 'package:jappcare/features/emergency/domain/repositories/emergency_repository.dart';
 import 'package:jappcare/features/emergency/infrastructure/repositoriesImpl/emergency_repository_impl.dart';
-import 'package:jappcare/features/emergency/ui/emergency/controllers/emergency_controller.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/controllers/services_locator_controller.dart';
 class EmergencyDependencies {
   static void init() {

@@ -6,30 +6,32 @@ import 'controllers/checkout_phone_detail_controller.dart';
 import 'package:get/get.dart';
 
 class CheckoutPhoneDetailScreen extends GetView<CheckoutPhoneDetailController> {
+  const CheckoutPhoneDetailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: CustomAppBar(title: 'Checkout'),
+      appBar: const CustomAppBar(title: 'Checkout'),
       body: Container(
-        margin: EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Add Payment Method',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            CustomPhoneFormField(
+            const CustomPhoneFormField(
                label: 'Phone',
               hintText: 'Phone',
             ),
-            Spacer(),
+            const Spacer(),
 
             CustomButton(text: 'Place Oder', onPressed: (){controller.goToPayWithCard();})
           ],

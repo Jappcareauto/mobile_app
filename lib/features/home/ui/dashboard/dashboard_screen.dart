@@ -2,7 +2,6 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/loading_widget.dart';
-import 'package:jappcare/features/error/ui/commingSoon/comming_soon_screen.dart';
 import 'package:jappcare/features/home/ui/home/home_screen.dart';
 import 'controllers/dashboard_controller.dart';
 import 'package:get/get.dart';
@@ -10,12 +9,14 @@ import 'package:get/get.dart';
 
 
 class DashboardScreen extends GetView<DashboardController> {
+  const DashboardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Get.theme.primaryColor,
       body: Obx(() => controller.loading.value
-          ? LoaderWidget(dense: true)
+          ? const LoaderWidget(dense: true)
           : IndexedStack(
         index: controller.selectedIndex.value,
         children: [

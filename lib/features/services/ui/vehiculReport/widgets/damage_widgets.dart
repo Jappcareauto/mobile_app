@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/features/services/ui/vehiculReport/controllers/vehicul_report_controller.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +7,12 @@ class DamageWidgets extends GetView<VehiculReportController>{
   final String status;
   final String cause;
   final String estimPrice ;
-  DamageWidgets({
-    Key?key,
+  const DamageWidgets({
+    super.key,
     required this.cause,
     required this.estimPrice,
     required this.status
-}): super(key: key);
+});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,13 +34,13 @@ class DamageWidgets extends GetView<VehiculReportController>{
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          WarningContainer(
+          const WarningContainer(
               title: 'Beware',
               text: 'This vehicle was damaged 2 times'
           ),
-          Text(
+          const Text(
             'April 2021', // Titre (ex: Make)
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               color: Colors.grey,
             ),
@@ -55,10 +54,10 @@ class DamageWidgets extends GetView<VehiculReportController>{
               color: Colors.red
             ),
           ),
-          SizedBox(height: 10,),
-          Text(
+          const SizedBox(height: 10,),
+          const Text(
             'Possible damage cause', // Titre (ex: Make)
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               color: Colors.grey,
             ),
@@ -72,10 +71,10 @@ class DamageWidgets extends GetView<VehiculReportController>{
                 color: Colors.black
             ),
           ),
-          SizedBox(height: 10,),
-          Text(
+          const SizedBox(height: 10,),
+          const Text(
             'Estimated repair cost', // Titre (ex: Make)
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               color: Colors.grey,
             ),

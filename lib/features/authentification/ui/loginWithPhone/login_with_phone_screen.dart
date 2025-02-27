@@ -12,6 +12,8 @@ import 'controllers/login_with_phone_controller.dart';
 import 'package:get/get.dart';
 
 class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
+  const LoginWithPhoneScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,7 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      ImageDecoration(assetPath: AppConstants.SingUp),
+                      const ImageDecoration(assetPath: AppConstants.SingUp),
                       SizedBox(
                         height: Get.height * .6,
                         child: Column(

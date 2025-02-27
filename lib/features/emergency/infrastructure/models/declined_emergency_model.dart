@@ -1,6 +1,5 @@
 import 'package:jappcare/features/emergency/infrastructure/models/emergency_model.dart';
 
-import '../../domain/entities/emergency.dart';
 import '../../domain/entities/declined_emergency.dart';
 
 class DeclinedEmergencyModel {

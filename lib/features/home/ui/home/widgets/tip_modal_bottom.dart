@@ -24,7 +24,7 @@ class TipModalBottomWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6)
               ) ,
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Text("Tip",
                 style: Get.textTheme.titleLarge
                     ?.copyWith(fontWeight: FontWeight.bold)),

@@ -7,7 +7,7 @@ class ImageCarousel extends StatefulWidget {
   final double? height ;
   final MainAxisAlignment positionIndicator ;
   final bool? haveBorderRadius ;
-  ImageCarousel({required this.imageUrls, this.height, required this.positionIndicator, this.haveBorderRadius});
+  const ImageCarousel({super.key, required this.imageUrls, this.height, required this.positionIndicator, this.haveBorderRadius});
 
   @override
   State<ImageCarousel> createState() => _ImageCarouselState();
@@ -39,7 +39,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
             );
           },
           options: CarouselOptions(
-            height: widget.height != null ? widget.height : 250,
+            height: widget.height ?? 250,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 5),
             enlargeCenterPage: true,

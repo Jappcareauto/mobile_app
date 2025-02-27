@@ -1,19 +1,16 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
-import 'package:jappcare/core/services/networkServices/dio_network_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/functions.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_real_time_message.dart';
-import 'package:jappcare/features/workshop/application/usecases/get_real_time_message_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_id_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_id_usecase.dart';
 import 'package:jappcare/features/workshop/application/usecases/send_message_command.dart';
@@ -23,12 +20,10 @@ import 'package:jappcare/features/workshop/domain/entities/send_message.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/send_message_model.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
-import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'package:web_socket_channel/io.dart';
-import '../../../domain/core/exceptions/workshop_exception.dart';
 class ChatController extends GetxController {
   final ConfirmeAppointmentController confirmeAppointmentController = ConfirmeAppointmentController(Get.find());
   final AppNavigation _appNavigation;
@@ -133,7 +128,7 @@ class ChatController extends GetxController {
   }
   void _handleReconnection(String chatroom, String token) {
     print("Tentative de reconnexion...");
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () {
       messages.clear();
       getrealTimeMessage(chatroom, token); // Tente de se reconnecter après 5 secondes
     });
@@ -204,7 +199,7 @@ class ChatController extends GetxController {
       context: Get.context!,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => Placeholder(),
+      builder: (context) => const Placeholder(),
     );
   }
 
@@ -228,12 +223,13 @@ class ChatController extends GetxController {
     if (scrollController.hasClients) {
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
     }
   }
 
+  @override
   void onClose() {
     // Fermer proprement la connexion WebSocket
     channel.sink.close();

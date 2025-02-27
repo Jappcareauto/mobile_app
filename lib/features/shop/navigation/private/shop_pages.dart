@@ -33,57 +33,57 @@ import 'shop_private_routes.dart';
 
 class ShopPages implements FeaturePages {
   @override
-  List<GetPage>  getPages() => [
-    GetPage(
-      name: ShopPrivateRoutes.home,
-      page: () => ShopScreen(),
-      binding: ShopControllerBinding(),
-    ),
-    GetPage(
-      name: ShopPrivateRoutes.productDetails,
-      page: () => ProductDetailsScreen(),
-      binding: ProductDetailsControllerBinding(),
-    ),
-    GetPage(
-      name: ShopPrivateRoutes.bag,
-      page: () => BagScreen(),
-      binding: BagControllerBinding(),
-    ),
-    GetPage(
-      name: ShopPrivateRoutes.checkout,
-      page: () => CheckoutScreen(),
-      binding: CheckoutControllerBinding(),
-    ),
-    GetPage(
-      name: ShopPrivateRoutes.oderSummary,
-      page: () => OderSummaryScreen(),
-      binding: OderSummaryControllerBinding(),
-    ),
-    GetPage(
-      name: ShopPrivateRoutes.odersummary2,
-      page: () => Odersummary2Screen(),
-      binding: Odersummary2ControllerBinding(),
-    ),
-    GetPage(
-      name: ShopPrivateRoutes.checkoutPhoneDetail,
-      page: () => CheckoutPhoneDetailScreen(),
-      binding: CheckoutPhoneDetailControllerBinding(),
-    ),
-    GetPage(
-      name: ShopPrivateRoutes.checkoutCardDetails,
-      page: () => CheckoutCardDetailsScreen(),
-      binding: CheckoutCardDetailsControllerBinding(),
-    ),
-    GetPage(
-      name: ShopPrivateRoutes.confirmTransaction,
-      page: () => ConfirmTransactionScreen(),
-      binding: ConfirmTransactionControllerBinding(),
-    ),
-    GetPage(
-      name: ShopPrivateRoutes.recepit,
-      page: () => RecepitScreen(),
-      binding: RecepitControllerBinding(),
-    ),
-    // Add other routes here
-  ];
+  List<GetPage> getPages() => [
+        GetPage(
+          name: ShopPrivateRoutes.home,
+          page: () => const ShopScreen(),
+          binding: ShopControllerBinding(),
+        ),
+        GetPage(
+          name: ShopPrivateRoutes.productDetails,
+          page: () => ProductDetailsScreen(),
+          binding: ProductDetailsControllerBinding(),
+        ),
+        GetPage(
+          name: ShopPrivateRoutes.bag,
+          page: () => BagScreen(),
+          binding: BagControllerBinding(),
+        ),
+        GetPage(
+          name: ShopPrivateRoutes.checkout,
+          page: () => const CheckoutScreen(),
+          binding: CheckoutControllerBinding(),
+        ),
+        GetPage(
+          name: ShopPrivateRoutes.oderSummary,
+          page: () => OderSummaryScreen(),
+          binding: OderSummaryControllerBinding(),
+        ),
+        GetPage(
+          name: ShopPrivateRoutes.odersummary2,
+          page: () => const Odersummary2Screen(),
+          binding: Odersummary2ControllerBinding(),
+        ),
+        GetPage(
+          name: ShopPrivateRoutes.checkoutPhoneDetail,
+          page: () => const CheckoutPhoneDetailScreen(),
+          binding: CheckoutPhoneDetailControllerBinding(),
+        ),
+        GetPage(
+          name: ShopPrivateRoutes.checkoutCardDetails,
+          page: () => const CheckoutCardDetailsScreen(),
+          binding: CheckoutCardDetailsControllerBinding(),
+        ),
+        GetPage(
+          name: ShopPrivateRoutes.confirmTransaction,
+          page: () => const ConfirmTransactionScreen(),
+          binding: ConfirmTransactionControllerBinding(),
+        ),
+        GetPage(
+          name: ShopPrivateRoutes.recepit,
+          page: () => RecepitScreen(),
+          binding: RecepitControllerBinding(),
+        ),
+        // Add other routes here
+      ];
 }

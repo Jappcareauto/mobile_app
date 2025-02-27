@@ -16,7 +16,7 @@ class WorkshopCustomMapView extends StatelessWidget implements FeatureWidgetInte
       initState: (_) {},
       builder: (_) {
         return Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
           child:  ClipRRect(
             borderRadius:
             const BorderRadius.all(Radius.circular(32)),

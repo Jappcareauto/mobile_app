@@ -5,7 +5,6 @@ import 'package:jappcare/features/emergency/application/usecases/emergency_comma
 import 'package:jappcare/features/emergency/application/usecases/emergency_usecase.dart';
 import 'package:jappcare/features/emergency/domain/entities/emergency.dart';
 import 'package:jappcare/features/emergency/navigation/private/emergency_private_routes.dart';
-import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import 'package:geolocator/geolocator.dart';
 class EmergencyDetailController extends GetxController {
@@ -60,8 +59,9 @@ class EmergencyDetailController extends GetxController {
           (e) {
         loading.value = false;
         print(e);
-        if(Get.context !=null)
+        if(Get.context !=null) {
           Get.showCustomSnackBar(e.message);
+        }
       },
           (response) {
         goToWaitResponse(noteController.text ,issue , selectedVehicleName.value , emergencyId.value);

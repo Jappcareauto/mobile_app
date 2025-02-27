@@ -29,7 +29,7 @@ class CustomFormField extends StatefulWidget {
   final int? maxLine;
   final Color? filColor;
   const CustomFormField({
-    Key? key,
+    super.key,
     this.controller,
     this.filColor,
     this.label,
@@ -53,7 +53,7 @@ class CustomFormField extends StatefulWidget {
     this.contentPadding = const EdgeInsets.all(12),
     this.maxLength,
     this.forceUpperCase = false,
-  }) : super(key: key);
+  });
 
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
@@ -83,7 +83,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
           ),
         if (widget.label != null) const SizedBox(height: 8),
         TextFormField(
-          maxLines: widget.maxLine != null ? widget.maxLine : 1,
+          maxLines: widget.maxLine ?? 1,
           controller: widget.controller,
           obscureText: _obscureText,
           keyboardType: widget.keyboardType,

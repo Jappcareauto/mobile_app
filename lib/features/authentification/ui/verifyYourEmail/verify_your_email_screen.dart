@@ -22,7 +22,7 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
           actions: [
             TextButton(
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   'Having issues?',
                 ))
           ],
@@ -57,7 +57,7 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      ImageDecoration(assetPath: AppConstants.Sms),
+                                      const ImageDecoration(assetPath: AppConstants.Sms),
                                       Text(
                                         "We've sent a verification email to ",
                                         style: Get.textTheme.bodyLarge

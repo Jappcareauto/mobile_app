@@ -24,7 +24,7 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _themeController = Get.put(ThemeController());
+    final themeController = Get.put(ThemeController());
     return ThemeProvider(
         initTheme: AppThemeLight.theme,
         builder: (context, myTheme) {
@@ -47,7 +47,7 @@ class Main extends StatelessWidget {
               getPages: Get.find<AppPages>().getAllPages(),
               theme: myTheme,
               darkTheme: AppThemeDark.theme,
-              themeMode: _themeController.themeMode.value,
+              themeMode: themeController.themeMode.value,
               locale: const Locale('fr'), //Don't translate line
               translationsKeys: AppTranslation.translations);
         });

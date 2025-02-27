@@ -5,11 +5,8 @@ import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
-import '../../../../../core/utils/app_images.dart';
 import 'car_card_add_vehicle.dart';
-import 'car_container_widget.dart';
 import 'shimmers/garage_name_shimmer.dart';
 import 'shimmers/list_vehicle_shimmer.dart';
 

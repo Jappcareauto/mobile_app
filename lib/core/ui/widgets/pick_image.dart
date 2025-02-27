@@ -6,7 +6,7 @@ import 'package:image/image.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PickImage extends StatelessWidget {
-  PickImage({Key? key, this.many = false}) : super(key: key);
+  PickImage({super.key, this.many = false});
   final bool many;
   final picker = ImagePicker();
 
@@ -31,7 +31,7 @@ class PickImage extends StatelessWidget {
       width: Get.width,
       decoration: BoxDecoration(
           color: isDarkMode ? Colors.grey : Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(30))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

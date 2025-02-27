@@ -11,7 +11,7 @@ class DetailItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.lightBorder),
           borderRadius: BorderRadius.circular(12),

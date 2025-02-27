@@ -12,22 +12,22 @@ import 'emergency_private_routes.dart';
 
 class EmergencyPages implements FeaturePages {
   @override
-  List<GetPage>  getPages() => [
-    GetPage(
-      name: EmergencyPrivateRoutes.home,
-      page: () => EmergencyScreen(),
-      binding: EmergencyControllerBinding(),
-    ),
-    GetPage(
-      name: EmergencyPrivateRoutes.emergencyDetail,
-      page: () => EmergencyDetailScreen(),
-      binding: EmergencyDetailControllerBinding(),
-    ),
-    GetPage(
-      name: EmergencyPrivateRoutes.emergencyWaitResponse,
-      page: () => EmergencyWaitResponseScreen(),
-      binding: EmergencyWaitResponseControllerBinding(),
-    ),
-    // Add other routes here
-  ];
+  List<GetPage> getPages() => [
+        GetPage(
+          name: EmergencyPrivateRoutes.home,
+          page: () => const EmergencyScreen(),
+          binding: EmergencyControllerBinding(),
+        ),
+        GetPage(
+          name: EmergencyPrivateRoutes.emergencyDetail,
+          page: () => EmergencyDetailScreen(),
+          binding: EmergencyDetailControllerBinding(),
+        ),
+        GetPage(
+          name: EmergencyPrivateRoutes.emergencyWaitResponse,
+          page: () => const EmergencyWaitResponseScreen(),
+          binding: EmergencyWaitResponseControllerBinding(),
+        ),
+        // Add other routes here
+      ];
 }

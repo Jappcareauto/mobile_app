@@ -6,12 +6,12 @@ import 'activities_private_routes.dart';
 
 class ActivitiesPages implements FeaturePages {
   @override
-  List<GetPage>  getPages() => [
-    GetPage(
-      name: ActivitiesPrivateRoutes.home,
-      page: () => ActivitiesScreen(),
-      binding: ActivitiesControllerBinding(),
-    ),
-    // Add other routes here
-  ];
+  List<GetPage> getPages() => [
+        GetPage(
+          name: ActivitiesPrivateRoutes.home,
+          page: () => ActivitiesScreen(),
+          binding: ActivitiesControllerBinding(),
+        ),
+        // Add other routes here
+      ];
 }

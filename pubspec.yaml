@@ -42,22 +42,24 @@ dependencies:
   geolocator: ^13.0.2
   shared_preferences: ^2.3.5
   web_socket_channel: ^3.0.2
+  image: any
+
 dev_dependencies: 
   icons_launcher: ^2.1.7
   flutter_lints: 4.0.0
-  flutter_test: 
+  flutter_test:
     sdk: flutter
 
-flutter: 
-  assets: 
-    - assets/
-    - assets/images/
-    - assets/icons/
-  fonts:
-    - family: PlusJakarta
-      fonts:
-        - asset: assets/fonts/PlusJakarta.ttf
-  uses-material-design: true
+flutter:
+    assets:
+      - assets/
+      - assets/images/
+      - assets/icons/
+    fonts:
+      - family: PlusJakarta
+        fonts:
+          - asset: assets/fonts/PlusJakarta.ttf
+    uses-material-design: true
 
 icons_launcher:
   image_path: "assets/icons/icon_launcher.png"

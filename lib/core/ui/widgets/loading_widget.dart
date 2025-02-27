@@ -5,7 +5,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 class LoaderWidget extends StatelessWidget {
   final bool dense;
 
-  const LoaderWidget({Key? key, this.dense = false}) : super(key: key);
+  const LoaderWidget({super.key, this.dense = false});
 
   @override
   Widget build(BuildContext context) {

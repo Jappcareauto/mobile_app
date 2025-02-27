@@ -7,7 +7,7 @@ class TimeSlot extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const TimeSlot({
+  const TimeSlot({super.key, 
     required this.label,
     required this.timeRange,
     required this.isSelected,
@@ -20,7 +20,7 @@ class TimeSlot extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 165,
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected ? Get.theme.primaryColor.withOpacity(0.2) : Colors.white,
           borderRadius: BorderRadius.circular(12),

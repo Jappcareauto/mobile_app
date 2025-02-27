@@ -6,19 +6,20 @@ class OptionWidgets extends StatelessWidget{
   @override
     final String title ;
     final VoidCallback ontap ;
-    OptionWidgets({
-      Key?key,
+    const OptionWidgets({
+      super.key,
       required this.title,
       required this.ontap
-}):super(key: key);
+});
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: ontap,
       child: Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           bottom: 20
         ),
-        padding: EdgeInsets.symmetric(horizontal: 16 , vertical: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 16 , vertical: 24),
         decoration: BoxDecoration(
           color: AppColors.secondary,
 
@@ -31,9 +32,9 @@ class OptionWidgets extends StatelessWidget{
 
                 Text(
                     title,
-                    style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 14),
+                    style: const TextStyle(fontWeight: FontWeight.w600 , fontSize: 14),
                 ),
-                Icon(FluentIcons.arrow_right_16_filled)
+                const Icon(FluentIcons.arrow_right_16_filled)
           ],
         ),
       ),

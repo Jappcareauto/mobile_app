@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/features/shop/domain/entities/cardItams.dart';
 import 'package:jappcare/features/shop/navigation/private/shop_private_routes.dart';
 import 'package:jappcare/features/shop/ui/bag/widgets/delete_model.dart';

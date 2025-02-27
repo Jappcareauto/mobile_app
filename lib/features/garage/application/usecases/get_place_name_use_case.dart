@@ -2,7 +2,6 @@ import 'package:jappcare/features/garage/application/usecases/get_place_name_com
 import 'package:jappcare/features/garage/domain/core/exceptions/garage_exception.dart';
 import 'package:jappcare/features/garage/domain/repositories/garage_repository.dart';
 
-import 'get_vehicle_list_command.dart';
 import 'package:dartz/dartz.dart';
 
 class  GetPlaceNameUseCase{

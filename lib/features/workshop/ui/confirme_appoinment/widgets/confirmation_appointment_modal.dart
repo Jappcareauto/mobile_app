@@ -5,6 +5,8 @@ import 'package:jappcare/core/utils/app_images.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
 class ConfirmationAppointmentModal extends GetView<ConfirmeAppointmentController> {
+  const ConfirmationAppointmentModal({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -14,7 +16,7 @@ class ConfirmationAppointmentModal extends GetView<ConfirmeAppointmentController
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children:[
-              Container(
+              const SizedBox(
                 height: 150,
                 child: ImageComponent(
                   assetPath: AppImages.processChat,

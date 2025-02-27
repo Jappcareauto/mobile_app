@@ -6,7 +6,7 @@ class LocationOption extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const LocationOption({
+  const LocationOption({super.key, 
     required this.label,
     required this.icon,
     required this.isSelected,
@@ -19,7 +19,7 @@ class LocationOption extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 165,
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected ? Colors.orange.withOpacity(0.2) : Colors.white,
           borderRadius: BorderRadius.circular(12),
@@ -30,7 +30,7 @@ class LocationOption extends StatelessWidget {
         child: Row(
           children: [
             Icon(icon, color: isSelected ? Colors.orange : Colors.black),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
               label,
               style: TextStyle(

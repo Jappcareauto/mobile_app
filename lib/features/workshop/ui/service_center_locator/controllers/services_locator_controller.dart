@@ -1,20 +1,19 @@
 import 'package:get/get.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:jappcare/features/workshop/navigation/private/workshop_pages.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 class ServicesLocatorController extends GetxController {
   final AppNavigation _appNavigation;
   ServicesLocatorController(this._appNavigation);
   // Completer for GoogleMap controller
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   var isLocationPermissionGranted = false.obs;
   final isExpanded = false.obs;
   var bottomSheetHeight = 260.0.obs;
-  final CameraPosition initialPosition = CameraPosition(
+  static const CameraPosition initialPosition = CameraPosition(
     target: LatLng(3.848000, 11.502100),
     zoom: 14.0,
   );
@@ -23,6 +22,7 @@ class ServicesLocatorController extends GetxController {
     // Generate by Menosi_cli
     super.onInit();
   }
+
   void toggleExpansion() {
     isExpanded.value = !isExpanded.value;
     print('container cliquer ');
@@ -35,10 +35,12 @@ class ServicesLocatorController extends GetxController {
       _controller.complete(controller);
     }
   }
+
   void gottoautoshopDetail() {
-     print('got to auto shop detail');
-     _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails);
+    print('got to auto shop detail');
+    _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails);
   }
+
   Future<void> _checkLocationPermission() async {
     var status = await Permission.location.status;
 
@@ -52,7 +54,8 @@ class ServicesLocatorController extends GetxController {
       } else if (result.isDenied) {
         // Permission refusée (encore une fois)
         print("Permission refusée");
-        Get.snackbar('Permission', 'Location permission is required to show the map.');
+        Get.snackbar(
+            'Permission', 'Location permission is required to show the map.');
       } else if (result.isPermanentlyDenied) {
         // Permission refusée de façon permanente, redirigez l'utilisateur vers les paramètres
         await openAppSettings();
@@ -62,5 +65,4 @@ class ServicesLocatorController extends GetxController {
       isLocationPermissionGranted.value = true;
     }
   }
-
 }

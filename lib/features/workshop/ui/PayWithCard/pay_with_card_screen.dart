@@ -7,6 +7,8 @@ import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/features/workshop/ui/PayWithCard/controllers/pay_with_card_controller.dart';
 
 class PayWithCardScreen extends GetView<PayWithCardController> {
+  const PayWithCardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,18 +53,18 @@ class PayWithCardScreen extends GetView<PayWithCardController> {
             ),
             const SizedBox(height: 16),
             // Expiry et CVC
-            Row(
+            const Row(
               children: [
                 Expanded(
-                  child: const CustomFormField(
+                  child: CustomFormField(
                     hintText: 'MM/YY',
                     label:'Expiry' ,
                     ),
                   ),
 
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(
-                  child: const CustomFormField(
+                  child: CustomFormField(
                     hintText: 'CVC',
                     label:'CVC' ,
                   ),

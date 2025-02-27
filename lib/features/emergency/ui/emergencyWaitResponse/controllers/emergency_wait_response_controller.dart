@@ -1,13 +1,8 @@
-import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
-import 'package:jappcare/core/services/networkServices/dio_network_service.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/emergency/application/usecases/declined_emergency_command.dart';
 import 'package:jappcare/features/emergency/application/usecases/declined_emergency_usecase.dart';
-import 'package:jappcare/features/emergency/domain/core/exceptions/emergency_exception.dart';
-import 'package:jappcare/features/emergency/domain/entities/declined_emergency.dart';
-import 'package:jappcare/features/emergency/infrastructure/models/declined_emergency_model.dart';
 import 'package:jappcare/features/emergency/navigation/private/emergency_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 

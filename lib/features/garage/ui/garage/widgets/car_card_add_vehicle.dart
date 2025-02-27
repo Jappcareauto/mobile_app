@@ -69,14 +69,14 @@ class CarCardAddVehicle extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${carDetails[1]} ${carName}",
+                      "${carDetails[1]} $carName",
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color:  haveBGColor ? Colors.white : Colors.black,
                       ),
                     ),
-                    Text("${carDetails[0]}" , style: TextStyle(
+                    Text(carDetails[0] , style: TextStyle(
                       color:  haveBGColor ? Colors.white : Colors.black,
                       fontWeight: FontWeight.w400,
                       fontSize: 14
@@ -91,8 +91,8 @@ class CarCardAddVehicle extends StatelessWidget {
                     child:GestureDetector(
                       onTap: next,
                       child: Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.only(right: 5),
+                        padding: const EdgeInsets.all(10),
+                        margin: const EdgeInsets.only(right: 5),
                         child: Icon(
                           FluentIcons.arrow_right_24_regular,
                           color: haveBGColor ? Colors.white: Colors.black,
@@ -121,7 +121,7 @@ class CarCardAddVehicle extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Row(
                         children: [
                           Text(

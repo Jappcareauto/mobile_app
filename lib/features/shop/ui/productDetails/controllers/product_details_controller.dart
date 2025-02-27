@@ -1,8 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jappcare/core/services/networkServices/dio_network_service.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
-import 'package:jappcare/features/shop/application/usecases/get_product_detail_command.dart';
-import 'package:jappcare/features/shop/application/usecases/get_product_detail_usecase.dart';
 import 'package:jappcare/features/shop/application/usecases/get_review_command.dart';
 import 'package:jappcare/features/shop/application/usecases/get_review_usecase.dart';
 import 'package:jappcare/features/shop/domain/entities/get_product_detail.dart';

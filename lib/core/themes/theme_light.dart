@@ -15,7 +15,6 @@ class AppThemeLight {
         colorScheme: const ColorScheme.light(
           primary: AppColors.orange,
           secondary: AppColors.purple,
-          background: AppColors.lightBackground,
           surface: AppColors.lightSurface,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(

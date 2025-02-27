@@ -15,7 +15,7 @@ class ProfileDependencies {
         () => ProfileRepositoryImpl(networkService: Get.find()),
         fenix: true);
 
-    Get.lazyPut<FeatureWidgetInterface>(() =>  AvatarWidget(),
+    Get.lazyPut<FeatureWidgetInterface>(() =>  const AvatarWidget(),
         tag: 'AvatarWidget', fenix: true);
       Get.lazyPut(() => GetUserInfosUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => UpdateProfileImageUseCase(Get.find()), fenix: true);

@@ -6,6 +6,8 @@ import 'controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
 class SettingsScreen extends GetView<SettingsController> {
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

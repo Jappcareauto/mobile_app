@@ -18,22 +18,22 @@ class GaragePages implements FeaturePages {
   List<GetPage>  getPages() => [
     GetPage(
       name: GaragePrivateRoutes.home,
-      page: () => GarageScreen(),
+      page: () => const GarageScreen(),
       binding: GarageControllerBinding(),
     ),
     GetPage(
       name: GaragePrivateRoutes.addVehicle,
-      page: () => AddVehicleScreen(),
+      page: () => const AddVehicleScreen(),
       binding: AddVehicleControllerBinding(),
     ),
     GetPage(
       name: GaragePrivateRoutes.vehicleDetails,
-      page: () => VehicleDetailsScreen(),
+      page: () => const VehicleDetailsScreen(),
       binding: VehicleDetailsControllerBinding(),
     ),
     GetPage(
       name: GaragePrivateRoutes.generateVehicleReport,
-      page: () => GenerateVehicleReportScreen(),
+      page: () => const GenerateVehicleReportScreen(),
       binding: GenerateVehicleReportControllerBinding(),
     ),
     // Add other routes here

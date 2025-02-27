@@ -21,7 +21,7 @@ class HomeController extends GetxController {
   Future<void> refreshData() async {
     print("debut du refresh");
     // Simule un délai de chargement (par exemple, une requête réseau)
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     // Rafraîchir les données des widgets dynamiques
     if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ListVehicleWidget')) {
@@ -46,7 +46,7 @@ class HomeController extends GetxController {
   }
   void navigateTCommingSoon(){
     Get.to(() =>
-        CommingSoonScreen(),
+        const CommingSoonScreen(),
       transition: Transition.leftToRight
     );
   }

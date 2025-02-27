@@ -11,7 +11,9 @@ import 'package:get/get.dart';
 class ActivitiesScreen extends GetView<ActivitiesController>
     implements FeatureWidgetInterface {
   final GarageController garageController =
-      Get.put(GarageController(Get.find(),Get.find()));
+      Get.put(GarageController(Get.find(), Get.find()));
+
+  ActivitiesScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,7 @@ class ActivitiesScreen extends GetView<ActivitiesController>
         body: Stack(
           children: [
             garageController.vehicleList.isEmpty
-                ? Center(
+                ? const Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -75,9 +77,10 @@ class ActivitiesScreen extends GetView<ActivitiesController>
                     ),
                   ),
             Container(
-
-                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*.65,left: MediaQuery.of(context).size.width*.85),
-                child: ChatWidget())
+                margin: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * .65,
+                    left: MediaQuery.of(context).size.width * .85),
+                child: const ChatWidget())
           ],
         ));
   }

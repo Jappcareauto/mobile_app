@@ -8,17 +8,19 @@ import 'controllers/edit_profile_controller.dart';
 import 'package:get/get.dart';
 
 class EditProfileScreen extends GetView<EditProfileController> {
+  const EditProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: "Edit Profile", canBack: true),
+      appBar: const CustomAppBar(title: "Edit Profile", canBack: true),
       body: SingleChildScrollView(
           child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Form(
             child: Column(
           children: [
-             AvatarWidget(size: 100, canEdit: true),
+             const AvatarWidget(size: 100, canEdit: true),
             const SizedBox(height: 20),
             CustomFormField(
               controller: controller.editProfileFormHelper.controllers['name'],

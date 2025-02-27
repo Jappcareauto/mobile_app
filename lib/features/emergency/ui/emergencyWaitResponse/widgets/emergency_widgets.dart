@@ -5,7 +5,6 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/emergency/domain/core/utils/emergency_enum.dart';
 import 'package:jappcare/features/emergency/ui/emergency/controllers/emergency_controller.dart';
 import 'package:jappcare/features/emergency/ui/emergencyDetail/controllers/emergency_detail_controller.dart';
 import 'package:jappcare/features/emergency/ui/emergencyWaitResponse/controllers/emergency_wait_response_controller.dart';
@@ -14,10 +13,12 @@ import 'package:jappcare/features/home/ui/home/widgets/notification_widget.dart'
 
 
 class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
-  bool _isExpanded = true; // Contrôle l'affichage du Row
+  final bool _isExpanded = true; // Contrôle l'affichage du Row
   final argument = Get.arguments ;
  final EmergencyDetailController emergencyDetailController = EmergencyDetailController(Get.find());
  final EmergencyController emergencyController = EmergencyController(Get.find());
+
+  EmergencyWidgets({super.key});
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -37,8 +38,8 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                         color: AppColors.white,
                         borderRadius: BorderRadius.circular(32)
                     ),
-                    padding: EdgeInsets.all(12),
-                    child: Icon(FluentIcons.arrow_left_12_regular, size: 24,),
+                    padding: const EdgeInsets.all(12),
+                    child: const Icon(FluentIcons.arrow_left_12_regular, size: 24,),
                   )
               ),
               GestureDetector(
@@ -50,15 +51,15 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                         color: AppColors.white,
                         borderRadius: BorderRadius.circular(32)
                     ),
-                    padding: EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(12),
                     child: Icon(controller.isExpanded.value == true ? FluentIcons.arrow_minimize_16_filled :FluentIcons.arrow_maximize_16_filled , size: 24,),
                   )
               )
             ],
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           AnimatedContainer(
-            duration: Duration(milliseconds: 200),
+            duration: const Duration(milliseconds: 200),
             curve: Curves.linear,
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
@@ -68,7 +69,7 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                 BoxShadow(
                   color: Colors.grey.shade300,
                   blurRadius: 8,
-                  offset: Offset(0, 4),
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
@@ -76,11 +77,11 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Waiting for response...',
+                const Text('Waiting for response...',
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                 ),
-                SizedBox(height: 10,),
-                NotificationWidget(
+                const SizedBox(height: 10,),
+                const NotificationWidget(
                     haveTitle: false,
                     textSize: 14,
                     bodyText: 'Your request has been sent, waiting for a response from a service provider',
@@ -110,7 +111,7 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Stated Issue",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
@@ -120,7 +121,7 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                             ),
                             Text(
                              argument['issue'].toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
@@ -128,7 +129,7 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                           ],
                         ),
                       ),
-                      Column(
+                      const Column(
                         children: [
                           Text(
                             "Estimated Price",
@@ -158,7 +159,7 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Vehicle",
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -172,22 +173,21 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                       ),
                       const SizedBox(height: 16),
                       Container(
-                        child: ImageComponent(
-                          width: 200,
-                          assetPath: AppImages.carWhite,
-                        ),
-
                         height: 120,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: Colors.grey.shade300),
 
                         ),
+                        child: const ImageComponent(
+                          width: 200,
+                          assetPath: AppImages.carWhite,
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10,),
-                  DetailResponseWidgets()
+                  const SizedBox(height: 10,),
+                  const DetailResponseWidgets()
 
 
                 ],
@@ -204,18 +204,18 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                         onPressed: () {
                             controller.declinedEmergency(argument['emergencyId'], "DECLINED");
                         }),
-                    SizedBox(width: 4,),
+                    const SizedBox(width: 4,),
                     GestureDetector(
                       onTap: () {
                         controller.processChat();
                       },
                       child: Container(
-                        padding: EdgeInsets.all(14),
+                        padding: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(width: 1)
                         ),
-                        child: Icon(FluentIcons.chat_16_filled, size: 24,),
+                        child: const Icon(FluentIcons.chat_16_filled, size: 24,),
                       ),
                     )
                   ],

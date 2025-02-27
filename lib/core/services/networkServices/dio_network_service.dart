@@ -98,7 +98,7 @@ class DioNetworkService extends NetworkService {
     return error.type == DioException.connectionTimeout ||
         error.type == DioException.sendTimeout ||
         error.type == DioException.receiveTimeout ||
-        (error.type == DioErrorType.unknown && error.error is SocketException);
+        (error.type == DioExceptionType.unknown && error.error is SocketException);
   }
 
   /// Méthode pour obtenir les en-têtes avec le token
@@ -115,7 +115,7 @@ class DioNetworkService extends NetworkService {
 
   void _handleError(dynamic error) {
     String errorMessage = 'Une erreur est survenue';
-    if (error is DioError) {
+    if (error is DioException) {
       if (error.response != null && error.response?.data != null) {
         final data = error.response?.data;
         if (data is Map<String, dynamic> &&

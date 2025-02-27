@@ -6,9 +6,6 @@ class SuccessPaymentController extends GetxController{
   final AppNavigation  _appNavigation ;
   SuccessPaymentController(this._appNavigation);
 
-  void onInit(){
-    super.onInit();
-  }
   void goToAppointmentDetails(){
     _appNavigation.toNamed(WorkshopPrivateRoutes.appointmentDetail);
   }

@@ -7,7 +7,7 @@ class NotFoundScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text("Page non trouvée"),
+        title:  const Text("Page non trouvée"),
       ),
       body: Center(
         child: Padding(
@@ -21,7 +21,7 @@ class NotFoundScreen extends StatelessWidget {
                 size: 100,
               ),
               const SizedBox(height: 16),
-               Text(
+               const Text(
                 "404",
                 style: TextStyle(
                   fontSize: 70.0,
@@ -29,7 +29,7 @@ class NotFoundScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8.0),
-               Text(
+               const Text(
                 "Oups ! La page que vous recherchez n'existe pas.",
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -41,7 +41,7 @@ class NotFoundScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pushNamed(AppRoutes.home);
                 },
-                child:  Text("Retourner a la page d'accueil"),
+                child:  const Text("Retourner a la page d'accueil"),
               ),
             ],
           ),

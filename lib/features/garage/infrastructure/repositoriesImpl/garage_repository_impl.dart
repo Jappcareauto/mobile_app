@@ -82,7 +82,7 @@ class GarageRepositoryImpl implements GarageRepository {
         if (data['results'] != null && data['results'].isNotEmpty) {
           return Right(data['results'][0]['formatted_address']) ;// Récupère l'adresse formatée
         } else {
-          return  Right("Adresse non trouvée");
+          return  const Right("Adresse non trouvée");
         }
       } else {
         throw Exception("Erreur API : ${response.statusCode}");

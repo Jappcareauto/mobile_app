@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/confirmation_appointment_modal.dart';
 
 class ConfirmModel extends StatelessWidget {
+  const ConfirmModel({super.key});
+
   @override
   Widget build(BuildContext context) {
    return Padding(
@@ -19,7 +21,7 @@ class ConfirmModel extends StatelessWidget {
          ],
        ),
        padding: const EdgeInsets.all(16), // Espacement intérieur
-       child: Wrap(
+       child: const Wrap(
          children: [
            ConfirmationAppointmentModal()
          ],

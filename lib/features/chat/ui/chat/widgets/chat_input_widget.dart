@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +12,11 @@ class ChatInputWidget extends GetView<ChatController> {
   final VoidCallback onMic;
   final ChatController chatController;
   const ChatInputWidget({
-    Key? key,
+    super.key,
     required this.chatController,
     required this.onAttach,
     required this.onMic,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +28,13 @@ class ChatInputWidget extends GetView<ChatController> {
         children: [
           if (controller.selectedImages.isNotEmpty)
             Container(
+              decoration: const BoxDecoration(
+                color: AppColors.black,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(50),
+                  topLeft: Radius.circular(50)
+                )
+              ),
               child:  SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Obx(() =>
@@ -51,7 +57,7 @@ class ChatInputWidget extends GetView<ChatController> {
                                       child:IconButton(onPressed: (){
                                         controller.removeImage(index);
                                       },
-                                          icon: Icon(FluentIcons.dismiss_12_filled))
+                                          icon: const Icon(FluentIcons.dismiss_12_filled))
                                   )
                                 ],
                               )
@@ -60,14 +66,6 @@ class ChatInputWidget extends GetView<ChatController> {
                         }).toList(),
                       ),
                   )
-              ),
-
-              decoration: BoxDecoration(
-                color: AppColors.black,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(50),
-                  topLeft: Radius.circular(50)
-                )
               ),
             ),
 

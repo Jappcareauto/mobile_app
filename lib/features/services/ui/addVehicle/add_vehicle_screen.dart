@@ -7,28 +7,30 @@ import 'controllers/add_vehicle_controller.dart';
 import 'package:get/get.dart';
 
 class AddVehicleScreen extends GetView<AddVehicleController> {
+  const AddVehicleScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar:CustomAppBar(title: 'Add Vehicle'),
+      appBar:const CustomAppBar(title: 'Add Vehicle'),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            CustomFormField(
+            const CustomFormField(
               label: 'VIN/Chassis Number',
               hintText: 'e.g 3GCUKREC8EG359263',
             ),
 
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
 
-            CustomFormField(
+            const CustomFormField(
               label: 'License Plate Number',
               hintText: 'Ex. NW 905 AG',
             ),
 
-            Spacer(),
+            const Spacer(),
 
             CustomButton(text: 'Add Vehicle', onPressed: (){
              onpenModalPaymentMethod(controller.goBack);

@@ -5,6 +5,8 @@ import 'package:jappcare/features/services/ui/vehiculReport/widgets/damage_widge
 import 'package:jappcare/features/services/ui/vehiculReport/widgets/mileage_section_widget.dart';
 
 class CardDetailsWidget extends GetView<VehiculReportController> {
+  const CardDetailsWidget({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +14,10 @@ class CardDetailsWidget extends GetView<VehiculReportController> {
       Obx(() {
         int selectedIndex = controller.selectedFilter.value;
         if (selectedIndex == 4) {
-         return MileageSectionWidget();
+         return const MileageSectionWidget();
         }
         if (selectedIndex == 5) {
-        return  Column(
+        return  const Column(
             children: [
               DamageWidgets(
                 cause: 'Unknown',
@@ -105,15 +107,15 @@ class CardDetailsWidget extends GetView<VehiculReportController> {
                       ),
 
                       const SizedBox(height: 20),
-                      MileageSectionWidget(),
-                      SizedBox(height: 10,),
-                      DamageWidgets(
+                      const MileageSectionWidget(),
+                      const SizedBox(height: 10,),
+                      const DamageWidgets(
                         cause: 'Unknown',
                         estimPrice: '3000 - 5000',
                         status: 'Damaged',
                       ),
-                      SizedBox(height: 10,),
-                      DamageWidgets(
+                      const SizedBox(height: 10,),
+                      const DamageWidgets(
                         cause: 'Unknown',
                         estimPrice: '3000 - 5000',
                         status: 'Damaged',

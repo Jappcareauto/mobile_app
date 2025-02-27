@@ -10,37 +10,39 @@ import 'controllers/recepit_controller.dart';
 import 'package:get/get.dart';
 
 class RecepitScreen extends GetView<RecepitController> {
-  final Odersummary2Controller _odersummary2controller = Get.put(Odersummary2Controller(Get.find()));
+  final Odersummary2Controller _odersummary2controller =
+      Get.put(Odersummary2Controller(Get.find()));
+
+  RecepitScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      appBar: CustomAppBar(title: 'Completed'),
-      body:   SingleChildScrollView(
-        child:  Center(
-            child: Container(
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*.1),
-
-              child:  Column(
-                  children:[
-                    ImageComponent(
-                        assetPath:AppImages.confirmTransaction
-                    ),
-                    Text(
-                      'Success',
-                      style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 16),
-                    ),
-                    Text("${NumberFormat('#,###').format(_odersummary2controller.totalPrice)} Frs" , style: TextStyle(color: AppColors.orange , fontWeight: FontWeight.w700 , fontSize: 22 ),),
-                    ItemsWidgets(),
-                    SizedBox(height: 50,)
-                  ]
-              ) ,
-            )
-
-        ),
-      )
-
-    );
+        appBar: const CustomAppBar(title: 'Completed'),
+        body: SingleChildScrollView(
+          child: Center(
+              child: Container(
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * .1),
+            child: Column(children: [
+              const ImageComponent(assetPath: AppImages.confirmTransaction),
+              const Text(
+                'Success',
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              ),
+              Text(
+                "${NumberFormat('#,###').format(_odersummary2controller.totalPrice)} Frs",
+                style: const TextStyle(
+                    color: AppColors.orange,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 22),
+              ),
+              ItemsWidgets(),
+              const SizedBox(
+                height: 50,
+              )
+            ]),
+          )),
+        ));
   }
 }

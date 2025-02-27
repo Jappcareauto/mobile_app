@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:jappcare/features/shop/navigation/private/shop_private_routes.dart';
-import 'package:jappcare/features/shop/navigation/shop_public_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
 class Odersummary2Controller extends GetxController {

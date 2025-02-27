@@ -4,6 +4,8 @@ import 'controllers/privacy_policy_controller.dart';
 import 'package:get/get.dart';
 
 class PrivacyPolicyScreen extends GetView<PrivacyPolicyController> {
+  const PrivacyPolicyScreen({super.key});
+
  @override
   Widget build(BuildContext context) {
     return Scaffold(

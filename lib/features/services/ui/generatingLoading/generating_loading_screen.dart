@@ -6,11 +6,13 @@ import 'controllers/generating_loading_controller.dart';
 import 'package:get/get.dart';
 
 class GeneratingLoadingScreen extends GetView<GeneratingLoadingController> {
+  const GeneratingLoadingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: CustomAppBar(title: 'Vehicle \nReport'),
+      appBar: const CustomAppBar(title: 'Vehicle \nReport'),
       body:   Center(
           child: Container(
             margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*.2),
@@ -20,12 +22,12 @@ class GeneratingLoadingScreen extends GetView<GeneratingLoadingController> {
                     onTap: (){
                       controller.goTosucessPayment();
                     },
-                    child: ImageComponent(
+                    child: const ImageComponent(
                         assetPath:AppImages.confirmTransaction
                     ),
                   ),
 
-                  Text(
+                  const Text(
                     'Generating your vehicle report',
                     style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 16),
                   ),

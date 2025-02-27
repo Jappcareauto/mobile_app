@@ -7,12 +7,12 @@ class InvoiceDetails extends StatelessWidget {
   final double amount;
 
   const InvoiceDetails({
-    Key? key,
+    super.key,
     required this.items, // Liste des articles : nom, quantité, prix
     required this.total, // Total sans taxe
     required this.tax,   // Montant des taxes
     required this.amount, // Montant total à payer
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class InvoiceDetails extends StatelessWidget {
                     ),
                   ],
                 );
-              }).toList(),
+              }),
             ],
           ),
           const SizedBox(height: 16.0),
@@ -107,7 +107,7 @@ class InvoiceDetails extends StatelessWidget {
               children: [
                 _buildRow("Total", total, isBold: false),
                 _buildRow("Tax 5%", tax, isBold: false),
-                  SizedBox(height: 15,),
+                  const SizedBox(height: 15,),
                 _buildRow("Amount", amount, isBold: true),
               ],
             ),
