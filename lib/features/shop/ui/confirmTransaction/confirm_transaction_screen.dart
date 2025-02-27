@@ -6,11 +6,13 @@ import 'controllers/confirm_transaction_controller.dart';
 import 'package:get/get.dart';
 
 class ConfirmTransactionScreen extends GetView<ConfirmTransactionController> {
+  const ConfirmTransactionScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: CustomAppBar(title: ''),
+      appBar: const CustomAppBar(title: ''),
       body:  Center(
         child: Container(
           margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*.2),
@@ -20,16 +22,16 @@ class ConfirmTransactionScreen extends GetView<ConfirmTransactionController> {
                   onTap: (){
                     controller.goToRecepit();
                   },
-                  child: ImageComponent(
+                  child: const ImageComponent(
                       assetPath:AppImages.confirmTransaction
                   ),
                 ),
 
-                Text(
+                const Text(
                   'Waiting for confirmation',
                   style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 16),
                 ),
-                Text('Please confirm the tranaction on your devices')
+                const Text('Please confirm the tranaction on your devices')
 
 
               ]

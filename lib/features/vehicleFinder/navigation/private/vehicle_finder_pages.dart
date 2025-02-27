@@ -9,7 +9,7 @@ class VehicleFinderPages implements FeaturePages {
   List<GetPage>  getPages() => [
     GetPage(
       name: VehicleFinderPrivateRoutes.home,
-      page: () => VehicleFinderScreen(),
+      page: () => const VehicleFinderScreen(),
       binding: VehicleFinderControllerBinding(),
     ),
     // Add other routes here

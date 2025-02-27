@@ -28,7 +28,9 @@ class FormHelper<L, R> {
   }
 
   void dispose() {
-    controllers.values.forEach((controller) => controller.dispose());
+    for (var controller in controllers.values) {
+      controller.dispose();
+    }
   }
 
   void submit() async {

@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.dart';
 import 'package:jappcare/features/workshop/domain/repositories/workshop_repository.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/PayWithCard/controllers/pay_with_card_controller.dart';
@@ -27,7 +25,7 @@ import '../application/usecases/get_allservices_usecase.dart';
 class WorkshopDependencies {
   static void init() {
     Get.lazyPut<WorkshopRepository>(() => WorkshopRepositoryImpl(networkService: Get.find()), fenix: true);
-    Get.lazyPut<FeatureWidgetInterface>(() => WorkshopScreen(),tag: 'WorkshopScreen', fenix: true);
+    Get.lazyPut<FeatureWidgetInterface>(() => const WorkshopScreen(),tag: 'WorkshopScreen', fenix: true);
     Get.lazyPut<BookAppointmentController>  (() =>BookAppointmentController(Get.find()));
     Get.lazyPut<AutoShopController>(() => AutoShopController(Get.find()));
     Get.lazyPut<ServicesLocatorController>(() => ServicesLocatorController(Get.find()));

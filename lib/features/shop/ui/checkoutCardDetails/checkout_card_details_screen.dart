@@ -6,6 +6,8 @@ import 'controllers/checkout_card_details_controller.dart';
 import 'package:get/get.dart';
 
 class CheckoutCardDetailsScreen extends GetView<CheckoutCardDetailsController> {
+  const CheckoutCardDetailsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,7 @@ class CheckoutCardDetailsScreen extends GetView<CheckoutCardDetailsController> {
             const SizedBox(height: 16),
 
             // Expiry Date et CVC
-            Row(
+            const Row(
               children: [
                 Expanded(
                   child: CustomFormField(
@@ -39,7 +41,7 @@ class CheckoutCardDetailsScreen extends GetView<CheckoutCardDetailsController> {
                     label: 'Expiry',
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(
                   child: CustomFormField(
                     hintText: 'CVC',
@@ -51,7 +53,7 @@ class CheckoutCardDetailsScreen extends GetView<CheckoutCardDetailsController> {
             const SizedBox(height: 16),
 
             // Phone Field
-            CustomPhoneFormField(
+            const CustomPhoneFormField(
               label: 'Phone',
               hintText: 'Phone',
             ),

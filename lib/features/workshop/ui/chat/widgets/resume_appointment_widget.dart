@@ -1,12 +1,10 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
-import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
 class ResumeAppointmentWidget extends GetView<ChatController> {
   final String services ;
@@ -16,8 +14,8 @@ class ResumeAppointmentWidget extends GetView<ChatController> {
   final String fee ;
   final String time ;
   final String caseId;
-    ResumeAppointmentWidget({
-      Key? key,
+    const ResumeAppointmentWidget({
+      super.key,
       required this.services,
 
       required this.date,
@@ -25,7 +23,7 @@ class ResumeAppointmentWidget extends GetView<ChatController> {
       required this.fee,
       required this.time,
       required this.caseId
-    }):super( key:key );
+    });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,22 +32,22 @@ class ResumeAppointmentWidget extends GetView<ChatController> {
           borderRadius: BorderRadius.circular(20),
 
         ),
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Service Offered by',
+              const Text('Service Offered by',
                   style: TextStyle(
                       fontSize: 12, fontWeight: FontWeight.normal)),
               Text(services,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 14,fontWeight: FontWeight.bold )),
-              SizedBox(height: 20,),
-              Text('From',
+              const SizedBox(height: 20,),
+              const Text('From',
                   style: TextStyle(
                       fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
 
               Row(
                 children: [
@@ -59,27 +57,27 @@ class ResumeAppointmentWidget extends GetView<ChatController> {
                         .buildView({
                       "haveName":true
                     }),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
 
-                  Text( Get.find<ProfileController>().userInfos?.name?? "Unknow",  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                  Text( Get.find<ProfileController>().userInfos?.name?? "Unknow",  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
                 ],
               ),
 
-              SizedBox(height: 20,),
-              Text('Case ID',
+              const SizedBox(height: 20,),
+              const Text('Case ID',
                   style: TextStyle(
                       fontSize: 12, fontWeight: FontWeight.normal)),
               Text(caseId,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 14,fontWeight: FontWeight.bold )),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
-              Text('Date',
+              const Text('Date',
                   style: TextStyle(
                       fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
               Row(
                   children: [
-                    Icon(
+                    const Icon(
                       FluentIcons.calendar_3_day_20_regular,
 
                     ),
@@ -89,7 +87,7 @@ class ResumeAppointmentWidget extends GetView<ChatController> {
                             DateFormat('EEE, MMM dd, yyyy').format(
                                date),
                             // Format personnalisé
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
 
                             ),
@@ -97,26 +95,26 @@ class ResumeAppointmentWidget extends GetView<ChatController> {
                         ),
 
 
-                    SizedBox(width: 20),
-                    Icon(
+                    const SizedBox(width: 20),
+                    const Icon(
                       FluentIcons.clock_12_regular,
 
                     ),
 
                         Text(
-                           time, style: TextStyle(
+                           time, style: const TextStyle(
                             fontSize: 14,fontWeight: FontWeight.w300 ))
 
                   ]
               ),
-              SizedBox(height: 20,),
-              Text('Note',
+              const SizedBox(height: 20,),
+              const Text('Note',
                   style: TextStyle(
                       fontSize: 12, fontWeight: FontWeight.normal, color:  Colors.grey)),
               Text(note,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 14, fontWeight: FontWeight.bold )),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
 
              Align(

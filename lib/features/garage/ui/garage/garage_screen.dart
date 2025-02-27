@@ -9,6 +9,8 @@ import 'widgets/recent_activities_widget.dart';
 
 class GarageScreen extends GetView<GarageController>
     implements FeatureWidgetInterface {
+  const GarageScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GarageController>(

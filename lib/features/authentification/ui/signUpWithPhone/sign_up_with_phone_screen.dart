@@ -11,6 +11,8 @@ import 'controllers/sign_up_with_phone_controller.dart';
 import 'package:get/get.dart';
 
 class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
+  const SignUpWithPhoneScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     

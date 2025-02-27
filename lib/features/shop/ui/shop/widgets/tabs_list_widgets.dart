@@ -14,7 +14,7 @@ class TabsListWidgets extends StatelessWidget{
   final bool haveBorder ;
   final Function(Data selectCar)? onSelected;
   TabsListWidgets({
-    Key?key,
+    super.key,
     required this.tabs,
     this.data,
      this.onSelected,
@@ -22,7 +22,7 @@ class TabsListWidgets extends StatelessWidget{
     required this.selectedTabs,
     required this.borderRadius,
     required this.haveBorder
-}):super(key: key);
+});
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -59,8 +59,8 @@ class TabsListWidgets extends StatelessWidget{
                       color:
                       selectedFilter.value == index
 
-                      ? Color(0xFFFB7C37)
-                      : Color(0xFFFFEDE6) , width: 1.5),
+                      ? const Color(0xFFFB7C37)
+                      : const Color(0xFFFFEDE6) , width: 1.5),
                   borderRadius:borderRadius,
                 ),
                 child: Center(

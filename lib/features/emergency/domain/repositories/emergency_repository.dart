@@ -3,7 +3,6 @@ import 'package:jappcare/features/emergency/domain/core/exceptions/emergency_exc
 import 'package:jappcare/features/emergency/domain/entities/emergency.dart';
 
 
-import '../core/exceptions/emergency_exception.dart';
 import '../entities/declined_emergency.dart';
 
 

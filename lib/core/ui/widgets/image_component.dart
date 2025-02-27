@@ -21,7 +21,7 @@ class ImageComponent extends StatelessWidget {
   final BoxFit fit;
 
   const ImageComponent({
-    Key? key,
+    super.key,
     this.imageUrl,
     this.assetPath,
     this.file,
@@ -34,7 +34,7 @@ class ImageComponent extends StatelessWidget {
     this.color,
     this.onErrorWidget,
     this.fit = BoxFit.cover,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

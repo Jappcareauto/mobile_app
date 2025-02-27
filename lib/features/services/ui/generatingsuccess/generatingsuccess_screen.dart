@@ -7,11 +7,13 @@ import 'controllers/generatingsuccess_controller.dart';
 import 'package:get/get.dart';
 
 class GeneratingsuccessScreen extends GetView<GeneratingsuccessController> {
+  const GeneratingsuccessScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: CustomAppBar(title: 'Vehicle \n Report'),
+      appBar: const CustomAppBar(title: 'Vehicle \n Report'),
       body : Center(
           child: Container(
             margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*.2),
@@ -21,18 +23,18 @@ class GeneratingsuccessScreen extends GetView<GeneratingsuccessController> {
                     onTap: (){
                       // controller.goToRecepit();
                     },
-                    child: ImageComponent(
+                    child: const ImageComponent(
                         assetPath:AppImages.boiteLettre
                     ),
                   ),
 
-                  Text(
+                  const Text(
                     'Report generated',
                     style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 16),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child:  CustomButton(
                         text: 'Continue' ,
                         onPressed: (){

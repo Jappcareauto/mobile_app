@@ -3,22 +3,24 @@ import 'package:jappcare/features/services/ui/vehiculReport/widgets/chart_contai
 import 'package:jappcare/features/services/ui/vehiculReport/widgets/warning_container.dart';
 
 class MileageSectionWidget extends StatelessWidget{
+  const MileageSectionWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Mileage',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.orange,
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           WarningContainer(title: 'Beware', text: 'This vehicle may have a fake mileage'),
           ChartContainerWidgets()
         ],

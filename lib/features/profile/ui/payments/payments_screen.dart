@@ -6,13 +6,15 @@ import 'controllers/payments_controller.dart';
 import 'package:get/get.dart';
 
 class PaymentsScreen extends GetView<PaymentsController> {
+  const PaymentsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "Payment\nMethods", canBack: true),
       body: Column(children: [
         const SizedBox(height: 20),
-        Container(
+        SizedBox(
           height: 200,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -27,7 +29,7 @@ class PaymentsScreen extends GetView<PaymentsController> {
                           onTap: () => controller.onPaymentMethodsSelected(e),
                         ),
                       ))
-                  .toList(),
+                  ,
             ],
           ),
         ),

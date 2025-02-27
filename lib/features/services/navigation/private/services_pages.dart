@@ -27,7 +27,7 @@ class ServicesPages implements FeaturePages {
   List<GetPage>  getPages() => [
     GetPage(
       name: ServicesPrivateRoutes.home,
-      page: () => ServicesScreen(),
+      page: () => const ServicesScreen(),
       binding: ServicesControllerBinding(),
     ),
     GetPage(
@@ -37,27 +37,27 @@ class ServicesPages implements FeaturePages {
     ),
     GetPage(
       name: ServicesPrivateRoutes.addVehicle,
-      page: () => AddVehicleScreen(),
+      page: () => const AddVehicleScreen(),
       binding: AddVehicleControllerBinding(),
     ),
     GetPage(
       name: ServicesPrivateRoutes.oderDetail,
-      page: () => OderDetailScreen(),
+      page: () => const OderDetailScreen(),
       binding: OderDetailControllerBinding(),
     ),
     GetPage(
       name: ServicesPrivateRoutes.generatingLoading,
-      page: () => GeneratingLoadingScreen(),
+      page: () => const GeneratingLoadingScreen(),
       binding: GeneratingLoadingControllerBinding(),
     ),
     GetPage(
       name: ServicesPrivateRoutes.generatingsuccess,
-      page: () => GeneratingsuccessScreen(),
+      page: () => const GeneratingsuccessScreen(),
       binding: GeneratingsuccessControllerBinding(),
     ),
     GetPage(
       name: ServicesPrivateRoutes.vehiculReport,
-      page: () => VehiculReportScreen(),
+      page: () => const VehiculReportScreen(),
       binding: VehiculReportControllerBinding(),
     ),
     // Add other routes here

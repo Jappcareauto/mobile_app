@@ -13,7 +13,7 @@ class InvoiceCard extends StatelessWidget {
   final VoidCallback onViewInvoice;
 
   const InvoiceCard({
-    Key? key,
+    super.key,
     required this.name,
     required this.email,
     required this.service,
@@ -22,7 +22,7 @@ class InvoiceCard extends StatelessWidget {
     required this.amount,
     required this.status,
     required this.onViewInvoice,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class InvoiceCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage(AppImages.avatar),
                       ),
                       const SizedBox(width: 10),

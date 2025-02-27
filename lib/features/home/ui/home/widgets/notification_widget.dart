@@ -1,7 +1,5 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 
 class NotificationWidget extends StatelessWidget {
@@ -50,10 +48,10 @@ class NotificationWidget extends StatelessWidget {
 
             ],
           ) :
-              SizedBox(),
+              const SizedBox(),
           subtitle: Text(
             bodyText,
-            style: TextStyle(fontSize:  textSize != null ? textSize : 16),
+            style: TextStyle(fontSize:  textSize ?? 16),
           ),
           trailing: CircleAvatar(
               backgroundColor: coloriage.withOpacity(.1),

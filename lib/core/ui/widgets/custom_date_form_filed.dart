@@ -7,7 +7,7 @@ class CustomDateFormField extends StatelessWidget {
   final String? label;
   final String? Function(String?)? validator;
 
-  CustomDateFormField({
+  CustomDateFormField({super.key, 
     this.controller,
     this.label,
     this.validator,
@@ -45,7 +45,7 @@ class CustomDateFormField extends StatelessWidget {
                     '${yearController.text}-${monthController.text}-${dayController.text}',
               ),
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Expanded(
               child: CustomFormField(
                 controller: monthController,

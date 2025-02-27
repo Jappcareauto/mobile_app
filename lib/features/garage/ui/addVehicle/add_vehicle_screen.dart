@@ -7,6 +7,8 @@ import 'controllers/add_vehicle_controller.dart';
 import 'package:get/get.dart';
 
 class AddVehicleScreen extends GetView<AddVehicleController> {
+  const AddVehicleScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +29,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                             _.addVehicleFormHelper.autovalidateMode.value,
                             child: Column(
                                 children: [
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                             CustomFormField(
                               controller:
                               _.addVehicleFormHelper.controllers['vin'],
@@ -39,7 +41,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                             ),
 
 
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 CustomFormField(
                                   controller: _.addVehicleFormHelper
                                       .controllers['registration'],

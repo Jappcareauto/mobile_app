@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,9 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/garage/application/usecases/get_place_name_command.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_allservices.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -106,7 +103,7 @@ class WorkshopDetailsController extends GetxController {
 
   Future<BitmapDescriptor> getCustomIcon() async {
     return await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(size: Size(48, 48)), // Taille de l'icône
+      const ImageConfiguration(size: Size(48, 48)), // Taille de l'icône
       AppConstants.mapLocalisation, // Chemin vers l'icône dans vos assets
     );
   }
@@ -130,7 +127,7 @@ class WorkshopDetailsController extends GetxController {
   }
 
   void addMarker(double latitude, double longitude) async {
-    final markerId = MarkerId('custom-marker');
+    const markerId = MarkerId('custom-marker');
     await loadCustomIcons();
     final marker = Marker(
       markerId: markerId,

@@ -13,7 +13,7 @@ class ExpandableContainer extends StatelessWidget {
   final AppointmentDetailsController controller;
 
   const ExpandableContainer({
-    Key? key,
+    super.key,
     required this.onpresse,
     required this.title,
     required this.visibility,
@@ -21,7 +21,7 @@ class ExpandableContainer extends StatelessWidget {
     required this.description,
     required this.imageUrls,
     required this.controller,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +74,9 @@ class ExpandableContainer extends StatelessWidget {
                     ),
                     const SizedBox(height: 12.0),
                     if(imageUrls.isNotEmpty)
-                      Text(
+                      const Text(
                         'Images',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 14.0,
                             height: 1.5,
                             color: Colors.grey

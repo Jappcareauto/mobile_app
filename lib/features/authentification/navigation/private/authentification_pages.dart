@@ -28,38 +28,38 @@ class AuthentificationPages implements FeaturePages {
   List<GetPage>  getPages() => [
     GetPage(
       name: AuthentificationPrivateRoutes.home,
-      page: () => AuthentificationScreen(),
+      page: () => const AuthentificationScreen(),
       binding: AuthentificationControllerBinding(),
     ),
     
     GetPage(
       name: AuthentificationPrivateRoutes.loginWithEmail,
-      page: () => LoginWithEmailScreen(),
+      page: () => const LoginWithEmailScreen(),
       binding: LoginWithEmailControllerBinding(),
     ),
     GetPage(
       name: AuthentificationPrivateRoutes.loginWithPhone,
-      page: () => LoginWithPhoneScreen(),
+      page: () => const LoginWithPhoneScreen(),
       binding: LoginWithPhoneControllerBinding(),
     ),
     GetPage(
       name: AuthentificationPrivateRoutes.signUpWithEmail,
-      page: () => SignUpWithEmailScreen(),
+      page: () => const SignUpWithEmailScreen(),
       binding: SignUpWithEmailControllerBinding(),
     ),
     GetPage(
       name: AuthentificationPrivateRoutes.signUpWithPhone,
-      page: () => SignUpWithPhoneScreen(),
+      page: () => const SignUpWithPhoneScreen(),
       binding: SignUpWithPhoneControllerBinding(),
     ),
     GetPage(
       name: AuthentificationPrivateRoutes.verifyYourEmail,
-      page: () => VerifyYourEmailScreen(),
+      page: () => const VerifyYourEmailScreen(),
       binding: VerifyYourEmailControllerBinding(),
     ),
     GetPage(
       name: AuthentificationPrivateRoutes.resetPassword,
-      page: () => ResetPasswordScreen(),
+      page: () => const ResetPasswordScreen(),
       binding: ResetPasswordControllerBinding(),
     ),
     // Add other routes here

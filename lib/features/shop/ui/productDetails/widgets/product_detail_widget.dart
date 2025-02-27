@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jappcare/features/shop/ui/productDetails/controllers/product_details_controller.dart';
-import 'package:jappcare/features/shop/ui/shop/controllers/shop_controller.dart';
 
 class ProductDetailsWidget extends GetView<ProductDetailsController> {
   final String name  ;
   final double price ;
   final String description ;
   final String note ;
-  ProductDetailsWidget({
-    Key?key,
+  const ProductDetailsWidget({
+    super.key,
     required this.note,
     required this.name,
     required this.price,
     required this.description,
-}): super(key: key);
+});
   @override
   Widget build(BuildContext context) {
     return  Padding(
@@ -31,7 +30,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                 Expanded(
                   child: Text(
                     name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -42,12 +41,12 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                   children: [
                     Text(
                       note,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.black,
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.star,
                       color: Colors.orange,
                       size: 16,
@@ -56,26 +55,26 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                 ),
               ],
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             // Price
             Text(
               price.toString(),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.orange,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             // Offered by
-            Text(
+            const Text(
               'Offered by',
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey,
               ),
             ),
-            Text(
+            const Text(
               'Japcare Autotech',
               style: TextStyle(
                 fontSize: 16,
@@ -83,7 +82,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             // Description
             Text(
               description,
@@ -92,7 +91,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                 color: Colors.grey[700],
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Fee and Quantity Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -100,7 +99,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Fee',
                       style: TextStyle(
                         fontSize: 14,
@@ -111,7 +110,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                         Text(
                           // Formater le prix avec des séparateurs de milliers
                           "${NumberFormat('#,###').format(controller.totalPrice.value)} Frs",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -140,7 +139,7 @@ class ProductDetailsWidget extends GetView<ProductDetailsController> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
                         controller.quantity.value.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -169,7 +168,7 @@ class QuantityButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback onPressed;
 
-  QuantityButton({required this.icon, required this.onPressed});
+  const QuantityButton({super.key, required this.icon, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

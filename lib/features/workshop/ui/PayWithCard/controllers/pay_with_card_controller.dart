@@ -6,9 +6,6 @@ class PayWithCardController extends GetxController{
   final AppNavigation _appNavigation ;
   var saveCardPaymentMethode = false.obs ;
   PayWithCardController(this._appNavigation);
-  void onInit(){
-    super.onInit();
-  }
   void gotToSuccessPayment (){
     _appNavigation.toNamed(WorkshopPrivateRoutes.successPayment);
   }

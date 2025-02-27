@@ -112,9 +112,7 @@ class CarCardWidget extends GetView<GarageController> {
                           ),
                           const SizedBox(width: 10),
 
-                          Text(controller.placeName.value == null
-                              ? localisation
-                              : controller.placeName.value, style: Get.textTheme
+                          Text(controller.placeName.value ?? localisation, style: Get.textTheme
                               .bodySmall),
                         ],
                       ),
@@ -128,7 +126,7 @@ class CarCardWidget extends GetView<GarageController> {
                         assetPath: AppImages.car,
                         width: Get.width * 0.4,
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       // Ajout d'un espacement entre l'image et le texte
                       Flexible(
                         fit: FlexFit.loose,
@@ -140,7 +138,7 @@ class CarCardWidget extends GetView<GarageController> {
                           // Tronque le texte si trop long
                           maxLines: 1,
                           // Limite le texte à une seule ligne
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12, // Ajuste la taille de la police
                             fontWeight: FontWeight.bold, // Style en gras
                           ),

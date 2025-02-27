@@ -66,8 +66,9 @@ class WorkshopController extends GetxController {
     result.fold(
       (e) {
          loading.value = false;
-         if(Get.context !=null)
-            Get.showCustomSnackBar(e.message);
+         if(Get.context !=null) {
+           Get.showCustomSnackBar(e.message);
+         }
       },
       (response) {
         loading.value = false;
@@ -83,8 +84,9 @@ class WorkshopController extends GetxController {
     result.fold(
       (e) {
         serviceloading.value = false;
-         if(Get.context !=null)
-            Get.showCustomSnackBar(e.message);
+         if(Get.context !=null) {
+           Get.showCustomSnackBar(e.message);
+         }
       },
       (response) {
         serviceloading.value = false;

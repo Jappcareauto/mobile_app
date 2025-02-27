@@ -6,6 +6,9 @@ import 'controllers/select_language_controller.dart';
 import 'package:get/get.dart';
 
 class SelectLanguageScreen extends GetView<SelectLanguageController> {
+  const SelectLanguageScreen({super.key});
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

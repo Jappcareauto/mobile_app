@@ -8,7 +8,7 @@ import '../ui/widgets/pick_image.dart';
 extension Utils on GetInterface {
   showLoader(
       {bool dismissible = false, bool canUserPop = false, bool dense = false}) {
-    this.dialog(
+    dialog(
         WillPopScope(
             onWillPop: () async {
               return canUserPop;

@@ -9,11 +9,6 @@ class InvoiceController extends GetxController {
   var rating = 0.obs; // Note initiale (0 étoiles)
 
 
-  @override
-  void onInit() {
-
-    super.onInit();
-  }
   void updateRating(int newRating) {
     rating.value = newRating; // Mettre à jour la note
   }

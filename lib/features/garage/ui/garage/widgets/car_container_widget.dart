@@ -13,14 +13,14 @@ class CarContainer extends StatelessWidget {
   final bool? isSelected;
 
   const CarContainer({
-    Key? key,
+    super.key,
     required this.carName,
     required this.carDetails,
     this.imagePath,
     required this.principalColor,
     this.onPressed,
     this.isSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +48,13 @@ class CarContainer extends StatelessWidget {
             ),
             Text(
               carDetails,
-              style: TextStyle(fontSize: 14, color: Colors.black),
+              style: const TextStyle(fontSize: 14, color: Colors.black),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 16),
                   child: Icon(
                     Icons.arrow_back,

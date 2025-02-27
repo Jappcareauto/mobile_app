@@ -1,13 +1,9 @@
 import 'package:get/get.dart';
-import 'package:jappcare/features/emergency/application/usecases/emergency_command.dart';
-import 'package:jappcare/features/emergency/application/usecases/emergency_usecase.dart';
-import 'package:jappcare/features/emergency/domain/entities/emergency.dart';
 import 'package:jappcare/features/emergency/navigation/private/emergency_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
 
 
-import '../../../../../core/utils/getx_extensions.dart';
 
 
 class EmergencyController extends GetxController {

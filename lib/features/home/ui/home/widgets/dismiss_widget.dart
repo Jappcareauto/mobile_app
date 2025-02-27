@@ -1,19 +1,20 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DismissWidget extends StatelessWidget{
+  const DismissWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
    return Container(
   alignment: Alignment.centerRight,
      decoration: BoxDecoration(
-       color: Color(0xFFFFDBCC),
+       color: const Color(0xFFFFDBCC),
        // Couleur de fond de la notification
        borderRadius: BorderRadius.circular(16), // Coins arrondis
      ),
-     padding: EdgeInsets.symmetric(horizontal: 20),
-     child: Column(
+     padding: const EdgeInsets.symmetric(horizontal: 20),
+     child: const Column(
        mainAxisAlignment: MainAxisAlignment.center,
        crossAxisAlignment: CrossAxisAlignment.center,
        children: [

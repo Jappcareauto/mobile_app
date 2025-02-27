@@ -11,10 +11,12 @@ import 'controllers/login_with_email_controller.dart';
 import 'package:get/get.dart';
 
 class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
+  const LoginWithEmailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Sign In'),
+      appBar: const CustomAppBar(title: 'Sign In'),
       body: MixinBuilder<LoginWithEmailController>(
         builder: (_) {
           return Padding(
@@ -25,7 +27,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      ImageDecoration(assetPath: AppConstants.Login),
+                      const ImageDecoration(assetPath: AppConstants.Login),
 
                       SizedBox(
                         height: Get.height * .6,
@@ -74,7 +76,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Don\'t have an account?'),
+                                  const Text('Don\'t have an account?'),
                                   TextButton(
                                       onPressed: _.navigateToSignUp,
                                       child: const Text('Register'))

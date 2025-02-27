@@ -7,6 +7,8 @@ import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/features/workshop/ui/PayWithPhone/controller/pay_with_phone_controller.dart';
 
 class PayWithPhoneScreen extends GetView<PayWithPhoneController> {
+  const PayWithPhoneScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

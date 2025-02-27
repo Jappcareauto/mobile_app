@@ -2,15 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 
 class DetailResponseWidgets extends StatelessWidget{
+  const DetailResponseWidgets({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.secondary,
         borderRadius: BorderRadius.circular(16)
       ),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(

@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
-import 'package:jappcare/core/services/networkServices/dio_network_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
@@ -13,8 +12,6 @@ import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_c
 import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_usecase.dart';
 import 'package:jappcare/features/garage/domain/entities/get_garage_by_owner_id.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
-import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
-import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:image_picker/image_picker.dart';
@@ -109,10 +106,10 @@ class BookAppointmentController extends GetxController{
 
   }
   Future<void> selectImagesFromGallery() async {
-    final List<XFile>? pickedFiles = await _picker
+    final List<XFile> pickedFiles = await _picker
         .pickMultiImage(); // Utilisation de pickMultiImage pour plusieurs images
 
-    if (pickedFiles != null && pickedFiles.isNotEmpty) {
+    if (pickedFiles.isNotEmpty) {
       // Si des images sont sélectionnées, convertir chaque image en File et les ajouter à une liste
       selectedImages.value =
           pickedFiles.map((file) => File(file.path)).toList();

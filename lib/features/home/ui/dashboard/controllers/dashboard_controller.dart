@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/features/error/ui/commingSoon/comming_soon_screen.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/services/localServices/local_storage_service.dart';
@@ -40,7 +39,7 @@ class DashboardController extends GetxController {
     if (index == 3) {
 
       Get.to(
-            () => CommingSoonScreen(),
+            () => const CommingSoonScreen(),
         transition: Transition.rightToLeft,
       )?.then((_) {
         selectedIndex.value = 0;

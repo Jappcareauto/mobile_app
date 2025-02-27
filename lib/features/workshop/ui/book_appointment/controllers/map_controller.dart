@@ -5,12 +5,10 @@ import 'dart:async';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:jappcare/core/utils/app_constants.dart';
-import 'package:flutter/material.dart';
 class MapController extends GetxController {
   final GarageController _garageController = GarageController(Get.find(), Get.find());
   final loading = true.obs;
@@ -69,7 +67,7 @@ class MapController extends GetxController {
   void addMarker(double latitude, double longitude) async {
     await loadCustomIcons();
     final marker = Marker(
-      markerId: MarkerId('custom-marker'),
+      markerId: const MarkerId('custom-marker'),
       position: LatLng(latitude, longitude),
       icon: serviceLocation.value,
       infoWindow: InfoWindow(

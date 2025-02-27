@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
@@ -9,6 +8,8 @@ import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/ui/sucess_payment/controller/success_payment_controller.dart';
 
 class SucessPaymentScreen extends GetView<SuccessPaymentController>{
+  const SucessPaymentScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,29 +33,29 @@ class SucessPaymentScreen extends GetView<SuccessPaymentController>{
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(50),
-              child: ImageComponent(
+              child: const ImageComponent(
                 height: 100,
                 width: 100,
                 assetPath: AppImages.recepit,
               ) ,
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Your Payment of'),
-                SizedBox(width: 5,),
+                const Text('Your Payment of'),
+                const SizedBox(width: 5,),
                 Text('5,000Frs' , style: Get.textTheme.bodyLarge,),
-                SizedBox(width: 5,),
+                const SizedBox(width: 5,),
 
-                Text('for')
+                const Text('for')
               ],
             ),
-            Text('booking fee is successful'),
+            const Text('booking fee is successful'),
 
-            Spacer(),
+            const Spacer(),
             Container(
-              margin: EdgeInsets.all(20),
+              margin: const EdgeInsets.all(20),
               child: CustomButton(
                   text: 'Done',
                   onPressed:(){

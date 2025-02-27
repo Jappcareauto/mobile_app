@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
-import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
 
 class PaymentMethodeWidget extends StatelessWidget{
   final ChatController chatController = Get.put(ChatController(Get.find()));
   final VoidCallback onConfirm ;
   PaymentMethodeWidget({
-    Key?key,
+    super.key,
     required this.onConfirm
-  }):super(key: key);
+  });
   @override
   Widget build(BuildContext context) {
     return
       Obx(() =>
           Center(
-            child: Container(
+            child: SizedBox(
 
               height: 350,
 
@@ -28,7 +27,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                 children:
                 [
 
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -38,7 +37,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                       ),
                     ],
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
 
                   ...List.generate(chatController.paymentDetails.length, (index) {
                     final paymentDetail = chatController.paymentDetails[index];
@@ -51,7 +50,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                       },
                       child: Container(
                         padding: const EdgeInsets.all(5),
-                        margin: EdgeInsets.only(bottom: 10),
+                        margin: const EdgeInsets.only(bottom: 10),
                         decoration: BoxDecoration(
                           color: isSelected ? Get.theme.primaryColor.withOpacity(0.2) : null,
                           borderRadius: BorderRadius.circular(10),
@@ -93,7 +92,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                       ),
                     );
                   }),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -107,7 +106,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                         width: 160,
 
                       ),
-                      SizedBox(height: 5,),
+                      const SizedBox(height: 5,),
 
                       CustomButton(
                         text: 'Confirm',

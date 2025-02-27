@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TestimonieShimmer extends StatelessWidget {
-  const TestimonieShimmer({Key? key}) : super(key: key);
+  const TestimonieShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {

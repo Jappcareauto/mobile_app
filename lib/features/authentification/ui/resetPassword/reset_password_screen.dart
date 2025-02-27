@@ -6,10 +6,12 @@ import 'controllers/reset_password_controller.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordScreen extends GetView<ResetPasswordController> {
+  const ResetPasswordScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Reset Password",
       ),
       body: MixinBuilder<ResetPasswordController>(
@@ -52,7 +54,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                         validator: form.validators['email'],
                         keyboardType: TextInputType.emailAddress,
                       ),
-                    Spacer(),
+                    const Spacer(),
                     Column(
                       children: [
                         CustomButton(

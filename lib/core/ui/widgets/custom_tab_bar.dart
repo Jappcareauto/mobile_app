@@ -7,7 +7,7 @@ class CustomTabBar extends StatefulWidget {
   final Color? unselectedColor;
   final ValueChanged<int> onTabSelected;
 
-  CustomTabBar({
+  const CustomTabBar({super.key, 
     required this.labels,
     this.selectedColor,
     this.unselectedColor,

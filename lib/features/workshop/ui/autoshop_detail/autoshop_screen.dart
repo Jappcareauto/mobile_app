@@ -1,6 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
@@ -10,6 +9,8 @@ import 'package:jappcare/features/workshop/ui/autoshop_detail/widgets/banner_wid
 import 'package:jappcare/features/workshop/ui/workshop/widgets/categories_item_list.dart';
 
 class AutoshopScreen extends GetView<AutoShopController>{
+  const AutoshopScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +19,7 @@ class AutoshopScreen extends GetView<AutoShopController>{
 
       Column(
         children: [
-          BannerWidget(
+          const BannerWidget(
             imageComponents: ImageComponent(
               assetPath: AppImages.shopCar,
             ),
@@ -26,7 +27,7 @@ class AutoshopScreen extends GetView<AutoShopController>{
           ),
       Container(
         padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
 
 
@@ -104,9 +105,9 @@ class AutoshopScreen extends GetView<AutoShopController>{
           ],
         ),
       ),
-          SelectServiceItemList(
+          const SelectServiceItemList(
             title: 'Specialized Services',),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Container(
             height: 150,
             decoration: BoxDecoration(
@@ -114,11 +115,11 @@ class AutoshopScreen extends GetView<AutoShopController>{
               borderRadius: BorderRadius.circular(20),
 
             ),
-            child: Placeholder(),
+            child: const Placeholder(),
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Container(
-             margin: EdgeInsets.symmetric(horizontal: 10),
+             margin: const EdgeInsets.symmetric(horizontal: 10),
             child:   CustomButton(
                 text: 'Book Appointment',
                 isLoading: controller.isLoading,
@@ -127,7 +128,7 @@ class AutoshopScreen extends GetView<AutoShopController>{
                 }),
           ),
 
-          SizedBox(height: 30,)
+          const SizedBox(height: 30,)
       ],
       ),
       )

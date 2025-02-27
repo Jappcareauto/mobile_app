@@ -22,7 +22,7 @@ class GarageDependencies {
         fenix: true);
     Get.lazyPut<FeatureWidgetInterface>(() =>  ListVehicleWidget(),
         tag: 'ListVehicleWidget', fenix: true);
-    Get.lazyPut<FeatureWidgetInterface>(() => GarageScreen(),
+    Get.lazyPut<FeatureWidgetInterface>(() => const GarageScreen(),
         tag: 'GarageScreen', fenix: true);
     //RecentActivitiesWidget
     Get.lazyPut<FeatureWidgetInterface>(

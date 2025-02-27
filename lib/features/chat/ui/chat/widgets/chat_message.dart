@@ -9,12 +9,12 @@ class ChatMessage extends StatelessWidget {
   final List<File>? images;
 
   const ChatMessage({
-    Key? key,
+    super.key,
     this.text,
     required this.isSender,
 
      this.images,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

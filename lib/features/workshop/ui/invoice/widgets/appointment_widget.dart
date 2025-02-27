@@ -9,7 +9,7 @@ class AppointmentContainer extends StatelessWidget {
   final String vin ;
   final String vehiculName;
   const AppointmentContainer({
-    Key? key,
+    super.key,
     required this.vin,
     required this.vehiculName,
     required this.from,
@@ -17,13 +17,13 @@ class AppointmentContainer extends StatelessWidget {
     required this.caseId,
     required this.issuedDate,
     required this.dueDate,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          color: Color(0xFFFDFBF4),
+          color: const Color(0xFFFDFBF4),
               borderRadius: BorderRadius.circular(20)
         ),
        // Couleur d'arrière-plan beige
@@ -149,12 +149,12 @@ class AppointmentContainer extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Vehicule",
                     style: TextStyle(
                       color: Color(0xFF797676),
@@ -172,7 +172,7 @@ class AppointmentContainer extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4.0),
-                  Text(
+                  const Text(
                     "VIN",
                     style: TextStyle(
                       color: Color(0xFF797676),

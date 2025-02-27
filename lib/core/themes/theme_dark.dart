@@ -13,7 +13,6 @@ class AppThemeDark {
       colorScheme: const ColorScheme.dark(
         primary: AppColors.orange,
         secondary: AppColors.purple,
-        background: AppColors.darkBackground,
         surface: AppColors.darkSurface,
       ),
       // Vous pouvez configurer d'autres propriétés ici.

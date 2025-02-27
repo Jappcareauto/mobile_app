@@ -3,14 +3,12 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/app_bar_with_salutation.dart';
-import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/home/ui/home/widgets/dismiss_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/tip_modal_bottom.dart';
 import 'package:jappcare/features/home/ui/home/widgets/title_section.dart';
-import 'package:jappcare/features/workshop/ui/widgets/workshop_carrousel.dart';
 import '../../../../core/utils/app_images.dart';
 import 'controllers/home_controller.dart';
 import 'widgets/notification_widget.dart';
@@ -31,7 +29,7 @@ class HomeScreen extends GetView<HomeController> {
           ],
       body: RefreshIndicator(
           onRefresh: controller.refreshData ,
-          color: Color(0xFFFB7C37),
+          color: const Color(0xFFFB7C37),
           strokeWidth: 4.0,
           backgroundColor: AppColors.white,
           child: SingleChildScrollView(
@@ -52,7 +50,7 @@ class HomeScreen extends GetView<HomeController> {
                   //     AppImages.Actualite,
                   //   ],
                   // ),
-                 SizedBox(height: 20,),
+                 const SizedBox(height: 20,),
                  Container(
                    child: Column(
                      children:  controller.notifications.asMap().entries.map((entry) {
@@ -62,7 +60,7 @@ class HomeScreen extends GetView<HomeController> {
                        return Dismissible(
                          key: Key(notification),
                          direction: DismissDirection.endToStart,
-                         background: DismissWidget(),
+                         background: const DismissWidget(),
                          onDismissed: (direction) {
                            // Action après la suppression
                            controller.notifications.removeAt(index);
@@ -71,7 +69,7 @@ class HomeScreen extends GetView<HomeController> {
                             haveTitle: true,
                            textSize: 16,
 
-                           backgrounColor: Color(0xFFFFEDE6),
+                           backgrounColor: const Color(0xFFFFEDE6),
                            title: "Notification",
                            bodyText: notification,
                            coloriage: Get.theme.primaryColor,
@@ -81,16 +79,16 @@ class HomeScreen extends GetView<HomeController> {
                      }).toList(),
                    ),
                  ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
 
 
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
 
                   NotificationWidget(
                     haveTitle: true,
-                    backgrounColor: Color(0xFFF4EEFF),
+                    backgrounColor: const Color(0xFFF4EEFF),
                     title: "Tip",
                     bodyText:
                         'Rotate your tires regulary to ensure they wear evenly and last longer.',
@@ -134,14 +132,14 @@ class HomeScreen extends GetView<HomeController> {
                 children: [
                   GestureDetector(
 
-                    child: TitleSection(nameSection: 'Services'),
+                    child: const TitleSection(nameSection: 'Services'),
                   ),
                   Row(
                     children: [
                       Expanded(
                         child:
                         CustomCardService(
-                          color: Color(0xFFFFEDE6),
+                          color: const Color(0xFFFFEDE6),
                           text: 'Find a Service\nCenter',
                           imagePath: AppImages.service,
                           onTap: () {
@@ -154,7 +152,7 @@ class HomeScreen extends GetView<HomeController> {
                       Expanded(
                         child:
                         CustomCardService(
-                          color: Color(0xFFFFDAD4),
+                          color: const Color(0xFFFFDAD4),
                           text: 'Emergency\nAssistance',
                           imagePath: AppImages.emergency,
                           onTap: () {
@@ -232,7 +230,7 @@ void openModalTipsMethod() {
             ],
           ),
           padding: const EdgeInsets.all(16), // Espacement intérieur
-          child: Wrap(
+          child: const Wrap(
             children: [
               TipModalBottomWidget()
             ],

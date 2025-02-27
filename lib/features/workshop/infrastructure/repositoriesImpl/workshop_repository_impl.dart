@@ -29,8 +29,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../domain/entities/get_allservices.dart';
 import '../models/get_allservices_model.dart';
 
-import '../../domain/entities/get_vehicul_by_id.dart';
-import '../models/get_vehicul_by_id_model.dart';
 
 class WorkshopRepositoryImpl implements WorkshopRepository {
   final NetworkService networkService;

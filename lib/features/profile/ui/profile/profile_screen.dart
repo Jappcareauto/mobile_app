@@ -8,6 +8,8 @@ import 'controllers/profile_controller.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +57,7 @@ class ProfileScreen extends GetView<ProfileController> {
                         ),
                       ),
                     ),
-                     AvatarWidget(size: 100, canEdit: false)
+                     const AvatarWidget(size: 100, canEdit: false)
                   ],
                 ),
               ),

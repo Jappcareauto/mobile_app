@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
@@ -7,10 +6,11 @@ import 'package:jappcare/features/shop/ui/bag/controllers/bag_controller.dart';
 
 class DeleteModel extends GetView<BagController>{
   final String id;
-  DeleteModel({
-    Key?key,
+  const DeleteModel({
+    super.key,
     required this.id
-}):super(key: key);
+});
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
@@ -64,7 +64,7 @@ class DeleteModel extends GetView<BagController>{
                       onPressed: (){
                         Get.back();
                       }),
-                  SizedBox(width: 5,),
+                  const SizedBox(width: 5,),
                   // Publish Button
                   CustomButton(
                       strech: false,

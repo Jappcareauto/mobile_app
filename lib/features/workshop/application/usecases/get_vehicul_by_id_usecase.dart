@@ -5,7 +5,6 @@ import 'get_vehicul_by_id_command.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/core/exceptions/workshop_exception.dart';
 import '../../domain/repositories/workshop_repository.dart';
-import '../../domain/entities/get_vehicul_by_id.dart';
 
 class GetVehiculByIdUseCase {
   final WorkshopRepository repository;

@@ -11,9 +11,6 @@ import 'package:jappcare/features/emergency/infrastructure/models/emergency_mode
 
 
 import '../../domain/entities/declined_emergency.dart';
-import '../../../../core/exceptions/base_exception.dart';
-import '../../domain/core/exceptions/emergency_exception.dart';
-import '../../domain/core/utils/emergency_constants.dart';
 import '../models/declined_emergency_model.dart';
 
 class EmergencyRepositoryImpl implements EmergencyRepository {

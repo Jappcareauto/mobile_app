@@ -6,7 +6,7 @@ import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/features/workshop/ui/invoice/controllers/invoice_controller.dart';
 
 class ReviewModal extends GetView<InvoiceController> {
-  const ReviewModal({Key? key}) : super(key: key);
+  const ReviewModal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class ReviewModal extends GetView<InvoiceController> {
               const SizedBox(height: 16.0),
 
               // Review Text Field
-              CustomFormField(
+              const CustomFormField(
                 maxLine: 5,
                 hintText: 'Write a review',
               ),
@@ -86,7 +86,7 @@ class ReviewModal extends GetView<InvoiceController> {
                        controller.rating.value = 0 ;
                        print("Rating Reset to: ${controller.rating.value}");
                      }),
-                  SizedBox(width: 5,),
+                  const SizedBox(width: 5,),
                   // Publish Button
                   CustomButton(
                       strech: false,

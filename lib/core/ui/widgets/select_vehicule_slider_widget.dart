@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/car_card_add_vehicle.dart';
 import 'package:get/get.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 
 import '../../../features/garage/domain/entities/get_vehicle_list.dart';
 
@@ -13,15 +12,15 @@ class SelectedVehiculeWidget extends StatelessWidget {
   final String titleText;
   final VoidCallback? onTapeAddVehicle;
 
-  SelectedVehiculeWidget({
-    Key? key,
+  const SelectedVehiculeWidget({
+    super.key,
     required this.pageController,
     required this.cars,
     required this.currentPage,
     required this.haveAddVehicule,
     required this.titleText,
     this.onTapeAddVehicle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

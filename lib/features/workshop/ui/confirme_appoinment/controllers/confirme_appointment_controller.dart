@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:jappcare/core/services/networkServices/dio_network_service.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_command.dart';
@@ -30,6 +29,7 @@ class ConfirmeAppointmentController extends GetxController {
   // final argument = Get.arguments ;
   ConfirmeAppointmentController(this._appNavigation);
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  @override
   void onInit() {
     super.onInit();
     participantId.add(Get.find<ProfileController>().userInfos!.id);
@@ -44,7 +44,7 @@ class ConfirmeAppointmentController extends GetxController {
         ),
         context: Get.context!,
         builder: (BuildContext context) {
-          return ConfirmationAppointmentModal();
+          return const ConfirmationAppointmentModal();
         });
   }
 
@@ -58,8 +58,9 @@ class ConfirmeAppointmentController extends GetxController {
     result.fold(
             (e){
               proceedChatLoading.value = false;
-              if(Get.context !=null)
+              if(Get.context !=null) {
                 Get.showCustomSnackBar(e.message);
+              }
               proceedChatLoading.value = false;
 
             },
@@ -120,7 +121,7 @@ class ConfirmeAppointmentController extends GetxController {
       isScrollControlled: true, // Permet un contrôle précis sur la hauteur
       backgroundColor: Colors.transparent, // Rendre l'arrière-plan transparent
       builder: (BuildContext context) {
-        return ConfirmModel();
+        return const ConfirmModel();
       },
     );
   }

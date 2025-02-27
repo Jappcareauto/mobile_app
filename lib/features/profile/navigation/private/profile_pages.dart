@@ -27,37 +27,37 @@ class ProfilePages implements FeaturePages {
   List<GetPage>  getPages() => [
     GetPage(
       name: ProfilePrivateRoutes.home,
-      page: () => ProfileScreen(),
+      page: () => const ProfileScreen(),
       binding: ProfileControllerBinding(),
     ),
     GetPage(
       name: ProfilePrivateRoutes.settings,
-      page: () => SettingsScreen(),
+      page: () => const SettingsScreen(),
       binding: SettingsControllerBinding(),
     ),
     GetPage(
       name: ProfilePrivateRoutes.editProfile,
-      page: () => EditProfileScreen(),
+      page: () => const EditProfileScreen(),
       binding: EditProfileControllerBinding(),
     ),
     GetPage(
       name: ProfilePrivateRoutes.termsAndConditions,
-      page: () => TermsAndConditionsScreen(),
+      page: () => const TermsAndConditionsScreen(),
       binding: TermsAndConditionsControllerBinding(),
     ),
     GetPage(
       name: ProfilePrivateRoutes.privacyPolicy,
-      page: () => PrivacyPolicyScreen(),
+      page: () => const PrivacyPolicyScreen(),
       binding: PrivacyPolicyControllerBinding(),
     ),
     GetPage(
       name: ProfilePrivateRoutes.history,
-      page: () => HistoryScreen(),
+      page: () => const HistoryScreen(),
       binding: HistoryControllerBinding(),
     ),
     GetPage(
       name: ProfilePrivateRoutes.payments,
-      page: () => PaymentsScreen(),
+      page: () => const PaymentsScreen(),
       binding: PaymentsControllerBinding(),
     ),
     // Add other routes here

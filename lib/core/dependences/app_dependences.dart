@@ -36,8 +36,6 @@ import '../../features/profile/navigation/private/profile_pages.dart';
 import '../../features/notifications/dependences/notifications_dependencies.dart';
 import '../../features/notifications/navigation/private/notifications_pages.dart';
 
-import '../../features/chat/dependences/chat_dependencies.dart';
-import '../../features/chat/navigation/private/chat_pages.dart';
 
 import '../../features/services/dependences/services_dependencies.dart';
 import '../../features/services/navigation/private/services_pages.dart';

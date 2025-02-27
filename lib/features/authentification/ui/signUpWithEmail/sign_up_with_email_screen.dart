@@ -10,6 +10,8 @@ import 'controllers/sign_up_with_email_controller.dart';
 import 'package:get/get.dart';
 
 class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
+  const SignUpWithEmailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -17,7 +17,7 @@ class ItemContainer extends GetView<BagController> {
   final String assetPath ;
   final VoidCallback onDelete ;
   const ItemContainer({
-    Key? key,
+    super.key,
     required this.total ,
     required this.assetPath,
     required this.imageUrl,
@@ -28,12 +28,12 @@ class ItemContainer extends GetView<BagController> {
     required this.onDecrement,
     required this.modifyQuantity,
    required this.onDelete
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -56,9 +56,9 @@ class ItemContainer extends GetView<BagController> {
               onTap: (){
                   onDelete();
               },
-              child: Icon(FluentIcons.delete_12_filled),
+              child: const Icon(FluentIcons.delete_12_filled),
             ),
-          ) : SizedBox(),
+          ) : const SizedBox(),
           Container(
 
             child: Row(
@@ -99,7 +99,7 @@ class ItemContainer extends GetView<BagController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Price' ,  style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans' ),),
+                  const Text('Price' ,  style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans' ),),
                   Text(
                     "${NumberFormat('#,###').format(price)} Frs",
                     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
@@ -110,7 +110,7 @@ class ItemContainer extends GetView<BagController> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Price :  ' ,  style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans' ),),
+                const Text('Price :  ' ,  style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans' ),),
                 Text(
                   "${NumberFormat('#,###').format(price)} Frs",
                   style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
@@ -124,11 +124,11 @@ class ItemContainer extends GetView<BagController> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Quantity'),
-                  SizedBox(height: 5,),
+                  const Text('Quantity'),
+                  const SizedBox(height: 5,),
                   Row(
                     children: [
-                      SizedBox(width: 5,),
+                      const SizedBox(width: 5,),
                       modifyQuantity
                           ?  QuantityButton(
                         icon: Icons.remove,
@@ -136,7 +136,7 @@ class ItemContainer extends GetView<BagController> {
                           onDecrement();
                         },
                       ):
-                      SizedBox() ,
+                      const SizedBox() ,
 
 
 
@@ -146,7 +146,7 @@ class ItemContainer extends GetView<BagController> {
                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
                               quantity.value.toString(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
@@ -162,7 +162,7 @@ class ItemContainer extends GetView<BagController> {
                               onIncrement();
                         },
                       )
-                          : SizedBox() ,
+                          : const SizedBox() ,
 
                     ],
                   )
@@ -170,10 +170,10 @@ class ItemContainer extends GetView<BagController> {
               )
             ],
           ),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Row(
             children: [
-              Text('Total' , style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans'),),
+              const Text('Total' , style: TextStyle(fontSize: 14 , fontWeight: FontWeight.w400 , color: Color(0xFF797676) , fontFamily:'PlusJakartaSans'),),
               SizedBox(width: MediaQuery.of(context).size.width*.5,),
     Obx(() =>
     Expanded(child:

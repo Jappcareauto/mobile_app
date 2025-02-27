@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
@@ -7,6 +5,8 @@ import 'package:jappcare/features/services/ui/vehiculReport/controllers/vehicul_
 import 'package:flutter/material.dart';
 
 class ChartContainerWidgets extends GetView<VehiculReportController>{
+  const ChartContainerWidgets({super.key});
+
   @override
   Widget build(BuildContext context) {
       return Container(
@@ -24,13 +24,13 @@ class ChartContainerWidgets extends GetView<VehiculReportController>{
             ),
           ],
         ),
-        child: Column(
+        child: const Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Last known mileage',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 color: Colors.grey,
@@ -38,7 +38,7 @@ class ChartContainerWidgets extends GetView<VehiculReportController>{
             ),
             Text(
               '82 , 000 mi',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: Colors.black,

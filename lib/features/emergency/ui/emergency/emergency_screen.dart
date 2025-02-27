@@ -5,17 +5,19 @@ import 'controllers/emergency_controller.dart';
 import 'package:get/get.dart';
 
 class EmergencyScreen extends GetView<EmergencyController> {
+  const EmergencyScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: CustomAppBar(title: 'Emergency\nAssistance'),
+      appBar: const CustomAppBar(title: 'Emergency\nAssistance'),
       body:  SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(20),
+          margin: const EdgeInsets.all(20),
           child:Column(
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -24,7 +26,7 @@ class EmergencyScreen extends GetView<EmergencyController> {
                   )
                 ],
               ),
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
 
               ...List.generate(controller.categorie.length, (index){
                 return OptionWidgets(

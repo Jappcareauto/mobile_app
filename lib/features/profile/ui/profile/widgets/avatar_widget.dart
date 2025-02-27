@@ -15,11 +15,11 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
   final bool? haveName ;
   const AvatarWidget(
       {
-        Key?key,
+        super.key,
         this.size = 55,
         this.canEdit = false ,
         this.haveName
-      }):super(key: key);
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                           height: size,
                           borderRadius: 50,
                           onErrorWidget:Container(
-                            padding: EdgeInsets.all(3),
+                            padding: const EdgeInsets.all(3),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(
@@ -76,7 +76,7 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                                       ),
                                       Text(
                                         _.userInfos?.name ?? "",
-                                        style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 14 ),
+                                        style: const TextStyle(fontWeight: FontWeight.w600 , fontSize: 14 ),
                                       )
                                     ],
                                   ):

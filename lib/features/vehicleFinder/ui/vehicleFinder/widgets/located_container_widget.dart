@@ -7,36 +7,36 @@ import 'package:jappcare/core/utils/app_images.dart';
 
 class LocatedContainerWidget extends StatelessWidget{
   final bool haveButton ;
-  LocatedContainerWidget({
-    Key?key,
+  const LocatedContainerWidget({
+    super.key,
      required this.haveButton
-}):super(key: key);
+});
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
+        const Row(
           children: [
             Icon(FluentIcons.location_12_regular , color: AppColors.black,),
             SizedBox(width: 5,),
             Text('Vehicle Located')
           ],
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         haveButton == true ?
-        SizedBox() :
+        const SizedBox() :
         Container(
           decoration: BoxDecoration(
-            color: Color(0xFFFFEDE6),
+            color: const Color(0xFFFFEDE6),
             borderRadius: BorderRadius.circular(16)
           ),
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             top: 12,
             right: 16,
             left: 16,
             bottom: 16
           ),
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -53,20 +53,20 @@ class LocatedContainerWidget extends StatelessWidget{
             ],
           ),
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               width: MediaQuery.of(context).size.width*0.45,
               height: 94,
               decoration: BoxDecoration(
                   color: AppColors.white,
-                  border: Border.all(width: 1.84,color: Color(0xFFE5E2E1)),
+                  border: Border.all(width: 1.84,color: const Color(0xFFE5E2E1)),
                   borderRadius: BorderRadius.circular(20)
               ),
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -88,7 +88,7 @@ class LocatedContainerWidget extends StatelessWidget{
               height: 94,
               decoration: BoxDecoration(
                   color: AppColors.white,
-                  border: Border.all(width: 1.84,color: Color(0xFFE5E2E1)),
+                  border: Border.all(width: 1.84,color: const Color(0xFFE5E2E1)),
                   borderRadius: BorderRadius.circular(20)
               ),
               child: ImageComponent(
@@ -98,10 +98,10 @@ class LocatedContainerWidget extends StatelessWidget{
             ),
           ],
         ),
-        SizedBox(height: 10,),
+        const SizedBox(height: 10,),
         haveButton == true ?
         CustomButton(text: 'Take me there', onPressed: (){})
-        : SizedBox()
+        : const SizedBox()
       ],
     );
   }

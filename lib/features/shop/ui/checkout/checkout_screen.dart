@@ -7,16 +7,18 @@ import 'controllers/checkout_controller.dart';
 import 'package:get/get.dart';
 
 class CheckoutScreen extends GetView<CheckoutController> {
+  const CheckoutScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Checkout'),
+        appBar: const CustomAppBar(title: 'Checkout'),
         body: SingleChildScrollView(
           child:Container(
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             child: Column(
               children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -24,8 +26,8 @@ class CheckoutScreen extends GetView<CheckoutController> {
 
                   ],
                 ),
-                SizedBox(height: 10,),
-                Row(
+                const SizedBox(height: 10,),
+                const Row(
                   children: [
 
                     Expanded(child:
@@ -43,34 +45,34 @@ class CheckoutScreen extends GetView<CheckoutController> {
                     ))
                   ],
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
-                CustomFormField(
+                const CustomFormField(
 
                   label: 'Town/City',
                   hintText: 'Town/City',
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
-                CustomFormField(
+                const CustomFormField(
 
                   label: 'Street/Address',
                   hintText: 'Street/Address',
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
-                CustomPhoneFormField(
+                const CustomPhoneFormField(
                   hintText: 'Phone',
                   label: 'Phone',
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
 
-                CustomFormField(
+                const CustomFormField(
 
                   label: 'Email',
                   hintText: 'Email',
                 ),
-                SizedBox(height: 100,),
+                const SizedBox(height: 100,),
                 CustomButton(
                     text: 'Procced to Checkout',
                     onPressed: (){

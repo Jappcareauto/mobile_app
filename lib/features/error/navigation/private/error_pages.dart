@@ -15,17 +15,17 @@ class ErrorPages implements FeaturePages {
   List<GetPage>  getPages() => [
     GetPage(
       name: ErrorPrivateRoutes.home,
-      page: () => ErrorScreen(),
+      page: () => const ErrorScreen(),
       binding: ErrorControllerBinding(),
     ),
     GetPage(
       name: ErrorPrivateRoutes.commingSoon,
-      page: () => CommingSoonScreen(),
+      page: () => const CommingSoonScreen(),
       binding: CommingSoonControllerBinding(),
     ),
     GetPage(
       name: ErrorPrivateRoutes.networkError,
-      page: () => NetworkErrorScreen(),
+      page: () => const NetworkErrorScreen(),
       binding: NetworkErrorControllerBinding(),
     ),
     // Add other routes here

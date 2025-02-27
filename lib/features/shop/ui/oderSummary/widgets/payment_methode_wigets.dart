@@ -4,28 +4,27 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/shop/ui/oderSummary/controllers/oder_summary_controller.dart';
-import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
 
 class PaymentMethodeWidget extends StatelessWidget{
   final String buttonText ;
   final VoidCallback ontap ;
   PaymentMethodeWidget({
-     Key?key,
+     super.key,
     required this.ontap ,
     required this.buttonText
-}): super(key: key);
+});
   final OderSummaryController oderSummary = Get.put(OderSummaryController(Get.find()));
   @override
   Widget build(BuildContext context) {
     return
       Obx(() =>
           Center(
-            child: Container(
+            child: SizedBox(
               height: 300,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       Text(
                         'How would you like to pay ?',
@@ -33,13 +32,13 @@ class PaymentMethodeWidget extends StatelessWidget{
                       ),
                     ],
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   InkWell(
                     onTap: (){
                       oderSummary.selectMethode('MTN');
                     },
                     child:   Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           color: oderSummary.selectedMethod == 'MTN' ? Get.theme.primaryColor.withOpacity(0.2) : null,
                           borderRadius: BorderRadius.circular(10),
@@ -48,12 +47,12 @@ class PaymentMethodeWidget extends StatelessWidget{
                       child: Row(
                         children: [
 
-                          ImageComponent(
+                          const ImageComponent(
                             height: 32,
                             width: 32,
                             assetPath: AppImages.mtnLogo,
                           ),
-                          SizedBox(width: 10,),
+                          const SizedBox(width: 10,),
 
                           Text(
                             'MTN MoMo',
@@ -79,13 +78,13 @@ class PaymentMethodeWidget extends StatelessWidget{
                     ),
                   ),
 
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   InkWell(
                     onTap: (){
                       oderSummary.selectMethode('ORANGE');
                     },
                     child:Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
 
                       decoration: BoxDecoration(
                           color: oderSummary.selectedMethod == 'ORANGE' ? Get.theme.primaryColor.withOpacity(0.2) : null,
@@ -94,12 +93,12 @@ class PaymentMethodeWidget extends StatelessWidget{
                       child: Row(
                         children: [
 
-                          ImageComponent(
+                          const ImageComponent(
                             height: 32,
                             width: 32,
                             assetPath: AppImages.orangeLogo,
                           ),
-                          SizedBox(width: 5,),
+                          const SizedBox(width: 5,),
 
                           Text(
                             'Orange Money',
@@ -126,13 +125,13 @@ class PaymentMethodeWidget extends StatelessWidget{
                     ),
                   ),
 
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   InkWell(
                     onTap: (){
                       oderSummary.selectMethode('CARD');
                     },
                     child:Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
 
                       decoration: BoxDecoration(
                           color: oderSummary.selectedMethod == 'CARD' ? Get.theme.primaryColor.withOpacity(0.2) : null,
@@ -141,12 +140,12 @@ class PaymentMethodeWidget extends StatelessWidget{
                       child: Row(
                         children: [
 
-                          ImageComponent(
+                          const ImageComponent(
                             height: 32,
                             width: 32,
                             assetPath: AppImages.cardLogo,
                           ),
-                          SizedBox(width: 10,),
+                          const SizedBox(width: 10,),
 
                           Text(
                             'Card',
@@ -173,7 +172,7 @@ class PaymentMethodeWidget extends StatelessWidget{
                     ),
                   ),
 
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                       CustomButton(
                         text: buttonText,
                         onPressed:ontap ,

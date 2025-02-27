@@ -11,13 +11,13 @@ class EarningsGraph extends StatelessWidget {
   final bool haveTitle;
 
   const EarningsGraph({
-    Key? key,
+    super.key,
     required this.totalEarnings,
     required this.dataPoints,
     required this.selectedPointLabel,
     required this.selectedPointValue,
     this.haveTitle = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

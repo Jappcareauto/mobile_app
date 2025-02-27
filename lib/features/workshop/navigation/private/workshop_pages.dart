@@ -1,10 +1,7 @@
 import 'package:get/get.dart';
 
-
-
 import '../bindings/invoice_controller_binding.dart';
 import '../../ui/invoice/invoice_screen.dart';
-import 'package:jappcare/features/authentification/ui/verifyYourEmail/views/email_verify_successfully.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/apointment_detail_bindings.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/book_appointment_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/chat_appointment_binding.dart';
@@ -33,68 +30,61 @@ import 'workshop_private_routes.dart';
 
 class WorkshopPages implements FeaturePages {
   @override
-  List<GetPage>  getPages() => [
-    GetPage(
-      name: WorkshopPrivateRoutes.home,
-      page: () => WorkshopScreen(),
-      binding: WorkshopControllerBinding(),
-    ),
-    GetPage(
-      name: WorkshopPrivateRoutes.workshopDetails,
-      page: () => WorkshopDetailsScreen(),
-      binding: WorkshopDetailsControllerBinding(),
-    ),
-    GetPage(
-      name: WorkshopPrivateRoutes.invoice,
-      page: () => InvoiceScreen(),
-      binding: InvoiceControllerBinding(),
-    ),
-   
-    // Add other routes here
-    GetPage(
-      name: WorkshopPrivateRoutes.sevicesLocator,
-      page: () => ServicesCenterLocator(),
-      binding: ServicesLocatorBinding(),
-    ),
-    GetPage(
-      name: WorkshopPrivateRoutes.detailautoshop,
-      page: () => AutoshopScreen(),
-      binding: DetailAutoshopBinding(),
-    ),
-    GetPage(
-        name: WorkshopPrivateRoutes.bookappointment,
-        page: () => BookAppointmentScreen(),
-        binding: BookAppointmentBinding()
-    ),
-    GetPage(
-        name: WorkshopPrivateRoutes.confirmappointment,
-        page: () => ConfirmeAppointmentScreen(),
-        binding: ConfirmAppointmentBinding()
-    ),
-    GetPage(
-        name: WorkshopPrivateRoutes.processChat,
-        page: () => ChatDetailsScreen(),
-        binding: ChatAppointmentBinding()
-    ),
-    GetPage(
-        name: WorkshopPrivateRoutes.payWithCard,
-        page: () => PayWithCardScreen(),
-        binding: PayWithCardBindings()
-    ),
-    GetPage(
-        name: WorkshopPrivateRoutes.payWithPhone,
-        page: () => PayWithPhoneScreen(),
-        binding: PayWithPhoneBindings()
-    ),
-    GetPage(
-        name: WorkshopPrivateRoutes.successPayment,
-        page: () =>  SucessPaymentScreen(),
-        binding: SuccessPaymentBinding()
-    ),
-    GetPage(
-        name: WorkshopPrivateRoutes.appointmentDetail,
-        page: () =>  AppointmentDetailScreen(),
-        binding: AppointmentDetailsBinding()
-    )
-  ];
+  List<GetPage> getPages() => [
+        GetPage(
+          name: WorkshopPrivateRoutes.home,
+          page: () => const WorkshopScreen(),
+          binding: WorkshopControllerBinding(),
+        ),
+        GetPage(
+          name: WorkshopPrivateRoutes.workshopDetails,
+          page: () => WorkshopDetailsScreen(),
+          binding: WorkshopDetailsControllerBinding(),
+        ),
+        GetPage(
+          name: WorkshopPrivateRoutes.invoice,
+          page: () => InvoiceScreen(),
+          binding: InvoiceControllerBinding(),
+        ),
+
+        // Add other routes here
+        GetPage(
+          name: WorkshopPrivateRoutes.sevicesLocator,
+          page: () => const ServicesCenterLocator(),
+          binding: ServicesLocatorBinding(),
+        ),
+        GetPage(
+          name: WorkshopPrivateRoutes.detailautoshop,
+          page: () => const AutoshopScreen(),
+          binding: DetailAutoshopBinding(),
+        ),
+        GetPage(
+            name: WorkshopPrivateRoutes.bookappointment,
+            page: () => const BookAppointmentScreen(),
+            binding: BookAppointmentBinding()),
+        GetPage(
+            name: WorkshopPrivateRoutes.confirmappointment,
+            page: () => ConfirmeAppointmentScreen(),
+            binding: ConfirmAppointmentBinding()),
+        GetPage(
+            name: WorkshopPrivateRoutes.processChat,
+            page: () => ChatDetailsScreen(),
+            binding: ChatAppointmentBinding()),
+        GetPage(
+            name: WorkshopPrivateRoutes.payWithCard,
+            page: () => const PayWithCardScreen(),
+            binding: PayWithCardBindings()),
+        GetPage(
+            name: WorkshopPrivateRoutes.payWithPhone,
+            page: () => const PayWithPhoneScreen(),
+            binding: PayWithPhoneBindings()),
+        GetPage(
+            name: WorkshopPrivateRoutes.successPayment,
+            page: () => const SucessPaymentScreen(),
+            binding: SuccessPaymentBinding()),
+        GetPage(
+            name: WorkshopPrivateRoutes.appointmentDetail,
+            page: () => AppointmentDetailScreen(),
+            binding: AppointmentDetailsBinding())
+      ];
 }

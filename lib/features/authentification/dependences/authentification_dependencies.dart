@@ -22,7 +22,7 @@ class AuthentificationDependencies {
     Get.lazyPut<AuthentificationRepository>(() => AuthentificationRepositoryImpl(
         networkService: Get.find()), fenix: true);
 
-    Get.lazyPut<FeatureWidgetInterface>(() => AuthentificationScreen(),
+    Get.lazyPut<FeatureWidgetInterface>(() => const AuthentificationScreen(),
         tag: 'AuthentificationScreen', fenix: true);
       Get.lazyPut(() => LoginUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => RegisterUseCase(Get.find()), fenix: true);

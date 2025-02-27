@@ -12,12 +12,12 @@ class NotificationsPages implements FeaturePages {
   List<GetPage>  getPages() => [
     GetPage(
       name: NotificationsPrivateRoutes.home,
-      page: () => NotificationsScreen(),
+      page: () => const NotificationsScreen(),
       binding: NotificationsControllerBinding(),
     ),
     GetPage(
       name: NotificationsPrivateRoutes.notificationDetails,
-      page: () => NotificationDetailsScreen(),
+      page: () => const NotificationDetailsScreen(),
       binding: NotificationDetailsControllerBinding(),
     ),
     // Add other routes here
