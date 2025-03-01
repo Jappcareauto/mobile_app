@@ -6,12 +6,12 @@ import 'vehicle_finder_private_routes.dart';
 
 class VehicleFinderPages implements FeaturePages {
   @override
-  List<GetPage>  getPages() => [
-    GetPage(
-      name: VehicleFinderPrivateRoutes.home,
-      page: () => const VehicleFinderScreen(),
-      binding: VehicleFinderControllerBinding(),
-    ),
-    // Add other routes here
-  ];
+  List<GetPage> getPages() => [
+        GetPage(
+          name: VehicleFinderPrivateRoutes.home,
+          page: () => const VehicleFinderScreen(),
+          binding: VehicleFinderControllerBinding(),
+        ),
+        // Add other routes here
+      ];
 }

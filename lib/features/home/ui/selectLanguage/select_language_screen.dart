@@ -18,22 +18,22 @@ class SelectLanguageScreen extends GetView<SelectLanguageController> {
             const EdgeInsets.symmetric(horizontal: AppDimensions.paddingMedium),
         child: GetBuilder<SelectLanguageController>(
           initState: (_) {},
-          builder: (_) {
+          builder: (controller) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 const SizedBox(height: 20),
                 CustomRadioButtonWidget(
                     language: 'English',
-                    groupValue: _.groupValue,
-                    isSelected: _.selectedLanguage == 'English',
-                    onChanged: _.changeLanguage),
+                    groupValue: controller.groupValue,
+                    isSelected: controller.selectedLanguage == 'English',
+                    onChanged: controller.changeLanguage),
                 const SizedBox(height: 8),
                 CustomRadioButtonWidget(
                     language: 'Français',
-                    groupValue: _.groupValue,
-                    isSelected: _.selectedLanguage == 'Français',
-                    onChanged: _.changeLanguage),
+                    groupValue: controller.groupValue,
+                    isSelected: controller.selectedLanguage == 'Français',
+                    onChanged: controller.changeLanguage),
               ],
             );
           },

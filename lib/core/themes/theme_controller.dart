@@ -2,13 +2,14 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class ThemeController extends GetxController {
-  Rx<ThemeMode> themeMode = ThemeMode.light.obs;
+  final Rx<ThemeMode> _themeMode = ThemeMode.light.obs;
 
   void changeThemeMode(ThemeMode mode) {
-    themeMode.value = mode;
+    _themeMode.value = mode;
+    Get.changeThemeMode(mode); // Apply the theme change
   }
 
-  bool get isDarkMode => themeMode.value == ThemeMode.dark;
+  bool get isDarkMode => _themeMode.value == ThemeMode.dark;
 
-  ThemeMode get currentTheme => themeMode.value;
+  ThemeMode get currentTheme => _themeMode.value;
 }

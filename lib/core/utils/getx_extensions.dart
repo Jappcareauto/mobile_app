@@ -34,8 +34,8 @@ extension Utils on GetInterface {
             snackPosition: SnackPosition.BOTTOM,
             backgroundColor: color ??
                 (isError
-                    ? Colors.red.withOpacity(.8)
-                    : Get.theme.primaryColor.withOpacity(.8)),
+                    ? Colors.red.withValues(alpha: .8)
+                    : Get.theme.primaryColor.withValues(alpha: .8)),
             title: title,
             message: message,
             duration: const Duration(seconds: 2),

@@ -11,19 +11,20 @@ class OnboardingScreen extends GetView<OnboardingController> {
   Widget build(BuildContext context) {
     return MixinBuilder<OnboardingController>(
       initState: (_) {},
-      builder: (_) {
+      builder: (controller) {
         Widget buildDot(int index, BuildContext context) {
           return Container(
             height: 10,
-            width: _.currentPage == index ? 18 : 10,
+            width: controller.currentPage.value == index ? 18 : 10,
             margin: const EdgeInsets.symmetric(
               horizontal: 4,
             ),
             decoration: BoxDecoration(
               borderRadius:
                   BorderRadius.circular(AppDimensions.radiusExtraLarge),
-              color:
-                  _.currentPage.value == index ? Colors.white : Colors.white60,
+              color: controller.currentPage.value == index
+                  ? Colors.white
+                  : Colors.white60,
             ),
           );
         }
@@ -59,8 +60,8 @@ class OnboardingScreen extends GetView<OnboardingController> {
               child: Stack(
                 children: [
                   PageView(
-                    controller: _.pageController,
-                    onPageChanged: _.onPageChange,
+                    controller: controller.pageController,
+                    onPageChanged: controller.onPageChange,
                     children: [
                       // Container(
                       //   child: Column(

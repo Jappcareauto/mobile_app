@@ -17,119 +17,129 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
     return Scaffold(
       appBar: const CustomAppBar(title: 'Register'),
       body: MixinBuilder<SignUpWithEmailController>(
-        builder: (_) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Form(
-                key: _.registerFormHelper.formKey,
-                autovalidateMode: _.registerFormHelper.autovalidateMode.value,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: Get.height * .6,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            CustomFormField(
-                              label: 'Name',
-                              hintText: 'Enter your name',
-                              controller:
-                                  _.registerFormHelper.controllers['name'],
-                              validator:
-                                  _.registerFormHelper.validators['name'],
-                              keyboardType: TextInputType.text,
-                            ),
-                            const SizedBox(height: 20),
-                            CustomFormField(
-                              label: 'Email',
-                              hintText: 'Enter your email',
-                              controller:
-                                  _.registerFormHelper.controllers['email'],
-                              validator:
-                                  _.registerFormHelper.validators['email'],
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            const SizedBox(height: 20),
-                            CustomFormField(
-                              label: 'Password',
-                              isPassword: true,
-                              hintText: 'Enter your password',
-                              controller:
-                                  _.registerFormHelper.controllers['password'],
-                              validator:
-                                  _.registerFormHelper.validators['password'],
-                              obscureText: true,
-                            ),
-                            const SizedBox(height: 8),
-                            CustomDateFormField(
-                              label: 'Date of Birth',
-                              controller: _.registerFormHelper
-                                  .controllers['dateOfBirth'],
-                              validator: _
-                                  .registerFormHelper.validators['dateOfBirth'],
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Radio(
-                                    value: true,
-                                    groupValue: true,
-                                    onChanged: (a) {}),
-                                Expanded(
-                                  child: Text(
-                                    "By continuing, you agree to our ",
-                                    style: Get.textTheme.bodySmall,
-                                  ),
-                                ),
-                                TextButton(
-                                    onPressed: Get.find<AuthentificationController>().goToTermsAndConditions,
-                                    child: Text(
-                                      'Terms and Conditions',
-                                      style: Get.textTheme.bodySmall?.copyWith(
-                                          color: Get.theme.primaryColor),
-                                    )),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height * .25,
-                        child: Column(
-                          children: [
-                            CustomButton(
-                              isLoading: _.registerFormHelper.isLoading,
-                              text: 'Register',
-                              onPressed: _.registerFormHelper.submit,
-                            ),
-                            const SizedBox(height: 20),
-                            CustomButton(
-                              text: 'Continue',
-                              haveBorder: true,
-                              prefixIcon: const ImageComponent(
-                                  assetPath: AppImages.google, width: 25),
-                              isLoading: Get.find<AuthentificationController>()
-                                  .loadingGoogle,
-                              onPressed: Get.find<AuthentificationController>()
-                                  .loginWithGoogle,
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+        builder: (controller) {
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Form(
+                  key: controller.registerFormHelper.formKey,
+                  autovalidateMode:
+                      controller.registerFormHelper.autovalidateMode.value,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: Get.height * .6,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              CustomFormField(
+                                label: 'Name',
+                                hintText: 'Enter your name',
+                                controller: controller
+                                    .registerFormHelper.controllers['name'],
+                                validator: controller
+                                    .registerFormHelper.validators['name'],
+                                keyboardType: TextInputType.text,
+                              ),
+                              const SizedBox(height: 20),
+                              CustomFormField(
+                                label: 'Email',
+                                hintText: 'Enter your email',
+                                controller: controller
+                                    .registerFormHelper.controllers['email'],
+                                validator: controller
+                                    .registerFormHelper.validators['email'],
+                                keyboardType: TextInputType.emailAddress,
+                              ),
+                              const SizedBox(height: 20),
+                              CustomFormField(
+                                label: 'Password',
+                                isPassword: true,
+                                hintText: 'Enter your password',
+                                controller: controller
+                                    .registerFormHelper.controllers['password'],
+                                validator: controller
+                                    .registerFormHelper.validators['password'],
+                                obscureText: true,
+                              ),
+                              const SizedBox(height: 8),
+                              CustomDateFormField(
+                                label: 'Date of Birth',
+                                controller: controller.registerFormHelper
+                                    .controllers['dateOfBirth'],
+                                validator: controller.registerFormHelper
+                                    .validators['dateOfBirth'],
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  const Text('Don\'t have an account?'),
+                                  Radio(
+                                      value: true,
+                                      groupValue: true,
+                                      onChanged: (a) {}),
+                                  Expanded(
+                                    child: Text(
+                                      "By continuing, you agree to our ",
+                                      style: Get.textTheme.bodySmall,
+                                    ),
+                                  ),
                                   TextButton(
-                                      onPressed: _.goToLoginPage,
-                                      child: const Text('Login'))
-                                ])
-                          ],
+                                      onPressed:
+                                          Get.find<AuthentificationController>()
+                                              .goToTermsAndConditions,
+                                      child: Text(
+                                        'Terms and Conditions',
+                                        style: Get.textTheme.bodySmall
+                                            ?.copyWith(
+                                                color: Get.theme.primaryColor),
+                                      )),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )),
+                        SizedBox(
+                          height: Get.height * .25,
+                          child: Column(
+                            children: [
+                              CustomButton(
+                                isLoading:
+                                    controller.registerFormHelper.isLoading,
+                                text: 'Register',
+                                onPressed: controller.registerFormHelper.submit,
+                              ),
+                              const SizedBox(height: 20),
+                              CustomButton(
+                                text: 'Continue',
+                                haveBorder: true,
+                                prefixIcon: const ImageComponent(
+                                    assetPath: AppImages.google, width: 25),
+                                isLoading:
+                                    Get.find<AuthentificationController>()
+                                        .loadingGoogle,
+                                onPressed:
+                                    Get.find<AuthentificationController>()
+                                        .loginWithGoogle,
+                              ),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text('Don\'t have an account?'),
+                                    TextButton(
+                                        onPressed: controller.goToLoginPage,
+                                        child: const Text('Login'))
+                                  ])
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
           );
         },
       ),
