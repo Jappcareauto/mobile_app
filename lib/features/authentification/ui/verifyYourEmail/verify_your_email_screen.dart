@@ -57,7 +57,8 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                                   Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const ImageDecoration(assetPath: AppConstants.Sms),
+                                      const ImageDecoration(
+                                          assetPath: AppConstants.sms),
                                       Text(
                                         "We've sent a verification email to ",
                                         style: Get.textTheme.bodyLarge

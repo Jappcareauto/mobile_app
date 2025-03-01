@@ -28,12 +28,11 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const ImageDecoration(assetPath: AppConstants.SingUp),
+                      const ImageDecoration(assetPath: AppConstants.singUp),
                       SizedBox(
                         height: Get.height * .6,
                         child: Column(
                           children: [
-
                             CustomPhoneFormField(
                                 label: 'Phone',
                                 hintText: 'Enter your Phone',

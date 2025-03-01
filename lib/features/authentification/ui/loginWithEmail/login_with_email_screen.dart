@@ -27,8 +27,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const ImageDecoration(assetPath: AppConstants.Login),
-
+                      const ImageDecoration(assetPath: AppConstants.login),
                       SizedBox(
                         height: Get.height * .6,
                         child: Column(
@@ -36,7 +35,8 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                             CustomFormField(
                               label: 'Email',
                               hintText: 'Enter your email',
-                              controller: _.loginFormHelper.controllers['email'],
+                              controller:
+                                  _.loginFormHelper.controllers['email'],
                               validator: _.loginFormHelper.validators['email'],
                               keyboardType: TextInputType.emailAddress,
                             ),
@@ -45,15 +45,19 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                               label: 'Password',
                               isPassword: true,
                               hintText: 'Enter your password',
-                              controller: _.loginFormHelper.controllers['password'],
-                              validator: _.loginFormHelper.validators['password'],
+                              controller:
+                                  _.loginFormHelper.controllers['password'],
+                              validator:
+                                  _.loginFormHelper.validators['password'],
                               obscureText: true,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 TextButton(
-                                    onPressed: Get.find<AuthentificationController>().navigateToForgotPassword,
+                                    onPressed:
+                                        Get.find<AuthentificationController>()
+                                            .navigateToForgotPassword,
                                     child: const Text('Forgot Password?')),
                               ],
                             ),
