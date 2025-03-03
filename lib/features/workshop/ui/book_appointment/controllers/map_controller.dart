@@ -9,15 +9,18 @@ import 'dart:ui' as ui;
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:jappcare/core/utils/app_constants.dart';
+
 class MapController extends GetxController {
-  final GarageController _garageController = GarageController(Get.find(), Get.find());
+  final GarageController _garageController =
+      GarageController(Get.find(), Get.find());
   final loading = true.obs;
   final vehicleLoading = true.obs;
   final AppNavigation _appNavigation;
   final arguments = Get.arguments;
   final locationPermissionGranted = false.obs;
   final Completer<GoogleMapController> mapController = Completer();
-  final Rx<BitmapDescriptor> serviceLocation = BitmapDescriptor.defaultMarker.obs;
+  final Rx<BitmapDescriptor> serviceLocation =
+      BitmapDescriptor.defaultMarker.obs;
   Set<Marker> markers = {};
   var kYaounde = const CameraPosition(
     target: LatLng(3.8480, 11.5021),
@@ -41,7 +44,6 @@ class MapController extends GetxController {
       loading.value = false;
       vehicleLoading.value = false;
     }
-
   }
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
@@ -52,7 +54,9 @@ class MapController extends GetxController {
         targetWidth: width,
       );
       ui.FrameInfo fi = await codec.getNextFrame();
-      return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+      return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+          .buffer
+          .asUint8List();
     } catch (e) {
       print("Error loading asset: $e");
       rethrow;
@@ -60,8 +64,9 @@ class MapController extends GetxController {
   }
 
   Future<void> loadCustomIcons() async {
-    final Uint8List serviceIconBytes = await getBytesFromAsset(AppConstants.mapLocalisation, 150);
-    serviceLocation.value = BitmapDescriptor.fromBytes(serviceIconBytes);
+    final Uint8List serviceIconBytes =
+        await getBytesFromAsset(AppConstants.mapLocalisation, 150);
+    serviceLocation.value = BitmapDescriptor.bytes(serviceIconBytes);
   }
 
   void addMarker(double latitude, double longitude) async {
@@ -85,6 +90,7 @@ class MapController extends GetxController {
       locationPermissionGranted.value = true;
     }
   }
+
   void goToLocation(double latitude, double longitude) async {
     final GoogleMapController controller = await mapController.future;
     controller.animateCamera(
@@ -96,9 +102,9 @@ class MapController extends GetxController {
       ),
     );
   }
+
   void locatePoint(double latitude, double longitude) {
     addMarker(latitude, longitude); // Ajout du marqueur
     goToLocation(latitude, longitude); // Centrage de la carte
   }
-
 }

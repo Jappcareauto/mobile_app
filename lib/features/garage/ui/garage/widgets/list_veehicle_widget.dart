@@ -10,8 +10,10 @@ import 'car_card_add_vehicle.dart';
 import 'shimmers/garage_name_shimmer.dart';
 import 'shimmers/list_vehicle_shimmer.dart';
 
-class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterface {
-  GarageController garageController  = GarageController(Get.find(), Get.find());
+class ListVehicleWidget extends StatelessWidget
+    implements FeatureWidgetInterface {
+  final GarageController garageController =
+      GarageController(Get.find(), Get.find());
   final bool haveTitle;
   final PageController? pageController;
   final RxInt? currentPage;
@@ -22,7 +24,7 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
   final Function(Vehicle selectCar)? onSelected;
   final int? selectedIndex;
 
-   ListVehicleWidget({
+  ListVehicleWidget({
     super.key,
     this.pageController,
     this.currentPage,
@@ -40,20 +42,25 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
     return MixinBuilder<GarageController>(
       init: GarageController(Get.find(), Get.find()),
       autoRemove: false,
-      builder: (_) {
-        if (_.vehicleLoading.value) {
+      builder: (controller) {
+        if (controller.vehicleLoading.value) {
           return const ListVehicleShimmer();
         }
 
-        final vehiclesToDisplay = _.vehicleList.isEmpty
+        final vehiclesToDisplay = controller.vehicleList.isEmpty
             ? []
             : isSingleCard == true
-            ? [_.vehicleList[(currentPage?.value ?? 0).clamp(0, _.vehicleList.length - 1)]]
-            : _.vehicleList;
+                ? [
+                    controller.vehicleList[(currentPage?.value ?? 0)
+                        .clamp(0, controller.vehicleList.length - 1)]
+                  ]
+                : controller.vehicleList;
 
         // Initialiser l'appel de `onSelected` pour le premier élément
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (vehiclesToDisplay.isNotEmpty && onSelected != null && currentPage?.value == 0) {
+        WidgetsBinding.instance.addPostFrameCallback((controller) {
+          if (vehiclesToDisplay.isNotEmpty &&
+              onSelected != null &&
+              currentPage?.value == 0) {
             onSelected!(vehiclesToDisplay[0]);
           }
         });
@@ -65,12 +72,13 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Obx(() {
-                  return _.loading.value
+                  return controller.loading.value
                       ? const MyGarageNameShimmer()
                       : Text(
-                    title,
-                    style: Get.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
-                  );
+                          title,
+                          style: Get.textTheme.bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        );
                 }),
               ),
             if (haveTitle) const SizedBox(height: 5),
@@ -78,7 +86,8 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
               height: 190,
               child: PageView.builder(
                 controller: pageController,
-                itemCount: vehiclesToDisplay.length + (haveAddVehicule == true ? 1 : 0),
+                itemCount: vehiclesToDisplay.length +
+                    (haveAddVehicule == true ? 1 : 0),
                 onPageChanged: (index) {
                   currentPage?.value = index;
                   if (index < vehiclesToDisplay.length && onSelected != null) {
@@ -86,25 +95,27 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
                   }
                 },
                 itemBuilder: (context, index) {
-                  if (haveAddVehicule == true && index == vehiclesToDisplay.length) {
+                  if (haveAddVehicule == true &&
+                      index == vehiclesToDisplay.length) {
                     return GestureDetector(
-                      onTap: _.goToAddVehicle,
+                      onTap: controller.goToAddVehicle,
                       child: Container(
                         height: 200,
                         margin: const EdgeInsets.only(right: 12),
                         width: 360,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
-                          color: Get.theme.primaryColor.withOpacity(.1),
+                          color: Get.theme.primaryColor.withValues(alpha: .1),
                           border: Border.all(
-                            color: Get.theme.primaryColor.withOpacity(.1),
+                            color: Get.theme.primaryColor.withValues(alpha: .1),
                             width: 3,
                           ),
                         ),
                         child: const Center(
                           child: Text(
                             '+ Add Vehicle',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w400),
                           ),
                         ),
                       ),
@@ -123,7 +134,7 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
                     haveBorder: currentPage?.value == index,
                     containerheight: 200,
                     next: () {
-                      _.goToVehicleDetails(vehicle);
+                      controller.goToVehicleDetails(vehicle);
                       // if (index == (vehiclesToDisplay.length - 1) && !haveAddVehicule!) {
                       //   pageController?.jumpToPage(0);
                       // } else {
@@ -134,7 +145,10 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
                       // }
                     },
                     carName: vehicle.detail.model ?? '',
-                    carDetails:[ vehicle.detail.year ?? "Unknown" , vehicle.detail.make ?? "Unknown"] ,
+                    carDetails: [
+                      vehicle.detail.year ?? "Unknown",
+                      vehicle.detail.make ?? "Unknown"
+                    ],
                     imagePath: vehicle.media[2]?.sourceUrl ?? '',
                     imageUrl: vehicle.media[2]?.sourceUrl ?? '',
                   );
@@ -149,11 +163,13 @@ class ListVehicleWidget extends StatelessWidget implements FeatureWidgetInterfac
 
   @override
   void refreshData() {
-    final lastUserId = Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
+    final lastUserId =
+        Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
     if (lastUserId != null) {
       garageController.fetchData(lastUserId);
     }
   }
+
   @override
   Widget buildView([args]) {
     return ListVehicleWidget(

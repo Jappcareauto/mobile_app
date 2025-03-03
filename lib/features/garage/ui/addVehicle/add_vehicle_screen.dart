@@ -16,61 +16,63 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
         body: MixinBuilder<AddVehicleController>(
           init: AddVehicleController(Get.find()),
           initState: (_) {},
-          builder: (_) {
-            return Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Form(
-                        key: _.addVehicleFormHelper.formKey,
-                            autovalidateMode:
-                            _.addVehicleFormHelper.autovalidateMode.value,
-                            child: Column(
+          builder: (controller) {
+            return SafeArea(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Form(
+                              key: controller.addVehicleFormHelper.formKey,
+                              autovalidateMode: controller
+                                  .addVehicleFormHelper.autovalidateMode.value,
+                              child: Column(
                                 children: [
-                                const SizedBox(height: 20),
-                            CustomFormField(
-                              controller:
-                              _.addVehicleFormHelper.controllers['vin'],
-                              label: "VIN/Chassi Number",
-                              hintText: "Ex. NW905 AG",
-                              forceUpperCase: true,
-                              validator:
-                              _.addVehicleFormHelper.validators['vin'],
-                            ),
-
-
-                                const SizedBox(height: 20),
-                                CustomFormField(
-                                  controller: _.addVehicleFormHelper
-                                      .controllers['registration'],
-                                  label: "Vehicel Registration Number",
-                                  hintText: "Ex. SV30-0169266",
-                                  forceUpperCase: true,
-                                  validator: _.addVehicleFormHelper
-                                      .validators['registration'],
-                                ),
-                              ],
-                            ))),
+                                  const SizedBox(height: 20),
+                                  CustomFormField(
+                                    controller: controller.addVehicleFormHelper
+                                        .controllers['vin'],
+                                    label: "VIN/Chassi Number",
+                                    hintText: "Ex. NW905 AG",
+                                    forceUpperCase: true,
+                                    validator: controller
+                                        .addVehicleFormHelper.validators['vin'],
+                                  ),
+                                  const SizedBox(height: 20),
+                                  CustomFormField(
+                                    controller: controller.addVehicleFormHelper
+                                        .controllers['registration'],
+                                    label: "Vehicel Registration Number",
+                                    hintText: "Ex. SV30-0169266",
+                                    forceUpperCase: true,
+                                    validator: controller.addVehicleFormHelper
+                                        .validators['registration'],
+                                  ),
+                                ],
+                              ))),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: CustomButton(
-                    text: "Add Vehicle",
-                    onPressed: (){
-                      onpenModalPaymentMethod(_.addVehicleFormHelper.submit);
-                    },
-                    isLoading: _.addVehicleFormHelper.isLoading,
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: CustomButton(
+                      text: "Add Vehicle",
+                      onPressed: () {
+                        onpenModalPaymentMethod(
+                            controller.addVehicleFormHelper.submit);
+                      },
+                      isLoading: controller.addVehicleFormHelper.isLoading,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ));
   }
 }
+
 void onpenModalPaymentMethod(void onConfirm) {
   showModalBottomSheet(
     context: Get.context!,
@@ -85,7 +87,7 @@ void onpenModalPaymentMethod(void onConfirm) {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withValues(alpha: .1),
                 blurRadius: 10,
                 offset: const Offset(0, -2),
               ),
@@ -94,8 +96,8 @@ void onpenModalPaymentMethod(void onConfirm) {
           padding: const EdgeInsets.all(16), // Espacement intérieur
           child: Wrap(
             children: [
-              PaymentMethodeWidget(onConfirm:(){
-                onConfirm ;
+              PaymentMethodeWidget(onConfirm: () {
+                onConfirm;
               }),
             ],
           ),
