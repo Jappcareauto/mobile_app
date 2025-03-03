@@ -8,6 +8,30 @@ class Validators {
     return null;
   }
 
+  static String? maxEntrySize(String? value,
+      {required int maxEntrySize, String fieldName = 'Ce champ'}) {
+    if (value == null || value.isEmpty || value.length > maxEntrySize) {
+      return '$fieldName requiert $maxEntrySize charactères au maximum';
+    }
+    return null;
+  }
+
+  static String? minEntrySize(String? value,
+      {required int minEntrySize, String fieldName = 'Ce champ'}) {
+    if (value == null || value.isEmpty || value.length < minEntrySize) {
+      return '$fieldName requiert $minEntrySize charactères au minimum';
+    }
+    return null;
+  }
+
+  static String? exactEntrySize(String? value,
+      {required int exactEntrySize, String fieldName = 'Ce champ'}) {
+    if (value == null || value.isEmpty || value.length < exactEntrySize) {
+      return '$fieldName requiert $exactEntrySize charactères uniquement';
+    }
+    return null;
+  }
+
   static String? email(String? value) {
     if (value == null || value.isEmpty) {
       return 'Veuillez entrer votre email';
@@ -57,4 +81,3 @@ class Validators {
 
   // Ajoutez d'autres validateurs si nécessaire
 }
-

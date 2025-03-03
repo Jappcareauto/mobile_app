@@ -101,8 +101,8 @@ class ListVehicleWidget extends StatelessWidget
                       onTap: controller.goToAddVehicle,
                       child: Container(
                         height: 200,
-                        margin: const EdgeInsets.only(right: 12),
-                        width: 360,
+                        // margin: const EdgeInsets.only(right: 12),
+                        width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
                           color: Get.theme.primaryColor.withValues(alpha: .1),

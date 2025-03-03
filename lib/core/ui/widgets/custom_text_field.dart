@@ -8,6 +8,7 @@ class CustomFormField extends StatefulWidget {
   final TextEditingController? controller;
   final String? label;
   final String? hintText;
+  final String? helperText;
   final bool isPassword;
   final bool isEnabled;
   final TextInputType keyboardType;
@@ -35,6 +36,7 @@ class CustomFormField extends StatefulWidget {
     this.label,
     this.maxLine,
     this.hintText,
+    this.helperText,
     this.isPassword = false,
     this.isEnabled = true,
     this.keyboardType = TextInputType.text,
@@ -101,11 +103,13 @@ class _CustomFormFieldState extends State<CustomFormField> {
               : null,
           decoration: InputDecoration(
             counter: const SizedBox(),
-            fillColor: widget.filColor ?? Get.theme.primaryColor.withOpacity(.1),
+            fillColor:
+                widget.filColor ?? Get.theme.primaryColor.withValues(alpha: .1),
             filled: true,
             alignLabelWithHint: true,
             floatingLabelAlignment: FloatingLabelAlignment.start,
             hintText: widget.hintText,
+            helperText: widget.helperText,
             hintStyle: Theme.of(context)
                 .textTheme
                 .bodyMedium

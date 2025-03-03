@@ -35,16 +35,17 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                                     controller: controller.addVehicleFormHelper
                                         .controllers['vin'],
                                     label: "VIN/Chassi Number",
-                                    hintText: "Ex. NW905 AG",
+                                    hintText: "Ex. 1HGCM82633A123456",
                                     forceUpperCase: true,
                                     validator: controller
                                         .addVehicleFormHelper.validators['vin'],
+                                    maxLength: 17,
                                   ),
                                   const SizedBox(height: 20),
                                   CustomFormField(
                                     controller: controller.addVehicleFormHelper
                                         .controllers['registration'],
-                                    label: "Vehicel Registration Number",
+                                    label: "Vehicle Registration Number",
                                     hintText: "Ex. SV30-0169266",
                                     forceUpperCase: true,
                                     validator: controller.addVehicleFormHelper
@@ -58,10 +59,8 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                     padding: const EdgeInsets.all(20),
                     child: CustomButton(
                       text: "Add Vehicle",
-                      onPressed: () {
-                        onpenModalPaymentMethod(
-                            controller.addVehicleFormHelper.submit);
-                      },
+                      onPressed: () => onpenModalPaymentMethod(
+                          controller.addVehicleFormHelper.submit),
                       isLoading: controller.addVehicleFormHelper.isLoading,
                     ),
                   ),
@@ -73,7 +72,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
   }
 }
 
-void onpenModalPaymentMethod(void onConfirm) {
+void onpenModalPaymentMethod(VoidCallback onConfirm) {
   showModalBottomSheet(
     context: Get.context!,
     isScrollControlled: true, // Permet un contrôle précis sur la hauteur
@@ -96,9 +95,7 @@ void onpenModalPaymentMethod(void onConfirm) {
           padding: const EdgeInsets.all(16), // Espacement intérieur
           child: Wrap(
             children: [
-              PaymentMethodeWidget(onConfirm: () {
-                onConfirm;
-              }),
+              PaymentMethodeWidget(onConfirm: onConfirm),
             ],
           ),
         ),

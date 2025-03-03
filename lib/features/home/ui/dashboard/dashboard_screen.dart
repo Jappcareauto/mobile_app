@@ -6,8 +6,6 @@ import 'package:jappcare/features/home/ui/home/home_screen.dart';
 import 'controllers/dashboard_controller.dart';
 import 'package:get/get.dart';
 
-
-
 class DashboardScreen extends GetView<DashboardController> {
   const DashboardScreen({super.key});
 
@@ -18,84 +16,85 @@ class DashboardScreen extends GetView<DashboardController> {
       body: Obx(() => controller.loading.value
           ? const LoaderWidget(dense: true)
           : IndexedStack(
-        index: controller.selectedIndex.value,
-        children: [
-          HomeScreen(),
-          if (Get.isRegistered<FeatureWidgetInterface>(
-              tag: 'ActivitiesScreen'))
-            Get.find<FeatureWidgetInterface>(tag: 'ActivitiesScreen')
-                .buildView(),
-          if (Get.isRegistered<FeatureWidgetInterface>(
-              tag: 'WorkshopScreen'))
-            Get.find<FeatureWidgetInterface>(tag: 'WorkshopScreen')
-                .buildView(),
-          // Placeholder pour Shop, mais redirigé dans le controller
-          Container(),
-          if (Get.isRegistered<FeatureWidgetInterface>(
-              tag: 'GarageScreen'))
-            Get.find<FeatureWidgetInterface>(tag: 'GarageScreen')
-                .buildView(),
-        ],
-      )),
-      bottomNavigationBar: Obx(() => controller.loading.value ||
-          controller.selectedIndex.value == 3 // Cache la barre si "Shop" est actif
+              index: controller.selectedIndex.value,
+              children: [
+                HomeScreen(),
+                if (Get.isRegistered<FeatureWidgetInterface>(
+                    tag: 'ActivitiesScreen'))
+                  Get.find<FeatureWidgetInterface>(tag: 'ActivitiesScreen')
+                      .buildView(),
+                if (Get.isRegistered<FeatureWidgetInterface>(
+                    tag: 'WorkshopScreen'))
+                  Get.find<FeatureWidgetInterface>(tag: 'WorkshopScreen')
+                      .buildView(),
+                // Placeholder pour Shop, mais redirigé dans le controller
+                // Container(),
+                if (Get.isRegistered<FeatureWidgetInterface>(
+                    tag: 'GarageScreen'))
+                  Get.find<FeatureWidgetInterface>(tag: 'GarageScreen')
+                      .buildView(),
+              ],
+            )),
+      bottomNavigationBar: Obx(() => controller.loading.value
+          //     controller.selectedIndex.value ==
+          //         3 // Cache la barre si "Shop" est actif
           ? const SizedBox()
           : BottomNavigationBar(
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        showUnselectedLabels: true,
-        iconSize: 25,
-        unselectedItemColor: const Color(0xFF111111),
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              controller.selectedIndex.value == 0
-                  ? FluentIcons.home_24_filled
-                  : FluentIcons.home_24_regular,
-            ),
-            label: 'Home',
-          ),
-          if (Get.isRegistered<FeatureWidgetInterface>(
-              tag: 'ActivitiesScreen'))
-            BottomNavigationBarItem(
-              icon: Icon(
-                controller.selectedIndex.value == 1
-                    ? FluentIcons.clock_24_filled
-                    : FluentIcons.clock_24_regular,
-              ),
-              label: 'Activities',
-            ),
-          if (Get.isRegistered<FeatureWidgetInterface>(
-              tag: 'WorkshopScreen'))
-            BottomNavigationBarItem(
-              icon: Icon(
-                controller.selectedIndex.value == 2
-                    ? FluentIcons.home_garage_24_filled
-                    : FluentIcons.home_garage_24_regular,
-              ),
-              label: 'Workshops',
-            ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              controller.selectedIndex.value == 3
-                  ? FluentIcons.building_shop_24_filled
-                  : FluentIcons.building_shop_24_regular,
-            ),
-            label: 'Shop',
-          ),
-          if (Get.isRegistered<FeatureWidgetInterface>(
-              tag: 'GarageScreen'))
-            BottomNavigationBarItem(
-              icon: Icon(controller.selectedIndex.value == 4
-                  ? FluentIcons.vehicle_cab_24_filled
-                  : FluentIcons.vehicle_cab_24_regular),
-              label: 'Garage',
-            ),
-        ],
-        currentIndex: controller.selectedIndex.value,
-        selectedItemColor: Get.theme.primaryColor,
-        onTap: controller.onItemTapped,
-      )),
+              backgroundColor: Colors.white,
+              type: BottomNavigationBarType.fixed,
+              showUnselectedLabels: true,
+              iconSize: 25,
+              unselectedItemColor: const Color(0xFF111111),
+              items: <BottomNavigationBarItem>[
+                BottomNavigationBarItem(
+                  icon: Icon(
+                    controller.selectedIndex.value == 0
+                        ? FluentIcons.home_24_filled
+                        : FluentIcons.home_24_regular,
+                  ),
+                  label: 'Home',
+                ),
+                if (Get.isRegistered<FeatureWidgetInterface>(
+                    tag: 'ActivitiesScreen'))
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      controller.selectedIndex.value == 1
+                          ? FluentIcons.clock_24_filled
+                          : FluentIcons.clock_24_regular,
+                    ),
+                    label: 'Activities',
+                  ),
+                if (Get.isRegistered<FeatureWidgetInterface>(
+                    tag: 'WorkshopScreen'))
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      controller.selectedIndex.value == 2
+                          ? FluentIcons.home_garage_24_filled
+                          : FluentIcons.home_garage_24_regular,
+                    ),
+                    label: 'Workshops',
+                  ),
+                // BottomNavigationBarItem(
+                //   icon: Icon(
+                //     controller.selectedIndex.value == 3
+                //         ? FluentIcons.building_shop_24_filled
+                //         : FluentIcons.building_shop_24_regular,
+                //   ),
+                //   label: 'Shop',
+                // ),
+                if (Get.isRegistered<FeatureWidgetInterface>(
+                    tag: 'GarageScreen'))
+                  BottomNavigationBarItem(
+                    icon: Icon(controller.selectedIndex.value == 3
+                        ? FluentIcons.vehicle_cab_24_filled
+                        : FluentIcons.vehicle_cab_24_regular),
+                    label: 'Garage',
+                  ),
+              ],
+              currentIndex: controller.selectedIndex.value,
+              selectedItemColor: Get.theme.primaryColor,
+              onTap: controller.onItemTapped,
+            )),
     );
   }
 }
