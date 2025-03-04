@@ -26,7 +26,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          java-version: '11' # Flutter generally uses Java 11 for Android builds
+          java-version: '17' # Flutter generally uses Java 11 for Android builds
           distribution: 'temurin'
 
       # Setup Flutter environment
