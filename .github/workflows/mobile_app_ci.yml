@@ -33,7 +33,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2 # Use the latest version of the action
         with:
-          flutter-version: '3.24.0' # Use the latest stable version, or set a specific version
+          flutter-version: '3.29.0' # Use the latest stable version, or set a specific version
 
       # Get dependencies
       - name: Install Dependencies
