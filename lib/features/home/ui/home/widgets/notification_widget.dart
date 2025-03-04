@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 
@@ -7,16 +6,17 @@ class NotificationWidget extends StatelessWidget {
       {required this.bodyText,
       super.key,
       required this.coloriage,
-        this.textSize,
-        this.haveTitle,
+      this.textSize,
+      this.haveTitle,
       required this.icon,
-        required this.backgrounColor,
-      required this.title, this.onTap});
+      required this.backgrounColor,
+      required this.title,
+      this.onTap});
   final IconData icon;
   final Color coloriage;
-  final Color? backgrounColor ;
+  final Color? backgrounColor;
   final String bodyText;
-  final double? textSize ;
+  final double? textSize;
   final bool? haveTitle;
   final String title;
   final Function()? onTap;
@@ -25,7 +25,7 @@ class NotificationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: backgrounColor  ,
+          color: backgrounColor,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: AppColors.lightBorder)),
       margin: const EdgeInsets.only(bottom: 10),
@@ -33,28 +33,27 @@ class NotificationWidget extends StatelessWidget {
         onTap: onTap,
         child: ListTile(
           contentPadding: const EdgeInsets.only(left: 20, right: 20),
-          title:  haveTitle == true ?
-          Row(
-            children: [
-
-              Icon(icon, size: 24, color: coloriage) ,
-
-              const SizedBox(width: 10),
-              Text(
-                title,
-                style: TextStyle(
-                    fontSize:16, fontWeight: FontWeight.bold, color: coloriage),
-              ),
-
-            ],
-          ) :
-              const SizedBox(),
+          title: haveTitle == true
+              ? Row(
+                  children: [
+                    Icon(icon, size: 24, color: coloriage),
+                    const SizedBox(width: 10),
+                    Text(
+                      title,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: coloriage),
+                    ),
+                  ],
+                )
+              : const SizedBox(),
           subtitle: Text(
             bodyText,
-            style: TextStyle(fontSize:  textSize ?? 16),
+            style: TextStyle(fontSize: textSize ?? 16),
           ),
           trailing: CircleAvatar(
-              backgroundColor: coloriage.withOpacity(.1),
+              backgroundColor: coloriage.withValues(alpha: .1),
               radius: 35,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),

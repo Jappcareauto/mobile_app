@@ -24,7 +24,6 @@ class SelectedVehiculeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         Row(
@@ -45,7 +44,8 @@ class SelectedVehiculeWidget extends StatelessWidget {
           height: 220, // Contraindre la hauteur du PageView
           child: PageView.builder(
             controller: pageController,
-            itemCount: cars.length + (haveAddVehicule ? 1 : 0), // Ajouter un élément si nécessaire
+            itemCount: cars.length +
+                (haveAddVehicule ? 1 : 0), // Ajouter un élément si nécessaire
             onPageChanged: (index) {
               currentPage.value = index; // Mettre à jour la page actuelle
             },
@@ -60,16 +60,17 @@ class SelectedVehiculeWidget extends StatelessWidget {
                     width: 360,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24),
-                      color: Get.theme.primaryColor.withOpacity(.1),
+                      color: Get.theme.primaryColor.withValues(alpha: .1),
                       border: Border.all(
-                        color: Get.theme.primaryColor.withOpacity(.1),
+                        color: Get.theme.primaryColor.withValues(alpha: .1),
                         width: 3,
                       ),
                     ),
                     child: const Center(
                       child: Text(
                         '+ Add Vehicle',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),
@@ -94,7 +95,7 @@ class SelectedVehiculeWidget extends StatelessWidget {
                       );
                     }
                   },
-                  carName: cars[index].name?? '',
+                  carName: cars[index].name ?? '',
                   carDetails: [
                     cars[index].name ?? 'Unknown VIN',
                     cars[index].detail!.make ?? 'Unknown Name',

@@ -27,7 +27,7 @@ class GarageController extends GetxController {
   final GetGarageByOwnerIdUseCase _getGarageByOwnerIdUseCase = Get.find();
 
   final AppNavigation _appNavigation;
-  GarageController(this._appNavigation , this._getVehicleListUseCase);
+  GarageController(this._appNavigation, this._getVehicleListUseCase);
 
   GetGarageByOwnerId? myGarage;
 
@@ -44,7 +44,10 @@ class GarageController extends GetxController {
     });
 
     // Chargement initial des données
-    final lastUserId = Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
+    final lastUserId =
+        Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
+    // print(lastUserId);
+    print("lastUserId");
     if (lastUserId != null) {
       fetchData(lastUserId);
     }
@@ -56,8 +59,8 @@ class GarageController extends GetxController {
     vehicleLoading.value = true;
 
     try {
-       await getGarageByOwnerId(userId);
-       print('donner rafrechie');
+      await getGarageByOwnerId(userId);
+      print('donner rafrechie');
     } catch (e) {
       print("Erreur lors de la récupération des données : $e");
     } finally {
@@ -65,7 +68,6 @@ class GarageController extends GetxController {
       vehicleLoading.value = false;
     }
   }
-
 
   void goBack() {
     _appNavigation.goBack();
@@ -79,14 +81,17 @@ class GarageController extends GetxController {
     _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails,
         arguments: vehicleDetails);
   }
-void goToAppointmentDetail (Vehicle appointmentDetails){
-    _appNavigation.toNamed(AppRoutes.appointmentDetails , arguments: appointmentDetails);
-}
-  Future<void> getGarageByOwnerId(String userId) async {
 
+  void goToAppointmentDetail(Vehicle appointmentDetails) {
+    _appNavigation.toNamed(AppRoutes.appointmentDetails,
+        arguments: appointmentDetails);
+  }
+
+  Future<void> getGarageByOwnerId(String userId) async {
     loading.value = true;
     final result = await _getGarageByOwnerIdUseCase
         .call(GetGarageByOwnerIdCommand(userId: userId));
+    print(result);
     result.fold(
       (e) {
         loading.value = false;
@@ -102,20 +107,18 @@ void goToAppointmentDetail (Vehicle appointmentDetails){
       },
     );
   }
-  Future<void> getPlaceName(double longitude , double latitude) async{
+
+  Future<void> getPlaceName(double longitude, double latitude) async {
     lat.value = latitude;
     long.value = longitude;
-     final result  = await _getPlaceNameUseCase.call(GetPlaceNameCommand(longitude: longitude, latitude: latitude));
-     result.fold(
-         (error){
-           print(error.message);
-         },
-         (response){
-           placeName.value = response ;
-           update();
-         }
-
-     );
+    final result = await _getPlaceNameUseCase
+        .call(GetPlaceNameCommand(longitude: longitude, latitude: latitude));
+    result.fold((error) {
+      print(error.message);
+    }, (response) {
+      placeName.value = response;
+      update();
+    });
   }
 
   Future<void> getVehicleList(String garageId) async {
@@ -130,7 +133,6 @@ void goToAppointmentDetail (Vehicle appointmentDetails){
       (response) {
         vehicleList.value = response;
         print("vehicleList.toList()");
-
 
         update();
         vehicleLoading.value = false;

@@ -36,7 +36,6 @@ import '../../features/profile/navigation/private/profile_pages.dart';
 import '../../features/notifications/dependences/notifications_dependencies.dart';
 import '../../features/notifications/navigation/private/notifications_pages.dart';
 
-
 import '../../features/services/dependences/services_dependencies.dart';
 import '../../features/services/navigation/private/services_pages.dart';
 
@@ -86,7 +85,7 @@ class AppDependency {
     final dioNetworkService = DioNetworkService();
     await dioNetworkService.init();
     Get.lazyPut<NetworkService>(() => dioNetworkService, fenix: true);
-    Get.lazyPut(()=>GetPlaceNameUseCase(Get.find()));
+    Get.lazyPut(() => GetPlaceNameUseCase(Get.find()));
     // Events
     Get.put(AppEventService(), permanent: true);
 
@@ -99,10 +98,10 @@ class AppDependency {
     WorkshopDependencies.init();
     ProfileDependencies.init();
     NotificationsDependencies.init();
-      // ChatDependencies.init();
-     ServicesDependencies.init();
-     EmergencyDependencies.init();
-     VehicleFinderDependencies.init();
-     ErrorDependencies.init();
- }
+    // ChatDependencies.init();
+    ServicesDependencies.init();
+    EmergencyDependencies.init();
+    VehicleFinderDependencies.init();
+    ErrorDependencies.init();
+  }
 }

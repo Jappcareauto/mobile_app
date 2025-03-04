@@ -24,13 +24,16 @@ import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/co
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'package:web_socket_channel/io.dart';
+
 class ChatController extends GetxController {
-  final ConfirmeAppointmentController confirmeAppointmentController = ConfirmeAppointmentController(Get.find());
+  final ConfirmeAppointmentController confirmeAppointmentController =
+      ConfirmeAppointmentController(Get.find());
   final AppNavigation _appNavigation;
-  final loading = false.obs ;
+  final loading = false.obs;
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
-  GetVehiculByIdUseCase getVehiculByIdUseCase = GetVehiculByIdUseCase(Get.find());
-  final selectedMethod = 'Orange Money'.obs ;
+  GetVehiculByIdUseCase getVehiculByIdUseCase =
+      GetVehiculByIdUseCase(Get.find());
+  final selectedMethod = 'Orange Money'.obs;
   ChatController(this._appNavigation);
   late WebSocketChannel channel;
   final ScrollController scrollController = ScrollController();
@@ -39,39 +42,28 @@ class ChatController extends GetxController {
   final TextEditingController messageController = TextEditingController();
   final LocalStorageService _localStorage = Get.find<LocalStorageService>();
   SendMessageUseCase sendMessageUseCase = SendMessageUseCase(Get.find());
-  GetRealTimeMessageUseCase getRealTimeMessageUseCase = GetRealTimeMessageUseCase(Get.find());
+  GetRealTimeMessageUseCase getRealTimeMessageUseCase =
+      GetRealTimeMessageUseCase(Get.find());
   @override
   void onInit() {
     super.onInit();
+    globalControllerWorkshop.addData("chatroomId", "123456");
     final chatroom = globalControllerWorkshop.workshopData['chatroomId'];
-    getrealTimeMessage(chatroom , _localStorage.read(AppConstants.tokenKey));
-
-
+    print('chatroom $chatroom');
+    getrealTimeMessage(chatroom, _localStorage.read(AppConstants.tokenKey));
   }
 
   var paymentDetails = [
+    {"name": "MTN Momo", "icon": AppImages.mtnLogo, "numero": "+237691121881"},
     {
-      "name":"MTN Momo",
-      "icon":AppImages.mtnLogo,
-      "numero":"+237691121881"
+      "name": "Orange Money",
+      "icon": AppImages.orangeLogo,
+      "numero": "+237691121881"
     },
-    {
-      "name":"Orange Money",
-      "icon":AppImages.orangeLogo,
-      "numero":"+237691121881"
-    },
-    {
-      "name":"Card",
-      "icon":AppImages.card,
-      "numero":"**** **** **** 7890"
-    },
-    {
-      "name":"Cash",
-      "icon":AppImages.money,
-      "numero":""
-    }
+    {"name": "Card", "icon": AppImages.card, "numero": "**** **** **** 7890"},
+    {"name": "Cash", "icon": AppImages.money, "numero": ""}
   ];
-  Future<void> getrealTimeMessage(String chatroom , String token) async {
+  Future<void> getrealTimeMessage(String chatroom, String token) async {
     final Uri uri = Uri.parse('${WorkshopConstants.chatUri}$chatroom');
     try {
       // Crée une connexion WebSocket avec les headers nécessaires
@@ -85,9 +77,10 @@ class ChatController extends GetxController {
 
       // Écoute les messages en temps réel
       channel.stream.listen(
-            (message) {
+        (message) {
           final decodedMessage = jsonDecode(message);
-          final chatMessage = SendMessageModel.fromJson(decodedMessage).toEntity();
+          final chatMessage =
+              SendMessageModel.fromJson(decodedMessage).toEntity();
           messages.add(chatMessage);
           print("Nouveau message reçu : $decodedMessage");
         },
@@ -95,69 +88,72 @@ class ChatController extends GetxController {
           print("Erreur WebSocket : $error");
           _handleReconnection(chatroom, token);
           print("REConnexion WebSocket REUSSIE.");
-
         },
         onDone: () {
           print("Connexion WebSocket fermée.");
           _handleReconnection(chatroom, token);
           print("REConnexion WebSocket REUSSIE.");
-
-
         },
       );
     } on SocketException catch (e) {
       print("Erreur réseau : $e");
     } catch (e) {
       print("Erreur inattendue : $e");
-
     }
   }
-  Future<void>getVehiculeById() async {
-    loading.value = true ;
-    final result = await getVehiculByIdUseCase.call(GetVehiculByIdCommand(id: globalControllerWorkshop.workshopData['vehiculeId']));
-    result.fold((e){
-          Get.showCustomSnackBar(e.message);
-          print(e.message);
-          loading.value = false ;
-    }, (response){
-          _appNavigation.toNamed(WorkshopPrivateRoutes.appointmentDetail , arguments: response);
-          loading.value = false ;
 
+  Future<void> getVehiculeById() async {
+    loading.value = true;
+    final result = await getVehiculByIdUseCase.call(GetVehiculByIdCommand(
+        id: globalControllerWorkshop.workshopData['vehiculeId']));
+    result.fold((e) {
+      Get.showCustomSnackBar(e.message);
+      print(e.message);
+      loading.value = false;
+    }, (response) {
+      _appNavigation.toNamed(WorkshopPrivateRoutes.appointmentDetail,
+          arguments: response);
+      loading.value = false;
     });
-
   }
+
   void _handleReconnection(String chatroom, String token) {
     print("Tentative de reconnexion...");
     Future.delayed(const Duration(seconds: 5), () {
       messages.clear();
-      getrealTimeMessage(chatroom, token); // Tente de se reconnecter après 5 secondes
+      getrealTimeMessage(
+          chatroom, token); // Tente de se reconnecter après 5 secondes
     });
   }
+
   Future<void> pickImage() async {
     final images = await getImage(many: true);
     if (images != null) {
       selectedImages.addAll(images);
     }
   }
-  void goToAppointmentDetail(){
-    _appNavigation.toNamed(WorkshopPrivateRoutes.appointmentDetail , arguments: globalControllerWorkshop.selectVehicle);
 
+  void goToAppointmentDetail() {
+    _appNavigation.toNamed(WorkshopPrivateRoutes.appointmentDetail,
+        arguments: globalControllerWorkshop.selectVehicle);
   }
+
   void removeImage(int index) {
     selectedImages.removeAt(index);
   }
-  void sendMessage()  async {
+
+  void sendMessage() async {
     if (messageController.text.isNotEmpty || selectedImages.isNotEmpty) {
       try {
         // Créer une instance de SendMessage
         final newMessage = SendMessage.create(
-          senderId:Get.find<ProfileController>().userInfos!.id,
+          senderId: Get.find<ProfileController>().userInfos!.id,
           content: messageController.text,
-          chatRoomId:globalControllerWorkshop.workshopData['chatroomId'],
+          chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
           timestamp: DateTime.now().toIso8601String(),
           type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
           appointmentId: globalControllerWorkshop.workshopData['appointmentId'],
-         );
+        );
         // Ajouter à la liste des messages
         messages.add(newMessage);
         await insertMessageToDataBase();
@@ -168,30 +164,28 @@ class ChatController extends GetxController {
         update();
         scrollToBottom();
         //sauvegarder le message dans la base de donneee
-
       } catch (e) {
         print("Erreur lors de l'envoi du message : $e");
       }
     }
   }
+
   Future<void> insertMessageToDataBase() async {
     final result = await sendMessageUseCase.call(SendMessageCommand(
-        appointmentId:globalControllerWorkshop.workshopData['appointmentId'] ,// a remplacer lorsque le enpoint de creation des rendez voux seras fonctionnel,
+        appointmentId: globalControllerWorkshop.workshopData[
+            'appointmentId'], // a remplacer lorsque le enpoint de creation des rendez voux seras fonctionnel,
         chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
-        content:  messageController.text,
+        content: messageController.text,
         type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
         senderId: Get.find<ProfileController>().userInfos!.id,
-        timestamp: DateTime.now().toIso8601String()
-    ));
-    result.fold(
-            (e){
-          print('erreur d\'envoie du message $e');
-          Get.showCustomSnackBar(e.message);
-        },
-            (response){
-          print('message envoyer avec succes');
-          print(response);
-        });
+        timestamp: DateTime.now().toIso8601String()));
+    result.fold((e) {
+      print('erreur d\'envoie du message $e');
+      Get.showCustomSnackBar(e.message);
+    }, (response) {
+      print('message envoyer avec succes');
+      print(response);
+    });
   }
 
   void openMore() {
@@ -206,19 +200,21 @@ class ChatController extends GetxController {
   void goBack() {
     _appNavigation.goBack();
   }
-  void selectMethode (String methode){
-      selectedMethod.value = methode ;
-  }
-  void goToAddPaymentMethodForm(String? methode){
-    Get.back();
-      if(methode == 'Card'){
 
-        _appNavigation.toNamed(WorkshopPrivateRoutes.payWithCard);
-      }
-      if(methode == 'MTN Momo' || methode== 'Orange Money'){
-        _appNavigation.toNamed(WorkshopPrivateRoutes.payWithPhone);
-      }
+  void selectMethode(String methode) {
+    selectedMethod.value = methode;
   }
+
+  void goToAddPaymentMethodForm(String? methode) {
+    Get.back();
+    if (methode == 'Card') {
+      _appNavigation.toNamed(WorkshopPrivateRoutes.payWithCard);
+    }
+    if (methode == 'MTN Momo' || methode == 'Orange Money') {
+      _appNavigation.toNamed(WorkshopPrivateRoutes.payWithPhone);
+    }
+  }
+
   void scrollToBottom() {
     if (scrollController.hasClients) {
       scrollController.animateTo(

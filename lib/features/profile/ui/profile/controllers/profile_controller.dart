@@ -32,6 +32,11 @@ class ProfileController extends GetxController {
   final updateImageLoading = false.obs;
 
   @override
+
+  /// Behavior:
+  /// 1. Subscribes to the userLoginEvent event in the AppEventService.
+  /// 2. Calls the getUserInfos method when the userLoginEvent is emitted with a non-empty token.
+  /// 3. Calls the getUserInfos method immediately when the controller is initialized.
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();

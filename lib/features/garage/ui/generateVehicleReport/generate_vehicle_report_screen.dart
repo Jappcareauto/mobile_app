@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
-import '../garage/widgets/list_veehicle_widget.dart';
+import '../garage/widgets/list_vehicle_widget.dart';
 import 'controllers/generate_vehicle_report_controller.dart';
 import 'package:get/get.dart';
 

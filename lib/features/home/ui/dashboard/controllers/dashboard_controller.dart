@@ -27,8 +27,8 @@ class DashboardController extends GetxController {
     loading.value = true;
     if (_localService.read(AppConstants.tokenKey) == null) {
       await Future.delayed(const Duration(seconds: 1));
-      await _appNavigation.toNamedAndReplaceAll(
-          HomePrivateRoutes.selectLanguage);
+      await _appNavigation
+          .toNamedAndReplaceAll(HomePrivateRoutes.selectLanguage);
       loading.value = false;
     } else {
       loading.value = false;
@@ -36,10 +36,10 @@ class DashboardController extends GetxController {
   }
 
   void onItemTapped(int index) {
-    if (index == 3) {
-
+    print(index);
+    if (index == 4) {
       Get.to(
-            () => const CommingSoonScreen(),
+        () => const CommingSoonScreen(),
         transition: Transition.rightToLeft,
       )?.then((_) {
         selectedIndex.value = 0;
@@ -49,7 +49,6 @@ class DashboardController extends GetxController {
       selectedIndex.value = index;
     }
   }
-
 
   void goBack() {
     _appNavigation.goBack();

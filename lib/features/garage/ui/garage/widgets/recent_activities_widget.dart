@@ -11,14 +11,15 @@ import 'car_card_widget.dart';
 
 class RecentActivitiesWidget extends StatelessWidget
     implements FeatureWidgetInterface {
-  GarageController garageController  = GarageController(Get.find(), Get.find());
+  final GarageController garageController =
+      GarageController(Get.find(), Get.find());
 
   final String title;
   final bool haveTitle;
   final bool haveTabBar;
   final bool isHorizontal;
   final String? status;
-   RecentActivitiesWidget(
+  RecentActivitiesWidget(
       {super.key,
       this.title = "Recent Activities",
       this.haveTitle = true,
@@ -29,11 +30,12 @@ class RecentActivitiesWidget extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GarageController>(
-      init: GarageController(Get.find(),Get.find()),
+      init: GarageController(Get.find(), Get.find()),
       autoRemove: false,
       initState: (_) {},
-      builder: (_) {
-        if (_.myGarage?.location == null || _.vehicleList.isEmpty) {
+      builder: (controller) {
+        if (controller.myGarage?.location == null ||
+            controller.vehicleList.isEmpty) {
           if (title == "Recent Activities") {
             return const Center(
               child: Column(
@@ -45,31 +47,33 @@ class RecentActivitiesWidget extends StatelessWidget
                 ],
               ),
             );
-
           } else {
             return const SizedBox();
           }
         }
 
-        var ws = _.vehicleList
+        var ws = controller.vehicleList
             .map(
               (e) => CarCardWidget(
-                latitude: _.myGarage!.location!.latitude ,
-                longitude: _.myGarage!.location!.longitude,
-                date: "${DateTime.parse(_.myGarage!.location!.createdAt).year}/${DateTime.parse(_.myGarage!.location!.createdAt).month.toString().padLeft(2, '0')}/${DateTime.parse(_.myGarage!.location!.createdAt).day.toString()..toString().padLeft(2, '0')}",
-                time: "${DateTime.parse(_.myGarage!.location!.createdAt).hour.toString().padLeft(2, '0')}:${DateTime.parse(_.myGarage!.location!.createdAt).minute.toString().padLeft(2, '0')}:${DateTime.parse(_.myGarage!.location!.createdAt).second.toString().padLeft(2, '0')}",
-                localisation: _.myGarage!.location!.latitude.toString(),
+                latitude: controller.myGarage!.location!.latitude,
+                longitude: controller.myGarage!.location!.longitude,
+                date:
+                    "${DateTime.parse(controller.myGarage!.location!.createdAt).year}/${DateTime.parse(controller.myGarage!.location!.createdAt).month.toString().padLeft(2, '0')}/${DateTime.parse(controller.myGarage!.location!.createdAt).day.toString()..toString().padLeft(2, '0')}",
+                time:
+                    "${DateTime.parse(controller.myGarage!.location!.createdAt).hour.toString().padLeft(2, '0')}:${DateTime.parse(controller.myGarage!.location!.createdAt).minute.toString().padLeft(2, '0')}:${DateTime.parse(controller.myGarage!.location!.createdAt).second.toString().padLeft(2, '0')}",
+                localisation:
+                    controller.myGarage!.location!.latitude.toString(),
                 nameCar: e.name,
                 pathImageCar: e.imageUrl,
                 status: 'Completed',
-                onPressed: () => _.goToAppointmentDetail(e),
+                onPressed: () => controller.goToAppointmentDetail(e),
               ),
             )
             .toList();
         if (status != null) {
           ws = ws.where((w) => w.status == status).toList();
         }
-        return _.vehicleList.isEmpty
+        return controller.vehicleList.isEmpty
             ? const SizedBox()
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,13 +112,16 @@ class RecentActivitiesWidget extends StatelessWidget
       },
     );
   }
+
   @override
   void refreshData() {
-    final lastUserId = Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
+    final lastUserId =
+        Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
     if (lastUserId != null) {
       garageController.fetchData(lastUserId);
     }
   }
+
   @override
   Widget buildView([args]) {
     if (args != null && args is bool) {

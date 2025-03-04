@@ -21,6 +21,16 @@ class AddVehicleController extends GetxController {
   final AppNavigation _appNavigation;
   AddVehicleController(this._appNavigation);
 
+  String? validateVin(String? value) {
+    if (value == null || value.isEmpty) {
+      return "VIN is required.";
+    }
+    if (!RegExp(r'^[A-HJ-NPR-Z0-9]{17}$').hasMatch(value)) {
+      return "Invalid VIN. Must be 17 characters and contain only A-Z (except I, O, Q) and 0-9.";
+    }
+    return null; // No error
+  }
+
   @override
   void onInit() {
     // Generate by Menosi_cli
@@ -31,7 +41,7 @@ class AddVehicleController extends GetxController {
         "registration": null,
       },
       validators: {
-        "vin": Validators.requiredField,
+        "vin": validateVin,
         "registration": Validators.requiredField,
       },
       onSubmit: (data) => _addVehicleUseCase.call(AddVehicleCommand(

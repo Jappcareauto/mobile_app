@@ -36,15 +36,19 @@ class AuthentificationScreen extends GetView<AuthentificationController>
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              CustomButton(
-                text: 'Login',
-                haveBorder: true,
-                onPressed: controller.openSignInModal,
+              Flexible(
+                child: CustomButton(
+                  text: 'Login',
+                  haveBorder: true,
+                  onPressed: controller.openSignInModal,
+                ),
               ),
               const SizedBox(height: 20),
-              CustomButton(
-                text: 'Create Account',
-                onPressed: controller.openSignUpModal,
+              Flexible(
+                child: CustomButton(
+                  text: 'Create Account',
+                  onPressed: controller.openSignUpModal,
+                ),
               ),
               const SizedBox(height: 20),
             ],

@@ -35,7 +35,7 @@ class VehicleModel {
       name: json['name'],
       imageUrl: json['imageUrl'],
       description: json['description'],
-      vin: json['vin'],
+      vin: json['vin'] ?? "",
       detail:
           json['detail'] != null ? DetailModel.fromJson(json['detail']) : null,
       id: json['id'],
@@ -330,5 +330,4 @@ class MediaModel {
         createdAt: createdAt,
         updatedAt: updatedAt,
       );
-
 }

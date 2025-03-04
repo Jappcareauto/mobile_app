@@ -16,7 +16,6 @@ class HomeController extends GetxController {
   List<String> notifications = [
     "Your repair from the Jappcare Autotech shop is ready, and available for pickup.",
     "Votre commande a été expédiée.",
-
   ];
   Future<void> refreshData() async {
     print("debut du refresh");
@@ -28,11 +27,14 @@ class HomeController extends GetxController {
       Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget').refreshData();
     }
 
-    if (Get.isRegistered<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')) {
-      Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget').refreshData();
+    if (Get.isRegistered<FeatureWidgetInterface>(
+        tag: 'RecentActivitiesWidget')) {
+      Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
+          .refreshData();
     }
     print('fin du refresh');
   }
+
   @override
   void onInit() {
     // Generate by Menosi_cli
@@ -44,12 +46,11 @@ class HomeController extends GetxController {
       }
     });
   }
-  void navigateTCommingSoon(){
-    Get.to(() =>
-        const CommingSoonScreen(),
-      transition: Transition.leftToRight
-    );
+
+  void navigateTCommingSoon() {
+    Get.to(() => const CommingSoonScreen(), transition: Transition.leftToRight);
   }
+
   void goBack() {
     _appNavigation.goBack();
   }
@@ -62,15 +63,19 @@ class HomeController extends GetxController {
           return const TipModalBottomWidget();
         });
   }
-void goToservices(){
-  _appNavigation.toNamed(AppRoutes.services);
-}
-  void goToEmergency(){
+
+  void goToservices() {
+    _appNavigation.toNamed(AppRoutes.services);
+  }
+
+  void goToEmergency() {
     _appNavigation.toNamed(AppRoutes.emergency);
   }
-  void goToVehicleFinder(){
+
+  void goToVehicleFinder() {
     _appNavigation.toNamed(AppRoutes.workshop);
   }
+
   void goToVehicleReport() =>
       _appNavigation.toNamed(AppRoutes.generateVehicleReport);
 

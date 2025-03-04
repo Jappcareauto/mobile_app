@@ -14,6 +14,7 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.put(ProfileController(Get.find()), permanent: true);
+    var profileController = Get.find<ProfileController>();
     return SliverAppBar(
       automaticallyImplyLeading: false,
       scrolledUnderElevation: 0,
@@ -30,20 +31,20 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget {
               Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
             const SizedBox(width: 5),
             Obx(
-                  () => Get.find<ProfileController>().loading.value
+              () => profileController.loading.value
                   ? Shimmer.fromColors(
-                baseColor: Colors.grey,
-                highlightColor: Colors.white,
-                child: const Text('Loading...',
-                    style: TextStyle(fontSize: 20)),
-              )
+                      baseColor: Colors.grey,
+                      highlightColor: Colors.white,
+                      child: const Text('Loading...',
+                          style: TextStyle(fontSize: 20)),
+                    )
                   : Text(
-                "Hi, ${Get.find<ProfileController>().userInfos?.name ?? ''}",
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+                      "Hi, ${profileController.userInfos?.name ?? ''}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
             ),
           ],
         ),

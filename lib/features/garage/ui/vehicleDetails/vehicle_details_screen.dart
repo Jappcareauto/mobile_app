@@ -29,15 +29,18 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${vhcle.detail!.make} ${vhcle.detail!.model}"  ?? '',
+                Text(
+                    vhcle.detail != null
+                        ? "${vhcle.detail!.make} ${vhcle.detail!.model}"
+                        : '',
                     style: Get.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Get.theme.primaryColor)),
-                Text(vhcle.detail!.year ?? "",   style: Get.textTheme.bodyMedium),
+                Text(vhcle.detail?.year ?? "", style: Get.textTheme.bodyMedium),
                 const SizedBox(height: 10),
                 SizedBox(
                   width: Get.width,
@@ -72,8 +75,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                         title: "Make", value: vhcle.detail?.make ?? 'Unknow'),
                     const SizedBox(width: 20),
                     DetailItem(
-                        title: "Model",
-                        value: vhcle.detail?.model ?? 'Unknow'),
+                        title: "Model", value: vhcle.detail?.model ?? 'Unknow'),
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -102,8 +104,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                 Row(
                   children: [
                     DetailItem(
-                        title: "Power",
-                        value: vhcle.detail?.power ?? 'Unknow'),
+                        title: "Power", value: vhcle.detail?.power ?? 'Unknow'),
                     const SizedBox(width: 20),
                     DetailItem(
                         title: "Body Type",
@@ -132,49 +133,49 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
             ),
           ),
           const SizedBox(height: 20),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-
-          child:  const Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Find a service for your car' , style: TextStyle(fontWeight: FontWeight.w600 , fontSize: 16),)
-            ],
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Find a service for your car',
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                )
+              ],
+            ),
           ),
-        ),
           const SizedBox(height: 10),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: CustomCardService(
+                      color: const Color(0xFFC4FFCD),
+                      text: 'Vehicles\nReports',
+                      imagePath: AppImages.vehicule,
+                      onTap: () {}
+                      // controller.goToVehicleReport
 
-         Container(
-           margin: const EdgeInsets.symmetric(horizontal: 20),
-
-           child:  Row(
-             children: [
-               Expanded(
-                 child: CustomCardService(
-                     color: const Color(0xFFC4FFCD),
-                     text: 'Vehicles\nReports',
-                     imagePath: AppImages.vehicule,
-                     onTap: (){}
-                   // controller.goToVehicleReport
-
-                 ),
-               ),
-               const SizedBox(width: 10),
-               Expanded(
-                 child: CustomCardService(
-                   color: const Color(0xFFFFDAD4),
-                   text: 'Emergency\nAssistance',
-                   imagePath: AppImages.emergency,
-                   onTap: () {
-                     // controller.goToEmergency();
-                   },
-                 ),
-               ),
-             ],
-           ),
-         ),
-           RecentActivitiesWidget(haveTabBar: false),
+                      ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: CustomCardService(
+                    color: const Color(0xFFFFDAD4),
+                    text: 'Emergency\nAssistance',
+                    imagePath: AppImages.emergency,
+                    onTap: () {
+                      // controller.goToEmergency();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          RecentActivitiesWidget(haveTabBar: false),
         ]),
       ),
     );
