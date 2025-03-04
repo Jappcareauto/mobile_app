@@ -30,68 +30,65 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                     child: Column(
                       children: [
                         const ImageDecoration(assetPath: AppConstants.login),
-                        SizedBox(
-                          height: Get.height * .6,
-                          child: Column(
-                            children: [
-                              CustomFormField(
-                                label: 'Email',
-                                hintText: 'Enter your email',
-                                controller: controller
-                                    .loginFormHelper.controllers['email'],
-                                validator: controller
-                                    .loginFormHelper.validators['email'],
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                              const SizedBox(height: 20),
-                              CustomFormField(
-                                label: 'Password',
-                                isPassword: true,
-                                hintText: 'Enter your password',
-                                controller: controller
-                                    .loginFormHelper.controllers['password'],
-                                validator: controller
-                                    .loginFormHelper.validators['password'],
-                                obscureText: true,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                        // const SizedBox(height: 10),
+                        Column(
+                          children: [
+                            CustomFormField(
+                              label: 'Email',
+                              hintText: 'Enter your email',
+                              controller: controller
+                                  .loginFormHelper.controllers['email'],
+                              validator: controller
+                                  .loginFormHelper.validators['email'],
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            const SizedBox(height: 10),
+                            CustomFormField(
+                              label: 'Password',
+                              isPassword: true,
+                              hintText: 'Enter your password',
+                              controller: controller
+                                  .loginFormHelper.controllers['password'],
+                              validator: controller
+                                  .loginFormHelper.validators['password'],
+                              obscureText: true,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                    onPressed:
+                                        Get.find<AuthentificationController>()
+                                            .navigateToForgotPassword,
+                                    child: const Text('Forgot Password?')),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            CustomButton(
+                              isLoading: controller.loginFormHelper.isLoading,
+                              text: 'Login',
+                              onPressed: controller.loginFormHelper.submit,
+                            ),
+                            const SizedBox(height: 20),
+                            CustomButton(
+                              text: 'Continue',
+                              haveBorder: true,
+                              prefixIcon: const ImageComponent(
+                                  assetPath: AppImages.google, width: 25),
+                              isLoading: Get.find<AuthentificationController>()
+                                  .loadingGoogle,
+                              onPressed: Get.find<AuthentificationController>()
+                                  .loginWithGoogle,
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  const Text('Don\'t have an account?'),
                                   TextButton(
-                                      onPressed:
-                                          Get.find<AuthentificationController>()
-                                              .navigateToForgotPassword,
-                                      child: const Text('Forgot Password?')),
-                                ],
-                              ),
-                              CustomButton(
-                                isLoading: controller.loginFormHelper.isLoading,
-                                text: 'Login',
-                                onPressed: controller.loginFormHelper.submit,
-                              ),
-                              const SizedBox(height: 20),
-                              CustomButton(
-                                text: 'Continue',
-                                haveBorder: true,
-                                prefixIcon: const ImageComponent(
-                                    assetPath: AppImages.google, width: 25),
-                                isLoading:
-                                    Get.find<AuthentificationController>()
-                                        .loadingGoogle,
-                                onPressed:
-                                    Get.find<AuthentificationController>()
-                                        .loginWithGoogle,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text('Don\'t have an account?'),
-                                    TextButton(
-                                        onPressed: controller.navigateToSignUp,
-                                        child: const Text('Register'))
-                                  ])
-                            ],
-                          ),
+                                      onPressed: controller.navigateToSignUp,
+                                      child: const Text('Register'))
+                                ])
+                          ],
                         ),
                       ],
                     ),

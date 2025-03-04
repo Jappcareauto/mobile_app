@@ -59,8 +59,9 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                     padding: const EdgeInsets.all(20),
                     child: CustomButton(
                       text: "Add Vehicle",
-                      onPressed: () => onpenModalPaymentMethod(
-                          controller.addVehicleFormHelper.submit),
+                      onPressed: () => controller.addVehicleFormHelper.submit(),
+                      // onpenModalPaymentMethod(
+                      //     ),
                       isLoading: controller.addVehicleFormHelper.isLoading,
                     ),
                   ),

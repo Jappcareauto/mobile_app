@@ -29,7 +29,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,7 +40,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                     style: Get.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Get.theme.primaryColor)),
-                Text(vhcle.detail!.year ?? "", style: Get.textTheme.bodyMedium),
+                Text(vhcle.detail?.year ?? "", style: Get.textTheme.bodyMedium),
                 const SizedBox(height: 10),
                 SizedBox(
                   width: Get.width,

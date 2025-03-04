@@ -47,6 +47,9 @@ class ListVehicleWidget extends StatelessWidget
           return const ListVehicleShimmer();
         }
 
+        print(
+            'controller.vehicleList.length : ${controller.vehicleList.length}');
+
         final vehiclesToDisplay = controller.vehicleList.isEmpty
             ? []
             : isSingleCard == true
@@ -144,13 +147,13 @@ class ListVehicleWidget extends StatelessWidget
                       //   );
                       // }
                     },
-                    carName: vehicle.detail.model ?? '',
+                    carName: vehicle.detail?.model ?? '',
                     carDetails: [
-                      vehicle.detail.year ?? "Unknown",
-                      vehicle.detail.make ?? "Unknown"
+                      vehicle.detail?.year ?? "Unknown",
+                      vehicle.detail?.make ?? "Unknown"
                     ],
-                    imagePath: vehicle.media[2]?.sourceUrl ?? '',
-                    imageUrl: vehicle.media[2]?.sourceUrl ?? '',
+                    imagePath: vehicle.media?[2]?.sourceUrl ?? '',
+                    imageUrl: vehicle.media?[2]?.sourceUrl ?? '',
                   );
                 },
               ),

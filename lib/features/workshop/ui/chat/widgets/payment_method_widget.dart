@@ -114,11 +114,9 @@ class PaymentMethodeWidget extends StatelessWidget {
                     Expanded(
                       child: CustomButton(
                         text: 'Confirm',
-                        onPressed: () {
-                          chatController.goToAddPaymentMethodForm(
-                              chatController.selectedMethod.value);
-                          print('cliked');
-                        },
+                        onPressed: () =>
+                            chatController.goToAddPaymentMethodForm(
+                                chatController.selectedMethod.value),
                         strech: false,
                       ),
                     ),

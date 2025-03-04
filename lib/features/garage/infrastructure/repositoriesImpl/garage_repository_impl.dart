@@ -27,6 +27,7 @@ class GarageRepositoryImpl implements GarageRepository {
       final response = await networkService.post(
         GarageConstants.addVehiclePostUri,
         body: {
+          'name': "Test name",
           'garageId': garageId,
           'vin': vin,
           'registrationNumber': registrationNumber,
@@ -69,10 +70,10 @@ class GarageRepositoryImpl implements GarageRepository {
   }
 
   @override
-  Future<Either<GarageException , String>> getPlaceName(double latitude, double longitude) async {
-
+  Future<Either<GarageException, String>> getPlaceName(
+      double latitude, double longitude) async {
     final url = Uri.parse(
-         "${GarageConstants.googlePlcaeUri}$latitude,$longitude&key=${GarageConstants.apiKey}");
+        "${GarageConstants.googlePlcaeUri}$latitude,$longitude&key=${GarageConstants.apiKey}");
 
     try {
       final response = await http.get(url);
@@ -80,9 +81,10 @@ class GarageRepositoryImpl implements GarageRepository {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         if (data['results'] != null && data['results'].isNotEmpty) {
-          return Right(data['results'][0]['formatted_address']) ;// Récupère l'adresse formatée
+          return Right(data['results'][0]
+              ['formatted_address']); // Récupère l'adresse formatée
         } else {
-          return  const Right("Adresse non trouvée");
+          return const Right("Adresse non trouvée");
         }
       } else {
         throw Exception("Erreur API : ${response.statusCode}");

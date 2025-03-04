@@ -62,7 +62,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                 imageUrl: vhcle.media![0]!.sourceUrl,
               ),
               NotificationWidget(
-                  backgrounColor: Get.theme.primaryColor.withOpacity(.2),
+                  backgrounColor: Get.theme.primaryColor.withValues(alpha: .2),
                   bodyText:
                       'Your repair from the Japcare Autotech shop is ready, and available for pickup',
                   coloriage: Get.theme.primaryColor,
@@ -92,7 +92,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Get.theme.primaryColor.withOpacity(.2)),
+                        color: Get.theme.primaryColor.withValues(alpha: .2)),
                     child: Text(
                       'In Progress',
                       style: TextStyle(color: Get.theme.primaryColor),
@@ -123,14 +123,12 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                 const Icon(
                   FluentIcons.calendar_3_day_20_regular,
                 ),
-                Container(
-                  child: Text(
-                    DateFormat('EEE, MMM dd, yyyy')
-                        .format(bookController.selectedDate.value),
-                    // Format personnalisé
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
+                Text(
+                  DateFormat('EEE, MMM dd, yyyy')
+                      .format(bookController.selectedDate.value),
+                  // Format personnalisé
+                  style: const TextStyle(
+                    fontSize: 14,
                   ),
                 ),
                 const SizedBox(width: 40),
@@ -145,9 +143,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                 height: 20,
               ),
               ExpandableContainer(
-                onpresse: () {
-                  controller.toggleExpanded();
-                },
+                onpresse: () => controller.toggleExpanded(),
                 visibility: controller.isExpanded,
                 subtitle: const Text(
                   "Reported Issue",
@@ -186,7 +182,8 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                       padding: const EdgeInsets.all(12.0),
                       decoration: BoxDecoration(
                           border: Border.all(
-                              color: Colors.grey.withOpacity(.2), width: 1),
+                              color: Colors.grey.withValues(alpha: .2),
+                              width: 1),
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
