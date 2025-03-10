@@ -107,7 +107,8 @@ class WorkshopScreen extends GetView<WorkshopController>
                                   image: AppImages.shopCar,
                                   title: service.name ?? 'Inconnu',
                                   rate: '4.5',
-                                  location: 'Douala, Cameroun',
+                                  location: service.location?.name ??
+                                      'Douala, Cameroun',
                                 ),
                               );
                             }).toList()

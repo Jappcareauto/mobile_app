@@ -1,6 +1,4 @@
-
 class GetAllServicesCenter {
-
   final List<Data> data;
   final Pagination pagination;
 
@@ -19,8 +17,8 @@ class GetAllServicesCenter {
       pagination: pagination,
     );
   }
-
 }
+
 class Data {
   final String? name;
   final String? ownerId;
@@ -68,10 +66,10 @@ class Data {
       updatedAt: updatedAt,
     );
   }
-
 }
-class Location {
 
+class Location {
+  final String name;
   final double latitude;
   final double longitude;
   final String description;
@@ -81,8 +79,8 @@ class Location {
   final String createdAt;
   final String updatedAt;
 
-
   Location._({
+    required this.name,
     required this.latitude,
     required this.longitude,
     required this.description,
@@ -94,6 +92,7 @@ class Location {
   });
 
   factory Location.create({
+    required name,
     required latitude,
     required longitude,
     required description,
@@ -105,6 +104,7 @@ class Location {
   }) {
     // Add any validation or business logic here
     return Location._(
+      name: name,
       latitude: latitude,
       longitude: longitude,
       description: description,
@@ -115,10 +115,9 @@ class Location {
       updatedAt: updatedAt,
     );
   }
-
 }
-class Pagination {
 
+class Pagination {
   final int page;
   final int size;
   final int totalItems;
@@ -145,5 +144,4 @@ class Pagination {
       totalPages: totalPages,
     );
   }
-
 }

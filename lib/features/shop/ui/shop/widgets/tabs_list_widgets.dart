@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
+import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_allservices.dart';
 
 class TabsListWidgets extends StatelessWidget {
@@ -42,9 +44,9 @@ class TabsListWidgets extends StatelessWidget {
                 onSelected!(data![index]);
               },
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                width: 175,
+                margin: const EdgeInsets.fromLTRB(0, 16, 8, 16),
+                padding: const EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                   color: selectedFilter.value == index
                       ? haveBorder == true
@@ -58,18 +60,36 @@ class TabsListWidgets extends StatelessWidget {
                       width: 1.5),
                   borderRadius: borderRadius,
                 ),
-                child: Center(
-                  child: Text(
-                    tabs[index],
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: selectedFilter.value == index
-                          ? haveBorder == true
-                              ? AppColors.black
-                              : AppColors.white
-                          : AppColors.black,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Text(
+                        tabs[index],
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: selectedFilter.value == index
+                              ? haveBorder == true
+                                  ? AppColors.black
+                                  : AppColors.white
+                              : AppColors.black,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ImageComponent(
+                          assetPath: AppImages.maintenance,
+                          width: 120,
+                          height: 120,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             );

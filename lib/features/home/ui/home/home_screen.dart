@@ -22,6 +22,8 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController(Get.find()));
+    print("controller.notifications");
+    print(controller.notifications);
     return Scaffold(
         body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) =>
@@ -51,34 +53,35 @@ class HomeScreen extends GetView<HomeController> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Column(
-                            children: controller.notifications
-                                .asMap()
-                                .entries
-                                .map((entry) {
-                              final index = entry.key;
-                              final notification = entry.value;
+                          if (controller.notifications.isNotEmpty)
+                            Column(
+                              children: controller.notifications
+                                  .asMap()
+                                  .entries
+                                  .map((entry) {
+                                final index = entry.key;
+                                final notification = entry.value;
 
-                              return Dismissible(
-                                key: Key(notification),
-                                direction: DismissDirection.endToStart,
-                                background: const DismissWidget(),
-                                onDismissed: (direction) {
-                                  // Action après la suppression
-                                  controller.notifications.removeAt(index);
-                                },
-                                child: NotificationWidget(
-                                  haveTitle: true,
-                                  textSize: 16,
-                                  backgrounColor: const Color(0xFFFFEDE6),
-                                  title: "Notification",
-                                  bodyText: notification,
-                                  coloriage: Get.theme.primaryColor,
-                                  icon: FluentIcons.alert_16_filled,
-                                ),
-                              );
-                            }).toList(),
-                          ),
+                                return Dismissible(
+                                  key: Key(index.toString()),
+                                  direction: DismissDirection.endToStart,
+                                  background: const DismissWidget(),
+                                  onDismissed: (direction) {
+                                    // Action après la suppression
+                                    controller.notifications.removeAt(index);
+                                  },
+                                  child: NotificationWidget(
+                                    haveTitle: true,
+                                    textSize: 16,
+                                    backgrounColor: const Color(0xFFFFEDE6),
+                                    title: "Notification",
+                                    bodyText: notification,
+                                    coloriage: Get.theme.primaryColor,
+                                    icon: FluentIcons.alert_16_filled,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           const SizedBox(
                             height: 20,
                           ),

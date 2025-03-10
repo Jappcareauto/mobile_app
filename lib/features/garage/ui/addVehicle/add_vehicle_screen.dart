@@ -23,45 +23,49 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Form(
-                              key: controller.addVehicleFormHelper.formKey,
-                              autovalidateMode: controller
-                                  .addVehicleFormHelper.autovalidateMode.value,
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 20),
-                                  CustomFormField(
-                                    controller: controller.addVehicleFormHelper
-                                        .controllers['vin'],
-                                    label: "VIN/Chassi Number",
-                                    hintText: "Ex. 1HGCM82633A123456",
-                                    forceUpperCase: true,
-                                    validator: controller
-                                        .addVehicleFormHelper.validators['vin'],
-                                    maxLength: 17,
-                                  ),
-                                  const SizedBox(height: 20),
-                                  CustomFormField(
-                                    controller: controller.addVehicleFormHelper
-                                        .controllers['registration'],
-                                    label: "Vehicle Registration Number",
-                                    hintText: "Ex. SV30-0169266",
-                                    forceUpperCase: true,
-                                    validator: controller.addVehicleFormHelper
-                                        .validators['registration'],
-                                  ),
-                                ],
-                              ))),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Form(
+                          key: controller.addVehicleFormHelper.formKey,
+                          autovalidateMode: controller
+                              .addVehicleFormHelper.autovalidateMode.value,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              CustomFormField(
+                                controller: controller
+                                    .addVehicleFormHelper.controllers['vin'],
+                                label: "VIN/Chassi Number",
+                                hintText: "Ex. 2GTEC13TX51385216",
+                                forceUpperCase: true,
+                                validator: controller
+                                    .addVehicleFormHelper.validators['vin'],
+                                maxLength: 17,
+                              ),
+                              const SizedBox(height: 20),
+                              CustomFormField(
+                                controller: controller.addVehicleFormHelper
+                                    .controllers['registration'],
+                                label: "Vehicle Registration Number",
+                                hintText: "Ex. SV30-0169266",
+                                forceUpperCase: true,
+                                validator: controller.addVehicleFormHelper
+                                    .validators['registration'],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: CustomButton(
                       text: "Add Vehicle",
-                      onPressed: () => controller.addVehicleFormHelper.submit(),
-                      // onpenModalPaymentMethod(
-                      //     ),
+                      onPressed: () => {
+                        controller.addVehicleFormHelper.submit()
+                        // onpenModalPaymentMethod(
+                        //     ),
+                      },
                       isLoading: controller.addVehicleFormHelper.isLoading,
                     ),
                   ),

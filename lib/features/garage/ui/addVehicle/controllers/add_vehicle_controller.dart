@@ -44,10 +44,12 @@ class AddVehicleController extends GetxController {
         "vin": validateVin,
         "registration": Validators.requiredField,
       },
-      onSubmit: (data) => _addVehicleUseCase.call(AddVehicleCommand(
-          garageId: Get.find<GarageController>().myGarage!.id,
-          vin: data['vin']!,
-          registrationNumber: data['registration']!)),
+      onSubmit: (data) {
+        return _addVehicleUseCase.call(AddVehicleCommand(
+            garageId: Get.find<GarageController>().myGarage!.id,
+            vin: data['vin']!,
+            registrationNumber: data['registration']!));
+      },
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
         Get.find<GarageController>()

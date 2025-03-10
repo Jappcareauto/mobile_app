@@ -1,7 +1,6 @@
 import '../../domain/entities/get_all_services_center.dart';
 
 class GetAllServicesCenterModel {
-
   final List<DataModel> data;
   final PaginationModel pagination;
 
@@ -12,22 +11,25 @@ class GetAllServicesCenterModel {
 
   factory GetAllServicesCenterModel.fromJson(Map<String, dynamic> json) {
     return GetAllServicesCenterModel._(
-      data: List<DataModel>.from(json['data'].map((x) => DataModel.fromJson(x))),
+      data:
+          List<DataModel>.from(json['data'].map((x) => DataModel.fromJson(x))),
       pagination: PaginationModel.fromJson(json['pagination']),
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
-    json['data'] = data.map((x) => x.toJson()).toList(); // Utilise la propriété `data` de la classe
+    json['data'] = data
+        .map((x) => x.toJson())
+        .toList(); // Utilise la propriété `data` de la classe
     json['pagination'] = pagination.toJson();
     return json;
   }
 
-
   factory GetAllServicesCenterModel.fromEntity(GetAllServicesCenter entity) {
     return GetAllServicesCenterModel._(
-      data: List<DataModel>.from(entity.data.map((x) => DataModel.fromEntity(x))),
+      data:
+          List<DataModel>.from(entity.data.map((x) => DataModel.fromEntity(x))),
       pagination: PaginationModel.fromEntity(entity.pagination),
     );
   }
@@ -39,8 +41,8 @@ class GetAllServicesCenterModel {
     );
   }
 }
-class DataModel {
 
+class DataModel {
   final String? name;
   final String? ownerId;
   final LocationModel? location;
@@ -50,8 +52,6 @@ class DataModel {
   final String? updatedBy;
   final String createdAt;
   final String updatedAt;
-
-
 
   DataModel._({
     required this.name,
@@ -81,7 +81,6 @@ class DataModel {
     );
   }
 
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
@@ -95,7 +94,6 @@ class DataModel {
     data['updatedAt'] = updatedAt;
     return data;
   }
-
 
   factory DataModel.fromEntity(Data entity) {
     return DataModel._(
@@ -127,8 +125,9 @@ class DataModel {
     );
   }
 }
-class LocationModel {
 
+class LocationModel {
+  final String name;
   final double latitude;
   final double longitude;
   final String description;
@@ -139,6 +138,7 @@ class LocationModel {
   final String updatedAt;
 
   LocationModel._({
+    required this.name,
     required this.latitude,
     required this.longitude,
     required this.description,
@@ -151,6 +151,7 @@ class LocationModel {
 
   factory LocationModel.fromJson(Map<String, dynamic> json) {
     return LocationModel._(
+      name: json['name'],
       latitude: json['latitude'],
       longitude: json['longitude'],
       description: json['description'],
@@ -164,6 +165,7 @@ class LocationModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['name'] = name;
     data['latitude'] = latitude;
     data['longitude'] = longitude;
     data['description'] = description;
@@ -177,6 +179,7 @@ class LocationModel {
 
   factory LocationModel.fromEntity(Location entity) {
     return LocationModel._(
+      name: entity.name,
       latitude: entity.latitude.toDouble(),
       longitude: entity.longitude.toDouble(),
       description: entity.description,
@@ -190,6 +193,7 @@ class LocationModel {
 
   Location toEntity() {
     return Location.create(
+      name: name,
       latitude: latitude,
       longitude: longitude,
       description: description,
@@ -201,8 +205,8 @@ class LocationModel {
     );
   }
 }
-class PaginationModel {
 
+class PaginationModel {
   final int page;
   final int size;
   final int totalItems;
