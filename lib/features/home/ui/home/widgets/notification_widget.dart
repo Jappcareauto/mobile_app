@@ -25,48 +25,58 @@ class NotificationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: backgrounColor,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppColors.lightBorder)),
+        color: backgrounColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
       margin: const EdgeInsets.only(bottom: 10),
-      child: InkWell(
-        onTap: onTap,
-        child: ListTile(
-          contentPadding: const EdgeInsets.only(left: 20, right: 20),
-          title: haveTitle == true
-              ? Row(
-                  children: [
-                    Icon(icon, size: 24, color: coloriage),
-                    const SizedBox(width: 10),
-                    Text(
-                      title,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: coloriage),
-                    ),
-                  ],
-                )
-              : const SizedBox(),
-          subtitle: Text(
-            bodyText,
-            style: TextStyle(fontSize: textSize ?? 16),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 15,
           ),
-          trailing: CircleAvatar(
-              backgroundColor: coloriage.withValues(alpha: .1),
-              radius: 35,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CircleAvatar(
-                  backgroundColor: coloriage,
-                  radius: 25,
-                  child: Icon(
-                    icon,
-                    color: Colors.white,
-                  ),
-                ),
-              )),
-        ),
+          InkWell(
+            onTap: onTap,
+            child: ListTile(
+              contentPadding: const EdgeInsets.only(left: 20, right: 20),
+              title: haveTitle == true
+                  ? Row(
+                      children: [
+                        Icon(icon, size: 20, color: coloriage),
+                        const SizedBox(width: 10),
+                        Text(
+                          title,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: coloriage),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
+              subtitle: Text(
+                bodyText,
+                style: TextStyle(fontSize: textSize ?? 16),
+              ),
+              trailing: CircleAvatar(
+                  backgroundColor: coloriage.withValues(alpha: .1),
+                  radius: 35,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: CircleAvatar(
+                      backgroundColor: coloriage,
+                      radius: 20,
+                      child: Icon(
+                        icon,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+        ],
       ),
     );
   }

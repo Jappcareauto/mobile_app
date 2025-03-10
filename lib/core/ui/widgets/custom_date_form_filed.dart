@@ -4,13 +4,16 @@ import 'custom_text_field.dart';
 
 class CustomDateFormField extends StatelessWidget {
   final TextEditingController? controller;
+  final Color? datehintstyle;
   final String? label;
   final String? Function(String?)? validator;
 
-  CustomDateFormField({super.key, 
+  CustomDateFormField({
+    super.key,
     this.controller,
     this.label,
     this.validator,
+    this.datehintstyle,
   });
 
   final dayController = TextEditingController();
@@ -35,6 +38,7 @@ class CustomDateFormField extends StatelessWidget {
           children: [
             Expanded(
               child: CustomFormField(
+                hintStyleColor: datehintstyle,
                 controller: dayController,
                 keyboardType: TextInputType.number,
                 hintText: 'Day',
@@ -48,6 +52,7 @@ class CustomDateFormField extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: CustomFormField(
+                hintStyleColor: datehintstyle,
                 controller: monthController,
                 keyboardType: TextInputType.number,
                 maxLength: 2,
@@ -62,6 +67,7 @@ class CustomDateFormField extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: CustomFormField(
+                hintStyleColor: datehintstyle,
                 controller: yearController,
                 maxLength: 4,
                 keyboardType: TextInputType.number,

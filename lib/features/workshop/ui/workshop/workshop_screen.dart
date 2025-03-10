@@ -22,7 +22,8 @@ class WorkshopScreen extends GetView<WorkshopController>
       Get.find(),
     ));
     return Scaffold(
-        appBar: const CustomAppBar(
+        appBar: CustomAppBar(
+          appBarcolor: Get.theme.scaffoldBackgroundColor,
           title: "Service Centers",
           canBack: true,
         ),

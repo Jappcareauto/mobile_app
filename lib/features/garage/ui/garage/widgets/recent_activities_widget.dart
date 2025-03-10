@@ -42,6 +42,8 @@ class RecentActivitiesWidget extends StatelessWidget
                 children: [
                   ImageComponent(
                     assetPath: AppConstants.noActivities,
+                    height: 400,
+                    width: 350,
                   ),
                   Text('You have no recent activities at the moment'),
                 ],
