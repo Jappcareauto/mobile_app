@@ -6,6 +6,7 @@ import '../../../core/utils/app_dimensions.dart';
 
 class CustomFormField extends StatefulWidget {
   final TextEditingController? controller;
+  final Color? hintStyleColor;
   final String? label;
   final String? hintText;
   final String? helperText;
@@ -55,6 +56,7 @@ class CustomFormField extends StatefulWidget {
     this.contentPadding = const EdgeInsets.all(12),
     this.maxLength,
     this.forceUpperCase = false,
+    this.hintStyleColor,
   });
 
   @override
@@ -63,15 +65,27 @@ class CustomFormField extends StatefulWidget {
 
 class _CustomFormFieldState extends State<CustomFormField> {
   bool _obscureText = false;
-
+  final FocusNode _focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
     _obscureText = widget.isPassword;
+
+    // Listen for focus changes
+    _focusNode.addListener(() {
+      setState(() {}); // Rebuild the widget when focus changes
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final isFocused = _focusNode.hasFocus;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -85,6 +99,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
           ),
         if (widget.label != null) const SizedBox(height: 8),
         TextFormField(
+          focusNode: _focusNode,
           maxLines: widget.maxLine ?? 1,
           controller: widget.controller,
           obscureText: _obscureText,
@@ -102,18 +117,20 @@ class _CustomFormFieldState extends State<CustomFormField> {
                 ]
               : null,
           decoration: InputDecoration(
+            fillColor: isFocused
+                ? Get.theme.primaryColor
+                    .withValues(alpha: .1) // Primary color when focused
+                : Colors.white, // White when not focused
             counter: const SizedBox(),
-            fillColor:
-                widget.filColor ?? Get.theme.primaryColor.withValues(alpha: .1),
             filled: true,
             alignLabelWithHint: true,
             floatingLabelAlignment: FloatingLabelAlignment.start,
             hintText: widget.hintText,
             helperText: widget.helperText,
-            hintStyle: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.grey),
+            errorStyle: const TextStyle(color: Color(0XFFFF553B)),
+            hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: widget.hintStyleColor,
+                ),
             contentPadding: widget.contentPadding,
             prefixIcon: widget.prefix,
             suffixIcon: widget.isPassword
@@ -142,7 +159,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius),
-              borderSide: BorderSide.none,
+              borderSide: const BorderSide(color: Color(0xFFE5E2E1)),
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(widget.borderRadius),

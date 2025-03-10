@@ -59,6 +59,8 @@ flutter:
       - family: PlusJakarta
         fonts:
           - asset: assets/fonts/PlusJakarta.ttf
+          - asset: assets/fonts/PlusJakartaSans-Bold.ttf
+          - asset: assets/fonts/PlusJakartaSans-SemiBold.ttf
     uses-material-design: true
 
 icons_launcher:

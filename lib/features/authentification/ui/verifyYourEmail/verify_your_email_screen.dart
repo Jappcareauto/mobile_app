@@ -19,6 +19,7 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
         appBar: CustomAppBar(
           canBack: true,
           title: "Verify Your\nEmail",
+          appBarcolor: Get.theme.scaffoldBackgroundColor,
           actions: [
             TextButton(
                 onPressed: () {},

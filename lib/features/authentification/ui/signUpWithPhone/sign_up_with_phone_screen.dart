@@ -15,9 +15,11 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Register'),
+      appBar: CustomAppBar(
+        title: 'Register',
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+      ),
       body: MixinBuilder<SignUpWithPhoneController>(
         builder: (_) {
           return Padding(
@@ -44,13 +46,12 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                             ),
                             const SizedBox(height: 20),
                             CustomPhoneFormField(
-                              label: 'Phone',
-                              hintText: 'Enter your phone',
-                              controller:
-                                  _.registerFormHelper.controllers['phone'],
-                              validator:
-                                  _.registerFormHelper.validators['phone']
-                            ),
+                                label: 'Phone',
+                                hintText: 'Enter your phone',
+                                controller:
+                                    _.registerFormHelper.controllers['phone'],
+                                validator:
+                                    _.registerFormHelper.validators['phone']),
                             const SizedBox(height: 20),
                             CustomFormField(
                               label: 'Password',
@@ -86,7 +87,9 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                                   ),
                                 ),
                                 TextButton(
-                                    onPressed: Get.find<AuthentificationController>().goToTermsAndConditions,
+                                    onPressed:
+                                        Get.find<AuthentificationController>()
+                                            .goToTermsAndConditions,
                                     child: Text(
                                       'Terms and Conditions',
                                       style: Get.textTheme.bodySmall?.copyWith(

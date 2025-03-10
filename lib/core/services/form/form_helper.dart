@@ -46,7 +46,7 @@ class FormHelper<L, R> {
             if (onError != null) {
               onError!(error);
             } else {
-              Get.snackbar('Erreur', error.toString(),
+              Get.snackbar('Error', error.toString(),
                   snackPosition: SnackPosition.BOTTOM);
             }
           },
@@ -54,13 +54,13 @@ class FormHelper<L, R> {
             if (onSuccess != null) {
               onSuccess!(success);
             } else {
-              Get.snackbar('Succès', 'Opération réussie',
+              Get.snackbar('Success', 'Opération réussie',
                   snackPosition: SnackPosition.BOTTOM);
             }
           },
         );
       } catch (e) {
-        Get.snackbar('Erreur', e.toString(),
+        Get.snackbar('Error', e.toString(),
             snackPosition: SnackPosition.BOTTOM);
       } finally {
         isLoading.value = false;
