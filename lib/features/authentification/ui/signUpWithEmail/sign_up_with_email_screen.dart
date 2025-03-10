@@ -15,7 +15,10 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Register'),
+      appBar: CustomAppBar(
+        title: 'Register',
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+      ),
       body: MixinBuilder<SignUpWithEmailController>(
         builder: (controller) {
           return SafeArea(
@@ -27,7 +30,13 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                       controller.registerFormHelper.autovalidateMode.value,
                   child: SingleChildScrollView(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                            'Hey there! Sign up with your email to get started'),
                         SizedBox(
                           height: Get.height * .6,
                           child: Column(
@@ -35,6 +44,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                               const SizedBox(height: 20),
                               CustomFormField(
                                 label: 'Name',
+                                hintStyleColor: Colors.grey,
                                 hintText: 'Enter your name',
                                 controller: controller
                                     .registerFormHelper.controllers['name'],
@@ -46,6 +56,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                               CustomFormField(
                                 label: 'Email',
                                 hintText: 'Enter your email',
+                                hintStyleColor: Colors.grey,
                                 controller: controller
                                     .registerFormHelper.controllers['email'],
                                 validator: controller
@@ -57,6 +68,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                 label: 'Password',
                                 isPassword: true,
                                 hintText: 'Enter your password',
+                                hintStyleColor: Colors.grey,
                                 controller: controller
                                     .registerFormHelper.controllers['password'],
                                 validator: controller
@@ -81,29 +93,33 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                       value: true,
                                       groupValue: true,
                                       onChanged: (a) {}),
-                                  Expanded(
-                                    child: Text(
-                                      "By continuing, you agree to our ",
-                                      style: Get.textTheme.bodySmall,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15.0),
+                                    child: Expanded(
+                                      child: Text(
+                                        "By continuing, you agree to our ",
+                                        style: Get.textTheme.bodySmall,
+                                      ),
                                     ),
                                   ),
                                   TextButton(
-                                      onPressed:
-                                          Get.find<AuthentificationController>()
-                                              .goToTermsAndConditions,
-                                      child: Text(
-                                        'Terms and Conditions',
-                                        style: Get.textTheme.bodySmall
-                                            ?.copyWith(
-                                                color: Get.theme.primaryColor),
-                                      )),
+                                    onPressed:
+                                        Get.find<AuthentificationController>()
+                                            .goToTermsAndConditions,
+                                    child: Text(
+                                      'Terms and Conditions',
+                                      style: Get.textTheme.bodySmall?.copyWith(
+                                          color: Get.theme.primaryColor),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ],
                           ),
                         ),
                         SizedBox(
-                          height: Get.height * .25,
+                          height: Get.height * .24,
                           child: Column(
                             children: [
                               CustomButton(
