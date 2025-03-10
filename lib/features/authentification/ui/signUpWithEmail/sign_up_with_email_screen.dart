@@ -78,6 +78,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                               const SizedBox(height: 8),
                               CustomDateFormField(
                                 label: 'Date of Birth',
+                                datehintstyle: Colors.grey,
                                 controller: controller.registerFormHelper
                                     .controllers['dateOfBirth'],
                                 validator: controller.registerFormHelper
@@ -90,13 +91,15 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Radio(
-                                      value: true,
-                                      groupValue: true,
-                                      onChanged: (a) {}),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15.0),
-                                    child: Expanded(
+                                    value: true,
+                                    groupValue: true,
+                                    onChanged: (a) {},
+                                  ),
+                                  Flexible(
+                                    // Use Flexible here if you want the text to wrap properly
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15.0),
                                       child: Text(
                                         "By continuing, you agree to our ",
                                         style: Get.textTheme.bodySmall,
@@ -110,11 +113,12 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                     child: Text(
                                       'Terms and Conditions',
                                       style: Get.textTheme.bodySmall?.copyWith(
-                                          color: Get.theme.primaryColor),
+                                        color: Get.theme.primaryColor,
+                                      ),
                                     ),
                                   ),
                                 ],
-                              ),
+                              )
                             ],
                           ),
                         ),
