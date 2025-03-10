@@ -108,17 +108,19 @@ class ListVehicleWidget extends StatelessWidget
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
-                          color: Get.theme.primaryColor.withValues(alpha: .1),
+                          color: Colors.white,
                           border: Border.all(
-                            color: Get.theme.primaryColor.withValues(alpha: .1),
-                            width: 3,
+                            color: const Color(0xFFFB7C37),
+                            width: 1.3,
                           ),
                         ),
                         child: const Center(
                           child: Text(
                             '+ Add Vehicle',
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w400),
+                                color: Color(0xFFFB7C37),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400),
                           ),
                         ),
                       ),

@@ -20,6 +20,7 @@ class GarageScreen extends GetView<GarageController>
       builder: (_) {
         return Scaffold(
             appBar: CustomAppBar(
+              appBarcolor: Get.theme.scaffoldBackgroundColor,
               title: "My Garage",
               canBack: true,
               actions: [
@@ -33,8 +34,13 @@ class GarageScreen extends GetView<GarageController>
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    ListVehicleWidget(haveTitle: false),
-                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10.0,
+                        horizontal: 20.0,
+                      ),
+                      child: ListVehicleWidget(haveTitle: false),
+                    ),
                     RecentActivitiesWidget(haveTabBar: true),
                   ],
                 ),
