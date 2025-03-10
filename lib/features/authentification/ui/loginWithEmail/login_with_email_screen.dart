@@ -16,7 +16,10 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Sign In'),
+      appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+        title: 'Sign In',
+      ),
       body: MixinBuilder<LoginWithEmailController>(
         builder: (controller) {
           return SafeArea(
@@ -34,8 +37,11 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                         Column(
                           children: [
                             CustomFormField(
+                              filColor: Colors.white,
                               label: 'Email',
-                              hintText: 'Enter your email',
+                              hintText: 'e.g.michealjason@gmail.com',
+                              hintStyleColor: Colors.grey,
+                              focusedBorderColor: Get.theme.primaryColor,
                               controller: controller
                                   .loginFormHelper.controllers['email'],
                               validator: controller
@@ -44,9 +50,12 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                             ),
                             const SizedBox(height: 10),
                             CustomFormField(
+                              filColor: Colors.white,
+                              hintStyleColor: Colors.grey,
+                              focusedBorderColor: Get.theme.primaryColor,
                               label: 'Password',
                               isPassword: true,
-                              hintText: 'Enter your password',
+                              hintText: 'Password',
                               controller: controller
                                   .loginFormHelper.controllers['password'],
                               validator: controller

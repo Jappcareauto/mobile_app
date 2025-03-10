@@ -21,9 +21,7 @@ class CustomRadioButtonWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         decoration: BoxDecoration(
-          color: isSelected
-              ? Get.theme.primaryColor.withOpacity(.1)
-              : Colors.transparent,
+          color: isSelected ? const Color(0xFFFFEDE6) : Colors.transparent,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Row(

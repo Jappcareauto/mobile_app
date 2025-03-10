@@ -14,6 +14,7 @@ class ProfileScreen extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: "Profile",
         actions: [
           IconButton(
@@ -22,6 +23,7 @@ class ProfileScreen extends GetView<ProfileController> {
         ],
       ),
       body: RefreshIndicator(
+        elevation: 1.0,
         onRefresh: controller.getUserInfos,
         child: SingleChildScrollView(
           child: Column(
@@ -57,7 +59,7 @@ class ProfileScreen extends GetView<ProfileController> {
                         ),
                       ),
                     ),
-                     const AvatarWidget(size: 100, canEdit: false)
+                    const AvatarWidget(size: 100, canEdit: false)
                   ],
                 ),
               ),
@@ -66,11 +68,11 @@ class ProfileScreen extends GetView<ProfileController> {
                   tag: 'ListVehicleWidget'))
                 Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
                     .buildView({
-                  "pageController": controller.pageController ,
+                  "pageController": controller.pageController,
                   "currentPage": controller.currentPage,
                   "haveAddVehicule": true,
                   "title": "My Garage",
-                  "onTapeAddVehicle": (){
+                  "onTapeAddVehicle": () {
                     print("clique");
                   },
                 }),

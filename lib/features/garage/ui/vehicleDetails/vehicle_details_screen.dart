@@ -19,6 +19,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
     final vhcle = controller.vehicleModel;
     return Scaffold(
       appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: "My Garage",
         canBack: true,
         actions: [

@@ -31,7 +31,7 @@ class HomeScreen extends GetView<HomeController> {
             body: RefreshIndicator(
               onRefresh: controller.refreshData,
               color: const Color(0xFFFB7C37),
-              strokeWidth: 4.0,
+              strokeWidth: 3.0,
               backgroundColor: AppColors.white,
               child: SingleChildScrollView(
                 child: Column(
@@ -40,16 +40,6 @@ class HomeScreen extends GetView<HomeController> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
-                          // ImageCarousel(
-                          //   positionIndicator: MainAxisAlignment.start,
-                          //   haveBorderRadius: true,
-                          //   height: 144,
-                          //   imageUrls: [
-                          //     AppImages.Actualite,
-                          //     AppImages.Actualite,
-                          //     AppImages.Actualite,
-                          //   ],
-                          // ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -85,7 +75,6 @@ class HomeScreen extends GetView<HomeController> {
                           const SizedBox(
                             height: 20,
                           ),
-
                           NotificationWidget(
                             haveTitle: true,
                             backgrounColor: const Color(0xFFF4EEFF),

@@ -12,7 +12,11 @@ class SelectLanguageScreen extends GetView<SelectLanguageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CustomAppBar(title: 'Preferred\nLanguage', canBack: false),
+      appBar: const CustomAppBar(
+        appBarcolor: Colors.white,
+        title: 'Preferred Language',
+        canBack: false,
+      ),
       body: Padding(
         padding:
             const EdgeInsets.symmetric(horizontal: AppDimensions.paddingMedium),

@@ -7,8 +7,8 @@ class ImageDecoration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
-      width: 200,
+      height: 280,
+      width: 280,
       padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
           color: const Color(0xFFFFEDE6),

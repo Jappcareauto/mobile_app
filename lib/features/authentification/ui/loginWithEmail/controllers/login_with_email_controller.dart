@@ -27,7 +27,6 @@ class LoginWithEmailController extends GetxController {
 
   @override
   void onInit() {
-    // Generate by Menosi_cli
     super.onInit();
     loginFormHelper = FormHelper<AuthentificationException, Login>(
       fields: {
@@ -35,8 +34,8 @@ class LoginWithEmailController extends GetxController {
         "password": null,
       },
       validators: {
-        "email": Validators.requiredField,
-        "password": Validators.requiredField,
+        "email": Validators.email,
+        "password": Validators.password,
       },
       onSubmit: (data) => _loginUseCase.call(LoginCommand(
         email: data['email']!,

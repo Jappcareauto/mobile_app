@@ -18,6 +18,7 @@ class ActivitiesScreen extends GetView<ActivitiesController>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
+          appBarcolor: Get.theme.scaffoldBackgroundColor,
           title: "Activities",
           canBack: false,
           actions: [

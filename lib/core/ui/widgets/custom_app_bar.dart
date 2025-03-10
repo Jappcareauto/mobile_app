@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final double? titleSize;
+  final Color? appBarcolor;
   final bool canBack;
   final List<Widget>? actions;
   const CustomAppBar(
@@ -12,13 +13,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       required this.title,
       this.canBack = true,
       this.titleSize,
-      this.actions});
+      this.actions,
+      this.appBarcolor});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       surfaceTintColor: Colors.white,
-      backgroundColor: Get.theme.scaffoldBackgroundColor,
+      backgroundColor: appBarcolor,
       automaticallyImplyLeading: false,
       toolbarHeight: 100,
       title: Row(
@@ -31,13 +33,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (canBack)
-                  const Icon(
-                    FluentIcons.arrow_left_24_regular,
+                  IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
                     color: Colors.black,
+                    icon: const Icon(
+                      FluentIcons.arrow_left_24_regular, // Fluent UI icon
+                      color: Colors.black, // Icon color
+                    ),
                   ),
                 Text(title,
                     style: const TextStyle(
-                        fontSize: 26, fontWeight: FontWeight.w600)),
+                        fontSize: 26, fontWeight: FontWeight.bold)),
               ],
             ),
           ),
