@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jappcare/features/profile/ui/payments/addPaymentMethod/add_payment_method_screen.dart';
 
 import '../bindings/payments_controller_binding.dart';
 import '../../ui/payments/payments_screen.dart';
@@ -24,42 +25,52 @@ import 'profile_private_routes.dart';
 
 class ProfilePages implements FeaturePages {
   @override
-  List<GetPage>  getPages() => [
-    GetPage(
-      name: ProfilePrivateRoutes.home,
-      page: () => const ProfileScreen(),
-      binding: ProfileControllerBinding(),
-    ),
-    GetPage(
-      name: ProfilePrivateRoutes.settings,
-      page: () => const SettingsScreen(),
-      binding: SettingsControllerBinding(),
-    ),
-    GetPage(
-      name: ProfilePrivateRoutes.editProfile,
-      page: () => const EditProfileScreen(),
-      binding: EditProfileControllerBinding(),
-    ),
-    GetPage(
-      name: ProfilePrivateRoutes.termsAndConditions,
-      page: () => const TermsAndConditionsScreen(),
-      binding: TermsAndConditionsControllerBinding(),
-    ),
-    GetPage(
-      name: ProfilePrivateRoutes.privacyPolicy,
-      page: () => const PrivacyPolicyScreen(),
-      binding: PrivacyPolicyControllerBinding(),
-    ),
-    GetPage(
-      name: ProfilePrivateRoutes.history,
-      page: () => const HistoryScreen(),
-      binding: HistoryControllerBinding(),
-    ),
-    GetPage(
-      name: ProfilePrivateRoutes.payments,
-      page: () => const PaymentsScreen(),
-      binding: PaymentsControllerBinding(),
-    ),
-    // Add other routes here
-  ];
+  List<GetPage> getPages() => [
+        GetPage(
+          name: ProfilePrivateRoutes.home,
+          page: () => const ProfileScreen(),
+          binding: ProfileControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.settings,
+          page: () => const SettingsScreen(),
+          binding: SettingsControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.editProfile,
+          page: () => const EditProfileScreen(),
+          binding: EditProfileControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.termsAndConditions,
+          page: () => const TermsAndConditionsScreen(),
+          binding: TermsAndConditionsControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.privacyPolicy,
+          page: () => const PrivacyPolicyScreen(),
+          binding: PrivacyPolicyControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.history,
+          page: () => const HistoryScreen(),
+          binding: HistoryControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.payments,
+          page: () => const PaymentsScreen(),
+          binding: PaymentsControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.addMomoPaymentMethod,
+          page: () => const AddPaymentMethodScreen(),
+          binding: PaymentsControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.addCardPaymentMethod,
+          page: () => const AddPaymentMethodScreen(),
+          binding: PaymentsControllerBinding(),
+        ),
+        // Add other routes here
+      ];
 }

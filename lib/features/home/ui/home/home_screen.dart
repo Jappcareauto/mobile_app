@@ -53,7 +53,8 @@ class HomeScreen extends GetView<HomeController> {
                                 final notification = entry.value;
 
                                 return Dismissible(
-                                  key: Key(index.toString()),
+                                  // key: Key(index.toString()),
+                                  key: UniqueKey(),
                                   direction: DismissDirection.endToStart,
                                   background: const DismissWidget(),
                                   onDismissed: (direction) {

@@ -43,7 +43,6 @@ class CustomButton extends StatelessWidget {
           width: strech ? Get.context!.width : width,
           height: height,
           child: ElevatedButton(
-
             style: ElevatedButton.styleFrom(
               shadowColor: Colors.black,
               overlayColor: Colors.black12,
