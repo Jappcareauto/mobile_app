@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
@@ -14,6 +15,8 @@ import '../../../application/usecases/get_garage_by_owner_id_command.dart';
 
 import '../../../application/usecases/get_vehicle_list_usecase.dart';
 import '../../../application/usecases/get_vehicle_list_command.dart';
+
+import '../widgets/delete_vehicle_widget.dart';
 
 class GarageController extends GetxController {
   final GetVehicleListUseCase _getVehicleListUseCase;
@@ -87,6 +90,10 @@ class GarageController extends GetxController {
         arguments: appointmentDetails);
   }
 
+  void deleteVehicle(Vehicle vehicleDetails) {
+    openDeleteVehicleModal(vehicleDetails);
+  }
+
   Future<void> getGarageByOwnerId(String userId) async {
     loading.value = true;
     final result = await _getGarageByOwnerIdUseCase
@@ -139,4 +146,38 @@ class GarageController extends GetxController {
       },
     );
   }
+}
+
+void openDeleteVehicleModal(Vehicle vehicleDetails) {
+  showModalBottomSheet(
+    context: Get.context!,
+    isScrollControlled: true, // Permet un contrôle précis sur la hauteur
+    backgroundColor: Colors.transparent, // Rendre l'arrière-plan transparent
+    builder: (BuildContext context) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: .1),
+                blurRadius: 10,
+                offset: const Offset(0, -2),
+              ),
+            ],
+          ),
+          padding: const EdgeInsets.all(16), // Espacement intérieur
+          child: Wrap(
+            children: [
+              DeleteVehicleWidget(onConfirm: () {
+                print("pressed");
+              }),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }

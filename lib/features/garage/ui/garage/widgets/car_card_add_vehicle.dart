@@ -14,15 +14,17 @@ class CarCardAddVehicle extends StatelessWidget {
 
   final Function()? onPressed;
   final Function()? next;
-  final bool haveBorder ;
+  final Function()? delete;
+  final bool haveBorder;
   final bool? isSelected;
-  final bool  hideblure ;
+  final bool hideblure;
   final bool haveBGColor;
 
-  final double? containerheight ;
+  final double? containerheight;
   const CarCardAddVehicle({
     super.key,
     this.next,
+    this.delete,
     this.imageUrl,
     required this.haveBorder,
     this.containerheight,
@@ -31,23 +33,23 @@ class CarCardAddVehicle extends StatelessWidget {
     required this.carDetails,
     required this.imagePath,
     required this.haveBGColor,
-    this.onPressed, this.isSelected,
+    this.onPressed,
+    this.isSelected,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: containerheight ,
+      height: containerheight,
       margin: const EdgeInsets.only(right: 12),
       width: 360,
-      decoration:
-          BoxDecoration(
-          borderRadius: BorderRadius.circular(24),
-          color:  haveBGColor ? Get.theme.primaryColor : AppColors.white,
-          border: haveBorder ? Border.all(color: Get.theme.primaryColor , width: 1) :  Border.all(color: AppColors.lightBorder),
-        ),
-
-
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        color: haveBGColor ? Get.theme.primaryColor : AppColors.white,
+        border: haveBorder
+            ? Border.all(color: Get.theme.primaryColor, width: 1)
+            : Border.all(color: AppColors.lightBorder),
+      ),
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
         onTap: onPressed,
@@ -57,59 +59,78 @@ class CarCardAddVehicle extends StatelessWidget {
             alignment: Alignment.bottomRight,
             children: [
               ImageComponent(
-                assetPath: imageUrl == null ? imagePath : "" ,
-                imageUrl: imageUrl ,
+                assetPath: imageUrl == null ? imagePath : "",
+                imageUrl: imageUrl,
                 width: 250,
                 height: 120,
               ),
               Positioned(
-                top: 16,
-                left: 16,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${carDetails[1]} $carName",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color:  haveBGColor ? Colors.white : Colors.black,
+                top: 8,
+                left: 8,
+                right: 0,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${carDetails[1]} $carName",
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: haveBGColor ? Colors.white : Colors.black,
+                            ),
+                          ),
+                          Text(
+                            "${carDetails[0]}, ${carDetails[1]}",
+                            style: TextStyle(
+                                color:
+                                    haveBGColor ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(carDetails[0] , style: TextStyle(
-                      color:  haveBGColor ? Colors.white : Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14
-                    ) , ),
-                  ],
+                      GestureDetector(
+                        onTap: delete,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          margin: const EdgeInsets.only(right: 5),
+                          child: Icon(
+                            FluentIcons.delete_24_regular,
+                            color: haveBGColor ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-              if(next != null)...[
+              if (next != null) ...[
                 Positioned(
-                  bottom: 20,
-                    left: 20,
-                    child:GestureDetector(
+                    bottom: 8,
+                    left: 8,
+                    child: GestureDetector(
                       onTap: next,
                       child: Container(
                         padding: const EdgeInsets.all(10),
                         margin: const EdgeInsets.only(right: 5),
                         child: Icon(
                           FluentIcons.arrow_right_24_regular,
-                          color: haveBGColor ? Colors.white: Colors.black,
+                          color: haveBGColor ? Colors.white : Colors.black,
                         ),
-
                       ),
-                    )
-
-                )
+                    ))
               ],
-
-              if(!hideblure)...[
+              if (!hideblure) ...[
                 BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.5),
+                      color: Colors.white.withValues(alpha: 0.5),
                     ),
                   ),
                 ),
@@ -136,7 +157,6 @@ class CarCardAddVehicle extends StatelessWidget {
                   ),
                 ),
               ]
-
             ],
           ),
         ),

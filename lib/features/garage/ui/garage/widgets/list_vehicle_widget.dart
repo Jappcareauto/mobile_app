@@ -149,6 +149,9 @@ class ListVehicleWidget extends StatelessWidget
                       //   );
                       // }
                     },
+                    delete: () {
+                      controller.deleteVehicle(vehicle);
+                    },
                     carName: vehicle.detail?.model ?? '',
                     carDetails: [
                       vehicle.detail?.year ?? "Unknown",
