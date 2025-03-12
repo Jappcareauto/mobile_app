@@ -15,6 +15,17 @@ abstract class GarageRepository {
 
   Future<Either<GarageException, Vehicle>> addVehicle(
       String garageId, String vin, String registrationNumber);
+
   Future<Either<GarageException, String>> getPlaceName(
       double longitude, double latitude);
+
+  Future<Either<GarageException, Vehicle>> updateVehicle(
+      String id,
+      String name,
+      String garageId,
+      String vin,
+      String registrationNumber,
+      String? description);
+
+  Future<Either<GarageException, String>> deleteVehicle(String id);
 }

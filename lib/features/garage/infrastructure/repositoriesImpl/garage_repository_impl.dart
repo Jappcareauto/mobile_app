@@ -94,5 +94,43 @@ class GarageRepositoryImpl implements GarageRepository {
     }
   }
 
+  @override
+  Future<Either<GarageException, String>> deleteVehicle(String id) async {
+    try {
+      final response = await networkService.delete(
+        "${GarageConstants.addVehiclePostUri}/$id",
+      );
+      return Right(response as String);
+    } on BaseException catch (e) {
+      return Left(GarageException(e.message));
+    }
+  }
+
+  @override
+  Future<Either<GarageException, Vehicle>> updateVehicle(
+      String id,
+      String name,
+      String garageId,
+      String vin,
+      String registrationNumber,
+      String? description) async {
+    try {
+      final response = await networkService.put(
+        "${GarageConstants.addVehiclePostUri}/$id",
+        body: {
+          'name': name,
+          'garageId': garageId,
+          'vin': vin,
+          'registrationNumber': registrationNumber,
+          'description': description,
+          'withMedia': true,
+        },
+      );
+      return Right(VehicleModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(GarageException(e.message));
+    }
+  }
+
   //Add methods here
 }
