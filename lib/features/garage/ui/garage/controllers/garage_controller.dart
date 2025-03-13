@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
+import '../../../application/usecases/delete_vehicle_usecase.dart';
+import '../../../application/usecases/delete_vehicle_command.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_command.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
 import '../../../../../core/navigation/app_navigation.dart';
@@ -20,10 +22,12 @@ import '../widgets/delete_vehicle_widget.dart';
 
 class GarageController extends GetxController {
   final GetVehicleListUseCase _getVehicleListUseCase;
+  final DeleteVehicleUseCase _deleteVehicleUseCase = Get.find();
 
   final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
   final loading = true.obs;
   final vehicleLoading = true.obs;
+  final vehicleDeleteLoading = false.obs;
   RxDouble lat = 0.0.obs;
   RxDouble long = 0.0.obs;
   RxString placeName = ''.obs;
@@ -90,8 +94,26 @@ class GarageController extends GetxController {
         arguments: appointmentDetails);
   }
 
-  void deleteVehicle(Vehicle vehicleDetails) {
-    openDeleteVehicleModal(vehicleDetails);
+  Future<void> deleteVehicle(String id) async {
+    vehicleDeleteLoading.value = true;
+    final result =
+        await _deleteVehicleUseCase.call(DeleteVehicleCommand(id: id));
+    print(result);
+    result.fold(
+      (e) {
+        vehicleDeleteLoading.value = false;
+        Get.showCustomSnackBar(e.message);
+      },
+      (success) {
+        loading.value = false;
+        Get.find<GarageController>()
+            .getVehicleList(Get.find<GarageController>().myGarage!.id);
+      },
+    );
+  }
+
+  void openDeleteVehicle(Vehicle vehicleDetails) {
+    openDeleteVehicleModal(vehicleDetails, deleteVehicle);
   }
 
   Future<void> getGarageByOwnerId(String userId) async {
@@ -148,7 +170,7 @@ class GarageController extends GetxController {
   }
 }
 
-void openDeleteVehicleModal(Vehicle vehicleDetails) {
+void openDeleteVehicleModal(Vehicle vehicleDetails, Function onConfirm) {
   showModalBottomSheet(
     context: Get.context!,
     isScrollControlled: true, // Permet un contrôle précis sur la hauteur
