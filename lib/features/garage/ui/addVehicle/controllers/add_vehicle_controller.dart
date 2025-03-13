@@ -15,7 +15,9 @@ import '../../../domain/core/exceptions/garage_exception.dart';
 import '../../../domain/entities/get_vehicle_list.dart';
 
 class AddVehicleController extends GetxController {
-  final AddVehicleUseCase _addVehicleUseCase = Get.find();
+  final AddVehicleUseCase _addVehicleUseCase =
+      Get.find(); // Reactive variable to track character count
+  var vinCharacterCount = 0.obs;
   late FormHelper addVehicleFormHelper;
 
   final AppNavigation _appNavigation;
@@ -57,6 +59,11 @@ class AddVehicleController extends GetxController {
         _appNavigation.goBack();
       },
     );
+    // Listen for VIN input changes
+    addVehicleFormHelper.controllers['vin']?.addListener(() {
+      vinCharacterCount.value =
+          addVehicleFormHelper.controllers['vin']!.text.length;
+    });
   }
 
   void goBack() {
