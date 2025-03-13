@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_delete_button.dart';
+import '../controllers/garage_controller.dart';
 
 class DeleteVehicleWidget extends StatelessWidget {
   // final ChatController chatController = Get.put(ChatController(Get.find()));
@@ -9,6 +10,8 @@ class DeleteVehicleWidget extends StatelessWidget {
   const DeleteVehicleWidget({super.key, required this.onConfirm});
   @override
   Widget build(BuildContext context) {
+    final garageController = Get.find<GarageController>();
+
     return Center(
       child: SizedBox(
         height: 150,
@@ -49,13 +52,16 @@ class DeleteVehicleWidget extends StatelessWidget {
                   width: 10,
                 ),
                 Expanded(
-                  child: CustomDeleteButton(
-                    text: 'Confirm',
-                    onPressed: () => onConfirm(),
-                    color: Colors.red,
-                    // chatController.goToAddPaymentMethodForm(
-                    //     chatController.selectedMethod.value),
-                    strech: false,
+                  child: Obx(
+                    () => CustomDeleteButton(
+                      text: 'Confirm',
+                      onPressed: () => onConfirm(),
+                      color: Colors.red,
+                      // chatController.goToAddPaymentMethodForm(
+                      //     chatController.selectedMethod.value),
+                      strech: false,
+                      isLoading: garageController.vehicleDeleteLoading,
+                    ),
                   ),
                 ),
               ],
