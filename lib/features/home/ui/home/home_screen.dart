@@ -22,8 +22,6 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     Get.put(HomeController(Get.find()));
-    print("controller.notifications");
-    print(controller.notifications);
     return Scaffold(
         body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) =>

@@ -17,6 +17,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
   @override
   Widget build(BuildContext context) {
     final vhcle = controller.vehicleModel;
+    print(vhcle);
     return Scaffold(
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,

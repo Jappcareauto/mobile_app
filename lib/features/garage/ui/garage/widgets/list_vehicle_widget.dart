@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
@@ -46,9 +46,6 @@ class ListVehicleWidget extends StatelessWidget
         if (controller.vehicleLoading.value) {
           return const ListVehicleShimmer();
         }
-
-        print(
-            'controller.vehicleList.length : ${controller.vehicleList.length}');
 
         final vehiclesToDisplay = controller.vehicleList.isEmpty
             ? []
