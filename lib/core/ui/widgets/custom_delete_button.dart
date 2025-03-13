@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../utils/app_dimensions.dart';
 
-class CustomButton extends StatelessWidget {
+class CustomDeleteButton extends StatelessWidget {
   final String text;
   final Color? color;
   final Color? textColor;
@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
   final Color? borderColor;
   final RxBool? isLoading;
 
-  const CustomButton({
+  const CustomDeleteButton({
     super.key,
     required this.text,
     this.color,
@@ -44,22 +44,21 @@ class CustomButton extends StatelessWidget {
           height: height,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              shadowColor: Colors.black,
-              overlayColor: Colors.black12,
+              shadowColor: Colors.red,
+              overlayColor: Colors.redAccent.withValues(alpha: .1),
               elevation: .0,
-              backgroundColor:
-                  color ?? (haveBorder ? Colors.transparent : null),
+              backgroundColor: color ?? (haveBorder ? Colors.red : null),
               shape: RoundedRectangleBorder(
                   borderRadius: borderRadius,
                   side: haveBorder
-                      ? BorderSide(color: borderColor ?? Colors.black)
+                      ? BorderSide(color: borderColor ?? Colors.red)
                       : BorderSide.none),
             ),
             onPressed: loading.value ? null : onPressed,
             child: loading.value
                 ? LoadingAnimationWidget.beat(
                     color:
-                        textColor ?? (haveBorder ? Colors.black : Colors.white),
+                        textColor ?? (haveBorder ? Colors.red : Colors.white),
                     size: 20)
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +79,7 @@ class CustomButton extends StatelessWidget {
                                     ?.copyWith(
                                       color: textColor ??
                                           (haveBorder
-                                              ? Colors.black
+                                              ? Colors.red
                                               : Colors.white),
                                       fontWeight: FontWeight.bold,
                                     ),

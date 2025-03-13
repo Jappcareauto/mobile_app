@@ -12,8 +12,7 @@ class ChatMessage extends StatelessWidget {
     super.key,
     this.text,
     required this.isSender,
-
-     this.images,
+    this.images,
   });
 
   @override
@@ -24,27 +23,24 @@ class ChatMessage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Column(
-
           crossAxisAlignment:
-          isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Container(
               padding: const EdgeInsets.all(12.0),
               decoration: BoxDecoration(
                 color: isSender
-                    ? Get.theme.primaryColor.withOpacity(0.2)
+                    ? Get.theme.primaryColor.withValues(alpha: .2)
                     : isDarkMode
-                    ? Get.theme.scaffoldBackgroundColor.withOpacity(0.2)
-                    : Colors.grey.shade200,
+                        ? Get.theme.scaffoldBackgroundColor
+                            .withValues(alpha: .2)
+                        : Colors.grey.shade200,
                 borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(16))
+                        top: Radius.circular(16))
                     .copyWith(
-                    bottomLeft: isSender
-                        ? const Radius.circular(16)
-                        : null,
-                    bottomRight: isSender
-                        ? null
-                        : const Radius.circular(16)),
+                        bottomLeft: isSender ? const Radius.circular(16) : null,
+                        bottomRight:
+                            isSender ? null : const Radius.circular(16)),
               ),
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.7,
@@ -63,8 +59,6 @@ class ChatMessage extends StatelessWidget {
                             : Colors.black,
                       ),
                     ),
-
-
                 ],
               ),
             ),
@@ -75,7 +69,7 @@ class ChatMessage extends StatelessWidget {
                 children: images!.map((imagePath) {
                   final imageFile = File(imagePath.path);
                   return Image.file(
-                    imageFile ,
+                    imageFile,
                     width: 150.0,
                     height: 150.0,
                     fit: BoxFit.cover,

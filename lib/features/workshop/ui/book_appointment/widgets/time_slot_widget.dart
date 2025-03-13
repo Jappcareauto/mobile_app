@@ -7,7 +7,8 @@ class TimeSlot extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const TimeSlot({super.key, 
+  const TimeSlot({
+    super.key,
     required this.label,
     required this.timeRange,
     required this.isSelected,
@@ -22,21 +23,31 @@ class TimeSlot extends StatelessWidget {
         width: 165,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSelected ? Get.theme.primaryColor.withOpacity(0.2) : Colors.white,
+          color: isSelected
+              ? Get.theme.primaryColor.withValues(alpha: .2)
+              : Colors.white,
           borderRadius: BorderRadius.circular(12),
-           border: Border.all(
-              color: isSelected ? Colors.orange : Colors.grey,
-        ),
+          border: Border.all(
+            color: isSelected
+                ? Colors.orange
+                : const Color(0xF6EFF3FF).withValues(alpha: .95),
+          ),
         ),
         child: Column(
           children: [
             Text(
               label,
-              style: TextStyle(fontWeight: FontWeight.bold , color: isSelected ? Colors.orange : Colors.black),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: isSelected ? Colors.orange : Colors.black),
             ),
-            Text(timeRange ,
-              style: TextStyle(fontWeight: FontWeight.bold , color: isSelected ? Colors.orange : Colors.black),
-
+            const SizedBox(height: 4),
+            Text(
+              timeRange,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: isSelected ? Colors.orange : Colors.black),
             ),
           ],
         ),

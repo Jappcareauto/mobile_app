@@ -1,5 +1,4 @@
 class AddVehicleCommand {
-
   final String garageId;
   final String vin;
   final String registrationNumber;
@@ -10,4 +9,3 @@ class AddVehicleCommand {
     required this.registrationNumber,
   });
 }
-

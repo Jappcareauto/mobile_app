@@ -8,4 +8,6 @@ class ProfilePrivateRoutes {
   static const String privacyPolicy = '$home/privacyPolicy';
   static const String history = '$home/history';
   static const String payments = '$home/payments';
+  static const String addMomoPaymentMethod = '$home/payments/add/momo';
+  static const String addCardPaymentMethod = '$home/payments/add/card';
 }
