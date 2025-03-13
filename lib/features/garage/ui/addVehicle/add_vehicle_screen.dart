@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 class AddVehicleScreen extends GetView<AddVehicleController> {
   const AddVehicleScreen({super.key});
+  final int maxVinLength = 17;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +40,19 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                                 forceUpperCase: true,
                                 validator: controller
                                     .addVehicleFormHelper.validators['vin'],
-                                maxLength: 17,
+                                maxLength: maxVinLength,
                               ),
+
+                              const SizedBox(height: 20),
+                              // Character count text
+                              Obx(() => Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      "${controller.vinCharacterCount}/$maxVinLength characters",
+                                      style: const TextStyle(
+                                          fontSize: 12, color: Colors.grey),
+                                    ),
+                                  )),
                               const SizedBox(height: 20),
                               CustomFormField(
                                 controller: controller.addVehicleFormHelper
