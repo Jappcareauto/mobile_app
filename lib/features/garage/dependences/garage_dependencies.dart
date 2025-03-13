@@ -15,6 +15,8 @@ import '../application/usecases/get_vehicle_list_usecase.dart';
 
 import '../application/usecases/add_vehicle_usecase.dart';
 
+import '../application/usecases/delete_vehicle_usecase.dart';
+
 class GarageDependencies {
   static void init() {
     Get.lazyPut<GarageRepository>(
@@ -32,6 +34,7 @@ class GarageDependencies {
     Get.lazyPut(() => GetGarageByOwnerIdUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetVehicleListUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => AddVehicleUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => DeleteVehicleUseCase(Get.find()), fenix: true);
     Get.put(GarageController(Get.find(), Get.find()), permanent: true);
     Get.lazyPut(() => GetPlaceNameUseCase(Get.find()), fenix: true);
   }
