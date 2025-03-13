@@ -66,15 +66,18 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Flexible(
+                        Expanded(
                           child: Text(
                             globalcontrollerWorkshop
                                 .workshopData['serviceCenterName'],
-                            style: Get.textTheme.headlineLarge,
+                            style: Get.textTheme.headlineMedium,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 3,
-                            softWrap: false,
+                            // softWrap: false,
                           ),
+                        ),
+                        const SizedBox(
+                          width: 5,
                         ),
                         Chip(
                           backgroundColor: const Color(0xFFC4FFCD),
@@ -106,7 +109,9 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                             Obx(() => controller.loading.value
                                 ? const TextShimmer()
                                 : Text(
-                                    controller.placeName.value,
+                                    controller.placeName.value.isNotEmpty
+                                        ? controller.placeName.value
+                                        : 'Douala, Cameroun',
                                     style: TextStyle(
                                       fontSize: 17,
                                       color: Get.theme.primaryColor,
@@ -114,12 +119,15 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                                   ))
                           ],
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 10, right: 5),
-                          child: const Text(
-                            '|',
-                            style: TextStyle(fontSize: 20, color: Colors.grey),
-                          ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text(
+                          '|',
+                          style: TextStyle(fontSize: 20, color: Colors.grey),
+                        ),
+                        const SizedBox(
+                          width: 5,
                         ),
                         const Row(
                           children: [

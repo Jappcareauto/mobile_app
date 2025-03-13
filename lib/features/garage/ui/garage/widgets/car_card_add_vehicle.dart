@@ -17,6 +17,7 @@ class CarCardAddVehicle extends StatelessWidget {
   final Function()? delete;
   final bool haveBorder;
   final bool? isSelected;
+  final bool? showDelete;
   final bool hideblure;
   final bool haveBGColor;
 
@@ -28,6 +29,7 @@ class CarCardAddVehicle extends StatelessWidget {
     this.imageUrl,
     required this.haveBorder,
     this.containerheight,
+    this.showDelete,
     required this.hideblure,
     required this.carName,
     required this.carDetails,
@@ -60,7 +62,9 @@ class CarCardAddVehicle extends StatelessWidget {
             children: [
               ImageComponent(
                 assetPath: imageUrl == null ? imagePath : "",
-                imageUrl: imageUrl,
+                // imageUrl: imageUrl,
+                imageUrl:
+                    "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
                 width: 250,
                 height: 120,
               ),
@@ -94,17 +98,19 @@ class CarCardAddVehicle extends StatelessWidget {
                           ),
                         ],
                       ),
-                      GestureDetector(
-                        onTap: delete,
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          margin: const EdgeInsets.only(right: 5),
-                          child: Icon(
-                            FluentIcons.delete_24_regular,
-                            color: haveBGColor ? Colors.white : Colors.black,
+                      if (showDelete == true) ...{
+                        GestureDetector(
+                          onTap: delete,
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(right: 5),
+                            child: Icon(
+                              FluentIcons.delete_24_regular,
+                              color: haveBGColor ? Colors.white : Colors.black,
+                            ),
                           ),
                         ),
-                      )
+                      },
                     ],
                   ),
                 ),

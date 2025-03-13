@@ -51,6 +51,10 @@ class HomeController extends GetxController {
     Get.to(() => const CommingSoonScreen(), transition: Transition.leftToRight);
   }
 
+  void navigateToWorkShopScreen() {
+    Get.to(() => const CommingSoonScreen(), transition: Transition.leftToRight);
+  }
+
   void goBack() {
     _appNavigation.goBack();
   }

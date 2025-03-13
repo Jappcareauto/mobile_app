@@ -22,109 +22,133 @@ class WorkshopScreen extends GetView<WorkshopController>
       Get.find(),
     ));
     return Scaffold(
-        appBar: CustomAppBar(
-          appBarcolor: Get.theme.scaffoldBackgroundColor,
-          title: "Service Centers",
-          canBack: true,
-        ),
-        body: SingleChildScrollView(
-            child: Column(children: [
-          Row(
-            children: [
-              const Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: CustomFormField(
-                    borderRadius: 32,
-                    filColor: AppColors.white,
-                    hintText: "Search Centers",
-                    prefix: Icon(FluentIcons.search_24_regular),
+      appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+        title: "Service Centers",
+        canBack: false,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: CustomFormField(
+                      borderRadius: 32,
+                      filColor: AppColors.white,
+                      hintText: "Search Centers",
+                      prefix: Icon(FluentIcons.search_24_regular),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 10),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        color: AppColors.white),
+                    child: const Icon(FluentIcons.options_16_regular),
+                  ),
+                ],
               ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.only(right: 5),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: AppColors.white),
-                child: const Icon(FluentIcons.options_16_regular),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Row(
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Get.theme.primaryColor),
+                    child: Text(
+                      'Around Me',
+                      style: Get.textTheme.bodyMedium
+                          ?.copyWith(color: Get.theme.scaffoldBackgroundColor),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Get.theme.primaryColor),
+                    child: Text(
+                      'Available Now',
+                      style: Get.textTheme.bodyMedium
+                          ?.copyWith(color: Get.theme.scaffoldBackgroundColor),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              const SizedBox(width: 20),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Get.theme.primaryColor),
-                child: Text(
-                  'Around Me',
-                  style: Get.textTheme.bodyMedium
-                      ?.copyWith(color: Get.theme.scaffoldBackgroundColor),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          ServicesListWidget(),
-          const SizedBox(height: 20),
-          Obx(() {
-            return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  children: controller.loading.value
-                      ? [
-                          // Encapsuler ListVehicleShimmer dans un conteneur de hauteur définie
-                          const SizedBox(
-                              height: 190, // Hauteur fixée
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    WorkshopShimmerWidgets(),
-                                    WorkshopShimmerWidgets(),
-                                  ],
+            ),
+            const SizedBox(height: 20),
+            ServicesListWidget(),
+            const SizedBox(height: 8),
+            Obx(
+              () {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Column(
+                    children: controller.loading.value
+                        ? [
+                            // Encapsuler ListVehicleShimmer dans un conteneur de hauteur définie
+                            const SizedBox(
+                                height: 190, // Hauteur fixée
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      WorkshopShimmerWidgets(),
+                                      WorkshopShimmerWidgets(),
+                                    ],
+                                  ),
+                                )),
+                          ]
+                        : (controller.servicesCenter.value?.data != null &&
+                                controller
+                                    .servicesCenter.value!.data.isNotEmpty)
+                            ? controller.servicesCenter.value!.data
+                                .map<Widget>((service) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    controller.goToWorkshopDetails(
+                                        service.name ?? 'Inconnu',
+                                        service.location?.description ??
+                                            'Inconnu',
+                                        service.location?.latitude ?? 0.0,
+                                        service.location?.longitude ?? 0.0,
+                                        service.id);
+                                  },
+                                  child: ServiceItemWidget(
+                                    image: AppImages.shopCar,
+                                    title: service.name ?? 'Inconnu',
+                                    rate: '4.5',
+                                    location: service.location?.name ??
+                                        'Douala, Cameroun',
+                                  ),
+                                );
+                              }).toList()
+                            : [
+                                const Text(
+                                  'Aucun service disponible',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey,
+                                  ),
                                 ),
-                              )),
-                        ]
-                      : (controller.servicesCenter.value?.data != null &&
-                              controller.servicesCenter.value!.data.isNotEmpty)
-                          ? controller.servicesCenter.value!.data
-                              .map<Widget>((service) {
-                              return GestureDetector(
-                                onTap: () {
-                                  controller.goToWorkshopDetails(
-                                      service.name ?? 'Inconnu',
-                                      service.location?.description ??
-                                          'Inconnu',
-                                      service.location?.latitude ?? 0.0,
-                                      service.location?.longitude ?? 0.0,
-                                      service.id);
-                                },
-                                child: ServiceItemWidget(
-                                  image: AppImages.shopCar,
-                                  title: service.name ?? 'Inconnu',
-                                  rate: '4.5',
-                                  location: service.location?.name ??
-                                      'Douala, Cameroun',
-                                ),
-                              );
-                            }).toList()
-                          : [
-                              const Text(
-                                'Aucun service disponible',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                ));
-          })
-        ])));
+                              ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
