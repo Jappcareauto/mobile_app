@@ -108,7 +108,7 @@ class Detail {
     required createdAt,
     required updatedAt,
   }) {
-    // Add any validation or business logic here
+    // Add any validation or business logic herea
     return Detail._(
       make: make,
       model: model,
@@ -141,14 +141,14 @@ class Media {
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
-  Media._({ 
+  Media._({
     required this.sourceUrl,
     this.capturedUrl,
     this.type,
     this.mediaId,
     this.fileId,
     this.fileUrl,
-     this.id,
+    this.id,
     this.createdBy,
     this.updatedBy,
     this.createdAt,
@@ -162,7 +162,7 @@ class Media {
     mediaId,
     fileId,
     fileUrl,
-     id,
+    id,
     createdBy,
     updatedBy,
     createdAt,

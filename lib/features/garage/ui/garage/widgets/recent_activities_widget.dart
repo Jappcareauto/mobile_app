@@ -40,12 +40,24 @@ class RecentActivitiesWidget extends StatelessWidget
             return const Center(
               child: Column(
                 children: [
-                  ImageComponent(
-                    assetPath: AppConstants.noActivities,
-                    height: 400,
-                    width: 350,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ImageComponent(
+                          assetPath: AppConstants.noActivities,
+                          height: 200,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   Text('You have no recent activities at the moment'),
+                  SizedBox(
+                    height: 20,
+                  ),
                 ],
               ),
             );

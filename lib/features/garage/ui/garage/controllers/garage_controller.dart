@@ -95,6 +95,7 @@ class GarageController extends GetxController {
   }
 
   Future<void> deleteVehicle(String id) async {
+    print("tried a log");
     vehicleDeleteLoading.value = true;
     final result =
         await _deleteVehicleUseCase.call(DeleteVehicleCommand(id: id));
@@ -113,7 +114,9 @@ class GarageController extends GetxController {
   }
 
   void openDeleteVehicle(Vehicle vehicleDetails) {
-    openDeleteVehicleModal(vehicleDetails, deleteVehicle);
+    openDeleteVehicleModal(vehicleDetails, () {
+      deleteVehicle(vehicleDetails.id);
+    });
   }
 
   Future<void> getGarageByOwnerId(String userId) async {
@@ -195,6 +198,7 @@ void openDeleteVehicleModal(Vehicle vehicleDetails, Function onConfirm) {
             children: [
               DeleteVehicleWidget(onConfirm: () {
                 print("pressed");
+                onConfirm();
               }),
             ],
           ),

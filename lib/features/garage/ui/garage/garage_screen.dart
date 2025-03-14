@@ -22,7 +22,7 @@ class GarageScreen extends GetView<GarageController>
             appBar: CustomAppBar(
               appBarcolor: Get.theme.scaffoldBackgroundColor,
               title: "My Garage",
-              canBack: true,
+              canBack: false,
               actions: [
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'AvatarWidget'))
@@ -35,12 +35,18 @@ class GarageScreen extends GetView<GarageController>
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 20.0,
+                      padding: const EdgeInsets.only(
+                        top: 30,
+                        bottom: 10,
+                        left: 20,
+                        right: 20,
                       ),
-                      child: ListVehicleWidget(haveTitle: false),
+                      child: ListVehicleWidget(
+                        haveTitle: false,
+                        showDelete: true,
+                      ),
                     ),
+                    const SizedBox(height: 20),
                     RecentActivitiesWidget(haveTabBar: true),
                   ],
                 ),

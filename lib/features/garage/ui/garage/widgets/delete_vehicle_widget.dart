@@ -16,23 +16,18 @@ class DeleteVehicleWidget extends StatelessWidget {
       child: SizedBox(
         height: 150,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: Text(
-                    'Are you sure you want to delete this vehicle ?',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                    softWrap: false,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
+            const Flexible(
+              child: Text(
+                'Are you sure you want to delete this vehicle ?',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+                softWrap: false,
+                textAlign: TextAlign.center,
+              ),
             ),
             const SizedBox(
               height: 35,
@@ -52,16 +47,14 @@ class DeleteVehicleWidget extends StatelessWidget {
                   width: 10,
                 ),
                 Expanded(
-                  child: Obx(
-                    () => CustomDeleteButton(
-                      text: 'Confirm',
-                      onPressed: () => onConfirm(),
-                      color: Colors.red,
-                      // chatController.goToAddPaymentMethodForm(
-                      //     chatController.selectedMethod.value),
-                      strech: false,
-                      isLoading: garageController.vehicleDeleteLoading,
-                    ),
+                  child: CustomDeleteButton(
+                    text: 'Confirm',
+                    onPressed: () => onConfirm(),
+                    color: Colors.red,
+                    // chatController.goToAddPaymentMethodForm(
+                    //     chatController.selectedMethod.value),
+                    strech: false,
+                    isLoading: garageController.vehicleDeleteLoading,
                   ),
                 ),
               ],

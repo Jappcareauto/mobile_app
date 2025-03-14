@@ -21,11 +21,11 @@ class CustomCardService extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(25)),
-          //border: Border.all(width: 2, color: _currentColor),
-        ),
+      child: SizedBox(
+        // decoration: const BoxDecoration(
+        //   borderRadius: BorderRadius.all(Radius.circular(25)),
+        //   //border: Border.all(width: 2, color: _currentColor),
+        // ),
         width: widthContainer,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(25),
@@ -37,14 +37,13 @@ class CustomCardService extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 100,
-                  padding: const EdgeInsets.only(top: 15, left: 15),
+                  padding: const EdgeInsets.only(top: 10, left: 10),
                   child: Text(
                     text,
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 18.5),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

@@ -18,6 +18,7 @@ class ListVehicleWidget extends StatelessWidget
   final PageController? pageController;
   final RxInt? currentPage;
   final bool? haveAddVehicule;
+  final bool? showDelete;
   final String title;
   final VoidCallback? onTapeAddVehicle;
   final bool? isSingleCard;
@@ -28,6 +29,7 @@ class ListVehicleWidget extends StatelessWidget
     super.key,
     this.pageController,
     this.currentPage,
+    this.showDelete,
     this.haveAddVehicule = true,
     this.onTapeAddVehicle,
     this.isSingleCard,
@@ -81,7 +83,7 @@ class ListVehicleWidget extends StatelessWidget
                         );
                 }),
               ),
-            if (haveTitle) const SizedBox(height: 5),
+            if (haveTitle) const SizedBox(height: 10),
             SizedBox(
               height: 190,
               child: PageView.builder(
@@ -133,21 +135,25 @@ class ListVehicleWidget extends StatelessWidget
                     key: ValueKey(vehicle),
                     haveBGColor: false,
                     hideblure: true,
+                    showDelete: showDelete,
                     haveBorder: currentPage?.value == index,
                     containerheight: 200,
-                    next: () {
+                    onPressed: () {
                       controller.goToVehicleDetails(vehicle);
-                      // if (index == (vehiclesToDisplay.length - 1) && !haveAddVehicule!) {
-                      //   pageController?.jumpToPage(0);
-                      // } else {
-                      //   pageController?.nextPage(
-                      //     duration: const Duration(milliseconds: 300),
-                      //     curve: Curves.easeInOut,
-                      //   );
-                      // }
                     },
+                    // next: () {
+                    //   // if (index == (vehiclesToDisplay.length - 1) && !haveAddVehicule!) {
+                    //   //   pageController?.jumpToPage(0);
+                    //   // } else {
+                    //   //   pageController?.nextPage(
+                    //   //     duration: const Duration(milliseconds: 300),
+                    //   //     curve: Curves.easeInOut,
+                    //   //   );
+                    //   // }
+                    // },
                     delete: () {
-                      controller.deleteVehicle(vehicle);
+                      // print(vehicle.toString());
+                      controller.openDeleteVehicle(vehicle);
                     },
                     carName: vehicle.detail?.model ?? '',
                     carDetails: [
