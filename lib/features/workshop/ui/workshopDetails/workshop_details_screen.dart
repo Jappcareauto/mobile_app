@@ -156,7 +156,13 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
               ),
               ServicesListWidget(),
               const SizedBox(height: 20),
-              const SizedBox(height: 300, child: WorkshopCustomMapView()),
+              const SizedBox(
+                  height: 300,
+                  child: Row(
+                    children: [
+                      WorkshopCustomMapView(),
+                    ],
+                  )),
               const SizedBox(height: 20),
               Container(
                 width: Get.width,

@@ -25,7 +25,11 @@ class WorkshopScreen extends GetView<WorkshopController>
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: "Service Centers",
-        canBack: false,
+        canBack: true,
+        actions: [
+          if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
+            Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
