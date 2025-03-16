@@ -49,14 +49,15 @@ class ListVehicleWidget extends StatelessWidget
           return const ListVehicleShimmer();
         }
 
-        final vehiclesToDisplay = controller.vehicleList.isEmpty
-            ? []
-            : isSingleCard == true
-                ? [
-                    controller.vehicleList[(currentPage?.value ?? 0)
-                        .clamp(0, controller.vehicleList.length - 1)]
-                  ]
-                : controller.vehicleList;
+        final RxList<Vehicle> vehiclesToDisplay =
+            RxList<Vehicle>(controller.vehicleList.isEmpty
+                ? []
+                : isSingleCard == true
+                    ? [
+                        controller.vehicleList[(currentPage?.value ?? 0)
+                            .clamp(0, controller.vehicleList.length - 1)]
+                      ]
+                    : controller.vehicleList);
 
         // Initialiser l'appel de `onSelected` pour le premier élément
         WidgetsBinding.instance.addPostFrameCallback((controller) {
@@ -141,18 +142,18 @@ class ListVehicleWidget extends StatelessWidget
                     onPressed: () {
                       controller.goToVehicleDetails(vehicle);
                     },
-                    // next: () {
-                    //   // if (index == (vehiclesToDisplay.length - 1) && !haveAddVehicule!) {
-                    //   //   pageController?.jumpToPage(0);
-                    //   // } else {
-                    //   //   pageController?.nextPage(
-                    //   //     duration: const Duration(milliseconds: 300),
-                    //   //     curve: Curves.easeInOut,
-                    //   //   );
-                    //   // }
-                    // },
+                    next: () {
+                      if (index == (vehiclesToDisplay.length - 1) &&
+                          !haveAddVehicule!) {
+                        pageController?.jumpToPage(0);
+                      } else {
+                        pageController?.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      }
+                    },
                     delete: () {
-                      // print(vehicle.toString());
                       controller.openDeleteVehicle(vehicle);
                     },
                     carName: vehicle.detail?.model ?? '',
