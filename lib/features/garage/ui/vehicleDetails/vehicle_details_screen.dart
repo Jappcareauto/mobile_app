@@ -17,7 +17,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
   @override
   Widget build(BuildContext context) {
     final vhcle = controller.vehicleModel;
-    print(vhcle);
+    print(vhcle.imageUrl);
     return Scaffold(
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
@@ -66,10 +66,23 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                                   ))
                               .toList() ??
                           [
-                            SizedBox(
-                                width: Get.width * .85,
-                                height: 200,
-                                child: const Center(child: Text("No Media")))
+                            vhcle.imageUrl != null
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: ImageComponent(
+                                      assetPath: vhcle.imageUrl != null
+                                          ? null
+                                          : AppImages.carWhite,
+                                      imageUrl: vhcle.imageUrl,
+                                      width: Get.width * .85,
+                                      borderRadius: 10,
+                                    ),
+                                  )
+                                : SizedBox(
+                                    width: Get.width * .85,
+                                    height: 200,
+                                    child:
+                                        const Center(child: Text("No Media")))
                           ],
                     ),
                   ),
@@ -121,24 +134,24 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: EarningsGraph(
-                totalEarnings: 284000,
-                selectedPointLabel: '28,000Frs',
-                selectedPointValue: 28000,
-                dataPoints: [
-                  FlSpot(1, 10),
-                  FlSpot(5, 3),
-                  FlSpot(10, 18),
-                  FlSpot(15, 22),
-                  FlSpot(20, 10),
-                  FlSpot(25, 27),
-                  FlSpot(30, 23),
-                ],
-              ),
-            ),
+            // const SizedBox(height: 20),
+            // const Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 20),
+            //   child: EarningsGraph(
+            //     totalEarnings: 284000,
+            //     selectedPointLabel: '28,000Frs',
+            //     selectedPointValue: 28000,
+            //     dataPoints: [
+            //       FlSpot(1, 10),
+            //       FlSpot(5, 3),
+            //       FlSpot(10, 18),
+            //       FlSpot(15, 22),
+            //       FlSpot(20, 10),
+            //       FlSpot(25, 27),
+            //       FlSpot(30, 23),
+            //     ],
+            //   ),
+            // ),
             const SizedBox(height: 20),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),

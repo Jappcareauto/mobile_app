@@ -80,17 +80,30 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                           width: 5,
                         ),
                         Chip(
-                          backgroundColor: const Color(0xFFC4FFCD),
-                          label: const Text(
-                            'Available',
+                          backgroundColor: globalcontrollerWorkshop
+                                  .workshopData["availability"]
+                              ? const Color(0xFFC4FFCD)
+                              : const Color.fromARGB(255, 255, 187, 196),
+                          label: Text(
+                            globalcontrollerWorkshop
+                                    .workshopData["availability"]
+                                ? 'Available'
+                                : "Not Available",
                             style: TextStyle(
-                                color: Colors.green,
+                                color: globalcontrollerWorkshop
+                                        .workshopData["availability"]
+                                    ? Colors.green
+                                    : Colors.red,
                                 fontWeight: FontWeight.w600),
                           ),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                width: 0, color: Color(0xFFC4FFCD)),
+                            side: BorderSide(
+                                width: 0,
+                                color: globalcontrollerWorkshop
+                                        .workshopData["availability"]
+                                    ? const Color(0xFFC4FFCD)
+                                    : const Color.fromARGB(255, 231, 109, 125)),
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
@@ -109,9 +122,9 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                             Obx(() => controller.loading.value
                                 ? const TextShimmer()
                                 : Text(
-                                    controller.placeName.value.isNotEmpty
-                                        ? controller.placeName.value
-                                        : 'Douala, Cameroun',
+                                    globalcontrollerWorkshop
+                                            .workshopData["locationName"] ??
+                                        "Unknown",
                                     style: TextStyle(
                                       fontSize: 17,
                                       color: Get.theme.primaryColor,
@@ -170,7 +183,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                 child: CustomButton(
                   text: 'Book Appointment',
                   onPressed: () {
-                    controller.gotoBoockApontment();
+                    controller.gotoBookAppointment();
                   },
                 ),
               ),

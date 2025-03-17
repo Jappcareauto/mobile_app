@@ -24,12 +24,11 @@ class WorkshopDetailsController extends GetxController {
   final locationPermissionGranted = false.obs;
   final arguments = Get.find<GlobalcontrollerWorkshop>().workshopData;
 
-
   RxString placeName = ''.obs;
 
   //Maps initializations
   final Completer<GoogleMapController> mapController =
-  Completer<GoogleMapController>();
+      Completer<GoogleMapController>();
   var serviceLocation = BitmapDescriptor.defaultMarker.obs;
 
   var kYaounde = const CameraPosition(
@@ -91,7 +90,6 @@ class WorkshopDetailsController extends GetxController {
     );
   }
 
-
   Future<void> _requestLocationPermission() async {
     var status = await Permission.locationWhenInUse.request();
     if (status.isGranted) {
@@ -116,13 +114,13 @@ class WorkshopDetailsController extends GetxController {
     );
     ui.FrameInfo fi = await codec.getNextFrame();
     ByteData? byteData =
-    await fi.image.toByteData(format: ui.ImageByteFormat.png);
+        await fi.image.toByteData(format: ui.ImageByteFormat.png);
     return byteData!.buffer.asUint8List();
   }
 
   Future<void> loadCustomIcons() async {
     final Uint8List sevrviceIconBytes =
-    await getBytesFromAsset(AppConstants.mapLocalisation, 150);
+        await getBytesFromAsset(AppConstants.mapLocalisation, 150);
     serviceLocation.value = BitmapDescriptor.fromBytes(sevrviceIconBytes);
   }
 
@@ -201,9 +199,7 @@ class WorkshopDetailsController extends GetxController {
     controller.animateCamera(cameraUpdate);
   }
 
-  void gotoBoockApontment() {
+  void gotoBookAppointment() {
     _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment);
-
   }
-
 }

@@ -29,6 +29,10 @@ class Data {
   final String? updatedBy;
   final String createdAt;
   final String updatedAt;
+  final String? imageId;
+  final String? imageUrl;
+  final String? available;
+  final bool availability;
 
   Data._({
     required this.name,
@@ -38,33 +42,43 @@ class Data {
     required this.id,
     this.createdBy,
     this.updatedBy,
+    this.imageId,
+    this.imageUrl,
+    required this.availability,
+    this.available,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory Data.create({
-    required name,
-    required ownerId,
-    required location,
-    required category,
-    required id,
-    required createdBy,
-    required updatedBy,
-    required createdAt,
-    required updatedAt,
-  }) {
+  factory Data.create(
+      {required name,
+      required ownerId,
+      required location,
+      required category,
+      required id,
+      required createdBy,
+      required updatedBy,
+      required createdAt,
+      required updatedAt,
+      required imageId,
+      required imageUrl,
+      required availability,
+      required available}) {
     // Add any validation or business logic here
     return Data._(
-      name: name,
-      ownerId: ownerId,
-      location: location,
-      category: category,
-      id: id,
-      createdBy: createdBy,
-      updatedBy: updatedBy,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-    );
+        name: name,
+        ownerId: ownerId,
+        location: location,
+        category: category,
+        id: id,
+        createdBy: createdBy,
+        updatedBy: updatedBy,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        imageId: imageId,
+        imageUrl: imageUrl,
+        availability: availability,
+        available: available);
   }
 }
 

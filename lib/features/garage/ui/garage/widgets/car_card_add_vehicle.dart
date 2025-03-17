@@ -99,17 +99,22 @@ class CarCardAddVehicle extends StatelessWidget {
                         ],
                       ),
                       if (showDelete == true) ...{
-                        GestureDetector(
-                          onTap: delete,
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            margin: const EdgeInsets.only(right: 5),
-                            child: Icon(
-                              FluentIcons.delete_24_regular,
-                              color: haveBGColor ? Colors.white : Colors.black,
+                        Ink(
+                          color: Colors.grey,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(24),
+                            onTap: delete,
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              margin: const EdgeInsets.only(right: 5),
+                              child: Icon(
+                                FluentIcons.delete_24_regular,
+                                color:
+                                    haveBGColor ? Colors.white : Colors.black,
+                              ),
                             ),
                           ),
-                        ),
+                        )
                       },
                     ],
                   ),
