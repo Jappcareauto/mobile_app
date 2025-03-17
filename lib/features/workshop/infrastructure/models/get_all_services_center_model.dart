@@ -52,6 +52,10 @@ class DataModel {
   final String? updatedBy;
   final String createdAt;
   final String updatedAt;
+  final String? imageId;
+  final String? imageUrl;
+  final String? available;
+  final bool availability;
 
   DataModel._({
     required this.name,
@@ -63,9 +67,14 @@ class DataModel {
     this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
+    this.imageId,
+    this.imageUrl,
+    required this.availability,
+    this.available,
   });
 
   factory DataModel.fromJson(Map<String, dynamic> json) {
+    print(json);
     return DataModel._(
       name: json['name'],
       ownerId: json['ownerId'],
@@ -78,6 +87,10 @@ class DataModel {
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
+      imageId: json['imageId'],
+      imageUrl: json['imageUrl'],
+      availability: json['availability'] ?? false,
+      available: json['available'],
     );
   }
 
@@ -92,6 +105,10 @@ class DataModel {
     data['updatedBy'] = updatedBy;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+    data['imageId'] = imageId;
+    data['imageUrl'] = imageUrl;
+    data['availability'] = availability;
+    data['available'] = available;
     return data;
   }
 
@@ -108,6 +125,10 @@ class DataModel {
       updatedBy: entity.updatedBy,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
+      imageId: entity.imageId,
+      imageUrl: entity.imageUrl,
+      availability: entity.availability,
+      available: entity.available,
     );
   }
 
@@ -122,6 +143,10 @@ class DataModel {
       updatedBy: updatedBy,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      imageId: imageId,
+      imageUrl: imageUrl,
+      availability: availability,
+      available: available,
     );
   }
 }

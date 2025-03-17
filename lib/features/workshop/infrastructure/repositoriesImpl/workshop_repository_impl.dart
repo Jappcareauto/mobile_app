@@ -10,7 +10,6 @@ import '../../domain/core/exceptions/workshop_exception.dart';
 import '../../domain/core/utils/workshop_constants.dart';
 import 'package:dartz/dartz.dart';
 
-
 import '../../domain/entities/get_all_services_center.dart';
 import '../models/get_all_services_center_model.dart';
 
@@ -29,7 +28,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../domain/entities/get_allservices.dart';
 import '../models/get_allservices_model.dart';
 
-
 class WorkshopRepositoryImpl implements WorkshopRepository {
   final NetworkService networkService;
   WebSocketChannel? channel;
@@ -38,11 +36,11 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   });
 
   @override
-  Future<Either<WorkshopException, Vehicle>> getVehiculById(String userId) async {
+  Future<Either<WorkshopException, Vehicle>> getVehiculById(
+      String userId) async {
     try {
       final response = await networkService.get(
         "${WorkshopConstants.getVehiculByIdGetUri}/$userId",
-        
       );
       return Right(VehicleModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
@@ -50,13 +48,11 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-
   @override
   Future<Either<WorkshopException, GetAllservices>> getAllservices() async {
     try {
       final response = await networkService.get(
         WorkshopConstants.getAllservicesGetUri,
-        
       );
       return Right(GetAllservicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
@@ -64,13 +60,25 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-
   @override
-  Future<Either<WorkshopException, SendMessage>> sendMessage(String senderId, String content, String chatRoomId, String timestamp, String type, String appointmentId) async {
+  Future<Either<WorkshopException, SendMessage>> sendMessage(
+      String senderId,
+      String content,
+      String chatRoomId,
+      String timestamp,
+      String type,
+      String appointmentId) async {
     try {
       final response = await networkService.post(
         WorkshopConstants.sendMessagePostUri,
-        body: {'senderId': senderId, 'content': content, 'chatRoomId': chatRoomId, 'timestamp': timestamp, 'type': type, 'appointmentId': appointmentId, },
+        body: {
+          'senderId': senderId,
+          'content': content,
+          'chatRoomId': chatRoomId,
+          'timestamp': timestamp,
+          'type': type,
+          'appointmentId': appointmentId,
+        },
       );
       return Right(SendMessageModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
@@ -78,15 +86,16 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-
   @override
-  Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(String name, List<String> participantUserIds) async {
+  Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(
+      String name, List<String> participantUserIds) async {
     try {
       final response = await networkService.post(
         WorkshopConstants.createdRomeChatPostUri,
         body: {
           'name': name,
-          'participantUserIds': participantUserIds, },
+          'participantUserIds': participantUserIds,
+        },
       );
       return Right(CreatedRomeChatModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
@@ -94,9 +103,15 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-
   @override
-  Future<Either<WorkshopException, BookAppointment>> bookAppointment(String date, String locationType, String note, String serviceId,  String vehicleId, String status,String timeOfDay ) async {
+  Future<Either<WorkshopException, BookAppointment>> bookAppointment(
+      String date,
+      String locationType,
+      String note,
+      String serviceId,
+      String vehicleId,
+      String status,
+      String timeOfDay) async {
     try {
       final response = await networkService.post(
         WorkshopConstants.bookAppointmentPostUri,
@@ -107,13 +122,15 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           'serviceId': serviceId,
           'vehicleId': vehicleId,
           'status': status,
-          'timeOfDay': timeOfDay},
+          'timeOfDay': timeOfDay
+        },
       );
       return Right(BookAppointmentModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
   }
+
   @override
   Future<Either<WorkshopException, List<SendMessage>>> getRealTimeMessages(
       String chatroom, String token) async {
@@ -134,9 +151,10 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
 
       // Écoute les messages en temps réel
       channel!.stream.listen(
-            (message) {
+        (message) {
           final decodedMessage = jsonDecode(message);
-          final chatMessage = SendMessageModel.fromJson(decodedMessage).toEntity();
+          final chatMessage =
+              SendMessageModel.fromJson(decodedMessage).toEntity();
 
           receivedMessages.add(chatMessage);
           print("Nouveau message reçu : $chatMessage");
@@ -160,13 +178,15 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-
-
   @override
-  Future<Either<WorkshopException, GetAllServicesCenter>> getAllServicesCenter() async {
+  Future<Either<WorkshopException, GetAllServicesCenter>> getAllServicesCenter(
+      String? name,
+      String? category,
+      String? ownerId,
+      String? serviceCenterId) async {
     try {
       final response = await networkService.get(
-        WorkshopConstants.getAllServicesCenterGetUri,
+        "${WorkshopConstants.getAllServicesCenterGetUri}?name=${name ?? ""}&category=${category ?? ""}&ownerId=${ownerId ?? ""}&serviceCenterId=${serviceCenterId ?? ""}",
       );
       return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
@@ -174,11 +194,5 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-
-
-
-
-
   //Add methods here
-
 }
