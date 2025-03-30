@@ -120,7 +120,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
           'password': password,
         },
       );
-      return Right(LoginModel.fromJson(response).toEntity());
+      return Right(LoginModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
     }
