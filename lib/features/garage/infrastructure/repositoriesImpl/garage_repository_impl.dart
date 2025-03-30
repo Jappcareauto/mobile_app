@@ -34,7 +34,7 @@ class GarageRepositoryImpl implements GarageRepository {
           'withMedia': true,
         },
       );
-      return Right(VehicleModel.fromJson(response).toEntity());
+      return Right(VehicleModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
@@ -62,8 +62,9 @@ class GarageRepositoryImpl implements GarageRepository {
       final response = await networkService.get(
         "${GarageConstants.getGarageByOwnerIdGetUri}/$userId",
       );
-      return Right(GetGarageByOwnerIdModel.fromJson((response as List).first)
-          .toEntity());
+      return Right(
+          GetGarageByOwnerIdModel.fromJson((response["data"] as List).first)
+              .toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
@@ -100,7 +101,7 @@ class GarageRepositoryImpl implements GarageRepository {
       final response = await networkService.delete(
         "${GarageConstants.addVehiclePostUri}/$id",
       );
-      return Right(response as String);
+      return Right(response["data"] as String);
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
@@ -126,7 +127,7 @@ class GarageRepositoryImpl implements GarageRepository {
           'withMedia': true,
         },
       );
-      return Right(VehicleModel.fromJson(response).toEntity());
+      return Right(VehicleModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }

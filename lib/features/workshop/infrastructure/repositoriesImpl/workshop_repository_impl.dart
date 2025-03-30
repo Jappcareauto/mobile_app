@@ -42,7 +42,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       final response = await networkService.get(
         "${WorkshopConstants.getVehiculByIdGetUri}/$userId",
       );
-      return Right(VehicleModel.fromJson(response).toEntity());
+      return Right(VehicleModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
@@ -54,7 +54,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       final response = await networkService.get(
         WorkshopConstants.getAllservicesGetUri,
       );
-      return Right(GetAllservicesModel.fromJson(response).toEntity());
+      return Right(GetAllservicesModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
@@ -80,7 +80,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           'appointmentId': appointmentId,
         },
       );
-      return Right(SendMessageModel.fromJson(response).toEntity());
+      return Right(SendMessageModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
@@ -97,7 +97,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           'participantUserIds': participantUserIds,
         },
       );
-      return Right(CreatedRomeChatModel.fromJson(response).toEntity());
+      return Right(CreatedRomeChatModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
@@ -125,7 +125,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           'timeOfDay': timeOfDay
         },
       );
-      return Right(BookAppointmentModel.fromJson(response).toEntity());
+      return Right(BookAppointmentModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
@@ -188,7 +188,8 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       final response = await networkService.get(
         "${WorkshopConstants.getAllServicesCenterGetUri}?name=${name ?? ""}&category=${category ?? ""}&ownerId=${ownerId ?? ""}&serviceCenterId=${serviceCenterId ?? ""}",
       );
-      return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
+      return Right(
+          GetAllServicesCenterModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
