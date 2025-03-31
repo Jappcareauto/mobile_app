@@ -43,7 +43,7 @@ class AuthentificationScreen extends GetView<AuthentificationController>
                   onPressed: controller.openSignInModal,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               Flexible(
                 child: CustomButton(
                   text: 'Create Account',

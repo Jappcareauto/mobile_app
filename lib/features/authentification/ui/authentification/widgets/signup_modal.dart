@@ -11,35 +11,49 @@ class SignUpModalWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AuthentificationController>();
-    return Container(
-        height: 300,
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text("Register",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 20),
-            CustomButton(
-                text: "Continue",
-                prefixIcon: const ImageComponent(
-                  assetPath: AppImages.google,
-                  height: 25,
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Container(
+            // height: 300,
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 28,
+                  height: 6,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
-                onPressed: () {
-                  // _BottomSheetLogin();
-                }),
-            const SizedBox(height: 20),
-            CustomButton(
-                text: "Create Account with Email",
-                haveBorder: true,
-                onPressed: controller.goToSignUpWithEmail),
-            const SizedBox(height: 20),
-            CustomButton(
-                text: "Create Account with Phone",
-                haveBorder: true,
-                onPressed: controller.goToSignUpWithPhone),
-          ],
-        ));
+                const SizedBox(height: 28),
+                const Text("Register",
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 28),
+                CustomButton(
+                    text: "Continue",
+                    prefixIcon: const ImageComponent(
+                      assetPath: AppImages.google,
+                      height: 25,
+                    ),
+                    onPressed: () {
+                      // _BottomSheetLogin();
+                    }),
+                const SizedBox(height: 16),
+                CustomButton(
+                    text: "Create Account with Email",
+                    haveBorder: true,
+                    onPressed: controller.goToSignUpWithEmail),
+                const SizedBox(height: 16),
+                CustomButton(
+                    text: "Create Account with Phone",
+                    haveBorder: true,
+                    onPressed: controller.goToSignUpWithPhone),
+              ],
+            )),
+      ),
+    );
   }
 }

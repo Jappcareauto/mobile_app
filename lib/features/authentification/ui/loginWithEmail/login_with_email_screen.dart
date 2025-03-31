@@ -78,7 +78,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                               text: 'Login',
                               onPressed: controller.loginFormHelper.submit,
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
                             CustomButton(
                               text: 'Continue',
                               haveBorder: true,
@@ -89,6 +89,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                               onPressed: Get.find<AuthentificationController>()
                                   .loginWithGoogle,
                             ),
+                            const SizedBox(height: 10),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
