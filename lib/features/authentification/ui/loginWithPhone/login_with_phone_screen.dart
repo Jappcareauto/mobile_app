@@ -61,44 +61,43 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                                 .loginFormHelper.validators['password'],
                             obscureText: true,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                  onPressed:
-                                      Get.find<AuthentificationController>()
-                                          .navigateToForgotPassword,
-                                  child: const Text('Forgot Password?')),
-                            ],
-                          ),
-                          Column(spacing: 10, children: [
-                            CustomButton(
-                              isLoading: controller.loginFormHelper.isLoading,
-                              text: 'Login',
-                              onPressed: controller.loginFormHelper.submit,
-                            ),
-                            CustomButton(
-                              text: 'Continue',
-                              haveBorder: true,
-                              prefixIcon: const ImageComponent(
-                                  assetPath: AppImages.google, width: 25),
-                              isLoading: Get.find<AuthentificationController>()
-                                  .loadingGoogle,
-                              onPressed: Get.find<AuthentificationController>()
-                                  .loginWithGoogle,
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Don\'t have an account?'),
-                                  TextButton(
-                                      onPressed:
-                                          controller.navigateToSignUpWithPhone,
-                                      child: const Text('Register'))
-                                ])
-                          ])
                         ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: Get.find<AuthentificationController>()
+                                  .navigateToForgotPassword,
+                              child: const Text('Forgot Password?')),
+                        ],
+                      ),
+                      Column(spacing: 16, children: [
+                        CustomButton(
+                          isLoading: controller.loginFormHelper.isLoading,
+                          text: 'Login',
+                          onPressed: controller.loginFormHelper.submit,
+                        ),
+                        CustomButton(
+                          text: 'Continue',
+                          haveBorder: true,
+                          prefixIcon: const ImageComponent(
+                              assetPath: AppImages.google, width: 25),
+                          isLoading: Get.find<AuthentificationController>()
+                              .loadingGoogle,
+                          onPressed: Get.find<AuthentificationController>()
+                              .loginWithGoogle,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('Don\'t have an account?'),
+                              TextButton(
+                                  onPressed:
+                                      controller.navigateToSignUpWithPhone,
+                                  child: const Text('Register'))
+                            ])
+                      ])
                     ],
                   ),
                 )),

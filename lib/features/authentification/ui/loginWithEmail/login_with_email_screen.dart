@@ -42,6 +42,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                             child:
                                 ImageDecoration(assetPath: AppConstants.login)),
                         Column(
+                          spacing: 16,
                           children: [
                             CustomFormField(
                               filColor: Colors.white,
@@ -55,7 +56,6 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                                   .loginFormHelper.validators['email'],
                               keyboardType: TextInputType.emailAddress,
                             ),
-                            const SizedBox(height: 10),
                             CustomFormField(
                               filColor: Colors.white,
                               hintStyleColor: Colors.grey,
@@ -69,44 +69,43 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                                   .loginFormHelper.validators['password'],
                               obscureText: true,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                    onPressed:
-                                        Get.find<AuthentificationController>()
-                                            .navigateToForgotPassword,
-                                    child: const Text('Forgot Password?')),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            CustomButton(
-                              isLoading: controller.loginFormHelper.isLoading,
-                              text: 'Login',
-                              onPressed: controller.loginFormHelper.submit,
-                            ),
-                            const SizedBox(height: 10),
-                            CustomButton(
-                              text: 'Continue',
-                              haveBorder: true,
-                              prefixIcon: const ImageComponent(
-                                  assetPath: AppImages.google, width: 25),
-                              isLoading: Get.find<AuthentificationController>()
-                                  .loadingGoogle,
-                              onPressed: Get.find<AuthentificationController>()
-                                  .loginWithGoogle,
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Don\'t have an account?'),
-                                  TextButton(
-                                      onPressed: controller.navigateToSignUp,
-                                      child: const Text('Register'))
-                                ])
                           ],
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                                onPressed:
+                                    Get.find<AuthentificationController>()
+                                        .navigateToForgotPassword,
+                                child: const Text('Forgot Password?')),
+                          ],
+                        ),
+                        Column(spacing: 16, children: [
+                          CustomButton(
+                            isLoading: controller.loginFormHelper.isLoading,
+                            text: 'Login',
+                            onPressed: controller.loginFormHelper.submit,
+                          ),
+                          CustomButton(
+                            text: 'Continue',
+                            haveBorder: true,
+                            prefixIcon: const ImageComponent(
+                                assetPath: AppImages.google, width: 25),
+                            isLoading: Get.find<AuthentificationController>()
+                                .loadingGoogle,
+                            onPressed: Get.find<AuthentificationController>()
+                                .loginWithGoogle,
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Don\'t have an account?'),
+                                TextButton(
+                                    onPressed: controller.navigateToSignUp,
+                                    child: const Text('Register'))
+                              ])
+                        ])
                       ],
                     ),
                   )),
