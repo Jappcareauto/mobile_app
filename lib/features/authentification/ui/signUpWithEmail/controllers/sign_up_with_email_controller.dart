@@ -72,7 +72,6 @@ class SignUpWithEmailController extends GetxController {
   }
 
   void acceptTermsAndConditions(bool value) {
-    print(value);
     acceptedTerms.value = value;
   }
 }

@@ -11,6 +11,7 @@ class SignUpWithPhoneController extends GetxController {
   final AppNavigation _appNavigation;
   SignUpWithPhoneController(this._appNavigation);
   late FormHelper registerFormHelper;
+  final acceptedTerms = false.obs;
 
   @override
   void onInit() {
@@ -33,7 +34,8 @@ class SignUpWithPhoneController extends GetxController {
         "number": Validators.requiredField,
         "dateOfBirth": Validators.requiredField,
       },
-      onSubmit: null, /* (data) => _registerUseCase.call(RegisterCommand(
+      onSubmit: null,
+      /* (data) => _registerUseCase.call(RegisterCommand(
         name: data['name']!,
         email: data['email']!,
         password: data['password']!,
@@ -52,12 +54,16 @@ class SignUpWithPhoneController extends GetxController {
     );
   }
 
-  void goBack(){
+  void goBack() {
     _appNavigation.goBack();
   }
 
   void goToLoginPage() {
     _appNavigation.goBack();
     _appNavigation.toNamed(AuthentificationPrivateRoutes.loginWithPhone);
+  }
+
+  void acceptTermsAndConditions(bool value) {
+    acceptedTerms.value = value;
   }
 }

@@ -32,14 +32,12 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 20,
                       children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
                         const Text(
                             'Hey there! Sign up with your email to get started'),
-                        const SizedBox(height: 20),
                         Column(
+                          spacing: 20,
                           children: [
                             CustomFormField(
                               label: 'Name',
@@ -51,7 +49,6 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                   .registerFormHelper.validators['name'],
                               keyboardType: TextInputType.text,
                             ),
-                            const SizedBox(height: 20),
                             CustomFormField(
                               label: 'Email',
                               hintText: 'Enter your email',
@@ -62,7 +59,6 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                   .registerFormHelper.validators['email'],
                               keyboardType: TextInputType.emailAddress,
                             ),
-                            const SizedBox(height: 20),
                             CustomFormField(
                               label: 'Password',
                               isPassword: true,
@@ -74,7 +70,6 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                   .registerFormHelper.validators['password'],
                               obscureText: true,
                             ),
-                            const SizedBox(height: 8),
                             CustomDateFormField(
                               label: 'Date of Birth',
                               datehintstyle: Colors.grey,
@@ -83,27 +78,11 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                               validator: controller
                                   .registerFormHelper.validators['dateOfBirth'],
                             ),
-                            const SizedBox(height: 20),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
+                              spacing: 10,
                               children: [
-                                // Checkbox(
-                                //   tristate: true,
-                                //   value: controller.acceptedTerms.value,
-                                //   onChanged: (bool? value) {
-                                //     print("clicked");
-                                //     print(value);
-                                //     if (value == null) {
-                                //       controller
-                                //           .acceptTermsAndConditions(false);
-                                //     } else {
-                                //       controller
-                                //           .acceptTermsAndConditions(value);
-                                //     }
-                                //   },
-                                //   shape: const CircleBorder(),
-                                // ),
                                 GestureDetector(
                                   onTap: () =>
                                       controller.acceptTermsAndConditions(
@@ -115,7 +94,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       border: Border.all(
-                                        color: const Color(0xFFFB7C37),
+                                        color: Get.theme.primaryColor,
                                         width: 2,
                                       ),
                                       color: Colors.white,
@@ -126,17 +105,14 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                             child: Container(
                                               width: 12,
                                               height: 12,
-                                              decoration: const BoxDecoration(
+                                              decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: Color(0xFFFB7C37),
+                                                color: Get.theme.primaryColor,
                                               ),
                                             ),
                                           )
                                         : null,
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 10,
                                 ),
                                 Flexible(
                                   child: RichText(
@@ -166,8 +142,8 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                             )
                           ],
                         ),
-                        const SizedBox(height: 20),
                         Column(
+                          spacing: 10,
                           children: [
                             CustomButton(
                               isLoading:
@@ -175,7 +151,6 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                               text: 'Register',
                               onPressed: controller.registerFormHelper.submit,
                             ),
-                            const SizedBox(height: 10),
                             CustomButton(
                               text: 'Continue',
                               haveBorder: true,
@@ -186,7 +161,6 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                               onPressed: Get.find<AuthentificationController>()
                                   .loginWithGoogle,
                             ),
-                            const SizedBox(height: 10),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
