@@ -31,9 +31,13 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                       controller.loginFormHelper.autovalidateMode.value,
                   child: SingleChildScrollView(
                     child: Column(
+                      spacing: 10,
                       children: [
-                        const ImageDecoration(assetPath: AppConstants.login),
-                        // const SizedBox(height: 10),
+                        const SizedBox(
+                            width: 210,
+                            height: 200,
+                            child:
+                                ImageDecoration(assetPath: AppConstants.login)),
                         Column(
                           children: [
                             CustomFormField(

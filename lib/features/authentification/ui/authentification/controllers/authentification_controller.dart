@@ -54,7 +54,6 @@ class AuthentificationController extends GetxController {
   }
 
   void goToSignUpWithEmail() {
-    goToLoginWithEmail();
     _appNavigation.toNamed(AuthentificationPrivateRoutes.signUpWithEmail);
   }
 
