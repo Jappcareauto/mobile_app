@@ -5,6 +5,7 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/app_bar_with_salutation.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:jappcare/features/home/ui/dashboard/controllers/dashboard_controller.dart';
 import 'package:jappcare/features/home/ui/home/widgets/dismiss_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/tip_modal_bottom.dart';
@@ -16,6 +17,9 @@ import 'widgets/notification_widget.dart';
 class HomeScreen extends GetView<HomeController> {
   final GarageController garageController =
       Get.put(GarageController(Get.find(), Get.find()));
+
+  final DashboardController dashboardController =
+      Get.find<DashboardController>();
 
   HomeScreen({super.key});
 
@@ -37,12 +41,11 @@ class HomeScreen extends GetView<HomeController> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
+                    spacing: 10,
                     children: [
                       if (controller.notifications.isNotEmpty) ...[
-                        const SizedBox(
-                          height: 20,
-                        ),
                         Column(
+                          spacing: 10,
                           children: controller.notifications
                               .asMap()
                               .entries
@@ -61,7 +64,7 @@ class HomeScreen extends GetView<HomeController> {
                               },
                               child: NotificationWidget(
                                 haveTitle: true,
-                                textSize: 16,
+                                textSize: 14,
                                 backgrounColor: const Color(0xFFFFEDE6),
                                 title: "Notification",
                                 bodyText: notification,
@@ -127,7 +130,8 @@ class HomeScreen extends GetView<HomeController> {
                               imagePath: AppImages.service,
                               onTap: () {
                                 // controller.goToVehicleFinder();
-                                controller.goToVehicleFinder();
+                                dashboardController.onItemTapped(2);
+                                // controller.goToVehicleFinder();
                               },
                             ),
                           ),
