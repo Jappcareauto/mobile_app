@@ -17,7 +17,13 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Sign In'),
+      appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+        title: 'Sign In',
+        actions: [
+          TextButton(onPressed: () => {}, child: const Text('Having Issues?'))
+        ],
+      ),
       body: MixinBuilder<LoginWithPhoneController>(
         builder: (controller) {
           return Padding(

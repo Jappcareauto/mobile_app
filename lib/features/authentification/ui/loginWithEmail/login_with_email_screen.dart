@@ -19,6 +19,9 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: 'Sign In',
+        actions: [
+          TextButton(onPressed: () => {}, child: const Text('Having Issues?'))
+        ],
       ),
       body: MixinBuilder<LoginWithEmailController>(
         builder: (controller) {
