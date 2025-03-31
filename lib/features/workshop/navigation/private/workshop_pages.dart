@@ -32,9 +32,12 @@ class WorkshopPages implements FeaturePages {
   @override
   List<GetPage> getPages() => [
         GetPage(
-          name: WorkshopPrivateRoutes.home,
-          page: () => const WorkshopScreen(),
-          binding: WorkshopControllerBinding(),
+          name: WorkshopPrivateRoutes
+              .home, // The name of the route to the workshop screen
+          page: () =>
+              const WorkshopScreen(), // Here workshop screen view can savely extend the binded controller using for eg. GetView<WorkshopController>
+          binding:
+              WorkshopControllerBinding(), // Specifying that the WorkshopControllerBinding links the WorkshopController to the WorkshopScreen
         ),
         GetPage(
           name: WorkshopPrivateRoutes.workshopDetails,

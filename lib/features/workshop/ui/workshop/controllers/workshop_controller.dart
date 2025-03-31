@@ -14,7 +14,8 @@ import '../../../application/usecases/get_all_services_center_usecase.dart';
 import '../../../application/usecases/get_allservices_usecase.dart';
 
 class WorkshopController extends GetxController {
-  final GetAllservicesUseCase _getAllservicesUseCase = Get.find();
+  final GetAllservicesUseCase _getAllservicesUseCase =
+      Get.find(); // Get.find() is an instance method used to get a class
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final loading = false.obs;
   final serviceloading = false.obs;
@@ -83,23 +84,19 @@ class WorkshopController extends GetxController {
           getServiceCentersFormHelper.controllers['name']!.text;
     });
 
-    ever(serviceCenterName, (value) {
+    debounce(serviceCenterName, (value) {
       if (value.isNotEmpty) {
-        Timer(const Duration(seconds: 2), () {
-          getAllServicesCenter(name: serviceCenterName.value);
-        });
+        getAllServicesCenter(name: serviceCenterName.value);
       }
-    });
+    }, time: const Duration(seconds: 2));
 
-    ever(selectedFilter, (value) {
-      print("Identifiant");
-      print(value);
+    debounce(selectedFilter, (value) {
       if (value >= 0) {
         getAllServicesCenter(
             name: serviceCenterName.value,
             serviceId: servicesCenter.value?.data[selectedFilter.value].id);
       }
-    });
+    }, time: const Duration(seconds: 1));
   }
 
   void gotToServicesLocator() {

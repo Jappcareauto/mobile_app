@@ -17,77 +17,87 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Sign In'),
+      appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+        title: 'Sign In',
+        actions: [
+          TextButton(onPressed: () => {}, child: const Text('Having Issues?'))
+        ],
+      ),
       body: MixinBuilder<LoginWithPhoneController>(
-        builder: (_) {
+        builder: (controller) {
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Form(
-                key: _.loginFormHelper.formKey,
-                autovalidateMode: _.loginFormHelper.autovalidateMode.value,
+                key: controller.loginFormHelper.formKey,
+                autovalidateMode:
+                    controller.loginFormHelper.autovalidateMode.value,
                 child: SingleChildScrollView(
                   child: Column(
+                    spacing: 10,
                     children: [
-                      const ImageDecoration(assetPath: AppConstants.singUp),
-                      SizedBox(
-                        height: Get.height * .6,
-                        child: Column(
-                          children: [
-                            CustomPhoneFormField(
-                                label: 'Phone',
-                                hintText: 'Enter your Phone',
-                                controller:
-                                    _.loginFormHelper.controllers['phone'],
-                                validator:
-                                    _.loginFormHelper.validators['phone']),
-                            const SizedBox(height: 20),
-                            CustomFormField(
-                              label: 'Password',
-                              isPassword: true,
-                              hintText: 'Enter your password',
-                              controller:
-                                  _.loginFormHelper.controllers['password'],
-                              validator:
-                                  _.loginFormHelper.validators['password'],
-                              obscureText: true,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                TextButton(
-                                    onPressed:
-                                        Get.find<AuthentificationController>()
-                                            .navigateToForgotPassword,
-                                    child: const Text('Forgot Password?')),
-                              ],
-                            ),
-                            CustomButton(
-                              isLoading: _.loginFormHelper.isLoading,
-                              text: 'Login',
-                              onPressed: _.loginFormHelper.submit,
-                            ),
-                            const SizedBox(height: 20),
-                            CustomButton(
-                              text: 'Continue',
-                              haveBorder: true,
-                              prefixIcon: const ImageComponent(
-                                  assetPath: AppImages.google, width: 25),
-                              isLoading: Get.find<AuthentificationController>()
-                                  .loadingGoogle,
-                              onPressed: Get.find<AuthentificationController>()
-                                  .loginWithGoogle,
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Don\'t have an account?'),
-                                  TextButton(
-                                      onPressed: _.navigateToSignUpWithPhone,
-                                      child: const Text('Register'))
-                                ])
-                          ],
-                        ),
+                      const SizedBox(
+                          width: 210,
+                          height: 200,
+                          child:
+                              ImageDecoration(assetPath: AppConstants.singUp)),
+                      Column(
+                        spacing: 16,
+                        children: [
+                          CustomPhoneFormField(
+                              label: 'Phone',
+                              hintText: 'Enter your Phone',
+                              controller: controller
+                                  .loginFormHelper.controllers['phone'],
+                              validator: controller
+                                  .loginFormHelper.validators['phone']),
+                          CustomFormField(
+                            label: 'Password',
+                            isPassword: true,
+                            hintText: 'Enter your password',
+                            controller: controller
+                                .loginFormHelper.controllers['password'],
+                            validator: controller
+                                .loginFormHelper.validators['password'],
+                            obscureText: true,
+                          ),
+                        ],
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: Get.find<AuthentificationController>()
+                                  .navigateToForgotPassword,
+                              child: const Text('Forgot Password?')),
+                        ],
+                      ),
+                      Column(spacing: 16, children: [
+                        CustomButton(
+                          isLoading: controller.loginFormHelper.isLoading,
+                          text: 'Login',
+                          onPressed: controller.loginFormHelper.submit,
+                        ),
+                        CustomButton(
+                          text: 'Continue',
+                          haveBorder: true,
+                          prefixIcon: const ImageComponent(
+                              assetPath: AppImages.google, width: 25),
+                          isLoading: Get.find<AuthentificationController>()
+                              .loadingGoogle,
+                          onPressed: Get.find<AuthentificationController>()
+                              .loginWithGoogle,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text('Don\'t have an account?'),
+                              TextButton(
+                                  onPressed:
+                                      controller.navigateToSignUpWithPhone,
+                                  child: const Text('Register'))
+                            ])
+                      ])
                     ],
                   ),
                 )),

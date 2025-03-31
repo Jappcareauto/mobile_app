@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import '../../../../core/ui/widgets/custom_app_bar.dart';
@@ -23,7 +24,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
         builder: (controller) {
           return SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Form(
                   key: controller.registerFormHelper.formKey,
                   autovalidateMode:
@@ -31,130 +32,144 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 20,
                       children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
                         const Text(
                             'Hey there! Sign up with your email to get started'),
-                        SizedBox(
-                          height: Get.height * .6,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 20),
-                              CustomFormField(
-                                label: 'Name',
-                                hintStyleColor: Colors.grey,
-                                hintText: 'Enter your name',
-                                controller: controller
-                                    .registerFormHelper.controllers['name'],
-                                validator: controller
-                                    .registerFormHelper.validators['name'],
-                                keyboardType: TextInputType.text,
-                              ),
-                              const SizedBox(height: 20),
-                              CustomFormField(
-                                label: 'Email',
-                                hintText: 'Enter your email',
-                                hintStyleColor: Colors.grey,
-                                controller: controller
-                                    .registerFormHelper.controllers['email'],
-                                validator: controller
-                                    .registerFormHelper.validators['email'],
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                              const SizedBox(height: 20),
-                              CustomFormField(
-                                label: 'Password',
-                                isPassword: true,
-                                hintText: 'Enter your password',
-                                hintStyleColor: Colors.grey,
-                                controller: controller
-                                    .registerFormHelper.controllers['password'],
-                                validator: controller
-                                    .registerFormHelper.validators['password'],
-                                obscureText: true,
-                              ),
-                              const SizedBox(height: 8),
-                              CustomDateFormField(
-                                label: 'Date of Birth',
-                                datehintstyle: Colors.grey,
-                                controller: controller.registerFormHelper
-                                    .controllers['dateOfBirth'],
-                                validator: controller.registerFormHelper
-                                    .validators['dateOfBirth'],
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Radio(
-                                    value: true,
-                                    groupValue: true,
-                                    onChanged: (a) {},
-                                  ),
-                                  Flexible(
-                                    // Use Flexible here if you want the text to wrap properly
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 15.0),
-                                      child: Text(
-                                        "By continuing, you agree to our ",
-                                        style: Get.textTheme.bodySmall,
-                                      ),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed:
-                                        Get.find<AuthentificationController>()
-                                            .goToTermsAndConditions,
-                                    child: Text(
-                                      'Terms and Conditions',
-                                      style: Get.textTheme.bodySmall?.copyWith(
+                        Column(
+                          spacing: 20,
+                          children: [
+                            CustomFormField(
+                              label: 'Name',
+                              hintStyleColor: Colors.grey,
+                              hintText: 'Enter your name',
+                              controller: controller
+                                  .registerFormHelper.controllers['name'],
+                              validator: controller
+                                  .registerFormHelper.validators['name'],
+                              keyboardType: TextInputType.text,
+                            ),
+                            CustomFormField(
+                              label: 'Email',
+                              hintText: 'Enter your email',
+                              hintStyleColor: Colors.grey,
+                              controller: controller
+                                  .registerFormHelper.controllers['email'],
+                              validator: controller
+                                  .registerFormHelper.validators['email'],
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            CustomFormField(
+                              label: 'Password',
+                              isPassword: true,
+                              hintText: 'Enter your password',
+                              hintStyleColor: Colors.grey,
+                              controller: controller
+                                  .registerFormHelper.controllers['password'],
+                              validator: controller
+                                  .registerFormHelper.validators['password'],
+                              obscureText: true,
+                            ),
+                            CustomDateFormField(
+                              label: 'Date of Birth',
+                              datehintstyle: Colors.grey,
+                              controller: controller.registerFormHelper
+                                  .controllers['dateOfBirth'],
+                              validator: controller
+                                  .registerFormHelper.validators['dateOfBirth'],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              spacing: 10,
+                              children: [
+                                GestureDetector(
+                                  onTap: () =>
+                                      controller.acceptTermsAndConditions(
+                                          !controller.acceptedTerms.value),
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    // Outer circle: orange border, white background
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
                                         color: Get.theme.primaryColor,
+                                        width: 2,
                                       ),
+                                      color: Colors.white,
+                                    ),
+                                    // If checked, show a smaller orange dot in the center
+                                    child: controller.acceptedTerms.value
+                                        ? Center(
+                                            child: Container(
+                                              width: 12,
+                                              height: 12,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Get.theme.primaryColor,
+                                              ),
+                                            ),
+                                          )
+                                        : null,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: Get.textTheme.bodySmall,
+                                      children: [
+                                        const TextSpan(
+                                            text:
+                                                'By continuing, you agree to our '),
+                                        TextSpan(
+                                          text: 'Terms & Conditions',
+                                          style:
+                                              Get.textTheme.bodySmall?.copyWith(
+                                            color: Get.theme.primaryColor,
+                                          ),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = Get.find<
+                                                    AuthentificationController>()
+                                                .goToTermsAndConditions,
+                                        ),
+                                        const TextSpan(text: '.'),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              )
-                            ],
-                          ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          height: Get.height * .24,
-                          child: Column(
-                            children: [
-                              CustomButton(
-                                isLoading:
-                                    controller.registerFormHelper.isLoading,
-                                text: 'Register',
-                                onPressed: controller.registerFormHelper.submit,
-                              ),
-                              const SizedBox(height: 20),
-                              CustomButton(
-                                text: 'Continue',
-                                haveBorder: true,
-                                prefixIcon: const ImageComponent(
-                                    assetPath: AppImages.google, width: 25),
-                                isLoading:
-                                    Get.find<AuthentificationController>()
-                                        .loadingGoogle,
-                                onPressed:
-                                    Get.find<AuthentificationController>()
-                                        .loginWithGoogle,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text('Don\'t have an account?'),
-                                    TextButton(
-                                        onPressed: controller.goToLoginPage,
-                                        child: const Text('Login'))
-                                  ])
-                            ],
-                          ),
+                        Column(
+                          spacing: 10,
+                          children: [
+                            CustomButton(
+                              isLoading:
+                                  controller.registerFormHelper.isLoading,
+                              text: 'Register',
+                              onPressed: controller.registerFormHelper.submit,
+                            ),
+                            CustomButton(
+                              text: 'Continue',
+                              haveBorder: true,
+                              prefixIcon: const ImageComponent(
+                                  assetPath: AppImages.google, width: 25),
+                              isLoading: Get.find<AuthentificationController>()
+                                  .loadingGoogle,
+                              onPressed: Get.find<AuthentificationController>()
+                                  .loginWithGoogle,
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text('Don\'t have an account?'),
+                                  TextButton(
+                                      onPressed: controller.goToLoginPage,
+                                      child: const Text('Login'))
+                                ])
+                          ],
                         ),
                       ],
                     ),

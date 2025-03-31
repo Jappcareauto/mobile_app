@@ -35,6 +35,7 @@ class AuthentificationScreen extends GetView<AuthentificationController>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
+            spacing: 16,
             children: [
               Flexible(
                 child: CustomButton(
@@ -43,17 +44,16 @@ class AuthentificationScreen extends GetView<AuthentificationController>
                   onPressed: controller.openSignInModal,
                 ),
               ),
-              const SizedBox(height: 20),
               Flexible(
                 child: CustomButton(
                   text: 'Create Account',
                   onPressed: controller.openSignUpModal,
                 ),
               ),
-              const SizedBox(height: 20),
             ],
           ),
-        ))
+        )),
+        const SizedBox(height: 20),
       ],
     );
   }

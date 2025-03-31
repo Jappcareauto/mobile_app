@@ -17,6 +17,7 @@ import '../../../domain/entities/register.dart';
 class SignUpWithEmailController extends GetxController {
   final RegisterUseCase _registerUseCase = Get.find();
   late FormHelper registerFormHelper;
+  final acceptedTerms = false.obs;
 
   final AppNavigation _appNavigation;
   SignUpWithEmailController(this._appNavigation);
@@ -68,5 +69,9 @@ class SignUpWithEmailController extends GetxController {
   void goToLoginPage() {
     _appNavigation.goBack();
     _appNavigation.toNamed(AuthentificationPrivateRoutes.loginWithEmail);
+  }
+
+  void acceptTermsAndConditions(bool value) {
+    acceptedTerms.value = value;
   }
 }

@@ -38,7 +38,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final response = await networkService.get(
         ProfileConstants.getUserInfosGetUri,
       );
-      return Right(GetUserInfosModel.fromJson(response).toEntity());
+      return Right(GetUserInfosModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(ProfileException(e.message));
     }
