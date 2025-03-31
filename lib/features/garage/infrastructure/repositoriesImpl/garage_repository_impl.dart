@@ -44,10 +44,10 @@ class GarageRepositoryImpl implements GarageRepository {
   Future<Either<GarageException, List<Vehicle>>> getVehicleList(
       String garageId) async {
     try {
-      final response = await networkService.get(
-        "${GarageConstants.getVehicleListGetUri}?garageId=$garageId",
-      );
-      return Right((response['data'] as List)
+      final response = await networkService.post(
+          GarageConstants.getVehicleListGetUri,
+          body: {"garageId": garageId});
+      return Right((response['data']["data"] as List)
           .map((e) => VehicleModel.fromJson(e).toEntity())
           .toList());
     } on BaseException catch (e) {

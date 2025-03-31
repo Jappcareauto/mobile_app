@@ -51,9 +51,8 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   @override
   Future<Either<WorkshopException, GetAllservices>> getAllservices() async {
     try {
-      final response = await networkService.post(
-        WorkshopConstants.getAllservicesGetUri,
-      );
+      final response = await networkService
+          .post(WorkshopConstants.getAllservicesGetUri, body: {});
       return Right(GetAllservicesModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
@@ -185,9 +184,13 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       String? ownerId,
       String? serviceCenterId) async {
     try {
-      final response = await networkService.post(
-        "${WorkshopConstants.getAllServicesCenterGetUri}?name=${name ?? ""}&category=${category ?? ""}&ownerId=${ownerId ?? ""}&serviceCenterId=${serviceCenterId ?? ""}",
-      );
+      final response = await networkService
+          .post(WorkshopConstants.getAllServicesCenterGetUri, body: {
+        'name': name,
+        'category': category,
+        'ownerId': ownerId,
+        'serviceCenterId': serviceCenterId
+      });
       return Right(
           GetAllServicesCenterModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
