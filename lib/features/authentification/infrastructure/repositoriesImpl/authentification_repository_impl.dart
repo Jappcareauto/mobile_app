@@ -113,15 +113,33 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
 
   @override
   Future<Either<AuthentificationException, Login>> login(
-      String email, String password, bool? extend) async {
+      {String? email,
+      String? phone,
+      required String password,
+      bool? extend}) async {
     try {
       final response = await networkService.post(
         AuthentificationConstants.loginPostUri,
         body: {
           'email': email,
+          'phone': phone,
           'password': password,
         },
       );
+      return Right(LoginModel.fromJson(response["data"]).toEntity());
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message));
+    }
+  }
+
+  @override
+  Future<Either<AuthentificationException, Login>> googleLogin(
+      {required String bearerId}) async {
+    try {
+      final response = await networkService
+          .post(AuthentificationConstants.googleLoginPostUri, headers: {
+        'Authorization': 'Bearer $bearerId',
+      });
       return Right(LoginModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
