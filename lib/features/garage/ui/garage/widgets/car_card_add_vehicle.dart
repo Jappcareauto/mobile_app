@@ -54,7 +54,7 @@ class CarCardAddVehicle extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
-        onTap: onPressed,
+        // onTap: onPressed,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
           child: Stack(
@@ -84,8 +84,9 @@ class CarCardAddVehicle extends StatelessWidget {
                             "${carDetails[1]} $carName",
                             style: TextStyle(
                               fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: haveBGColor ? Colors.white : Colors.black,
+                              color: haveBGColor
+                                  ? Colors.white
+                                  : Get.theme.primaryColor,
                             ),
                           ),
                           Text(

@@ -32,9 +32,10 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                 child: Form(
               key: controller.formKey,
               child: Column(
+                spacing: 20,
                 children: [
                   const SizedBox(
-                    height: 10,
+                    height: 1,
                   ),
                   if (Get.isRegistered<FeatureWidgetInterface>(
                       tag: 'ListVehicleWidget'))
@@ -54,32 +55,16 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       },
                     }),
 
-                  const SizedBox(
-                    height: 20,
-                  ),
                   ServicesListWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
 
                   const BookingWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   // CustomMapWidget(),
-                  CustomOSMMapWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   const FormLocationWidget(),
                   const SizedBox(
-                    height: 50,
+                    height: 10,
                   ),
                   const AddImageWidget(),
                   // EstimatedInspectionFee(),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: CustomButton(
@@ -92,7 +77,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                         }),
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 10,
                   ),
                 ],
               ),

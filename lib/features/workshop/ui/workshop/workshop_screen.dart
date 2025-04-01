@@ -134,15 +134,21 @@ class WorkshopScreen extends GetView<WorkshopController>
                                       return GestureDetector(
                                         onTap: () {
                                           controller.goToWorkshopDetails(
-                                              service.name ?? 'Inconnu',
-                                              service.location?.description ??
+                                              name: service.name ?? 'Inconnu',
+                                              description: service
+                                                      .location?.description ??
                                                   'Inconnu',
-                                              service.location?.latitude ?? 0.0,
-                                              service.location?.longitude ??
-                                                  0.0,
-                                              service.id,
-                                              service.availability,
-                                              service.location?.name);
+                                              latitude:
+                                                  service.location?.latitude ??
+                                                      0.0,
+                                              longitude:
+                                                  service.location?.longitude ??
+                                                      0.0,
+                                              id: service.id,
+                                              availability:
+                                                  service.availability,
+                                              locationName:
+                                                  service.location?.name);
                                         },
                                         child: ServiceItemWidget(
                                           image: AppImages.shopCar,

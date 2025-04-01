@@ -51,7 +51,7 @@ class WorkshopController extends GetxController {
     ever(services, (serviceModel) {
       if (serviceModel != null && serviceModel.data.isNotEmpty) {
         selectedFilter.value = 0;
-        selectedCategory.value = serviceModel.data.first.title ?? "Sans titre";
+        selectedCategory.value = serviceModel.data.first.title;
       }
     });
     getServiceCentersFormHelper =
@@ -107,8 +107,14 @@ class WorkshopController extends GetxController {
     _appNavigation.goBack();
   }
 
-  void goToWorkshopDetails(String name, String description, double latitude,
-      double longitude, String id, bool availability, String? locationName) {
+  void goToWorkshopDetails(
+      {String? name,
+      String? description,
+      double? latitude,
+      double? longitude,
+      required String id,
+      bool? availability,
+      String? locationName}) {
     _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails,
         arguments: services);
     globalControllerWorkshop.addMultipleData({

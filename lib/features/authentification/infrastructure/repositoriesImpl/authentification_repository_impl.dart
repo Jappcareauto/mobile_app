@@ -117,14 +117,22 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       String? phone,
       required String password,
       bool? extend}) async {
+    Map<String, dynamic> loginWithMail = {
+      'email': email,
+      'password': password,
+      'extend': extend,
+    };
+
+    Map<String, dynamic> loginWithPhone = {
+      'phone': phone,
+      'password': password,
+      'extend': extend,
+    };
+
     try {
       final response = await networkService.post(
         AuthentificationConstants.loginPostUri,
-        body: {
-          'email': email,
-          'phone': phone,
-          'password': password,
-        },
+        body: email != null ? loginWithMail : loginWithPhone,
       );
       return Right(LoginModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {

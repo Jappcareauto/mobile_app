@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import '../../../../core/ui/interfaces/feature_widget_interface.dart';
@@ -9,7 +8,6 @@ import '../garage/widgets/recent_activities_widget.dart';
 import 'controllers/vehicle_details_controller.dart';
 import 'package:get/get.dart';
 import 'widgets/detail_item.dart';
-import 'widgets/diagram_widget.dart';
 
 class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
   const VehicleDetailsScreen({super.key});
@@ -17,7 +15,6 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
   @override
   Widget build(BuildContext context) {
     final vhcle = controller.vehicleModel;
-    print(vhcle.imageUrl);
     return Scaffold(
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
