@@ -15,6 +15,7 @@ class RecentActivitiesWidget extends StatelessWidget
       GarageController(Get.find(), Get.find());
 
   final String title;
+  final String? noActivitiesPlaceholder;
   final bool haveTitle;
   final bool haveTabBar;
   final bool isHorizontal;
@@ -22,6 +23,7 @@ class RecentActivitiesWidget extends StatelessWidget
   RecentActivitiesWidget(
       {super.key,
       this.title = "Recent Activities",
+      this.noActivitiesPlaceholder,
       this.haveTitle = true,
       this.haveTabBar = true,
       this.isHorizontal = false,
@@ -34,95 +36,131 @@ class RecentActivitiesWidget extends StatelessWidget
       autoRemove: false,
       initState: (_) {},
       builder: (controller) {
-        if (controller.myGarage?.location == null ||
-            controller.vehicleList.isEmpty) {
-          if (title == "Recent Activities") {
-            return const Center(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ImageComponent(
-                          assetPath: AppConstants.noActivities,
-                          height: 200,
-                          width: double.infinity,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text('You have no recent activities at the moment'),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return const SizedBox();
+        var filteredActivities = <CarCardWidget>[];
+
+        if (controller.vehicleList.isNotEmpty &&
+            controller.myGarage?.location != null) {
+          filteredActivities = controller.vehicleList
+              .map(
+                (e) => CarCardWidget(
+                  latitude: controller.myGarage!.location!.latitude,
+                  longitude: controller.myGarage!.location!.longitude,
+                  date:
+                      "${DateTime.parse(controller.myGarage!.location!.createdAt).year}/${DateTime.parse(controller.myGarage!.location!.createdAt).month.toString().padLeft(2, '0')}/${DateTime.parse(controller.myGarage!.location!.createdAt).day.toString()..toString().padLeft(2, '0')}",
+                  time:
+                      "${DateTime.parse(controller.myGarage!.location!.createdAt).hour.toString().padLeft(2, '0')}:${DateTime.parse(controller.myGarage!.location!.createdAt).minute.toString().padLeft(2, '0')}:${DateTime.parse(controller.myGarage!.location!.createdAt).second.toString().padLeft(2, '0')}",
+                  localisation:
+                      controller.myGarage!.location!.latitude.toString(),
+                  nameCar: e.name,
+                  pathImageCar: e.imageUrl,
+                  status: 'Completed',
+                  onPressed: () => controller.goToAppointmentDetail(e),
+                ),
+              )
+              .toList();
+          if (status != null) {
+            filteredActivities =
+                filteredActivities.where((w) => w.status == status).toList();
           }
         }
 
-        var ws = controller.vehicleList
-            .map(
-              (e) => CarCardWidget(
-                latitude: controller.myGarage!.location!.latitude,
-                longitude: controller.myGarage!.location!.longitude,
-                date:
-                    "${DateTime.parse(controller.myGarage!.location!.createdAt).year}/${DateTime.parse(controller.myGarage!.location!.createdAt).month.toString().padLeft(2, '0')}/${DateTime.parse(controller.myGarage!.location!.createdAt).day.toString()..toString().padLeft(2, '0')}",
-                time:
-                    "${DateTime.parse(controller.myGarage!.location!.createdAt).hour.toString().padLeft(2, '0')}:${DateTime.parse(controller.myGarage!.location!.createdAt).minute.toString().padLeft(2, '0')}:${DateTime.parse(controller.myGarage!.location!.createdAt).second.toString().padLeft(2, '0')}",
-                localisation:
-                    controller.myGarage!.location!.latitude.toString(),
-                nameCar: e.name,
-                pathImageCar: e.imageUrl,
-                status: 'Completed',
-                onPressed: () => controller.goToAppointmentDetail(e),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (haveTitle)
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  title,
+                  style: Get.textTheme.bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
-            )
-            .toList();
-        if (status != null) {
-          ws = ws.where((w) => w.status == status).toList();
-        }
-        return controller.vehicleList.isEmpty
-            ? const SizedBox()
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (haveTitle)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        title,
-                        style: Get.textTheme.bodyLarge
-                            ?.copyWith(fontWeight: FontWeight.bold),
+            if (haveTitle) const SizedBox(height: 15),
+            if (haveTabBar)
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: CustomTabBar(
+                  labels: const ["All", "Ongoing", "Completed"],
+                  onTabSelected: (index) {},
+                ),
+              ),
+            if (haveTabBar) const SizedBox(height: 20),
+            filteredActivities.isNotEmpty
+                ? isHorizontal
+                    ? SizedBox(
+                        height: 230,
+                        width: MediaQuery.of(context).size.width,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: filteredActivities.map((activity) {
+                            return SizedBox(
+                              width:
+                                  330, // Specify a fixed width for each item.
+                              // margin: const EdgeInsets.all(8.0),
+                              child: activity,
+                            );
+                          }).toList(),
+                        ))
+                    : Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Column(children: filteredActivities),
+                      )
+                : Column(
+                    spacing: 20,
+                    children: [
+                      const Row(
+                        children: [
+                          Expanded(
+                            child: ImageComponent(
+                              assetPath: AppConstants.noActivities,
+                              height: 200,
+                              width: double.infinity,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  if (haveTitle) const SizedBox(height: 15),
-                  if (haveTabBar)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: CustomTabBar(
-                        labels: const ["All", "Ongoing", "Completed"],
-                        onTabSelected: (index) {},
-                      ),
-                    ),
-                  if (haveTabBar) const SizedBox(height: 20),
-                  isHorizontal
-                      ? SizedBox(
-                          height: 250,
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView(
-                              scrollDirection: Axis.horizontal, children: ws))
-                      : Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: Column(children: ws),
-                        )
-                ],
-              );
+                      Text(noActivitiesPlaceholder ??
+                          "You have no recent activities at the moment"),
+                    ],
+                  )
+          ],
+        );
+        // if (controller.myGarage?.location == null ||
+        //     controller.vehicleList.isEmpty) {
+        //   if (title == "Recent Activities") {
+        //     return const Center(
+        //       child: Column(
+        //         children: [
+        //           Row(
+        //             children: [
+        //               Expanded(
+        //                 child: ImageComponent(
+        //                   assetPath: AppConstants.noActivities,
+        //                   height: 200,
+        //                   width: double.infinity,
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           SizedBox(
+        //             height: 20,
+        //           ),
+        //           Text('You have no recent activities at the moment'),
+        //           SizedBox(
+        //             height: 20,
+        //           ),
+        //         ],
+        //       ),
+        //     );
+        //   } else {
+        //     return const SizedBox();
+        //   }
+        // }
+
+        // return controller.vehicleList.isEmpty
+        //     ? const SizedBox()
+        //     :
       },
     );
   }
@@ -146,12 +184,12 @@ class RecentActivitiesWidget extends StatelessWidget
       );
     } else if (args != null && args is Map) {
       return RecentActivitiesWidget(
-        haveTabBar: args['haveTabBar'] ?? true,
-        haveTitle: args['haveTitle'] ?? true,
-        title: args['title'] ?? 'Recent Activities',
-        isHorizontal: args['isHorizontal'] ?? false,
-        status: args['status'],
-      );
+          haveTabBar: args['haveTabBar'] ?? true,
+          haveTitle: args['haveTitle'] ?? true,
+          title: args['title'] ?? 'Recent Activities',
+          isHorizontal: args['isHorizontal'] ?? false,
+          status: args['status'],
+          noActivitiesPlaceholder: args['noActivitiesPlaceholder']);
     } else {
       return this;
     }

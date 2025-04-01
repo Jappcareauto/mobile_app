@@ -74,7 +74,7 @@ class GarageRepositoryImpl implements GarageRepository {
   Future<Either<GarageException, String>> getPlaceName(
       double latitude, double longitude) async {
     final url = Uri.parse(
-        "${GarageConstants.googlePlcaeUri}$latitude,$longitude&key=${GarageConstants.apiKey}");
+        "${GarageConstants.googlePlaceUri}$latitude,$longitude&key=${GarageConstants.apiKey}");
 
     try {
       final response = await http.get(url);

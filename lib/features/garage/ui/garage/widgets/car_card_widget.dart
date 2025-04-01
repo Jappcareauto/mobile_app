@@ -39,9 +39,8 @@ class CarCardWidget extends GetView<GarageController> {
   @override
   Widget build(BuildContext context) {
     // Déterminer la couleur en fonction du statut
-    controller.getPlaceName(longitude, latitude);
-    return Obx(() =>
-        Container(
+    // controller.getPlaceName(longitude, latitude);
+    return Obx(() => Container(
           width: widthCard,
           height: heightCard,
           margin: const EdgeInsets.only(bottom: 12, left: 20),
@@ -56,19 +55,22 @@ class CarCardWidget extends GetView<GarageController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'BodyShop Appointment',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.orange),
-                      ),
-                      Text(
-                        'Japcare AutoShop',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
+                  const Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'BodyShop Appointment',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange),
+                        ),
+                        Text(
+                          'Japcare AutoShop',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
                   ),
                   ChipWidget(
                     status: status,
@@ -78,45 +80,46 @@ class CarCardWidget extends GetView<GarageController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(
-                            FluentIcons.calendar_ltr_12_regular,
-                            color: Colors.grey,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(date, style: Get.textTheme.bodySmall),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Icon(
-                            FluentIcons.clock_12_regular,
-                            color: Colors.grey,
-                          ),
-                          const SizedBox(width: 10),
-                          Text(time, style: Get.textTheme.bodySmall),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const Icon(
-                            FluentIcons.location_12_regular,
-                            color: Colors.grey,
-                          ),
-                          const SizedBox(width: 10),
-
-                          Text(controller.placeName.value ?? localisation, style: Get.textTheme
-                              .bodySmall),
-                        ],
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              FluentIcons.calendar_ltr_12_regular,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(date, style: Get.textTheme.bodySmall),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            const Icon(
+                              FluentIcons.clock_12_regular,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(time, style: Get.textTheme.bodySmall),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            const Icon(
+                              FluentIcons.location_12_regular,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(width: 10),
+                            Text(controller.placeName.value,
+                                style: Get.textTheme.bodySmall),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
@@ -146,7 +149,6 @@ class CarCardWidget extends GetView<GarageController> {
                       ),
                     ],
                   ),
-
                 ],
               ),
             ]),

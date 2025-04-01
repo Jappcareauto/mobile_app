@@ -32,7 +32,7 @@ class HomeScreen extends GetView<HomeController> {
             [const AppBarWithAvatarAndSalutation()],
         body: RefreshIndicator(
           onRefresh: controller.refreshData,
-          color: const Color(0xFFFB7C37),
+          color: Get.theme.primaryColor,
           strokeWidth: 3.0,
           backgroundColor: AppColors.white,
           child: SingleChildScrollView(
@@ -101,9 +101,9 @@ class HomeScreen extends GetView<HomeController> {
                       print("clique");
                     },
                   }),
-                // const SizedBox(height: 20),
                 if (Get.isRegistered<FeatureWidgetInterface>(
-                    tag: 'RecentActivitiesWidget'))
+                    tag: 'RecentActivitiesWidget')) ...[
+                  const SizedBox(height: 20),
                   Get.find<FeatureWidgetInterface>(
                           tag: 'RecentActivitiesWidget')
                       .buildView({
@@ -111,8 +111,11 @@ class HomeScreen extends GetView<HomeController> {
                     'haveTitle': true,
                     'title': 'Upcoming Activities',
                     'status': 'Completed',
-                    'isHorizontal': false
+                    'isHorizontal': true,
+                    'noActivitiesPlaceholder':
+                        'You have no upcoming activities at the moment'
                   }),
+                ],
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
