@@ -84,11 +84,11 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
 
   @override
   Future<Either<AuthentificationException, Register>> register(
-      String name,
-      String email,
-      String password,
-      PhoneCommand phone,
-      String dateOfBirth) async {
+      {required String name,
+      String? email,
+      required String password,
+      PhoneCommand? phone,
+      required String dateOfBirth}) async {
     try {
       final response = await networkService.post(
         AuthentificationConstants.registerPostUri,
@@ -96,10 +96,12 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
           'name': name,
           'email': email,
           'password': password,
-          // 'phone': {
-          //   'code': phone.code,
-          //   'number': phone.number,
-          // },
+          'phone': email != null
+              ? null
+              : {
+                  'code': phone?.code,
+                  'number': phone?.number,
+                },
           'dateOfBirth': dateOfBirth,
         },
       );
