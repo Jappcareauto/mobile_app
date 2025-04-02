@@ -89,18 +89,21 @@ class RecentActivitiesWidget extends StatelessWidget
             filteredActivities.isNotEmpty
                 ? isHorizontal
                     ? SizedBox(
-                        height: 230,
+                        height: 215,
                         width: MediaQuery.of(context).size.width,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                          children: filteredActivities.map((activity) {
-                            return SizedBox(
-                              width:
-                                  330, // Specify a fixed width for each item.
-                              // margin: const EdgeInsets.all(8.0),
-                              child: activity,
-                            );
-                          }).toList(),
+                          children: [
+                            ...filteredActivities.map((activity) {
+                              return SizedBox(
+                                width:
+                                    330, // Specify a fixed width for each item.
+                                // margin: const EdgeInsets.all(8.0),
+                                child: activity,
+                              );
+                            }),
+                            const SizedBox(width: 20),
+                          ],
                         ))
                     : Padding(
                         padding: const EdgeInsets.only(right: 20),

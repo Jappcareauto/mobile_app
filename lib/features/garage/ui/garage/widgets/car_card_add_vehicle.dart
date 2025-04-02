@@ -54,7 +54,7 @@ class CarCardAddVehicle extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
-        // onTap: onPressed,
+        onTap: onPressed,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
           child: Stack(

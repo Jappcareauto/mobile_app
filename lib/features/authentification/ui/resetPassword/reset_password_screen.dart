@@ -15,12 +15,12 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
         title: "Reset Password",
       ),
       body: MixinBuilder<ResetPasswordController>(
-        builder: (_) {
-          final form = _.index.value == 0
-              ? _.forgotPasswordFormHelper
-              : _.index.value == 1
-                  ? _.formHelper
-                  : _.resetPasswordFormHelper;
+        builder: (controller) {
+          final form = controller.index.value == 0
+              ? controller.forgotPasswordFormHelper
+              : controller.index.value == 1
+                  ? controller.formHelper
+                  : controller.resetPasswordFormHelper;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
@@ -29,7 +29,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    if (_.index.value == 1)
+                    if (controller.index.value == 1)
                       CustomFormField(
                         label: 'Code',
                         hintText: 'Enter  receive by email',
@@ -37,7 +37,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                         validator: form.validators['code'],
                         keyboardType: TextInputType.emailAddress,
                       ),
-                    if (_.index.value == 2)
+                    if (controller.index.value == 2)
                       CustomFormField(
                         label: 'Password',
                         isPassword: true,
@@ -46,7 +46,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                         validator: form.validators['newPassword'],
                         obscureText: true,
                       ),
-                    if (_.index.value == 0)
+                    if (controller.index.value == 0)
                       CustomFormField(
                         label: 'Email',
                         hintText: 'Enter your email',

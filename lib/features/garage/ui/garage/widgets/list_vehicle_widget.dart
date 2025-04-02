@@ -140,9 +140,7 @@ class ListVehicleWidget extends StatelessWidget
                     showDelete: showDelete,
                     haveBorder: currentPage?.value == index,
                     containerheight: 200,
-                    onPressed: () {
-                      controller.goToVehicleDetails(vehicle);
-                    },
+                    onPressed: () => controller.goToVehicleDetails(vehicle),
                     next: () {
                       if (index == (vehiclesToDisplay.length - 1) &&
                           !haveAddVehicule!) {

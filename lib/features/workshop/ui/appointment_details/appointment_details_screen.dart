@@ -25,6 +25,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
     final vhcle = controller.vehicleModel;
     return Scaffold(
       appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: 'Appointment\nDetails',
         actions: [
           if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
@@ -45,10 +46,10 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("${vhcle.detail!.make} ${vhcle.detail!.model}",
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 22,
-                              color: Color(0xFFFB7C37))),
+                              color: Get.theme.primaryColor)),
                       Text("${vhcle.detail!.year}"),
                     ],
                   )
@@ -57,10 +58,11 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
               const SizedBox(
                 height: 20,
               ),
-              ImageComponent(
-                // assetPath: AppImages.carWhite,
-                imageUrl: vhcle.media![0]!.sourceUrl,
-              ),
+              if (vhcle.media != null)
+                ImageComponent(
+                  // assetPath: AppImages.carWhite,
+                  imageUrl: vhcle.media![0]!.sourceUrl,
+                ),
               NotificationWidget(
                   backgrounColor: Get.theme.primaryColor.withValues(alpha: .2),
                   bodyText:
@@ -68,10 +70,14 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                   coloriage: Get.theme.primaryColor,
                   icon: FluentIcons.alert_12_regular,
                   title: 'Notification'),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 20,
                 children: [
-                  const Align(
+                  const Expanded(
                     child: Row(
                       children: [
                         SizedBox(
@@ -85,11 +91,9 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         color: Get.theme.primaryColor.withValues(alpha: .2)),
