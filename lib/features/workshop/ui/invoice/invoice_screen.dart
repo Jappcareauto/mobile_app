@@ -19,110 +19,124 @@ class InvoiceScreen extends GetView<InvoiceController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'Invoice #001'),
-        body: SingleChildScrollView(
-          child: Container(
-              margin: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Invoiced to',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400),
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const ClipRRect(
-                            child: ImageComponent(
-                              assetPath: AppImages.avatar,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'James May',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w600),
+        appBar: CustomAppBar(
+          title: 'Invoice #001',
+          appBarcolor: Get.theme.scaffoldBackgroundColor,
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+                margin: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Invoiced to',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
+                        Row(
+                          spacing: 10,
+                          children: [
+                            const Expanded(
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    child: ImageComponent(
+                                      assetPath: AppImages.avatar,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'James May',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Text(
+                                          'jamesmay@gmail.com',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Color(0xFF797676),
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                'jamesmay@gmail.com',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Color(0xFF797676),
-                                    fontWeight: FontWeight.w400),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .25,
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: Colors.red.withValues(alpha: .2)),
-                            child: const Text(
-                              'Unpaid',
-                              style: TextStyle(color: AppColors.red),
                             ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  const AppointmentContainer(
-                    vehiculName: '2024 Porsche Taycan',
-                    vin: '89345643893',
-                    from: "Japcare Autoshop",
-                    service: "Body Shop Appointment",
-                    caseId: "JC8586047",
-                    issuedDate: "Oct 20, 2024",
-                    dueDate: "Nov 20, 2024",
-                  ),
-                  InvoiceDetails(
-                      items: appointmentDetailsController.invoiceItems,
-                      total: 50500,
-                      tax: 2500,
-                      amount: 54000),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      CustomButton(
-                          strech: false,
-                          width: MediaQuery.of(context).size.width * .40,
-                          haveBorder: true,
-                          text: 'Review',
-                          onPressed: () {
-                            controller.showReviemModel();
-                          }),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      CustomButton(
-                          strech: false,
-                          width: MediaQuery.of(context).size.width * .45,
-                          text: 'Proceed Payment',
-                          onPressed: () {
-                            onpenModalPaymentMethod(() {});
-                          }),
-                    ],
-                  )
-                ],
-              )),
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.red.withValues(alpha: .2)),
+                              child: const Text(
+                                'Unpaid',
+                                style: TextStyle(color: AppColors.red),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    const AppointmentContainer(
+                      vehiculName: '2024 Porsche Taycan',
+                      vin: '89345643893',
+                      from: "Japcare Autoshop",
+                      service: "Body Shop Appointment",
+                      caseId: "JC8586047",
+                      issuedDate: "Oct 20, 2024",
+                      dueDate: "Nov 20, 2024",
+                    ),
+                    InvoiceDetails(
+                        items: appointmentDetailsController.invoiceItems,
+                        total: 50500,
+                        tax: 2500,
+                        amount: 54000),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      spacing: 10,
+                      children: [
+                        Expanded(
+                          child: CustomButton(
+                            strech: false,
+                            haveBorder: true,
+                            text: 'Review',
+                            onPressed: () {
+                              controller.showReviemModel();
+                            },
+                          ),
+                        ),
+                        CustomButton(
+                            strech: false,
+                            text: 'Proceed Payment',
+                            onPressed: () {
+                              onpenModalPaymentMethod(() {});
+                            }),
+                      ],
+                    )
+                  ],
+                )),
+          ),
         ));
   }
 }
