@@ -13,7 +13,10 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: "Add Vehicle"),
+        appBar: CustomAppBar(
+          title: "Add Vehicle",
+          appBarcolor: Get.theme.scaffoldBackgroundColor,
+        ),
         body: MixinBuilder<AddVehicleController>(
           init: AddVehicleController(Get.find()),
           initState: (_) {},

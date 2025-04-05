@@ -160,8 +160,11 @@ class ListVehicleWidget extends StatelessWidget
                       vehicle.detail?.year ?? "Unknown",
                       vehicle.detail?.make ?? "Unknown"
                     ],
-                    imagePath: vehicle.media?[2]?.sourceUrl ?? '',
-                    imageUrl: vehicle.media?[2]?.sourceUrl ?? '',
+                    imagePath:
+                        vehicle.media != null && vehicle.media!.isNotEmpty
+                            ? vehicle.media![0]?.sourceUrl ?? ""
+                            : '',
+                    imageUrl: vehicle.imageUrl,
                   );
                 },
               ),

@@ -96,10 +96,10 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                   ),
                   const SizedBox(height: 20),
                   Row(
+                    spacing: 20,
                     children: [
                       DetailItem(
                           title: "Trim", value: vhcle.detail?.trim ?? 'Unknow'),
-                      const SizedBox(width: 20),
                       DetailItem(
                           title: "Year", value: vhcle.detail?.year ?? 'Unknow'),
                     ],

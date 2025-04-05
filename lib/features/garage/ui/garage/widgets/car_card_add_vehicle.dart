@@ -62,9 +62,10 @@ class CarCardAddVehicle extends StatelessWidget {
             children: [
               ImageComponent(
                 assetPath: imageUrl == null ? imagePath : "",
-                // imageUrl: imageUrl,
-                imageUrl:
+                imageUrl: imageUrl ??
                     "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
+                // imageUrl:
+                //     "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
                 width: 250,
                 height: 120,
               ),

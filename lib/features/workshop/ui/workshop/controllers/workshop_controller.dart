@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/features/workshop/domain/core/exceptions/workshop_exception.dart';
@@ -162,6 +162,30 @@ class WorkshopController extends GetxController {
         serviceloading.value = false;
         services.value = response;
         print(response);
+      },
+    );
+  }
+
+  Future<void> showFiltersDialog() {
+    return showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Filters'),
+          content: const Text('This is an alert dialog.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Get.back(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Apply'),
+              onPressed: () {},
+            ),
+          ],
+        );
       },
     );
   }

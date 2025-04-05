@@ -60,12 +60,15 @@ class WorkshopScreen extends GetView<WorkshopController>
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: AppColors.white),
-                          child: const Icon(FluentIcons.options_16_regular),
+                        InkWell(
+                          onTap: () => controller.showFiltersDialog(),
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: AppColors.white),
+                            child: const Icon(FluentIcons.options_16_regular),
+                          ),
                         ),
                       ],
                     ),
