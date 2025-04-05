@@ -61,7 +61,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                                 controller: controller.addVehicleFormHelper
                                     .controllers['registration'],
                                 label: "Vehicle Registration Number",
-                                hintText: "Ex. SV30-0169266",
+                                hintText: "Ex. NW 905 AG",
                                 forceUpperCase: true,
                                 validator: controller.addVehicleFormHelper
                                     .validators['registration'],

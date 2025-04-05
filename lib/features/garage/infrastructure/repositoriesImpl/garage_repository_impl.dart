@@ -31,7 +31,8 @@ class GarageRepositoryImpl implements GarageRepository {
           'garageId': garageId,
           'vin': vin,
           'registrationNumber': registrationNumber,
-          'withMedia': true,
+          'description': "Test description",
+          // 'withMedia': true,
         },
       );
       return Right(VehicleModel.fromJson(response["data"]).toEntity());
@@ -101,7 +102,8 @@ class GarageRepositoryImpl implements GarageRepository {
       final response = await networkService.delete(
         "${GarageConstants.addVehiclePostUri}/$id",
       );
-      return Right(response["data"] as String);
+      print(response);
+      return const Right("Vehicle deleted successfully");
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }

@@ -58,10 +58,10 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
               const SizedBox(
                 height: 20,
               ),
-              if (vhcle.media != null)
+              if (vhcle.imageUrl != null)
                 ImageComponent(
                   // assetPath: AppImages.carWhite,
-                  imageUrl: vhcle.media![0]!.sourceUrl,
+                  imageUrl: vhcle.imageUrl,
                 ),
               NotificationWidget(
                   backgrounColor: Get.theme.primaryColor.withValues(alpha: .2),

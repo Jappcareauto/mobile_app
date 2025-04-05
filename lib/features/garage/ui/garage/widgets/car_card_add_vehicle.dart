@@ -74,7 +74,7 @@ class CarCardAddVehicle extends StatelessWidget {
                 left: 8,
                 right: 0,
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                  width: Get.width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -101,7 +101,8 @@ class CarCardAddVehicle extends StatelessWidget {
                         ],
                       ),
                       if (showDelete == true) ...{
-                        Ink(
+                        Flexible(
+                            child: Ink(
                           color: Colors.grey,
                           child: InkWell(
                             borderRadius: BorderRadius.circular(24),
@@ -116,7 +117,7 @@ class CarCardAddVehicle extends StatelessWidget {
                               ),
                             ),
                           ),
-                        )
+                        ))
                       },
                     ],
                   ),

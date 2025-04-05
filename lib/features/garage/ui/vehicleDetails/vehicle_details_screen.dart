@@ -44,45 +44,58 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                   Text(vhcle.detail?.year ?? "",
                       style: Get.textTheme.bodyMedium),
                   const SizedBox(height: 10),
+
                   SizedBox(
                     width: Get.width,
                     height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: vhcle.media
-                              ?.map((e) => Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: ImageComponent(
-                                      assetPath: e?.sourceUrl != null
-                                          ? null
-                                          : AppImages.carWhite,
-                                      imageUrl: e?.sourceUrl,
-                                      width: Get.width * .85,
-                                      borderRadius: 10,
-                                    ),
-                                  ))
-                              .toList() ??
-                          [
-                            vhcle.imageUrl != null
-                                ? Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: ImageComponent(
-                                      assetPath: vhcle.imageUrl != null
-                                          ? null
-                                          : AppImages.carWhite,
-                                      imageUrl: vhcle.imageUrl,
-                                      width: Get.width * .85,
-                                      borderRadius: 10,
-                                    ),
-                                  )
-                                : SizedBox(
-                                    width: Get.width * .85,
-                                    height: 200,
-                                    child:
-                                        const Center(child: Text("No Media")))
-                          ],
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: ImageComponent(
+                        // assetPath: vhcle.imageUrl == null ? imagePath : "",
+                        imageUrl: vhcle.imageUrl ??
+                            "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
+                        // imageUrl:
+                        //     "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
+                        width: Get.width * .85,
+                        height: 200,
+                      ),
                     ),
                   ),
+                  // ListView(
+                  //     scrollDirection: Axis.horizontal,
+                  //     children: vhcle.media
+                  //             ?.map((e) => Padding(
+                  //                   padding: const EdgeInsets.only(right: 10),
+                  //                   child: ImageComponent(
+                  //                     assetPath: e?.sourceUrl != null
+                  //                         ? null
+                  //                         : AppImages.carWhite,
+                  //                     imageUrl: e?.sourceUrl,
+                  //                     width: Get.width * .85,
+                  //                     borderRadius: 10,
+                  //                   ),
+                  //                 ))
+                  //             .toList() ??
+                  //         [
+                  //           vhcle.imageUrl != null
+                  //               ? Padding(
+                  //                   padding: const EdgeInsets.only(right: 10),
+                  //                   child: ImageComponent(
+                  //                     assetPath: vhcle.imageUrl != null
+                  //                         ? null
+                  //                         : AppImages.carWhite,
+                  //                     imageUrl: vhcle.imageUrl,
+                  //                     width: Get.width * .85,
+                  //                     borderRadius: 10,
+                  //                   ),
+                  //                 )
+                  //               : SizedBox(
+                  //                   width: Get.width * .85,
+                  //                   height: 200,
+                  //                   child:
+                  //                       const Center(child: Text("No Media")))
+                  //         ],
+                  //   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
@@ -99,33 +112,35 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                     spacing: 20,
                     children: [
                       DetailItem(
-                          title: "Trim", value: vhcle.detail?.trim ?? 'Unknow'),
+                          title: "Trim",
+                          value: vhcle.detail?.trim ?? 'Unknown'),
                       DetailItem(
-                          title: "Year", value: vhcle.detail?.year ?? 'Unknow'),
+                          title: "Year",
+                          value: vhcle.detail?.year ?? 'Unknown'),
                     ],
                   ),
                   const SizedBox(height: 20),
                   Row(
+                    spacing: 20,
                     children: [
                       DetailItem(
                           title: "Transmission",
-                          value: vhcle.detail?.transmission ?? 'Unknow'),
-                      const SizedBox(width: 20),
+                          value: vhcle.detail?.transmission ?? 'Unknown'),
                       DetailItem(
                           title: "Drive",
-                          value: vhcle.detail?.driveTrain ?? 'Unknow'),
+                          value: vhcle.detail?.driveTrain ?? 'Unknown'),
                     ],
                   ),
                   const SizedBox(height: 20),
                   Row(
+                    spacing: 20,
                     children: [
                       DetailItem(
                           title: "Power",
-                          value: vhcle.detail?.power ?? 'Unknow'),
-                      const SizedBox(width: 20),
+                          value: vhcle.detail?.power ?? 'Unknown'),
                       DetailItem(
                           title: "Body Type",
-                          value: vhcle.detail?.bodyType ?? 'Unknow'),
+                          value: vhcle.detail?.bodyType ?? 'Unknown'),
                     ],
                   ),
                 ],
