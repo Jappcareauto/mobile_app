@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -61,7 +62,8 @@ class ImageComponent extends StatelessWidget {
       if (imageUrl!.endsWith('.svg')) {
         return SvgPicture.network(
           imageUrl!,
-          color: color,
+          colorFilter: ColorFilter.mode(
+              color ?? Get.theme.primaryColor, BlendMode.color),
           placeholderBuilder: (context) => _buildShimmer(),
           fit: fit,
           width: width,
@@ -87,7 +89,8 @@ class ImageComponent extends StatelessWidget {
       if (assetPath!.endsWith('.svg')) {
         return SvgPicture.asset(
           assetPath!,
-          color: color,
+          colorFilter: ColorFilter.mode(
+              color ?? Get.theme.primaryColor, BlendMode.color),
           fit: fit,
           width: width,
           height: height,

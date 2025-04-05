@@ -13,6 +13,7 @@ class PayWithPhoneScreen extends GetView<PayWithPhoneController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: 'Phone Details',
         actions: [
           if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))

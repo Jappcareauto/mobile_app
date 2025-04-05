@@ -79,8 +79,9 @@ class ListVehicleWidget extends StatelessWidget
                       ? const MyGarageNameShimmer()
                       : Text(
                           title,
-                          style: Get.textTheme.bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                          style: Get.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         );
                 }),
               ),
@@ -110,15 +111,15 @@ class ListVehicleWidget extends StatelessWidget
                           borderRadius: BorderRadius.circular(24),
                           color: Colors.white,
                           border: Border.all(
-                            color: const Color(0xFFFB7C37),
+                            color: Get.theme.primaryColor,
                             width: 1.3,
                           ),
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             '+ Add Vehicle',
                             style: TextStyle(
-                                color: Color(0xFFFB7C37),
+                                color: Get.theme.primaryColor,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -139,9 +140,7 @@ class ListVehicleWidget extends StatelessWidget
                     showDelete: showDelete,
                     haveBorder: currentPage?.value == index,
                     containerheight: 200,
-                    onPressed: () {
-                      controller.goToVehicleDetails(vehicle);
-                    },
+                    onPressed: () => controller.goToVehicleDetails(vehicle),
                     next: () {
                       if (index == (vehiclesToDisplay.length - 1) &&
                           !haveAddVehicule!) {
@@ -161,8 +160,11 @@ class ListVehicleWidget extends StatelessWidget
                       vehicle.detail?.year ?? "Unknown",
                       vehicle.detail?.make ?? "Unknown"
                     ],
-                    imagePath: vehicle.media?[2]?.sourceUrl ?? '',
-                    imageUrl: vehicle.media?[2]?.sourceUrl ?? '',
+                    imagePath:
+                        vehicle.media != null && vehicle.media!.isNotEmpty
+                            ? vehicle.media![0]?.sourceUrl ?? ""
+                            : '',
+                    imageUrl: vehicle.imageUrl,
                   );
                 },
               ),

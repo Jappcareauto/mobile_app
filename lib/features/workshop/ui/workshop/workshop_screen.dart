@@ -22,7 +22,7 @@ class WorkshopScreen extends GetView<WorkshopController>
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: "Service Centers",
-        canBack: true,
+        canBack: false,
         actions: [
           if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
             Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
@@ -60,12 +60,15 @@ class WorkshopScreen extends GetView<WorkshopController>
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: AppColors.white),
-                          child: const Icon(FluentIcons.options_16_regular),
+                        InkWell(
+                          onTap: () => controller.showFiltersDialog(),
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: AppColors.white),
+                            child: const Icon(FluentIcons.options_16_regular),
+                          ),
                         ),
                       ],
                     ),
@@ -134,15 +137,21 @@ class WorkshopScreen extends GetView<WorkshopController>
                                       return GestureDetector(
                                         onTap: () {
                                           controller.goToWorkshopDetails(
-                                              service.name ?? 'Inconnu',
-                                              service.location?.description ??
+                                              name: service.name ?? 'Inconnu',
+                                              description: service
+                                                      .location?.description ??
                                                   'Inconnu',
-                                              service.location?.latitude ?? 0.0,
-                                              service.location?.longitude ??
-                                                  0.0,
-                                              service.id,
-                                              service.availability,
-                                              service.location?.name);
+                                              latitude:
+                                                  service.location?.latitude ??
+                                                      0.0,
+                                              longitude:
+                                                  service.location?.longitude ??
+                                                      0.0,
+                                              id: service.id,
+                                              availability:
+                                                  service.availability,
+                                              locationName:
+                                                  service.location?.name);
                                         },
                                         child: ServiceItemWidget(
                                           image: AppImages.shopCar,

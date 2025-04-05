@@ -11,7 +11,10 @@ class SettingsScreen extends GetView<SettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: "Settings"),
+        appBar: CustomAppBar(
+          title: "Settings",
+          appBarcolor: Get.theme.scaffoldBackgroundColor,
+        ),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8),

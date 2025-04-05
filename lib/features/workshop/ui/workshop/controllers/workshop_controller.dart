@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/features/workshop/domain/core/exceptions/workshop_exception.dart';
@@ -51,7 +51,7 @@ class WorkshopController extends GetxController {
     ever(services, (serviceModel) {
       if (serviceModel != null && serviceModel.data.isNotEmpty) {
         selectedFilter.value = 0;
-        selectedCategory.value = serviceModel.data.first.title ?? "Sans titre";
+        selectedCategory.value = serviceModel.data.first.title;
       }
     });
     getServiceCentersFormHelper =
@@ -107,8 +107,14 @@ class WorkshopController extends GetxController {
     _appNavigation.goBack();
   }
 
-  void goToWorkshopDetails(String name, String description, double latitude,
-      double longitude, String id, bool availability, String? locationName) {
+  void goToWorkshopDetails(
+      {String? name,
+      String? description,
+      double? latitude,
+      double? longitude,
+      required String id,
+      bool? availability,
+      String? locationName}) {
     _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails,
         arguments: services);
     globalControllerWorkshop.addMultipleData({
@@ -156,6 +162,30 @@ class WorkshopController extends GetxController {
         serviceloading.value = false;
         services.value = response;
         print(response);
+      },
+    );
+  }
+
+  Future<void> showFiltersDialog() {
+    return showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Filters'),
+          content: const Text('This is an alert dialog.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Get.back(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Apply'),
+              onPressed: () {},
+            ),
+          ],
+        );
       },
     );
   }

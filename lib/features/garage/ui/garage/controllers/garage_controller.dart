@@ -85,6 +85,7 @@ class GarageController extends GetxController {
   }
 
   void goToVehicleDetails(Vehicle vehicleDetails) {
+    print("vehicleDetails");
     _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails,
         arguments: vehicleDetails);
   }
@@ -106,7 +107,8 @@ class GarageController extends GetxController {
         Get.showCustomSnackBar(e.message);
       },
       (success) {
-        loading.value = false;
+        vehicleDeleteLoading.value = false;
+        Get.back();
         Get.find<GarageController>()
             .getVehicleList(Get.find<GarageController>().myGarage!.id);
       },

@@ -13,6 +13,7 @@ class PayWithCardScreen extends GetView<PayWithCardController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: 'Card Details',
         actions: [
           if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))

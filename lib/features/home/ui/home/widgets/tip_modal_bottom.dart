@@ -11,7 +11,7 @@ class TipModalBottomWidget extends StatelessWidget {
     return Container(
       width: Get.width,
       // height: 390,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       child: Column(
         children: [
           Container(

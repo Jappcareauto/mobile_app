@@ -45,12 +45,23 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                         spacing: 16,
                         children: [
                           CustomPhoneFormField(
-                              label: 'Phone',
-                              hintText: 'Enter your Phone',
-                              controller: controller
-                                  .loginFormHelper.controllers['phone'],
-                              validator: controller
-                                  .loginFormHelper.validators['phone']),
+                            label: 'Phone',
+                            hintText: 'Enter your Phone',
+                            controller:
+                                controller.loginFormHelper.controllers['phone'],
+                            validator:
+                                controller.loginFormHelper.validators['phone'],
+                            onCountryChange: (value) {
+                              if (value.dialCode != null) {
+                                controller.loginFormHelper.controllers['code']
+                                    ?.text = value.dialCode!;
+                              }
+                            },
+                            onChanged: (value) {
+                              controller.loginFormHelper.controllers["phone"]
+                                  ?.text = value;
+                            },
+                          ),
                           CustomFormField(
                             label: 'Password',
                             isPassword: true,
