@@ -4,9 +4,9 @@ import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
-import 'package:jappcare/features/workshop/application/usecases/book_appointment_command.dart';
+import 'package:jappcare/features/workshop/application/command/book_appointment_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
-import 'package:jappcare/features/workshop/application/usecases/created_rome_chat_command.dart';
+import 'package:jappcare/features/workshop/application/command/created_rome_chat_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/created_rome_chat_usecase.dart';
 import 'package:jappcare/features/workshop/domain/core/exceptions/workshop_exception.dart';
 import 'package:jappcare/features/workshop/domain/entities/book_appointment.dart';
@@ -16,16 +16,17 @@ import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/confir
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/confirmation_appointment_modal.dart';
 
 class ConfirmeAppointmentController extends GetxController {
-  
   final AppNavigation _appNavigation;
-  CreatedRomeChatUseCase createdRomeChatUseCase = CreatedRomeChatUseCase(Get.find());
-  final BookAppointmentUseCase bookAppointmentUseCase = BookAppointmentUseCase(Get.find());
+  CreatedRomeChatUseCase createdRomeChatUseCase =
+      CreatedRomeChatUseCase(Get.find());
+  final BookAppointmentUseCase bookAppointmentUseCase =
+      BookAppointmentUseCase(Get.find());
   final loading = false.obs;
-  final RxList<String> participantId  = RxList();
-  final proceedChatLoading = false.obs ;
+  final RxList<String> participantId = RxList();
+  final proceedChatLoading = false.obs;
   var chatRoomID = ''.obs;
-  var appointmentId = ''.obs ;
-  final requestIsSend = false.obs ;
+  var appointmentId = ''.obs;
+  final requestIsSend = false.obs;
   // final argument = Get.arguments ;
   ConfirmeAppointmentController(this._appNavigation);
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
@@ -34,8 +35,8 @@ class ConfirmeAppointmentController extends GetxController {
     super.onInit();
     participantId.add(Get.find<ProfileController>().userInfos!.id);
   }
-  final PageController pageController = PageController(
-  );
+
+  final PageController pageController = PageController();
   void openModal() {
     showModalBottomSheet(
         enableDrag: true,
@@ -48,66 +49,65 @@ class ConfirmeAppointmentController extends GetxController {
         });
   }
 
-
-  Future<void> createdRoomChat() async{
+  Future<void> createdRoomChat() async {
     proceedChatLoading.value = true;
     final result = await createdRomeChatUseCase.call(CreatedRomeChatCommand(
-        name: globalControllerWorkshop.workshopData['serviceCenterName'] ,
-        participantUserIds: participantId
-    ));
-    result.fold(
-            (e){
-              proceedChatLoading.value = false;
-              if(Get.context !=null) {
-                Get.showCustomSnackBar(e.message);
-              }
-              proceedChatLoading.value = false;
-
-            },
-            (response){
-              chatRoomID.value = response.id ;
-              print(response.id);
-              print(response);
-              goToChat(response.id);
-              proceedChatLoading.value = false;
-
+        name: globalControllerWorkshop.workshopData['serviceCenterName'],
+        participantUserIds: participantId));
+    result.fold((e) {
+      proceedChatLoading.value = false;
+      if (Get.context != null) {
+        Get.showCustomSnackBar(e.message);
+      }
+      proceedChatLoading.value = false;
+    }, (response) {
+      chatRoomID.value = response.id;
+      print(response.id);
+      print(response);
+      goToChat(response.id);
+      proceedChatLoading.value = false;
     });
   }
 
   void goToChat(String chatRoomId) {
     print('got to chat');
     Get.back();
-    _appNavigation.toNamed(WorkshopPrivateRoutes.processChat,);
+    _appNavigation.toNamed(
+      WorkshopPrivateRoutes.processChat,
+    );
     globalControllerWorkshop.addMultipleData(
-        {
-          'chatroomId': chatRoomId,
-          'appointmentId' : appointmentId.value
-        });
+        {'chatroomId': chatRoomId, 'appointmentId': appointmentId.value});
   }
-  Future<Either<WorkshopException , BookAppointment>> booknewAppointment(
-  DateTime date, String locationType, String note, String serviceId, String vehicleId,
-      String status, String timeOfDay) async {
-    loading.value = true ;
+
+  Future<Either<WorkshopException, BookAppointment>> booknewAppointment(
+      DateTime date,
+      String locationType,
+      String note,
+      String serviceId,
+      String vehicleId,
+      String status,
+      String timeOfDay) async {
+    loading.value = true;
     final result = await bookAppointmentUseCase.call(BookAppointmentCommand(
-        date: date.toUtc().toIso8601String(),
-        locationType: locationType,
-        note: note,
-        serviceId: serviceId,
-        vehicleId: vehicleId,
-        status: status,
-        timeOfDay:timeOfDay,
+      date: date.toUtc().toIso8601String(),
+      locationType: locationType,
+      note: note,
+      serviceId: serviceId,
+      vehicleId: vehicleId,
+      status: status,
+      timeOfDay: timeOfDay,
     ));
     return result.fold(
-          (e) {
+      (e) {
         loading.value = false;
         print("erreur.vehicleId");
         print(e.message);
         Get.showCustomSnackBar("Une erreur s'est produite");
         return Left(WorkshopException(e.message));
       },
-          (response) {
-            loading.value = false;
-        appointmentId.value = response.id ;
+      (response) {
+        loading.value = false;
+        appointmentId.value = response.id;
         print("response.vehicleId");
         onpenModalConfirmMethod();
         print(response.vehicleId);
@@ -115,6 +115,7 @@ class ConfirmeAppointmentController extends GetxController {
       },
     );
   }
+
   void onpenModalConfirmMethod() {
     showModalBottomSheet(
       context: Get.context!,
@@ -125,5 +126,4 @@ class ConfirmeAppointmentController extends GetxController {
       },
     );
   }
-
 }

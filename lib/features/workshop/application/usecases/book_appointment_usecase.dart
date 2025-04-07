@@ -1,5 +1,5 @@
 //Don't translate me
-import 'book_appointment_command.dart';
+import '../command/book_appointment_command.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/core/exceptions/workshop_exception.dart';
 import '../../domain/repositories/workshop_repository.dart';
@@ -10,7 +10,8 @@ class BookAppointmentUseCase {
 
   BookAppointmentUseCase(this.repository);
 
-  Future<Either<WorkshopException, BookAppointment>> call(BookAppointmentCommand command) async {
+  Future<Either<WorkshopException, BookAppointment>> call(
+      BookAppointmentCommand command) async {
     return await repository.bookAppointment(
         command.date,
         command.locationType,
@@ -18,7 +19,6 @@ class BookAppointmentUseCase {
         command.serviceId,
         command.vehicleId,
         command.status,
-        command.timeOfDay
-    );
+        command.timeOfDay);
   }
 }

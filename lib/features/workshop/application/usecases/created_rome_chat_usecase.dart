@@ -1,5 +1,5 @@
 //Don't translate me
-import 'created_rome_chat_command.dart';
+import '../command/created_rome_chat_command.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/core/exceptions/workshop_exception.dart';
 import '../../domain/repositories/workshop_repository.dart';
@@ -10,6 +10,9 @@ class CreatedRomeChatUseCase {
 
   CreatedRomeChatUseCase(this.repository);
 
-  Future<Either<WorkshopException, CreatedRomeChat>> call(CreatedRomeChatCommand command) async {
-    return await repository.createdRomeChat(command.name,command.participantUserIds) ;  }
+  Future<Either<WorkshopException, CreatedRomeChat>> call(
+      CreatedRomeChatCommand command) async {
+    return await repository.createdRomeChat(
+        command.name, command.participantUserIds);
+  }
 }

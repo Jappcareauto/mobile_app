@@ -7,7 +7,7 @@ import 'package:jappcare/features/workshop/domain/entities/get_all_services_cent
 import 'package:jappcare/features/workshop/domain/entities/get_allservices.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
-import 'package:jappcare/features/workshop/application/usecases/get_service_center_command.dart';
+import 'package:jappcare/features/workshop/application/command/get_service_center_command.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/utils/getx_extensions.dart';
 import '../../../application/usecases/get_all_services_center_usecase.dart';
