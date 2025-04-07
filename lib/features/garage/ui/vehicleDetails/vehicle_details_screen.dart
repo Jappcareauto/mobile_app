@@ -32,6 +32,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
+                spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -43,7 +44,6 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                           color: Get.theme.primaryColor)),
                   Text(vhcle.detail?.year ?? "",
                       style: Get.textTheme.bodyMedium),
-                  const SizedBox(height: 10),
 
                   SizedBox(
                     width: Get.width,
@@ -96,51 +96,60 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                   //                       const Center(child: Text("No Media")))
                   //         ],
                   //   ),
-                  const SizedBox(height: 10),
                   Row(
+                    spacing: 10,
                     children: [
                       DetailItem(
                           title: "Make", value: vhcle.detail?.make ?? 'Unknow'),
-                      const SizedBox(width: 20),
                       DetailItem(
                           title: "Model",
                           value: vhcle.detail?.model ?? 'Unknow'),
                     ],
                   ),
-                  const SizedBox(height: 20),
                   Row(
-                    spacing: 20,
+                    spacing: 10,
                     children: [
+                      // DetailItem(
+                      //     title: "Trim",
+                      //     value: vhcle.detail?.trim ?? 'Unknown'),
                       DetailItem(
-                          title: "Trim",
-                          value: vhcle.detail?.trim ?? 'Unknown'),
+                          title: "Transmission",
+                          value: vhcle.detail?.transmission ?? 'Unknown'),
                       DetailItem(
                           title: "Year",
                           value: vhcle.detail?.year ?? 'Unknown'),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  // const SizedBox(height: 20),
+                  // Row(
+                  //   spacing: 20,
+                  //   children: [
+
+                  //     DetailItem(
+                  //         title: "Drive",
+                  //         value: vhcle.detail?.driveTrain ?? 'Unknown'),
+                  //   ],
+                  // ),
                   Row(
-                    spacing: 20,
+                    spacing: 10,
                     children: [
                       DetailItem(
-                          title: "Transmission",
-                          value: vhcle.detail?.transmission ?? 'Unknown'),
+                          title: "Body Type",
+                          value: vhcle.detail?.bodyType ?? 'Unknown'),
+                    ],
+                  ),
+                  Row(
+                    children: [
                       DetailItem(
                           title: "Drive",
                           value: vhcle.detail?.driveTrain ?? 'Unknown'),
                     ],
                   ),
-                  const SizedBox(height: 20),
                   Row(
-                    spacing: 20,
                     children: [
                       DetailItem(
-                          title: "Power",
-                          value: vhcle.detail?.power ?? 'Unknown'),
-                      DetailItem(
-                          title: "Body Type",
-                          value: vhcle.detail?.bodyType ?? 'Unknown'),
+                          title: "Trim",
+                          value: vhcle.detail?.trim ?? 'Unknown'),
                     ],
                   ),
                 ],
@@ -164,7 +173,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
             //     ],
             //   ),
             // ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               child: const Row(

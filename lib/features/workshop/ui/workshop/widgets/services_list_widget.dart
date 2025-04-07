@@ -11,17 +11,16 @@ class ServicesListWidget extends GetView<WorkshopController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Specialized Services",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            child: Obx(() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Specialized Services",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          child: Obx(
+            () {
               return controller.serviceloading.value
                   ? const Text('loading')
                   : (controller.services.value?.data != null &&
@@ -30,7 +29,7 @@ class ServicesListWidget extends GetView<WorkshopController> {
                           tabs: controller.services.value!.data
                               .map((service) => service.title)
                               .toList(),
-                          selectedFilter: controller.selectedFilter,
+                          selectedFilter: controller.selectedService,
                           data: controller.services.value!.data,
                           onSelected: (data) {
                             print(controller.services.value?.data[0]);
@@ -38,17 +37,17 @@ class ServicesListWidget extends GetView<WorkshopController> {
                                 "L'IDENTIFIANT DU SERVICE SELECTIONNER EST : ${data.id}");
                             controller.servicesId.value = data.id;
                             globalControllerWorkshop.addData(
-                                'servciceId', data.id);
+                                'serviceId', data.id);
                           },
                           selectedTabs: controller.selectedCategory,
                           borderRadius: BorderRadius.circular(16),
                           haveBorder: true,
                         )
                       : const Text('Aucun service disponible');
-            }),
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -59,7 +59,7 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController> {
                         argument['selectedDate'],
                         argument['selectedLocation'],
                         argument['noteController'],
-                        argument['servciceId'],
+                        argument['serviceId'],
                         argument['vehiculeId'],
                         "NOT_STARTED",
                         argument['selectedTime'],

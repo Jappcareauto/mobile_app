@@ -12,6 +12,7 @@ import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/utils/getx_extensions.dart';
 import '../../../application/usecases/get_all_services_center_usecase.dart';
 import '../../../application/usecases/get_allservices_usecase.dart';
+import '../widgets/workshop_filters.dart';
 
 class WorkshopController extends GetxController {
   final GetAllservicesUseCase _getAllservicesUseCase =
@@ -21,6 +22,11 @@ class WorkshopController extends GetxController {
   final serviceloading = false.obs;
 
   var serviceCenterName = "".obs;
+  RxInt? selectedService = 0.obs;
+  var selectedCategory = "".obs;
+  final selectedCategoryIndex = 0.obs;
+  var servicesId = "".obs;
+
   late FormHelper getServiceCentersFormHelper;
 
   final GetAllServicesCenterUseCase _getAllServicesCenterUseCase = Get.find();
@@ -30,10 +36,6 @@ class WorkshopController extends GetxController {
 
   final AppNavigation _appNavigation;
   WorkshopController(this._appNavigation);
-  var selectedFilter = 0.obs;
-  var selectedCategory = "".obs;
-  final selectedCategoryIndex = 0.obs;
-  var servicesId = "".obs;
 
   String? validateName(String? value) {
     if (value == null || value.isEmpty) {
@@ -48,12 +50,12 @@ class WorkshopController extends GetxController {
     super.onInit();
     getAllservices();
     getAllServicesCenter();
-    ever(services, (serviceModel) {
-      if (serviceModel != null && serviceModel.data.isNotEmpty) {
-        selectedFilter.value = 0;
-        selectedCategory.value = serviceModel.data.first.title;
-      }
-    });
+    // ever(services, (serviceModel) {
+    //   if (serviceModel != null && serviceModel.data.isNotEmpty) {
+    //     selectedFilter.value = 0;
+    //     selectedCategory.value = serviceModel.data.first.title;
+    //   }
+    // });
     getServiceCentersFormHelper =
         FormHelper<WorkshopException, GetAllServicesCenter>(
       fields: {
@@ -84,19 +86,19 @@ class WorkshopController extends GetxController {
           getServiceCentersFormHelper.controllers['name']!.text;
     });
 
-    debounce(serviceCenterName, (value) {
-      if (value.isNotEmpty) {
-        getAllServicesCenter(name: serviceCenterName.value);
-      }
-    }, time: const Duration(seconds: 2));
+    // debounce(serviceCenterName, (value) {
+    //   if (value.isNotEmpty) {
+    //     getAllServicesCenter(name: serviceCenterName.value);
+    //   }
+    // }, time: const Duration(seconds: 2));
 
-    debounce(selectedFilter, (value) {
-      if (value >= 0) {
-        getAllServicesCenter(
-            name: serviceCenterName.value,
-            serviceId: servicesCenter.value?.data[selectedFilter.value].id);
-      }
-    }, time: const Duration(seconds: 1));
+    // debounce(selectedFilter, (value) {
+    //   if (value >= 0) {
+    //     getAllServicesCenter(
+    //         name: serviceCenterName.value,
+    //         serviceId: servicesCenter.value?.data[selectedFilter.value].id);
+    //   }
+    // }, time: const Duration(seconds: 1));
   }
 
   void gotToServicesLocator() {
@@ -123,7 +125,7 @@ class WorkshopController extends GetxController {
       "latitude": latitude,
       "longitude": longitude,
       "locationName": locationName,
-      "servciceId": servicesId.value,
+      "serviceId": servicesId.value,
       "serviceCenterId": id,
       "availability": availability
     });
@@ -146,6 +148,11 @@ class WorkshopController extends GetxController {
         print(response.data);
       },
     );
+  }
+
+  void clearFilters() {
+    serviceCenterName.value = "";
+    selectedService = null;
   }
 
   Future<void> getAllservices() async {
@@ -171,18 +178,33 @@ class WorkshopController extends GetxController {
       context: Get.context!,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Filters'),
-          content: const Text('This is an alert dialog.'),
+          title: const Text('Filters by research'),
+          content: const WorkshopFilters(),
           actions: <Widget>[
             TextButton(
-              child: const Text('OK'),
+              child: const Text('Ok'),
               onPressed: () {
                 Get.back(); // Dismiss the dialog
               },
             ),
             TextButton(
+              child: const Text('Clear'),
+              onPressed: () {
+                clearFilters(); // Clear the filters
+                getAllServicesCenter(); // Reload the services
+                Get.back(); // Close the dialog
+              },
+            ),
+            TextButton(
               child: const Text('Apply'),
-              onPressed: () {},
+              onPressed: () {
+                getAllServicesCenter(
+                    name: serviceCenterName.value,
+                    serviceId: selectedService != null
+                        ? servicesCenter.value?.data[selectedService!.value].id
+                        : null);
+                Get.back(); // Close the dialog
+              },
             ),
           ],
         );

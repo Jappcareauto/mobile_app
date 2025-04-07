@@ -17,9 +17,8 @@ import 'package:jappcare/features/workshop/navigation/private/workshop_private_r
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class BookAppointmentController extends GetxController{
-
-  final AppNavigation _appNavigation ;
+class BookAppointmentController extends GetxController {
+  final AppNavigation _appNavigation;
   var selectedDate = DateTime.now().obs;
   var selectedYear = DateTime.now().year.obs; // Année actuelle
   var selectedMonth = DateTime.now().month.obs; // Mois actuel
@@ -34,8 +33,8 @@ class BookAppointmentController extends GetxController{
   final GetGarageByOwnerIdUseCase _getGarageByOwnerIdUseCase = Get.find();
   final loading = true.obs;
   final vehicleLoading = true.obs;
-  final vehicleId = ''.obs ;
-  final vehicleVin = ''.obs ;
+  final vehicleId = ''.obs;
+  final vehicleVin = ''.obs;
   GetGarageByOwnerId? myGarage;
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -49,7 +48,7 @@ class BookAppointmentController extends GetxController{
     viewportFraction: 0.9,
   );
   final RxInt currentPage = 0.obs;
-    BookAppointmentController(this._appNavigation);
+  BookAppointmentController(this._appNavigation);
   @override
   void onInit() {
     super.onInit();
@@ -69,7 +68,6 @@ class BookAppointmentController extends GetxController{
         print(currentPage.value);
       }
     });
-
   }
 
   @override
@@ -78,13 +76,14 @@ class BookAppointmentController extends GetxController{
     super.dispose();
   }
 
-
   void selectDate(DateTime date) {
     selectedDate.value = date;
   }
+
   void selectMonth(int month) {
     selectedMonth.value = month; // Mise à jour du mois sélectionné
   }
+
   void selectTime(String time) {
     selectedTime.value = time;
   }
@@ -92,19 +91,20 @@ class BookAppointmentController extends GetxController{
   void selectLocation(String location) {
     selectedLocation.value = location;
   }
-  void gotToConfirmAppointment () {
+
+  void gotToConfirmAppointment() {
     _appNavigation.toNamed(WorkshopPrivateRoutes.confirmappointment);
     globalControllerWorkshop.addMultipleData({
       "currentPage": currentPage,
-      "selectedDate":selectedDate.value,
-      "selectedLocation" : selectedLocation.value,
-      "noteController" :noteController.text,
-      "vehiculeId": vehicleId.value ,
-      "selectedTime":selectedTime.value
+      "selectedDate": selectedDate.value,
+      "selectedLocation": selectedLocation.value,
+      "noteController": noteController.text,
+      "vehiculeId": vehicleId.value,
+      "selectedTime": selectedTime.value
     });
     globalControllerWorkshop.addMultipleImages(selectedImages);
-
   }
+
   Future<void> selectImagesFromGallery() async {
     final List<XFile> pickedFiles = await _picker
         .pickMultiImage(); // Utilisation de pickMultiImage pour plusieurs images
@@ -117,17 +117,17 @@ class BookAppointmentController extends GetxController{
       print('Aucune image sélectionnée.');
     }
   }
-  Future<void> getGarageByOwnerId(String userId) async {
 
+  Future<void> getGarageByOwnerId(String userId) async {
     loading.value = true;
     final result = await _getGarageByOwnerIdUseCase
         .call(GetGarageByOwnerIdCommand(userId: userId));
     result.fold(
-          (e) {
+      (e) {
         loading.value = false;
         Get.showCustomSnackBar(e.message);
       },
-          (success) {
+      (success) {
         myGarage = success;
         getVehicleList(myGarage!.id);
         Get.find<AppEventService>()
@@ -137,16 +137,17 @@ class BookAppointmentController extends GetxController{
       },
     );
   }
+
   Future<void> getVehicleList(String garageId) async {
     vehicleLoading.value = true;
     final result = await _getVehicleListUseCase
         .call(GetVehicleListCommand(garageId: garageId));
     result.fold(
-          (e) {
+      (e) {
         vehicleLoading.value = false;
         Get.showCustomSnackBar(e.message);
       },
-          (response) {
+      (response) {
         vehicleList = response;
         print("vehicleList.toList()");
 

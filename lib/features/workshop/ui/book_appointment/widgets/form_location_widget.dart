@@ -15,7 +15,7 @@ class FormLocationWidget extends GetView<BookAppointmentController> {
       child: Column(
         children: [
           CustomFormField(
-            focusedBorderColor: AppColors.greyText.withOpacity(.1),
+            focusedBorderColor: AppColors.greyText.withValues(alpha: .1),
             // filColor: AppColors.white,
             validator: Validators.requiredField,
             hintText: 'Search for a place',
@@ -27,7 +27,7 @@ class FormLocationWidget extends GetView<BookAppointmentController> {
           ),
           CustomFormField(
             controller: controller.noteController,
-            focusedBorderColor: AppColors.greyText.withOpacity(.1),
+            focusedBorderColor: AppColors.greyText.withValues(alpha: .1),
             filColor: AppColors.white,
             maxLine: 7,
             hintText: 'Add a Note (Optional)',

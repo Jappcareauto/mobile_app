@@ -4,7 +4,7 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
+// import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_widgets.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import 'controllers/workshop_controller.dart';
@@ -35,6 +35,7 @@ class WorkshopScreen extends GetView<WorkshopController>
           return SafeArea(
             child: SingleChildScrollView(
               child: Column(
+                spacing: 20,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -73,42 +74,41 @@ class WorkshopScreen extends GetView<WorkshopController>
                       ],
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Get.theme.primaryColor),
-                          child: Text(
-                            'Around Me',
-                            style: Get.textTheme.bodyMedium?.copyWith(
-                                color: Get.theme.scaffoldBackgroundColor),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Get.theme.primaryColor),
-                          child: Text(
-                            'Available Now',
-                            style: Get.textTheme.bodyMedium?.copyWith(
-                                color: Get.theme.scaffoldBackgroundColor),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  ServicesListWidget(),
-                  const SizedBox(height: 8),
+                  // const SizedBox(height: 10),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 20),
+                  //   child: Row(
+                  //     children: [
+                  //       Container(
+                  //         padding: const EdgeInsets.symmetric(
+                  //             horizontal: 12, vertical: 8),
+                  //         decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(20),
+                  //             color: Get.theme.primaryColor),
+                  //         child: Text(
+                  //           'Around Me',
+                  //           style: Get.textTheme.bodyMedium?.copyWith(
+                  //               color: Get.theme.scaffoldBackgroundColor),
+                  //         ),
+                  //       ),
+                  //       const SizedBox(width: 10),
+                  //       Container(
+                  //         padding: const EdgeInsets.symmetric(
+                  //             horizontal: 12, vertical: 8),
+                  //         decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(20),
+                  //             color: Get.theme.primaryColor),
+                  //         child: Text(
+                  //           'Available Now',
+                  //           style: Get.textTheme.bodyMedium?.copyWith(
+                  //               color: Get.theme.scaffoldBackgroundColor),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 20),
+                  // ServicesListWidget(),
                   Obx(
                     () {
                       return Padding(
