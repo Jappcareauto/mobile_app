@@ -6,8 +6,9 @@ import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_cont
 
 class ServicesListWidget extends GetView<WorkshopController> {
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  final bool? canSelect;
 
-  ServicesListWidget({super.key});
+  ServicesListWidget({super.key, this.canSelect = false});
 
   @override
   Widget build(BuildContext context) {

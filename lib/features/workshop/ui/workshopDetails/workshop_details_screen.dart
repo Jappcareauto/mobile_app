@@ -167,7 +167,12 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                       fontWeight: FontWeight.w400, fontSize: 16),
                 ),
               ),
-              ServicesListWidget(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: ServicesListWidget(
+                  canSelect: false,
+                ),
+              ),
               const SizedBox(height: 20),
               const SizedBox(
                   height: 300,

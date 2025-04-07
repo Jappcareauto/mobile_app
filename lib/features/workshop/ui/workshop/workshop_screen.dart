@@ -133,32 +133,35 @@ class WorkshopScreen extends GetView<WorkshopController>
                                       controller.servicesCenter.value!.data
                                           .isNotEmpty)
                                   ? controller.servicesCenter.value!.data
-                                      .map<Widget>((service) {
+                                      .map<Widget>((serviceCenter) {
                                       return GestureDetector(
                                         onTap: () {
                                           controller.goToWorkshopDetails(
-                                              name: service.name ?? 'Inconnu',
-                                              description: service
+                                              name: serviceCenter.name ??
+                                                  'Inconnu',
+                                              description: serviceCenter
                                                       .location?.description ??
                                                   'Inconnu',
-                                              latitude:
-                                                  service.location?.latitude ??
-                                                      0.0,
-                                              longitude:
-                                                  service.location?.longitude ??
-                                                      0.0,
-                                              id: service.id,
+                                              latitude: serviceCenter
+                                                      .location?.latitude ??
+                                                  0.0,
+                                              longitude: serviceCenter
+                                                      .location?.longitude ??
+                                                  0.0,
+                                              id: serviceCenter.id,
                                               availability:
-                                                  service.availability,
+                                                  serviceCenter.availability,
                                               locationName:
-                                                  service.location?.name);
+                                                  serviceCenter.location?.name);
                                         },
                                         child: ServiceItemWidget(
                                           image: AppImages.shopCar,
-                                          title: service.name ?? 'Inconnu',
+                                          title:
+                                              serviceCenter.name ?? 'Inconnu',
                                           rate: '4.5',
-                                          location: service.location?.name ??
-                                              'Douala, Cameroun',
+                                          location:
+                                              serviceCenter.location?.name ??
+                                                  'Douala, Cameroun',
                                         ),
                                       );
                                     }).toList()

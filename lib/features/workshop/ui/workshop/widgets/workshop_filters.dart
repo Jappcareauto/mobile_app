@@ -16,6 +16,7 @@ class WorkshopFilters extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Wrap(
           spacing: 10,
@@ -43,21 +44,10 @@ class WorkshopFilters extends StatelessWidget {
                     ?.copyWith(color: Get.theme.scaffoldBackgroundColor),
               ),
             ),
-            // Container(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            //   decoration: BoxDecoration(
-            //       borderRadius: BorderRadius.circular(20),
-            //       color: Get.theme.primaryColor),
-            //   child: Text(
-            //     'Available Now',
-            //     style: Get.textTheme.bodyMedium
-            //         ?.copyWith(color: Get.theme.scaffoldBackgroundColor),
-            //   ),
-            // ),
           ],
         ),
         const SizedBox(height: 20),
-        ServicesListWidget(),
+        ServicesListWidget(canSelect: true),
       ],
     );
   }

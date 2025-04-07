@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jappcare/core/utils/app_dimensions.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import '../../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../../../../core/ui/widgets/custom_app_bar.dart';
@@ -44,6 +45,25 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                           color: Get.theme.primaryColor)),
                   Text(vhcle.detail?.year ?? "",
                       style: Get.textTheme.bodyMedium),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shadowColor: Colors.black,
+                      overlayColor: Colors.black12,
+                      elevation: .0,
+                      backgroundColor: Colors.transparent,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(AppDimensions.radiusLarge)),
+                          side: BorderSide(color: Colors.black)),
+                    ),
+                    onPressed: () => {},
+                    child: const Text(
+                      "Download the report",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
 
                   SizedBox(
                     width: Get.width,

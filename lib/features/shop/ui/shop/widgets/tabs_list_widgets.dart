@@ -9,12 +9,13 @@ import 'package:jappcare/features/workshop/domain/entities/get_allservices.dart'
 class TabsListWidgets extends StatelessWidget {
   final List<String> tabs;
 
-  final RxInt? selectedFilter;
+  final RxInt selectedFilter;
   late RxString selectedTabs;
   final List<Data>? data;
   final BorderRadius borderRadius;
   final bool haveBorder;
   final Function(Data selectCar)? onSelected;
+  final bool? canSelect;
   TabsListWidgets(
       {super.key,
       required this.tabs,
@@ -22,8 +23,10 @@ class TabsListWidgets extends StatelessWidget {
       this.onSelected,
       required this.selectedFilter,
       required this.selectedTabs,
+      this.canSelect,
       required this.borderRadius,
       required this.haveBorder});
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -34,12 +37,14 @@ class TabsListWidgets extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        spacing: 10,
         children: List.generate(tabs.length, (index) {
           return Obx(() {
             final category = tabs[index];
             return GestureDetector(
               onTap: () {
-                selectedFilter?.value = index;
+                if (canSelect == null || !canSelect!) return;
+                selectedFilter.value = index;
                 selectedTabs.value = category;
                 onSelected!(data![index]);
               },
@@ -48,13 +53,13 @@ class TabsListWidgets extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(0, 16, 8, 16),
                 padding: const EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
-                  color: selectedFilter?.value == index
+                  color: selectedFilter.value == index
                       ? haveBorder == true
                           ? AppColors.secondary
                           : AppColors.primary
                       : AppColors.secondary,
                   border: Border.all(
-                      color: selectedFilter?.value == index
+                      color: selectedFilter.value == index
                           ? AppColors.primary
                           : const Color(0xFFFFEDE6),
                       width: 1.5),
@@ -68,7 +73,7 @@ class TabsListWidgets extends StatelessWidget {
                         tabs[index],
                         style: TextStyle(
                           fontSize: 16,
-                          color: selectedFilter?.value == index
+                          color: selectedFilter.value == index
                               ? haveBorder == true
                                   ? AppColors.black
                                   : AppColors.white

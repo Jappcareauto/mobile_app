@@ -22,7 +22,7 @@ class WorkshopController extends GetxController {
   final serviceloading = false.obs;
 
   var serviceCenterName = "".obs;
-  RxInt? selectedService = 0.obs;
+  var selectedService = (-1).obs;
   var selectedCategory = "".obs;
   final selectedCategoryIndex = 0.obs;
   var servicesId = "".obs;
@@ -152,7 +152,7 @@ class WorkshopController extends GetxController {
 
   void clearFilters() {
     serviceCenterName.value = "";
-    selectedService = null;
+    selectedService.value = -1;
   }
 
   Future<void> getAllservices() async {
@@ -198,10 +198,12 @@ class WorkshopController extends GetxController {
             TextButton(
               child: const Text('Apply'),
               onPressed: () {
+                print(servicesCenter.value?.data.length);
+                print(selectedService.value);
                 getAllServicesCenter(
                     name: serviceCenterName.value,
-                    serviceId: selectedService != null
-                        ? servicesCenter.value?.data[selectedService!.value].id
+                    serviceId: selectedService.value != -1
+                        ? services.value?.data[selectedService.value].id
                         : null);
                 Get.back(); // Close the dialog
               },
