@@ -11,27 +11,25 @@ class CarCardAddVehicle extends StatelessWidget {
   final List<String> carDetails;
   final String imagePath;
   final String? imageUrl;
-  final RxInt? currentPage;
-  final int? itemIndex;
 
   final Function()? onPressed;
   final Function()? next;
   final Function()? delete;
-  final bool haveBorder;
   final bool? isSelected;
   final bool? showDelete;
   final bool hideblure;
   final bool haveBGColor;
+  final RxInt? currentPage;
+  final int? itemIndex;
 
   final double? containerheight;
   const CarCardAddVehicle({
     super.key,
     this.next,
-    this.delete,
     this.currentPage,
     this.itemIndex,
+    this.delete,
     this.imageUrl,
-    required this.haveBorder,
     this.containerheight,
     this.showDelete,
     required this.hideblure,
@@ -45,8 +43,7 @@ class CarCardAddVehicle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shouldHaveBorder =
-        currentPage?.value == itemIndex ? true.obs : false.obs;
+    final haveBorder = currentPage?.value == itemIndex ? true.obs : false.obs;
     return Obx(() => Container(
           height: containerheight,
           margin: const EdgeInsets.only(right: 12),
@@ -54,7 +51,7 @@ class CarCardAddVehicle extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
             color: haveBGColor ? Get.theme.primaryColor : AppColors.white,
-            border: shouldHaveBorder.value
+            border: haveBorder.value
                 ? Border.all(color: Get.theme.primaryColor, width: 1)
                 : Border.all(color: AppColors.lightBorder),
           ),

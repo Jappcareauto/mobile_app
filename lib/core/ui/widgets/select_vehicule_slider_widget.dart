@@ -83,7 +83,8 @@ class SelectedVehiculeWidget extends StatelessWidget {
                   key: ValueKey(cars[index]),
                   haveBGColor: haveAddVehicule ? true : false,
                   hideblure: true,
-                  haveBorder: currentPage.value == index,
+                  currentPage: currentPage,
+                  itemIndex: index,
                   containerheight: 200,
                   next: () {
                     if (index == cars.length - 1 && !haveAddVehicule) {
