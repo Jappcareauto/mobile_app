@@ -9,6 +9,7 @@ import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import 'controllers/workshop_controller.dart';
 import 'package:get/get.dart';
+import '../workshop/widgets/services_list_widget.dart';
 
 import 'widgets/service_item.dart';
 
@@ -34,46 +35,46 @@ class WorkshopScreen extends GetView<WorkshopController>
         builder: (controller) {
           return SafeArea(
             child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 20,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Form(
-                            key: controller.getServiceCentersFormHelper.formKey,
-                            autovalidateMode: controller
-                                .getServiceCentersFormHelper
-                                .autovalidateMode
-                                .value,
-                            child: CustomFormField(
-                              controller: controller.getServiceCentersFormHelper
-                                  .controllers['name'],
-                              borderRadius: 32,
-                              filColor: AppColors.white,
-                              hintText: "Search Centers",
-                              prefix: const Icon(FluentIcons.search_24_regular),
-                              validator: controller.getServiceCentersFormHelper
-                                  .validators['name'],
-                            ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Form(
+                          key: controller.getServiceCentersFormHelper.formKey,
+                          autovalidateMode: controller
+                              .getServiceCentersFormHelper
+                              .autovalidateMode
+                              .value,
+                          child: CustomFormField(
+                            controller: controller.getServiceCentersFormHelper
+                                .controllers['name'],
+                            borderRadius: 32,
+                            filColor: AppColors.white,
+                            hintText: "Search Centers",
+                            prefix: const Icon(FluentIcons.search_24_regular),
+                            validator: controller
+                                .getServiceCentersFormHelper.validators['name'],
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        InkWell(
-                          onTap: () => controller.showFiltersDialog(),
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: AppColors.white),
-                            child: const Icon(FluentIcons.options_16_regular),
-                          ),
+                      ),
+                      const SizedBox(width: 10),
+                      InkWell(
+                        onTap: () => controller.showFiltersDialog(),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: AppColors.white),
+                          child: const Icon(FluentIcons.options_16_regular),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                  ServicesListWidget(canSelect: true),
                   // const SizedBox(height: 10),
                   // Padding(
                   //   padding: const EdgeInsets.only(left: 20),
@@ -111,70 +112,66 @@ class WorkshopScreen extends GetView<WorkshopController>
                   // ServicesListWidget(),
                   Obx(
                     () {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Column(
-                          children: controller.loading.value
-                              ? [
-                                  // Encapsuler ListVehicleShimmer dans un conteneur de hauteur définie
-                                  const SizedBox(
-                                      height: 190, // Hauteur fixée
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            WorkshopShimmerWidgets(),
-                                            WorkshopShimmerWidgets(),
-                                          ],
-                                        ),
-                                      )),
-                                ]
-                              : (controller.servicesCenter.value?.data !=
-                                          null &&
-                                      controller.servicesCenter.value!.data
-                                          .isNotEmpty)
-                                  ? controller.servicesCenter.value!.data
-                                      .map<Widget>((serviceCenter) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          controller.goToWorkshopDetails(
-                                              name: serviceCenter.name ??
-                                                  'Inconnu',
-                                              description: serviceCenter
-                                                      .location?.description ??
-                                                  'Inconnu',
-                                              latitude: serviceCenter
-                                                      .location?.latitude ??
-                                                  0.0,
-                                              longitude: serviceCenter
-                                                      .location?.longitude ??
-                                                  0.0,
-                                              id: serviceCenter.id,
-                                              availability:
-                                                  serviceCenter.availability,
-                                              locationName:
-                                                  serviceCenter.location?.name);
-                                        },
-                                        child: ServiceItemWidget(
-                                          image: AppImages.shopCar,
-                                          title:
-                                              serviceCenter.name ?? 'Inconnu',
-                                          rate: '4.5',
-                                          location:
-                                              serviceCenter.location?.name ??
-                                                  'Douala, Cameroun',
-                                        ),
-                                      );
-                                    }).toList()
-                                  : [
-                                      const Text(
-                                        'Aucun service disponible',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.grey,
-                                        ),
+                      print(controller.loading.value);
+                      return Column(
+                        children: controller.loading.value
+                            ? [
+                                // Encapsuler ListVehicleShimmer dans un conteneur de hauteur définie
+                                const SizedBox(
+                                    height: 190, // Hauteur fixée
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: [
+                                          WorkshopShimmerWidgets(),
+                                          WorkshopShimmerWidgets(),
+                                        ],
                                       ),
-                                    ],
-                        ),
+                                    )),
+                              ]
+                            : (controller.servicesCenter.value?.data != null &&
+                                    controller
+                                        .servicesCenter.value!.data.isNotEmpty)
+                                ? controller.servicesCenter.value!.data
+                                    .map<Widget>((serviceCenter) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        controller.goToWorkshopDetails(
+                                            name:
+                                                serviceCenter.name ?? 'Inconnu',
+                                            description: serviceCenter
+                                                    .location?.description ??
+                                                'Inconnu',
+                                            latitude: serviceCenter
+                                                    .location?.latitude ??
+                                                0.0,
+                                            longitude: serviceCenter
+                                                    .location?.longitude ??
+                                                0.0,
+                                            id: serviceCenter.id,
+                                            availability:
+                                                serviceCenter.availability,
+                                            locationName:
+                                                serviceCenter.location?.name);
+                                      },
+                                      child: ServiceItemWidget(
+                                        image: AppImages.shopCar,
+                                        title: serviceCenter.name ?? 'Inconnu',
+                                        rate: '4.5',
+                                        location:
+                                            serviceCenter.location?.name ??
+                                                'Douala, Cameroun',
+                                      ),
+                                    );
+                                  }).toList()
+                                : [
+                                    const Text(
+                                      'Aucun service disponible',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
                       );
                     },
                   ),

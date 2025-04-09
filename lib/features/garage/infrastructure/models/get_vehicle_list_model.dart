@@ -33,7 +33,9 @@ class VehicleModel {
     return VehicleModel._(
       garageId: json['garageId'],
       name: json['name'],
-      imageUrl: json['imageUrl'],
+      imageUrl: json['media']?["mainItemUrl"] != null
+          ? json['media']["mainItemUrl"]
+          : null,
       description: json['description'],
       vin: json['vin'] ?? "",
       detail:

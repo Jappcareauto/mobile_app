@@ -35,7 +35,7 @@ class GarageRepositoryImpl implements GarageRepository {
           // 'withMedia': true,
         },
       );
-      return Right(VehicleModel.fromJson(response["data"]).toEntity());
+      return Right(VehicleModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
@@ -129,7 +129,7 @@ class GarageRepositoryImpl implements GarageRepository {
           'withMedia': true,
         },
       );
-      return Right(VehicleModel.fromJson(response["data"]).toEntity());
+      return Right(VehicleModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }

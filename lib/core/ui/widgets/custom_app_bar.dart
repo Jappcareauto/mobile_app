@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.white,
       backgroundColor: appBarcolor,
       automaticallyImplyLeading: false,
-      toolbarHeight: 100,
+      toolbarHeight: 115,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,5 +60,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size(Get.width, 100);
+  Size get preferredSize => Size(Get.width, 115);
 }

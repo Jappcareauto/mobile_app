@@ -102,7 +102,15 @@ class BookAppointmentController extends GetxController {
       "vehiculeId": vehicleId.value,
       "selectedTime": selectedTime.value
     });
-    globalControllerWorkshop.addMultipleImages(selectedImages);
+    globalControllerWorkshop.setImages(selectedImages);
+  }
+
+  void removeImageFromGallery(File index) {
+    if (selectedImages.isNotEmpty) {
+      // Si des images sont sélectionnées, convertir chaque image en File et les ajouter à une liste
+      selectedImages.value =
+          selectedImages.where((file) => file.uri != index.uri).toList();
+    }
   }
 
   Future<void> selectImagesFromGallery() async {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:jappcare/core/ui/widgets/custom_button.dart';
-import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
+// import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 // import 'package:jappcare/core/ui/widgets/image_component.dart';
 // import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
@@ -46,8 +46,6 @@ class WorkshopFilters extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 20),
-        ServicesListWidget(canSelect: true),
       ],
     );
   }

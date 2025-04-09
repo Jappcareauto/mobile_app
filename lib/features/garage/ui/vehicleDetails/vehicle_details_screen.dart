@@ -65,20 +65,16 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                     ),
                   ),
 
-                  SizedBox(
+                  Container(
                     width: Get.width,
                     height: 200,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: ImageComponent(
-                        // assetPath: vhcle.imageUrl == null ? imagePath : "",
-                        imageUrl: vhcle.imageUrl ??
-                            "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
-                        // imageUrl:
-                        //     "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
-                        width: Get.width * .85,
-                        height: 200,
-                      ),
+                    padding: const EdgeInsets.only(right: 10),
+                    child: ImageComponent(
+                      // assetPath: vhcle.imageUrl == null ? imagePath : "",
+                      imageUrl: vhcle.imageUrl ??
+                          "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
+                      width: Get.width * .85,
+                      height: 200,
                     ),
                   ),
                   // ListView(

@@ -9,4 +9,10 @@ abstract class ProfileRepository {
 
   Future<Either<ProfileException, bool>> updateProfileImage(
       String userId, String file);
+
+  Future<Either<ProfileException, GetUserInfos>> updateUserInfos(
+      {required String name,
+      required String email,
+      String? address,
+      String? phone});
 }

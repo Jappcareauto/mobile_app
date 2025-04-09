@@ -10,7 +10,10 @@ class NotificationsScreen extends GetView<NotificationsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Notifications"),
+      appBar: CustomAppBar(
+        title: "Notifications",
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+      ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),

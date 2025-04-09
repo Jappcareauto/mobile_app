@@ -148,7 +148,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
           .post(AuthentificationConstants.googleLoginPostUri, headers: {
         'Authorization': 'Bearer $bearerId',
       });
-      return Right(LoginModel.fromJson(response["data"]).toEntity());
+      return Right(LoginModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
     }

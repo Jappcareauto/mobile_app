@@ -86,39 +86,38 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                   style: const TextStyle(
                       fontSize: 14, fontWeight: FontWeight.w400))),
             ]),
-            const SizedBox(
-              height: 20,
-            ),
-            argument['noteController'].isEmpty
-                ? const SizedBox()
-                : const Text('Note',
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
-            Text(argument['noteController'],
-                style:
-                    const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
-            const SizedBox(
-              height: 20,
-            ),
-            images.isEmpty
-                ? const SizedBox()
-                : const Text('Images',
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
-            const SizedBox(
-              height: 10,
-            ),
-            SingleChildScrollView(
+            if (argument['noteController'].isNotEmpty) ...[
+              const SizedBox(
+                height: 20,
+              ),
+              const Text('Note',
+                  style:
+                      TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+              Text(argument['noteController'],
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold)),
+            ],
+            if (images.isNotEmpty) ...[
+              const SizedBox(
+                height: 20,
+              ),
+              const Text('Images',
+                  style:
+                      TextStyle(fontSize: 15, fontWeight: FontWeight.normal)),
+              const SizedBox(
+                height: 10,
+              ),
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Obx(
                   () => Row(
+                    spacing: 10,
                     children: images.map((imagePath) {
-                      return Container(
-                        margin: const EdgeInsets.only(right: 20),
+                      return SizedBox(
                         height: 100,
                         width: MediaQuery.of(context).size.width * 0.25,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(12),
                           child: Image.file(
                             imagePath, // Ajuster la taille de l'image
                             fit: BoxFit.cover,
@@ -127,7 +126,9 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                       );
                     }).toList(),
                   ),
-                ))
+                ),
+              ),
+            ],
           ],
         ));
   }

@@ -100,7 +100,6 @@ class ConfirmeAppointmentController extends GetxController {
     return result.fold(
       (e) {
         loading.value = false;
-        print("erreur.vehicleId");
         print(e.message);
         Get.showCustomSnackBar("Une erreur s'est produite");
         return Left(WorkshopException(e.message));

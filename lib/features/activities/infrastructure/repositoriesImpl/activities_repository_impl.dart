@@ -23,7 +23,7 @@ class ActivitiesRepositoryImpl implements ActivitiesRepository {
       final response = await networkService.post(
           ActivitiesConstants.getAllActivitiesGetUri,
           body: {'garageId': garageId});
-      return Right(GetAllActivitiesModel.fromJson(response["data"]).toEntity());
+      return Right(GetAllActivitiesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(ActivitiesException(e.message));
     }

@@ -65,6 +65,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      spacing: 5,
                       children: [
                         Expanded(
                           child: Text(
@@ -75,9 +76,6 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                             maxLines: 3,
                             // softWrap: false,
                           ),
-                        ),
-                        const SizedBox(
-                          width: 5,
                         ),
                         Chip(
                           backgroundColor: globalcontrollerWorkshop
@@ -111,47 +109,54 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      spacing: 5,
                       children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.place_outlined,
+                                color: Get.theme.primaryColor,
+                              ),
+                              const SizedBox(width: 5),
+                              Flexible(
+                                child: Obx(() => controller.loading.value
+                                    ? const TextShimmer()
+                                    : Text(
+                                        globalcontrollerWorkshop
+                                                .workshopData["locationName"] ??
+                                            "Unknown",
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          color: Get.theme.primaryColor,
+                                        ),
+                                      )),
+                              )
+                            ],
+                          ),
+                        ),
                         Row(
                           children: [
-                            Icon(
-                              Icons.place_outlined,
-                              color: Get.theme.primaryColor,
+                            Text(
+                              '|',
+                              style: TextStyle(
+                                  fontSize: 20, color: Get.theme.primaryColor),
                             ),
-                            const SizedBox(width: 5),
-                            Obx(() => controller.loading.value
-                                ? const TextShimmer()
-                                : Text(
-                                    globalcontrollerWorkshop
-                                            .workshopData["locationName"] ??
-                                        "Unknown",
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      color: Get.theme.primaryColor,
-                                    ),
-                                  ))
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Text(
-                          '|',
-                          style: TextStyle(fontSize: 20, color: Colors.grey),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Row(
-                          children: [
-                            Icon(Icons.star_rounded,
-                                color: Colors
-                                    .orange), // Utiliser une couleur appropriée
-                            Text('4.5',
-                                style: TextStyle(
+                            const Row(
+                              children: [
+                                Icon(Icons.star_rounded,
+                                    color: Colors
+                                        .orange), // Utiliser une couleur appropriée
+                                Text(
+                                  '4.5',
+                                  style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.orange))
+                                    color: Colors.orange,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ],
