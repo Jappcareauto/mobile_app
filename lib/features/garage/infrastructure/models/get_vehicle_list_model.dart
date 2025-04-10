@@ -6,6 +6,7 @@ class VehicleModel {
   final String? imageUrl;
   final String? description;
   final String vin;
+  final String registrationNumber;
   final DetailModel? detail;
   final String id;
   final String? createdBy;
@@ -20,6 +21,7 @@ class VehicleModel {
     this.imageUrl,
     this.description,
     required this.vin,
+    required this.registrationNumber,
     this.detail,
     required this.id,
     this.createdBy,
@@ -38,6 +40,7 @@ class VehicleModel {
           : null,
       description: json['description'],
       vin: json['vin'] ?? "",
+      registrationNumber: json['registrationNumber'] ?? "",
       detail:
           json['detail'] != null ? DetailModel.fromJson(json['detail']) : null,
       id: json['id'],
@@ -87,6 +90,7 @@ class VehicleModel {
       imageUrl: entity.imageUrl,
       description: entity.description,
       vin: entity.vin,
+      registrationNumber: entity.registrationNumber,
       detail:
           entity.detail != null ? DetailModel.fromEntity(entity.detail!) : null,
       id: entity.id,
@@ -105,6 +109,7 @@ class VehicleModel {
       imgUrl: imageUrl,
       description: description,
       vin: vin,
+      registrationNumber: registrationNumber,
       detail: detail?.toEntity(),
       media: media?.map((e) => e?.toEntity()).toList(),
       id: id,
@@ -126,6 +131,7 @@ class DetailModel {
   final String? power;
   final String? bodyType;
   final String? vehicleId;
+  final String? vehicleType;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -142,6 +148,7 @@ class DetailModel {
     this.power,
     this.bodyType,
     this.vehicleId,
+    this.vehicleType,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -160,6 +167,7 @@ class DetailModel {
       power: json['power'],
       bodyType: json['bodyType'],
       vehicleId: json['vehicleId'],
+      vehicleType: json['vehicleType'],
       id: json['id'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
@@ -195,6 +203,9 @@ class DetailModel {
       data['bodyType'] = bodyType;
     }
     data['vehicleId'] = vehicleId;
+    if (vehicleType != null) {
+      data['vehicleType'] = vehicleType;
+    }
     data['id'] = id;
     if (createdBy != null) {
       data['createdBy'] = createdBy;
@@ -218,6 +229,7 @@ class DetailModel {
       power: entity.power,
       bodyType: entity.bodyType,
       vehicleId: entity.vehicleId,
+      vehicleType: entity.vehicleType,
       id: entity.id,
       createdBy: entity.createdBy,
       updatedBy: entity.updatedBy,
@@ -237,6 +249,7 @@ class DetailModel {
       power: power,
       bodyType: bodyType,
       vehicleId: vehicleId,
+      vehicleType: vehicleType,
       id: id,
       createdBy: createdBy,
       updatedBy: updatedBy,

@@ -4,6 +4,7 @@ class Vehicle {
   final String? imageUrl;
   final String? description;
   final String vin;
+  final String registrationNumber;
   final Detail? detail;
   final String id;
   final List<Media?>? media;
@@ -18,6 +19,7 @@ class Vehicle {
     this.description,
     this.imageUrl,
     required this.vin,
+    required this.registrationNumber,
     this.detail,
     required this.id,
     this.media,
@@ -33,6 +35,7 @@ class Vehicle {
     String? imgUrl,
     description,
     required vin,
+    required registrationNumber,
     Detail? detail,
     required id,
     List<Media?>? media,
@@ -48,6 +51,7 @@ class Vehicle {
       imageUrl: imgUrl,
       description: description,
       vin: vin,
+      registrationNumber: registrationNumber,
       detail: detail,
       id: id,
       media: media,
@@ -69,6 +73,7 @@ class Detail {
   final String? power;
   final String? bodyType;
   final String? vehicleId;
+  final String? vehicleType;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -85,6 +90,7 @@ class Detail {
     this.power,
     this.bodyType,
     this.vehicleId,
+    this.vehicleType,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -102,6 +108,7 @@ class Detail {
     power,
     bodyType,
     vehicleId,
+    vehicleType,
     required id,
     createdBy,
     updatedBy,
@@ -119,6 +126,7 @@ class Detail {
       power: power,
       bodyType: bodyType,
       vehicleId: vehicleId,
+      vehicleType: vehicleType,
       id: id,
       createdBy: createdBy,
       updatedBy: updatedBy,

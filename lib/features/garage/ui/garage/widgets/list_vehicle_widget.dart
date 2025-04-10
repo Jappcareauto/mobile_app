@@ -139,8 +139,7 @@ class ListVehicleWidget extends StatelessWidget
                       haveBGColor: false,
                       hideblure: true,
                       showDelete: showDelete,
-                      currentPage: currentPage,
-                      itemIndex: index,
+                      haveBorder: currentPage?.value == index ? true : false,
                       containerheight: 200,
                       onPressed: () => controller.goToVehicleDetails(vehicle),
                       next: () {

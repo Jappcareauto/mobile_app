@@ -35,7 +35,8 @@ class GarageRepositoryImpl implements GarageRepository {
           // 'withMedia': true,
         },
       );
-      return Right(VehicleModel.fromJson(response).toEntity());
+      print(response);
+      return Right(VehicleModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
