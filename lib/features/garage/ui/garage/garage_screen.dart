@@ -18,7 +18,6 @@ class GarageScreen extends GetView<GarageController>
       autoRemove: false,
       initState: (_) {},
       builder: (controller) {
-        print(controller);
         return Scaffold(
             appBar: CustomAppBar(
               appBarcolor: Get.theme.scaffoldBackgroundColor,
