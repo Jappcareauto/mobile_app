@@ -134,12 +134,14 @@ class ListVehicleWidget extends StatelessWidget
                     //       (media) => media.type == "INTERIOR",
                     //   orElse: () => vehicle.media.isNotEmpty ? vehicle.media.first : null,
                     // );
+                    final haveBorder =
+                        currentPage?.value == index ? true : false;
                     return CarCardAddVehicle(
                       key: ValueKey(vehicle),
                       haveBGColor: false,
                       hideblure: true,
                       showDelete: showDelete,
-                      haveBorder: currentPage?.value == index ? true : false,
+                      haveBorder: haveBorder,
                       containerheight: 200,
                       onPressed: () => controller.goToVehicleDetails(vehicle),
                       next: () {
