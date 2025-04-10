@@ -33,7 +33,8 @@ class WorkshopDetailsController extends GetxController {
 
   var kYaounde = const CameraPosition(
     target: LatLng(3.8480, 11.5021),
-    zoom: 13.4746,
+    // zoom: 13.4746,
+    zoom: 5,
   );
   Set<Marker> markers = {};
   Set<Polyline> polylines = {};
@@ -74,12 +75,12 @@ class WorkshopDetailsController extends GetxController {
   void getPosition() async {
     await _requestLocationPermission();
     final position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
+      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
     );
     userPosition = LatLng(position.latitude, position.longitude);
     update();
     // missionsAroundMe();
-    update();
+    // update();
   }
 
   //Maps methods
@@ -100,7 +101,7 @@ class WorkshopDetailsController extends GetxController {
   }
 
   Future<BitmapDescriptor> getCustomIcon() async {
-    return await BitmapDescriptor.fromAssetImage(
+    return await BitmapDescriptor.asset(
       const ImageConfiguration(size: Size(48, 48)), // Taille de l'icône
       AppConstants.mapLocalisation, // Chemin vers l'icône dans vos assets
     );
@@ -120,8 +121,8 @@ class WorkshopDetailsController extends GetxController {
 
   Future<void> loadCustomIcons() async {
     final Uint8List sevrviceIconBytes =
-        await getBytesFromAsset(AppConstants.mapLocalisation, 150);
-    serviceLocation.value = BitmapDescriptor.fromBytes(sevrviceIconBytes);
+        await getBytesFromAsset(AppConstants.mapLocalisation, 37);
+    serviceLocation.value = BitmapDescriptor.bytes(sevrviceIconBytes);
   }
 
   void addMarker(double latitude, double longitude) async {
@@ -150,7 +151,7 @@ class WorkshopDetailsController extends GetxController {
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(latitude, longitude),
-          zoom: 14.0, // Niveau de zoom (ajustez selon vos besoins)
+          zoom: 6.0, // Niveau de zoom (ajustez selon vos besoins)
         ),
       ),
     );

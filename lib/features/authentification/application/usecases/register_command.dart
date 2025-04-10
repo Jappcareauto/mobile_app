@@ -1,22 +1,20 @@
 class RegisterCommand {
-
   final String name;
-  final String email;
+  final String? email;
   final String password;
-  final PhoneCommand phone;
+  final PhoneCommand? phone;
   final String dateOfBirth;
 
   const RegisterCommand({
     required this.name,
-    required this.email,
+    this.email,
     required this.password,
-    required this.phone,
+    this.phone,
     required this.dateOfBirth,
   });
 }
 
 class PhoneCommand {
-
   final String code;
   final String number;
 
@@ -25,4 +23,3 @@ class PhoneCommand {
     required this.number,
   });
 }
-

@@ -10,6 +10,13 @@ class RegisterUseCase {
 
   RegisterUseCase(this.repository);
 
-  Future<Either<AuthentificationException, Register>> call(RegisterCommand command) async {
-    return await repository.register(command.name,command.email,command.password,command.phone,command.dateOfBirth);  }
+  Future<Either<AuthentificationException, Register>> call(
+      RegisterCommand command) async {
+    return await repository.register(
+        name: command.name,
+        dateOfBirth: command.dateOfBirth,
+        email: command.email,
+        password: command.password,
+        phone: command.phone);
+  }
 }

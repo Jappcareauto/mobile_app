@@ -83,7 +83,7 @@ class SelectedVehiculeWidget extends StatelessWidget {
                   key: ValueKey(cars[index]),
                   haveBGColor: haveAddVehicule ? true : false,
                   hideblure: true,
-                  haveBorder: currentPage.value == index,
+                  haveBorder: currentPage.value == index ? true : false,
                   containerheight: 200,
                   next: () {
                     if (index == cars.length - 1 && !haveAddVehicule) {
@@ -95,9 +95,9 @@ class SelectedVehiculeWidget extends StatelessWidget {
                       );
                     }
                   },
-                  carName: cars[index].name ?? '',
+                  carName: cars[index].name,
                   carDetails: [
-                    cars[index].name ?? 'Unknown VIN',
+                    cars[index].vin,
                     cars[index].detail!.make ?? 'Unknown Name',
                   ],
                   imagePath: cars[index].imageUrl ?? '',

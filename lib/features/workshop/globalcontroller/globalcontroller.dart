@@ -31,6 +31,10 @@ class GlobalcontrollerWorkshop extends GetxController {
     selectedImages.addAll(images);
   }
 
+  void setImages(List<File> images) {
+    selectedImages.value = images;
+  }
+
   // Supprimer une image spécifique
   void removeImage(File image) {
     selectedImages.remove(image);

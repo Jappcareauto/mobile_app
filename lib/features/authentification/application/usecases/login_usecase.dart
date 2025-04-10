@@ -10,6 +10,12 @@ class LoginUseCase {
 
   LoginUseCase(this.repository);
 
-  Future<Either<AuthentificationException, Login>> call(LoginCommand command) async {
-    return await repository.login(command.email,command.password,command.extend);  }
+  Future<Either<AuthentificationException, Login>> call(
+      LoginCommand command) async {
+    return await repository.login(
+        email: command.email,
+        phone: command.phone,
+        password: command.password,
+        extend: command.extend);
+  }
 }

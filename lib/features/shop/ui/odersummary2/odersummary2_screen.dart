@@ -11,7 +11,9 @@ class Odersummary2Screen extends GetView<Odersummary2Controller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Oder Summary'),
+      appBar: CustomAppBar(
+          title: 'Order Summary',
+          appBarcolor: Get.theme.scaffoldBackgroundColor),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -22,7 +24,7 @@ class Odersummary2Screen extends GetView<Odersummary2Controller> {
             Container(
                 margin: const EdgeInsets.all(10),
                 child: PaymentMethodeWidget(
-                  buttonText: 'Place Oder',
+                  buttonText: 'Place Order',
                   ontap: () {
                     controller.goToPayWithPhone();
                   },

@@ -15,10 +15,10 @@ class CustomPhoneFormField extends StatefulWidget {
 
   const CustomPhoneFormField({
     super.key,
-     this.controller,
+    this.controller,
     this.label,
     this.hintText,
-    this.initialCountryCode,
+    this.initialCountryCode = "+237",
     this.isEnabled = true,
     this.validator,
     this.onCountryChange,
@@ -26,13 +26,15 @@ class CustomPhoneFormField extends StatefulWidget {
   });
 
   @override
-  _CustomPhoneFormFieldState createState() => _CustomPhoneFormFieldState();
+  State<CustomPhoneFormField> createState() => _CustomPhoneFormFieldState();
 }
 
 class _CustomPhoneFormFieldState extends State<CustomPhoneFormField> {
   @override
   void initState() {
     super.initState();
+    widget.onCountryChange
+        ?.call(CountryCode(dialCode: widget.initialCountryCode));
   }
 
   @override
@@ -53,7 +55,7 @@ class _CustomPhoneFormFieldState extends State<CustomPhoneFormField> {
           children: [
             CountryCodePicker(
               showFlag: false,
-              initialSelection: widget.initialCountryCode ?? "+237",
+              initialSelection: widget.initialCountryCode,
               onChanged: (countryCode) {
                 if (widget.onCountryChange != null) {
                   widget.onCountryChange!(countryCode);
@@ -63,7 +65,7 @@ class _CustomPhoneFormFieldState extends State<CustomPhoneFormField> {
                   .textTheme
                   .bodyMedium
                   ?.copyWith(color: Colors.black),
-              backgroundColor: Get.theme.primaryColor.withOpacity(.1),
+              backgroundColor: Get.theme.primaryColor.withValues(alpha: .1),
             ),
             Expanded(
               child: CustomFormField(

@@ -44,5 +44,21 @@ class ProfileRepositoryImpl implements ProfileRepository {
     }
   }
 
+  @override
+  Future<Either<ProfileException, GetUserInfos>> updateUserInfos(
+      {required String name,
+      required String email,
+      String? address,
+      String? phone}) async {
+    try {
+      final response = await networkService.get(
+        ProfileConstants.getUserInfosGetUri,
+      );
+      return Right(GetUserInfosModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(ProfileException(e.message));
+    }
+  }
+
   //Add methods here
 }

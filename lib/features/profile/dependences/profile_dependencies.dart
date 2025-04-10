@@ -8,6 +8,7 @@ import '../ui/profile/widgets/avatar_widget.dart';
 import '../application/usecases/get_user_infos_usecase.dart';
 
 import '../application/usecases/update_profile_image_usecase.dart';
+import '../application/usecases/update_profile_usecase.dart';
 
 class ProfileDependencies {
   static void init() {
@@ -15,9 +16,10 @@ class ProfileDependencies {
         () => ProfileRepositoryImpl(networkService: Get.find()),
         fenix: true);
 
-    Get.lazyPut<FeatureWidgetInterface>(() =>  const AvatarWidget(),
+    Get.lazyPut<FeatureWidgetInterface>(() => const AvatarWidget(),
         tag: 'AvatarWidget', fenix: true);
-      Get.lazyPut(() => GetUserInfosUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => GetUserInfosUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => UpdateProfileImageUseCase(Get.find()), fenix: true);
-}
+    Get.lazyPut(() => UpdateProfileUseCase(Get.find()), fenix: true);
+  }
 }

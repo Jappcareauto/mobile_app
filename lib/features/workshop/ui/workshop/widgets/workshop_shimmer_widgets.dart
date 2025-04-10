@@ -9,38 +9,32 @@ class WorkshopShimmerWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child:  Shimmer.fromColors(
-        baseColor: Colors.grey.withOpacity(.5),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey.withValues(alpha: .5),
         highlightColor: Colors.white,
         child: Column(
           children: [
             GestureDetector(
-              onTap: () {
-
-              },
+              onTap: () {},
               child: const ServiceItemWidget(
                 image: AppImages.shopCar,
-                title:  'Inconnu',
+                title: 'Inconnu',
                 rate: '4.5',
                 location: 'Douala, Cameroun',
               ),
             ),
             GestureDetector(
-              onTap: () {
-
-              },
+              onTap: () {},
               child: const ServiceItemWidget(
                 image: AppImages.shopCar,
-                title:  'Inconnu',
+                title: 'Inconnu',
                 rate: '4.5',
                 location: 'Douala, Cameroun',
               ),
             ),
           ],
         ),
-      ) ,
+      ),
     );
-
   }
-
 }

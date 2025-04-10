@@ -47,10 +47,6 @@ class SignUpWithEmailController extends GetxController {
         name: data['name']!,
         email: data['email']!,
         password: data['password']!,
-        phone: PhoneCommand(
-          code: data['code']!,
-          number: data['number']!,
-        ),
         dateOfBirth: data['dateOfBirth']!,
       )),
       onError: (e) => Get.showCustomSnackBar(e.message),

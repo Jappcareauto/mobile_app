@@ -25,24 +25,24 @@ class BookingWidget extends GetView<BookAppointmentController> {
           ),
           const Text(
             "Select Day",
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          const SizedBox(height: 16),
+          // const SizedBox(height: 16),
           Obx(() => CalendarDatePicker(
                 initialDate: controller.selectedDate.value,
                 firstDate: DateTime.now(),
                 lastDate: DateTime(DateTime.now().year + 1),
                 onDateChanged: (date) => controller.selectDate(date),
               )),
-          const SizedBox(height: 16),
+          // const SizedBox(height: 16),
           Obx(() => Text(
                 DateFormat("EEE, MMM dd, yyyy")
                     .format(controller.selectedDate.value),
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.orange,
+                  color: Get.theme.primaryColor,
                 ),
               )),
           const SizedBox(height: 16),

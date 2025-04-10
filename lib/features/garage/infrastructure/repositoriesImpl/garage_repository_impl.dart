@@ -31,9 +31,11 @@ class GarageRepositoryImpl implements GarageRepository {
           'garageId': garageId,
           'vin': vin,
           'registrationNumber': registrationNumber,
-          'withMedia': true,
+          'description': "Test description",
+          // 'withMedia': true,
         },
       );
+      print(response);
       return Right(VehicleModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
@@ -74,7 +76,7 @@ class GarageRepositoryImpl implements GarageRepository {
   Future<Either<GarageException, String>> getPlaceName(
       double latitude, double longitude) async {
     final url = Uri.parse(
-        "${GarageConstants.googlePlcaeUri}$latitude,$longitude&key=${GarageConstants.apiKey}");
+        "${GarageConstants.googlePlaceUri}$latitude,$longitude&key=${GarageConstants.apiKey}");
 
     try {
       final response = await http.get(url);
@@ -101,7 +103,8 @@ class GarageRepositoryImpl implements GarageRepository {
       final response = await networkService.delete(
         "${GarageConstants.addVehiclePostUri}/$id",
       );
-      return Right(response["data"] as String);
+      print(response);
+      return const Right("Vehicle deleted successfully");
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
@@ -127,7 +130,7 @@ class GarageRepositoryImpl implements GarageRepository {
           'withMedia': true,
         },
       );
-      return Right(VehicleModel.fromJson(response["data"]).toEntity());
+      return Right(VehicleModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }

@@ -53,7 +53,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     try {
       final response = await networkService
           .post(WorkshopConstants.getAllservicesGetUri, body: {});
-      return Right(GetAllservicesModel.fromJson(response["data"]).toEntity());
+      return Right(GetAllservicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
@@ -121,7 +121,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           'serviceId': serviceId,
           'vehicleId': vehicleId,
           'status': status,
-          'timeOfDay': timeOfDay
+          'timeOfDay': timeOfDay,
         },
       );
       return Right(BookAppointmentModel.fromJson(response["data"]).toEntity());
@@ -191,8 +191,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
         'ownerId': ownerId,
         'serviceCenterId': serviceCenterId
       });
-      return Right(
-          GetAllServicesCenterModel.fromJson(response["data"]).toEntity());
+      return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
