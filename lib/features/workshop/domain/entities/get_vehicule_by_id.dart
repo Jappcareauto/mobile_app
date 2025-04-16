@@ -1,4 +1,4 @@
-import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
+// import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
 
 class VehicleEntity {
   final String name;
