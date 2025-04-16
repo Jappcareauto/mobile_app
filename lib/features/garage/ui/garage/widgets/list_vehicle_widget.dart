@@ -129,6 +129,8 @@ class ListVehicleWidget extends StatelessWidget
                       );
                     }
 
+                    print(vehiclesToDisplay.length);
+
                     var vehicle = vehiclesToDisplay[index];
                     // final  interiorMedia = vehicle.media.firstWhere(
                     //       (media) => media.type == "INTERIOR",

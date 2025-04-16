@@ -35,15 +35,14 @@ class GarageScreen extends GetView<GarageController>
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(
-                        top: 30,
-                        bottom: 10,
-                        left: 20,
-                        right: 20,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
                       ),
                       child: ListVehicleWidget(
                         haveTitle: false,
                         showDelete: true,
+                        pageController: controller.pageController,
+                        currentPage: controller.currentVehiclePage,
                       ),
                     ),
                     const SizedBox(height: 20),

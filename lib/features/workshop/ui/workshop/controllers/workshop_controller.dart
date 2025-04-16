@@ -4,14 +4,14 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/features/workshop/domain/core/exceptions/workshop_exception.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_allservices.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/application/command/get_service_center_command.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/utils/getx_extensions.dart';
 import '../../../application/usecases/get_all_services_center_usecase.dart';
-import '../../../application/usecases/get_allservices_usecase.dart';
+import '../../../application/usecases/get_all_services_usecase.dart';
 import '../widgets/workshop_filters.dart';
 
 class WorkshopController extends GetxController {

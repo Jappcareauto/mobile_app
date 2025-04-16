@@ -1,8 +1,9 @@
-import '../../domain/entities/get_allservices.dart';
+import 'package:jappcare/core/ui/domain/models/pagination.model.dart';
+
+import '../../domain/entities/get_all_services.dart';
 
 class GetAllservicesModel {
-
-  final List<DataModel> data;
+  final List<ServiceModel> data;
   final PaginationModel pagination;
 
   GetAllservicesModel._({
@@ -12,21 +13,25 @@ class GetAllservicesModel {
 
   factory GetAllservicesModel.fromJson(Map<String, dynamic> json) {
     return GetAllservicesModel._(
-      data: List<DataModel>.from(json['data'].map((x) => DataModel.fromJson(x))),
+      data: List<ServiceModel>.from(
+          json['data'].map((x) => ServiceModel.fromJson(x))),
       pagination: PaginationModel.fromJson(json['pagination']),
     );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = <String, dynamic>{};
-    json['data'] = data.map((x) => x.toJson()).toList(); // Utilise la propriété `data` de la classe
+    json['data'] = data
+        .map((x) => x.toJson())
+        .toList(); // Utilise la propriété `data` de la classe
     json['pagination'] = pagination.toJson();
     return json;
   }
 
   factory GetAllservicesModel.fromEntity(GetAllservices entity) {
     return GetAllservicesModel._(
-      data: List<DataModel>.from(entity.data.map((x) => DataModel.fromEntity(x))),
+      data: List<ServiceModel>.from(
+          entity.data.map((x) => ServiceModel.fromEntity(x))),
       pagination: PaginationModel.fromEntity(entity.pagination),
     );
   }
@@ -38,8 +43,8 @@ class GetAllservicesModel {
     );
   }
 }
-class DataModel {
 
+class ServiceModel {
   final String title;
   final String? description;
   final String serviceCenterId;
@@ -50,20 +55,20 @@ class DataModel {
   final String createdAt;
   final String updatedAt;
 
-  DataModel._({
+  ServiceModel._({
     required this.title,
     this.description,
     required this.serviceCenterId,
     required this.definition,
     required this.id,
-     this.createdBy,
-     this.updatedBy,
+    this.createdBy,
+    this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory DataModel.fromJson(Map<String, dynamic> json) {
-    return DataModel._(
+  factory ServiceModel.fromJson(Map<String, dynamic> json) {
+    return ServiceModel._(
       title: json['title'],
       description: json['description'],
       serviceCenterId: json['serviceCenterId'],
@@ -90,8 +95,8 @@ class DataModel {
     return data;
   }
 
-  factory DataModel.fromEntity(Data entity) {
-    return DataModel._(
+  factory ServiceModel.fromEntity(ServiceEntity entity) {
+    return ServiceModel._(
       title: entity.title,
       description: entity.description,
       serviceCenterId: entity.serviceCenterId,
@@ -104,8 +109,8 @@ class DataModel {
     );
   }
 
-  Data toEntity() {
-    return Data.create(
+  ServiceEntity toEntity() {
+    return ServiceEntity.create(
       title: title,
       description: description,
       serviceCenterId: serviceCenterId,
@@ -115,56 +120,6 @@ class DataModel {
       updatedBy: updatedBy,
       createdAt: createdAt,
       updatedAt: updatedAt,
-    );
-  }
-}
-class PaginationModel {
-
-  final int page;
-  final int size;
-  final int totalItems;
-  final int totalPages;
-
-  PaginationModel._({
-    required this.page,
-    required this.size,
-    required this.totalItems,
-    required this.totalPages,
-  });
-
-  factory PaginationModel.fromJson(Map<String, dynamic> json) {
-    return PaginationModel._(
-      page: json['page'],
-      size: json['size'],
-      totalItems: json['totalItems'],
-      totalPages: json['totalPages'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['page'] = page;
-    data['size'] = size;
-    data['totalItems'] = totalItems;
-    data['totalPages'] = totalPages;
-    return data;
-  }
-
-  factory PaginationModel.fromEntity(Pagination entity) {
-    return PaginationModel._(
-      page: entity.page,
-      size: entity.size,
-      totalItems: entity.totalItems,
-      totalPages: entity.totalPages,
-    );
-  }
-
-  Pagination toEntity() {
-    return Pagination.create(
-      page: page,
-      size: size,
-      totalItems: totalItems,
-      totalPages: totalPages,
     );
   }
 }

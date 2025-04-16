@@ -161,13 +161,13 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                           value: vhcle.detail?.driveTrain ?? 'Unknown'),
                     ],
                   ),
-                  Row(
-                    children: [
-                      DetailItem(
-                          title: "Trim",
-                          value: vhcle.detail?.trim ?? 'Unknown'),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     DetailItem(
+                  //         title: "Trim",
+                  //         value: vhcle.detail?.trim ?? 'Unknown'),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

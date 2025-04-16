@@ -1,3 +1,5 @@
+import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
+
 class Vehicle {
   final String garageId;
   final String name;
@@ -60,6 +62,10 @@ class Vehicle {
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
+  }
+
+  VehicleModel toModel() {
+    return VehicleModel.fromEntity(this);
   }
 }
 

@@ -28,6 +28,10 @@ class GarageController extends GetxController {
   final loading = true.obs;
   final vehicleLoading = true.obs;
   final vehicleDeleteLoading = false.obs;
+  final PageController pageController = PageController(
+    viewportFraction: 0.9,
+  );
+  final RxInt currentVehiclePage = 0.obs;
   RxDouble lat = 0.0.obs;
   RxDouble long = 0.0.obs;
   RxString placeName = ''.obs;
@@ -58,6 +62,12 @@ class GarageController extends GetxController {
     if (lastUserId != null) {
       fetchData(lastUserId);
     }
+    pageController.addListener(() {
+      int newPage = pageController.page!.round();
+      if (currentVehiclePage.value != newPage) {
+        currentVehiclePage.value = newPage;
+      }
+    });
   }
 
   // Méthode pour récupérer les données
@@ -173,6 +183,25 @@ class GarageController extends GetxController {
       },
     );
   }
+
+  // Future<void> getVehicleList(String garageId) async {
+  //   vehicleLoading.value = true;
+  //   final result = await _getVehicleListUseCase
+  //       .call(GetVehicleListCommand(garageId: garageId));
+  //   result.fold(
+  //     (e) {
+  //       vehicleLoading.value = false;
+  //       Get.showCustomSnackBar(e.message);
+  //     },
+  //     (response) {
+  //       vehicleList.value = response;
+  //       print("vehicleList.toList()");
+
+  //       update();
+  //       vehicleLoading.value = false;
+  //     },
+  //   );
+  // }
 }
 
 void openDeleteVehicleModal(Vehicle vehicleDetails, Function onConfirm) {

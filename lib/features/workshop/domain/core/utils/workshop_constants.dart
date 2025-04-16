@@ -7,6 +7,7 @@ class WorkshopConstants {
   static const String getsetterPostUri = '/get/set';
   static const String getAllServicesCenterGetUri = '/service-center/list';
   static const String bookAppointmentPostUri = '/appointment';
+  static const String getAllAppointmentsUri = '/appointment/list';
   static const String createdRomeChatPostUri = '/chatroom';
   static const String chatUri =
       'wss://bpi.jappcare.com/api/v1/chat?chatRoomId=';

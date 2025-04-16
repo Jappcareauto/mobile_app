@@ -1,6 +1,8 @@
-class GetAllservices {
+import 'package:jappcare/core/ui/domain/entities/pagination.entity.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_services_model.dart';
 
-  final List<Data> data;
+class GetAllservices {
+  final List<ServiceEntity> data;
   final Pagination pagination;
 
   GetAllservices._({
@@ -18,33 +20,32 @@ class GetAllservices {
       pagination: pagination,
     );
   }
-
 }
-class Data {
 
+class ServiceEntity {
+  final String id;
+  final String createdAt;
+  final String updatedAt;
+  final String? createdBy;
+  final String? updatedBy;
   final String title;
   final String? description;
   final String serviceCenterId;
   final String definition;
-  final String id;
-  final String? createdBy;
-  final String? updatedBy;
-  final String createdAt;
-  final String updatedAt;
 
-  Data._({
+  ServiceEntity._({
     required this.title,
-     this.description,
+    this.description,
     required this.serviceCenterId,
     required this.definition,
     required this.id,
-     this.createdBy,
-     this.updatedBy,
+    this.createdBy,
+    this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory Data.create({
+  factory ServiceEntity.create({
     required title,
     required description,
     required serviceCenterId,
@@ -56,7 +57,7 @@ class Data {
     required updatedAt,
   }) {
     // Add any validation or business logic here
-    return Data._(
+    return ServiceEntity._(
       title: title,
       description: description,
       serviceCenterId: serviceCenterId,
@@ -69,34 +70,7 @@ class Data {
     );
   }
 
-}
-class Pagination {
-
-  final int page;
-  final int size;
-  final int totalItems;
-  final int totalPages;
-
-  Pagination._({
-    required this.page,
-    required this.size,
-    required this.totalItems,
-    required this.totalPages,
-  });
-
-  factory Pagination.create({
-    required page,
-    required size,
-    required totalItems,
-    required totalPages,
-  }) {
-    // Add any validation or business logic here
-    return Pagination._(
-      page: page,
-      size: size,
-      totalItems: totalItems,
-      totalPages: totalPages,
-    );
+  ServiceModel toModel() {
+    return ServiceModel.fromEntity(this);
   }
-
 }

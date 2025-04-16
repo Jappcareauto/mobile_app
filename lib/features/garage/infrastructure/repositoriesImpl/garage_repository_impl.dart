@@ -49,7 +49,7 @@ class GarageRepositoryImpl implements GarageRepository {
       final response = await networkService.post(
           GarageConstants.getVehicleListGetUri,
           body: {"garageId": garageId});
-      return Right((response['data']["data"] as List)
+      return Right((response['data'] as List)
           .map((e) => VehicleModel.fromJson(e).toEntity())
           .toList());
     } on BaseException catch (e) {

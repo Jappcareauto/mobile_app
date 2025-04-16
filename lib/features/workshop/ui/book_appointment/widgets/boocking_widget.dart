@@ -86,7 +86,7 @@ class BookingWidget extends GetView<BookAppointmentController> {
             children: [
               Obx(() => Expanded(
                     child: LocationOption(
-                      label: "At Home",
+                      label: "Home",
                       icon: FluentIcons.home_12_regular,
                       isSelected: controller.selectedLocation.value == "HOME",
                       onTap: () => controller.selectLocation("HOME"),
@@ -95,10 +95,34 @@ class BookingWidget extends GetView<BookAppointmentController> {
               const SizedBox(width: 10),
               Obx(() => Expanded(
                     child: LocationOption(
-                      label: "At the Shop",
+                      label: "Garage",
                       icon: FluentIcons.home_12_regular,
                       isSelected: controller.selectedLocation.value == "GARAGE",
                       onTap: () => controller.selectLocation("GARAGE"),
+                    ),
+                  )),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Obx(() => Expanded(
+                    child: LocationOption(
+                      label: "6..Service center",
+                      icon: FluentIcons.home_12_regular,
+                      isSelected:
+                          controller.selectedLocation.value == "SERVICE_CENTER",
+                      onTap: () => controller.selectLocation("SERVICE_CENTER"),
+                    ),
+                  )),
+              const SizedBox(width: 10),
+              Obx(() => Expanded(
+                    child: LocationOption(
+                      label: "Custom",
+                      icon: FluentIcons.home_12_regular,
+                      isSelected: controller.selectedLocation.value == "CUSTOM",
+                      onTap: () => controller.selectLocation("CUSTOM"),
                     ),
                   )),
             ],

@@ -1,7 +1,6 @@
-import '../../domain/entities/get_vehicul_by_id.dart';
+import '../../domain/entities/get_vehicule_by_id.dart';
 
 class GetVehiculByIdModel {
-
   final String name;
   final String description;
   final String garageId;
@@ -68,7 +67,7 @@ class GetVehiculByIdModel {
     return data;
   }
 
-  factory GetVehiculByIdModel.fromEntity(GetVehiculById entity) {
+  factory GetVehiculByIdModel.fromEntity(VehicleEntity entity) {
     return GetVehiculByIdModel._(
       name: entity.name,
       description: entity.description,
@@ -86,8 +85,8 @@ class GetVehiculByIdModel {
     );
   }
 
-  GetVehiculById toEntity() {
-    return GetVehiculById.create(
+  VehicleEntity toEntity() {
+    return VehicleEntity.create(
       name: name,
       description: description,
       garageId: garageId,
@@ -104,8 +103,8 @@ class GetVehiculByIdModel {
     );
   }
 }
-class DetailModel {
 
+class DetailModel {
   final String make;
   final String model;
   final String year;
@@ -214,8 +213,8 @@ class DetailModel {
     );
   }
 }
-class MediaModel {
 
+class MediaModel {
   final String type;
   final String source;
   final List<ItemsModel> items;
@@ -240,7 +239,8 @@ class MediaModel {
     return MediaModel._(
       type: json['type'],
       source: json['source'],
-      items: List<ItemsModel>.from(json['items'].map((x) => ItemsModel.fromJson(x))),
+      items: List<ItemsModel>.from(
+          json['items'].map((x) => ItemsModel.fromJson(x))),
       id: json['id'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
@@ -266,7 +266,8 @@ class MediaModel {
     return MediaModel._(
       type: entity.type,
       source: entity.source,
-      items: List<ItemsModel>.from(entity.items.map((x) => ItemsModel.fromEntity(x))),
+      items: List<ItemsModel>.from(
+          entity.items.map((x) => ItemsModel.fromEntity(x))),
       id: entity.id,
       createdBy: entity.createdBy,
       updatedBy: entity.updatedBy,
@@ -288,8 +289,8 @@ class MediaModel {
     );
   }
 }
-class ItemsModel {
 
+class ItemsModel {
   final String sourceUrl;
   final String capturedUrl;
   final String type;
