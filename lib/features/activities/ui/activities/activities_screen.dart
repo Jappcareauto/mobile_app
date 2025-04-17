@@ -28,7 +28,7 @@ class ActivitiesScreen extends GetView<ActivitiesController>
         ),
         body: Stack(
           children: [
-            garageController.vehicleList.isEmpty
+            garageController.appointments.isEmpty
                 ? const Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -64,7 +64,7 @@ class ActivitiesScreen extends GetView<ActivitiesController>
                             'haveTabBar': false,
                             'haveTitle': true,
                             'title': 'In Progress Activities',
-                            'status': 'In Progress',
+                            'status': 'IN_PROGRESS',
                             'isHorizontal': true
                           }),
                         //RecentActivitiesWidget

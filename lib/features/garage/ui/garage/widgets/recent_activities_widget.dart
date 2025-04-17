@@ -50,7 +50,7 @@ class RecentActivitiesWidget extends StatelessWidget
                   "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
               time:
                   "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
-              localisation: e.location?.name ?? "unknown",
+              localisation: e.locationType,
               nameCar: e.vehicle?.name ?? "Unknown",
               pathImageCar: e.vehicle?.imageUrl,
               status: e.status ?? "Unknown",
@@ -88,14 +88,14 @@ class RecentActivitiesWidget extends StatelessWidget
             filteredActivities.isNotEmpty
                 ? isHorizontal
                     ? SizedBox(
-                        height: 245,
+                        height: 230,
                         width: MediaQuery.of(context).size.width,
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: filteredActivities.map((activity) {
                             return SizedBox(
                               width:
-                                  330, // Specify a fixed width for each item.
+                                  350, // Specify a fixed width for each item.
                               // margin: const EdgeInsets.all(8.0),
                               child: activity,
                             );
