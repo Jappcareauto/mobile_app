@@ -38,26 +38,25 @@ class RecentActivitiesWidget extends StatelessWidget
       builder: (controller) {
         var filteredActivities = <CarCardWidget>[];
 
-        if (controller.vehicleList.isNotEmpty &&
+        if (controller.appointments.isNotEmpty &&
             controller.myGarage?.location != null) {
-          filteredActivities = controller.vehicleList
-              .map(
-                (e) => CarCardWidget(
-                  latitude: controller.myGarage!.location!.latitude,
-                  longitude: controller.myGarage!.location!.longitude,
-                  date:
-                      "${DateTime.parse(controller.myGarage!.location!.createdAt).year}/${DateTime.parse(controller.myGarage!.location!.createdAt).month.toString().padLeft(2, '0')}/${DateTime.parse(controller.myGarage!.location!.createdAt).day.toString()..toString().padLeft(2, '0')}",
-                  time:
-                      "${DateTime.parse(controller.myGarage!.location!.createdAt).hour.toString().padLeft(2, '0')}:${DateTime.parse(controller.myGarage!.location!.createdAt).minute.toString().padLeft(2, '0')}:${DateTime.parse(controller.myGarage!.location!.createdAt).second.toString().padLeft(2, '0')}",
-                  localisation:
-                      controller.myGarage!.location!.latitude.toString(),
-                  nameCar: e.name,
-                  pathImageCar: e.imageUrl,
-                  status: 'Completed',
-                  onPressed: () => controller.goToAppointmentDetail(e),
-                ),
-              )
-              .toList();
+          filteredActivities = controller.appointments.map((e) {
+            return CarCardWidget(
+              latitude: e.location?.latitude ??
+                  controller.myGarage!.location!.latitude,
+              longitude: e.location?.longitude ??
+                  controller.myGarage!.location!.longitude,
+              date:
+                  "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
+              time:
+                  "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
+              localisation: e.location?.name ?? "unknown",
+              nameCar: e.vehicle?.name ?? "Unknown",
+              pathImageCar: e.vehicle?.imageUrl,
+              status: e.status ?? "Unknown",
+              onPressed: () => controller.goToAppointmentDetail(e),
+            );
+          }).toList();
           if (status != null) {
             filteredActivities =
                 filteredActivities.where((w) => w.status == status).toList();

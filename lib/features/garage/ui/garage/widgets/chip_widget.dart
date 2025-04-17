@@ -14,15 +14,15 @@ class ChipWidget extends StatelessWidget {
     Color chipColor;
     Color chipTextColor;
 
-    if (status == 'In Progress') {
-      chipColor = AppColors.orange.withOpacity(.1);
+    if (status == 'IN_PROGRESS') {
+      chipColor = Color(0xFFFFEDE6);
       chipTextColor = AppColors.orange;
-    } else if (status == 'Completed') {
-      chipColor = AppColors.green.withOpacity(.1);
+    } else if (status == 'COMPLETED') {
+      chipColor = AppColors.green.withValues(alpha: .1);
       chipTextColor = Colors.green;
     } else {
-      chipColor = AppColors.green;
-      chipTextColor = Colors.black;
+      chipColor = AppColors.red;
+      chipTextColor = Colors.white;
     }
     return Chip(
       backgroundColor: chipColor,

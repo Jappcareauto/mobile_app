@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 
 import '../core/exceptions/garage_exception.dart';
 import '../entities/get_garage_by_owner_id.dart';
@@ -28,4 +29,16 @@ abstract class GarageRepository {
       String? description);
 
   Future<Either<GarageException, String>> deleteVehicle(String id);
+
+  Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments(
+      // {
+      // String date,
+      // String locationType,
+      // String note,
+      // String serviceId,
+      // String vehicleId,
+      // String status,
+      // String timeOfDay
+      // }
+      );
 }

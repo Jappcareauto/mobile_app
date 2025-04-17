@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 
 import '../core/exceptions/workshop_exception.dart';
 
@@ -28,18 +27,6 @@ abstract class WorkshopRepository {
       String vehicleId,
       String status,
       String timeOfDay);
-
-  Future<Either<WorkshopException, GetAllAppointments>> getAllAppointments(
-      // {
-      // String date,
-      // String locationType,
-      // String note,
-      // String serviceId,
-      // String vehicleId,
-      // String status,
-      // String timeOfDay
-      // }
-      );
 
   Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(
       String name, List<String> participantUserIds);

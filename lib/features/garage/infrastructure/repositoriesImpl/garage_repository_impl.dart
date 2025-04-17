@@ -1,4 +1,7 @@
 //Don't translate me
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_appointments_model.dart';
+
 import '../../domain/repositories/garage_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
 
@@ -51,6 +54,20 @@ class GarageRepositoryImpl implements GarageRepository {
           body: {"garageId": garageId});
       return Right((response['data'] as List)
           .map((e) => VehicleModel.fromJson(e).toEntity())
+          .toList());
+    } on BaseException catch (e) {
+      return Left(GarageException(e.message));
+    }
+  }
+
+  @override
+  Future<Either<GarageException, List<AppointmentEntity>>>
+      getAllAppointments() async {
+    try {
+      final response = await networkService
+          .post(GarageConstants.getAllAppointmentsUri, body: {});
+      return Right((response["data"] as List)
+          .map((e) => AppointmentModel.fromJson(e).toEntity())
           .toList());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));

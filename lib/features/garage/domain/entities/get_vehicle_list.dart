@@ -1,7 +1,7 @@
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
 
 class Vehicle {
-  final String garageId;
+  final String? garageId;
   final String name;
   final String? imageUrl;
   final String? description;
@@ -16,7 +16,7 @@ class Vehicle {
   final String updatedAt;
 
   Vehicle._({
-    required this.garageId,
+    this.garageId,
     required this.name,
     this.description,
     this.imageUrl,
@@ -32,7 +32,7 @@ class Vehicle {
   });
 
   factory Vehicle.create({
-    required garageId,
+    garageId,
     required name,
     String? imgUrl,
     description,

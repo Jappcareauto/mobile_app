@@ -47,7 +47,7 @@ class GetAllservicesModel {
 class ServiceModel {
   final String title;
   final String? description;
-  final String serviceCenterId;
+  final String? serviceCenterId;
   final String definition;
   final String id;
   final String? createdBy;
@@ -58,7 +58,7 @@ class ServiceModel {
   ServiceModel._({
     required this.title,
     this.description,
-    required this.serviceCenterId,
+    this.serviceCenterId,
     required this.definition,
     required this.id,
     this.createdBy,

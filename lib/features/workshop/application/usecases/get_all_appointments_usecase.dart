@@ -1,24 +1,16 @@
 //Don't translate me
-import '../command/book_appointment_command.dart';
+import 'package:jappcare/features/garage/domain/core/exceptions/garage_exception.dart';
+import 'package:jappcare/features/garage/domain/repositories/garage_repository.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+
 import 'package:dartz/dartz.dart';
-import '../../domain/core/exceptions/workshop_exception.dart';
-import '../../domain/repositories/workshop_repository.dart';
-import '../../domain/entities/book_appointment.dart';
 
 class GetAllAppointmentsUsecase {
-  final WorkshopRepository repository;
+  final GarageRepository repository;
 
   GetAllAppointmentsUsecase(this.repository);
 
-  Future<Either<WorkshopException, BookAppointment>> call(
-      BookAppointmentCommand command) async {
-    return await repository.bookAppointment(
-        command.date,
-        command.locationType,
-        command.note,
-        command.serviceId,
-        command.vehicleId,
-        command.status,
-        command.timeOfDay);
+  Future<Either<GarageException, List<AppointmentEntity>>> call() {
+    return repository.getAllAppointments();
   }
 }

@@ -1,8 +1,6 @@
 //Don't translate me
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
-import 'package:jappcare/features/workshop/infrastructure/models/get_all_appointments_model.dart';
 
 import '../../domain/repositories/workshop_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
@@ -56,18 +54,6 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       final response = await networkService
           .post(WorkshopConstants.getAllservicesGetUri, body: {});
       return Right(GetAllservicesModel.fromJson(response).toEntity());
-    } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
-    }
-  }
-
-  @override
-  Future<Either<WorkshopException, GetAllAppointments>>
-      getAllAppointments() async {
-    try {
-      final response = await networkService
-          .post(WorkshopConstants.getAllAppointmentsUri, body: {});
-      return Right(GetAllAppointmentsModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }

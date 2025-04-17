@@ -1,7 +1,7 @@
 import '../../domain/entities/get_vehicle_list.dart';
 
 class VehicleModel {
-  final String garageId;
+  final String? garageId;
   final String name;
   final String? imageUrl;
   final String? description;
@@ -16,7 +16,7 @@ class VehicleModel {
   final List<MediaModel?>? media;
 
   VehicleModel._({
-    required this.garageId,
+    this.garageId,
     required this.name,
     this.imageUrl,
     this.description,

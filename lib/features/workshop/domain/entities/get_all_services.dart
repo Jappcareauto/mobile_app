@@ -30,13 +30,13 @@ class ServiceEntity {
   final String? updatedBy;
   final String title;
   final String? description;
-  final String serviceCenterId;
+  final String? serviceCenterId;
   final String definition;
 
   ServiceEntity._({
     required this.title,
     this.description,
-    required this.serviceCenterId,
+    this.serviceCenterId,
     required this.definition,
     required this.id,
     this.createdBy,
@@ -48,7 +48,7 @@ class ServiceEntity {
   factory ServiceEntity.create({
     required title,
     required description,
-    required serviceCenterId,
+    serviceCenterId,
     required definition,
     required id,
     required createdBy,
