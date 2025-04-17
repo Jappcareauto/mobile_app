@@ -80,8 +80,17 @@ class RecentActivitiesWidget extends StatelessWidget
               Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: CustomTabBar(
-                  labels: const ["All", "Ongoing", "Completed"],
-                  onTabSelected: (index) {},
+                  labels: controller.statusFilters,
+                  onTabSelected: (index) {
+                    if (controller.statusFilters[index] == "All") {
+                      controller.selectedAppointStatusFilter.value = "";
+                    } else if (controller.statusFilters[index] == "Ongoing") {
+                      controller.selectedAppointStatusFilter.value = "Ongoing";
+                    } else if (controller.statusFilters[index] == "Completed") {
+                      controller.selectedAppointStatusFilter.value =
+                          "Completed";
+                    }
+                  },
                 ),
               ),
             if (haveTabBar) const SizedBox(height: 20),

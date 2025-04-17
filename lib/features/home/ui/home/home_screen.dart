@@ -110,7 +110,7 @@ class HomeScreen extends GetView<HomeController> {
                     'haveTabBar': false,
                     'haveTitle': true,
                     'title': 'Upcoming Activities',
-                    'status': 'Completed',
+                    'status': 'NOT_STARTED',
                     'isHorizontal': true,
                     'noActivitiesPlaceholder':
                         'You have no upcoming activities at the moment'

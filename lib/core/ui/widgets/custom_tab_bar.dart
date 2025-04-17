@@ -7,7 +7,8 @@ class CustomTabBar extends StatefulWidget {
   final Color? unselectedColor;
   final ValueChanged<int> onTabSelected;
 
-  const CustomTabBar({super.key, 
+  const CustomTabBar({
+    super.key,
     required this.labels,
     this.selectedColor,
     this.unselectedColor,
@@ -15,7 +16,7 @@ class CustomTabBar extends StatefulWidget {
   });
 
   @override
-  _CustomTabBarState createState() => _CustomTabBarState();
+  State<CustomTabBar> createState() => _CustomTabBarState();
 }
 
 class _CustomTabBarState extends State<CustomTabBar> {
@@ -37,7 +38,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
             color: isSelected
                 ? (widget.selectedColor ?? Get.theme.primaryColor)
                 : (widget.unselectedColor ??
-                    Get.theme.primaryColor.withOpacity(.1)),
+                    Get.theme.primaryColor.withValues(alpha: .1)),
             borderRadius: BorderRadius.circular(20),
           ),
           child: GestureDetector(

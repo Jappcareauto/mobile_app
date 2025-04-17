@@ -26,6 +26,7 @@ class GarageController extends GetxController {
   final GetVehicleListUseCase _getVehicleListUseCase;
   final DeleteVehicleUseCase _deleteVehicleUseCase = Get.find();
   final GetAllAppointmentsUsecase _getAllAppointmentsUsecase = Get.find();
+  final List<String> statusFilters = <String>["All", "Ongoing", "Completed"];
 
   final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
   final loading = true.obs;
@@ -34,6 +35,7 @@ class GarageController extends GetxController {
   final PageController pageController = PageController(
     viewportFraction: 0.9,
   );
+  final selectedAppointStatusFilter = ''.obs;
   final RxInt currentVehiclePage = 0.obs;
   RxDouble lat = 0.0.obs;
   RxDouble long = 0.0.obs;
@@ -62,10 +64,15 @@ class GarageController extends GetxController {
     final lastUserId =
         Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
     // print(lastUserId);
-    print("lastUserId");
     if (lastUserId != null) {
       fetchData(lastUserId);
     }
+    ever(selectedAppointStatusFilter, (value) {
+      print("Enter");
+      if (value != "") {
+        getAllAppointments();
+      }
+    });
     pageController.addListener(() {
       int newPage = pageController.page!.round();
       if (currentVehiclePage.value != newPage) {
@@ -81,7 +88,6 @@ class GarageController extends GetxController {
 
     try {
       await getGarageByOwnerId(userId);
-      print('donner rafrechie');
     } catch (e) {
       print("Erreur lors de la récupération des données : $e");
     } finally {
@@ -99,7 +105,6 @@ class GarageController extends GetxController {
   }
 
   void goToVehicleDetails(Vehicle vehicleDetails) {
-    print("vehicleDetails");
     _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails,
         arguments: vehicleDetails);
   }
@@ -110,11 +115,9 @@ class GarageController extends GetxController {
   }
 
   Future<void> deleteVehicle(String id) async {
-    print("tried a log");
     vehicleDeleteLoading.value = true;
     final result =
         await _deleteVehicleUseCase.call(DeleteVehicleCommand(id: id));
-    print(result);
     result.fold(
       (e) {
         vehicleDeleteLoading.value = false;
@@ -139,7 +142,6 @@ class GarageController extends GetxController {
     loading.value = true;
     final result = await _getGarageByOwnerIdUseCase
         .call(GetGarageByOwnerIdCommand(userId: userId));
-    print(result);
     result.fold(
       (e) {
         loading.value = false;
@@ -181,8 +183,6 @@ class GarageController extends GetxController {
       },
       (response) {
         vehicleList.value = response;
-        print("vehicleList.toList()");
-
         update();
         vehicleLoading.value = false;
       },
@@ -202,7 +202,6 @@ class GarageController extends GetxController {
       (response) {
         loading.value = false;
         appointments.value = response;
-        print(response);
       },
     );
   }
@@ -232,7 +231,6 @@ void openDeleteVehicleModal(Vehicle vehicleDetails, Function onConfirm) {
           child: Wrap(
             children: [
               DeleteVehicleWidget(onConfirm: () {
-                print("pressed");
                 onConfirm();
               }),
             ],
