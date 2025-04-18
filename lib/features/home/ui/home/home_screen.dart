@@ -5,6 +5,7 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/app_bar_with_salutation.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:jappcare/features/home/ui/dashboard/controllers/dashboard_controller.dart';
 import 'package:jappcare/features/home/ui/home/widgets/dismiss_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/tip_modal_bottom.dart';
@@ -17,6 +18,9 @@ class HomeScreen extends GetView<HomeController> {
   final GarageController garageController =
       Get.put(GarageController(Get.find(), Get.find()));
 
+  final DashboardController dashboardController =
+      Get.find<DashboardController>();
+
   HomeScreen({super.key});
 
   @override
@@ -28,7 +32,7 @@ class HomeScreen extends GetView<HomeController> {
             [const AppBarWithAvatarAndSalutation()],
         body: RefreshIndicator(
           onRefresh: controller.refreshData,
-          color: const Color(0xFFFB7C37),
+          color: Get.theme.primaryColor,
           strokeWidth: 3.0,
           backgroundColor: AppColors.white,
           child: SingleChildScrollView(
@@ -37,12 +41,11 @@ class HomeScreen extends GetView<HomeController> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
+                    spacing: 10,
                     children: [
                       if (controller.notifications.isNotEmpty) ...[
-                        const SizedBox(
-                          height: 20,
-                        ),
                         Column(
+                          spacing: 10,
                           children: controller.notifications
                               .asMap()
                               .entries
@@ -61,7 +64,7 @@ class HomeScreen extends GetView<HomeController> {
                               },
                               child: NotificationWidget(
                                 haveTitle: true,
-                                textSize: 16,
+                                textSize: 14,
                                 backgrounColor: const Color(0xFFFFEDE6),
                                 title: "Notification",
                                 bodyText: notification,
@@ -98,18 +101,21 @@ class HomeScreen extends GetView<HomeController> {
                       print("clique");
                     },
                   }),
-                // const SizedBox(height: 20),
                 if (Get.isRegistered<FeatureWidgetInterface>(
-                    tag: 'RecentActivitiesWidget'))
+                    tag: 'RecentActivitiesWidget')) ...[
+                  const SizedBox(height: 20),
                   Get.find<FeatureWidgetInterface>(
                           tag: 'RecentActivitiesWidget')
                       .buildView({
                     'haveTabBar': false,
                     'haveTitle': true,
                     'title': 'Upcoming Activities',
-                    'status': 'Completed',
-                    'isHorizontal': false
+                    'status': 'NOT_STARTED',
+                    'isHorizontal': true,
+                    'noActivitiesPlaceholder':
+                        'You have no upcoming activities at the moment'
                   }),
+                ],
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -127,7 +133,8 @@ class HomeScreen extends GetView<HomeController> {
                               imagePath: AppImages.service,
                               onTap: () {
                                 // controller.goToVehicleFinder();
-                                controller.goToVehicleFinder();
+                                dashboardController.onItemTapped(2);
+                                // controller.goToVehicleFinder();
                               },
                             ),
                           ),

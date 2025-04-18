@@ -79,94 +79,100 @@ class ListVehicleWidget extends StatelessWidget
                       ? const MyGarageNameShimmer()
                       : Text(
                           title,
-                          style: Get.textTheme.bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                          style: Get.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         );
                 }),
               ),
             if (haveTitle) const SizedBox(height: 10),
             SizedBox(
-              height: 190,
-              child: PageView.builder(
-                controller: pageController,
-                itemCount: vehiclesToDisplay.length +
-                    (haveAddVehicule == true ? 1 : 0),
-                onPageChanged: (index) {
-                  currentPage?.value = index;
-                  if (index < vehiclesToDisplay.length && onSelected != null) {
-                    onSelected!(vehiclesToDisplay[index]);
-                  }
-                },
-                itemBuilder: (context, index) {
-                  if (haveAddVehicule == true &&
-                      index == vehiclesToDisplay.length) {
-                    return GestureDetector(
-                      onTap: controller.goToAddVehicle,
-                      child: Container(
-                        height: 200,
-                        // margin: const EdgeInsets.only(right: 12),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          color: Colors.white,
-                          border: Border.all(
-                            color: const Color(0xFFFB7C37),
-                            width: 1.3,
+                height: 190,
+                child: PageView.builder(
+                  controller: pageController,
+                  itemCount: vehiclesToDisplay.length +
+                      (haveAddVehicule == true ? 1 : 0),
+                  onPageChanged: (index) {
+                    currentPage?.value = index;
+                    if (index < vehiclesToDisplay.length &&
+                        onSelected != null) {
+                      onSelected!(vehiclesToDisplay[index]);
+                    }
+                  },
+                  itemBuilder: (context, index) {
+                    if (haveAddVehicule == true &&
+                        index == vehiclesToDisplay.length) {
+                      return GestureDetector(
+                        onTap: controller.goToAddVehicle,
+                        child: Container(
+                          height: 200,
+                          // margin: const EdgeInsets.only(right: 12),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Get.theme.primaryColor,
+                              width: 1.3,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '+ Add Vehicle',
+                              style: TextStyle(
+                                  color: Get.theme.primaryColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400),
+                            ),
                           ),
                         ),
-                        child: const Center(
-                          child: Text(
-                            '+ Add Vehicle',
-                            style: TextStyle(
-                                color: Color(0xFFFB7C37),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
+                      );
+                    }
 
-                  var vehicle = vehiclesToDisplay[index];
-                  // final  interiorMedia = vehicle.media.firstWhere(
-                  //       (media) => media.type == "INTERIOR",
-                  //   orElse: () => vehicle.media.isNotEmpty ? vehicle.media.first : null,
-                  // );
-                  return CarCardAddVehicle(
-                    key: ValueKey(vehicle),
-                    haveBGColor: false,
-                    hideblure: true,
-                    showDelete: showDelete,
-                    haveBorder: currentPage?.value == index,
-                    containerheight: 200,
-                    onPressed: () {
-                      controller.goToVehicleDetails(vehicle);
-                    },
-                    next: () {
-                      if (index == (vehiclesToDisplay.length - 1) &&
-                          !haveAddVehicule!) {
-                        pageController?.jumpToPage(0);
-                      } else {
-                        pageController?.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    },
-                    delete: () {
-                      controller.openDeleteVehicle(vehicle);
-                    },
-                    carName: vehicle.detail?.model ?? '',
-                    carDetails: [
-                      vehicle.detail?.year ?? "Unknown",
-                      vehicle.detail?.make ?? "Unknown"
-                    ],
-                    imagePath: vehicle.media?[2]?.sourceUrl ?? '',
-                    imageUrl: vehicle.media?[2]?.sourceUrl ?? '',
-                  );
-                },
-              ),
-            )
+                    print(vehiclesToDisplay.length);
+
+                    var vehicle = vehiclesToDisplay[index];
+                    // final  interiorMedia = vehicle.media.firstWhere(
+                    //       (media) => media.type == "INTERIOR",
+                    //   orElse: () => vehicle.media.isNotEmpty ? vehicle.media.first : null,
+                    // );
+                    final haveBorder =
+                        currentPage?.value == index ? true : false;
+                    return CarCardAddVehicle(
+                      key: ValueKey(vehicle),
+                      haveBGColor: false,
+                      hideblure: true,
+                      showDelete: showDelete,
+                      haveBorder: haveBorder,
+                      containerheight: 200,
+                      onPressed: () => controller.goToVehicleDetails(vehicle),
+                      next: () {
+                        if (index == (vehiclesToDisplay.length - 1) &&
+                            !haveAddVehicule!) {
+                          pageController?.jumpToPage(0);
+                        } else {
+                          pageController?.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        }
+                      },
+                      delete: () {
+                        controller.openDeleteVehicle(vehicle);
+                      },
+                      carName: vehicle.detail?.model ?? '',
+                      carDetails: [
+                        vehicle.detail?.year ?? "Unknown",
+                        vehicle.detail?.make ?? "Unknown"
+                      ],
+                      imagePath:
+                          vehicle.media != null && vehicle.media!.isNotEmpty
+                              ? vehicle.media![0]?.sourceUrl ?? ""
+                              : '',
+                      imageUrl: vehicle.imageUrl,
+                    );
+                  },
+                ))
           ],
         );
       },

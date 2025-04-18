@@ -8,6 +8,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/garage/ui/garage/widgets/chip_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/notification_widget.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/controllers/appointment_details_controller.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/widgets/expendend_container_widget.dart';
@@ -22,9 +23,10 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
   // final ConfirmeAppointmentController confirmAppointment = Get.put(ConfirmeAppointmentController(Get.find()));
   @override
   Widget build(BuildContext context) {
-    final vhcle = controller.vehicleModel;
+    final appointment = controller.appointment;
     return Scaffold(
       appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: 'Appointment\nDetails',
         actions: [
           if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
@@ -44,12 +46,13 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("${vhcle.detail!.make} ${vhcle.detail!.model}",
-                          style: const TextStyle(
+                      Text(
+                          "${appointment.vehicle?.detail?.make} ${appointment.vehicle?.detail?.model}",
+                          style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 22,
-                              color: Color(0xFFFB7C37))),
-                      Text("${vhcle.detail!.year}"),
+                              color: Get.theme.primaryColor)),
+                      Text("${appointment.vehicle?.detail?.year}"),
                     ],
                   )
                 ],
@@ -57,10 +60,11 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
               const SizedBox(
                 height: 20,
               ),
-              ImageComponent(
-                // assetPath: AppImages.carWhite,
-                imageUrl: vhcle.media![0]!.sourceUrl,
-              ),
+              if (appointment.vehicle?.imageUrl != null)
+                ImageComponent(
+                  // assetPath: AppImages.carWhite,
+                  imageUrl: appointment.vehicle?.imageUrl,
+                ),
               NotificationWidget(
                   backgrounColor: Get.theme.primaryColor.withValues(alpha: .2),
                   bodyText:
@@ -68,47 +72,50 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                   coloriage: Get.theme.primaryColor,
                   icon: FluentIcons.alert_12_regular,
                   title: 'Notification'),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 20,
                 children: [
-                  const Align(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 5,
-                        ),
-                        CircleAvatar(
-                          backgroundImage: AssetImage(AppImages.avatar),
-                        ),
-                        SizedBox(width: 5),
-                        Text('Japtech AutoShop'),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 5,
+                      ),
+                      CircleAvatar(
+                        backgroundImage: AssetImage(AppImages.avatar),
+                      ),
+                      SizedBox(width: 5),
+                      Text('Japtech AutoShop'),
+                    ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        color: Get.theme.primaryColor.withValues(alpha: .2)),
-                    child: Text(
-                      'In Progress',
-                      style: TextStyle(color: Get.theme.primaryColor),
-                    ),
-                  )
+                  Flexible(
+                      child:
+                          ChipWidget(status: appointment.status ?? "Unknown")),
+                  // Container(
+                  //   padding:
+                  //       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  //   decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(30),
+                  //       color: Get.theme.primaryColor.withValues(alpha: .2)),
+                  //   child: Text(
+                  //     'In Progress',
+                  //     style: TextStyle(color: Get.theme.primaryColor),
+                  //   ),
+                  // )
                 ],
               ),
               const SizedBox(
                 height: 20,
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'General Maintenance appointment',
+                    "${appointment.service?.description}",
                     style: TextStyle(
                         color: AppColors.orange,
                         fontWeight: FontWeight.w600,
@@ -119,26 +126,37 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
               const SizedBox(
                 height: 20,
               ),
-              Row(children: [
-                const Icon(
-                  FluentIcons.calendar_3_day_20_regular,
-                ),
-                Text(
-                  DateFormat('EEE, MMM dd, yyyy')
-                      .format(bookController.selectedDate.value),
-                  // Format personnalisé
-                  style: const TextStyle(
-                    fontSize: 14,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 20,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(
+                        FluentIcons.calendar_3_day_20_regular,
+                      ),
+                      Text(
+                        DateFormat('EEE, MMM dd, yyyy')
+                            .format(DateTime.parse(appointment.date)),
+                        // Format personnalisé
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(width: 40),
-                const Icon(
-                  FluentIcons.location_12_regular,
-                ),
-                Text(bookController.selectedLocation.value,
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w300))
-              ]),
+                  Row(
+                    children: [
+                      const Icon(
+                        FluentIcons.location_12_regular,
+                      ),
+                      Text(appointment.locationType,
+                          style: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w300))
+                    ],
+                  ),
+                ],
+              ),
               const SizedBox(
                 height: 20,
               ),

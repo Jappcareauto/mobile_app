@@ -10,7 +10,7 @@ class ListVehicleShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-        baseColor: Colors.grey.withOpacity(.5),
+        baseColor: Colors.grey.withValues(alpha: .5),
         highlightColor: Colors.white,
         child: SizedBox(
           height: 190,

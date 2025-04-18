@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
+import 'package:jappcare/features/workshop/application/usecases/get_all_appointments_usecase.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import '../../../application/usecases/delete_vehicle_usecase.dart';
 import '../../../application/usecases/delete_vehicle_command.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_command.dart';
@@ -23,11 +25,19 @@ import '../widgets/delete_vehicle_widget.dart';
 class GarageController extends GetxController {
   final GetVehicleListUseCase _getVehicleListUseCase;
   final DeleteVehicleUseCase _deleteVehicleUseCase = Get.find();
+  final GetAllAppointmentsUsecase _getAllAppointmentsUsecase = Get.find();
+  final List<String> statusFilters = <String>["All", "Ongoing", "Completed"];
 
   final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
   final loading = true.obs;
-  final vehicleLoading = true.obs;
+  final vehicleLoading = false.obs;
+  final appointmentsLoading = true.obs;
   final vehicleDeleteLoading = false.obs;
+  final PageController pageController = PageController(
+    viewportFraction: 0.9,
+  );
+  final selectedAppointStatusFilter = ''.obs;
+  final RxInt currentVehiclePage = 0.obs;
   RxDouble lat = 0.0.obs;
   RxDouble long = 0.0.obs;
   RxString placeName = ''.obs;
@@ -39,6 +49,7 @@ class GarageController extends GetxController {
   GetGarageByOwnerId? myGarage;
 
   RxList<Vehicle> vehicleList = <Vehicle>[].obs;
+  RxList<AppointmentEntity> appointments = <AppointmentEntity>[].obs;
 
   @override
   void onInit() {
@@ -54,10 +65,21 @@ class GarageController extends GetxController {
     final lastUserId =
         Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
     // print(lastUserId);
-    print("lastUserId");
     if (lastUserId != null) {
       fetchData(lastUserId);
     }
+    ever(selectedAppointStatusFilter, (value) {
+      print("Enter");
+      if (value != "") {
+        getAllAppointments();
+      }
+    });
+    pageController.addListener(() {
+      int newPage = pageController.page!.round();
+      if (currentVehiclePage.value != newPage) {
+        currentVehiclePage.value = newPage;
+      }
+    });
   }
 
   // Méthode pour récupérer les données
@@ -67,7 +89,6 @@ class GarageController extends GetxController {
 
     try {
       await getGarageByOwnerId(userId);
-      print('donner rafrechie');
     } catch (e) {
       print("Erreur lors de la récupération des données : $e");
     } finally {
@@ -89,24 +110,23 @@ class GarageController extends GetxController {
         arguments: vehicleDetails);
   }
 
-  void goToAppointmentDetail(Vehicle appointmentDetails) {
+  void goToAppointmentDetail(AppointmentEntity appointmentDetails) {
     _appNavigation.toNamed(AppRoutes.appointmentDetails,
         arguments: appointmentDetails);
   }
 
   Future<void> deleteVehicle(String id) async {
-    print("tried a log");
     vehicleDeleteLoading.value = true;
     final result =
         await _deleteVehicleUseCase.call(DeleteVehicleCommand(id: id));
-    print(result);
     result.fold(
       (e) {
         vehicleDeleteLoading.value = false;
         Get.showCustomSnackBar(e.message);
       },
       (success) {
-        loading.value = false;
+        vehicleDeleteLoading.value = false;
+        Get.back();
         Get.find<GarageController>()
             .getVehicleList(Get.find<GarageController>().myGarage!.id);
       },
@@ -123,7 +143,6 @@ class GarageController extends GetxController {
     loading.value = true;
     final result = await _getGarageByOwnerIdUseCase
         .call(GetGarageByOwnerIdCommand(userId: userId));
-    print(result);
     result.fold(
       (e) {
         loading.value = false;
@@ -132,6 +151,7 @@ class GarageController extends GetxController {
       (success) {
         myGarage = success;
         getVehicleList(myGarage!.id);
+        getAllAppointments();
         Get.find<AppEventService>()
             .emit<String>(AppConstants.garageIdEvent, myGarage!.id);
         update();
@@ -164,10 +184,25 @@ class GarageController extends GetxController {
       },
       (response) {
         vehicleList.value = response;
-        print("vehicleList.toList()");
-
         update();
         vehicleLoading.value = false;
+      },
+    );
+  }
+
+  Future<void> getAllAppointments() async {
+    appointmentsLoading.value = true;
+    final result = await _getAllAppointmentsUsecase.call();
+    result.fold(
+      (e) {
+        appointmentsLoading.value = false;
+        if (Get.context != null) {
+          Get.showCustomSnackBar(e.message);
+        }
+      },
+      (response) {
+        appointmentsLoading.value = false;
+        appointments.value = response;
       },
     );
   }
@@ -197,7 +232,6 @@ void openDeleteVehicleModal(Vehicle vehicleDetails, Function onConfirm) {
           child: Wrap(
             children: [
               DeleteVehicleWidget(onConfirm: () {
-                print("pressed");
                 onConfirm();
               }),
             ],

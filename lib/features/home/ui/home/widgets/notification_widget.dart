@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jappcare/core/utils/app_colors.dart';
 
 class NotificationWidget extends StatelessWidget {
   const NotificationWidget(
@@ -28,7 +27,6 @@ class NotificationWidget extends StatelessWidget {
         color: backgrounColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      margin: const EdgeInsets.only(bottom: 10),
       child: Column(
         children: [
           const SizedBox(
@@ -37,7 +35,7 @@ class NotificationWidget extends StatelessWidget {
           InkWell(
             onTap: onTap,
             child: ListTile(
-              contentPadding: const EdgeInsets.only(left: 20, right: 20),
+              contentPadding: const EdgeInsets.only(left: 16, right: 16),
               title: haveTitle == true
                   ? Row(
                       children: [

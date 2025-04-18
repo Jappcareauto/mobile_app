@@ -99,28 +99,30 @@ class PaymentMethodeWidget extends StatelessWidget {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 10,
                   children: [
-                    CustomButton(
-                      text: 'Cancel',
-                      onPressed: () {
-                        Get.back();
-                      },
-                      haveBorder: true,
-                      strech: false,
-                      width: 160,
+                    Expanded(
+                      child: CustomButton(
+                        text: 'Cancel',
+                        onPressed: () {
+                          Get.back();
+                        },
+                        haveBorder: true,
+                        strech: false,
+                        width: 160,
+                      ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    CustomButton(
-                      text: 'Confirm',
-                      onPressed: () {
-                        chatController.goToAddPaymentMethodForm(
-                            chatController.selectedMethod.value);
-                        print('cliked');
-                      },
-                      strech: false,
-                      width: 160,
+                    Expanded(
+                      child: CustomButton(
+                        text: 'Confirm',
+                        onPressed: () {
+                          chatController.goToAddPaymentMethodForm(
+                              chatController.selectedMethod.value);
+                          print('cliked');
+                        },
+                        strech: false,
+                        width: 160,
+                      ),
                     ),
                   ],
                 )

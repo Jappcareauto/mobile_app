@@ -4,17 +4,18 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_allservices.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 
 class TabsListWidgets extends StatelessWidget {
   final List<String> tabs;
 
   final RxInt selectedFilter;
   late RxString selectedTabs;
-  final List<Data>? data;
+  final List<ServiceEntity>? data;
   final BorderRadius borderRadius;
   final bool haveBorder;
-  final Function(Data selectCar)? onSelected;
+  final Function(ServiceEntity selectCar)? onSelected;
+  final bool? canSelect;
   TabsListWidgets(
       {super.key,
       required this.tabs,
@@ -22,8 +23,10 @@ class TabsListWidgets extends StatelessWidget {
       this.onSelected,
       required this.selectedFilter,
       required this.selectedTabs,
+      this.canSelect,
       required this.borderRadius,
       required this.haveBorder});
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -34,11 +37,13 @@ class TabsListWidgets extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        spacing: 10,
         children: List.generate(tabs.length, (index) {
           return Obx(() {
             final category = tabs[index];
             return GestureDetector(
               onTap: () {
+                if (canSelect == null || !canSelect!) return;
                 selectedFilter.value = index;
                 selectedTabs.value = category;
                 onSelected!(data![index]);
@@ -55,7 +60,7 @@ class TabsListWidgets extends StatelessWidget {
                       : AppColors.secondary,
                   border: Border.all(
                       color: selectedFilter.value == index
-                          ? const Color(0xFFFB7C37)
+                          ? AppColors.primary
                           : const Color(0xFFFFEDE6),
                       width: 1.5),
                   borderRadius: borderRadius,

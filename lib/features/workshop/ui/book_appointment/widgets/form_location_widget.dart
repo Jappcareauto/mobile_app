@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/validators.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
@@ -15,7 +16,7 @@ class FormLocationWidget extends GetView<BookAppointmentController> {
       child: Column(
         children: [
           CustomFormField(
-            focusedBorderColor: AppColors.greyText.withOpacity(.1),
+            focusedBorderColor: AppColors.greyText.withValues(alpha: .1),
             // filColor: AppColors.white,
             validator: Validators.requiredField,
             hintText: 'Search for a place',
@@ -23,11 +24,26 @@ class FormLocationWidget extends GetView<BookAppointmentController> {
             controller: controller.locationController,
           ),
           const SizedBox(
+            height: 10,
+          ),
+          Obx(() {
+            return Column(
+              children: controller.placePredictions
+                  .map((p) => ListTile(
+                        title: Text(p.description),
+                        onTap: () {
+                          controller.getPlaceDetails(p.placeId);
+                        },
+                      ))
+                  .toList(),
+            );
+          }),
+          const SizedBox(
             height: 20,
           ),
           CustomFormField(
             controller: controller.noteController,
-            focusedBorderColor: AppColors.greyText.withOpacity(.1),
+            focusedBorderColor: AppColors.greyText.withValues(alpha: .1),
             filColor: AppColors.white,
             maxLine: 7,
             hintText: 'Add a Note (Optional)',

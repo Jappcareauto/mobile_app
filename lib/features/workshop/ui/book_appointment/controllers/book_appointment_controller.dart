@@ -14,12 +14,15 @@ import 'package:jappcare/features/garage/domain/entities/get_garage_by_owner_id.
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
+import 'package:jappcare/features/workshop/application/usecases/get_place_autocomplete_usecase.dart';
+import 'package:jappcare/features/workshop/application/usecases/get_place_details_usecase.dart';
+import 'package:jappcare/features/workshop/domain/entities/place_prediction.dart';
+import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class BookAppointmentController extends GetxController{
-
-  final AppNavigation _appNavigation ;
+class BookAppointmentController extends GetxController {
+  final AppNavigation _appNavigation;
   var selectedDate = DateTime.now().obs;
   var selectedYear = DateTime.now().year.obs; // Année actuelle
   var selectedMonth = DateTime.now().month.obs; // Mois actuel
@@ -32,14 +35,24 @@ class BookAppointmentController extends GetxController{
   final TextEditingController locationController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   final GetGarageByOwnerIdUseCase _getGarageByOwnerIdUseCase = Get.find();
+  final GetPlaceDetailsUseCase _getPlaceDetailsUseCase = Get.find();
+  final GetPlaceAutocompleteUsecase _getPlaceAutocompleteUseCase = Get.find();
+
   final loading = true.obs;
   final vehicleLoading = true.obs;
-  final vehicleId = ''.obs ;
-  final vehicleVin = ''.obs ;
+  final vehicleId = ''.obs;
+  final vehicleVin = ''.obs;
   GetGarageByOwnerId? myGarage;
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<Vehicle> vehicleList = [];
+
+  // late FormHelper bookAppointmentFormHelper;
+
+  RxString placeInput = "".obs;
+  RxList<PlacePrediction> placePredictions = <PlacePrediction>[].obs;
+  late final PlaceDetails placeDetails;
+
   RxString selectedLocation = "GARAGE".obs;
   var images = [
     AppImages.shopCar,
@@ -49,7 +62,7 @@ class BookAppointmentController extends GetxController{
     viewportFraction: 0.9,
   );
   final RxInt currentPage = 0.obs;
-    BookAppointmentController(this._appNavigation);
+  BookAppointmentController(this._appNavigation);
   @override
   void onInit() {
     super.onInit();
@@ -60,6 +73,20 @@ class BookAppointmentController extends GetxController{
         pageController.jumpToPage(0); // Forcer le positionnement à la page 0
       }
     });
+
+    debounce(placeInput, (value) {
+      if (value.isNotEmpty) {
+        getPlaceAutocomplete(value);
+      } else {
+        placePredictions.value = [];
+      }
+    }, time: const Duration(milliseconds: 500));
+
+    // Listen for VIN input changes
+    locationController.addListener(() {
+      placeInput.value = locationController.text;
+    });
+
     pageController.addListener(() {
       int newPage = pageController.page!.round();
       if (currentPage.value != newPage) {
@@ -69,7 +96,6 @@ class BookAppointmentController extends GetxController{
         print(currentPage.value);
       }
     });
-
   }
 
   @override
@@ -78,13 +104,14 @@ class BookAppointmentController extends GetxController{
     super.dispose();
   }
 
-
   void selectDate(DateTime date) {
     selectedDate.value = date;
   }
+
   void selectMonth(int month) {
     selectedMonth.value = month; // Mise à jour du mois sélectionné
   }
+
   void selectTime(String time) {
     selectedTime.value = time;
   }
@@ -92,19 +119,28 @@ class BookAppointmentController extends GetxController{
   void selectLocation(String location) {
     selectedLocation.value = location;
   }
-  void gotToConfirmAppointment () {
+
+  void gotToConfirmAppointment() {
     _appNavigation.toNamed(WorkshopPrivateRoutes.confirmappointment);
     globalControllerWorkshop.addMultipleData({
       "currentPage": currentPage,
-      "selectedDate":selectedDate.value,
-      "selectedLocation" : selectedLocation.value,
-      "noteController" :noteController.text,
-      "vehiculeId": vehicleId.value ,
-      "selectedTime":selectedTime.value
+      "selectedDate": selectedDate.value,
+      "selectedLocation": selectedLocation.value,
+      "noteController": noteController.text,
+      "vehiculeId": vehicleId.value,
+      "selectedTime": selectedTime.value
     });
-    globalControllerWorkshop.addMultipleImages(selectedImages);
-
+    globalControllerWorkshop.setImages(selectedImages);
   }
+
+  void removeImageFromGallery(File index) {
+    if (selectedImages.isNotEmpty) {
+      // Si des images sont sélectionnées, convertir chaque image en File et les ajouter à une liste
+      selectedImages.value =
+          selectedImages.where((file) => file.uri != index.uri).toList();
+    }
+  }
+
   Future<void> selectImagesFromGallery() async {
     final List<XFile> pickedFiles = await _picker
         .pickMultiImage(); // Utilisation de pickMultiImage pour plusieurs images
@@ -117,17 +153,17 @@ class BookAppointmentController extends GetxController{
       print('Aucune image sélectionnée.');
     }
   }
-  Future<void> getGarageByOwnerId(String userId) async {
 
+  Future<void> getGarageByOwnerId(String userId) async {
     loading.value = true;
     final result = await _getGarageByOwnerIdUseCase
         .call(GetGarageByOwnerIdCommand(userId: userId));
     result.fold(
-          (e) {
+      (e) {
         loading.value = false;
         Get.showCustomSnackBar(e.message);
       },
-          (success) {
+      (success) {
         myGarage = success;
         getVehicleList(myGarage!.id);
         Get.find<AppEventService>()
@@ -137,22 +173,54 @@ class BookAppointmentController extends GetxController{
       },
     );
   }
+
   Future<void> getVehicleList(String garageId) async {
     vehicleLoading.value = true;
     final result = await _getVehicleListUseCase
         .call(GetVehicleListCommand(garageId: garageId));
     result.fold(
-          (e) {
+      (e) {
         vehicleLoading.value = false;
         Get.showCustomSnackBar(e.message);
       },
-          (response) {
+      (response) {
         vehicleList = response;
         print("vehicleList.toList()");
 
         print(response);
         update();
         vehicleLoading.value = false;
+      },
+    );
+  }
+
+  Future<void> getPlaceDetails(String placeId) async {
+    // loading.value = true;
+    final result = await _getPlaceDetailsUseCase.call(placeId);
+    result.fold(
+      (e) {
+        loading.value = false;
+        Get.showCustomSnackBar(e.message);
+      },
+      (success) {
+        placeDetails = success;
+        update();
+        // loading.value = false;
+      },
+    );
+  }
+
+  Future<void> getPlaceAutocomplete(String input) async {
+    // loading.value = true;
+    final result = await _getPlaceAutocompleteUseCase.call(input);
+    result.fold(
+      (e) {
+        loading.value = false;
+        Get.showCustomSnackBar(e.message);
+      },
+      (success) {
+        placePredictions.value = success;
+        // loading.value = false;
       },
     );
   }

@@ -9,7 +9,8 @@ class GarageConstants {
   static const String addVehiclePostUri = '/vehicle';
   static const String deleteVehicleUri = '/vehicle';
   static const String updateVehicleUri = '/vehicle';
-  static const String googlePlcaeUri =
+  static const String getAllAppointmentsUri = '/appointment/list';
+  static const String googlePlaceUri =
       "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
   static const String apiKey = "AIzaSyBy9Mq91oGtmrw1jKiRrDvKWwGpQgtzt3I";
 }

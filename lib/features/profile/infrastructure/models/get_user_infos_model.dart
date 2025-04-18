@@ -1,7 +1,6 @@
 import '../../domain/entities/get_user_infos.dart';
 
 class GetUserInfosModel {
-
   final String name;
   final String email;
   final String? image;
@@ -29,7 +28,8 @@ class GetUserInfosModel {
       name: json['name'],
       email: json['email'],
       image: json['profileImageUrl'],
-      verified: json['verified'],
+      // verified: json['verified'],
+      verified: true,
       id: json['id'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
@@ -42,13 +42,23 @@ class GetUserInfosModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['email'] = email;
-    if (image != null) { data['profileImageUrl'] = image; }
+    if (image != null) {
+      data['profileImageUrl'] = image;
+    }
     data['verified'] = verified;
     data['id'] = id;
-    if (createdBy != null) { data['createdBy'] = createdBy; }
-    if (updatedBy != null) { data['updatedBy'] = updatedBy; }
-    if (createdAt != null) { data['createdAt'] = createdAt; }
-    if (updatedAt != null) { data['updatedAt'] = updatedAt; }
+    if (createdBy != null) {
+      data['createdBy'] = createdBy;
+    }
+    if (updatedBy != null) {
+      data['updatedBy'] = updatedBy;
+    }
+    if (createdAt != null) {
+      data['createdAt'] = createdAt;
+    }
+    if (updatedAt != null) {
+      data['updatedAt'] = updatedAt;
+    }
     return data;
   }
 

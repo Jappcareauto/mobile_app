@@ -15,19 +15,19 @@ class CarCardAddVehicle extends StatelessWidget {
   final Function()? onPressed;
   final Function()? next;
   final Function()? delete;
-  final bool haveBorder;
   final bool? isSelected;
   final bool? showDelete;
   final bool hideblure;
   final bool haveBGColor;
+  final bool haveBorder;
 
   final double? containerheight;
   const CarCardAddVehicle({
     super.key,
     this.next,
+    required this.haveBorder,
     this.delete,
     this.imageUrl,
-    required this.haveBorder,
     this.containerheight,
     this.showDelete,
     required this.hideblure,
@@ -62,9 +62,10 @@ class CarCardAddVehicle extends StatelessWidget {
             children: [
               ImageComponent(
                 assetPath: imageUrl == null ? imagePath : "",
-                // imageUrl: imageUrl,
-                imageUrl:
+                imageUrl: imageUrl ??
                     "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
+                // imageUrl:
+                //     "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
                 width: 250,
                 height: 120,
               ),
@@ -73,7 +74,7 @@ class CarCardAddVehicle extends StatelessWidget {
                 left: 8,
                 right: 0,
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
+                  width: Get.width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -84,8 +85,9 @@ class CarCardAddVehicle extends StatelessWidget {
                             "${carDetails[1]} $carName",
                             style: TextStyle(
                               fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: haveBGColor ? Colors.white : Colors.black,
+                              color: haveBGColor
+                                  ? Colors.white
+                                  : Get.theme.primaryColor,
                             ),
                           ),
                           Text(
@@ -99,7 +101,8 @@ class CarCardAddVehicle extends StatelessWidget {
                         ],
                       ),
                       if (showDelete == true) ...{
-                        Ink(
+                        Flexible(
+                            child: Ink(
                           color: Colors.grey,
                           child: InkWell(
                             borderRadius: BorderRadius.circular(24),
@@ -114,7 +117,7 @@ class CarCardAddVehicle extends StatelessWidget {
                               ),
                             ),
                           ),
-                        )
+                        ))
                       },
                     ],
                   ),

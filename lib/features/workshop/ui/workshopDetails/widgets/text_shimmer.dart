@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -7,8 +6,8 @@ class TextShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Shimmer.fromColors(
-      baseColor: Colors.grey.withOpacity(.5),
+    return Shimmer.fromColors(
+      baseColor: Colors.grey.withValues(alpha: .5),
       highlightColor: Colors.white,
       child: Container(
         width: 150,
@@ -17,5 +16,4 @@ class TextShimmer extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -13,54 +13,61 @@ class EditProfileScreen extends GetView<EditProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Edit Profile", canBack: true),
+      appBar: CustomAppBar(
+        title: "Edit Profile",
+        canBack: true,
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+      ),
       body: SingleChildScrollView(
-          child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Form(
-            child: Column(
-          children: [
-             const AvatarWidget(size: 100, canEdit: true),
-            const SizedBox(height: 20),
-            CustomFormField(
-              controller: controller.editProfileFormHelper.controllers['name'],
-              label: "Name",
-              hintText: "Ex. John",
-              validator: controller.editProfileFormHelper.validators['name'],
-            ),
-            const SizedBox(height: 10),
-            CustomFormField(
-              controller: controller.editProfileFormHelper.controllers['email'],
-              label: "Email",
-              hintText: "Ex. jOq5i@example.com",
-              keyboardType: TextInputType.emailAddress,
-              validator: controller.editProfileFormHelper.validators['email'],
-            ),
-            const SizedBox(height: 10),
-            CustomFormField(
-              controller:
-                  controller.editProfileFormHelper.controllers['address'],
-              label: "Address",
-              validator: controller.editProfileFormHelper.validators['address'],
-              hintText: "Ex. 123 Main St, Anytown, USA",
-              keyboardType: TextInputType.streetAddress,
-            ),
-            const SizedBox(height: 10),
-            CustomPhoneFormField(
-              controller:
-                  controller.editProfileFormHelper.controllers['phoneNumber'],
-              label: "Phone Number",
-              hintText: "Ex. 123456789",
-              validator:
-                  controller.editProfileFormHelper.validators['phoneNumber'],
-            ),
-            const SizedBox(height: 20),
-            CustomButton(
-                text: "Save",
-                onPressed: controller.editProfileFormHelper.submit),
-          ],
-        )),
-      )),
+          child: Column(
+            children: [
+              const AvatarWidget(size: 100, canEdit: true),
+              const SizedBox(height: 20),
+              CustomFormField(
+                controller:
+                    controller.editProfileFormHelper.controllers['name'],
+                label: "Name",
+                hintText: "Ex. John",
+                validator: controller.editProfileFormHelper.validators['name'],
+              ),
+              const SizedBox(height: 10),
+              CustomFormField(
+                controller:
+                    controller.editProfileFormHelper.controllers['email'],
+                label: "Email",
+                hintText: "Ex. jOq5i@example.com",
+                keyboardType: TextInputType.emailAddress,
+                validator: controller.editProfileFormHelper.validators['email'],
+              ),
+              const SizedBox(height: 10),
+              CustomFormField(
+                controller:
+                    controller.editProfileFormHelper.controllers['address'],
+                label: "Address",
+                validator:
+                    controller.editProfileFormHelper.validators['address'],
+                hintText: "Ex. 123 Main St, Anytown, USA",
+                keyboardType: TextInputType.streetAddress,
+              ),
+              const SizedBox(height: 10),
+              CustomPhoneFormField(
+                controller:
+                    controller.editProfileFormHelper.controllers['phoneNumber'],
+                label: "Phone Number",
+                hintText: "Ex. 123456789",
+                validator:
+                    controller.editProfileFormHelper.validators['phoneNumber'],
+              ),
+              const SizedBox(height: 20),
+              CustomButton(
+                  text: "Save",
+                  onPressed: controller.editProfileFormHelper.submit),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

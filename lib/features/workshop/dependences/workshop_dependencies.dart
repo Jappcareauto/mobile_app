@@ -20,31 +20,44 @@ import '../infrastructure/repositoriesImpl/workshop_repository_impl.dart';
 
 import '../application/usecases/get_all_services_center_usecase.dart';
 
-import '../application/usecases/get_allservices_usecase.dart';
+import '../application/usecases/get_all_services_usecase.dart';
+import '../application/usecases/get_place_autocomplete_usecase.dart';
+import '../application/usecases/get_place_details_usecase.dart';
 
 class WorkshopDependencies {
   static void init() {
-    Get.lazyPut<WorkshopRepository>(() => WorkshopRepositoryImpl(networkService: Get.find()), fenix: true);
-    Get.lazyPut<FeatureWidgetInterface>(() => const WorkshopScreen(),tag: 'WorkshopScreen', fenix: true);
-    Get.lazyPut<BookAppointmentController>  (() =>BookAppointmentController(Get.find()));
+    Get.lazyPut<WorkshopRepository>(
+        () => WorkshopRepositoryImpl(networkService: Get.find()),
+        fenix: true);
+    Get.lazyPut<FeatureWidgetInterface>(() => const WorkshopScreen(),
+        tag: 'WorkshopScreen', fenix: true);
+    Get.lazyPut<BookAppointmentController>(
+        () => BookAppointmentController(Get.find()));
     Get.lazyPut<AutoShopController>(() => AutoShopController(Get.find()));
-    Get.lazyPut<ServicesLocatorController>(() => ServicesLocatorController(Get.find()));
-    Get.lazyPut<WorkshopController>(() => WorkshopController(Get.find(),));
-    Get.lazyPut<ConfirmeAppointmentController>(() => ConfirmeAppointmentController(Get.find()));
-    Get.lazyPut<WorkshopDetailsController>(() => WorkshopDetailsController(Get.find()));
+    Get.lazyPut<ServicesLocatorController>(
+        () => ServicesLocatorController(Get.find()));
+    Get.lazyPut<WorkshopController>(() => WorkshopController(
+          Get.find(),
+        ));
+    Get.lazyPut<ConfirmeAppointmentController>(
+        () => ConfirmeAppointmentController(Get.find()));
+    Get.lazyPut<WorkshopDetailsController>(
+        () => WorkshopDetailsController(Get.find()));
     Get.lazyPut<ChatController>(() => ChatController(Get.find()));
     Get.lazyPut<PayWithCardController>(() => PayWithCardController(Get.find()));
-    Get.lazyPut<PayWithPhoneController>(() => PayWithPhoneController(Get.find()));
-    Get.lazyPut<SuccessPaymentController>(() => SuccessPaymentController(Get.find()));
-    Get.lazyPut<AppointmentDetailsController>(() => AppointmentDetailsController(Get.find()));
+    Get.lazyPut<PayWithPhoneController>(
+        () => PayWithPhoneController(Get.find()));
+    Get.lazyPut<SuccessPaymentController>(
+        () => SuccessPaymentController(Get.find()));
+    Get.lazyPut<AppointmentDetailsController>(
+        () => AppointmentDetailsController(Get.find()));
     Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);
     Get.lazyPut<MapController>(() => MapController(Get.find()));
-    Get.lazyPut(()=>BookAppointmentUseCase(Get.find()));
+    Get.lazyPut(() => BookAppointmentUseCase(Get.find()));
     Get.lazyPut<GlobalcontrollerWorkshop>(() => GlobalcontrollerWorkshop());
     // Get.put(WorkshopController(Get.find<AppNavigation>(), Get.find<GetAllServicesCenter>()));
-      Get.lazyPut(() => GetAllservicesUseCase(Get.find()), fenix: true);
-}
-
-
-
+    Get.lazyPut(() => GetAllservicesUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => GetPlaceAutocompleteUsecase(Get.find()), fenix: true);
+    Get.lazyPut(() => GetPlaceDetailsUseCase(Get.find()), fenix: true);
+  }
 }

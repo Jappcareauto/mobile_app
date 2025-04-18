@@ -1,9 +1,12 @@
+import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
+
 class Vehicle {
-  final String garageId;
+  final String? garageId;
   final String name;
   final String? imageUrl;
   final String? description;
   final String vin;
+  final String registrationNumber;
   final Detail? detail;
   final String id;
   final List<Media?>? media;
@@ -13,11 +16,12 @@ class Vehicle {
   final String updatedAt;
 
   Vehicle._({
-    required this.garageId,
+    this.garageId,
     required this.name,
     this.description,
     this.imageUrl,
     required this.vin,
+    required this.registrationNumber,
     this.detail,
     required this.id,
     this.media,
@@ -28,11 +32,12 @@ class Vehicle {
   });
 
   factory Vehicle.create({
-    required garageId,
+    garageId,
     required name,
     String? imgUrl,
     description,
     required vin,
+    required registrationNumber,
     Detail? detail,
     required id,
     List<Media?>? media,
@@ -48,6 +53,7 @@ class Vehicle {
       imageUrl: imgUrl,
       description: description,
       vin: vin,
+      registrationNumber: registrationNumber,
       detail: detail,
       id: id,
       media: media,
@@ -56,6 +62,10 @@ class Vehicle {
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
+  }
+
+  VehicleModel toModel() {
+    return VehicleModel.fromEntity(this);
   }
 }
 
@@ -69,6 +79,7 @@ class Detail {
   final String? power;
   final String? bodyType;
   final String? vehicleId;
+  final String? vehicleType;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -85,6 +96,7 @@ class Detail {
     this.power,
     this.bodyType,
     this.vehicleId,
+    this.vehicleType,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -102,6 +114,7 @@ class Detail {
     power,
     bodyType,
     vehicleId,
+    vehicleType,
     required id,
     createdBy,
     updatedBy,
@@ -119,6 +132,7 @@ class Detail {
       power: power,
       bodyType: bodyType,
       vehicleId: vehicleId,
+      vehicleType: vehicleType,
       id: id,
       createdBy: createdBy,
       updatedBy: updatedBy,

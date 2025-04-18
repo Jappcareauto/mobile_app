@@ -1,4 +1,7 @@
 //Don't translate me
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_appointments_model.dart';
+
 import '../../domain/repositories/garage_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
 
@@ -31,9 +34,11 @@ class GarageRepositoryImpl implements GarageRepository {
           'garageId': garageId,
           'vin': vin,
           'registrationNumber': registrationNumber,
-          'withMedia': true,
+          'description': "Test description",
+          // 'withMedia': true,
         },
       );
+      print(response);
       return Right(VehicleModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
@@ -47,8 +52,22 @@ class GarageRepositoryImpl implements GarageRepository {
       final response = await networkService.post(
           GarageConstants.getVehicleListGetUri,
           body: {"garageId": garageId});
-      return Right((response['data']["data"] as List)
+      return Right((response['data'] as List)
           .map((e) => VehicleModel.fromJson(e).toEntity())
+          .toList());
+    } on BaseException catch (e) {
+      return Left(GarageException(e.message));
+    }
+  }
+
+  @override
+  Future<Either<GarageException, List<AppointmentEntity>>>
+      getAllAppointments() async {
+    try {
+      final response = await networkService
+          .post(GarageConstants.getAllAppointmentsUri, body: {});
+      return Right((response["data"] as List)
+          .map((e) => AppointmentModel.fromJson(e).toEntity())
           .toList());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
@@ -74,7 +93,7 @@ class GarageRepositoryImpl implements GarageRepository {
   Future<Either<GarageException, String>> getPlaceName(
       double latitude, double longitude) async {
     final url = Uri.parse(
-        "${GarageConstants.googlePlcaeUri}$latitude,$longitude&key=${GarageConstants.apiKey}");
+        "${GarageConstants.googlePlaceUri}$latitude,$longitude&key=${GarageConstants.apiKey}");
 
     try {
       final response = await http.get(url);
@@ -101,7 +120,8 @@ class GarageRepositoryImpl implements GarageRepository {
       final response = await networkService.delete(
         "${GarageConstants.addVehiclePostUri}/$id",
       );
-      return Right(response["data"] as String);
+      print(response);
+      return const Right("Vehicle deleted successfully");
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }
@@ -127,7 +147,7 @@ class GarageRepositoryImpl implements GarageRepository {
           'withMedia': true,
         },
       );
-      return Right(VehicleModel.fromJson(response["data"]).toEntity());
+      return Right(VehicleModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }

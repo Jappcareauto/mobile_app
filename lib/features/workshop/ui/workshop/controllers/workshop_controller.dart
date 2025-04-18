@@ -1,17 +1,18 @@
 import 'dart:async';
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/features/workshop/domain/core/exceptions/workshop_exception.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_allservices.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
-import 'package:jappcare/features/workshop/application/usecases/get_service_center_command.dart';
+import 'package:jappcare/features/workshop/application/command/get_service_center_command.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/utils/getx_extensions.dart';
 import '../../../application/usecases/get_all_services_center_usecase.dart';
-import '../../../application/usecases/get_allservices_usecase.dart';
+import '../../../application/usecases/get_all_services_usecase.dart';
+import '../widgets/workshop_filters.dart';
 
 class WorkshopController extends GetxController {
   final GetAllservicesUseCase _getAllservicesUseCase =
@@ -21,6 +22,11 @@ class WorkshopController extends GetxController {
   final serviceloading = false.obs;
 
   var serviceCenterName = "".obs;
+  var selectedService = (-1).obs;
+  var selectedCategory = "".obs;
+  final selectedCategoryIndex = 0.obs;
+  var servicesId = "".obs;
+
   late FormHelper getServiceCentersFormHelper;
 
   final GetAllServicesCenterUseCase _getAllServicesCenterUseCase = Get.find();
@@ -30,10 +36,6 @@ class WorkshopController extends GetxController {
 
   final AppNavigation _appNavigation;
   WorkshopController(this._appNavigation);
-  var selectedFilter = 0.obs;
-  var selectedCategory = "".obs;
-  final selectedCategoryIndex = 0.obs;
-  var servicesId = "".obs;
 
   String? validateName(String? value) {
     if (value == null || value.isEmpty) {
@@ -48,12 +50,12 @@ class WorkshopController extends GetxController {
     super.onInit();
     getAllservices();
     getAllServicesCenter();
-    ever(services, (serviceModel) {
-      if (serviceModel != null && serviceModel.data.isNotEmpty) {
-        selectedFilter.value = 0;
-        selectedCategory.value = serviceModel.data.first.title ?? "Sans titre";
-      }
-    });
+    // ever(services, (serviceModel) {
+    //   if (serviceModel != null && serviceModel.data.isNotEmpty) {
+    //     selectedFilter.value = 0;
+    //     selectedCategory.value = serviceModel.data.first.title;
+    //   }
+    // });
     getServiceCentersFormHelper =
         FormHelper<WorkshopException, GetAllServicesCenter>(
       fields: {
@@ -84,19 +86,19 @@ class WorkshopController extends GetxController {
           getServiceCentersFormHelper.controllers['name']!.text;
     });
 
-    debounce(serviceCenterName, (value) {
-      if (value.isNotEmpty) {
-        getAllServicesCenter(name: serviceCenterName.value);
-      }
-    }, time: const Duration(seconds: 2));
+    // debounce(serviceCenterName, (value) {
+    //   if (value.isNotEmpty) {
+    //     getAllServicesCenter(name: serviceCenterName.value);
+    //   }
+    // }, time: const Duration(seconds: 2));
 
-    debounce(selectedFilter, (value) {
-      if (value >= 0) {
-        getAllServicesCenter(
-            name: serviceCenterName.value,
-            serviceId: servicesCenter.value?.data[selectedFilter.value].id);
-      }
-    }, time: const Duration(seconds: 1));
+    // debounce(selectedFilter, (value) {
+    //   if (value >= 0) {
+    //     getAllServicesCenter(
+    //         name: serviceCenterName.value,
+    //         serviceId: servicesCenter.value?.data[selectedFilter.value].id);
+    //   }
+    // }, time: const Duration(seconds: 1));
   }
 
   void gotToServicesLocator() {
@@ -107,8 +109,14 @@ class WorkshopController extends GetxController {
     _appNavigation.goBack();
   }
 
-  void goToWorkshopDetails(String name, String description, double latitude,
-      double longitude, String id, bool availability, String? locationName) {
+  void goToWorkshopDetails(
+      {String? name,
+      String? description,
+      double? latitude,
+      double? longitude,
+      required String id,
+      bool? availability,
+      String? locationName}) {
     _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails,
         arguments: services);
     globalControllerWorkshop.addMultipleData({
@@ -117,7 +125,7 @@ class WorkshopController extends GetxController {
       "latitude": latitude,
       "longitude": longitude,
       "locationName": locationName,
-      "servciceId": servicesId.value,
+      "serviceId": servicesId.value,
       "serviceCenterId": id,
       "availability": availability
     });
@@ -142,6 +150,11 @@ class WorkshopController extends GetxController {
     );
   }
 
+  void clearFilters() {
+    serviceCenterName.value = "";
+    selectedService.value = -1;
+  }
+
   Future<void> getAllservices() async {
     serviceloading.value = true;
     final result = await _getAllservicesUseCase.call();
@@ -156,6 +169,47 @@ class WorkshopController extends GetxController {
         serviceloading.value = false;
         services.value = response;
         print(response);
+      },
+    );
+  }
+
+  Future<void> showFiltersDialog() {
+    return showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Filters by research'),
+          content: const WorkshopFilters(),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Get.back(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Clear'),
+              onPressed: () {
+                clearFilters(); // Clear the filters
+                getAllServicesCenter(); // Reload the services
+                Get.back(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Apply'),
+              onPressed: () {
+                print(servicesCenter.value?.data.length);
+                print(selectedService.value);
+                getAllServicesCenter(
+                    name: serviceCenterName.value,
+                    serviceId: selectedService.value != -1
+                        ? services.value?.data[selectedService.value].id
+                        : null);
+                Get.back(); // Close the dialog
+              },
+            ),
+          ],
+        );
       },
     );
   }

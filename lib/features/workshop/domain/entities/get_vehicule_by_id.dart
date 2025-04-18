@@ -1,5 +1,6 @@
-class GetVehiculById {
+// import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
 
+class VehicleEntity {
   final String name;
   final String description;
   final String garageId;
@@ -14,7 +15,7 @@ class GetVehiculById {
   final String createdAt;
   final String updatedAt;
 
-  GetVehiculById._({
+  VehicleEntity._({
     required this.name,
     required this.description,
     required this.garageId,
@@ -30,7 +31,7 @@ class GetVehiculById {
     required this.updatedAt,
   });
 
-  factory GetVehiculById.create({
+  factory VehicleEntity.create({
     required name,
     required description,
     required garageId,
@@ -46,7 +47,7 @@ class GetVehiculById {
     required updatedAt,
   }) {
     // Add any validation or business logic here
-    return GetVehiculById._(
+    return VehicleEntity._(
       name: name,
       description: description,
       garageId: garageId,
@@ -62,10 +63,9 @@ class GetVehiculById {
       updatedAt: updatedAt,
     );
   }
-
 }
-class Detail {
 
+class Detail {
   final String make;
   final String model;
   final String year;
@@ -132,10 +132,9 @@ class Detail {
       updatedAt: updatedAt,
     );
   }
-
 }
-class Media {
 
+class Media {
   final String type;
   final String source;
   final List<Items> items;
@@ -178,10 +177,9 @@ class Media {
       updatedAt: updatedAt,
     );
   }
-
 }
-class Items {
 
+class Items {
   final String sourceUrl;
   final String capturedUrl;
   final String type;
@@ -236,5 +234,4 @@ class Items {
       updatedAt: updatedAt,
     );
   }
-
 }

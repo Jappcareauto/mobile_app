@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
-import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 
 class AppointmentDetailsController extends GetxController {
@@ -8,7 +8,7 @@ class AppointmentDetailsController extends GetxController {
   AppointmentDetailsController(this._appNavigation);
   RxBool isExpanded = true.obs;
   RxBool isExpandedReportDetail = true.obs;
-  late Vehicle vehicleModel;
+  late AppointmentEntity appointment;
   void toggleExpanded() {
     isExpanded.value = !isExpanded.value;
   }
@@ -26,7 +26,7 @@ class AppointmentDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    vehicleModel = Get.arguments;
+    appointment = Get.arguments;
   }
 
   void goToInvoice() {

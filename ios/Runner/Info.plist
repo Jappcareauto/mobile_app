@@ -41,6 +41,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+  	<key>CFBundleTypeRole</key>
+  	<string>Editor</string>
+  	<key>CFBundleURLSchemes</key>
+  	<array>
+  		<string>***IF YOU HAVE FACEBOOK SIGN IN CLIENT ID, TYPE HERE***</string>
+   		<string>com.googleusercontent.apps.***YOUR_CLIENT_ID***</string>
+  	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

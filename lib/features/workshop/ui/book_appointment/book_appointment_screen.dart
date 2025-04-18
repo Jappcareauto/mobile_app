@@ -6,8 +6,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/boocking_widget.dart';
-// import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_osm_widget.dart';
+import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 
@@ -21,91 +20,82 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
     return Scaffold(
         appBar: CustomAppBar(
           title: 'Book Appointment',
+          appBarcolor: Get.theme.scaffoldBackgroundColor,
           actions: [
             if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
               Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
           ],
         ),
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-                child: Form(
-              key: controller.formKey,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  if (Get.isRegistered<FeatureWidgetInterface>(
-                      tag: 'ListVehicleWidget'))
-                    Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
-                        .buildView({
-                      "pageController": controller.pageController,
-                      "currentPage": controller.currentPage,
-                      "haveAddVehicule": false,
-                      "title": "Select Vehicle",
-                      "onSelected": (selectedCar) {
-                        controller.vehicleId.value = selectedCar.id;
-                        controller.vehicleVin.value = selectedCar.vin;
-                        controller.globalControllerWorkshop
-                            .addVehicle(selectedCar);
-                        print(
-                            "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
-                      },
-                    }),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                  child: Form(
+                key: controller.formKey,
+                child: Column(
+                  spacing: 20,
+                  children: [
+                    const SizedBox(
+                      height: 1,
+                    ),
+                    if (Get.isRegistered<FeatureWidgetInterface>(
+                        tag: 'ListVehicleWidget'))
+                      Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+                          .buildView({
+                        "pageController": controller.pageController,
+                        "currentPage": controller.currentPage,
+                        "haveAddVehicule": false,
+                        "title": "Select Vehicle",
+                        "onSelected": (selectedCar) {
+                          controller.vehicleId.value = selectedCar.id;
+                          controller.vehicleVin.value = selectedCar.vin;
+                          controller.globalControllerWorkshop
+                              .addVehicle(selectedCar);
+                          print(
+                              "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
+                        },
+                      }),
 
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ServicesListWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: ServicesListWidget(
+                        canSelect: false,
+                      ),
+                    ),
 
-                  const BookingWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  // CustomMapWidget(),
-                  CustomOSMMapWidget(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const FormLocationWidget(),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  const AddImageWidget(),
-                  // EstimatedInspectionFee(),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    child: CustomButton(
-                        text: 'Continue',
-                        onPressed: () {
-                          if (controller.formKey.currentState?.validate() ??
-                              false) {
-                            controller.gotToConfirmAppointment();
-                          }
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                ],
-              ),
-            )),
-            // Positioned(
-            //     top: MediaQuery
-            //         .of(context)
-            //         .size
-            //         .height * 0.7,
-            //     right: 10,
-            //     child: ChatWidget()
-            // )
-          ],
+                    const BookingWidget(),
+                    CustomMapWidget(),
+                    const FormLocationWidget(),
+
+                    const AddImageWidget(),
+                    // EstimatedInspectionFee(),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomButton(
+                          text: 'Continue',
+                          onPressed: () {
+                            if (controller.formKey.currentState?.validate() ??
+                                false) {
+                              controller.gotToConfirmAppointment();
+                            }
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              )),
+              // Positioned(
+              //     top: MediaQuery
+              //         .of(context)
+              //         .size
+              //         .height * 0.7,
+              //     right: 10,
+              //     child: ChatWidget()
+              // )
+            ],
+          ),
         ));
   }
 }

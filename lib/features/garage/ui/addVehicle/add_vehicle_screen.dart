@@ -13,7 +13,10 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: "Add Vehicle"),
+        appBar: CustomAppBar(
+          title: "Add Vehicle",
+          appBarcolor: Get.theme.scaffoldBackgroundColor,
+        ),
         body: MixinBuilder<AddVehicleController>(
           init: AddVehicleController(Get.find()),
           initState: (_) {},
@@ -58,7 +61,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                                 controller: controller.addVehicleFormHelper
                                     .controllers['registration'],
                                 label: "Vehicle Registration Number",
-                                hintText: "Ex. SV30-0169266",
+                                hintText: "Ex. NW 905 AG",
                                 forceUpperCase: true,
                                 validator: controller.addVehicleFormHelper
                                     .validators['registration'],

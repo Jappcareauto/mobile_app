@@ -28,7 +28,7 @@ class ActivitiesScreen extends GetView<ActivitiesController>
         ),
         body: Stack(
           children: [
-            garageController.vehicleList.isEmpty
+            garageController.appointments.isEmpty
                 ? const Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -64,22 +64,23 @@ class ActivitiesScreen extends GetView<ActivitiesController>
                             'haveTabBar': false,
                             'haveTitle': true,
                             'title': 'In Progress Activities',
-                            'status': 'In Progress',
+                            'status': 'IN_PROGRESS',
                             'isHorizontal': true
                           }),
-                        const SizedBox(height: 20),
                         //RecentActivitiesWidget
                         if (Get.isRegistered<FeatureWidgetInterface>(
-                            tag: 'RecentActivitiesWidget'))
+                            tag: 'RecentActivitiesWidget')) ...[
+                          const SizedBox(height: 40),
                           Get.find<FeatureWidgetInterface>(
                                   tag: 'RecentActivitiesWidget')
                               .buildView(),
+                        ]
                       ],
                     ),
                   ),
             Container(
                 margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * .65,
+                    top: MediaQuery.of(context).size.height * .62,
                     left: MediaQuery.of(context).size.width * .85),
                 child: const ChatWidget())
           ],
