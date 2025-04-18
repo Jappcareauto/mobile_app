@@ -109,7 +109,7 @@ class BookingWidget extends GetView<BookAppointmentController> {
             children: [
               Obx(() => Expanded(
                     child: LocationOption(
-                      label: "6..Service center",
+                      label: "Service center",
                       icon: FluentIcons.home_12_regular,
                       isSelected:
                           controller.selectedLocation.value == "SERVICE_CENTER",

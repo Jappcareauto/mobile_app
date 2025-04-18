@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
+import 'package:jappcare/features/workshop/domain/entities/place_prediction.dart';
 
 import '../core/exceptions/workshop_exception.dart';
 
@@ -44,4 +46,9 @@ abstract class WorkshopRepository {
   Future<Either<WorkshopException, GetAllservices>> getAllservices();
 
   Future<Either<WorkshopException, Vehicle>> getVehiculById(String id);
+
+  Future<Either<WorkshopException, List<PlacePrediction>>> fetchAutocomplete(
+      String input);
+  Future<Either<WorkshopException, PlaceDetails>> fetchPlaceDetails(
+      String placeId);
 }

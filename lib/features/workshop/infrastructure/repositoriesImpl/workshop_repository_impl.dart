@@ -1,6 +1,12 @@
 //Don't translate me
+import 'package:dio/dio.dart';
+import 'package:jappcare/features/garage/domain/core/utils/garage_constants.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
+import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/place_prediction_model.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/place_details_model.dart';
+import 'package:jappcare/features/workshop/domain/entities/place_prediction.dart';
 
 import '../../domain/repositories/workshop_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
@@ -192,6 +198,49 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
         'serviceCenterId': serviceCenterId
       });
       return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(WorkshopException(e.message));
+    }
+  }
+
+  // 1. Autocomplete → gets a list of { description, place_id }
+  @override
+  Future<Either<WorkshopException, List<PlacePrediction>>> fetchAutocomplete(
+      String input) async {
+    final Dio dio = Dio();
+
+    try {
+      final k = GarageConstants.apiKey;
+      final response =
+          await dio.post(WorkshopConstants.googleAutocompleteUri, data: {
+        'input': input,
+        'key': k,
+        'components': 'country:us',
+      });
+      return Right((response.data['predictions'] as List)
+          .map((p) => PlacePredictionModel.fromJson(p).toEntity())
+          .toList());
+    } on BaseException catch (e) {
+      return Left(WorkshopException(e.message));
+    }
+  }
+
+  // 1. Autocomplete → gets a list of { description, place_id }
+  @override
+  Future<Either<WorkshopException, PlaceDetails>> fetchPlaceDetails(
+      String placeId) async {
+    final Dio dio = Dio();
+
+    try {
+      final k = GarageConstants.apiKey;
+      final response =
+          await dio.post(WorkshopConstants.googlePlaceDetailsUri, data: {
+        'place_id': placeId,
+        'key': k,
+        'fields': 'formatted_address,geometry',
+      });
+      return Right(
+          PlaceDetailsModel.fromJson(response.data['result']).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }

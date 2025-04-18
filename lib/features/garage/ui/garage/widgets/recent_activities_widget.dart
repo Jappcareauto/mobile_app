@@ -4,6 +4,7 @@ import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
 
 import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../../../../../core/ui/widgets/custom_tab_bar.dart';
@@ -31,11 +32,13 @@ class RecentActivitiesWidget extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GarageController>(
+    return MixinBuilder<GarageController>(
       init: GarageController(Get.find(), Get.find()),
       autoRemove: false,
-      initState: (_) {},
       builder: (controller) {
+        if (controller.appointmentsLoading.value) {
+          return const ListVehicleShimmer();
+        }
         var filteredActivities = <CarCardWidget>[];
 
         if (controller.appointments.isNotEmpty &&

@@ -6,7 +6,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/boocking_widget.dart';
-// import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
+import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 
@@ -64,7 +64,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                     ),
 
                     const BookingWidget(),
-                    // CustomMapWidget(),
+                    CustomMapWidget(),
                     const FormLocationWidget(),
 
                     const AddImageWidget(),

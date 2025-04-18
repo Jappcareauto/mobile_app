@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/validators.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
@@ -22,6 +23,21 @@ class FormLocationWidget extends GetView<BookAppointmentController> {
             label: 'Location',
             controller: controller.locationController,
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          Obx(() {
+            return Column(
+              children: controller.placePredictions
+                  .map((p) => ListTile(
+                        title: Text(p.description),
+                        onTap: () {
+                          controller.getPlaceDetails(p.placeId);
+                        },
+                      ))
+                  .toList(),
+            );
+          }),
           const SizedBox(
             height: 20,
           ),

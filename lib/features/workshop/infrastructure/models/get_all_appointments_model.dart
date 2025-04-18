@@ -54,6 +54,7 @@ class AppointmentModel {
   final String timeOfDay;
   final String date;
   final String locationType;
+  final String? note;
   final LocationModel? location;
   final ServiceModel? service;
   final VehicleModel? vehicle;
@@ -63,6 +64,7 @@ class AppointmentModel {
     required this.createdAt,
     required this.updatedAt,
     this.status,
+    this.note,
     required this.timeOfDay,
     required this.date,
     required this.locationType,
@@ -77,6 +79,7 @@ class AppointmentModel {
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       status: json['status'],
+      note: json['note'],
       timeOfDay: json['timeOfDay'],
       date: json['date'],
       locationType: json['locationType'],
@@ -98,6 +101,7 @@ class AppointmentModel {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['status'] = status;
+    data['note'] = note;
     data['timeOfDay'] = timeOfDay;
     data['date'] = date;
     data['locationType'] = locationType;
@@ -113,6 +117,7 @@ class AppointmentModel {
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       status: entity.status,
+      note: entity.note,
       timeOfDay: entity.timeOfDay,
       date: entity.date,
       locationType: entity.locationType,
@@ -128,6 +133,7 @@ class AppointmentModel {
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status,
+      note: note,
       timeOfDay: timeOfDay,
       date: date,
       locationType: locationType,

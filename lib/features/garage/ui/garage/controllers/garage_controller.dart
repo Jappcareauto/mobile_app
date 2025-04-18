@@ -30,7 +30,8 @@ class GarageController extends GetxController {
 
   final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
   final loading = true.obs;
-  final vehicleLoading = true.obs;
+  final vehicleLoading = false.obs;
+  final appointmentsLoading = true.obs;
   final vehicleDeleteLoading = false.obs;
   final PageController pageController = PageController(
     viewportFraction: 0.9,
@@ -190,17 +191,17 @@ class GarageController extends GetxController {
   }
 
   Future<void> getAllAppointments() async {
-    loading.value = true;
+    appointmentsLoading.value = true;
     final result = await _getAllAppointmentsUsecase.call();
     result.fold(
       (e) {
-        loading.value = false;
+        appointmentsLoading.value = false;
         if (Get.context != null) {
           Get.showCustomSnackBar(e.message);
         }
       },
       (response) {
-        loading.value = false;
+        appointmentsLoading.value = false;
         appointments.value = response;
       },
     );

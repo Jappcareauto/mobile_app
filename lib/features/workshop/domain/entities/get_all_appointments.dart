@@ -30,6 +30,7 @@ class AppointmentEntity {
   final String createdAt;
   final String updatedAt;
   final String? status;
+  final String? note;
   final String timeOfDay;
   final String date;
   final String locationType;
@@ -42,6 +43,7 @@ class AppointmentEntity {
       required this.createdAt,
       required this.updatedAt,
       this.status,
+      this.note,
       required this.timeOfDay,
       required this.date,
       required this.locationType,
@@ -55,6 +57,7 @@ class AppointmentEntity {
       required createdAt,
       required updatedAt,
       status,
+      note,
       required timeOfDay,
       required date,
       required locationType,
@@ -66,6 +69,7 @@ class AppointmentEntity {
         createdAt: createdAt,
         updatedAt: updatedAt,
         status: status,
+        note: note,
         timeOfDay: timeOfDay,
         date: date,
         locationType: locationType,

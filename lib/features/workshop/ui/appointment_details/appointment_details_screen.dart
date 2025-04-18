@@ -126,26 +126,37 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
               const SizedBox(
                 height: 20,
               ),
-              Row(children: [
-                const Icon(
-                  FluentIcons.calendar_3_day_20_regular,
-                ),
-                Text(
-                  DateFormat('EEE, MMM dd, yyyy')
-                      .format(DateTime.parse(appointment.date)),
-                  // Format personnalisé
-                  style: const TextStyle(
-                    fontSize: 14,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                spacing: 20,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(
+                        FluentIcons.calendar_3_day_20_regular,
+                      ),
+                      Text(
+                        DateFormat('EEE, MMM dd, yyyy')
+                            .format(DateTime.parse(appointment.date)),
+                        // Format personnalisé
+                        style: const TextStyle(
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(width: 40),
-                const Icon(
-                  FluentIcons.location_12_regular,
-                ),
-                Text(appointment.locationType,
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w300))
-              ]),
+                  Row(
+                    children: [
+                      const Icon(
+                        FluentIcons.location_12_regular,
+                      ),
+                      Text(appointment.locationType,
+                          style: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w300))
+                    ],
+                  ),
+                ],
+              ),
               const SizedBox(
                 height: 20,
               ),

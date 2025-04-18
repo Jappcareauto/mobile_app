@@ -14,4 +14,8 @@ class WorkshopConstants {
   static const String sendMessagePostUri = '/chat-message';
   static const String getAllservicesGetUri = '/service/list';
   static const String getVehiculByIdGetUri = '/vehicle/by-owner-id';
+  static const String googleAutocompleteUri =
+      'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+  static const String googlePlaceDetailsUri =
+      'https://maps.googleapis.com/maps/api/place/details/json';
 }

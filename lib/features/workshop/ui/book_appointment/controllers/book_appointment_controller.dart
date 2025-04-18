@@ -14,6 +14,10 @@ import 'package:jappcare/features/garage/domain/entities/get_garage_by_owner_id.
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
+import 'package:jappcare/features/workshop/application/usecases/get_place_autocomplete_usecase.dart';
+import 'package:jappcare/features/workshop/application/usecases/get_place_details_usecase.dart';
+import 'package:jappcare/features/workshop/domain/entities/place_prediction.dart';
+import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -31,6 +35,9 @@ class BookAppointmentController extends GetxController {
   final TextEditingController locationController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   final GetGarageByOwnerIdUseCase _getGarageByOwnerIdUseCase = Get.find();
+  final GetPlaceDetailsUseCase _getPlaceDetailsUseCase = Get.find();
+  final GetPlaceAutocompleteUsecase _getPlaceAutocompleteUseCase = Get.find();
+
   final loading = true.obs;
   final vehicleLoading = true.obs;
   final vehicleId = ''.obs;
@@ -39,6 +46,13 @@ class BookAppointmentController extends GetxController {
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<Vehicle> vehicleList = [];
+
+  // late FormHelper bookAppointmentFormHelper;
+
+  RxString placeInput = "".obs;
+  RxList<PlacePrediction> placePredictions = <PlacePrediction>[].obs;
+  late final PlaceDetails placeDetails;
+
   RxString selectedLocation = "GARAGE".obs;
   var images = [
     AppImages.shopCar,
@@ -59,6 +73,20 @@ class BookAppointmentController extends GetxController {
         pageController.jumpToPage(0); // Forcer le positionnement à la page 0
       }
     });
+
+    debounce(placeInput, (value) {
+      if (value.isNotEmpty) {
+        getPlaceAutocomplete(value);
+      } else {
+        placePredictions.value = [];
+      }
+    }, time: const Duration(milliseconds: 500));
+
+    // Listen for VIN input changes
+    locationController.addListener(() {
+      placeInput.value = locationController.text;
+    });
+
     pageController.addListener(() {
       int newPage = pageController.page!.round();
       if (currentPage.value != newPage) {
@@ -162,6 +190,37 @@ class BookAppointmentController extends GetxController {
         print(response);
         update();
         vehicleLoading.value = false;
+      },
+    );
+  }
+
+  Future<void> getPlaceDetails(String placeId) async {
+    // loading.value = true;
+    final result = await _getPlaceDetailsUseCase.call(placeId);
+    result.fold(
+      (e) {
+        loading.value = false;
+        Get.showCustomSnackBar(e.message);
+      },
+      (success) {
+        placeDetails = success;
+        update();
+        // loading.value = false;
+      },
+    );
+  }
+
+  Future<void> getPlaceAutocomplete(String input) async {
+    // loading.value = true;
+    final result = await _getPlaceAutocompleteUseCase.call(input);
+    result.fold(
+      (e) {
+        loading.value = false;
+        Get.showCustomSnackBar(e.message);
+      },
+      (success) {
+        placePredictions.value = success;
+        // loading.value = false;
       },
     );
   }
