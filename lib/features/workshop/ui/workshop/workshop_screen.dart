@@ -112,7 +112,6 @@ class WorkshopScreen extends GetView<WorkshopController>
                   // ServicesListWidget(),
                   Obx(
                     () {
-                      print(controller.loading.value);
                       return Column(
                         children: controller.loading.value
                             ? [
@@ -154,7 +153,8 @@ class WorkshopScreen extends GetView<WorkshopController>
                                                 serviceCenter.location?.name);
                                       },
                                       child: ServiceItemWidget(
-                                        image: AppImages.shopCar,
+                                        image: serviceCenter.imageUrl ??
+                                            AppImages.shopCar,
                                         title: serviceCenter.name ?? 'Inconnu',
                                         rate: '4.5',
                                         location:

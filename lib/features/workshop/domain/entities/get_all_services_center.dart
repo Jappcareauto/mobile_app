@@ -1,3 +1,8 @@
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
+
+import '../../../../core/ui/domain/entities/pagination.entity.dart';
+import '../../../../core/ui/domain/entities/location.entity.dart';
+
 class GetAllServicesCenter {
   final List<Data> data;
   final Pagination pagination;
@@ -22,7 +27,8 @@ class GetAllServicesCenter {
 class Data {
   final String? name;
   final String? ownerId;
-  final Location? location;
+  final LocationEntity? location;
+  final List<ServiceEntity>? services;
   final String? category;
   final String id;
   final String? createdBy;
@@ -37,6 +43,7 @@ class Data {
   Data._({
     required this.name,
     this.ownerId,
+    this.services,
     required this.location,
     required this.category,
     required this.id,
@@ -53,6 +60,7 @@ class Data {
   factory Data.create(
       {required name,
       required ownerId,
+      required services,
       required location,
       required category,
       required id,
@@ -68,6 +76,7 @@ class Data {
     return Data._(
         name: name,
         ownerId: ownerId,
+        services: services,
         location: location,
         category: category,
         id: id,
@@ -82,80 +91,51 @@ class Data {
   }
 }
 
-class Location {
-  final String name;
-  final double latitude;
-  final double longitude;
-  final String description;
-  final String id;
-  final String createdBy;
-  final String updatedBy;
-  final String createdAt;
-  final String updatedAt;
+// class Location {
+//   final String name;
+//   final double latitude;
+//   final double longitude;
+//   final String description;
+//   final String id;
+//   final String createdBy;
+//   final String updatedBy;
+//   final String createdAt;
+//   final String updatedAt;
 
-  Location._({
-    required this.name,
-    required this.latitude,
-    required this.longitude,
-    required this.description,
-    required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+//   Location._({
+//     required this.name,
+//     required this.latitude,
+//     required this.longitude,
+//     required this.description,
+//     required this.id,
+//     required this.createdBy,
+//     required this.updatedBy,
+//     required this.createdAt,
+//     required this.updatedAt,
+//   });
 
-  factory Location.create({
-    required name,
-    required latitude,
-    required longitude,
-    required description,
-    required id,
-    required createdBy,
-    required updatedBy,
-    required createdAt,
-    required updatedAt,
-  }) {
-    // Add any validation or business logic here
-    return Location._(
-      name: name,
-      latitude: latitude,
-      longitude: longitude,
-      description: description,
-      id: id,
-      createdBy: createdBy,
-      updatedBy: updatedBy,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-    );
-  }
-}
-
-class Pagination {
-  final int page;
-  final int size;
-  final int totalItems;
-  final int totalPages;
-
-  Pagination._({
-    required this.page,
-    required this.size,
-    required this.totalItems,
-    required this.totalPages,
-  });
-
-  factory Pagination.create({
-    required page,
-    required size,
-    required totalItems,
-    required totalPages,
-  }) {
-    // Add any validation or business logic here
-    return Pagination._(
-      page: page,
-      size: size,
-      totalItems: totalItems,
-      totalPages: totalPages,
-    );
-  }
-}
+//   factory Location.create({
+//     required name,
+//     required latitude,
+//     required longitude,
+//     required description,
+//     required id,
+//     required createdBy,
+//     required updatedBy,
+//     required createdAt,
+//     required updatedAt,
+//   }) {
+//     // Add any validation or business logic here
+//     return Location._(
+//       name: name,
+//       latitude: latitude,
+//       longitude: longitude,
+//       description: description,
+//       id: id,
+//       createdBy: createdBy,
+//       updatedBy: updatedBy,
+//       createdAt: createdAt,
+//       updatedAt: updatedAt,
+//     );
+//   }
+// }
