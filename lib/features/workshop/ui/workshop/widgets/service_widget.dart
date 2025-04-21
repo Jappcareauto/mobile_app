@@ -6,7 +6,7 @@ import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 
-class TabsListWidgets extends StatelessWidget {
+class ServiceWidget extends StatelessWidget {
   final List<String> tabs; // List of tabs
   final RxInt selectedFilter; // Selected tab index
   late RxString selectedTabs; // Selected tab
@@ -15,7 +15,7 @@ class TabsListWidgets extends StatelessWidget {
   final bool haveBorder;
   final Function(ServiceEntity selectCar)? onSelected;
   final bool? canSelect;
-  TabsListWidgets(
+  ServiceWidget(
       {super.key,
       required this.tabs,
       this.data,

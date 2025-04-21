@@ -111,6 +111,7 @@ class WorkshopController extends GetxController {
 
   void goToWorkshopDetails(
       {String? name,
+      List<ServiceEntity>? centerServices,
       String? description,
       double? latitude,
       double? longitude,
@@ -118,7 +119,7 @@ class WorkshopController extends GetxController {
       bool? availability,
       String? locationName}) {
     _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails,
-        arguments: services);
+        arguments: centerServices);
     globalControllerWorkshop.addMultipleData({
       "serviceCenterName": name,
       "description": description,
@@ -127,7 +128,8 @@ class WorkshopController extends GetxController {
       "locationName": locationName,
       "serviceId": servicesId.value,
       "serviceCenterId": id,
-      "availability": availability
+      "availability": availability,
+      "centerServices": centerServices
     });
   }
 

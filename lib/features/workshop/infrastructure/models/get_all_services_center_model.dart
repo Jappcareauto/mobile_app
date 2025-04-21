@@ -151,7 +151,7 @@ class DataModel {
   Data toEntity() {
     return Data.create(
       name: name,
-      services: services?.map((e) => e.toEntity()),
+      services: services?.map((e) => e.toEntity()).toList(),
       ownerId: ownerId,
       location: location?.toEntity(),
       category: category,

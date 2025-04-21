@@ -3,15 +3,18 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
+import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/boocking_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
-import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
+// import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
 
 class BookAppointmentScreen extends GetView<BookAppointmentController> {
-  const BookAppointmentScreen({super.key});
+  final globalcontrollerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  BookAppointmentScreen({super.key});
 
   // final GenerateVehiculeReportController generateVehiculeReportController = GenerateVehiculeReportController(Get.find());
 
@@ -57,11 +60,12 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       }),
 
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: ServicesListWidget(
-                        canSelect: false,
-                      ),
-                    ),
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: ServiceCenterServicesListWidget(
+                          services: globalcontrollerWorkshop
+                              .workshopData['centerServices'],
+                          canSelect: false,
+                        )),
 
                     const BookingWidget(),
                     CustomMapWidget(),

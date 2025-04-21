@@ -137,6 +137,8 @@ class WorkshopScreen extends GetView<WorkshopController>
                                         controller.goToWorkshopDetails(
                                             name:
                                                 serviceCenter.name ?? 'Inconnu',
+                                            centerServices:
+                                                serviceCenter.services,
                                             description: serviceCenter
                                                     .location?.description ??
                                                 'Inconnu',

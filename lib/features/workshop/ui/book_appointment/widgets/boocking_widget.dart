@@ -80,9 +80,10 @@ class BookingWidget extends GetView<BookAppointmentController> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: 12,
             children: [
               Obx(() => Expanded(
                     child: LocationOption(
@@ -92,7 +93,6 @@ class BookingWidget extends GetView<BookAppointmentController> {
                       onTap: () => controller.selectLocation("HOME"),
                     ),
                   )),
-              const SizedBox(width: 10),
               Obx(() => Expanded(
                     child: LocationOption(
                       label: "Garage",
@@ -103,9 +103,10 @@ class BookingWidget extends GetView<BookAppointmentController> {
                   )),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            spacing: 12,
             children: [
               Obx(() => Expanded(
                     child: LocationOption(
@@ -116,7 +117,6 @@ class BookingWidget extends GetView<BookAppointmentController> {
                       onTap: () => controller.selectLocation("SERVICE_CENTER"),
                     ),
                   )),
-              const SizedBox(width: 10),
               Obx(() => Expanded(
                     child: LocationOption(
                       label: "Custom",
