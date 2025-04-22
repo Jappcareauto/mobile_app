@@ -198,8 +198,8 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
         'category': category,
         'ownerId': ownerId,
         'serviceCenterId': serviceCenterId,
-        'aroundMe': aroundMe,
-        'availableNow': availableNow
+        // 'aroundMe': aroundMe,
+        // 'availableNow': availableNow
       });
       return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {

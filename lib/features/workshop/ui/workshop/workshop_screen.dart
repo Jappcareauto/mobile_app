@@ -42,6 +42,7 @@ class WorkshopScreen extends GetView<WorkshopController>
                 spacing: 20,
                 children: [
                   Row(
+                    spacing: 10,
                     children: [
                       Expanded(
                         child: Form(
@@ -62,7 +63,6 @@ class WorkshopScreen extends GetView<WorkshopController>
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
                       InkWell(
                         onTap: () => controller.showFiltersDialog(),
                         child: Container(
@@ -103,49 +103,6 @@ class WorkshopScreen extends GetView<WorkshopController>
                           })
                         : const Text('Aucun service disponible'),
                   ),
-                  //   (index) {
-                  //   onSelect?.call(data);
-                  //   // print(
-                  //   //     "L'IDENTIFIANT DU SERVICE SELECTIONNER EST : ${data.id}");
-                  //   // controller.servicesId.value = data.id;
-                  //   // globalControllerWorkshop.addData('serviceId', data.id);
-                  // },
-                  // ServicesListWidget(canSelect: true),
-                  // const SizedBox(height: 10),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(left: 20),
-                  //   child: Row(
-                  //     children: [
-                  //       Container(
-                  //         padding: const EdgeInsets.symmetric(
-                  //             horizontal: 12, vertical: 8),
-                  //         decoration: BoxDecoration(
-                  //             borderRadius: BorderRadius.circular(20),
-                  //             color: Get.theme.primaryColor),
-                  //         child: Text(
-                  //           'Around Me',
-                  //           style: Get.textTheme.bodyMedium?.copyWith(
-                  //               color: Get.theme.scaffoldBackgroundColor),
-                  //         ),
-                  //       ),
-                  //       const SizedBox(width: 10),
-                  //       Container(
-                  //         padding: const EdgeInsets.symmetric(
-                  //             horizontal: 12, vertical: 8),
-                  //         decoration: BoxDecoration(
-                  //             borderRadius: BorderRadius.circular(20),
-                  //             color: Get.theme.primaryColor),
-                  //         child: Text(
-                  //           'Available Now',
-                  //           style: Get.textTheme.bodyMedium?.copyWith(
-                  //               color: Get.theme.scaffoldBackgroundColor),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  // const SizedBox(height: 20),
-                  // ServicesListWidget(),
                   Obx(
                     () {
                       return Column(

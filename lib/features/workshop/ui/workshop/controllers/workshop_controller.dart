@@ -25,8 +25,8 @@ class WorkshopController extends GetxController {
   var selectedCategory = "".obs;
   final selectedCategoryIndex = 0.obs;
   var servicesId = "".obs;
-  var aroundMe = false.obs;
-  var availableNow = false.obs;
+  final aroundMe = false.obs;
+  final availableNow = false.obs;
 
   late FormHelper getServiceCentersFormHelper;
 
@@ -193,30 +193,35 @@ class WorkshopController extends GetxController {
   }
 
   Future<void> showFiltersDialog() {
+    final aroundMeFilter = false.obs;
+    final availableNowFilter = false.obs;
     return showDialog(
       context: Get.context!,
       builder: (BuildContext context) {
+        aroundMeFilter.value = aroundMe.value;
+        availableNowFilter.value = availableNow.value;
+        print("passed");
         return AlertDialog(
           title: const Text('Filters by research'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Wrap(
-                spacing: 10,
-                runSpacing: 5,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      aroundMe.value = !aroundMe.value;
-                    },
-                    child: Obx(() {
-                      return Container(
+          content: Obx(() {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  spacing: 10,
+                  runSpacing: 5,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        aroundMeFilter.value = !aroundMeFilter.value;
+                      },
+                      child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 8),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: aroundMe.value
+                            color: aroundMeFilter.value
                                 ? Get.theme.primaryColor
                                 : Get.theme.unselectedWidgetColor),
                         child: Text(
@@ -224,20 +229,18 @@ class WorkshopController extends GetxController {
                           style: Get.textTheme.bodyMedium?.copyWith(
                               color: Get.theme.scaffoldBackgroundColor),
                         ),
-                      );
-                    }),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      availableNow.value = !availableNow.value;
-                    },
-                    child: Obx(() {
-                      return Container(
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        availableNowFilter.value = !availableNowFilter.value;
+                      },
+                      child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 12, vertical: 8),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: availableNow.value
+                            color: availableNowFilter.value
                                 ? Get.theme.primaryColor
                                 : Get.theme.unselectedWidgetColor),
                         child: Text(
@@ -245,40 +248,44 @@ class WorkshopController extends GetxController {
                           style: Get.textTheme.bodyMedium?.copyWith(
                               color: Get.theme.scaffoldBackgroundColor),
                         ),
-                      );
-                    }),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          }),
           actions: <Widget>[
             TextButton(
               child: const Text('Ok'),
-              onPressed: () {
-                Get.back(); // Dismiss the dialog
-              },
+              onPressed: () => Get.back() // Dismiss the dialog
+              ,
             ),
             TextButton(
               child: const Text('Clear'),
               onPressed: () {
                 aroundMe.value = false;
                 availableNow.value = false; // Close the dialog
-                filterServiceCenters(
-                    input: serviceCenterName.value,
-                    serviceId: selectedService.value,
-                    aroundMe: false,
-                    availableNow: false);
+                if (aroundMe.value || availableNow.value) {
+                  filterServiceCenters(
+                      input: serviceCenterName.value,
+                      serviceId: selectedService.value,
+                      aroundMe: false,
+                      availableNow: false);
+                }
+                Get.back(); // Dismiss the dialog
               },
             ),
             TextButton(
               child: const Text('Apply'),
               onPressed: () {
+                aroundMe.value = aroundMeFilter.value;
+                availableNow.value = availableNowFilter.value;
                 filterServiceCenters(
                     input: serviceCenterName.value,
                     serviceId: selectedService.value,
-                    aroundMe: aroundMe.value,
-                    availableNow: availableNow.value);
+                    aroundMe: aroundMeFilter.value,
+                    availableNow: availableNowFilter.value);
                 Get.back(); // Close the dialog
               },
             ),
