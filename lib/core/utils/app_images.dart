@@ -4,7 +4,7 @@ class AppImages {
   //Images
   static const String noImage = "assets/images/noimage.jpg";
   static const String Actualite = "assets/images/actualite.png";
-static const String commingSoon = "assets/images/commingSoon.png";
+  static const String commingSoon = "assets/images/commingSoon.png";
 
   static const String car1 = "assets/images/car1.png";
   static const String car2 = "assets/images/car2.png";
@@ -18,8 +18,8 @@ static const String commingSoon = "assets/images/commingSoon.png";
   static const String shopCar = "assets/images/body_shop.png";
   static const String cardPayment = "assets/images/card.png";
   static const String momo = "assets/images/momo.png";
-  static const String mapsquare = 'assets/icons/maps-square-01.png' ;
-  static const String processChat = 'assets/images/process_chat.png' ;
+  static const String mapsquare = 'assets/icons/maps-square-01.png';
+  static const String processChat = 'assets/images/process_chat.png';
   static const String avatar = "assets/images/avatar.png";
   static const String mtnLogo = "assets/icons/mtn-logo.png";
   static const String orangeLogo = "assets/icons/orange.png";
@@ -38,12 +38,12 @@ static const String commingSoon = "assets/images/commingSoon.png";
   static const String emergency = "assets/icons/emergency.png";
   static const String carBody = "assets/icons/car_body.png";
   static const String carClean = "assets/icons/car_clean.png";
-  static const String confirmTransaction = "assets/images/confirmtransaction.png";
+  static const String confirmTransaction =
+      "assets/images/confirmtransaction.png";
   static const String recepit = "assets/images/recepit.png";
   static const String boiteLettre = "assets/images/boite_lettre.png";
   static const String charts = "assets/images/charts.png";
   static const String noActivities = "assets/images/noactivities.png";
   static const String money = "assets/icons/money.png";
   static const String card = "assets/icons/card.png";
-
 }

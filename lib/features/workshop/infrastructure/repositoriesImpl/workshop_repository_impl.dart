@@ -188,14 +188,18 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       String? name,
       String? category,
       String? ownerId,
-      String? serviceCenterId) async {
+      String? serviceCenterId,
+      bool? aroundMe,
+      bool? availableNow) async {
     try {
       final response = await networkService
           .post(WorkshopConstants.getAllServicesCenterGetUri, body: {
         'name': name,
         'category': category,
         'ownerId': ownerId,
-        'serviceCenterId': serviceCenterId
+        'serviceCenterId': serviceCenterId,
+        // 'aroundMe': aroundMe,
+        // 'availableNow': availableNow
       });
       return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {

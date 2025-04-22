@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
-import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
-import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
+// import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
+// import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/views/workshop_custom_map_view.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/widgets/text_shimmer.dart';
 import '../widgets/workshop_carrousel.dart';
@@ -12,7 +14,7 @@ import 'package:get/get.dart';
 
 class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
   final globalcontrollerWorkshop = Get.find<GlobalcontrollerWorkshop>();
-  final WorkshopController workshopController = WorkshopController(Get.find());
+  // final WorkshopController workshopController = WorkshopController(Get.find());
 
   WorkshopDetailsScreen({super.key});
   @override
@@ -164,19 +166,39 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                   ],
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.all(20),
+              Padding(
+                padding: const EdgeInsets.all(20),
                 child: Text(
                   globalcontrollerWorkshop.workshopData['description'],
                   style: const TextStyle(
                       fontWeight: FontWeight.w400, fontSize: 16),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: ServicesListWidget(
-                  canSelect: false,
-                ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Specialized Services",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        child: globalcontrollerWorkshop
+                                        .workshopData['centerServices'] !=
+                                    null &&
+                                globalcontrollerWorkshop
+                                    .workshopData['centerServices']!.isNotEmpty
+                            ? ServiceWidget(
+                                tabs: (globalcontrollerWorkshop
+                                        .workshopData['centerServices']
+                                    as List<ServiceEntity>),
+                                borderRadius: BorderRadius.circular(16),
+                              )
+                            : const Text('Aucun service disponible'),
+                      ),
+                    ]),
               ),
               const SizedBox(height: 20),
               const SizedBox(

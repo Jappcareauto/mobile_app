@@ -7,11 +7,10 @@ import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 
 class TabsListWidgets extends StatelessWidget {
-  final List<String> tabs;
-
-  final RxInt selectedFilter;
-  late RxString selectedTabs;
-  final List<ServiceEntity>? data;
+  final List<String> tabs; // List of tabs
+  final RxInt selectedFilter; // Selected tab index
+  late RxString selectedTabs; // Selected tab
+  final List<ServiceEntity>? data; // List of data
   final BorderRadius borderRadius;
   final bool haveBorder;
   final Function(ServiceEntity selectCar)? onSelected;

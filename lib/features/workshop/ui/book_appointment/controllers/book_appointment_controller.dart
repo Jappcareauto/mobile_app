@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jappcare/core/events/app_events_service.dart';
+// import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
-import 'package:jappcare/core/utils/app_constants.dart';
+// import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
-import 'package:jappcare/features/garage/application/usecases/get_garage_by_owner_id_command.dart';
-import 'package:jappcare/features/garage/application/usecases/get_garage_by_owner_id_usecase.dart';
-import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_command.dart';
-import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_usecase.dart';
+// import 'package:jappcare/features/garage/application/usecases/get_garage_by_owner_id_command.dart';
+// import 'package:jappcare/features/garage/application/usecases/get_garage_by_owner_id_usecase.dart';
+// import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_command.dart';
+// import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_usecase.dart';
 import 'package:jappcare/features/garage/domain/entities/get_garage_by_owner_id.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
@@ -30,11 +30,11 @@ class BookAppointmentController extends GetxController {
 
   var selectedImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();
-  final GetVehicleListUseCase _getVehicleListUseCase = Get.find();
   final LocalStorageService _localStorageService = Get.find();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
-  final GetGarageByOwnerIdUseCase _getGarageByOwnerIdUseCase = Get.find();
+  // final GetGarageByOwnerIdUseCase _getGarageByOwnerIdUseCase = Get.find();
+  // final GetVehicleListUseCase _getVehicleListUseCase = Get.find();
   final GetPlaceDetailsUseCase _getPlaceDetailsUseCase = Get.find();
   final GetPlaceAutocompleteUsecase _getPlaceAutocompleteUseCase = Get.find();
 
@@ -49,9 +49,11 @@ class BookAppointmentController extends GetxController {
 
   // late FormHelper bookAppointmentFormHelper;
 
+  // The location state of the form
   RxString placeInput = "".obs;
   RxList<PlacePrediction> placePredictions = <PlacePrediction>[].obs;
   late final PlaceDetails placeDetails;
+  // End on the location state of the form
 
   RxString selectedLocation = "GARAGE".obs;
   var images = [
@@ -154,45 +156,45 @@ class BookAppointmentController extends GetxController {
     }
   }
 
-  Future<void> getGarageByOwnerId(String userId) async {
-    loading.value = true;
-    final result = await _getGarageByOwnerIdUseCase
-        .call(GetGarageByOwnerIdCommand(userId: userId));
-    result.fold(
-      (e) {
-        loading.value = false;
-        Get.showCustomSnackBar(e.message);
-      },
-      (success) {
-        myGarage = success;
-        getVehicleList(myGarage!.id);
-        Get.find<AppEventService>()
-            .emit<String>(AppConstants.garageIdEvent, myGarage!.id);
-        update();
-        loading.value = false;
-      },
-    );
-  }
+  // Future<void> getGarageByOwnerId(String userId) async {
+  //   loading.value = true;
+  //   final result = await _getGarageByOwnerIdUseCase
+  //       .call(GetGarageByOwnerIdCommand(userId: userId));
+  //   result.fold(
+  //     (e) {
+  //       loading.value = false;
+  //       Get.showCustomSnackBar(e.message);
+  //     },
+  //     (success) {
+  //       myGarage = success;
+  //       getVehicleList(myGarage!.id);
+  //       Get.find<AppEventService>()
+  //           .emit<String>(AppConstants.garageIdEvent, myGarage!.id);
+  //       update();
+  //       loading.value = false;
+  //     },
+  //   );
+  // }
 
-  Future<void> getVehicleList(String garageId) async {
-    vehicleLoading.value = true;
-    final result = await _getVehicleListUseCase
-        .call(GetVehicleListCommand(garageId: garageId));
-    result.fold(
-      (e) {
-        vehicleLoading.value = false;
-        Get.showCustomSnackBar(e.message);
-      },
-      (response) {
-        vehicleList = response;
-        print("vehicleList.toList()");
+  // Future<void> getVehicleList(String garageId) async {
+  //   vehicleLoading.value = true;
+  //   final result = await _getVehicleListUseCase
+  //       .call(GetVehicleListCommand(garageId: garageId));
+  //   result.fold(
+  //     (e) {
+  //       vehicleLoading.value = false;
+  //       Get.showCustomSnackBar(e.message);
+  //     },
+  //     (response) {
+  //       vehicleList = response;
+  //       print("vehicleList.toList()");
 
-        print(response);
-        update();
-        vehicleLoading.value = false;
-      },
-    );
-  }
+  //       print(response);
+  //       update();
+  //       vehicleLoading.value = false;
+  //     },
+  //   );
+  // }
 
   Future<void> getPlaceDetails(String placeId) async {
     // loading.value = true;

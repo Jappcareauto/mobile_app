@@ -83,36 +83,35 @@ class CarCardWidget extends GetView<GarageController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 10,
                   children: [
                     Row(
+                      spacing: 8,
                       children: [
                         const Icon(
                           FluentIcons.calendar_ltr_12_regular,
                           color: Colors.grey,
                         ),
-                        const SizedBox(width: 10),
                         Text(date, style: Get.textTheme.bodySmall),
                       ],
                     ),
-                    const SizedBox(height: 10),
                     Row(
+                      spacing: 8,
                       children: [
                         const Icon(
                           FluentIcons.clock_12_regular,
                           color: Colors.grey,
                         ),
-                        const SizedBox(width: 10),
                         Text(time, style: Get.textTheme.bodySmall),
                       ],
                     ),
-                    const SizedBox(height: 10),
                     Row(
+                      spacing: 8,
                       children: [
                         const Icon(
                           FluentIcons.location_12_regular,
                           color: Colors.grey,
                         ),
-                        const SizedBox(width: 10),
                         Text(localisation, style: Get.textTheme.bodySmall),
                       ],
                     ),
@@ -121,14 +120,13 @@ class CarCardWidget extends GetView<GarageController> {
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
+                spacing: 8,
                 children: [
                   ImageComponent(
                     imageUrl: pathImageCar,
                     assetPath: AppImages.car,
-                    width: Get.width * 0.4,
+                    width: Get.width * 0.35,
                   ),
-                  const SizedBox(height: 8),
-                  // Ajout d'un espacement entre l'image et le texte
                   Flexible(
                     fit: FlexFit.loose,
                     child: Text(

@@ -63,7 +63,7 @@ class WorkshopPages implements FeaturePages {
         ),
         GetPage(
             name: WorkshopPrivateRoutes.bookappointment,
-            page: () => const BookAppointmentScreen(),
+            page: () => BookAppointmentScreen(),
             binding: BookAppointmentBinding()),
         GetPage(
             name: WorkshopPrivateRoutes.confirmappointment,
