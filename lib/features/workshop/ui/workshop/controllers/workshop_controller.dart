@@ -12,7 +12,6 @@ import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/utils/getx_extensions.dart';
 import '../../../application/usecases/get_all_services_center_usecase.dart';
 import '../../../application/usecases/get_all_services_usecase.dart';
-import '../widgets/workshop_filters.dart';
 
 class WorkshopController extends GetxController {
   final GetAllservicesUseCase _getAllservicesUseCase =
@@ -26,6 +25,8 @@ class WorkshopController extends GetxController {
   var selectedCategory = "".obs;
   final selectedCategoryIndex = 0.obs;
   var servicesId = "".obs;
+  var aroundMe = false.obs;
+  var availableNow = false.obs;
 
   late FormHelper getServiceCentersFormHelper;
 
@@ -60,12 +61,18 @@ class WorkshopController extends GetxController {
     debounce(serviceCenterName, (value) {
       filterServiceCenters(
           input: value.isNotEmpty ? value : null,
-          serviceId: selectedService.value);
+          serviceId: selectedService.value,
+          aroundMe: aroundMe.value,
+          availableNow: availableNow.value);
     }, time: const Duration(seconds: 2));
 
     debounce(selectedService, (value) {
       if (value >= 0 || value == -1) {
-        filterServiceCenters(input: serviceCenterName.value, serviceId: value);
+        filterServiceCenters(
+            input: serviceCenterName.value,
+            serviceId: value,
+            aroundMe: aroundMe.value,
+            availableNow: availableNow.value);
       }
     }, time: const Duration(seconds: 1));
 
@@ -136,9 +143,9 @@ class WorkshopController extends GetxController {
       {String? input,
       required int serviceId,
       bool? aroundMe,
-      bool? avaiableNow}) {
+      bool? availableNow}) {
     getAllServicesCenter(
-        name: input,
+        name: input != "" ? input : null,
         serviceId: serviceId == -1 ? null : services.value?.data[serviceId].id);
   }
 
@@ -146,14 +153,14 @@ class WorkshopController extends GetxController {
       {String? name,
       String? serviceId,
       bool? aroundMe,
-      bool? avaiableNow}) async {
+      bool? availableNow}) async {
     loading.value = true;
     final result = await _getAllServicesCenterUseCase.call(
         GetServiceCenterCommand(
             name: name,
             serviceCenterId: serviceId,
             aroundMe: aroundMe,
-            availableNow: avaiableNow));
+            availableNow: availableNow));
     result.fold(
       (e) {
         loading.value = false;
@@ -164,14 +171,8 @@ class WorkshopController extends GetxController {
       (response) {
         loading.value = false;
         servicesCenter.value = response;
-        print(response.data);
       },
     );
-  }
-
-  void clearFilters() {
-    serviceCenterName.value = "";
-    selectedService.value = -1;
   }
 
   Future<void> getAllservices() async {
@@ -185,15 +186,8 @@ class WorkshopController extends GetxController {
         }
       },
       (response) {
-        print("called");
         serviceloading.value = false;
         services.value = response;
-        // if (response.data.isNotEmpty) {
-        //   selectedCategory.value = response.data[0].title;
-        //   selectedService.value = 0;
-        // }
-
-        print(response);
       },
     );
   }
@@ -204,7 +198,60 @@ class WorkshopController extends GetxController {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Filters by research'),
-          content: const WorkshopFilters(),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Wrap(
+                spacing: 10,
+                runSpacing: 5,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      aroundMe.value = !aroundMe.value;
+                    },
+                    child: Obx(() {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: aroundMe.value
+                                ? Get.theme.primaryColor
+                                : Get.theme.unselectedWidgetColor),
+                        child: Text(
+                          'Around Me',
+                          style: Get.textTheme.bodyMedium?.copyWith(
+                              color: Get.theme.scaffoldBackgroundColor),
+                        ),
+                      );
+                    }),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      availableNow.value = !availableNow.value;
+                    },
+                    child: Obx(() {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: availableNow.value
+                                ? Get.theme.primaryColor
+                                : Get.theme.unselectedWidgetColor),
+                        child: Text(
+                          'Available Now',
+                          style: Get.textTheme.bodyMedium?.copyWith(
+                              color: Get.theme.scaffoldBackgroundColor),
+                        ),
+                      );
+                    }),
+                  ),
+                ],
+              ),
+            ],
+          ),
           actions: <Widget>[
             TextButton(
               child: const Text('Ok'),
@@ -215,19 +262,23 @@ class WorkshopController extends GetxController {
             TextButton(
               child: const Text('Clear'),
               onPressed: () {
-                clearFilters(); // Clear the filters
-                getAllServicesCenter(); // Reload the services
-                Get.back(); // Close the dialog
+                aroundMe.value = false;
+                availableNow.value = false; // Close the dialog
+                filterServiceCenters(
+                    input: serviceCenterName.value,
+                    serviceId: selectedService.value,
+                    aroundMe: false,
+                    availableNow: false);
               },
             ),
             TextButton(
               child: const Text('Apply'),
               onPressed: () {
-                print(servicesCenter.value?.data.length);
-                print(selectedService.value);
                 filterServiceCenters(
                     input: serviceCenterName.value,
-                    serviceId: selectedService.value);
+                    serviceId: selectedService.value,
+                    aroundMe: aroundMe.value,
+                    availableNow: availableNow.value);
                 Get.back(); // Close the dialog
               },
             ),
