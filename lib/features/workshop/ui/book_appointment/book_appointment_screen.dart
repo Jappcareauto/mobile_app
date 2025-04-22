@@ -10,7 +10,7 @@ import 'package:jappcare/features/workshop/ui/book_appointment/widgets/boocking_
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
-import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
+// import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
 
 class BookAppointmentScreen extends GetView<BookAppointmentController> {
   final globalcontrollerWorkshop = Get.find<GlobalcontrollerWorkshop>();
@@ -59,13 +59,13 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                         },
                       }),
 
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: ServiceCenterServicesListWidget(
-                          services: globalcontrollerWorkshop
-                              .workshopData['centerServices'],
-                          canSelect: false,
-                        )),
+                    // Padding(
+                    //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    //     child: ServiceCenterServicesListWidget(
+                    //       services: globalcontrollerWorkshop
+                    //           .workshopData['centerServices'],
+                    //       canSelect: false,
+                    //     )),
 
                     const BookingWidget(),
                     CustomMapWidget(),

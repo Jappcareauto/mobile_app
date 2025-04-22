@@ -188,7 +188,9 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       String? name,
       String? category,
       String? ownerId,
-      String? serviceCenterId) async {
+      String? serviceCenterId,
+      bool? aroundMe,
+      bool? availableNow) async {
     try {
       final response = await networkService
           .post(WorkshopConstants.getAllServicesCenterGetUri, body: {

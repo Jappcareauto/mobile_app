@@ -56,6 +56,19 @@ class WorkshopController extends GetxController {
     //     selectedCategory.value = serviceModel.data.first.title;
     //   }
     // });
+
+    debounce(serviceCenterName, (value) {
+      filterServiceCenters(
+          input: value.isNotEmpty ? value : null,
+          serviceId: selectedService.value);
+    }, time: const Duration(seconds: 2));
+
+    debounce(selectedService, (value) {
+      if (value >= 0 || value == -1) {
+        filterServiceCenters(input: serviceCenterName.value, serviceId: value);
+      }
+    }, time: const Duration(seconds: 1));
+
     getServiceCentersFormHelper =
         FormHelper<WorkshopException, GetAllServicesCenter>(
       fields: {
@@ -83,22 +96,8 @@ class WorkshopController extends GetxController {
     // Listen for VIN input changes
     getServiceCentersFormHelper.controllers['name']?.addListener(() {
       serviceCenterName.value =
-          getServiceCentersFormHelper.controllers['name']!.text;
+          getServiceCentersFormHelper.controllers['name']!.text.toLowerCase();
     });
-
-    // debounce(serviceCenterName, (value) {
-    //   if (value.isNotEmpty) {
-    //     getAllServicesCenter(name: serviceCenterName.value);
-    //   }
-    // }, time: const Duration(seconds: 2));
-
-    // debounce(selectedFilter, (value) {
-    //   if (value >= 0) {
-    //     getAllServicesCenter(
-    //         name: serviceCenterName.value,
-    //         serviceId: servicesCenter.value?.data[selectedFilter.value].id);
-    //   }
-    // }, time: const Duration(seconds: 1));
   }
 
   void gotToServicesLocator() {
@@ -133,10 +132,28 @@ class WorkshopController extends GetxController {
     });
   }
 
-  Future<void> getAllServicesCenter({String? name, String? serviceId}) async {
+  void filterServiceCenters(
+      {String? input,
+      required int serviceId,
+      bool? aroundMe,
+      bool? avaiableNow}) {
+    getAllServicesCenter(
+        name: input,
+        serviceId: serviceId == -1 ? null : services.value?.data[serviceId].id);
+  }
+
+  Future<void> getAllServicesCenter(
+      {String? name,
+      String? serviceId,
+      bool? aroundMe,
+      bool? avaiableNow}) async {
     loading.value = true;
-    final result = await _getAllServicesCenterUseCase
-        .call(GetServiceCenterCommand(name: name, serviceCenterId: serviceId));
+    final result = await _getAllServicesCenterUseCase.call(
+        GetServiceCenterCommand(
+            name: name,
+            serviceCenterId: serviceId,
+            aroundMe: aroundMe,
+            availableNow: avaiableNow));
     result.fold(
       (e) {
         loading.value = false;
@@ -168,8 +185,14 @@ class WorkshopController extends GetxController {
         }
       },
       (response) {
+        print("called");
         serviceloading.value = false;
         services.value = response;
+        // if (response.data.isNotEmpty) {
+        //   selectedCategory.value = response.data[0].title;
+        //   selectedService.value = 0;
+        // }
+
         print(response);
       },
     );
@@ -202,11 +225,9 @@ class WorkshopController extends GetxController {
               onPressed: () {
                 print(servicesCenter.value?.data.length);
                 print(selectedService.value);
-                getAllServicesCenter(
-                    name: serviceCenterName.value,
-                    serviceId: selectedService.value != -1
-                        ? services.value?.data[selectedService.value].id
-                        : null);
+                filterServiceCenters(
+                    input: serviceCenterName.value,
+                    serviceId: selectedService.value);
                 Get.back(); // Close the dialog
               },
             ),

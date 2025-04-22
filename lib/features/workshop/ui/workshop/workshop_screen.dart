@@ -4,12 +4,13 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_widgets.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import 'controllers/workshop_controller.dart';
 import 'package:get/get.dart';
-import '../workshop/widgets/services_list_widget.dart';
+// import '../workshop/widgets/services_list_widget.dart';
 
 import 'widgets/service_item.dart';
 
@@ -74,7 +75,42 @@ class WorkshopScreen extends GetView<WorkshopController>
                       ),
                     ],
                   ),
-                  ServicesListWidget(canSelect: true),
+                  const Text(
+                    "Specialized Services",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    child: controller.services.value != null &&
+                            controller.services.value!.data.isNotEmpty
+                        ? Obx(() {
+                            final services = controller.services.value!.data;
+                            return ServiceWidget(
+                              tabs: services,
+                              selectedFilter: controller.selectedService.value,
+                              onSelected: (index) {
+                                if (controller.selectedService.value == index) {
+                                  controller.selectedService.value = -1;
+                                  controller.selectedCategory.value = '';
+                                } else {
+                                  controller.selectedCategory.value =
+                                      services[index].title;
+                                  controller.selectedService.value = index;
+                                }
+                              },
+                              borderRadius: BorderRadius.circular(16),
+                              haveBorder: true,
+                            );
+                          })
+                        : const Text('Aucun service disponible'),
+                  ),
+                  //   (index) {
+                  //   onSelect?.call(data);
+                  //   // print(
+                  //   //     "L'IDENTIFIANT DU SERVICE SELECTIONNER EST : ${data.id}");
+                  //   // controller.servicesId.value = data.id;
+                  //   // globalControllerWorkshop.addData('serviceId', data.id);
+                  // },
+                  // ServicesListWidget(canSelect: true),
                   // const SizedBox(height: 10),
                   // Padding(
                   //   padding: const EdgeInsets.only(left: 20),
