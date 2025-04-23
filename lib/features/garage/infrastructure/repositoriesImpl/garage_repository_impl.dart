@@ -61,11 +61,12 @@ class GarageRepositoryImpl implements GarageRepository {
   }
 
   @override
-  Future<Either<GarageException, List<AppointmentEntity>>>
-      getAllAppointments() async {
+  Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments(
+      {String? status}) async {
     try {
-      final response = await networkService
-          .post(GarageConstants.getAllAppointmentsUri, body: {});
+      final response = await networkService.post(
+          GarageConstants.getAllAppointmentsUri,
+          body: {'status': status});
       return Right((response["data"] as List)
           .map((e) => AppointmentModel.fromJson(e).toEntity())
           .toList());

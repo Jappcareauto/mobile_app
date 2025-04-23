@@ -36,9 +36,6 @@ class RecentActivitiesWidget extends StatelessWidget
       init: GarageController(Get.find(), Get.find()),
       autoRemove: false,
       builder: (controller) {
-        if (controller.appointmentsLoading.value) {
-          return const ListVehicleShimmer();
-        }
         var filteredActivities = <CarCardWidget>[];
 
         if (controller.appointments.isNotEmpty &&
@@ -88,54 +85,61 @@ class RecentActivitiesWidget extends StatelessWidget
                     if (controller.statusFilters[index] == "All") {
                       controller.selectedAppointStatusFilter.value = "";
                     } else if (controller.statusFilters[index] == "Ongoing") {
-                      controller.selectedAppointStatusFilter.value = "Ongoing";
+                      controller.selectedAppointStatusFilter.value =
+                          "IN_PROGRESS";
                     } else if (controller.statusFilters[index] == "Completed") {
                       controller.selectedAppointStatusFilter.value =
-                          "Completed";
+                          "COMPLETED";
                     }
                   },
                 ),
               ),
             if (haveTabBar) const SizedBox(height: 20),
-            filteredActivities.isNotEmpty
-                ? isHorizontal
-                    ? SizedBox(
-                        height: 230,
-                        width: MediaQuery.of(context).size.width,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: filteredActivities.map((activity) {
-                            return SizedBox(
-                              width:
-                                  350, // Specify a fixed width for each item.
-                              // margin: const EdgeInsets.all(8.0),
-                              child: activity,
-                            );
-                          }).toList(),
-                          // const SizedBox(width: 10),
-                        ))
-                    : Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: Column(children: filteredActivities),
-                      )
-                : Column(
-                    spacing: 20,
+            if (controller.appointmentsLoading.value)
+              ListVehicleShimmer(
+                isHorizontal: isHorizontal,
+              ),
+            if (!controller.appointmentsLoading.value &&
+                filteredActivities.isNotEmpty)
+              isHorizontal
+                  ? SizedBox(
+                      height: 230,
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: filteredActivities.map((activity) {
+                          return SizedBox(
+                            width: 350, // Specify a fixed width for each item.
+                            // margin: const EdgeInsets.all(8.0),
+                            child: activity,
+                          );
+                        }).toList(),
+                        // const SizedBox(width: 10),
+                      ))
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Column(children: filteredActivities),
+                    ),
+            if (!controller.appointmentsLoading.value &&
+                filteredActivities.isEmpty)
+              Column(
+                spacing: 20,
+                children: [
+                  const Row(
                     children: [
-                      const Row(
-                        children: [
-                          Expanded(
-                            child: ImageComponent(
-                              assetPath: AppConstants.noActivities,
-                              height: 200,
-                              width: double.infinity,
-                            ),
-                          ),
-                        ],
+                      Expanded(
+                        child: ImageComponent(
+                          assetPath: AppConstants.noActivities,
+                          height: 200,
+                          width: double.infinity,
+                        ),
                       ),
-                      Text(noActivitiesPlaceholder ??
-                          "You have no recent activities at the moment"),
                     ],
-                  )
+                  ),
+                  Text(noActivitiesPlaceholder ??
+                      "You have no recent activities at the moment"),
+                ],
+              )
           ],
         );
         // if (controller.myGarage?.location == null ||

@@ -60,7 +60,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                 validator:
                     controller.editProfileFormHelper.validators['phoneNumber'],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
               CustomButton(
                   text: "Save",
                   onPressed: controller.editProfileFormHelper.submit),

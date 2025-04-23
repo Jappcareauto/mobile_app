@@ -60,7 +60,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                               CustomFormField(
                                 controller: controller.addVehicleFormHelper
                                     .controllers['registration'],
-                                label: "Vehicle Registration Number",
+                                label: "License Plate Number",
                                 hintText: "Ex. NW 905 AG",
                                 forceUpperCase: true,
                                 validator: controller.addVehicleFormHelper

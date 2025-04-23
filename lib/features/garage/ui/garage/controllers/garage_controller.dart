@@ -69,10 +69,9 @@ class GarageController extends GetxController {
       fetchData(lastUserId);
     }
     ever(selectedAppointStatusFilter, (value) {
-      print("Enter");
-      if (value != "") {
-        getAllAppointments();
-      }
+      print(value);
+      print("tried");
+      getAllAppointments(status: value != "" ? value : null);
     });
     pageController.addListener(() {
       int newPage = pageController.page!.round();
@@ -190,9 +189,9 @@ class GarageController extends GetxController {
     );
   }
 
-  Future<void> getAllAppointments() async {
+  Future<void> getAllAppointments({String? status}) async {
     appointmentsLoading.value = true;
-    final result = await _getAllAppointmentsUsecase.call();
+    final result = await _getAllAppointmentsUsecase.call(status: status);
     result.fold(
       (e) {
         appointmentsLoading.value = false;
