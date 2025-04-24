@@ -135,22 +135,18 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                           value: vhcle.detail?.year ?? 'Unknown'),
                     ],
                   ),
-                  // const SizedBox(height: 20),
-                  // Row(
-                  //   spacing: 20,
-                  //   children: [
-
-                  //     DetailItem(
-                  //         title: "Drive",
-                  //         value: vhcle.detail?.driveTrain ?? 'Unknown'),
-                  //   ],
-                  // ),
                   Row(
                     spacing: 10,
                     children: [
+                      // DetailItem(
+                      //     title: "Trim",
+                      //     value: vhcle.detail?.trim ?? 'Unknown'),
                       DetailItem(
                           title: "Body Type",
                           value: vhcle.detail?.bodyType ?? 'Unknown'),
+                      DetailItem(
+                          title: "Licence Plate Number",
+                          value: vhcle.registrationNumber),
                     ],
                   ),
                   Row(
@@ -158,13 +154,6 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                       DetailItem(
                           title: "Drive",
                           value: vhcle.detail?.driveTrain ?? 'Unknown'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      DetailItem(
-                          title: "Licence Plate Number",
-                          value: vhcle.registrationNumber),
                     ],
                   ),
                 ],

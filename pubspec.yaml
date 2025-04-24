@@ -36,12 +36,12 @@ dependencies:
   dio: ^5.7.0
   country_code_picker: ^3.0.0
   pinput: ^5.0.0
-  fl_chart: ^0.70.2
+  fl_chart: ^0.71.0
   image_picker: ^1.1.2
   carousel_slider: ^5.0.0
   google_maps_flutter: ^2.10.0
   permission_handler: ^12.0.0+1
-  geolocator: ^13.0.2
+  geolocator: ^14.0.0
   shared_preferences: ^2.3.5
   web_socket_channel: ^3.0.2
   image: any

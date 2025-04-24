@@ -14,11 +14,12 @@ class GetAllServicesCenterUseCase {
   Future<Either<WorkshopException, GetAllServicesCenter>> call(
       GetServiceCenterCommand? command) async {
     return await repository.getAllServicesCenter(
-        command?.name,
-        command?.category,
-        command?.ownerId,
-        command?.serviceCenterId,
-        command?.aroundMe,
-        command?.availableNow);
+        name: command?.name,
+        category: command?.category,
+        ownerId: command?.ownerId,
+        serviceId: command?.ownerId,
+        serviceCenterId: command?.serviceCenterId,
+        aroundMe: command?.aroundMe,
+        availableNow: command?.availableNow);
   }
 }
