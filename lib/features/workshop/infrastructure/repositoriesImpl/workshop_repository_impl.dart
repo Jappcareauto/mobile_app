@@ -185,18 +185,20 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
 
   @override
   Future<Either<WorkshopException, GetAllServicesCenter>> getAllServicesCenter(
-      String? name,
+      {String? name,
       String? category,
       String? ownerId,
       String? serviceCenterId,
+      String? serviceId,
       bool? aroundMe,
-      bool? availableNow) async {
+      bool? availableNow}) async {
     try {
       final response = await networkService
           .post(WorkshopConstants.getAllServicesCenterGetUri, body: {
         'name': name,
         'category': category,
         'ownerId': ownerId,
+        // 'serviceId': serviceId,
         'serviceCenterId': serviceCenterId,
         // 'aroundMe': aroundMe,
         // 'availableNow': availableNow

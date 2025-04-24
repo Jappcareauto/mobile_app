@@ -10,7 +10,8 @@ class GetAllAppointmentsUsecase {
 
   GetAllAppointmentsUsecase(this.repository);
 
-  Future<Either<GarageException, List<AppointmentEntity>>> call() {
-    return repository.getAllAppointments();
+  Future<Either<GarageException, List<AppointmentEntity>>> call(
+      {String? status}) {
+    return repository.getAllAppointments(status: status);
   }
 }

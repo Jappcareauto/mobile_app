@@ -177,6 +177,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
+                  spacing: 20,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(

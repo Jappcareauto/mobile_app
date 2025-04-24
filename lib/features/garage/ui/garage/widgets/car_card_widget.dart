@@ -125,7 +125,7 @@ class CarCardWidget extends GetView<GarageController> {
                   ImageComponent(
                     imageUrl: pathImageCar,
                     assetPath: AppImages.car,
-                    width: Get.width * 0.35,
+                    width: Get.width * 0.3,
                   ),
                   Flexible(
                     fit: FlexFit.loose,

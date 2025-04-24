@@ -3,6 +3,7 @@ class GetServiceCenterCommand {
   final String? category;
   final String? ownerId;
   final String? serviceCenterId;
+  final String? serviceId;
   final bool? aroundMe;
   final bool? availableNow;
   GetServiceCenterCommand(
@@ -10,6 +11,7 @@ class GetServiceCenterCommand {
       this.category,
       this.ownerId,
       this.serviceCenterId,
+      this.serviceId,
       this.aroundMe,
       this.availableNow});
 }

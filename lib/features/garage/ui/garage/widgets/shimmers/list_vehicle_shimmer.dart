@@ -5,19 +5,20 @@ import 'package:jappcare/features/garage/ui/garage/widgets/car_container_widget.
 import 'package:shimmer/shimmer.dart';
 
 class ListVehicleShimmer extends StatelessWidget {
-  const ListVehicleShimmer({super.key});
+  final bool isHorizontal;
+  const ListVehicleShimmer({super.key, this.isHorizontal = true});
 
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
         baseColor: Colors.grey.withValues(alpha: .5),
         highlightColor: Colors.white,
-        child: SizedBox(
+        child: Container(
           height: 190,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: ListView(
-            scrollDirection: Axis.horizontal,
+            scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,
             children: <Widget>[
-              const SizedBox(width: 20),
               CarContainer(
                 carName: 'Avensis Turbo',
                 carDetails: 'DW056663',

@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
@@ -36,7 +37,8 @@ class ServiceWidget extends StatelessWidget {
             },
             child: Container(
               width: 175,
-              margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+              height: 200,
+              margin: const EdgeInsets.only(right: 8),
               padding: const EdgeInsets.only(top: 10),
               decoration: BoxDecoration(
                 color: selectedFilter == index
@@ -52,11 +54,13 @@ class ServiceWidget extends StatelessWidget {
                 borderRadius: borderRadius,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
-                      item.title,
+                      item.definition.split("_").join(" "),
                       style: TextStyle(
                         fontSize: 16,
                         color: selectedFilter == index
@@ -81,8 +85,7 @@ class ServiceWidget extends StatelessWidget {
                                 : item.definition == "VIN_DETECTION"
                                     ? AppImages.vin
                                     : AppImages.maintenance,
-                        width: 120,
-                        height: 120,
+                        width: Get.width * 0.38,
                       ),
                     ],
                   ),

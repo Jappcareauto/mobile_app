@@ -30,5 +30,6 @@ abstract class GarageRepository {
 
   Future<Either<GarageException, String>> deleteVehicle(String id);
 
-  Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments();
+  Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments(
+      {String? status});
 }

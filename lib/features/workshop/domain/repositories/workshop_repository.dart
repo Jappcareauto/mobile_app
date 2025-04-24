@@ -19,12 +19,13 @@ abstract class WorkshopRepository {
   //Add methods here
 
   Future<Either<WorkshopException, GetAllServicesCenter>> getAllServicesCenter(
-      String? name,
+      {String? name,
       String? category,
       String? ownerId,
+      String? serviceId,
       String? serviceCenterId,
       bool? aroundMe,
-      bool? availableNow);
+      bool? availableNow});
 
   Future<Either<WorkshopException, BookAppointment>> bookAppointment(
       String date,

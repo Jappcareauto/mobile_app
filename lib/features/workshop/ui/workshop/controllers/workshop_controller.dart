@@ -68,6 +68,7 @@ class WorkshopController extends GetxController {
 
     debounce(selectedService, (value) {
       if (value >= 0 || value == -1) {
+        print(value);
         filterServiceCenters(
             input: serviceCenterName.value,
             serviceId: value,
@@ -158,7 +159,7 @@ class WorkshopController extends GetxController {
     final result = await _getAllServicesCenterUseCase.call(
         GetServiceCenterCommand(
             name: name,
-            serviceCenterId: serviceId,
+            serviceId: serviceId,
             aroundMe: aroundMe,
             availableNow: availableNow));
     result.fold(
