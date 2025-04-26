@@ -21,6 +21,7 @@ class RecentActivitiesWidget extends StatelessWidget
   final bool haveTabBar;
   final bool isHorizontal;
   final String? status;
+  final int? limit;
   RecentActivitiesWidget(
       {super.key,
       this.title = "Recent Activities",
@@ -28,7 +29,8 @@ class RecentActivitiesWidget extends StatelessWidget
       this.haveTitle = true,
       this.haveTabBar = true,
       this.isHorizontal = false,
-      this.status});
+      this.status,
+      this.limit});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,11 @@ class RecentActivitiesWidget extends StatelessWidget
 
         if (controller.appointments.isNotEmpty &&
             controller.myGarage?.location != null) {
-          filteredActivities = controller.appointments.map((e) {
+          var limitedActivities = limit != null
+              ? controller.appointments.sublist(0, limit!)
+              : controller.appointments;
+
+          filteredActivities = limitedActivities.map((e) {
             return CarCardWidget(
               latitude: e.location?.latitude ??
                   controller.myGarage!.location!.latitude,
@@ -205,6 +211,7 @@ class RecentActivitiesWidget extends StatelessWidget
           title: args['title'] ?? 'Recent Activities',
           isHorizontal: args['isHorizontal'] ?? false,
           status: args['status'],
+          limit: args['limit'],
           noActivitiesPlaceholder: args['noActivitiesPlaceholder']);
     } else {
       return this;

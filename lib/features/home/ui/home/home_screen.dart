@@ -112,6 +112,7 @@ class HomeScreen extends GetView<HomeController> {
                     'title': 'Upcoming Activities',
                     'status': 'NOT_STARTED',
                     'isHorizontal': true,
+                    'limit': 1,
                     'noActivitiesPlaceholder':
                         'You have no upcoming activities at the moment'
                   }),
@@ -190,7 +191,11 @@ class HomeScreen extends GetView<HomeController> {
                     tag: 'RecentActivitiesWidget'))
                   Get.find<FeatureWidgetInterface>(
                           tag: 'RecentActivitiesWidget')
-                      .buildView(),
+                      .buildView({
+                    'limit': 2,
+                    'haveTabBar': false,
+                    'haveTitle': true,
+                  }),
               ],
             ),
           ),
