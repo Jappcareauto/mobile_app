@@ -27,7 +27,7 @@ class ChipWidget extends StatelessWidget {
     return Chip(
       backgroundColor: chipColor,
       label: Text(
-        status,
+        status.split("_").join(" "),
         style: TextStyle(color: chipTextColor, fontWeight: FontWeight.bold),
       ),
       elevation: 0,
