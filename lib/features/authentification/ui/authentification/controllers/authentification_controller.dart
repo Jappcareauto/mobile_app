@@ -4,10 +4,12 @@ import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';
 import 'package:jappcare/features/authentification/ui/authentification/widgets/signup_modal.dart';
 import '../../../../../core/navigation/app_navigation.dart';
+import '../../../application/usecases/google_login_usecase.dart';
 import '../widgets/login_modal.dart';
 
 class AuthentificationController extends GetxController {
   final AppNavigation _appNavigation;
+  final GoogleLoginUseCase _googleLoginUseCase = Get.find();
   AuthentificationController(this._appNavigation);
   final loadingGoogle = false.obs;
 
@@ -66,6 +68,10 @@ class AuthentificationController extends GetxController {
     Get.showCustomSnackBar("Nothing is running ;-)\n It's just a demo");
     await Future.delayed(const Duration(seconds: 2));
     loadingGoogle.value = false;
+  }
+
+  void googleLogin() {
+    _googleLoginUseCase.call();
   }
 
   void navigateToForgotPassword() {
