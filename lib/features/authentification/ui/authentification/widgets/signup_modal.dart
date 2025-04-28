@@ -33,14 +33,13 @@ class SignUpModalWidget extends StatelessWidget {
                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 28),
                 CustomButton(
-                    text: "Continue",
-                    prefixIcon: const ImageComponent(
-                      assetPath: AppImages.google,
-                      height: 25,
-                    ),
-                    onPressed: () {
-                      // _BottomSheetLogin();
-                    }),
+                  text: "Continue",
+                  prefixIcon: const ImageComponent(
+                    assetPath: AppImages.google,
+                    height: 25,
+                  ),
+                  onPressed: controller.googleLogin,
+                ),
                 const SizedBox(height: 16),
                 CustomButton(
                     text: "Create Account with Email",

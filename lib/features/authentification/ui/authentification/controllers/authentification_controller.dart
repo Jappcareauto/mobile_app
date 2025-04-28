@@ -5,13 +5,16 @@ import 'package:jappcare/features/authentification/navigation/private/authentifi
 import 'package:jappcare/features/authentification/ui/authentification/widgets/signup_modal.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../application/usecases/google_login_usecase.dart';
+import '../../../application/usecases/google_signup_usecase.dart';
 import '../widgets/login_modal.dart';
 
 class AuthentificationController extends GetxController {
   final AppNavigation _appNavigation;
   final GoogleLoginUseCase _googleLoginUseCase = Get.find();
+  final GoogleSignupUseCase _googleSignupUseCase = Get.find();
   AuthentificationController(this._appNavigation);
   final loadingGoogle = false.obs;
+  final loadingGoogleSignup = false.obs;
 
   @override
   void onInit() {
@@ -70,8 +73,18 @@ class AuthentificationController extends GetxController {
     loadingGoogle.value = false;
   }
 
-  void googleLogin() {
+  void googleLogin() async {
+    loadingGoogle.value = true;
     _googleLoginUseCase.call();
+    await Future.delayed(const Duration(seconds: 2));
+    loadingGoogle.value = false;
+  }
+
+  void googleSignup() async {
+    loadingGoogle.value = true;
+    _googleSignupUseCase.call();
+    await Future.delayed(const Duration(seconds: 2));
+    loadingGoogle.value = false;
   }
 
   void navigateToForgotPassword() {

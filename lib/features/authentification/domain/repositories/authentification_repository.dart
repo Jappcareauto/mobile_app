@@ -14,7 +14,12 @@ abstract class AuthentificationRepository {
   Future<Either<AuthentificationException, Login>> googleLogin(
       {required String bearerId});
 
+  Future<Either<AuthentificationException, Register>> googleRegister(
+      {required String bearerId});
+
   Future<void> googleSignIn();
+
+  Future<void> googleSignUp();
 
   Future<Either<AuthentificationException, Register>> register(
       {required String name,

@@ -157,6 +157,20 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   }
 
   @override
+  Future<Either<AuthentificationException, Register>> googleRegister(
+      {required String bearerId}) async {
+    try {
+      final response = await networkService
+          .post(AuthentificationConstants.googleSignUpPostUri, headers: {
+        'Authorization': 'Bearer $bearerId',
+      });
+      return Right(RegisterModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message));
+    }
+  }
+
+  @override
   Future<void> googleSignIn() async {
     final GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: <String>['email'],

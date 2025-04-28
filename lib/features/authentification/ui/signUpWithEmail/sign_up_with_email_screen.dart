@@ -157,9 +157,9 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                               prefixIcon: const ImageComponent(
                                   assetPath: AppImages.google, width: 25),
                               isLoading: Get.find<AuthentificationController>()
-                                  .loadingGoogle,
+                                  .loadingGoogleSignup,
                               onPressed: Get.find<AuthentificationController>()
-                                  .loginWithGoogle,
+                                  .googleSignup,
                             ),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
