@@ -77,7 +77,7 @@ class BookAppointmentController extends GetxController {
     });
 
     debounce(placeInput, (value) {
-      if (value.isNotEmpty) {
+      if (value.isNotEmpty && value == locationController.text) {
         getPlaceAutocomplete(value);
       } else {
         placePredictions.value = [];
@@ -86,6 +86,7 @@ class BookAppointmentController extends GetxController {
 
     // Listen for VIN input changes
     locationController.addListener(() {
+      print("onChanGE");
       placeInput.value = locationController.text;
     });
 
@@ -206,6 +207,7 @@ class BookAppointmentController extends GetxController {
       },
       (success) {
         placeDetails = success;
+        placeInput.value = success.name;
         update();
         // loading.value = false;
       },
@@ -215,6 +217,8 @@ class BookAppointmentController extends GetxController {
   Future<void> getPlaceAutocomplete(String input) async {
     // loading.value = true;
     final result = await _getPlaceAutocompleteUseCase.call(input);
+    print("result");
+    print(result);
     result.fold(
       (e) {
         loading.value = false;

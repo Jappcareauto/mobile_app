@@ -7,6 +7,8 @@ import 'package:jappcare/features/workshop/ui/workshopDetails/controllers/worksh
 class CustomMapWidget extends GetView<MapController> {
   final WorkshopDetailsController workshopcontroller =
       Get.put(WorkshopDetailsController(Get.find()));
+  // final WorkshopDetailsController workshopcontroller =
+  //     Get.put(WorkshopDetailsController(Get.find()));
 
   CustomMapWidget({super.key});
 

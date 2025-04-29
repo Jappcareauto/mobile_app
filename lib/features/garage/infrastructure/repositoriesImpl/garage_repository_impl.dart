@@ -35,7 +35,7 @@ class GarageRepositoryImpl implements GarageRepository {
           'vin': vin,
           'registrationNumber': registrationNumber,
           'description': "Test description",
-          // 'withMedia': true,
+          'withMedia': true,
         },
       );
       print(response);
