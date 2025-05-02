@@ -193,6 +193,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       bool? aroundMe,
       bool? availableNow}) async {
     try {
+      print(serviceId);
       final response = await networkService
           .post(WorkshopConstants.getAllServicesCenterGetUri, body: {
         'name': name,

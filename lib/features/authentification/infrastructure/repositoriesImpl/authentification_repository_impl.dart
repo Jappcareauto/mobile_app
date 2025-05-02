@@ -162,7 +162,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     try {
       final response = await networkService
           .post(AuthentificationConstants.googleSignUpPostUri, headers: {
-        'Authorization': 'Bearer $bearerId',
+        'Authorization': 'BearerId $bearerId',
       });
       return Right(RegisterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
@@ -174,8 +174,6 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   Future<void> googleSignIn() async {
     final GoogleSignIn _googleSignIn = GoogleSignIn(
       scopes: <String>['email'],
-      serverClientId:
-          '415070003598-pc9dsnpisbn9uvil4lpuh339bh6ran3p.apps.googleusercontent.com',
     );
     try {
       final GoogleSignInAccount? account = await _googleSignIn.signIn();
@@ -221,6 +219,14 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> googleLogout() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      scopes: <String>['email'],
+    );
+
+    googleSignIn.disconnect();
   }
 
   //Add methods here

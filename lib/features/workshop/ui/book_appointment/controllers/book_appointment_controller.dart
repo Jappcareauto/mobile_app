@@ -40,8 +40,16 @@ class BookAppointmentController extends GetxController {
 
   final loading = true.obs;
   final vehicleLoading = true.obs;
+
+  // Selected service observables
+  final selectedServiceId = ''.obs;
+  final selectedServiceName = ''.obs;
+  final selectedServiceIndex = (-1).obs;
+
+  // Selected vehicle observables
   final vehicleId = ''.obs;
   final vehicleVin = ''.obs;
+
   GetGarageByOwnerId? myGarage;
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -129,6 +137,8 @@ class BookAppointmentController extends GetxController {
       "currentPage": currentPage,
       "selectedDate": selectedDate.value,
       "selectedLocation": selectedLocation.value,
+      "serviceName": selectedServiceName.value,
+      "serviceId": selectedServiceId.value,
       "noteController": noteController.text,
       "vehiculeId": vehicleId.value,
       "selectedTime": selectedTime.value

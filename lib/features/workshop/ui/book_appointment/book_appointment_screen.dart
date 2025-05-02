@@ -5,12 +5,14 @@ import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/boocking_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
 
@@ -40,6 +42,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 10,
                     children: [
                       if (Get.isRegistered<FeatureWidgetInterface>(
@@ -69,11 +72,68 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       //       canSelect: false,
                       //     )),
 
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Column(
+                            spacing: 10,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Select Service",
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                child: globalcontrollerWorkshop.workshopData[
+                                                'centerServices'] !=
+                                            null &&
+                                        globalcontrollerWorkshop
+                                            .workshopData['centerServices']!
+                                            .isNotEmpty
+                                    ? Obx(() {
+                                        final services =
+                                            (globalcontrollerWorkshop
+                                                        .workshopData[
+                                                    'centerServices']
+                                                as List<ServiceEntity>);
+                                        return ServiceWidget(
+                                          tabs: services,
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          selectedFilter: controller
+                                              .selectedServiceIndex.value,
+                                          onSelected: (index) {
+                                            if (controller.selectedServiceIndex
+                                                    .value ==
+                                                index) {
+                                              controller.selectedServiceIndex
+                                                  .value = -1;
+                                              controller.selectedServiceName
+                                                  .value = '';
+                                              controller
+                                                  .selectedServiceId.value = '';
+                                            } else {
+                                              controller.selectedServiceName
+                                                      .value =
+                                                  services[index].definition;
+                                              controller.selectedServiceId
+                                                  .value = services[index].id;
+                                              controller.selectedServiceIndex
+                                                  .value = index;
+                                            }
+                                          },
+                                        );
+                                      })
+                                    : const Text('Aucun service disponible'),
+                              ),
+                            ]),
+                      ),
+
                       const BookingWidget(),
                       Obx(() {
                         return Column(
                           children: [
-                            if (controller.selectedLocation.value !=
+                            if (controller.selectedLocation.value ==
                                 "CUSTOM") ...[
                               const SizedBox(
                                 height: 20,

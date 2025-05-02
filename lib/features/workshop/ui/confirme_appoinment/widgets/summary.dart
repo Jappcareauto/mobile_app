@@ -29,7 +29,15 @@ class Summary extends GetView<ConfirmeAppointmentController> {
           children: [
             const Text('Service Offered by',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-            Text(argument['serviceCenterName'] ?? "Unknow",
+            Text(argument['serviceCenterName'] ?? "Unknown",
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text('Service type',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
+            Text(argument['serviceName'] ?? "Unknown",
                 style:
                     const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
             const SizedBox(
@@ -42,6 +50,8 @@ class Summary extends GetView<ConfirmeAppointmentController> {
             const SizedBox(
               height: 20,
             ),
+            const Text('From',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
             Row(
               children: [
                 if (Get.isRegistered<FeatureWidgetInterface>(
@@ -51,7 +61,7 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                 const SizedBox(
                   width: 10,
                 ),
-                Text(Get.find<ProfileController>().userInfos?.name ?? "Unknow",
+                Text(Get.find<ProfileController>().userInfos?.name ?? "Unknown",
                     style: const TextStyle(
                         fontSize: 16, fontWeight: FontWeight.bold))
               ],
@@ -61,30 +71,37 @@ class Summary extends GetView<ConfirmeAppointmentController> {
             ),
             const Text('Date',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-            Row(children: [
-              const Icon(
-                FluentIcons.calendar_3_day_20_regular,
-                size: 24,
-              ),
-              Obx(
-                () => Text(
-                  DateFormat('EEE, MMM dd, yyyy')
-                      .format(argument['selectedDate']),
-                  // Format personnalisé
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+            Row(spacing: 10, children: [
+              Row(
+                children: [
+                  const Icon(
+                    FluentIcons.calendar_3_day_20_regular,
+                    size: 24,
                   ),
-                ),
+                  Obx(
+                    () => Text(
+                      DateFormat('EEE, MMM dd, yyyy')
+                          .format(argument['selectedDate']),
+                      // Format personnalisé
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 20),
-              const Icon(
-                FluentIcons.clock_12_regular,
-                size: 24,
-              ),
-              Obx(() => Text(argument['selectedTime'],
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.w400))),
+              Row(
+                children: [
+                  const Icon(
+                    FluentIcons.clock_12_regular,
+                    size: 24,
+                  ),
+                  Obx(() => Text(argument['selectedTime'],
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w400))),
+                ],
+              )
             ]),
             if (argument['noteController'].isNotEmpty) ...[
               const SizedBox(

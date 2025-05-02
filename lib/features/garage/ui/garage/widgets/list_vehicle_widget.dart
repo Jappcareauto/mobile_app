@@ -15,6 +15,7 @@ class ListVehicleWidget extends StatelessWidget
   final GarageController garageController =
       GarageController(Get.find(), Get.find());
   final bool haveTitle;
+  final bool haveTitlePadding;
   final PageController? pageController;
   final RxInt? currentPage;
   final bool? haveAddVehicule;
@@ -34,6 +35,7 @@ class ListVehicleWidget extends StatelessWidget
     this.onTapeAddVehicle,
     this.isSingleCard,
     this.haveTitle = true,
+    this.haveTitlePadding = true,
     this.title = "My Garage",
     this.onSelected,
     this.selectedIndex,
@@ -73,7 +75,8 @@ class ListVehicleWidget extends StatelessWidget
           children: [
             if (haveTitle)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding:
+                    EdgeInsets.symmetric(horizontal: haveTitlePadding ? 20 : 0),
                 child: Obx(() {
                   return controller.loading.value
                       ? const MyGarageNameShimmer()
@@ -198,6 +201,7 @@ class ListVehicleWidget extends StatelessWidget
       title: args["title"],
       isSingleCard: args["isSingleCard"],
       onSelected: args["onSelected"],
+      haveTitlePadding: args["haveTitlePadding"] ?? true,
     );
   }
 }
