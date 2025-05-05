@@ -12,6 +12,7 @@ import 'package:jappcare/core/utils/getx_extensions.dart';
 // import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_usecase.dart';
 import 'package:jappcare/features/garage/domain/entities/get_garage_by_owner_id.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_place_autocomplete_usecase.dart';
@@ -42,43 +43,54 @@ class BookAppointmentController extends GetxController {
   final vehicleLoading = true.obs;
 
   // Selected service observables
+  final RxList<ServiceEntity> centerServices = <ServiceEntity>[].obs;
   final selectedServiceId = ''.obs;
   final selectedServiceName = ''.obs;
   final selectedServiceIndex = 0.obs;
 
-  // Selected vehicle observables
+  // Observables to manage the vehicles
   final vehicleId = ''.obs;
   final vehicleVin = ''.obs;
-
   GetGarageByOwnerId? myGarage;
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   List<Vehicle> vehicleList = [];
 
-  // late FormHelper bookAppointmentFormHelper;
+  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   // The location state of the form
+  RxString selectedLocation = "GARAGE".obs;
   RxString placeInput = "".obs;
   RxList<PlacePrediction> placePredictions = <PlacePrediction>[].obs;
   late final PlaceDetails placeDetails;
   // End on the location state of the form
 
-  RxString selectedLocation = "GARAGE".obs;
   var images = [
     AppImages.shopCar,
     AppImages.carClean,
   ].obs;
+
+  // Observers to manage the selection of the vehicle for the appointment
   final PageController pageController = PageController(
     viewportFraction: 0.9,
   );
   final RxInt currentPage = 0.obs;
+
   BookAppointmentController(this._appNavigation);
+
   @override
   void onInit() {
     super.onInit();
     // Listener pour synchroniser la page actuelle
+    centerServices.value = globalControllerWorkshop
+        .workshopData['centerServices'] as List<ServiceEntity>;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (centerServices.isNotEmpty) {
+        selectedServiceId.value = centerServices[0].id;
+        selectedServiceName.value = centerServices[0].definition;
+        // selectedServiceIndex.value = 0;
+      }
+
       if (pageController.hasClients) {
         pageController.jumpToPage(0); // Forcer le positionnement à la page 0
       }

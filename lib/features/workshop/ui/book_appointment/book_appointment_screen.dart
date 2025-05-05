@@ -5,7 +5,6 @@ import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
@@ -85,20 +84,10 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(
-                                child: globalcontrollerWorkshop.workshopData[
-                                                'centerServices'] !=
-                                            null &&
-                                        globalcontrollerWorkshop
-                                            .workshopData['centerServices']!
-                                            .isNotEmpty
+                                child: controller.centerServices.isNotEmpty
                                     ? Obx(() {
-                                        final services =
-                                            (globalcontrollerWorkshop
-                                                        .workshopData[
-                                                    'centerServices']
-                                                as List<ServiceEntity>);
                                         return ServiceWidget(
-                                          tabs: services,
+                                          tabs: controller.centerServices,
                                           borderRadius:
                                               BorderRadius.circular(16),
                                           selectedFilter: controller
@@ -116,9 +105,13 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                             } else {
                                               controller.selectedServiceName
                                                       .value =
-                                                  services[index].definition;
-                                              controller.selectedServiceId
-                                                  .value = services[index].id;
+                                                  controller
+                                                      .centerServices[index]
+                                                      .definition;
+                                              controller
+                                                      .selectedServiceId.value =
+                                                  controller
+                                                      .centerServices[index].id;
                                               controller.selectedServiceIndex
                                                   .value = index;
                                             }
@@ -134,8 +127,9 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       Obx(() {
                         return Column(
                           children: [
-                            if (controller.selectedLocation.value ==
-                                "CUSTOM") ...[
+                            if (controller.selectedLocation.value == "CUSTOM" ||
+                                controller.selectedLocation.value ==
+                                    "HOME") ...[
                               const SizedBox(
                                 height: 20,
                               ),
@@ -174,9 +168,6 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                               }
                             }),
                       ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
                     ],
                   ),
                 ),

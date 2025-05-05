@@ -54,7 +54,7 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController> {
                   // margin: EdgeInsets.symmetric(horizontal: ),
                   CustomButton(
                       isLoading: controller.loading,
-                      text: 'Send Inspection Request',
+                      text: 'Book Appointment',
                       onPressed: () {
                         print('send inspection');
                         controller.booknewAppointment(
