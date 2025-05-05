@@ -35,9 +35,19 @@ class Summary extends GetView<ConfirmeAppointmentController> {
             const SizedBox(
               height: 20,
             ),
+            const Text('CASE ID',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
+            Text(argument['serviceId'] ?? "Unknown",
+                style:
+                    const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            const SizedBox(
+              height: 20,
+            ),
             const Text('Service type',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-            Text(argument['serviceName'] ?? "Unknown",
+            Text(
+                argument['serviceName']?.toString().split("_").join(" ") ??
+                    "Unknown",
                 style:
                     const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
             const SizedBox(
