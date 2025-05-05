@@ -23,6 +23,7 @@ class ListVehicleWidget extends StatelessWidget
   final String title;
   final VoidCallback? onTapeAddVehicle;
   final bool? isSingleCard;
+  final bool? viewCarDetailsOnCardPress;
   final Function(Vehicle selectCar)? onSelected;
   final int? selectedIndex;
 
@@ -31,6 +32,7 @@ class ListVehicleWidget extends StatelessWidget
     this.pageController,
     this.currentPage,
     this.showDelete,
+    this.viewCarDetailsOnCardPress = true,
     this.haveAddVehicule = true,
     this.onTapeAddVehicle,
     this.isSingleCard,
@@ -132,48 +134,51 @@ class ListVehicleWidget extends StatelessWidget
                       );
                     }
 
-                    print(vehiclesToDisplay.length);
-
                     var vehicle = vehiclesToDisplay[index];
                     // final  interiorMedia = vehicle.media.firstWhere(
                     //       (media) => media.type == "INTERIOR",
                     //   orElse: () => vehicle.media.isNotEmpty ? vehicle.media.first : null,
                     // );
-                    final haveBorder =
-                        currentPage?.value == index ? true : false;
-                    return CarCardAddVehicle(
-                      key: ValueKey(vehicle),
-                      haveBGColor: false,
-                      hideblure: true,
-                      showDelete: showDelete,
-                      haveBorder: haveBorder,
-                      containerheight: 200,
-                      onPressed: () => controller.goToVehicleDetails(vehicle),
-                      next: () {
-                        if (index == (vehiclesToDisplay.length - 1) &&
-                            !haveAddVehicule!) {
-                          pageController?.jumpToPage(0);
-                        } else {
-                          pageController?.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        }
-                      },
-                      delete: () {
-                        controller.openDeleteVehicle(vehicle);
-                      },
-                      carName: vehicle.detail?.model ?? '',
-                      carDetails: [
-                        vehicle.detail?.year ?? "Unknown",
-                        vehicle.detail?.make ?? "Unknown"
-                      ],
-                      imagePath:
-                          vehicle.media != null && vehicle.media!.isNotEmpty
-                              ? vehicle.media![0]?.sourceUrl ?? ""
-                              : '',
-                      imageUrl: vehicle.imageUrl,
-                    );
+                    return Obx(() {
+                      return CarCardAddVehicle(
+                        key: ValueKey(vehicle),
+                        haveBGColor: false,
+                        hideblure: true,
+                        showDelete: showDelete,
+                        haveBorder: currentPage?.value == index ? true : false,
+                        containerheight: 200,
+                        onPressed: () => {
+                          if (viewCarDetailsOnCardPress!)
+                            {
+                              controller.goToVehicleDetails(vehicle),
+                            }
+                        },
+                        next: () {
+                          if (index == (vehiclesToDisplay.length - 1) &&
+                              !haveAddVehicule!) {
+                            pageController?.jumpToPage(0);
+                          } else {
+                            pageController?.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                        },
+                        delete: () {
+                          controller.openDeleteVehicle(vehicle);
+                        },
+                        carName: vehicle.detail?.model ?? '',
+                        carDetails: [
+                          vehicle.detail?.year ?? "Unknown",
+                          vehicle.detail?.make ?? "Unknown"
+                        ],
+                        imagePath:
+                            vehicle.media != null && vehicle.media!.isNotEmpty
+                                ? vehicle.media![0]?.sourceUrl ?? ""
+                                : '',
+                        imageUrl: vehicle.imageUrl,
+                      );
+                    });
                   },
                 ))
           ],
@@ -202,6 +207,7 @@ class ListVehicleWidget extends StatelessWidget
       isSingleCard: args["isSingleCard"],
       onSelected: args["onSelected"],
       haveTitlePadding: args["haveTitlePadding"] ?? true,
+      viewCarDetailsOnCardPress: args["viewCarDetailsOnCardPress"],
     );
   }
 }

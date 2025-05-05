@@ -45,11 +45,11 @@ class SignUpModalWidget extends StatelessWidget {
                     text: "Create Account with Email",
                     haveBorder: true,
                     onPressed: controller.goToSignUpWithEmail),
-                const SizedBox(height: 16),
-                CustomButton(
-                    text: "Create Account with Phone",
-                    haveBorder: true,
-                    onPressed: controller.goToSignUpWithPhone),
+                // const SizedBox(height: 16),
+                // CustomButton(
+                //     text: "Create Account with Phone",
+                //     haveBorder: true,
+                //     onPressed: controller.goToSignUpWithPhone),
               ],
             )),
       ),

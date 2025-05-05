@@ -30,11 +30,11 @@ class GarageRepositoryImpl implements GarageRepository {
       final response = await networkService.post(
         GarageConstants.addVehiclePostUri,
         body: {
-          'name': "Test name",
+          // 'name': "Test name",
           'garageId': garageId,
           'vin': vin,
           'registrationNumber': registrationNumber,
-          'description': "Test description",
+          // 'description': "Test description",
           'withMedia': true,
         },
       );

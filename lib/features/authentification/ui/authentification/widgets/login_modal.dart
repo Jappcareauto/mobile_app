@@ -47,11 +47,11 @@ class LoginModalWidget extends StatelessWidget {
                     text: "Login with Email",
                     haveBorder: true,
                     onPressed: controller.goToLoginWithEmail),
-                const SizedBox(height: 16),
-                CustomButton(
-                    text: "Login with Phone",
-                    haveBorder: true,
-                    onPressed: controller.goToLoginWithPhone),
+                // const SizedBox(height: 16),
+                // CustomButton(
+                //     text: "Login with Phone",
+                //     haveBorder: true,
+                //     onPressed: controller.goToLoginWithPhone),
               ],
             )),
       ),

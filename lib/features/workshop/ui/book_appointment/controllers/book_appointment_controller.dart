@@ -44,7 +44,7 @@ class BookAppointmentController extends GetxController {
   // Selected service observables
   final selectedServiceId = ''.obs;
   final selectedServiceName = ''.obs;
-  final selectedServiceIndex = (-1).obs;
+  final selectedServiceIndex = 0.obs;
 
   // Selected vehicle observables
   final vehicleId = ''.obs;

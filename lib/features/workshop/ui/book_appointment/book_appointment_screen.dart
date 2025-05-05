@@ -54,6 +54,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                           "currentPage": controller.currentPage,
                           "haveAddVehicule": false,
                           "title": "Select Vehicle",
+                          "viewCarDetailsOnCardPress": false,
                           "onSelected": (selectedCar) {
                             controller.vehicleId.value = selectedCar.id;
                             controller.vehicleVin.value = selectedCar.vin;
