@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
+import 'package:jappcare/features/authentification/application/usecases/google_login_usecase.dart';
+import 'package:jappcare/features/authentification/application/usecases/google_signup_usecase.dart';
 import 'package:jappcare/features/authentification/ui/authentification/authentification_screen.dart';
 
 import '../domain/repositories/authentification_repository.dart';
@@ -19,17 +21,20 @@ import '../application/usecases/reset_password_usecase.dart';
 
 class AuthentificationDependencies {
   static void init() {
-    Get.lazyPut<AuthentificationRepository>(() => AuthentificationRepositoryImpl(
-        networkService: Get.find()), fenix: true);
+    Get.lazyPut<AuthentificationRepository>(
+        () => AuthentificationRepositoryImpl(networkService: Get.find()),
+        fenix: true);
 
     Get.lazyPut<FeatureWidgetInterface>(() => const AuthentificationScreen(),
         tag: 'AuthentificationScreen', fenix: true);
-      Get.lazyPut(() => LoginUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => LoginUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => RegisterUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => VerifyEmailUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => ResendOtpUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => ForgotPasswordUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => ForgotPasswordUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => ResetPasswordUseCase(Get.find()), fenix: true);
-}
+    Get.lazyPut(() => GoogleLoginUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => GoogleSignupUseCase(Get.find()), fenix: true);
+  }
 }

@@ -26,64 +26,77 @@ class ActivitiesScreen extends GetView<ActivitiesController>
               Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
           ],
         ),
-        body: Stack(
-          children: [
-            garageController.appointments.isEmpty
-                ? const Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ImageComponent(
-                          assetPath: AppImages.noActivities,
-                        ),
-                        Column(
+        body: MixinBuilder<ActivitiesController>(
+          init: ActivitiesController(Get.find()),
+          initState: (_) {},
+          builder: (controller) {
+            return Stack(
+              children: [
+                garageController.appointments.isEmpty
+                    ? const Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              'You have no recent activities',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 16),
+                            ImageComponent(
+                              assetPath: AppImages.noActivities,
                             ),
-                            Text(
-                              'at the moment',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 16),
+                            Column(
+                              children: [
+                                Text(
+                                  'You have no recent activities',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                ),
+                                Text(
+                                  'at the moment',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16),
+                                )
+                              ],
                             )
                           ],
-                        )
-                      ],
-                    ),
-                  )
-                : SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        if (Get.isRegistered<FeatureWidgetInterface>(
-                            tag: 'RecentActivitiesWidget'))
-                          Get.find<FeatureWidgetInterface>(
-                                  tag: 'RecentActivitiesWidget')
-                              .buildView({
-                            'haveTabBar': false,
-                            'haveTitle': true,
-                            'title': 'In Progress Activities',
-                            'status': 'IN_PROGRESS',
-                            'isHorizontal': true
-                          }),
-                        //RecentActivitiesWidget
-                        if (Get.isRegistered<FeatureWidgetInterface>(
-                            tag: 'RecentActivitiesWidget')) ...[
-                          const SizedBox(height: 40),
-                          Get.find<FeatureWidgetInterface>(
-                                  tag: 'RecentActivitiesWidget')
-                              .buildView(),
-                        ]
-                      ],
-                    ),
-                  ),
-            Container(
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * .62,
-                    left: MediaQuery.of(context).size.width * .85),
-                child: const ChatWidget())
-          ],
+                        ),
+                      )
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            if (Get.isRegistered<FeatureWidgetInterface>(
+                                tag: 'RecentActivitiesWidget'))
+                              Get.find<FeatureWidgetInterface>(
+                                      tag: 'RecentActivitiesWidget')
+                                  .buildView({
+                                'haveTabBar': false,
+                                'haveTitle': true,
+                                'title': 'In Progress Activities',
+                                'status': 'IN_PROGRESS',
+                                'isHorizontal': true
+                              }),
+                            //RecentActivitiesWidget
+                            if (Get.isRegistered<FeatureWidgetInterface>(
+                                tag: 'RecentActivitiesWidget')) ...[
+                              const SizedBox(height: 40),
+                              Get.find<FeatureWidgetInterface>(
+                                      tag: 'RecentActivitiesWidget')
+                                  .buildView(),
+                            ]
+                          ],
+                        ),
+                      ),
+                Container(
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * .62,
+                        left: MediaQuery.of(context).size.width * .85),
+                    child: ChatWidget(
+                      onTap: () {
+                        print("Tapped");
+                        controller.goToChatScreen();
+                      },
+                    ))
+              ],
+            );
+          },
         ));
   }
 

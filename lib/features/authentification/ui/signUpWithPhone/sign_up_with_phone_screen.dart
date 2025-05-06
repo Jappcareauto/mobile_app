@@ -165,9 +165,9 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                               prefixIcon: const ImageComponent(
                                   assetPath: AppImages.google, width: 25),
                               isLoading: Get.find<AuthentificationController>()
-                                  .loadingGoogle,
+                                  .loadingGoogleSignup,
                               onPressed: Get.find<AuthentificationController>()
-                                  .loginWithGoogle,
+                                  .googleSignup,
                             ),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

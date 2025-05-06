@@ -10,8 +10,6 @@ class WorkshopCustomMapView extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(WorkshopDetailsController(Get.find()));
-
     return Expanded(
         child: MixinBuilder<WorkshopDetailsController>(
       initState: (_) {},

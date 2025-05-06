@@ -24,7 +24,7 @@ class MapController extends GetxController {
   Set<Marker> markers = {};
   var kYaounde = const CameraPosition(
     target: LatLng(3.8480, 11.5021),
-    zoom: 13.4746,
+    zoom: 5,
   );
 
   MapController(this._appNavigation);

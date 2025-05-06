@@ -156,6 +156,7 @@ class WorkshopController extends GetxController {
       bool? aroundMe,
       bool? availableNow}) async {
     loading.value = true;
+    print(serviceId);
     final result = await _getAllServicesCenterUseCase.call(
         GetServiceCenterCommand(
             name: name,

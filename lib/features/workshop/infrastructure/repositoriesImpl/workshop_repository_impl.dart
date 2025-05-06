@@ -193,6 +193,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       bool? aroundMe,
       bool? availableNow}) async {
     try {
+      print(serviceId);
       final response = await networkService
           .post(WorkshopConstants.getAllServicesCenterGetUri, body: {
         'name': name,
@@ -217,12 +218,13 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
 
     try {
       final k = GarageConstants.apiKey;
-      final response =
-          await dio.post(WorkshopConstants.googleAutocompleteUri, data: {
+      final response = await dio
+          .post(WorkshopConstants.googleAutocompleteUri, queryParameters: {
         'input': input,
         'key': k,
-        'components': 'country:us',
+        'components': 'country:cm',
       });
+      print(response);
       return Right((response.data['predictions'] as List)
           .map((p) => PlacePredictionModel.fromJson(p).toEntity())
           .toList());
@@ -239,8 +241,8 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
 
     try {
       final k = GarageConstants.apiKey;
-      final response =
-          await dio.post(WorkshopConstants.googlePlaceDetailsUri, data: {
+      final response = await dio
+          .post(WorkshopConstants.googlePlaceDetailsUri, queryParameters: {
         'place_id': placeId,
         'key': k,
         'fields': 'formatted_address,geometry',

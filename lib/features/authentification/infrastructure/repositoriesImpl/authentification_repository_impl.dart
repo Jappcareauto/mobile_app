@@ -18,6 +18,8 @@ import '../models/forgot_password_model.dart';
 import '../../domain/entities/reset_password.dart';
 import '../models/reset_password_model.dart';
 
+import 'package:google_sign_in/google_sign_in.dart';
+
 class AuthentificationRepositoryImpl implements AuthentificationRepository {
   final NetworkService networkService;
 
@@ -152,6 +154,79 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
     }
+  }
+
+  @override
+  Future<Either<AuthentificationException, Register>> googleRegister(
+      {required String bearerId}) async {
+    try {
+      final response = await networkService
+          .post(AuthentificationConstants.googleSignUpPostUri, headers: {
+        'Authorization': 'BearerId $bearerId',
+      });
+      return Right(RegisterModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message));
+    }
+  }
+
+  @override
+  Future<void> googleSignIn() async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: <String>['email'],
+    );
+    try {
+      final GoogleSignInAccount? account = await _googleSignIn.signIn();
+      if (account == null) return; // user aborted
+
+      final GoogleSignInAuthentication auth = await account.authentication;
+      final String? idToken = auth.idToken;
+      final String? accessToken = auth.accessToken;
+
+      if (idToken == null) throw Exception('Missing Google ID Token');
+      // Now send `idToken` to your backend
+      // await sendTokenToServer(idToken);
+
+      print(account);
+      print(accessToken);
+      print(idToken);
+      await googleLogin(bearerId: idToken);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  Future<void> googleSignUp() async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: <String>['email'],
+    );
+    try {
+      final GoogleSignInAccount? account = await _googleSignIn.signIn();
+      if (account == null) return; // user aborted
+
+      final GoogleSignInAuthentication auth = await account.authentication;
+      final String? idToken = auth.idToken;
+      final String? accessToken = auth.accessToken;
+
+      if (idToken == null) throw Exception('Missing Google ID Token');
+      // Now send `idToken` to your backend
+      // await sendTokenToServer(idToken);
+
+      print(account);
+      print(accessToken);
+      print(idToken);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> googleLogout() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      scopes: <String>['email'],
+    );
+
+    googleSignIn.disconnect();
   }
 
   //Add methods here

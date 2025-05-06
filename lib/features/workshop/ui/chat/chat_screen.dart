@@ -15,9 +15,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class ChatDetailsScreen extends GetView<ChatController> {
+  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final BookAppointmentController bookController =
       Get.put(BookAppointmentController(Get.find()));
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
 
   ChatDetailsScreen({super.key});
 
@@ -31,6 +31,7 @@ class ChatDetailsScreen extends GetView<ChatController> {
         username: "Sara",
       ),
       body: MixinBuilder<ChatController>(
+        init: ChatController(Get.find()),
         initState: (_) {},
         builder: (_) {
           return Stack(

@@ -95,7 +95,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                             isLoading: Get.find<AuthentificationController>()
                                 .loadingGoogle,
                             onPressed: Get.find<AuthentificationController>()
-                                .loginWithGoogle,
+                                .googleLogin,
                           ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
