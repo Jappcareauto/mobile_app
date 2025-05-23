@@ -1,23 +1,22 @@
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
-import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
+import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
+import 'package:jappcare/features/workshop/ui/chat/widgets/chat_app_bar.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/chat_input_widget.dart';
+// import 'package:jappcare/features/workshop/ui/chat/widgets/chat_invoice.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
-import 'package:jappcare/features/workshop/ui/chat/widgets/resume_appointment_widget.dart';
 
-import 'controllers/workshop_chat_controller.dart';
-import 'widgets/chat_app_bar.dart';
+// import 'controllers/chat_controller.dart';
+// import 'widgets/chat_app_bar.dart';
 // import 'widgets/chat_input_field.dart';
 import 'widgets/chat_message.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-class ChatDetailsScreen extends GetView<WorkshopChatController> {
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
-  final BookAppointmentController bookController =
-      Get.put(BookAppointmentController(Get.find()));
+class ChatDetailsScreen extends GetView<ChatDetailsController> {
+  // final BookAppointmentController bookController =
+  //     Get.put(BookAppointmentController(Get.find()));
 
   ChatDetailsScreen({super.key});
 
@@ -26,14 +25,13 @@ class ChatDetailsScreen extends GetView<WorkshopChatController> {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: Get.theme.secondaryHeaderColor,
-      appBar: const ChatAppBar(
+      appBar: ChatAppBar(
         profileImageUrl: AppImages.avatar,
         username: "Sara",
       ),
-      body: MixinBuilder<WorkshopChatController>(
-        init: WorkshopChatController(Get.find()),
+      body: MixinBuilder<ChatDetailsController>(
         initState: (_) {},
-        builder: (_) {
+        builder: (controller) {
           return Stack(
             children: [
               Container(
@@ -50,8 +48,8 @@ class ChatDetailsScreen extends GetView<WorkshopChatController> {
                     padding: const EdgeInsets.all(12.0),
                     children: [
                       Container(
-                        margin: const EdgeInsets.all(20),
-                        child: const Align(
+                        margin: EdgeInsets.all(20),
+                        child: Align(
                           alignment: Alignment.center,
                           child: Text(
                               'This is the biginning of your conversation with Japcare AutoShop',
@@ -74,7 +72,7 @@ class ChatDetailsScreen extends GetView<WorkshopChatController> {
                                 Get.find<FeatureWidgetInterface>(
                                         tag: 'AvatarWidget')
                                     .buildView({"haveName": true}),
-                              const SizedBox(
+                              SizedBox(
                                 width: 10,
                               ),
                               Text(
@@ -82,7 +80,7 @@ class ChatDetailsScreen extends GetView<WorkshopChatController> {
                                           .userInfos
                                           ?.name ??
                                       "Unknow",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold))
                             ],
@@ -90,26 +88,21 @@ class ChatDetailsScreen extends GetView<WorkshopChatController> {
                         ),
                       ),
 
-                      const SizedBox(
+                      SizedBox(
                         height: 20,
                       ),
-                      Obx(() => ResumeAppointmentWidget(
-                          services: globalControllerWorkshop
-                              .workshopData['serviceCenterName'],
-                          date: globalControllerWorkshop
-                              .workshopData['selectedDate'],
-                          caseId: globalControllerWorkshop
-                              .workshopData['appointmentId'],
-                          note: globalControllerWorkshop
-                              .workshopData['noteController'],
-                          fee: '5,000 Frs',
-                          time: globalControllerWorkshop
-                              .workshopData['selectedTime'])),
-                      const SizedBox(
+                      // Obx(() => ResumeAppointmentWidget(
+                      //     services: Get.arguments['serviceName'],
+                      //     date: bookController.selectedDate.value,
+                      //     caseId: bookController.vehicleVin.value,
+                      //     note: bookController.noteController.text,
+                      //     fee: '5,000 Frs',
+                      //     time: bookController.selectedTime.value)),
+                      SizedBox(
                         height: 20,
                       ),
 
-                      ..._.messages.map((message) {
+                      ...controller.messages.map((message) {
                         return SingleChildScrollView(
                             controller: controller.scrollController,
                             child: ChatMessage(
@@ -125,7 +118,7 @@ class ChatDetailsScreen extends GetView<WorkshopChatController> {
                       }),
 
                       const SizedBox(height: 20),
-                      const Align(
+                      Align(
                         alignment: Alignment.topRight,
                         child: Row(
                           children: [
@@ -136,7 +129,7 @@ class ChatDetailsScreen extends GetView<WorkshopChatController> {
                             //
                             //   backgroundImage: AssetImage(AppImages.avatar),
                             // ),
-                            SizedBox(width: 5),
+                            const SizedBox(width: 5),
 
                             // Text('Japtech AutoShop'),
                           ],
@@ -193,7 +186,7 @@ void onpenModalPaymentMethod(void onConfirm) {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: .1),
+                color: Colors.black.withValues(alpha: 0.1),
                 blurRadius: 10,
                 offset: const Offset(0, -2),
               ),

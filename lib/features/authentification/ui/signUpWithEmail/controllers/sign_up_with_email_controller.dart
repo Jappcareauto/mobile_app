@@ -67,6 +67,11 @@ class SignUpWithEmailController extends GetxController {
     _appNavigation.toNamed(AuthentificationPrivateRoutes.loginWithEmail);
   }
 
+  void goToEmailVerificationPage(String? email) {
+    _appNavigation.toNamed(AuthentificationPrivateRoutes.verifyYourEmail,
+        arguments: email);
+  }
+
   void acceptTermsAndConditions(bool value) {
     acceptedTerms.value = value;
   }

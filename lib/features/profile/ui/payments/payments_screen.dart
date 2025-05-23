@@ -11,7 +11,11 @@ class PaymentsScreen extends GetView<PaymentsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Payment\nMethods", canBack: true),
+      appBar: CustomAppBar(
+        title: "Payment\nMethods",
+        canBack: true,
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+      ),
       body: SafeArea(
         child: Column(children: [
           const SizedBox(height: 20),
@@ -25,6 +29,7 @@ class PaymentsScreen extends GetView<PaymentsController> {
                 ...controller.payments.map(
                   (e) => Obx(
                     () => Container(
+                      width: 350,
                       margin: const EdgeInsets.only(right: 20),
                       decoration: BoxDecoration(
                         border: Border.all(

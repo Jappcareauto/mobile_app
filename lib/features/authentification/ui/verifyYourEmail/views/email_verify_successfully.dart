@@ -19,44 +19,44 @@ class _SuccessVerifiedMailScreenState extends State<SuccessVerifiedMailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Get.theme.primaryColor,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: SizedBox(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const SizedBox(height: 30),
-                  Column(
-                    children: [
-                      Center(
-                        child: ImageComponent(
-                            assetPath: AppImages.successVerify,
-                            width: Get.context!.width * .8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 32,
+                  children: [
+                    Center(
+                      child: ImageComponent(
+                          assetPath: AppImages.successVerify,
+                          width: Get.context!.width * .7),
+                    ),
+                    Center(
+                      child: Text(
+                        'Email Verified\nSuccessfully',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize:
+                                Get.theme.textTheme.displaySmall!.fontSize,
+                            color: Colors.white),
                       ),
-                      const SizedBox(height: 20),
-                      const Center(
-                        child: Text(
-                          'Email Verified\nSuccessfully',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 32, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              )),
+                    ),
+                  ],
+                ),
+              ),
               CustomButton(
-                text: 'Go to login',
+                text: 'Continue',
+                // onPressed: () {
+                //   Get.find<VerifyYourEmailController>().goToHome();
+                // },
                 onPressed: () {
-                  Get.find<VerifyYourEmailController>().goToHome();
+                  Get.find<VerifyYourEmailController>().goToLogin();
                 },
               ),
-              const SizedBox(height: 20),
             ],
           ),
         ),

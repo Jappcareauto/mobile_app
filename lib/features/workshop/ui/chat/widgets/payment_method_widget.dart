@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
-import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
+import 'package:jappcare/features/chat/ui/chat/controllers/chat_controller.dart';
 
 class PaymentMethodeWidget extends StatelessWidget {
   final ChatController chatController = Get.put(ChatController(Get.find()));

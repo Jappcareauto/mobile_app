@@ -25,7 +25,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'package:web_socket_channel/io.dart';
 
-class ChatController extends GetxController {
+class WorkshopChatDetailsController extends GetxController {
   final ConfirmeAppointmentController confirmeAppointmentController =
       ConfirmeAppointmentController(Get.find());
   final AppNavigation _appNavigation;
@@ -34,7 +34,7 @@ class ChatController extends GetxController {
   GetVehiculByIdUseCase getVehiculByIdUseCase =
       GetVehiculByIdUseCase(Get.find());
   final selectedMethod = 'Orange Money'.obs;
-  ChatController(this._appNavigation);
+  WorkshopChatDetailsController(this._appNavigation);
   late WebSocketChannel channel;
   final ScrollController scrollController = ScrollController();
   final RxList<SendMessage> messages = <SendMessage>[].obs;

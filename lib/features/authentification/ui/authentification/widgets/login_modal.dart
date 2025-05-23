@@ -16,7 +16,8 @@ class LoginModalWidget extends StatelessWidget {
       child: SingleChildScrollView(
         child: Container(
             // height: 300,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+            padding:
+                const EdgeInsets.only(left: 12, right: 12, top: 14, bottom: 36),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -34,24 +35,24 @@ class LoginModalWidget extends StatelessWidget {
                         TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 28),
                 CustomButton(
-                    text: "Continue",
-                    prefixIcon: const ImageComponent(
-                      assetPath: AppImages.google,
-                      height: 25,
-                    ),
-                    onPressed: () {
-                      // _BottomSheetLogin();
-                    }),
+                  text: "Continue",
+                  prefixIcon: const ImageComponent(
+                    assetPath: AppImages.google,
+                    height: 25,
+                  ),
+                  onPressed: controller.googleLogin,
+                  // _BottomSheetLogin();
+                ),
                 const SizedBox(height: 16),
                 CustomButton(
                     text: "Login with Email",
                     haveBorder: true,
                     onPressed: controller.goToLoginWithEmail),
-                const SizedBox(height: 16),
-                CustomButton(
-                    text: "Login with Phone",
-                    haveBorder: true,
-                    onPressed: controller.goToLoginWithPhone),
+                // const SizedBox(height: 16),
+                // CustomButton(
+                //     text: "Login with Phone",
+                //     haveBorder: true,
+                //     onPressed: controller.goToLoginWithPhone),
               ],
             )),
       ),

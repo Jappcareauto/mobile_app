@@ -5,13 +5,13 @@
 import '../../domain/repositories/authentification_repository.dart';
 // import '../../domain/entities/login.dart';
 
-class GoogleLoginUseCase {
+class GoogleSignupUseCase {
   final AuthentificationRepository repository;
 
-  GoogleLoginUseCase(this.repository);
+  GoogleSignupUseCase(this.repository);
 
   // Future<Either<AuthentificationException, Login>> call(
   Future<void> call() async {
-    return repository.googleSignIn();
+    return repository.googleSignUp();
   }
 }

@@ -77,6 +77,7 @@ class ProfileScreen extends GetView<ProfileController> {
                       "currentPage": controller.currentPage,
                       "haveAddVehicule": true,
                       "title": "My Garage",
+                      "haveTitlePadding": false,
                       "onTapeAddVehicle": () {
                         print("clique");
                       },
@@ -87,7 +88,7 @@ class ProfileScreen extends GetView<ProfileController> {
                     tag: 'RecentActivitiesWidget'))
                   Get.find<FeatureWidgetInterface>(
                           tag: 'RecentActivitiesWidget')
-                      .buildView(true),
+                      .buildView({"haveTabBar": true, "limit": 2}),
                 const SizedBox(height: 20),
               ],
             ),

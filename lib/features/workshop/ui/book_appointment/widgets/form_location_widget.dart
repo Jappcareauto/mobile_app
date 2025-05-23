@@ -31,6 +31,8 @@ class FormLocationWidget extends GetView<BookAppointmentController> {
               children: controller.placePredictions
                   .map((p) => ListTile(
                         title: Text(p.description),
+                        splashColor:
+                            Get.theme.primaryColor.withValues(alpha: .2),
                         onTap: () {
                           controller.getPlaceDetails(p.placeId);
                         },
@@ -38,16 +40,6 @@ class FormLocationWidget extends GetView<BookAppointmentController> {
                   .toList(),
             );
           }),
-          const SizedBox(
-            height: 20,
-          ),
-          CustomFormField(
-            controller: controller.noteController,
-            focusedBorderColor: AppColors.greyText.withValues(alpha: .1),
-            filColor: AppColors.white,
-            maxLine: 7,
-            hintText: 'Add a Note (Optional)',
-          )
         ],
       ),
     );
