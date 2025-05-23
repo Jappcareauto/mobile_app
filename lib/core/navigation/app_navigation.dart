@@ -32,6 +32,12 @@ abstract class AppNavigation {
   /// [arguments] is an optional parameter that can be used to pass data to the route.
   Future<void>? toNamedAndReplaceAll(String routeName, {dynamic arguments});
 
+  /// Navigate to a named route in the app, replacing all routes in the navigation stack.
+  ///
+  /// [page] the widget to navigate to.
+  /// [arguments] is an optional parameter that can be used to pass data to the route.
+  Future<void>? toWidgetAndReplaceAll(Widget page, {dynamic arguments});
+
   /// Go back to the previous route in the navigation stack.
   ///
   /// [result] is an optional parameter that can be used to pass data back to the previous route.

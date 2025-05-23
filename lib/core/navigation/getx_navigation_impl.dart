@@ -35,6 +35,16 @@ class GetXNavigationImpl implements AppNavigation {
   }
 
   @override
+  Future<void>? toWidgetAndReplaceAll(Widget page, {dynamic arguments}) {
+    try {
+      Get.offAll(() => page, arguments: arguments);
+      return AppDependency.init();
+    } catch (e) {
+      return Get.toNamed(notFoundPage, arguments: arguments);
+    }
+  }
+
+  @override
   Future<void>? toNamedAndReplace(String routeName, {dynamic arguments}) {
     try {
       return Get.offNamed(routeName, arguments: arguments);

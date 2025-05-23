@@ -65,7 +65,7 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                                     ?.copyWith(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                controller.email,
+                                controller.email ?? "",
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,

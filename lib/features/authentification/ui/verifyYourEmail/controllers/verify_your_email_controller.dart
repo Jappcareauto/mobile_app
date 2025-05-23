@@ -22,7 +22,7 @@ class VerifyYourEmailController extends GetxController {
   final AppNavigation _appNavigation;
   VerifyYourEmailController(this._appNavigation);
 
-  late String email;
+  late String? email;
 
   @override
   void onInit() {
@@ -66,7 +66,9 @@ class VerifyYourEmailController extends GetxController {
 
   Future<void> resendOtp() async {
     Get.showLoader();
-    final result = await _resendOtpUseCase.call(ResendOtpCommand(email: email));
+    if (email == null) return;
+    final result =
+        await _resendOtpUseCase.call(ResendOtpCommand(email: email!));
     result.fold(
       (e) {
         Get.closeLoader();

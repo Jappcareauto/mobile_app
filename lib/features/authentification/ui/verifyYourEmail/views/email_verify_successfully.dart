@@ -28,7 +28,7 @@ class _SuccessVerifiedMailScreenState extends State<SuccessVerifiedMailScreen> {
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 20,
+                  spacing: 32,
                   children: [
                     Center(
                       child: ImageComponent(
@@ -41,7 +41,7 @@ class _SuccessVerifiedMailScreenState extends State<SuccessVerifiedMailScreen> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize:
-                                Get.theme.textTheme.displayMedium!.fontSize,
+                                Get.theme.textTheme.displaySmall!.fontSize,
                             color: Colors.white),
                       ),
                     ),
