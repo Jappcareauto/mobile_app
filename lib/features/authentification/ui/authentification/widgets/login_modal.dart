@@ -16,7 +16,8 @@ class LoginModalWidget extends StatelessWidget {
       child: SingleChildScrollView(
         child: Container(
             // height: 300,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
+            padding:
+                const EdgeInsets.only(left: 12, right: 12, top: 14, bottom: 36),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import '../../../../core/navigation/routes/features_pages.dart';
+import '../../ui/chat/chat_details_screen.dart';
 import '../../ui/chat/chat_screen.dart';
 import '../bindings/chat_controller_binding.dart';
+import '../bindings/chat_details_controller_binding.dart';
 import 'chat_private_routes.dart';
 
 class ChatPages implements FeaturePages {
@@ -12,10 +14,16 @@ class ChatPages implements FeaturePages {
         //   page: () => ChatScreen(),
         //   binding: ChatControllerBinding(),
         // ),
+
         GetPage(
           name: ChatPrivateRoutes.home,
-          page: () => ChatDetailsScreen(),
+          page: () => ChatScreen(),
           binding: ChatControllerBinding(),
+        ),
+        GetPage(
+          name: ChatPrivateRoutes.chat,
+          page: () => ChatDetailsScreen(),
+          binding: ChatDetailsControllerBinding(),
         ),
         // Add other routes here
       ];

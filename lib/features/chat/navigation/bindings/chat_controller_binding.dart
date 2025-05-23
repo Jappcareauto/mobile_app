@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
+import 'package:jappcare/features/chat/ui/chat/controllers/chat_controller.dart';
 
 class ChatControllerBinding extends Bindings {
   @override

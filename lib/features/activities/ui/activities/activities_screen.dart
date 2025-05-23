@@ -86,11 +86,10 @@ class ActivitiesScreen extends GetView<ActivitiesController>
                       ),
                 Container(
                     margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * .62,
-                        left: MediaQuery.of(context).size.width * .85),
+                        top: MediaQuery.of(context).size.height * .60,
+                        left: MediaQuery.of(context).size.width * .80),
                     child: ChatWidget(
                       onTap: () {
-                        print("Tapped");
                         controller.goToChatScreen();
                       },
                     ))
