@@ -92,6 +92,18 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       PhoneCommand? phone,
       required String dateOfBirth}) async {
     try {
+      print({
+        'name': name,
+        'email': email,
+        'password': password,
+        'phone': email != null
+            ? null
+            : {
+                'code': phone?.code,
+                'number': phone?.number,
+              },
+        'dateOfBirth': dateOfBirth,
+      });
       final response = await networkService.post(
         AuthentificationConstants.registerPostUri,
         body: {
