@@ -60,6 +60,10 @@ class VerifyYourEmailController extends GetxController {
         .toNamedAndReplaceAll(AuthentificationPrivateRoutes.loginWithEmail);
   }
 
+  void goToVerificationSuccess() {
+    _appNavigation.toWidget(const SuccessVerifiedMailScreen());
+  }
+
   Future<void> resendOtp() async {
     Get.showLoader();
     final result = await _resendOtpUseCase.call(ResendOtpCommand(email: email));

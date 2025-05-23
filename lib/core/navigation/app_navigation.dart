@@ -14,6 +14,12 @@ abstract class AppNavigation {
   /// [arguments] is an optional parameter that can be used to pass data to the widget.
   Future<void>? to(Widget page, {dynamic arguments});
 
+  /// Navigate to a specific widget in the app.
+  ///
+  /// [page] is the widget to navigate to.
+  /// [arguments] is an optional parameter that can be used to pass data to the widget.
+  Future<void>? toWidget(Widget page, {dynamic arguments});
+
   /// Navigate to a named route in the app, replacing the current route.
   ///
   /// [routeName] is the name of the route to navigate to.

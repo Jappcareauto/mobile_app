@@ -127,7 +127,8 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                       CustomButton(
                         text: 'Continue',
                         isLoading: controller.verifyEmailFormHelper.isLoading,
-                        onPressed: controller.verifyEmailFormHelper.submit,
+                        // onPressed: controller.verifyEmailFormHelper.submit,
+                        onPressed: controller.goToVerificationSuccess,
                       ),
                     ],
                   ),
