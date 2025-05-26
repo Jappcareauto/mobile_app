@@ -60,7 +60,7 @@ class ServiceWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
-                      item.definition.split("_").join(" "),
+                      item.title.split("_").join(" "),
                       style: TextStyle(
                         fontSize: 16,
                         color: selectedFilter == index

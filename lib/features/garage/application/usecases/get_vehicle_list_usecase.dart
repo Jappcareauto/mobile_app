@@ -12,6 +12,6 @@ class GetVehicleListUseCase {
 
   Future<Either<GarageException, List<Vehicle>>> call(
       GetVehicleListCommand command) async {
-    return await repository.getVehicleList(command.garageId);
+    return await repository.getVehicleList(command.ownerId);
   }
 }

@@ -149,7 +149,7 @@ class GarageController extends GetxController {
       },
       (success) {
         myGarage = success;
-        getVehicleList(myGarage!.id);
+        getVehicleList(userId);
         getAllAppointments();
         Get.find<AppEventService>()
             .emit<String>(AppConstants.garageIdEvent, myGarage!.id);
@@ -172,10 +172,10 @@ class GarageController extends GetxController {
     });
   }
 
-  Future<void> getVehicleList(String garageId) async {
+  Future<void> getVehicleList(String ownerId) async {
     vehicleLoading.value = true;
     final result = await _getVehicleListUseCase
-        .call(GetVehicleListCommand(garageId: garageId));
+        .call(GetVehicleListCommand(ownerId: ownerId));
     result.fold(
       (e) {
         vehicleLoading.value = false;

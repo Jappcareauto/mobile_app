@@ -107,7 +107,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                                       .value =
                                                   controller
                                                       .centerServices[index]
-                                                      .definition;
+                                                      .title;
                                               controller
                                                       .selectedServiceId.value =
                                                   controller

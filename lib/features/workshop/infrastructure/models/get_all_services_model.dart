@@ -48,7 +48,7 @@ class ServiceModel {
   final String title;
   final String? description;
   final String? serviceCenterId;
-  final String definition;
+  final String? definition;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -59,7 +59,7 @@ class ServiceModel {
     required this.title,
     this.description,
     this.serviceCenterId,
-    required this.definition,
+    this.definition,
     required this.id,
     this.createdBy,
     this.updatedBy,

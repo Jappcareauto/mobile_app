@@ -11,8 +11,7 @@ abstract class GarageRepository {
   Future<Either<GarageException, GetGarageByOwnerId>> getGarageByOwnerId(
       String userId);
 
-  Future<Either<GarageException, List<Vehicle>>> getVehicleList(
-      String garageId);
+  Future<Either<GarageException, List<Vehicle>>> getVehicleList(String ownerId);
 
   Future<Either<GarageException, Vehicle>> addVehicle(
       String garageId, String vin, String registrationNumber);

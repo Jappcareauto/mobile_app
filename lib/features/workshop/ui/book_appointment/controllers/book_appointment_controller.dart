@@ -87,7 +87,7 @@ class BookAppointmentController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (centerServices.isNotEmpty) {
         selectedServiceId.value = centerServices[0].id;
-        selectedServiceName.value = centerServices[0].definition;
+        selectedServiceName.value = centerServices[0].title;
         // selectedServiceIndex.value = 0;
       }
 

@@ -1,9 +1,7 @@
 class GetVehicleListCommand {
-
-  final String garageId;
+  final String ownerId;
 
   const GetVehicleListCommand({
-    required this.garageId,
+    required this.ownerId,
   });
 }
-

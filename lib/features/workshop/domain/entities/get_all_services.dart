@@ -31,13 +31,13 @@ class ServiceEntity {
   final String title;
   final String? description;
   final String? serviceCenterId;
-  final String definition;
+  final String? definition;
 
   ServiceEntity._({
     required this.title,
     this.description,
     this.serviceCenterId,
-    required this.definition,
+    this.definition,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -49,7 +49,7 @@ class ServiceEntity {
     required title,
     required description,
     serviceCenterId,
-    required definition,
+    definition,
     required id,
     required createdBy,
     required updatedBy,

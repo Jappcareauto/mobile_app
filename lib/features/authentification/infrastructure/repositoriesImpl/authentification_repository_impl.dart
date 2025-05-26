@@ -1,4 +1,5 @@
 //Don't translate me
+import 'dart:io';
 import '../../domain/repositories/authentification_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
 
@@ -160,7 +161,12 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     try {
       final response = await networkService
           .post(AuthentificationConstants.googleLoginPostUri, headers: {
-        'Authorization': 'Bearer $bearerId',
+        'Authorization': 'BearerId $bearerId',
+        'Platform': Platform.isAndroid
+            ? 'android'
+            : Platform.isIOS
+                ? 'ios'
+                : 'web',
       });
       return Right(LoginModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
@@ -183,13 +189,15 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   }
 
   @override
-  Future<void> googleSignIn() async {
-    final GoogleSignIn _googleSignIn = GoogleSignIn(
+  Future<Either<AuthentificationException, Login>> googleSignIn() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn(
       scopes: <String>['email'],
     );
     try {
-      final GoogleSignInAccount? account = await _googleSignIn.signIn();
-      if (account == null) return; // user aborted
+      final GoogleSignInAccount? account = await googleSignIn.signIn();
+      if (account == null) {
+        throw Exception('The account was not found'); // user aborted
+      }
 
       final GoogleSignInAuthentication auth = await account.authentication;
       final String? idToken = auth.idToken;
@@ -202,19 +210,20 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       print(account);
       print(accessToken);
       print(idToken);
-      await googleLogin(bearerId: idToken);
-    } catch (e) {
+      return await googleLogin(bearerId: idToken);
+    } on BaseException catch (e) {
       print(e);
+      return Left(AuthentificationException(e.message));
     }
   }
 
   @override
   Future<void> googleSignUp() async {
-    final GoogleSignIn _googleSignIn = GoogleSignIn(
+    final GoogleSignIn googleSignIn = GoogleSignIn(
       scopes: <String>['email'],
     );
     try {
-      final GoogleSignInAccount? account = await _googleSignIn.signIn();
+      final GoogleSignInAccount? account = await googleSignIn.signIn();
       if (account == null) return; // user aborted
 
       final GoogleSignInAuthentication auth = await account.authentication;
