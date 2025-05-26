@@ -58,13 +58,14 @@ class GarageController extends GetxController {
     Get.find<AppEventService>()
         .on<String>(AppConstants.userIdEvent)
         .listen((userId) {
+      print('user id: $userId');
       if (userId != '') fetchData(userId!);
     });
 
     // Chargement initial des données
     final lastUserId =
         Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
-    // print(lastUserId);
+    print('user id 2: $lastUserId');
     if (lastUserId != null) {
       fetchData(lastUserId);
     }
@@ -87,7 +88,10 @@ class GarageController extends GetxController {
     vehicleLoading.value = true;
 
     try {
-      await getGarageByOwnerId(userId);
+      await getVehicleList(userId);
+      await getAllAppointments();
+      update();
+      // await getGarageByOwnerId(userId);
     } catch (e) {
       print("Erreur lors de la récupération des données : $e");
     } finally {
