@@ -147,11 +147,11 @@ class ListVehicleWidget extends StatelessWidget
                         showDelete: showDelete,
                         haveBorder: currentPage?.value == index ? true : false,
                         containerheight: 200,
-                        onPressed: () => {
-                          if (viewCarDetailsOnCardPress == true)
-                            {
-                              controller.goToVehicleDetails(vehicle),
-                            }
+                        onPressed: () {
+                          print(viewCarDetailsOnCardPress);
+                          if (viewCarDetailsOnCardPress == true) {
+                            controller.goToVehicleDetails(vehicle);
+                          }
                         },
                         next: vehiclesToDisplay.length > 1
                             ? () {

@@ -108,6 +108,7 @@ class GarageController extends GetxController {
   }
 
   void goToVehicleDetails(Vehicle vehicleDetails) {
+    print("View car details");
     _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails,
         arguments: vehicleDetails);
   }

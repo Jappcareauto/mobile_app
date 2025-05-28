@@ -65,18 +65,32 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                   //   ),
                   // ),
 
-                  if (vhcle.imageUrl != null)
+                  if (vhcle.imageUrl != null) ...[
                     Container(
                       width: Get.width,
                       height: 200,
                       padding: const EdgeInsets.only(right: 10),
-                      child: ImageComponent(
-                        // assetPath: vhcle.imageUrl == null ? imagePath : "",
-                        imageUrl: vhcle.imageUrl,
-                        width: Get.width * .85,
-                        height: 200,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
+                        border: Border.all(width: 1, color: Color(0XFFE5E2E1)),
+                        color: Colors.white,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                            16), // same radius as the container
+                        child: ImageComponent(
+                          // assetPath: vhcle.imageUrl == null ? imagePath : "",
+                          imageUrl: vhcle.imageUrl,
+                          width: Get.width * .85,
+                          height: 200,
+                        ),
                       ),
                     ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ],
                   // ListView(
                   //     scrollDirection: Axis.horizontal,
                   //     children: vhcle.media

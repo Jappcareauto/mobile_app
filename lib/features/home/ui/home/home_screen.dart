@@ -96,6 +96,7 @@ class HomeScreen extends GetView<HomeController> {
                     "pageController": controller.pageController,
                     "currentPage": controller.currentPage,
                     "title": "My Garage",
+                    'viewCarDetailsOnCardPress': true,
                     "onTapeAddVehicle": () {
                       print("clique");
                     },
