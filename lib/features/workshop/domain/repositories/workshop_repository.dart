@@ -51,6 +51,9 @@ abstract class WorkshopRepository {
 
   Future<Either<WorkshopException, GetAllservices>> getAllservices();
 
+  Future<Either<WorkshopException, GetAllservices>>
+      getAllServicesCenterServices(String serviceCenterId);
+
   Future<Either<WorkshopException, Vehicle>> getVehiculById(String id);
 
   Future<Either<WorkshopException, List<PlacePrediction>>> fetchAutocomplete(

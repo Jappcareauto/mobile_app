@@ -8,6 +8,7 @@ class GarageConstants {
   static const String getVehicleListGetUri = '/vehicle/list';
   static const String getVehicleListByOwnerIdGetUri = '/vehicle/by-owner-id';
   static const String addVehiclePostUri = '/vehicle';
+  static const String getVehicleByIdUri = '/vehicle';
   static const String deleteVehicleUri = '/vehicle';
   static const String updateVehicleUri = '/vehicle';
   static const String getAllAppointmentsUri = '/appointment/list';

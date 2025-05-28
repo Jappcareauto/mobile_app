@@ -7,7 +7,10 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
+import 'package:jappcare/features/workshop/application/usecases/get_service_center_services_usecase.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -20,8 +23,15 @@ class WorkshopDetailsController extends GetxController {
 
   LatLng? userPosition;
   final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
+  final GetServiceCenterServicesUsecase _getServiceCenterServicesUseCase =
+      Get.find();
+
+  final serviceCenterServicesLoading = false.obs;
+  Rxn<GetAllservices> serviceCenterServices = Rxn<GetAllservices>();
+
   final loading = false.obs;
   final locationPermissionGranted = false.obs;
+
   final arguments = Get.find<GlobalcontrollerWorkshop>().workshopData;
 
   RxString placeName = ''.obs;
@@ -43,12 +53,32 @@ class WorkshopDetailsController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    if (arguments['id']) {
+      getAllServiceCenterServices();
+    }
     getPosition();
     // getPlaceName();
   }
 
   void goBack() {
     _appNavigation.goBack();
+  }
+
+  Future<void> getAllServiceCenterServices() async {
+    serviceCenterServicesLoading.value = true;
+    final result = await _getServiceCenterServicesUseCase.call(arguments['id']);
+    result.fold(
+      (e) {
+        serviceCenterServicesLoading.value = false;
+        if (Get.context != null) {
+          Get.showCustomSnackBar(e.message);
+        }
+      },
+      (response) {
+        serviceCenterServicesLoading.value = false;
+        serviceCenterServices.value = response;
+      },
+    );
   }
 
   // Future<void> getPlaceName() async {

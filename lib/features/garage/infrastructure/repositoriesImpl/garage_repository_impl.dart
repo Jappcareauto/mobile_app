@@ -46,7 +46,20 @@ class GarageRepositoryImpl implements GarageRepository {
   }
 
   @override
-  Future<Either<GarageException, List<Vehicle>>> getVehicleList(
+  Future<Either<GarageException, List<Vehicle>>> getVehicleList() async {
+    try {
+      final response = await networkService
+          .post(GarageConstants.getVehicleListGetUri, body: {});
+      return Right((response['data'] as List)
+          .map((e) => VehicleModel.fromJson(e).toEntity())
+          .toList());
+    } on BaseException catch (e) {
+      return Left(GarageException(e.message));
+    }
+  }
+
+  @override
+  Future<Either<GarageException, List<Vehicle>>> getVehicleListByOwnerId(
       String ownerId) async {
     try {
       final response = await networkService
@@ -54,6 +67,18 @@ class GarageRepositoryImpl implements GarageRepository {
       return Right((response['data'] as List)
           .map((e) => VehicleModel.fromJson(e).toEntity())
           .toList());
+    } on BaseException catch (e) {
+      return Left(GarageException(e.message));
+    }
+  }
+
+  @override
+  Future<Either<GarageException, Vehicle>> getVehicleById(
+      String vehicleId) async {
+    try {
+      final response = await networkService
+          .get('${GarageConstants.getVehicleByIdUri}/$vehicleId');
+      return Right(VehicleModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message));
     }

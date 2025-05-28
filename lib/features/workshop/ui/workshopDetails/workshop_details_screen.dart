@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
@@ -177,7 +176,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
-                  spacing: 20,
+                    spacing: 20,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
@@ -186,21 +185,61 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                        child: globalcontrollerWorkshop
-                                        .workshopData['centerServices'] !=
-                                    null &&
-                                globalcontrollerWorkshop
-                                    .workshopData['centerServices']!.isNotEmpty
+                        child: controller.serviceCenterServices.value != null &&
+                                controller.serviceCenterServices.value!.data
+                                    .isNotEmpty
                             ? ServiceWidget(
-                                tabs: (globalcontrollerWorkshop
-                                        .workshopData['centerServices']
-                                    as List<ServiceEntity>),
+                                tabs: controller
+                                    .serviceCenterServices.value!.data,
                                 borderRadius: BorderRadius.circular(16),
+                                haveBorder: true,
                               )
                             : const Text('Aucun service disponible'),
                       ),
+
+                      // SizedBox(
+                      //   child: globalcontrollerWorkshop
+                      //                   .workshopData['centerServices'] !=
+                      //               null &&
+                      //           globalcontrollerWorkshop
+                      //               .workshopData['centerServices']!.isNotEmpty
+                      //       ? ServiceWidget(
+                      //           tabs: (globalcontrollerWorkshop
+                      //                   .workshopData['centerServices']
+                      //               as List<ServiceEntity>),
+                      //           borderRadius: BorderRadius.circular(16),
+                      //         )
+                      //       : const Text('Aucun service disponible'),
+                      // ),
                     ]),
               ),
+              // Container(
+              //   padding: EdgeInsets.symmetric(horizontal: 20.0),
+              //   child: Column(
+              //       spacing: 20,
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         const Text(
+              //           "Specialized Services",
+              //           style: TextStyle(
+              //               fontSize: 18, fontWeight: FontWeight.bold),
+              //         ),
+              //         SizedBox(
+              //           child: globalcontrollerWorkshop
+              //                           .workshopData['centerServices'] !=
+              //                       null &&
+              //                   globalcontrollerWorkshop
+              //                       .workshopData['centerServices']!.isNotEmpty
+              //               ? ServiceWidget(
+              //                   tabs: (globalcontrollerWorkshop
+              //                           .workshopData['centerServices']
+              //                       as List<ServiceEntity>),
+              //                   borderRadius: BorderRadius.circular(16),
+              //                 )
+              //               : const Text('Aucun service disponible'),
+              //         ),
+              //       ]),
+              // ),
               const SizedBox(height: 20),
               const SizedBox(
                   height: 300,

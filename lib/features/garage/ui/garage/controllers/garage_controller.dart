@@ -18,7 +18,6 @@ import '../../../application/usecases/get_garage_by_owner_id_usecase.dart';
 import '../../../application/usecases/get_garage_by_owner_id_command.dart';
 
 import '../../../application/usecases/get_vehicle_list_usecase.dart';
-import '../../../application/usecases/get_vehicle_list_command.dart';
 
 import '../widgets/delete_vehicle_widget.dart';
 
@@ -169,7 +168,7 @@ class GarageController extends GetxController {
     final result = await _getPlaceNameUseCase
         .call(GetPlaceNameCommand(longitude: longitude, latitude: latitude));
     result.fold((error) {
-      print(error.message);
+      debugPrint(error.message);
     }, (response) {
       placeName.value = response;
       update();
@@ -178,8 +177,7 @@ class GarageController extends GetxController {
 
   Future<void> getVehicleList(String ownerId) async {
     vehicleLoading.value = true;
-    final result = await _getVehicleListUseCase
-        .call(GetVehicleListCommand(ownerId: ownerId));
+    final result = await _getVehicleListUseCase.call();
     result.fold(
       (e) {
         vehicleLoading.value = false;

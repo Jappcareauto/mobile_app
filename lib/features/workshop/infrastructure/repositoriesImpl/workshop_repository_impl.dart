@@ -210,6 +210,22 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
+  @override
+  Future<Either<WorkshopException, GetAllservices>>
+      getAllServicesCenterServices(String serviceCenterId) async {
+    try {
+      print(serviceCenterId);
+      final response = await networkService.post(
+          '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.services}',
+          body: {
+            'serviceCenterId': serviceCenterId,
+          });
+      return Right(GetAllservicesModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(WorkshopException(e.message));
+    }
+  }
+
   // 1. Autocomplete → gets a list of { description, place_id }
   @override
   Future<Either<WorkshopException, List<PlacePrediction>>> fetchAutocomplete(

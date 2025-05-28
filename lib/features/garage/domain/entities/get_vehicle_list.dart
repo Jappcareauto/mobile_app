@@ -1,7 +1,7 @@
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
 
 class Vehicle {
-  final String? garageId;
+  final String? serviceCenterId;
   final String name;
   final String? imageUrl;
   final String? description;
@@ -16,7 +16,7 @@ class Vehicle {
   final String updatedAt;
 
   Vehicle._({
-    this.garageId,
+    this.serviceCenterId,
     required this.name,
     this.description,
     this.imageUrl,
@@ -32,7 +32,7 @@ class Vehicle {
   });
 
   factory Vehicle.create({
-    garageId,
+    serviceCenterId,
     required name,
     String? imgUrl,
     description,
@@ -48,7 +48,7 @@ class Vehicle {
   }) {
     // Add any validation or business logic here
     return Vehicle._(
-      garageId: garageId,
+      serviceCenterId: serviceCenterId,
       name: name,
       imageUrl: imgUrl,
       description: description,
@@ -85,6 +85,15 @@ class Detail {
   final String? updatedBy;
   final String createdAt;
   final String updatedAt;
+  final String? manufacturer;
+  final String? manufacturerRegion;
+  final String? manufacturerCountry;
+  final String? manufacturerPlantCity;
+  final String? restraint;
+  final String? engineSize;
+  final String? engineDescription;
+  final String? engineCapacity;
+  final String? dimensions;
 
   Detail._({
     this.make,
@@ -102,6 +111,15 @@ class Detail {
     this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
+    this.manufacturer,
+    this.manufacturerRegion,
+    this.manufacturerCountry,
+    this.manufacturerPlantCity,
+    this.restraint,
+    this.engineSize,
+    this.engineDescription,
+    this.engineCapacity,
+    this.dimensions,
   });
 
   factory Detail.create({
@@ -120,6 +138,15 @@ class Detail {
     updatedBy,
     required createdAt,
     required updatedAt,
+    manufacturer,
+    manufacturerRegion,
+    manufacturerCountry,
+    manufacturerPlantCity,
+    restraint,
+    engineSize,
+    engineDescription,
+    engineCapacity,
+    dimensions,
   }) {
     // Add any validation or business logic herea
     return Detail._(
@@ -138,6 +165,15 @@ class Detail {
       updatedBy: updatedBy,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      manufacturer: manufacturer,
+      manufacturerRegion: manufacturerRegion,
+      manufacturerCountry: manufacturerCountry,
+      manufacturerPlantCity: manufacturerPlantCity,
+      restraint: restraint,
+      engineSize: engineSize,
+      engineDescription: engineDescription,
+      engineCapacity: engineCapacity,
+      dimensions: dimensions,
     );
   }
 }
@@ -154,6 +190,9 @@ class Media {
   final String? updatedBy;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? mainItemUrl;
+  final List<String>? items;
+  final String? source;
 
   Media._({
     required this.sourceUrl,
@@ -167,6 +206,9 @@ class Media {
     this.updatedBy,
     this.createdAt,
     this.updatedAt,
+    this.mainItemUrl,
+    this.items,
+    this.source,
   });
 
   factory Media.create({
@@ -181,6 +223,9 @@ class Media {
     updatedBy,
     createdAt,
     updatedAt,
+    mainItemUrl,
+    items,
+    source,
   }) {
     // Add any validation or business logic here
     return Media._(
@@ -195,6 +240,9 @@ class Media {
       updatedBy: updatedBy,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      mainItemUrl: mainItemUrl,
+      items: items,
+      source: source,
     );
   }
 }

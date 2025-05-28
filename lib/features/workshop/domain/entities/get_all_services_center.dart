@@ -37,8 +37,7 @@ class Data {
   final String updatedAt;
   final String? imageId;
   final String? imageUrl;
-  final String? available;
-  final bool availability;
+  final bool? available;
 
   Data._({
     required this.name,
@@ -51,7 +50,6 @@ class Data {
     this.updatedBy,
     this.imageId,
     this.imageUrl,
-    required this.availability,
     this.available,
     required this.createdAt,
     required this.updatedAt,
@@ -70,8 +68,7 @@ class Data {
       required updatedAt,
       required imageId,
       required imageUrl,
-      required availability,
-      required available}) {
+      available}) {
     // Add any validation or business logic here
     return Data._(
         name: name,
@@ -86,7 +83,6 @@ class Data {
         updatedAt: updatedAt,
         imageId: imageId,
         imageUrl: imageUrl,
-        availability: availability,
         available: available);
   }
 }

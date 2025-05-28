@@ -148,22 +148,24 @@ class ListVehicleWidget extends StatelessWidget
                         haveBorder: currentPage?.value == index ? true : false,
                         containerheight: 200,
                         onPressed: () => {
-                          if (viewCarDetailsOnCardPress!)
+                          if (viewCarDetailsOnCardPress == true)
                             {
                               controller.goToVehicleDetails(vehicle),
                             }
                         },
-                        next: () {
-                          if (index == (vehiclesToDisplay.length - 1) &&
-                              !haveAddVehicule!) {
-                            pageController?.jumpToPage(0);
-                          } else {
-                            pageController?.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeInOut,
-                            );
-                          }
-                        },
+                        next: vehiclesToDisplay.length > 1
+                            ? () {
+                                if (index == (vehiclesToDisplay.length - 1) &&
+                                    !haveAddVehicule!) {
+                                  pageController?.jumpToPage(0);
+                                } else {
+                                  pageController?.nextPage(
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                  );
+                                }
+                              }
+                            : null,
                         delete: () {
                           controller.openDeleteVehicle(vehicle);
                         },

@@ -19,7 +19,7 @@ abstract class AuthentificationRepository {
 
   Future<Either<AuthentificationException, Login>> googleSignIn();
 
-  Future<void> googleSignUp();
+  Future<Either<AuthentificationException, Register>> googleSignUp();
 
   Future<Either<AuthentificationException, Register>> register(
       {required String name,

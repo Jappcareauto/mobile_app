@@ -5,6 +5,8 @@ class WorkshopConstants {
 
   // Add other constants here
   static const String getsetterPostUri = '/get/set';
+  static const String services = '/services';
+  static const String getServiceCenterGetUri = '/service-centers';
   static const String getAllServicesCenterGetUri = '/service-center/list';
   static const String bookAppointmentPostUri = '/appointment';
   static const String createdRomeChatPostUri = '/chatroom';

@@ -131,16 +131,21 @@ class RecentActivitiesWidget extends StatelessWidget
               Column(
                 spacing: 20,
                 children: [
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: ImageComponent(
-                          assetPath: AppConstants.noActivities,
-                          height: 200,
-                          width: double.infinity,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Get.theme.scaffoldBackgroundColor,
+                    ),
+                    child: const Row(
+                      children: [
+                        Expanded(
+                          child: ImageComponent(
+                            assetPath: AppConstants.noActivities,
+                            height: 250,
+                            width: double.infinity,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Text(noActivitiesPlaceholder ??
                       "You have no recent activities at the moment"),

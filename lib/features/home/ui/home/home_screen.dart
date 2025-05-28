@@ -37,6 +37,7 @@ class HomeScreen extends GetView<HomeController> {
           backgroundColor: AppColors.white,
           child: SingleChildScrollView(
             child: Column(
+              spacing: 20,
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -88,14 +89,12 @@ class HomeScreen extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'ListVehicleWidget'))
                   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
                       .buildView({
                     "pageController": controller.pageController,
                     "currentPage": controller.currentPage,
-                    "haveAddVehicule": true,
                     "title": "My Garage",
                     "onTapeAddVehicle": () {
                       print("clique");
@@ -103,7 +102,6 @@ class HomeScreen extends GetView<HomeController> {
                   }),
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'RecentActivitiesWidget')) ...[
-                  const SizedBox(height: 20),
                   Get.find<FeatureWidgetInterface>(
                           tag: 'RecentActivitiesWidget')
                       .buildView({
@@ -153,7 +151,6 @@ class HomeScreen extends GetView<HomeController> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
                       // Row(
                       //   children: [
                       //     Expanded(
@@ -184,7 +181,6 @@ class HomeScreen extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
                 //RecentActivitiesWidget
 
                 if (Get.isRegistered<FeatureWidgetInterface>(

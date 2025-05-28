@@ -1,5 +1,4 @@
 //Don't translate me
-import 'get_vehicle_list_command.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/core/exceptions/garage_exception.dart';
 import '../../domain/repositories/garage_repository.dart';
@@ -10,8 +9,7 @@ class GetVehicleListUseCase {
 
   GetVehicleListUseCase(this.repository);
 
-  Future<Either<GarageException, List<Vehicle>>> call(
-      GetVehicleListCommand command) async {
-    return await repository.getVehicleList(command.ownerId);
+  Future<Either<GarageException, List<Vehicle>>> call() async {
+    return await repository.getVehicleList();
   }
 }

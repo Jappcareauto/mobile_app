@@ -59,8 +59,7 @@ class DataModel {
   final String updatedAt;
   final String? imageId;
   final String? imageUrl;
-  final String? available;
-  final bool availability;
+  final bool? available;
 
   DataModel._({
     required this.name,
@@ -75,7 +74,6 @@ class DataModel {
     required this.updatedAt,
     this.imageId,
     this.imageUrl,
-    required this.availability,
     this.available,
   });
 
@@ -100,7 +98,6 @@ class DataModel {
       updatedAt: json['updatedAt'],
       imageId: json['imageId'],
       imageUrl: json['imageUrl'],
-      availability: json['availability'] ?? false,
       available: json['available'],
     );
   }
@@ -121,7 +118,6 @@ class DataModel {
     data['updatedAt'] = updatedAt;
     data['imageId'] = imageId;
     data['imageUrl'] = imageUrl;
-    data['availability'] = availability;
     data['available'] = available;
     return data;
   }
@@ -143,7 +139,6 @@ class DataModel {
       updatedAt: entity.updatedAt,
       imageId: entity.imageId,
       imageUrl: entity.imageUrl,
-      availability: entity.availability,
       available: entity.available,
     );
   }
@@ -162,7 +157,6 @@ class DataModel {
       updatedAt: updatedAt,
       imageId: imageId,
       imageUrl: imageUrl,
-      availability: availability,
       available: available,
     );
   }

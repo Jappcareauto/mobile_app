@@ -89,9 +89,16 @@ class AuthentificationController extends GetxController {
 
   void googleSignup() async {
     loadingGoogle.value = true;
-    _googleSignupUseCase.call();
-    await Future.delayed(const Duration(seconds: 2));
-    loadingGoogle.value = false;
+    final response = await _googleSignupUseCase.call();
+
+    response.fold((e) {
+      loadingGoogle.value = false;
+      if (Get.context != null) {
+        Get.showCustomSnackBar(e.message);
+      }
+    }, (success) {
+      loadingGoogle.value = false;
+    });
   }
 
   void navigateToForgotPassword() {
