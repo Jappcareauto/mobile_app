@@ -87,7 +87,7 @@ class CarCardWidget extends GetView<GarageController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  spacing: 10,
+                  spacing: 6,
                   children: [
                     Row(
                       spacing: 8,
@@ -124,29 +124,26 @@ class CarCardWidget extends GetView<GarageController> {
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
-                spacing: 8,
+                spacing: 4,
                 children: [
                   ImageComponent(
                     imageUrl: pathImageCar,
                     assetPath: AppImages.car,
-                    width: Get.width * 0.3,
+                    width: Get.width * 0.35,
                   ),
-                  // Flexible(
-                  //   fit: FlexFit.loose,
-                  //   child: Text(
-                  //     nameCar,
-                  //     textAlign: TextAlign.center,
-                  //     // Centre le texte
-                  //     overflow: TextOverflow.ellipsis,
-                  //     // Tronque le texte si trop long
-                  //     maxLines: 1,
-                  //     // Limite le texte à une seule ligne
-                  //     style: const TextStyle(
-                  //       fontSize: 12, // Ajuste la taille de la police
-                  //       fontWeight: FontWeight.bold, // Style en gras
-                  //     ),
-                  //   ),
-                  // ),
+                  Text(
+                    nameCar,
+                    textAlign: TextAlign.center,
+                    // Centre le texte
+                    overflow: TextOverflow.ellipsis,
+                    // Tronque le texte si trop long
+                    maxLines: 1,
+                    // Limite le texte à une seule ligne
+                    style: const TextStyle(
+                      fontSize: 14, // Ajuste la taille de la police
+                      fontWeight: FontWeight.bold, // Style en gras
+                    ),
+                  ),
                 ],
               ),
             ],

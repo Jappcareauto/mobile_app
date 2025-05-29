@@ -13,12 +13,13 @@ class BookAppointmentUseCase {
   Future<Either<WorkshopException, BookAppointment>> call(
       BookAppointmentCommand command) async {
     return await repository.bookAppointment(
-        command.date,
-        command.locationType,
-        command.note,
-        command.serviceId,
-        command.vehicleId,
-        command.status,
-        command.timeOfDay);
+        date: command.date,
+        locationType: command.locationType,
+        note: command.note,
+        serviceId: command.serviceId,
+        vehicleId: command.vehicleId,
+        serviceCenterId: command.serviceCenterId,
+        createdBy: command.createdBy,
+        timeOfDay: command.timeOfDay);
   }
 }

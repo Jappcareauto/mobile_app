@@ -53,13 +53,15 @@ class RecentActivitiesWidget extends StatelessWidget
                   "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
               time:
                   "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
-              localisation: e.locationType,
-              nameCar: e.vehicle?.name ?? "Unknown",
+              localisation: e.locationType == "SERVICE_CENTER"
+                  ? "On Site"
+                  : e.locationType,
+              nameCar: "${e.vehicle?.detail?.make} ${e.vehicle?.detail?.model}",
               pathImageCar: e.vehicle?.imageUrl ?? "",
               status: e.status ?? "Unknown",
               onPressed: () => controller.goToAppointmentDetail(e),
               appointmentType:
-                  e.service?.title.replaceAll("_", " ").toLowerCase(),
+                  e.service?.title.replaceAll("_", " ").capitalizeFirst,
               serviceCenterName: e.serviceCenter?.name?.trim(),
             );
           }).toList();

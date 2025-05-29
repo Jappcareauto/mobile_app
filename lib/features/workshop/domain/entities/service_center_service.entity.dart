@@ -10,7 +10,7 @@ class ServiceCenterServiceEntity {
   final String createdAt;
   final String updatedAt;
   final double? price;
-  final double? durationMinutes;
+  final int? durationMinutes;
   final bool? available;
 
   ServiceCenterServiceEntity._({

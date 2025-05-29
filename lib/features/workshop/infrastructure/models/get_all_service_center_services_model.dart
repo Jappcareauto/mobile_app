@@ -17,7 +17,7 @@ class GetAllServiceCenterServicesModel {
   factory GetAllServiceCenterServicesModel.fromJson(Map<String, dynamic> json) {
     return GetAllServiceCenterServicesModel._(
       data: List<ServiceCenterServiceModel>.from(
-          json['data'].map((x) => DataModel.fromJson(x))),
+          json['data'].map((x) => ServiceCenterServiceModel.fromJson(x))),
       pagination: PaginationModel.fromJson(json['pagination']),
     );
   }
@@ -57,7 +57,7 @@ class ServiceCenterServiceModel {
   final ServiceCenterModel serviceCenter;
   final ServiceModel service;
   final double? price;
-  final double? durationMinutes;
+  final int? durationMinutes;
   final bool? available;
 
   ServiceCenterServiceModel._({

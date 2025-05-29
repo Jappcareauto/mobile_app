@@ -1,39 +1,31 @@
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'dart:ui';
 
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 
-class CarCardAddVehicle extends StatelessWidget {
+class VehicleCardWidget extends StatelessWidget {
   final String carName;
   final List<String> carDetails;
-  final String imagePath;
+  final String? imagePath;
   final String? imageUrl;
 
   final Function()? onPressed;
-  final Function()? next;
-  final Function()? delete;
   final bool? isSelected;
   final bool? showDelete;
-  final bool hideblure;
   final bool haveBGColor;
   final bool haveBorder;
 
   final double? containerheight;
-  const CarCardAddVehicle({
+  const VehicleCardWidget({
     super.key,
-    this.next,
     required this.haveBorder,
-    this.delete,
     this.imageUrl,
     this.containerheight,
     this.showDelete,
-    required this.hideblure,
     required this.carName,
     required this.carDetails,
-    required this.imagePath,
+    this.imagePath,
     required this.haveBGColor,
     this.onPressed,
     this.isSelected,
@@ -98,77 +90,10 @@ class CarCardAddVehicle extends StatelessWidget {
                           ),
                         ],
                       ),
-                      if (showDelete == true) ...{
-                        Flexible(
-                            child: Ink(
-                          color: Colors.grey,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(24),
-                            onTap: delete,
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              margin: const EdgeInsets.only(right: 5),
-                              child: Icon(
-                                FluentIcons.delete_24_regular,
-                                color:
-                                    haveBGColor ? Colors.white : Colors.black,
-                              ),
-                            ),
-                          ),
-                        ))
-                      },
                     ],
                   ),
                 ),
               ),
-              if (next != null) ...[
-                Positioned(
-                    bottom: 8,
-                    left: 8,
-                    child: GestureDetector(
-                      onTap: next,
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.only(right: 5),
-                        child: Icon(
-                          FluentIcons.arrow_right_24_regular,
-                          color: haveBGColor ? Colors.white : Colors.black,
-                        ),
-                      ),
-                    ))
-              ],
-              if (!hideblure) ...[
-                BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.5),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  top: 0,
-                  left: 16,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Text(
-                            '+ Add Vehicle',
-                            style: Get.textTheme.bodyLarge?.copyWith(
-                              color: Get.theme.primaryColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ]
             ],
           ),
         ),

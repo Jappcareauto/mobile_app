@@ -29,14 +29,16 @@ abstract class WorkshopRepository {
           bool? aroundMe,
           bool? availableNow});
 
-  Future<Either<WorkshopException, BookAppointment>> bookAppointment(
-      String date,
-      String locationType,
-      String note,
-      String serviceId,
-      String vehicleId,
-      String status,
-      String timeOfDay);
+  Future<Either<WorkshopException, BookAppointment>> bookAppointment({
+    required String date,
+    required String locationType,
+    String note,
+    required String serviceId,
+    required String vehicleId,
+    required String timeOfDay,
+    required String createdBy,
+    required String serviceCenterId,
+  });
 
   Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(
       String name, List<String> participantUserIds);
@@ -53,7 +55,7 @@ abstract class WorkshopRepository {
 
   Future<Either<WorkshopException, GetAllServicesEntity>> getAllservices();
 
-  Future<Either<WorkshopException, GetAllServicesEntity>>
+  Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
       getAllServicesCenterServices(String serviceCenterId);
 
   Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>

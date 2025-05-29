@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 /// Abstract class for navigation in a Flutter application.
 abstract class AppNavigation {
@@ -12,13 +13,14 @@ abstract class AppNavigation {
   ///
   /// [page] is the widget to navigate to.
   /// [arguments] is an optional parameter that can be used to pass data to the widget.
-  Future<void>? to(Widget page, {dynamic arguments});
+  Future<void>? to(Widget page, {Transition? transition, dynamic arguments});
 
   /// Navigate to a specific widget in the app.
   ///
   /// [page] is the widget to navigate to.
   /// [arguments] is an optional parameter that can be used to pass data to the widget.
-  Future<void>? toWidget(Widget page, {dynamic arguments});
+  Future<void>? toWidget(Widget page,
+      {Transition? transition, dynamic arguments});
 
   /// Navigate to a named route in the app, replacing the current route.
   ///
@@ -36,7 +38,8 @@ abstract class AppNavigation {
   ///
   /// [page] the widget to navigate to.
   /// [arguments] is an optional parameter that can be used to pass data to the route.
-  Future<void>? toWidgetAndReplaceAll(Widget page, {dynamic arguments});
+  Future<void>? toWidgetAndReplaceAll(Widget page,
+      {Transition? transition, dynamic arguments});
 
   /// Go back to the previous route in the navigation stack.
   ///

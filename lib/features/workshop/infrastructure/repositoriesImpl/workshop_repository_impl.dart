@@ -112,24 +112,33 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   }
 
   @override
-  Future<Either<WorkshopException, BookAppointment>> bookAppointment(
-      String date,
-      String locationType,
-      String note,
-      String serviceId,
-      String vehicleId,
-      String status,
-      String timeOfDay) async {
+  Future<Either<WorkshopException, BookAppointment>> bookAppointment({
+    required String date,
+    required String locationType,
+    String? note,
+    required String serviceId,
+    required String vehicleId,
+    required String timeOfDay,
+    required String createdBy,
+    required String serviceCenterId,
+  }) async {
     try {
       final response = await networkService.post(
         WorkshopConstants.bookAppointmentPostUri,
         body: {
+          'id': "",
+          "createdBy": createdBy,
+          "updatedBy": createdBy,
+          "createdAt": date,
+          "updatedAt": date,
           'date': date,
+          'location': null,
           'locationType': locationType,
           'note': note,
           'serviceId': serviceId,
+          'serviceCenterId': serviceCenterId,
           'vehicleId': vehicleId,
-          'status': status,
+          'status': "NOT_STARTED",
           'timeOfDay': timeOfDay,
         },
       );
@@ -215,13 +224,14 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   }
 
   @override
-  Future<Either<WorkshopException, GetAllServicesEntity>>
+  Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
       getAllServicesCenterServices(String serviceCenterId) async {
     try {
       print(serviceCenterId);
       final response = await networkService.get(
           '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.services}');
-      return Right(GetAllServicesModel.fromJson(response).toEntity());
+      return Right(
+          GetAllServiceCenterServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }

@@ -173,6 +173,14 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                       fontWeight: FontWeight.w400, fontSize: 16),
                 ),
               ),
+              const SizedBox(
+                  height: 300,
+                  child: Row(
+                    children: [
+                      WorkshopCustomMapView(),
+                    ],
+                  )),
+              const SizedBox(height: 20),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
@@ -184,79 +192,34 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        child: controller.serviceCenterServices.value != null &&
-                                controller.serviceCenterServices.value!.data
-                                    .isNotEmpty
-                            ? ServiceWidget(
-                                tabs: controller
-                                    .serviceCenterServices.value!.data,
-                                borderRadius: BorderRadius.circular(16),
-                                haveBorder: true,
-                              )
-                            : const Text('Aucun service disponible'),
-                      ),
-
-                      // SizedBox(
-                      //   child: globalcontrollerWorkshop
-                      //                   .workshopData['centerServices'] !=
-                      //               null &&
-                      //           globalcontrollerWorkshop
-                      //               .workshopData['centerServices']!.isNotEmpty
-                      //       ? ServiceWidget(
-                      //           tabs: (globalcontrollerWorkshop
-                      //                   .workshopData['centerServices']
-                      //               as List<ServiceEntity>),
-                      //           borderRadius: BorderRadius.circular(16),
-                      //         )
-                      //       : const Text('Aucun service disponible'),
-                      // ),
+                      Obx(() {
+                        return SizedBox(
+                          child: controller.serviceCenterServices.isNotEmpty
+                              ? ServiceWidget(
+                                  tabs: controller.serviceCenterServices
+                                      .map((e) => e.service)
+                                      .toList(),
+                                  borderRadius: BorderRadius.circular(16),
+                                  haveBorder: true,
+                                )
+                              : const Text('Aucun service disponible'),
+                        );
+                      }),
                     ]),
               ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-              //   child: Column(
-              //       spacing: 20,
-              //       crossAxisAlignment: CrossAxisAlignment.start,
-              //       children: [
-              //         const Text(
-              //           "Specialized Services",
-              //           style: TextStyle(
-              //               fontSize: 18, fontWeight: FontWeight.bold),
-              //         ),
-              //         SizedBox(
-              //           child: globalcontrollerWorkshop
-              //                           .workshopData['centerServices'] !=
-              //                       null &&
-              //                   globalcontrollerWorkshop
-              //                       .workshopData['centerServices']!.isNotEmpty
-              //               ? ServiceWidget(
-              //                   tabs: (globalcontrollerWorkshop
-              //                           .workshopData['centerServices']
-              //                       as List<ServiceEntity>),
-              //                   borderRadius: BorderRadius.circular(16),
-              //                 )
-              //               : const Text('Aucun service disponible'),
-              //         ),
-              //       ]),
-              // ),
-              const SizedBox(height: 20),
-              const SizedBox(
-                  height: 300,
-                  child: Row(
-                    children: [
-                      WorkshopCustomMapView(),
-                    ],
-                  )),
               const SizedBox(height: 20),
               Container(
                 width: Get.width,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: CustomButton(
-                  text: 'Book Appointment',
-                  onPressed: () {
-                    controller.gotoBookAppointment();
-                  },
+                child: Obx(
+                  () => CustomButton(
+                    text: 'Book Appointment',
+                    onPressed: controller.serviceCenterServices.isNotEmpty
+                        ? () {
+                            controller.gotoBookAppointment();
+                          }
+                        : null,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),

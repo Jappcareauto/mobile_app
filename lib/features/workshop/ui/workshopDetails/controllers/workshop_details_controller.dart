@@ -8,10 +8,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
-import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
+// import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
 import 'package:jappcare/features/workshop/application/command/get_service_center_services.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_service_center_services_usecase.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
+import 'package:jappcare/features/workshop/domain/entities/service_center_service.entity.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -23,16 +23,18 @@ class WorkshopDetailsController extends GetxController {
   WorkshopDetailsController(this._appNavigation);
 
   LatLng? userPosition;
-  final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
+  // final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
   final GetServiceCenterServicesUsecase _getServiceCenterServicesUseCase =
       Get.find();
 
   final serviceCenterServicesLoading = false.obs;
-  Rxn<GetAllServicesEntity> serviceCenterServices = Rxn<GetAllServicesEntity>();
+  RxList<ServiceCenterServiceEntity> serviceCenterServices =
+      RxList<ServiceCenterServiceEntity>();
 
   final loading = false.obs;
   final locationPermissionGranted = false.obs;
 
+  final globalWorkshopController = Get.find<GlobalcontrollerWorkshop>();
   final arguments = Get.find<GlobalcontrollerWorkshop>().workshopData;
 
   RxString placeName = ''.obs;
@@ -79,7 +81,7 @@ class WorkshopDetailsController extends GetxController {
       },
       (response) {
         serviceCenterServicesLoading.value = false;
-        serviceCenterServices.value = response;
+        serviceCenterServices.value = response.data;
       },
     );
   }
@@ -235,5 +237,9 @@ class WorkshopDetailsController extends GetxController {
 
   void gotoBookAppointment() {
     _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment);
+    globalWorkshopController.addData(
+      "serviceCenterServices",
+      serviceCenterServices,
+    );
   }
 }

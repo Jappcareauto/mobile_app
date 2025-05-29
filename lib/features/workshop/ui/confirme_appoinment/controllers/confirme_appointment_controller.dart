@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/home/navigation/home_public_routes.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/application/command/book_appointment_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
@@ -79,14 +80,22 @@ class ConfirmeAppointmentController extends GetxController {
         {'chatroomId': chatRoomId, 'appointmentId': appointmentId.value});
   }
 
+  void goToHome() {
+    Get.back();
+    _appNavigation.toNamedAndReplaceAll(
+      HomePublicRoutes.home,
+    );
+    globalControllerWorkshop.resetData();
+  }
+
   Future<Either<WorkshopException, BookAppointment>> booknewAppointment(
-      DateTime date,
-      String locationType,
-      String note,
-      String serviceId,
-      String vehicleId,
-      String status,
-      String timeOfDay) async {
+      {required DateTime date,
+      required String locationType,
+      required String note,
+      required String serviceId,
+      required String vehicleId,
+      required String serviceCenterId,
+      required String timeOfDay}) async {
     loading.value = true;
     final result = await bookAppointmentUseCase.call(BookAppointmentCommand(
       date: date.toUtc().toIso8601String(),
@@ -94,8 +103,9 @@ class ConfirmeAppointmentController extends GetxController {
       note: note,
       serviceId: serviceId,
       vehicleId: vehicleId,
-      status: status,
       timeOfDay: timeOfDay,
+      serviceCenterId: serviceCenterId,
+      createdBy: Get.find<ProfileController>().userInfos!.id,
     ));
     return result.fold(
       (e) {
@@ -107,9 +117,8 @@ class ConfirmeAppointmentController extends GetxController {
       (response) {
         loading.value = false;
         appointmentId.value = response.id;
-        print("response.vehicleId");
         onpenModalConfirmMethod();
-        print(response.vehicleId);
+        print(response);
         return Right(response);
       },
     );
@@ -121,7 +130,7 @@ class ConfirmeAppointmentController extends GetxController {
       isScrollControlled: true, // Permet un contrôle précis sur la hauteur
       backgroundColor: Colors.transparent, // Rendre l'arrière-plan transparent
       builder: (BuildContext context) {
-        return const ConfirmModel();
+        return const ConfirmModal();
       },
     );
   }

@@ -121,6 +121,7 @@ class WorkshopController extends GetxController {
       {String? name,
       List<ServiceEntity>? centerServices,
       String? description,
+      String? serviceCenterAuthor,
       double? latitude,
       double? longitude,
       required String id,
@@ -157,7 +158,6 @@ class WorkshopController extends GetxController {
       bool? aroundMe,
       bool? availableNow}) async {
     loading.value = true;
-    print(serviceId);
     final result = await _getAllServicesCenterUseCase.call(
         GetServiceCenterCommand(
             name: name,
@@ -203,7 +203,6 @@ class WorkshopController extends GetxController {
       builder: (BuildContext context) {
         aroundMeFilter.value = aroundMe.value;
         availableNowFilter.value = availableNow.value;
-        print("passed");
         return AlertDialog(
           title: const Text('Filters by research'),
           content: Obx(() {

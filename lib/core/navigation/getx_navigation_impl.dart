@@ -17,27 +17,29 @@ class GetXNavigationImpl implements AppNavigation {
   }
 
   @override
-  Future<void>? to(Widget page, {dynamic arguments}) {
+  Future<void>? to(Widget page, {Transition? transition, dynamic arguments}) {
     try {
-      return Get.to(page, arguments: arguments);
+      return Get.to(page, transition: transition, arguments: arguments);
     } catch (e) {
       return Get.toNamed(notFoundPage, arguments: arguments);
     }
   }
 
   @override
-  Future<void>? toWidget(Widget page, {dynamic arguments}) {
+  Future<void>? toWidget(Widget page,
+      {Transition? transition, dynamic arguments}) {
     try {
-      return Get.to(() => page, arguments: arguments);
+      return Get.to(() => page, transition: transition, arguments: arguments);
     } catch (e) {
       return Get.toNamed(notFoundPage, arguments: arguments);
     }
   }
 
   @override
-  Future<void>? toWidgetAndReplaceAll(Widget page, {dynamic arguments}) {
+  Future<void>? toWidgetAndReplaceAll(Widget page,
+      {Transition? transition, dynamic arguments}) {
     try {
-      Get.offAll(() => page, arguments: arguments);
+      Get.offAll(() => page, transition: transition, arguments: arguments);
       return AppDependency.init();
     } catch (e) {
       return Get.toNamed(notFoundPage, arguments: arguments);

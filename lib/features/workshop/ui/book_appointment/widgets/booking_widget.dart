@@ -95,21 +95,6 @@ class BookingWidget extends GetView<BookAppointmentController> {
                   )),
               Obx(() => Expanded(
                     child: LocationOption(
-                      label: "Garage",
-                      icon: FluentIcons.home_12_regular,
-                      isSelected: controller.selectedLocation.value == "GARAGE",
-                      onTap: () => controller.selectLocation("GARAGE"),
-                    ),
-                  )),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            spacing: 12,
-            children: [
-              Obx(() => Expanded(
-                    child: LocationOption(
                       label: "Service center",
                       icon: FluentIcons.home_12_regular,
                       isSelected:
@@ -117,16 +102,40 @@ class BookingWidget extends GetView<BookAppointmentController> {
                       onTap: () => controller.selectLocation("SERVICE_CENTER"),
                     ),
                   )),
-              Obx(() => Expanded(
-                    child: LocationOption(
-                      label: "Custom",
-                      icon: FluentIcons.home_12_regular,
-                      isSelected: controller.selectedLocation.value == "CUSTOM",
-                      onTap: () => controller.selectLocation("CUSTOM"),
-                    ),
-                  )),
+              // Obx(() => Expanded(
+              //       child: LocationOption(
+              //         label: "Garage",
+              //         icon: FluentIcons.home_12_regular,
+              //         isSelected: controller.selectedLocation.value == "GARAGE",
+              //         onTap: () => controller.selectLocation("GARAGE"),
+              //       ),
+              //     )),
             ],
           ),
+          // const SizedBox(height: 12),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   spacing: 12,
+          //   children: [
+          //     Obx(() => Expanded(
+          //           child: LocationOption(
+          //             label: "Service center",
+          //             icon: FluentIcons.home_12_regular,
+          //             isSelected:
+          //                 controller.selectedLocation.value == "SERVICE_CENTER",
+          //             onTap: () => controller.selectLocation("SERVICE_CENTER"),
+          //           ),
+          //         )),
+          //     Obx(() => Expanded(
+          //           child: LocationOption(
+          //             label: "Custom",
+          //             icon: FluentIcons.home_12_regular,
+          //             isSelected: controller.selectedLocation.value == "CUSTOM",
+          //             onTap: () => controller.selectLocation("CUSTOM"),
+          //           ),
+          //         )),
+          //   ],
+          // ),
         ],
       ),
     );

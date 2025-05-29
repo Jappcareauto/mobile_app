@@ -56,7 +56,7 @@ class ServiceCenterModel {
 
   factory ServiceCenterModel.fromJson(Map<String, dynamic> json) {
     return ServiceCenterModel._(
-      data: DataModel.fromJson(json['data']),
+      data: DataModel.fromJson(json),
     );
   }
 
@@ -123,7 +123,6 @@ class DataModel {
   });
 
   factory DataModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     return DataModel._(
       name: json['name'],
       ownerId: json['ownerId'],
