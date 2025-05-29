@@ -1,5 +1,6 @@
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_service_center_model.dart';
 
 import '../../../../core/ui/domain/entities/pagination.entity.dart';
 
@@ -85,5 +86,9 @@ class ServiceCenterEntity {
       imageUrl: imageUrl,
       available: available,
     );
+  }
+
+  ServiceCenterModel toModel() {
+    return ServiceCenterModel.fromEntity(this);
   }
 }

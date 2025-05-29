@@ -184,15 +184,15 @@ class HomeScreen extends GetView<HomeController> {
                 ),
                 //RecentActivitiesWidget
 
-                if (Get.isRegistered<FeatureWidgetInterface>(
-                    tag: 'RecentActivitiesWidget'))
-                  Get.find<FeatureWidgetInterface>(
-                          tag: 'RecentActivitiesWidget')
-                      .buildView({
-                    'limit': 2,
-                    'haveTabBar': false,
-                    'haveTitle': true,
-                  }),
+                // if (Get.isRegistered<FeatureWidgetInterface>(
+                //     tag: 'RecentActivitiesWidget'))
+                //   Get.find<FeatureWidgetInterface>(
+                //           tag: 'RecentActivitiesWidget')
+                //       .buildView({
+                //     'limit': 2,
+                //     'haveTabBar': false,
+                //     'haveTitle': true,
+                //   }),
               ],
             ),
           ),

@@ -18,6 +18,8 @@ class CarCardWidget extends GetView<GarageController> {
     required this.status,
     required this.latitude,
     required this.longitude,
+    this.serviceCenterName,
+    this.appointmentType,
     this.pathImageCar,
     this.widthCard,
     this.heightCard,
@@ -29,6 +31,8 @@ class CarCardWidget extends GetView<GarageController> {
   final String localisation;
   final String nameCar;
   final String status;
+  final String? appointmentType;
+  final String? serviceCenterName;
   final String? pathImageCar;
   final double? widthCard;
   final double? heightCard;
@@ -55,17 +59,17 @@ class CarCardWidget extends GetView<GarageController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'BodyShop Appointment',
+                      '$appointmentType Appointment',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.orange),
                     ),
                     Text(
-                      'Japcare AutoShop',
+                      serviceCenterName ?? 'Japcare AutoShop',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -127,22 +131,22 @@ class CarCardWidget extends GetView<GarageController> {
                     assetPath: AppImages.car,
                     width: Get.width * 0.3,
                   ),
-                  Flexible(
-                    fit: FlexFit.loose,
-                    child: Text(
-                      nameCar,
-                      textAlign: TextAlign.center,
-                      // Centre le texte
-                      overflow: TextOverflow.ellipsis,
-                      // Tronque le texte si trop long
-                      maxLines: 1,
-                      // Limite le texte à une seule ligne
-                      style: const TextStyle(
-                        fontSize: 12, // Ajuste la taille de la police
-                        fontWeight: FontWeight.bold, // Style en gras
-                      ),
-                    ),
-                  ),
+                  // Flexible(
+                  //   fit: FlexFit.loose,
+                  //   child: Text(
+                  //     nameCar,
+                  //     textAlign: TextAlign.center,
+                  //     // Centre le texte
+                  //     overflow: TextOverflow.ellipsis,
+                  //     // Tronque le texte si trop long
+                  //     maxLines: 1,
+                  //     // Limite le texte à une seule ligne
+                  //     style: const TextStyle(
+                  //       fontSize: 12, // Ajuste la taille de la police
+                  //       fontWeight: FontWeight.bold, // Style en gras
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ],

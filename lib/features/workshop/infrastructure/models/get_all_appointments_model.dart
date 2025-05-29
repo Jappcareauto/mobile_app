@@ -2,6 +2,7 @@ import 'package:jappcare/core/ui/domain/models/location.model.dart';
 import 'package:jappcare/core/ui/domain/models/pagination.model.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_service_center_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/get_all_services_model.dart';
 
 class GetAllAppointmentsModel {
@@ -59,6 +60,7 @@ class AppointmentModel {
   final String? note;
   final LocationModel? location;
   final ServiceModel? service;
+  final ServiceCenterModel? serviceCenter;
   final VehicleModel? vehicle;
   // final ServiceCenterMode? serviceCenter;
 
@@ -75,6 +77,7 @@ class AppointmentModel {
     required this.locationType,
     this.location,
     this.service,
+    this.serviceCenter,
     this.vehicle,
   });
 
@@ -99,6 +102,9 @@ class AppointmentModel {
               'serviceCenterId': json['serviceCenter']['id']
             })
           : null,
+      serviceCenter: json['serviceCenter'] != null
+          ? ServiceCenterModel.fromJson(json['serviceCenter'])
+          : null,
       vehicle: json['vehicle'] != null
           ? VehicleModel.fromJson({
               ...json['vehicle'],
@@ -122,6 +128,7 @@ class AppointmentModel {
     data['locationType'] = locationType;
     data['location'] = location?.toJson();
     data['service'] = service?.toJson();
+    data['serviceCenter'] = serviceCenter?.toJson();
     data['vehicle'] = vehicle?.toJson();
     return data;
   }
@@ -140,6 +147,7 @@ class AppointmentModel {
       locationType: entity.locationType,
       location: entity.location?.toModel(),
       service: entity.service?.toModel(),
+      serviceCenter: entity.serviceCenter?.toModel(),
       vehicle: entity.vehicle?.toModel(),
     );
   }
@@ -158,6 +166,7 @@ class AppointmentModel {
       locationType: locationType,
       location: location?.toEntity(),
       service: service?.toEntity(),
+      serviceCenter: serviceCenter?.toEntity(),
       vehicle: vehicle?.toEntity(),
     );
   }
