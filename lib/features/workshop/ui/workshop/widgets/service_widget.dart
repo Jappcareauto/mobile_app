@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
 
 class ServiceWidget extends StatelessWidget {
   final List<ServiceEntity> tabs; // List of tabs

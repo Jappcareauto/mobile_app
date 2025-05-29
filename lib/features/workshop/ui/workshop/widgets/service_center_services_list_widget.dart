@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 // import 'package:jappcare/features/shop/ui/shop/widgets/tabs_list_widgets.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
 // import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
 import 'service_widget.dart';

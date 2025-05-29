@@ -24,6 +24,7 @@ import '../application/usecases/get_all_services_usecase.dart';
 import '../application/usecases/get_place_autocomplete_usecase.dart';
 import '../application/usecases/get_place_details_usecase.dart';
 import '../application/usecases/get_service_center_services_usecase.dart';
+import '../application/usecases/get_all_available_service_center_services_usecase.dart';
 
 class WorkshopDependencies {
   static void init() {
@@ -62,5 +63,7 @@ class WorkshopDependencies {
     Get.lazyPut(() => GetPlaceAutocompleteUsecase(Get.find()), fenix: true);
     Get.lazyPut(() => GetPlaceDetailsUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetServiceCenterServicesUsecase(Get.find()), fenix: true);
+    Get.lazyPut(() => GetAllAvailableServiceCenterServicesUsecase(Get.find()),
+        fenix: true);
   }
 }

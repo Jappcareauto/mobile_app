@@ -143,7 +143,8 @@ class WorkshopScreen extends GetView<WorkshopController>
                                                 0.0,
                                             id: serviceCenter.id,
                                             availability:
-                                                serviceCenter.available,
+                                                serviceCenter.available ??
+                                                    false,
                                             locationName:
                                                 serviceCenter.location?.name);
                                       },

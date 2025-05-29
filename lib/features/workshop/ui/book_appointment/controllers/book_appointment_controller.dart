@@ -12,7 +12,7 @@ import 'package:jappcare/core/utils/getx_extensions.dart';
 // import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_usecase.dart';
 import 'package:jappcare/features/garage/domain/entities/get_garage_by_owner_id.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_place_autocomplete_usecase.dart';

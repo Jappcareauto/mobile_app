@@ -48,6 +48,8 @@ class GetAllAppointmentsModel {
 
 class AppointmentModel {
   final String id;
+  final String createdBy;
+  final String updatedBy;
   final String createdAt;
   final String updatedAt;
   final String? status;
@@ -58,9 +60,12 @@ class AppointmentModel {
   final LocationModel? location;
   final ServiceModel? service;
   final VehicleModel? vehicle;
+  // final ServiceCenterMode? serviceCenter;
 
   AppointmentModel._({
     required this.id,
+    required this.createdBy,
+    required this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
     this.status,
@@ -76,6 +81,8 @@ class AppointmentModel {
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel._(
       id: json['id'],
+      createdBy: json['createdBy'],
+      updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       status: json['status'],
@@ -87,10 +94,16 @@ class AppointmentModel {
           ? LocationModel.fromJson(json['location'])
           : null,
       service: json['service'] != null
-          ? ServiceModel.fromJson(json['service'])
+          ? ServiceModel.fromJson({
+              ...json['service'],
+              'serviceCenterId': json['serviceCenter']['id']
+            })
           : null,
       vehicle: json['vehicle'] != null
-          ? VehicleModel.fromJson(json['vehicle'])
+          ? VehicleModel.fromJson({
+              ...json['vehicle'],
+              'serviceCenterId': json['serviceCenter']['id']
+            })
           : null,
     );
   }
@@ -98,6 +111,8 @@ class AppointmentModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['createdBy'] = createdBy;
+    data['updatedBy'] = updatedBy;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['status'] = status;
@@ -114,6 +129,8 @@ class AppointmentModel {
   factory AppointmentModel.fromEntity(AppointmentEntity entity) {
     return AppointmentModel._(
       id: entity.id,
+      createdBy: entity.createdBy,
+      updatedBy: entity.updatedBy,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       status: entity.status,
@@ -130,6 +147,8 @@ class AppointmentModel {
   AppointmentEntity toEntity() {
     return AppointmentEntity.create(
       id: id,
+      createdBy: createdBy,
+      updatedBy: updatedBy,
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status,

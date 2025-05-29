@@ -9,8 +9,9 @@ import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
+import 'package:jappcare/features/workshop/application/command/get_service_center_services.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_service_center_services_usecase.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -27,7 +28,7 @@ class WorkshopDetailsController extends GetxController {
       Get.find();
 
   final serviceCenterServicesLoading = false.obs;
-  Rxn<GetAllservices> serviceCenterServices = Rxn<GetAllservices>();
+  Rxn<GetAllServicesEntity> serviceCenterServices = Rxn<GetAllServicesEntity>();
 
   final loading = false.obs;
   final locationPermissionGranted = false.obs;
@@ -53,8 +54,9 @@ class WorkshopDetailsController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
-    if (arguments['id']) {
-      getAllServiceCenterServices();
+    print('arguments service center id ${arguments['serviceCenterId']}');
+    if (arguments['serviceCenterId'] != null) {
+      getAllServiceCenterServices(arguments['serviceCenterId']);
     }
     getPosition();
     // getPlaceName();
@@ -64,9 +66,10 @@ class WorkshopDetailsController extends GetxController {
     _appNavigation.goBack();
   }
 
-  Future<void> getAllServiceCenterServices() async {
+  Future<void> getAllServiceCenterServices(String serviceCenterId) async {
     serviceCenterServicesLoading.value = true;
-    final result = await _getServiceCenterServicesUseCase.call(arguments['id']);
+    final result = await _getServiceCenterServicesUseCase.call(
+        GetServiceCenterServicesCommand(serviceCenterId: serviceCenterId));
     result.fold(
       (e) {
         serviceCenterServicesLoading.value = false;

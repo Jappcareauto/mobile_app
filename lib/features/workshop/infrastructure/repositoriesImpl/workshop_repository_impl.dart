@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:jappcare/features/garage/domain/core/utils/garage_constants.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_service_center_services.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/place_prediction_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/place_details_model.dart';
@@ -16,8 +17,8 @@ import '../../domain/core/exceptions/workshop_exception.dart';
 import '../../domain/core/utils/workshop_constants.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../domain/entities/get_all_services_center.dart';
-import '../models/get_all_services_center_model.dart';
+import '../../domain/entities/get_all_services_center.entity.dart';
+import '../models/get_all_service_center_model.dart';
 
 import '../../domain/entities/book_appointment.dart';
 import '../models/book_appointment_model.dart';
@@ -31,8 +32,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-import '../../domain/entities/get_all_services.dart';
+import '../../domain/entities/get_all_services.entity.dart';
 import '../models/get_all_services_model.dart';
+import '../models/get_all_service_center_services_model.dart';
 
 class WorkshopRepositoryImpl implements WorkshopRepository {
   final NetworkService networkService;
@@ -55,11 +57,12 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   }
 
   @override
-  Future<Either<WorkshopException, GetAllservices>> getAllservices() async {
+  Future<Either<WorkshopException, GetAllServicesEntity>>
+      getAllservices() async {
     try {
       final response = await networkService
           .post(WorkshopConstants.getAllservicesGetUri, body: {});
-      return Right(GetAllservicesModel.fromJson(response).toEntity());
+      return Right(GetAllServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
@@ -184,14 +187,15 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   }
 
   @override
-  Future<Either<WorkshopException, GetAllServicesCenter>> getAllServicesCenter(
-      {String? name,
-      String? category,
-      String? ownerId,
-      String? serviceCenterId,
-      String? serviceId,
-      bool? aroundMe,
-      bool? availableNow}) async {
+  Future<Either<WorkshopException, GetAllServiceCenterEntity>>
+      getAllServicesCenter(
+          {String? name,
+          String? category,
+          String? ownerId,
+          String? serviceCenterId,
+          String? serviceId,
+          bool? aroundMe,
+          bool? availableNow}) async {
     try {
       print(serviceId);
       final response = await networkService
@@ -211,16 +215,27 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   }
 
   @override
-  Future<Either<WorkshopException, GetAllservices>>
+  Future<Either<WorkshopException, GetAllServicesEntity>>
       getAllServicesCenterServices(String serviceCenterId) async {
     try {
       print(serviceCenterId);
-      final response = await networkService.post(
-          '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.services}',
-          body: {
-            'serviceCenterId': serviceCenterId,
-          });
-      return Right(GetAllservicesModel.fromJson(response).toEntity());
+      final response = await networkService.get(
+          '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.services}');
+      return Right(GetAllServicesModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(WorkshopException(e.message));
+    }
+  }
+
+  @override
+  Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
+      getAllAvailableServicesCenterServices(String serviceCenterId) async {
+    try {
+      print(serviceCenterId);
+      final response = await networkService.get(
+          '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.availableServices}');
+      return Right(
+          GetAllServiceCenterServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }

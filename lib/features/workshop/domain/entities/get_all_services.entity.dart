@@ -1,21 +1,21 @@
 import 'package:jappcare/core/ui/domain/entities/pagination.entity.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/get_all_services_model.dart';
 
-class GetAllservices {
+class GetAllServicesEntity {
   final List<ServiceEntity> data;
   final Pagination pagination;
 
-  GetAllservices._({
+  GetAllServicesEntity._({
     required this.data,
     required this.pagination,
   });
 
-  factory GetAllservices.create({
+  factory GetAllServicesEntity.create({
     required data,
     required pagination,
   }) {
     // Add any validation or business logic here
-    return GetAllservices._(
+    return GetAllServicesEntity._(
       data: data,
       pagination: pagination,
     );

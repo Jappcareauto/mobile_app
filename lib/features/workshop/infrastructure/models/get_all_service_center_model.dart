@@ -1,11 +1,11 @@
+import 'package:jappcare/core/ui/domain/models/location.model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/get_all_services_model.dart';
 
-import '../../domain/entities/get_all_services_center.dart';
+import '../../domain/entities/get_all_services_center.entity.dart';
 import '../../../../core/ui/domain/models/pagination.model.dart';
-import '../../../../core/ui/domain/models/location.model.dart';
 
 class GetAllServicesCenterModel {
-  final List<DataModel> data;
+  final List<ServiceCenterModel> data;
   final PaginationModel pagination;
 
   GetAllServicesCenterModel._({
@@ -15,8 +15,8 @@ class GetAllServicesCenterModel {
 
   factory GetAllServicesCenterModel.fromJson(Map<String, dynamic> json) {
     return GetAllServicesCenterModel._(
-      data:
-          List<DataModel>.from(json['data'].map((x) => DataModel.fromJson(x))),
+      data: List<ServiceCenterModel>.from(
+          json['data'].map((x) => ServiceCenterModel.fromJson(x))),
       pagination: PaginationModel.fromJson(json['pagination']),
     );
   }
@@ -30,18 +30,63 @@ class GetAllServicesCenterModel {
     return json;
   }
 
-  factory GetAllServicesCenterModel.fromEntity(GetAllServicesCenter entity) {
+  factory GetAllServicesCenterModel.fromEntity(
+      GetAllServiceCenterEntity entity) {
     return GetAllServicesCenterModel._(
-      data:
-          List<DataModel>.from(entity.data.map((x) => DataModel.fromEntity(x))),
+      data: List<ServiceCenterModel>.from(
+          entity.data.map((x) => ServiceCenterModel.fromEntity(x))),
       pagination: PaginationModel.fromEntity(entity.pagination),
     );
   }
 
-  GetAllServicesCenter toEntity() {
-    return GetAllServicesCenter.create(
+  GetAllServiceCenterEntity toEntity() {
+    return GetAllServiceCenterEntity.create(
       data: data.map((x) => x.toEntity()).toList(),
       pagination: pagination.toEntity(),
+    );
+  }
+}
+
+class ServiceCenterModel {
+  final DataModel data;
+
+  ServiceCenterModel._({
+    required this.data,
+  });
+
+  factory ServiceCenterModel.fromJson(Map<String, dynamic> json) {
+    return ServiceCenterModel._(
+      data: DataModel.fromJson(json['data']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['data'] = data.toJson();
+    return json;
+  }
+
+  factory ServiceCenterModel.fromEntity(ServiceCenterEntity entity) {
+    return ServiceCenterModel._(
+      data: DataModel.fromEntity(entity),
+    );
+  }
+
+  ServiceCenterEntity toEntity() {
+    return ServiceCenterEntity.create(
+      name: data.name,
+      services: data.services?.map((e) => e.toEntity()).toList(),
+      ownerId: data.ownerId,
+      location: data.location?.toEntity(),
+      category: data.category,
+      id: data.id,
+      createdBy: data.createdBy,
+      updatedBy: data.updatedBy,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+      imageId: data.imageId,
+      imageUrl: data.imageUrl,
+      available: data.available,
     );
   }
 }
@@ -122,7 +167,7 @@ class DataModel {
     return data;
   }
 
-  factory DataModel.fromEntity(Data entity) {
+  factory DataModel.fromEntity(ServiceCenterEntity entity) {
     return DataModel._(
       name: entity.name,
       ownerId: entity.ownerId,
@@ -143,8 +188,8 @@ class DataModel {
     );
   }
 
-  Data toEntity() {
-    return Data.create(
+  ServiceCenterEntity toEntity() {
+    return ServiceCenterEntity.create(
       name: name,
       services: services?.map((e) => e.toEntity()).toList(),
       ownerId: ownerId,
