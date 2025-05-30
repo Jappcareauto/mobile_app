@@ -158,11 +158,6 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                   onPressed: !controller.acceptedTerms.value
                                       ? null
                                       : controller.registerFormHelper.submit,
-                                      // : () => controller
-                                      //     .goToEmailVerificationPage(controller
-                                      //         .registerFormHelper
-                                      //         .controllers['email']
-                                      //         ?.text),
                                 ),
                                 CustomButton(
                                   text: 'Continue',

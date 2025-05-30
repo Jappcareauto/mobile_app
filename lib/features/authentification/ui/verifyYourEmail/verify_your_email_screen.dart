@@ -127,100 +127,11 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                       CustomButton(
                         text: 'Continue',
                         isLoading: controller.verifyEmailFormHelper.isLoading,
-                        // onPressed: controller.verifyEmailFormHelper.submit,
-                        onPressed: controller.goToVerificationSuccess,
+                        onPressed: controller.verifyEmailFormHelper.submit,
                       ),
                     ],
                   ),
                 ),
-                // child: Column(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Expanded(
-                //       child: SingleChildScrollView(
-                //         child: Column(
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           crossAxisAlignment: CrossAxisAlignment.start,
-                //           children: [
-                //             Column(
-                //               children: [
-                //                 const Padding(
-                //                   padding: EdgeInsets.symmetric(horizontal: 40),
-                //                   child: ImageComponent(
-                //                       assetPath: AppImages.mail, width: 150),
-                //                 ),
-                //                 const SizedBox(height: 20),
-                //                 Column(
-                //                   mainAxisAlignment: MainAxisAlignment.center,
-                //                   children: [
-                //                     // const ImageDecoration(
-                //                     //     assetPath: AppConstants.sms),
-                //                     Text(
-                //                       "We've sent a verification email to ",
-                //                       style: Get.textTheme.bodyLarge?.copyWith(
-                //                           fontWeight: FontWeight.bold),
-                //                     ),
-                //                     Text(
-                //                       controller.email,
-                //                       style: TextStyle(
-                //                           fontSize: 16,
-                //                           fontWeight: FontWeight.bold,
-                //                           color: Get.theme.primaryColor),
-                //                     ),
-                //                   ],
-                //                 ),
-                //                 const SizedBox(height: 20),
-                //                 Pinput(
-                //                   length: 6,
-                //                   keyboardType: TextInputType.text,
-                //                   defaultPinTheme: PinTheme(
-                //                     width: 60,
-                //                     height: 60,
-                //                     textStyle: const TextStyle(
-                //                         fontSize: 25,
-                //                         color: Color.fromRGBO(30, 60, 87, 1),
-                //                         fontWeight: FontWeight.w600),
-                //                     decoration: BoxDecoration(
-                //                       color: Get.theme.primaryColor
-                //                           .withValues(alpha: 0.1),
-                //                       borderRadius: BorderRadius.circular(10),
-                //                     ),
-                //                   ),
-                //                   onCompleted: (value) =>
-                //                       controller.verifyEmailFormHelper.submit,
-                //                   // androidSmsAutofillMethod:
-                //                   //     AndroidSmsAutofillMethod.none,
-                //                   controller: controller.verifyEmailFormHelper
-                //                       .controllers['code'],
-                //                   validator: controller
-                //                       .verifyEmailFormHelper.validators['code'],
-                //                 ),
-                //                 const SizedBox(height: 5),
-                //                 Row(
-                //                   mainAxisAlignment: MainAxisAlignment.start,
-                //                   children: [
-                //                     const Text("Didn't get the code?"),
-                //                     TextButton(
-                //                       onPressed: controller.resendOtp,
-                //                       child: const Text(
-                //                         "Resend it",
-                //                       ),
-                //                     ),
-                //                   ],
-                //                 ),
-                //               ],
-                //             )
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //     CustomButton(
-                //       text: 'Continue',
-                //       isLoading: controller.verifyEmailFormHelper.isLoading,
-                //       onPressed: controller.verifyEmailFormHelper.submit,
-                //     ),
-                //   ],
-                // ),
               ),
             ),
           );

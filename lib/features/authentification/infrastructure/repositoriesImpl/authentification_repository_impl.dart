@@ -1,5 +1,4 @@
 //Don't translate me
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 
@@ -77,7 +76,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       String email) async {
     try {
       await networkService
-          .post("${AuthentificationConstants.resendOtpPostUri}?email=$email");
+          .get("${AuthentificationConstants.resendOtpPostUri}?email=$email");
       return const Right(true);
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
@@ -89,7 +88,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       String code) async {
     try {
       await networkService
-          .post("${AuthentificationConstants.verifyEmailPostUri}/$code");
+          .get("${AuthentificationConstants.verifyEmailPostUri}/$code");
       return const Right(true);
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
@@ -104,28 +103,29 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       PhoneCommand? phone,
       required String dateOfBirth}) async {
     try {
-      print({
-        'name': name,
-        'email': email,
-        'password': password,
-        'phone': email != null
-            ? null
-            : {
-                'code': phone?.code,
-                'number': phone?.number,
-              },
-        'dateOfBirth': dateOfBirth,
-      });
+      // print({
+      //   'name': name,
+      //   'email': email,
+      //   'password': password,
+      //   'phone': email != null
+      //       ? null
+      //       : {
+      //           'code': phone?.code,
+      //           'number': phone?.number,
+      //         },
+      //   'dateOfBirth': dateOfBirth,
+      // });
       final response = await networkService.post(
         AuthentificationConstants.registerPostUri,
         body: {
           'name': name,
           'email': email,
           'password': password,
+          'phone': null,
           'dateOfBirth': dateOfBirth,
         },
       );
-      return Right(RegisterModel.fromJson(response).toEntity());
+      return Right(RegisterModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
     }
