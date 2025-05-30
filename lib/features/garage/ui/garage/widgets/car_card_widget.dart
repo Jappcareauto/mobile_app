@@ -57,7 +57,9 @@ class CarCardWidget extends GetView<GarageController> {
         onTap: onPressed,
         child: Column(spacing: 20, children: [
           Row(
+            spacing: 10,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
@@ -77,6 +79,7 @@ class CarCardWidget extends GetView<GarageController> {
               ),
               ChipWidget(
                 status: status,
+                variant: ChipSize.small,
               ),
             ],
           ),

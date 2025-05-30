@@ -42,7 +42,9 @@ class RecentActivitiesWidget extends StatelessWidget
 
         if (controller.appointments.isNotEmpty) {
           var limitedActivities = limit != null
-              ? controller.appointments.sublist(0, limit!)
+              ? limit! > controller.appointments.length
+                  ? controller.appointments
+                  : controller.appointments.sublist(0, limit!)
               : controller.appointments;
 
           filteredActivities = limitedActivities.map((e) {

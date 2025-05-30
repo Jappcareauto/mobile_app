@@ -120,11 +120,17 @@ class HomeScreen extends GetView<HomeController> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
+                    spacing: 10,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        child: const TitleSection(nameSection: 'Services'),
+                      Text(
+                        'Services',
+                        style: Get.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Row(
+                        spacing: 10,
                         children: [
                           Expanded(
                             child: CustomCardService(
@@ -138,7 +144,6 @@ class HomeScreen extends GetView<HomeController> {
                               },
                             ),
                           ),
-                          const SizedBox(width: 10),
                           Expanded(
                             child: CustomCardService(
                               color: const Color(0xFFFFDAD4),

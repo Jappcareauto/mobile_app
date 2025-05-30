@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 
+enum ChipSize { small, normal }
+
 class ChipWidget extends StatelessWidget {
   const ChipWidget({
     super.key,
     required this.status,
+    this.variant = ChipSize.normal,
   });
 
   final String status;
+  final ChipSize? variant;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +28,34 @@ class ChipWidget extends StatelessWidget {
       chipColor = AppColors.red;
       chipTextColor = Colors.white;
     }
+
+    double chipPadding;
+    TextStyle chipTextStyle;
+
+    switch (variant) {
+      case ChipSize.normal:
+        chipPadding = 8;
+        chipTextStyle = TextStyle(
+            fontSize: 14, color: chipTextColor, fontWeight: FontWeight.bold);
+        break;
+      case ChipSize.small:
+        chipPadding = 4;
+        chipTextStyle = TextStyle(
+            fontSize: 12, color: chipTextColor, fontWeight: FontWeight.bold);
+        break;
+      case null:
+        chipPadding = 0;
+        chipTextStyle = TextStyle(
+            fontSize: 14, color: chipTextColor); // Assign a default value
+        break;
+    }
+
     return Chip(
+      padding: EdgeInsets.symmetric(horizontal: chipPadding),
       backgroundColor: chipColor,
       label: Text(
         status.split("_").join(" "),
-        style: TextStyle(color: chipTextColor, fontWeight: FontWeight.bold),
+        style: chipTextStyle,
       ),
       elevation: 0,
       shape: RoundedRectangleBorder(
