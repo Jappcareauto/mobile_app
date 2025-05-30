@@ -39,5 +39,7 @@ abstract class AuthentificationRepository {
       String email);
 
   Future<Either<AuthentificationException, ResetPassword>> resetPassword(
-      String code, String newPassword);
+      {required String email,
+      required String code,
+      required String newPassword});
 }

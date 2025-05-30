@@ -148,7 +148,6 @@ class ListVehicleWidget extends StatelessWidget
                         haveBorder: currentPage?.value == index ? true : false,
                         containerheight: 200,
                         onPressed: () {
-                          print(viewCarDetailsOnCardPress);
                           if (viewCarDetailsOnCardPress == true) {
                             controller.goToVehicleDetails(vehicle);
                           }
@@ -156,8 +155,12 @@ class ListVehicleWidget extends StatelessWidget
                         next: vehiclesToDisplay.length > 1
                             ? () {
                                 if (index == (vehiclesToDisplay.length - 1) &&
-                                    !haveAddVehicule!) {
-                                  pageController?.jumpToPage(0);
+                                    (haveAddVehicule == null ||
+                                        !haveAddVehicule!)) {
+                                  pageController?.animateToPage(0,
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut);
                                 } else {
                                   pageController?.nextPage(
                                     duration: const Duration(milliseconds: 300),

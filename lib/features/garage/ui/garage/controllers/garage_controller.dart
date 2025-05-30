@@ -57,20 +57,16 @@ class GarageController extends GetxController {
     Get.find<AppEventService>()
         .on<String>(AppConstants.userIdEvent)
         .listen((userId) {
-      print('user id: $userId');
       if (userId != '') fetchData(userId!);
     });
 
     // Chargement initial des données
     final lastUserId =
         Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
-    print('user id 2: $lastUserId');
     if (lastUserId != null) {
       fetchData(lastUserId);
     }
     ever(selectedAppointStatusFilter, (value) {
-      print(value);
-      print("tried");
       getAllAppointments(status: value != "" ? value : null);
     });
     pageController.addListener(() {

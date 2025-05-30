@@ -88,7 +88,6 @@ class BookAppointmentController extends GetxController {
             as List<ServiceCenterServiceEntity>;
 
     if (globalControllerWorkshop.workshopData['serviceCenterId'] != null) {
-      print(garageController.vehicleList);
       vehicles.value = garageController.vehicleList
           .where((e) =>
               e.serviceCenterId ==
@@ -103,7 +102,6 @@ class BookAppointmentController extends GetxController {
         if (serviceCenterServices[0].price != null) {
           selectedServicePrice.value = serviceCenterServices[0].price!.round();
         }
-        // selectedServiceIndex.value = 0;
       }
 
       if (pageController.hasClients) {
@@ -121,7 +119,6 @@ class BookAppointmentController extends GetxController {
 
     // Listen for VIN input changes
     locationController.addListener(() {
-      print("onChanGE");
       placeInput.value = locationController.text;
     });
 
@@ -129,9 +126,6 @@ class BookAppointmentController extends GetxController {
       int newPage = pageController.page!.round();
       if (currentPage.value != newPage) {
         currentPage.value = newPage;
-        print("newPage");
-
-        print(currentPage.value);
       }
     });
   }
@@ -254,8 +248,6 @@ class BookAppointmentController extends GetxController {
   Future<void> getPlaceAutocomplete(String input) async {
     // loading.value = true;
     final result = await _getPlaceAutocompleteUseCase.call(input);
-    print("result");
-    print(result);
     result.fold(
       (e) {
         loading.value = false;

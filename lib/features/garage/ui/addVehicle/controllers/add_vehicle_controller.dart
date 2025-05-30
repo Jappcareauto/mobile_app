@@ -59,7 +59,7 @@ class AddVehicleController extends GetxController {
       },
       onSubmit: (data) {
         return _addVehicleUseCase.call(AddVehicleCommand(
-            garageId: Get.find<GarageController>().myGarage!.id,
+            serviceCenterId: serviceCenterId.value,
             vin: data['vin']!,
             registrationNumber: data['registration']!));
       },

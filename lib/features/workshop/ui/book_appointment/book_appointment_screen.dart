@@ -51,8 +51,6 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                         vehicles: controller.vehicles,
                         pageController: controller.pageController,
                         currentPage: controller.currentPage,
-                        onTapAddVehicle:
-                            controller.garageController.goToAddVehicle,
                         onSelected: (selectedCar) {
                           controller.vehicleId.value = selectedCar.id;
                           controller.vehicleVin.value = selectedCar.vin;

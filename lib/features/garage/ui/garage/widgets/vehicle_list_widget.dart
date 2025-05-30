@@ -131,11 +131,15 @@ class VehicleListWidget extends StatelessWidget {
                     haveBorder: currentPage?.value == index ? true : false,
                     containerheight: 200,
                     onPressed: () => onTapViewVehicle?.call(vehicle),
-                    next: vehiclesToDisplay.length > 1
+                    next: (vehiclesToDisplay.length +
+                                (onTapAddVehicle != null ? 1 : 0)) >
+                            1
                         ? () {
                             if (index == (vehiclesToDisplay.length - 1) &&
                                 onTapAddVehicle == null) {
-                              pageController?.jumpToPage(0);
+                              pageController?.animateToPage(0,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut);
                             } else {
                               pageController?.nextPage(
                                 duration: const Duration(milliseconds: 300),

@@ -17,6 +17,7 @@ class RecentActivitiesWidget extends StatelessWidget
 
   final String title;
   final String? noActivitiesPlaceholder;
+  final String? vehicleId;
   final bool haveTitle;
   final bool haveTabBar;
   final bool isHorizontal;
@@ -30,6 +31,7 @@ class RecentActivitiesWidget extends StatelessWidget
       this.haveTabBar = true,
       this.isHorizontal = false,
       this.status,
+      this.vehicleId,
       this.limit});
 
   @override
@@ -47,7 +49,11 @@ class RecentActivitiesWidget extends StatelessWidget
                   : controller.appointments.sublist(0, limit!)
               : controller.appointments;
 
-          filteredActivities = limitedActivities.map((e) {
+          var filteredByVehicle = vehicleId != null
+              ? limitedActivities.where((e) => e.vehicle?.id == vehicleId)
+              : limitedActivities;
+
+          filteredActivities = filteredByVehicle.map((e) {
             return CarCardWidget(
               latitude: e.location?.latitude ?? 0,
               longitude: e.location?.longitude ?? 0,

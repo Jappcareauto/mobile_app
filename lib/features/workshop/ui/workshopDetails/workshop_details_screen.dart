@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
@@ -181,6 +182,16 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                     ],
                   )),
               const SizedBox(height: 20),
+              VehicleListWidget(
+                vehiclesLoading: false.obs,
+                vehicles: controller.vehicles,
+                pageController: controller.pageController,
+                currentPage: controller.currentPage,
+                onTapAddVehicle: controller.garageController.goToAddVehicle,
+                onTapViewVehicle:
+                    controller.garageController.goToVehicleDetails,
+              ),
+              const SizedBox(height: 20),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
@@ -190,7 +201,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                       const Text(
                         "Specialized Services",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Obx(() {
                         return SizedBox(

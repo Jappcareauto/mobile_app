@@ -13,6 +13,6 @@ class AddVehicleUseCase {
   Future<Either<GarageException, Vehicle>> call(
       AddVehicleCommand command) async {
     return await repository.addVehicle(
-        command.garageId, command.vin, command.registrationNumber);
+        command.serviceCenterId, command.vin, command.registrationNumber);
   }
 }

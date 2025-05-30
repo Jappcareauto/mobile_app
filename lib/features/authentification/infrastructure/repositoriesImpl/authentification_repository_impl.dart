@@ -40,11 +40,14 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
 
   @override
   Future<Either<AuthentificationException, ResetPassword>> resetPassword(
-      String code, String newPassword) async {
+      {required String email,
+      required String code,
+      required String newPassword}) async {
     try {
       final response = await networkService.post(
         AuthentificationConstants.resetPasswordPostUri,
         body: {
+          'email': email,
           'code': code,
           'newPassword': newPassword,
         },
@@ -65,7 +68,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
           'email': email,
         },
       );
-      return Right(ForgotPasswordModel.fromJson(response).toEntity());
+      return Right(ForgotPasswordModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message));
     }

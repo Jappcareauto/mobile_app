@@ -25,13 +25,13 @@ class GarageRepositoryImpl implements GarageRepository {
 
   @override
   Future<Either<GarageException, Vehicle>> addVehicle(
-      String garageId, String vin, String registrationNumber) async {
+      String serviceCenterId, String vin, String registrationNumber) async {
     try {
       final response = await networkService.post(
         GarageConstants.addVehiclePostUri,
         body: {
           // 'name': "Test name",
-          'garageId': garageId,
+          'serviceCenterId': serviceCenterId,
           'vin': vin,
           'registrationNumber': registrationNumber,
           // 'description': "Test description",

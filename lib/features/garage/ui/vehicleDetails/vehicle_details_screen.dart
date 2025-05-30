@@ -27,217 +27,226 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      vhcle.detail != null
-                          ? "${vhcle.detail!.make} ${vhcle.detail!.model}"
-                          : '',
-                      style: Get.textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Get.theme.primaryColor)),
-                  Text(vhcle.detail?.year ?? "",
-                      style: Get.textTheme.bodyMedium),
-                  // ElevatedButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     shadowColor: Colors.black,
-                  //     overlayColor: Colors.black12,
-                  //     elevation: .0,
-                  //     backgroundColor: Colors.transparent,
-                  //     shape: const RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.all(
-                  //             Radius.circular(AppDimensions.radiusLarge)),
-                  //         side: BorderSide(color: Colors.black)),
-                  //   ),
-                  //   onPressed: () => {},
-                  //   child: const Text(
-                  //     "Download the report",
-                  //     style: TextStyle(
-                  //       color: Colors.black,
-                  //     ),
-                  //   ),
-                  // ),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 20.0),
+          child: SingleChildScrollView(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        vhcle.detail != null
+                            ? "${vhcle.detail!.make} ${vhcle.detail!.model}"
+                            : '',
+                        style: Get.textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Get.theme.primaryColor)),
+                    Text(vhcle.detail?.year ?? "",
+                        style: Get.textTheme.bodyMedium),
+                    // ElevatedButton(
+                    //   style: ElevatedButton.styleFrom(
+                    //     shadowColor: Colors.black,
+                    //     overlayColor: Colors.black12,
+                    //     elevation: .0,
+                    //     backgroundColor: Colors.transparent,
+                    //     shape: const RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.all(
+                    //             Radius.circular(AppDimensions.radiusLarge)),
+                    //         side: BorderSide(color: Colors.black)),
+                    //   ),
+                    //   onPressed: () => {},
+                    //   child: const Text(
+                    //     "Download the report",
+                    //     style: TextStyle(
+                    //       color: Colors.black,
+                    //     ),
+                    //   ),
+                    // ),
 
-                  if (vhcle.imageUrl != null) ...[
-                    Container(
-                      width: Get.width,
-                      height: 200,
-                      padding: const EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
-                        border: Border.all(width: 1, color: Color(0XFFE5E2E1)),
-                        color: Colors.white,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            16), // same radius as the container
-                        child: ImageComponent(
-                          // assetPath: vhcle.imageUrl == null ? imagePath : "",
-                          imageUrl: vhcle.imageUrl,
-                          width: Get.width * .85,
-                          height: 200,
+                    if (vhcle.imageUrl != null) ...[
+                      Container(
+                        width: Get.width,
+                        height: 200,
+                        padding: const EdgeInsets.only(right: 10),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(16)),
+                          border:
+                              Border.all(width: 1, color: Color(0XFFE5E2E1)),
+                          color: Colors.white,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                              16), // same radius as the container
+                          child: ImageComponent(
+                            // assetPath: vhcle.imageUrl == null ? imagePath : "",
+                            imageUrl: vhcle.imageUrl,
+                            width: Get.width * .85,
+                            height: 200,
+                          ),
                         ),
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                    ],
+                    // ListView(
+                    //     scrollDirection: Axis.horizontal,
+                    //     children: vhcle.media
+                    //             ?.map((e) => Padding(
+                    //                   padding: const EdgeInsets.only(right: 10),
+                    //                   child: ImageComponent(
+                    //                     assetPath: e?.sourceUrl != null
+                    //                         ? null
+                    //                         : AppImages.carWhite,
+                    //                     imageUrl: e?.sourceUrl,
+                    //                     width: Get.width * .85,
+                    //                     borderRadius: 10,
+                    //                   ),
+                    //                 ))
+                    //             .toList() ??
+                    //         [
+                    //           vhcle.imageUrl != null
+                    //               ? Padding(
+                    //                   padding: const EdgeInsets.only(right: 10),
+                    //                   child: ImageComponent(
+                    //                     assetPath: vhcle.imageUrl != null
+                    //                         ? null
+                    //                         : AppImages.carWhite,
+                    //                     imageUrl: vhcle.imageUrl,
+                    //                     width: Get.width * .85,
+                    //                     borderRadius: 10,
+                    //                   ),
+                    //                 )
+                    //               : SizedBox(
+                    //                   width: Get.width * .85,
+                    //                   height: 200,
+                    //                   child:
+                    //                       const Center(child: Text("No Media")))
+                    //         ],
+                    //   ),
+                    Row(
+                      spacing: 10,
+                      children: [
+                        DetailItem(
+                            title: "Make",
+                            value: vhcle.detail?.make ?? 'Unknow'),
+                        DetailItem(
+                            title: "Model",
+                            value: vhcle.detail?.model ?? 'Unknow'),
+                      ],
                     ),
-                    SizedBox(
-                      height: 5,
+                    Row(
+                      spacing: 10,
+                      children: [
+                        // DetailItem(
+                        //     title: "Trim",
+                        //     value: vhcle.detail?.trim ?? 'Unknown'),
+                        DetailItem(
+                            title: "Transmission",
+                            value: vhcle.detail?.transmission ?? 'Unknown'),
+                        DetailItem(
+                            title: "Year",
+                            value: vhcle.detail?.year ?? 'Unknown'),
+                      ],
+                    ),
+                    Row(
+                      spacing: 10,
+                      children: [
+                        // DetailItem(
+                        //     title: "Trim",
+                        //     value: vhcle.detail?.trim ?? 'Unknown'),
+                        DetailItem(
+                            title: "Body Type",
+                            value: vhcle.detail?.bodyType ?? 'Unknown'),
+                        DetailItem(
+                            title: "Licence Plate Number",
+                            value: vhcle.registrationNumber),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        DetailItem(
+                            title: "Drive",
+                            value: vhcle.detail?.driveTrain ?? 'Unknown'),
+                      ],
                     ),
                   ],
-                  // ListView(
-                  //     scrollDirection: Axis.horizontal,
-                  //     children: vhcle.media
-                  //             ?.map((e) => Padding(
-                  //                   padding: const EdgeInsets.only(right: 10),
-                  //                   child: ImageComponent(
-                  //                     assetPath: e?.sourceUrl != null
-                  //                         ? null
-                  //                         : AppImages.carWhite,
-                  //                     imageUrl: e?.sourceUrl,
-                  //                     width: Get.width * .85,
-                  //                     borderRadius: 10,
-                  //                   ),
-                  //                 ))
-                  //             .toList() ??
-                  //         [
-                  //           vhcle.imageUrl != null
-                  //               ? Padding(
-                  //                   padding: const EdgeInsets.only(right: 10),
-                  //                   child: ImageComponent(
-                  //                     assetPath: vhcle.imageUrl != null
-                  //                         ? null
-                  //                         : AppImages.carWhite,
-                  //                     imageUrl: vhcle.imageUrl,
-                  //                     width: Get.width * .85,
-                  //                     borderRadius: 10,
-                  //                   ),
-                  //                 )
-                  //               : SizedBox(
-                  //                   width: Get.width * .85,
-                  //                   height: 200,
-                  //                   child:
-                  //                       const Center(child: Text("No Media")))
-                  //         ],
-                  //   ),
-                  Row(
-                    spacing: 10,
-                    children: [
-                      DetailItem(
-                          title: "Make", value: vhcle.detail?.make ?? 'Unknow'),
-                      DetailItem(
-                          title: "Model",
-                          value: vhcle.detail?.model ?? 'Unknow'),
-                    ],
-                  ),
-                  Row(
-                    spacing: 10,
-                    children: [
-                      // DetailItem(
-                      //     title: "Trim",
-                      //     value: vhcle.detail?.trim ?? 'Unknown'),
-                      DetailItem(
-                          title: "Transmission",
-                          value: vhcle.detail?.transmission ?? 'Unknown'),
-                      DetailItem(
-                          title: "Year",
-                          value: vhcle.detail?.year ?? 'Unknown'),
-                    ],
-                  ),
-                  Row(
-                    spacing: 10,
-                    children: [
-                      // DetailItem(
-                      //     title: "Trim",
-                      //     value: vhcle.detail?.trim ?? 'Unknown'),
-                      DetailItem(
-                          title: "Body Type",
-                          value: vhcle.detail?.bodyType ?? 'Unknown'),
-                      DetailItem(
-                          title: "Licence Plate Number",
-                          value: vhcle.registrationNumber),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      DetailItem(
-                          title: "Drive",
-                          value: vhcle.detail?.driveTrain ?? 'Unknown'),
-                    ],
-                  ),
-                ],
+                ),
               ),
-            ),
-            // const SizedBox(height: 20),
-            // const Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: 20),
-            //   child: EarningsGraph(
-            //     totalEarnings: 284000,
-            //     selectedPointLabel: '28,000Frs',
-            //     selectedPointValue: 28000,
-            //     dataPoints: [
-            //       FlSpot(1, 10),
-            //       FlSpot(5, 3),
-            //       FlSpot(10, 18),
-            //       FlSpot(15, 22),
-            //       FlSpot(20, 10),
-            //       FlSpot(25, 27),
-            //       FlSpot(30, 23),
-            //     ],
-            //   ),
-            // ),
-            const SizedBox(height: 10),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Find a service for your car',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-                  )
-                ],
+              // const SizedBox(height: 20),
+              // const Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 20),
+              //   child: EarningsGraph(
+              //     totalEarnings: 284000,
+              //     selectedPointLabel: '28,000Frs',
+              //     selectedPointValue: 28000,
+              //     dataPoints: [
+              //       FlSpot(1, 10),
+              //       FlSpot(5, 3),
+              //       FlSpot(10, 18),
+              //       FlSpot(15, 22),
+              //       FlSpot(20, 10),
+              //       FlSpot(25, 27),
+              //       FlSpot(30, 23),
+              //     ],
+              //   ),
+              // ),
+              const SizedBox(height: 10),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Find a service for your car',
+                      style:
+                          TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                    )
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: CustomCardService(
-                        color: const Color(0xFFC4FFCD),
-                        text: 'Vehicles\nReports',
-                        imagePath: AppImages.vehicule,
-                        onTap: () {}
-                        // controller.goToVehicleReport
+              const SizedBox(height: 10),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomCardService(
+                          color: const Color(0xFFC4FFCD),
+                          text: 'Vehicles\nReports',
+                          imagePath: AppImages.vehicule,
+                          onTap: () {}
+                          // controller.goToVehicleReport
 
-                        ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: CustomCardService(
-                      color: const Color(0xFFFFDAD4),
-                      text: 'Emergency\nAssistance',
-                      imagePath: AppImages.emergency,
-                      onTap: () {
-                        // controller.goToEmergency();
-                      },
+                          ),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: CustomCardService(
+                        color: const Color(0xFFFFDAD4),
+                        text: 'Emergency\nAssistance',
+                        imagePath: AppImages.emergency,
+                        onTap: () {
+                          // controller.goToEmergency();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            RecentActivitiesWidget(haveTabBar: false),
-          ]),
+              const SizedBox(height: 20),
+              RecentActivitiesWidget(
+                haveTabBar: false,
+                vehicleId: vhcle.id,
+              ),
+            ]),
+          ),
         ),
       ),
     );
