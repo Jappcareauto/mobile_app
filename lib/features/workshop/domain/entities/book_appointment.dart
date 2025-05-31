@@ -1,7 +1,9 @@
-class BookAppointment {
+import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 
+class BookAppointment {
   final String date;
   final String locationType;
+  final LocationEntity? location;
   final String note;
   final String serviceId;
   final String vehicleId;
@@ -15,7 +17,8 @@ class BookAppointment {
 
   BookAppointment._({
     required this.date,
-    required  this.timeOfDay,
+    this.location,
+    required this.timeOfDay,
     required this.locationType,
     required this.note,
     required this.serviceId,
@@ -30,6 +33,7 @@ class BookAppointment {
 
   factory BookAppointment.create({
     required date,
+    location,
     required locationType,
     required note,
     required serviceId,
@@ -45,6 +49,7 @@ class BookAppointment {
     // Add any validation or business logic here
     return BookAppointment._(
       date: date,
+      location: location,
       locationType: locationType,
       note: note,
       serviceId: serviceId,
@@ -58,5 +63,4 @@ class BookAppointment {
       updatedAt: updatedAt,
     );
   }
-
 }

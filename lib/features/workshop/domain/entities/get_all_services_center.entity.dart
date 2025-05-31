@@ -1,30 +1,31 @@
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
+import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_service_center_model.dart';
 
 import '../../../../core/ui/domain/entities/pagination.entity.dart';
-import '../../../../core/ui/domain/entities/location.entity.dart';
 
-class GetAllServicesCenter {
-  final List<Data> data;
+class GetAllServiceCenterEntity {
+  final List<ServiceCenterEntity> data;
   final Pagination pagination;
 
-  GetAllServicesCenter._({
+  GetAllServiceCenterEntity._({
     required this.data,
     required this.pagination,
   });
 
-  factory GetAllServicesCenter.create({
+  factory GetAllServiceCenterEntity.create({
     required data,
     required pagination,
   }) {
     // Add any validation or business logic here
-    return GetAllServicesCenter._(
+    return GetAllServiceCenterEntity._(
       data: data,
       pagination: pagination,
     );
   }
 }
 
-class Data {
+class ServiceCenterEntity {
   final String? name;
   final String? ownerId;
   final LocationEntity? location;
@@ -37,10 +38,9 @@ class Data {
   final String updatedAt;
   final String? imageId;
   final String? imageUrl;
-  final String? available;
-  final bool availability;
+  final bool? available;
 
-  Data._({
+  ServiceCenterEntity._({
     required this.name,
     this.ownerId,
     this.services,
@@ -51,13 +51,12 @@ class Data {
     this.updatedBy,
     this.imageId,
     this.imageUrl,
-    required this.availability,
     this.available,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  factory Data.create(
+  factory ServiceCenterEntity.create(
       {required name,
       required ownerId,
       services,
@@ -70,23 +69,26 @@ class Data {
       required updatedAt,
       required imageId,
       required imageUrl,
-      required availability,
-      required available}) {
+      available}) {
     // Add any validation or business logic here
-    return Data._(
-        name: name,
-        ownerId: ownerId,
-        services: services,
-        location: location,
-        category: category,
-        id: id,
-        createdBy: createdBy,
-        updatedBy: updatedBy,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        imageId: imageId,
-        imageUrl: imageUrl,
-        availability: availability,
-        available: available);
+    return ServiceCenterEntity._(
+      name: name,
+      ownerId: ownerId,
+      services: services,
+      location: location,
+      category: category,
+      id: id,
+      createdBy: createdBy,
+      updatedBy: updatedBy,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      imageId: imageId,
+      imageUrl: imageUrl,
+      available: available,
+    );
+  }
+
+  ServiceCenterModel toModel() {
+    return ServiceCenterModel.fromEntity(this);
   }
 }

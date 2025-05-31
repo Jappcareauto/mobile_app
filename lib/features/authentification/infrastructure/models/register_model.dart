@@ -1,10 +1,9 @@
 import '../../domain/entities/register.dart';
 
 class RegisterModel {
-
   final String name;
   final String email;
-  final bool verified;
+  final bool? verified;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -14,20 +13,20 @@ class RegisterModel {
   RegisterModel._({
     required this.name,
     required this.email,
-    required this.verified,
+    this.verified,
     required this.id,
-     this.createdBy,
-     this.updatedBy,
+    this.createdBy,
+    this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
   });
 
   factory RegisterModel.fromJson(Map<String, dynamic> json) {
     return RegisterModel._(
+      id: json['id'],
       name: json['name'],
       email: json['email'],
       verified: json['verified'],
-      id: json['id'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],

@@ -4,12 +4,17 @@ import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';
 import 'package:jappcare/features/authentification/ui/authentification/widgets/signup_modal.dart';
 import '../../../../../core/navigation/app_navigation.dart';
+import '../../../application/usecases/google_login_usecase.dart';
+import '../../../application/usecases/google_signup_usecase.dart';
 import '../widgets/login_modal.dart';
 
 class AuthentificationController extends GetxController {
   final AppNavigation _appNavigation;
+  final GoogleLoginUseCase _googleLoginUseCase = Get.find();
+  final GoogleSignupUseCase _googleSignupUseCase = Get.find();
   AuthentificationController(this._appNavigation);
   final loadingGoogle = false.obs;
+  final loadingGoogleSignup = false.obs;
 
   @override
   void onInit() {
@@ -66,6 +71,34 @@ class AuthentificationController extends GetxController {
     Get.showCustomSnackBar("Nothing is running ;-)\n It's just a demo");
     await Future.delayed(const Duration(seconds: 2));
     loadingGoogle.value = false;
+  }
+
+  void googleLogin() async {
+    loadingGoogle.value = true;
+    final response = await _googleLoginUseCase.call();
+
+    response.fold((e) {
+      loadingGoogle.value = false;
+      if (Get.context != null) {
+        Get.showCustomSnackBar(e.message);
+      }
+    }, (success) {
+      loadingGoogle.value = false;
+    });
+  }
+
+  void googleSignup() async {
+    loadingGoogle.value = true;
+    final response = await _googleSignupUseCase.call();
+
+    response.fold((e) {
+      loadingGoogle.value = false;
+      if (Get.context != null) {
+        Get.showCustomSnackBar(e.message);
+      }
+    }, (success) {
+      loadingGoogle.value = false;
+    });
   }
 
   void navigateToForgotPassword() {

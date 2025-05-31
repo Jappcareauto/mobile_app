@@ -1,7 +1,7 @@
 class Register {
   final String name;
   final String email;
-  final bool verified;
+  final bool? verified;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -11,7 +11,7 @@ class Register {
   Register._({
     required this.name,
     required this.email,
-    required this.verified,
+    this.verified,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -22,7 +22,7 @@ class Register {
   factory Register.create({
     required name,
     required email,
-    required verified,
+    verified,
     required id,
     createdBy,
     updatedBy,

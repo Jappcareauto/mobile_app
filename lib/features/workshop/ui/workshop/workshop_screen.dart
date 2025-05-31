@@ -109,16 +109,11 @@ class WorkshopScreen extends GetView<WorkshopController>
                         children: controller.loading.value
                             ? [
                                 // Encapsuler ListVehicleShimmer dans un conteneur de hauteur définie
-                                const SizedBox(
-                                    height: 190, // Hauteur fixée
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        children: [
-                                          WorkshopShimmerWidgets(),
-                                          WorkshopShimmerWidgets(),
-                                        ],
-                                      ),
-                                    )),
+                                Column(
+                                  children: [
+                                    WorkshopShimmerWidgets(),
+                                  ],
+                                ),
                               ]
                             : (controller.servicesCenter.value?.data != null &&
                                     controller
@@ -143,7 +138,8 @@ class WorkshopScreen extends GetView<WorkshopController>
                                                 0.0,
                                             id: serviceCenter.id,
                                             availability:
-                                                serviceCenter.availability,
+                                                serviceCenter.available ??
+                                                    false,
                                             locationName:
                                                 serviceCenter.location?.name);
                                       },

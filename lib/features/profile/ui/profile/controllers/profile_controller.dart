@@ -79,8 +79,9 @@ class ProfileController extends GetxController {
         _localStorageService.write(AppConstants.userId, success.id);
 
         Get.find<AppEventService>().emit<String>(AppConstants.userIdEvent, '');
+
         Get.find<AppEventService>()
-            .emit<String>(AppConstants.userIdEvent, userInfos!.id);
+            .emit<String>(AppConstants.userIdEvent, success.id);
         update();
       },
     );

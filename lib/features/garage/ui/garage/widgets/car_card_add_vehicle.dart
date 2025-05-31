@@ -49,7 +49,7 @@ class CarCardAddVehicle extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         color: haveBGColor ? Get.theme.primaryColor : AppColors.white,
         border: haveBorder
-            ? Border.all(color: Get.theme.primaryColor, width: 1)
+            ? Border.all(color: Get.theme.primaryColor, width: 2)
             : Border.all(color: AppColors.lightBorder),
       ),
       child: InkWell(
@@ -60,14 +60,13 @@ class CarCardAddVehicle extends StatelessWidget {
           child: Stack(
             alignment: Alignment.bottomRight,
             children: [
-              ImageComponent(
-                assetPath: imageUrl == null ? imagePath : "",
-                imageUrl: imageUrl,
-                // imageUrl:
-                //     "https://vhr.nyc3.cdn.digitaloceanspaces.com/vehiclemedia/gallery/2005/gmc/sierra-1500/sle-4x2-crew-cab-5.75-ft.-box-143.5-in.-wb-automatic/ext-6130313031.jpg",
-                width: 250,
-                height: 120,
-              ),
+              if (imageUrl != null)
+                ImageComponent(
+                  assetPath: imageUrl == null ? imagePath : "",
+                  imageUrl: imageUrl,
+                  width: 200,
+                  height: 120,
+                ),
               Positioned(
                 top: 8,
                 left: 8,

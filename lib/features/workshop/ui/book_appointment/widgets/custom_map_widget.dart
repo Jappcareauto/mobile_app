@@ -7,6 +7,8 @@ import 'package:jappcare/features/workshop/ui/workshopDetails/controllers/worksh
 class CustomMapWidget extends GetView<MapController> {
   final WorkshopDetailsController workshopcontroller =
       Get.put(WorkshopDetailsController(Get.find()));
+  // final WorkshopDetailsController workshopcontroller =
+  //     Get.put(WorkshopDetailsController(Get.find()));
 
   CustomMapWidget({super.key});
 
@@ -16,7 +18,7 @@ class CustomMapWidget extends GetView<MapController> {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       height: 300,
       child: ClipRRect(
-          borderRadius: BorderRadius.circular(32),
+          borderRadius: BorderRadius.circular(18),
           child: Obx(() {
             return controller.locationPermissionGranted.value
                 ? GoogleMap(

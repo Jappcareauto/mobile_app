@@ -37,6 +37,7 @@ class HomeScreen extends GetView<HomeController> {
           backgroundColor: AppColors.white,
           child: SingleChildScrollView(
             child: Column(
+              spacing: 20,
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -88,22 +89,20 @@ class HomeScreen extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'ListVehicleWidget'))
                   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
                       .buildView({
                     "pageController": controller.pageController,
                     "currentPage": controller.currentPage,
-                    "haveAddVehicule": true,
                     "title": "My Garage",
+                    'viewCarDetailsOnCardPress': true,
                     "onTapeAddVehicle": () {
                       print("clique");
                     },
                   }),
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'RecentActivitiesWidget')) ...[
-                  const SizedBox(height: 20),
                   Get.find<FeatureWidgetInterface>(
                           tag: 'RecentActivitiesWidget')
                       .buildView({
@@ -121,11 +120,17 @@ class HomeScreen extends GetView<HomeController> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
+                    spacing: 10,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        child: const TitleSection(nameSection: 'Services'),
+                      Text(
+                        'Services',
+                        style: Get.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Row(
+                        spacing: 10,
                         children: [
                           Expanded(
                             child: CustomCardService(
@@ -139,7 +144,6 @@ class HomeScreen extends GetView<HomeController> {
                               },
                             ),
                           ),
-                          const SizedBox(width: 10),
                           Expanded(
                             child: CustomCardService(
                               color: const Color(0xFFFFDAD4),
@@ -153,7 +157,6 @@ class HomeScreen extends GetView<HomeController> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
                       // Row(
                       //   children: [
                       //     Expanded(
@@ -184,18 +187,19 @@ class HomeScreen extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
                 //RecentActivitiesWidget
 
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'RecentActivitiesWidget'))
                   Get.find<FeatureWidgetInterface>(
                           tag: 'RecentActivitiesWidget')
-                      .buildView({
-                    'limit': 2,
-                    'haveTabBar': false,
-                    'haveTitle': true,
-                  }),
+                      .buildView(
+                    {
+                      'limit': 2,
+                      'haveTabBar': false,
+                      'haveTitle': true,
+                    },
+                  ),
               ],
             ),
           ),

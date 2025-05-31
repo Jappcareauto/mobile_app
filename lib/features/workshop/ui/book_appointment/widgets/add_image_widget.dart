@@ -11,14 +11,11 @@ class AddImageWidget extends GetView<BookAppointmentController> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
-            children: [
-              Text(
-                'Add Images',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              )
-            ],
+          Text(
+            'Add Images',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
           const SizedBox(
             height: 20,

@@ -18,6 +18,8 @@ class CarCardWidget extends GetView<GarageController> {
     required this.status,
     required this.latitude,
     required this.longitude,
+    this.serviceCenterName,
+    this.appointmentType,
     this.pathImageCar,
     this.widthCard,
     this.heightCard,
@@ -29,6 +31,8 @@ class CarCardWidget extends GetView<GarageController> {
   final String localisation;
   final String nameCar;
   final String status;
+  final String? appointmentType;
+  final String? serviceCenterName;
   final String? pathImageCar;
   final double? widthCard;
   final double? heightCard;
@@ -53,19 +57,21 @@ class CarCardWidget extends GetView<GarageController> {
         onTap: onPressed,
         child: Column(spacing: 20, children: [
           Row(
+            spacing: 10,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'BodyShop Appointment',
+                      '$appointmentType Appointment',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.orange),
                     ),
                     Text(
-                      'Japcare AutoShop',
+                      serviceCenterName ?? 'Japcare AutoShop',
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -73,6 +79,7 @@ class CarCardWidget extends GetView<GarageController> {
               ),
               ChipWidget(
                 status: status,
+                variant: ChipSize.small,
               ),
             ],
           ),
@@ -83,7 +90,7 @@ class CarCardWidget extends GetView<GarageController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  spacing: 10,
+                  spacing: 6,
                   children: [
                     Row(
                       spacing: 8,
@@ -120,27 +127,24 @@ class CarCardWidget extends GetView<GarageController> {
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
-                spacing: 8,
+                spacing: 4,
                 children: [
                   ImageComponent(
                     imageUrl: pathImageCar,
                     assetPath: AppImages.car,
-                    width: Get.width * 0.3,
+                    width: Get.width * 0.35,
                   ),
-                  Flexible(
-                    fit: FlexFit.loose,
-                    child: Text(
-                      nameCar,
-                      textAlign: TextAlign.center,
-                      // Centre le texte
-                      overflow: TextOverflow.ellipsis,
-                      // Tronque le texte si trop long
-                      maxLines: 1,
-                      // Limite le texte à une seule ligne
-                      style: const TextStyle(
-                        fontSize: 12, // Ajuste la taille de la police
-                        fontWeight: FontWeight.bold, // Style en gras
-                      ),
+                  Text(
+                    nameCar,
+                    textAlign: TextAlign.center,
+                    // Centre le texte
+                    overflow: TextOverflow.ellipsis,
+                    // Tronque le texte si trop long
+                    maxLines: 1,
+                    // Limite le texte à une seule ligne
+                    style: const TextStyle(
+                      fontSize: 14, // Ajuste la taille de la police
+                      fontWeight: FontWeight.bold, // Style en gras
                     ),
                   ),
                 ],

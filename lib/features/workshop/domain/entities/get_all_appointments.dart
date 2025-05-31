@@ -1,7 +1,8 @@
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/core/ui/domain/entities/pagination.entity.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.entity.dart';
 // import 'package:jappcare/features/workshop/domain/entities/get_vehicule_by_id.dart';
 
 class GetAllAppointments {
@@ -27,6 +28,8 @@ class GetAllAppointments {
 
 class AppointmentEntity {
   final String id;
+  final String createdBy;
+  final String updatedBy;
   final String createdAt;
   final String updatedAt;
   final String? status;
@@ -36,10 +39,13 @@ class AppointmentEntity {
   final String locationType;
   final LocationEntity? location;
   final ServiceEntity? service;
+  final ServiceCenterEntity? serviceCenter;
   final Vehicle? vehicle;
 
   AppointmentEntity._(
       {required this.id,
+      required this.createdBy,
+      required this.updatedBy,
       required this.createdAt,
       required this.updatedAt,
       this.status,
@@ -49,11 +55,14 @@ class AppointmentEntity {
       required this.locationType,
       required this.location,
       required this.service,
+      required this.serviceCenter,
       required this.vehicle});
 
   factory AppointmentEntity.create(
       {required id,
       required location,
+      required createdBy,
+      required updatedBy,
       required createdAt,
       required updatedAt,
       status,
@@ -61,11 +70,14 @@ class AppointmentEntity {
       required timeOfDay,
       required date,
       required locationType,
+      required serviceCenter,
       required service,
       required vehicle}) {
     // Add any validation or business logic here
     return AppointmentEntity._(
         id: id,
+        createdBy: createdBy,
+        updatedBy: updatedBy,
         createdAt: createdAt,
         updatedAt: updatedAt,
         status: status,
@@ -74,6 +86,7 @@ class AppointmentEntity {
         date: date,
         locationType: locationType,
         location: location,
+        serviceCenter: serviceCenter,
         service: service,
         vehicle: vehicle);
   }

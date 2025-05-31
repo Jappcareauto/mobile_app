@@ -17,6 +17,7 @@ class RecentActivitiesWidget extends StatelessWidget
 
   final String title;
   final String? noActivitiesPlaceholder;
+  final String? vehicleId;
   final bool haveTitle;
   final bool haveTabBar;
   final bool isHorizontal;
@@ -30,6 +31,7 @@ class RecentActivitiesWidget extends StatelessWidget
       this.haveTabBar = true,
       this.isHorizontal = false,
       this.status,
+      this.vehicleId,
       this.limit});
 
   @override
@@ -40,29 +42,38 @@ class RecentActivitiesWidget extends StatelessWidget
       builder: (controller) {
         var filteredActivities = <CarCardWidget>[];
 
-        if (controller.appointments.isNotEmpty &&
-            controller.myGarage?.location != null) {
+        if (controller.appointments.isNotEmpty) {
           var limitedActivities = limit != null
-              ? controller.appointments.sublist(0, limit!)
+              ? limit! > controller.appointments.length
+                  ? controller.appointments
+                  : controller.appointments.sublist(0, limit!)
               : controller.appointments;
 
-          filteredActivities = limitedActivities.map((e) {
+          var filteredByVehicle = vehicleId != null
+              ? limitedActivities.where((e) => e.vehicle?.id == vehicleId)
+              : limitedActivities;
+
+          filteredActivities = filteredByVehicle.map((e) {
             return CarCardWidget(
-              latitude: e.location?.latitude ??
-                  controller.myGarage!.location!.latitude,
-              longitude: e.location?.longitude ??
-                  controller.myGarage!.location!.longitude,
+              latitude: e.location?.latitude ?? 0,
+              longitude: e.location?.longitude ?? 0,
               date:
                   "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
               time:
                   "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
-              localisation: e.locationType,
-              nameCar: e.vehicle?.name ?? "Unknown",
-              pathImageCar: e.vehicle?.imageUrl,
+              localisation: e.locationType == "SERVICE_CENTER"
+                  ? "On Site"
+                  : e.locationType,
+              nameCar: "${e.vehicle?.detail?.make} ${e.vehicle?.detail?.model}",
+              pathImageCar: e.vehicle?.imageUrl ?? "",
               status: e.status ?? "Unknown",
               onPressed: () => controller.goToAppointmentDetail(e),
+              appointmentType:
+                  e.service?.title.replaceAll("_", " ").capitalizeFirst,
+              serviceCenterName: e.serviceCenter?.name?.trim(),
             );
           }).toList();
+
           if (status != null) {
             filteredActivities =
                 filteredActivities.where((w) => w.status == status).toList();
@@ -131,16 +142,21 @@ class RecentActivitiesWidget extends StatelessWidget
               Column(
                 spacing: 20,
                 children: [
-                  const Row(
-                    children: [
-                      Expanded(
-                        child: ImageComponent(
-                          assetPath: AppConstants.noActivities,
-                          height: 200,
-                          width: double.infinity,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Get.theme.scaffoldBackgroundColor,
+                    ),
+                    child: const Row(
+                      children: [
+                        Expanded(
+                          child: ImageComponent(
+                            assetPath: AppConstants.noActivities,
+                            height: 250,
+                            width: double.infinity,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Text(noActivitiesPlaceholder ??
                       "You have no recent activities at the moment"),

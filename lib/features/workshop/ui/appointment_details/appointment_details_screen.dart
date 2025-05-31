@@ -13,13 +13,13 @@ import 'package:jappcare/features/home/ui/home/widgets/notification_widget.dart'
 import 'package:jappcare/features/workshop/ui/appointment_details/controllers/appointment_details_controller.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/widgets/expendend_container_widget.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/widgets/invoices_widget.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
+// import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 
 class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
-  final BookAppointmentController bookController =
-      Get.put(BookAppointmentController(Get.find()));
+  // final BookAppointmentController bookController =
+  //     Get.put(BookAppointmentController(Get.find()));
 
-  AppointmentDetailScreen({super.key});
+  const AppointmentDetailScreen({super.key});
   // final ConfirmeAppointmentController confirmAppointment = Get.put(ConfirmeAppointmentController(Get.find()));
   @override
   Widget build(BuildContext context) {
@@ -61,10 +61,29 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                 height: 20,
               ),
               if (appointment.vehicle?.imageUrl != null)
-                ImageComponent(
-                  // assetPath: AppImages.carWhite,
-                  imageUrl: appointment.vehicle?.imageUrl,
+                Container(
+                  width: Get.width,
+                  height: 200,
+                  padding: const EdgeInsets.only(right: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    border: Border.all(width: 1, color: Color(0XFFE5E2E1)),
+                    color: Colors.white,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                        16), // same radius as the container
+                    child: ImageComponent(
+                      // assetPath: AppImages.carWhite,
+                      imageUrl: appointment.vehicle?.imageUrl,
+                      width: Get.width * .85,
+                      height: 200,
+                    ),
+                  ),
                 ),
+              const SizedBox(
+                height: 20,
+              ),
               NotificationWidget(
                   backgrounColor: Get.theme.primaryColor.withValues(alpha: .2),
                   bodyText:
@@ -88,7 +107,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                         backgroundImage: AssetImage(AppImages.avatar),
                       ),
                       SizedBox(width: 5),
-                      Text('Japtech AutoShop'),
+                      Text('${appointment.serviceCenter?.name}'),
                     ],
                   ),
                   Flexible(
@@ -115,7 +134,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${appointment.service?.description}",
+                    "${appointment.service?.title.replaceAll("_", " ")}",
                     style: TextStyle(
                         color: AppColors.orange,
                         fontWeight: FontWeight.w600,
@@ -128,12 +147,12 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                spacing: 20,
                 children: [
                   Row(
+                    spacing: 2.5,
                     children: [
                       const Icon(
-                        FluentIcons.calendar_3_day_20_regular,
+                        FluentIcons.calendar_12_regular,
                       ),
                       Text(
                         DateFormat('EEE, MMM dd, yyyy')
@@ -146,11 +165,12 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                     ],
                   ),
                   Row(
+                    spacing: 2.5,
                     children: [
                       const Icon(
                         FluentIcons.location_12_regular,
                       ),
-                      Text(appointment.locationType,
+                      Text(appointment.locationType.replaceAll("_", " "),
                           style: const TextStyle(
                               fontSize: 14, fontWeight: FontWeight.w300))
                     ],
@@ -160,23 +180,23 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
               const SizedBox(
                 height: 20,
               ),
-              ExpandableContainer(
-                onpresse: () => controller.toggleExpanded(),
-                visibility: controller.isExpanded,
-                subtitle: const Text(
-                  "Reported Issue",
-                  style: TextStyle(
-                      fontSize: 14.0, height: 1.5, color: Colors.grey),
-                ),
-                title: "Reported Issue",
-                description:
-                    "There is a noticeable dent on the rear bumper of my Porsche Taycan, specifically located between the lower edge of the rear headlight and the rear wheel arch. It is closer to the wheel arch, situated near the car's side profile. The dent is below the horizontal line of the rear headlight and sits closer to the lower third of the rear bumper.",
-                imageUrls: bookController.images,
-                controller: controller,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              // ExpandableContainer(
+              //   onpresse: () => controller.toggleExpanded(),
+              //   visibility: controller.isExpanded,
+              //   subtitle: const Text(
+              //     "Reported Issue",
+              //     style: TextStyle(
+              //         fontSize: 14.0, height: 1.5, color: Colors.grey),
+              //   ),
+              //   title: "Reported Issue",
+              //   description:
+              //       "There is a noticeable dent on the rear bumper of my Porsche Taycan, specifically located between the lower edge of the rear headlight and the rear wheel arch. It is closer to the wheel arch, situated near the car's side profile. The dent is below the horizontal line of the rear headlight and sits closer to the lower third of the rear bumper.",
+              //   imageUrls: bookController.images,
+              //   controller: controller,
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               ExpandableContainer(
                 onpresse: () {
                   controller.toggleisExpandedReportDetail();

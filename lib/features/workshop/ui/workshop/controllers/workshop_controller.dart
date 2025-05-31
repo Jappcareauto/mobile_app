@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/features/workshop/domain/core/exceptions/workshop_exception.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.entity.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/application/command/get_service_center_command.dart';
@@ -32,8 +32,9 @@ class WorkshopController extends GetxController {
 
   final GetAllServicesCenterUseCase _getAllServicesCenterUseCase = Get.find();
 
-  Rxn<GetAllServicesCenter> servicesCenter = Rxn<GetAllServicesCenter>();
-  Rxn<GetAllservices> services = Rxn<GetAllservices>();
+  Rxn<GetAllServiceCenterEntity> servicesCenter =
+      Rxn<GetAllServiceCenterEntity>();
+  Rxn<GetAllServicesEntity> services = Rxn<GetAllServicesEntity>();
 
   final AppNavigation _appNavigation;
   WorkshopController(this._appNavigation);
@@ -78,7 +79,7 @@ class WorkshopController extends GetxController {
     }, time: const Duration(seconds: 1));
 
     getServiceCentersFormHelper =
-        FormHelper<WorkshopException, GetAllServicesCenter>(
+        FormHelper<WorkshopException, GetAllServiceCenterEntity>(
       fields: {
         "name": null,
       },
@@ -120,6 +121,7 @@ class WorkshopController extends GetxController {
       {String? name,
       List<ServiceEntity>? centerServices,
       String? description,
+      String? serviceCenterAuthor,
       double? latitude,
       double? longitude,
       required String id,
@@ -201,7 +203,6 @@ class WorkshopController extends GetxController {
       builder: (BuildContext context) {
         aroundMeFilter.value = aroundMe.value;
         availableNowFilter.value = availableNow.value;
-        print("passed");
         return AlertDialog(
           title: const Text('Filters by research'),
           content: Obx(() {

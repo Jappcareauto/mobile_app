@@ -18,7 +18,6 @@ import '../../../application/usecases/get_garage_by_owner_id_usecase.dart';
 import '../../../application/usecases/get_garage_by_owner_id_command.dart';
 
 import '../../../application/usecases/get_vehicle_list_usecase.dart';
-import '../../../application/usecases/get_vehicle_list_command.dart';
 
 import '../widgets/delete_vehicle_widget.dart';
 
@@ -64,13 +63,10 @@ class GarageController extends GetxController {
     // Chargement initial des données
     final lastUserId =
         Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
-    // print(lastUserId);
     if (lastUserId != null) {
       fetchData(lastUserId);
     }
     ever(selectedAppointStatusFilter, (value) {
-      print(value);
-      print("tried");
       getAllAppointments(status: value != "" ? value : null);
     });
     pageController.addListener(() {
@@ -87,7 +83,10 @@ class GarageController extends GetxController {
     vehicleLoading.value = true;
 
     try {
-      await getGarageByOwnerId(userId);
+      await getVehicleList(userId);
+      await getAllAppointments();
+      update();
+      // await getGarageByOwnerId(userId);
     } catch (e) {
       print("Erreur lors de la récupération des données : $e");
     } finally {
@@ -105,6 +104,7 @@ class GarageController extends GetxController {
   }
 
   void goToVehicleDetails(Vehicle vehicleDetails) {
+    print("View car details");
     _appNavigation.toNamed(GaragePrivateRoutes.vehicleDetails,
         arguments: vehicleDetails);
   }
@@ -149,7 +149,7 @@ class GarageController extends GetxController {
       },
       (success) {
         myGarage = success;
-        getVehicleList(myGarage!.id);
+        getVehicleList(userId);
         getAllAppointments();
         Get.find<AppEventService>()
             .emit<String>(AppConstants.garageIdEvent, myGarage!.id);
@@ -165,17 +165,16 @@ class GarageController extends GetxController {
     final result = await _getPlaceNameUseCase
         .call(GetPlaceNameCommand(longitude: longitude, latitude: latitude));
     result.fold((error) {
-      print(error.message);
+      debugPrint(error.message);
     }, (response) {
       placeName.value = response;
       update();
     });
   }
 
-  Future<void> getVehicleList(String garageId) async {
+  Future<void> getVehicleList(String ownerId) async {
     vehicleLoading.value = true;
-    final result = await _getVehicleListUseCase
-        .call(GetVehicleListCommand(garageId: garageId));
+    final result = await _getVehicleListUseCase.call();
     result.fold(
       (e) {
         vehicleLoading.value = false;

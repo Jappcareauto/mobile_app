@@ -1,18 +1,18 @@
 import 'package:jappcare/core/ui/domain/models/pagination.model.dart';
 
-import '../../domain/entities/get_all_services.dart';
+import '../../domain/entities/get_all_services.entity.dart';
 
-class GetAllservicesModel {
+class GetAllServicesModel {
   final List<ServiceModel> data;
   final PaginationModel pagination;
 
-  GetAllservicesModel._({
+  GetAllServicesModel._({
     required this.data,
     required this.pagination,
   });
 
-  factory GetAllservicesModel.fromJson(Map<String, dynamic> json) {
-    return GetAllservicesModel._(
+  factory GetAllServicesModel.fromJson(Map<String, dynamic> json) {
+    return GetAllServicesModel._(
       data: List<ServiceModel>.from(
           json['data'].map((x) => ServiceModel.fromJson(x))),
       pagination: PaginationModel.fromJson(json['pagination']),
@@ -28,16 +28,16 @@ class GetAllservicesModel {
     return json;
   }
 
-  factory GetAllservicesModel.fromEntity(GetAllservices entity) {
-    return GetAllservicesModel._(
+  factory GetAllServicesModel.fromEntity(GetAllServicesEntity entity) {
+    return GetAllServicesModel._(
       data: List<ServiceModel>.from(
           entity.data.map((x) => ServiceModel.fromEntity(x))),
       pagination: PaginationModel.fromEntity(entity.pagination),
     );
   }
 
-  GetAllservices toEntity() {
-    return GetAllservices.create(
+  GetAllServicesEntity toEntity() {
+    return GetAllServicesEntity.create(
       data: data.map((x) => x.toEntity()).toList(),
       pagination: pagination.toEntity(),
     );
@@ -48,7 +48,6 @@ class ServiceModel {
   final String title;
   final String? description;
   final String? serviceCenterId;
-  final String definition;
   final String id;
   final String? createdBy;
   final String? updatedBy;
@@ -59,7 +58,6 @@ class ServiceModel {
     required this.title,
     this.description,
     this.serviceCenterId,
-    required this.definition,
     required this.id,
     this.createdBy,
     this.updatedBy,
@@ -72,7 +70,6 @@ class ServiceModel {
       title: json['title'],
       description: json['description'],
       serviceCenterId: json['serviceCenterId'],
-      definition: json['definition'],
       id: json['id'],
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
@@ -86,7 +83,6 @@ class ServiceModel {
     data['title'] = title;
     data['description'] = description;
     data['serviceCenterId'] = serviceCenterId;
-    data['definition'] = definition;
     data['id'] = id;
     data['createdBy'] = createdBy;
     data['updatedBy'] = updatedBy;
@@ -100,7 +96,6 @@ class ServiceModel {
       title: entity.title,
       description: entity.description,
       serviceCenterId: entity.serviceCenterId,
-      definition: entity.definition,
       id: entity.id,
       createdBy: entity.createdBy,
       updatedBy: entity.updatedBy,
@@ -114,7 +109,6 @@ class ServiceModel {
       title: title,
       description: description,
       serviceCenterId: serviceCenterId,
-      definition: definition,
       id: id,
       createdBy: createdBy,
       updatedBy: updatedBy,

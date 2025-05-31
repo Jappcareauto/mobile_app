@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/workshop/domain/entities/get_all_services.dart';
+import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
@@ -174,34 +174,6 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                       fontWeight: FontWeight.w400, fontSize: 16),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Column(
-                  spacing: 20,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Specialized Services",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        child: globalcontrollerWorkshop
-                                        .workshopData['centerServices'] !=
-                                    null &&
-                                globalcontrollerWorkshop
-                                    .workshopData['centerServices']!.isNotEmpty
-                            ? ServiceWidget(
-                                tabs: (globalcontrollerWorkshop
-                                        .workshopData['centerServices']
-                                    as List<ServiceEntity>),
-                                borderRadius: BorderRadius.circular(16),
-                              )
-                            : const Text('Aucun service disponible'),
-                      ),
-                    ]),
-              ),
-              const SizedBox(height: 20),
               const SizedBox(
                   height: 300,
                   child: Row(
@@ -210,14 +182,55 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                     ],
                   )),
               const SizedBox(height: 20),
+              VehicleListWidget(
+                vehiclesLoading: false.obs,
+                vehicles: controller.vehicles,
+                pageController: controller.pageController,
+                currentPage: controller.currentPage,
+                onTapAddVehicle: controller.garageController.goToAddVehicle,
+                onTapViewVehicle:
+                    controller.garageController.goToVehicleDetails,
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Column(
+                    spacing: 20,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Specialized Services",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      Obx(() {
+                        return SizedBox(
+                          child: controller.serviceCenterServices.isNotEmpty
+                              ? ServiceWidget(
+                                  tabs: controller.serviceCenterServices
+                                      .map((e) => e.service)
+                                      .toList(),
+                                  borderRadius: BorderRadius.circular(16),
+                                  haveBorder: true,
+                                )
+                              : const Text('Aucun service disponible'),
+                        );
+                      }),
+                    ]),
+              ),
+              const SizedBox(height: 20),
               Container(
                 width: Get.width,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: CustomButton(
-                  text: 'Book Appointment',
-                  onPressed: () {
-                    controller.gotoBookAppointment();
-                  },
+                child: Obx(
+                  () => CustomButton(
+                    text: 'Book Appointment',
+                    onPressed: controller.serviceCenterServices.isNotEmpty
+                        ? () {
+                            controller.gotoBookAppointment();
+                          }
+                        : null,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),

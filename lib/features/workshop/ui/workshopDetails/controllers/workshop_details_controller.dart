@@ -2,12 +2,18 @@ import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
+import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+// import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
+import 'package:jappcare/features/workshop/application/command/get_service_center_services.dart';
+import 'package:jappcare/features/workshop/application/usecases/get_service_center_services_usecase.dart';
+import 'package:jappcare/features/workshop/domain/entities/service_center_service.entity.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -15,14 +21,32 @@ import '../../../../../core/navigation/app_navigation.dart';
 
 class WorkshopDetailsController extends GetxController {
   final AppNavigation _appNavigation;
+  final garageController = Get.find<GarageController>();
+  // Observers to manage the selection of the vehicle for the appointment
+  final PageController pageController = PageController(
+    viewportFraction: 0.9,
+  );
+  final RxInt currentPage = 0.obs;
 
   WorkshopDetailsController(this._appNavigation);
 
   LatLng? userPosition;
-  final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
+  // final GetPlaceNameUseCase _getPlaceNameUseCase = Get.find();
+  final GetServiceCenterServicesUsecase _getServiceCenterServicesUseCase =
+      Get.find();
+
+  final serviceCenterServicesLoading = false.obs;
+  RxList<ServiceCenterServiceEntity> serviceCenterServices =
+      RxList<ServiceCenterServiceEntity>();
+
   final loading = false.obs;
+  final locationLoading = false.obs;
   final locationPermissionGranted = false.obs;
+
+  final globalWorkshopController = Get.find<GlobalcontrollerWorkshop>();
   final arguments = Get.find<GlobalcontrollerWorkshop>().workshopData;
+
+  final RxList<Vehicle> vehicles = <Vehicle>[].obs;
 
   RxString placeName = ''.obs;
 
@@ -43,12 +67,43 @@ class WorkshopDetailsController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    if (arguments['serviceCenterId'] != null) {
+      vehicles.value = garageController.vehicleList
+          .where((e) => e.serviceCenterId == arguments['serviceCenterId'])
+          .toList();
+      getAllServiceCenterServices(arguments['serviceCenterId']);
+    }
+
     getPosition();
-    // getPlaceName();
+
+    pageController.addListener(() {
+      int newPage = pageController.page!.round();
+      if (currentPage.value != newPage) {
+        currentPage.value = newPage;
+      }
+    });
   }
 
   void goBack() {
     _appNavigation.goBack();
+  }
+
+  Future<void> getAllServiceCenterServices(String serviceCenterId) async {
+    serviceCenterServicesLoading.value = true;
+    final result = await _getServiceCenterServicesUseCase.call(
+        GetServiceCenterServicesCommand(serviceCenterId: serviceCenterId));
+    result.fold(
+      (e) {
+        serviceCenterServicesLoading.value = false;
+        if (Get.context != null) {
+          Get.showCustomSnackBar(e.message);
+        }
+      },
+      (response) {
+        serviceCenterServicesLoading.value = false;
+        serviceCenterServices.value = response.data;
+      },
+    );
   }
 
   // Future<void> getPlaceName() async {
@@ -73,11 +128,14 @@ class WorkshopDetailsController extends GetxController {
 
   //get position
   void getPosition() async {
+    locationLoading.value = true;
     await _requestLocationPermission();
-    final position = await Geolocator.getCurrentPosition(
-      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
-    );
-    userPosition = LatLng(position.latitude, position.longitude);
+    // final position = await Geolocator.getCurrentPosition(
+    //   locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
+    // );
+    // userPosition = LatLng(position.latitude, position.longitude);
+    locationLoading.value = false;
+
     update();
     // missionsAroundMe();
     // update();
@@ -202,5 +260,9 @@ class WorkshopDetailsController extends GetxController {
 
   void gotoBookAppointment() {
     _appNavigation.toNamed(WorkshopPrivateRoutes.bookappointment);
+    globalWorkshopController.addData(
+      "serviceCenterServices",
+      serviceCenterServices,
+    );
   }
 }

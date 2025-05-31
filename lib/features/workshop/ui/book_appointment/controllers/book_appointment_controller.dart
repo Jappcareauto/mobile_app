@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 // import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
-import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 // import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
@@ -10,8 +9,9 @@ import 'package:jappcare/core/utils/getx_extensions.dart';
 // import 'package:jappcare/features/garage/application/usecases/get_garage_by_owner_id_usecase.dart';
 // import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_command.dart';
 // import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_usecase.dart';
-import 'package:jappcare/features/garage/domain/entities/get_garage_by_owner_id.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:jappcare/features/workshop/domain/entities/service_center_service.entity.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_place_autocomplete_usecase.dart';
@@ -23,6 +23,8 @@ import 'dart:io';
 
 class BookAppointmentController extends GetxController {
   final AppNavigation _appNavigation;
+  final garageController = Get.find<GarageController>();
+
   var selectedDate = DateTime.now().obs;
   var selectedYear = DateTime.now().year.obs; // Année actuelle
   var selectedMonth = DateTime.now().month.obs; // Mois actuel
@@ -30,7 +32,6 @@ class BookAppointmentController extends GetxController {
 
   var selectedImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();
-  final LocalStorageService _localStorageService = Get.find();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
   // final GetGarageByOwnerIdUseCase _getGarageByOwnerIdUseCase = Get.find();
@@ -40,44 +41,76 @@ class BookAppointmentController extends GetxController {
 
   final loading = true.obs;
   final vehicleLoading = true.obs;
+
+  // Selected service observables
+  final RxList<ServiceCenterServiceEntity> serviceCenterServices =
+      <ServiceCenterServiceEntity>[].obs;
+  final RxList<Vehicle> vehicles = <Vehicle>[].obs;
+  final selectedServiceId = ''.obs;
+  final selectedServiceName = ''.obs;
+  final RxInt selectedServicePrice = 0.obs;
+  final selectedServiceIndex = 0.obs;
+
+  // Observables to manage the vehicles
   final vehicleId = ''.obs;
   final vehicleVin = ''.obs;
-  GetGarageByOwnerId? myGarage;
+  // List<Vehicle> vehicleList = [];
+
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  List<Vehicle> vehicleList = [];
-
-  // late FormHelper bookAppointmentFormHelper;
 
   // The location state of the form
+  RxString selectedLocation = "SERVICE_CENTER".obs;
   RxString placeInput = "".obs;
   RxList<PlacePrediction> placePredictions = <PlacePrediction>[].obs;
   late final PlaceDetails placeDetails;
   // End on the location state of the form
 
-  RxString selectedLocation = "GARAGE".obs;
   var images = [
     AppImages.shopCar,
     AppImages.carClean,
   ].obs;
+
+  // Observers to manage the selection of the vehicle for the appointment
   final PageController pageController = PageController(
     viewportFraction: 0.9,
   );
   final RxInt currentPage = 0.obs;
+
   BookAppointmentController(this._appNavigation);
+
   @override
   void onInit() {
     super.onInit();
     // Listener pour synchroniser la page actuelle
+    serviceCenterServices.value =
+        globalControllerWorkshop.workshopData['serviceCenterServices']
+            as List<ServiceCenterServiceEntity>;
+
+    if (globalControllerWorkshop.workshopData['serviceCenterId'] != null) {
+      vehicles.value = garageController.vehicleList
+          .where((e) =>
+              e.serviceCenterId ==
+              globalControllerWorkshop.workshopData['serviceCenterId'])
+          .toList();
+    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (serviceCenterServices.isNotEmpty) {
+        selectedServiceId.value = serviceCenterServices[0].service.id;
+        selectedServiceName.value = serviceCenterServices[0].service.title;
+        if (serviceCenterServices[0].price != null) {
+          selectedServicePrice.value = serviceCenterServices[0].price!.round();
+        }
+      }
+
       if (pageController.hasClients) {
         pageController.jumpToPage(0); // Forcer le positionnement à la page 0
       }
     });
 
     debounce(placeInput, (value) {
-      if (value.isNotEmpty) {
+      if (value.isNotEmpty && value == locationController.text) {
         getPlaceAutocomplete(value);
       } else {
         placePredictions.value = [];
@@ -93,9 +126,6 @@ class BookAppointmentController extends GetxController {
       int newPage = pageController.page!.round();
       if (currentPage.value != newPage) {
         currentPage.value = newPage;
-        print("newPage");
-
-        print(currentPage.value);
       }
     });
   }
@@ -125,11 +155,13 @@ class BookAppointmentController extends GetxController {
   void gotToConfirmAppointment() {
     _appNavigation.toNamed(WorkshopPrivateRoutes.confirmappointment);
     globalControllerWorkshop.addMultipleData({
-      "currentPage": currentPage,
       "selectedDate": selectedDate.value,
       "selectedLocation": selectedLocation.value,
+      "serviceName": selectedServiceName.value,
+      "servicePrice": selectedServicePrice.value,
+      "serviceId": selectedServiceId.value,
       "noteController": noteController.text,
-      "vehiculeId": vehicleId.value,
+      "vehicle": vehicles[currentPage.value],
       "selectedTime": selectedTime.value
     });
     globalControllerWorkshop.setImages(selectedImages);
@@ -206,6 +238,7 @@ class BookAppointmentController extends GetxController {
       },
       (success) {
         placeDetails = success;
+        placeInput.value = success.name;
         update();
         // loading.value = false;
       },

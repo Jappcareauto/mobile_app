@@ -1,9 +1,11 @@
+import 'package:jappcare/core/ui/domain/models/location.model.dart';
+
 import '../../domain/entities/book_appointment.dart';
 
 class BookAppointmentModel {
-
   final String date;
   final String locationType;
+  final LocationModel? location;
   final String note;
   final String serviceId;
   final String vehicleId;
@@ -18,6 +20,7 @@ class BookAppointmentModel {
   BookAppointmentModel._({
     required this.date,
     required this.locationType,
+    this.location,
     required this.note,
     required this.serviceId,
     required this.vehicleId,
@@ -34,12 +37,15 @@ class BookAppointmentModel {
     return BookAppointmentModel._(
       date: json['date'],
       locationType: json['locationType'],
+      location: json['location'] != null
+          ? LocationModel.fromJson(json['location'])
+          : null,
       note: json['note'],
       serviceId: json['serviceId'],
       vehicleId: json['vehicleId'],
       status: json['status'],
       id: json['id'],
-      timeOfDay: json['timeOfDay'],
+      timeOfDay: json['timeOfDay'] ?? "MORNING",
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
@@ -51,6 +57,7 @@ class BookAppointmentModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['date'] = date;
     data['locationType'] = locationType;
+    data['location'] = location?.toJson();
     data['note'] = note;
     data['serviceId'] = serviceId;
     data['vehicleId'] = vehicleId;
@@ -68,6 +75,7 @@ class BookAppointmentModel {
     return BookAppointmentModel._(
       date: entity.date,
       locationType: entity.locationType,
+      location: entity.location?.toModel(),
       note: entity.note,
       serviceId: entity.serviceId,
       vehicleId: entity.vehicleId,
@@ -84,6 +92,7 @@ class BookAppointmentModel {
   BookAppointment toEntity() {
     return BookAppointment.create(
       date: date,
+      location: location?.toEntity(),
       locationType: locationType,
       note: note,
       serviceId: serviceId,

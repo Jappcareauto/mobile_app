@@ -7,17 +7,17 @@ import 'package:jappcare/features/workshop/ui/chat/widgets/chat_input_widget.dar
 import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/workshop/ui/chat/widgets/resume_appointment_widget.dart';
 
-import 'controllers/chat_controller.dart';
+import 'controllers/workshop_chat_controller.dart';
 import 'widgets/chat_app_bar.dart';
 // import 'widgets/chat_input_field.dart';
 import 'widgets/chat_message.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-class ChatDetailsScreen extends GetView<ChatController> {
+class ChatDetailsScreen extends GetView<WorkshopChatController> {
+  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final BookAppointmentController bookController =
       Get.put(BookAppointmentController(Get.find()));
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
 
   ChatDetailsScreen({super.key});
 
@@ -30,7 +30,8 @@ class ChatDetailsScreen extends GetView<ChatController> {
         profileImageUrl: AppImages.avatar,
         username: "Sara",
       ),
-      body: MixinBuilder<ChatController>(
+      body: MixinBuilder<WorkshopChatController>(
+        init: WorkshopChatController(Get.find()),
         initState: (_) {},
         builder: (_) {
           return Stack(

@@ -1,22 +1,22 @@
 import '../../domain/entities/get_vehicle_list.dart';
 
 class VehicleModel {
-  final String? garageId;
-  final String name;
-  final String? imageUrl;
-  final String? description;
-  final String vin;
-  final String registrationNumber;
-  final DetailModel? detail;
   final String id;
   final String? createdBy;
   final String? updatedBy;
   final String createdAt;
   final String updatedAt;
+  final String name;
+  final String? description;
+  final String? serviceCenterId;
+  final String vin;
+  final String registrationNumber;
+  final String? imageUrl;
+  final DetailModel? detail;
   final List<MediaModel?>? media;
 
   VehicleModel._({
-    this.garageId,
+    this.serviceCenterId,
     required this.name,
     this.imageUrl,
     this.description,
@@ -33,7 +33,7 @@ class VehicleModel {
 
   factory VehicleModel.fromJson(Map<String, dynamic> json) {
     return VehicleModel._(
-      garageId: json['garageId'],
+      serviceCenterId: json['serviceCenterId'],
       name: json['name'],
       imageUrl: json['imageUrl'] ?? json['media']?["mainItemUrl"],
       description: json['description'],
@@ -58,7 +58,7 @@ class VehicleModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['garageId'] = garageId;
+    data['serviceCenterId'] = serviceCenterId;
     data['name'] = name;
     if (imageUrl != null) {
       data['imageUrl'] = imageUrl;
@@ -83,7 +83,7 @@ class VehicleModel {
 
   factory VehicleModel.fromEntity(Vehicle entity) {
     return VehicleModel._(
-      garageId: entity.garageId,
+      serviceCenterId: entity.serviceCenterId,
       name: entity.name,
       imageUrl: entity.imageUrl,
       description: entity.description,
@@ -102,7 +102,7 @@ class VehicleModel {
 
   Vehicle toEntity() {
     return Vehicle.create(
-      garageId: garageId,
+      serviceCenterId: serviceCenterId,
       name: name,
       imgUrl: imageUrl,
       description: description,
@@ -120,21 +120,30 @@ class VehicleModel {
 }
 
 class DetailModel {
-  final String? make;
-  final String? model;
-  final String? year;
-  final String? trim;
-  final String? transmission;
-  final String? driveTrain;
-  final String? power;
-  final String? bodyType;
-  final String? vehicleId;
-  final String? vehicleType;
   final String id;
   final String? createdBy;
   final String? updatedBy;
   final String createdAt;
   final String updatedAt;
+  final String? make;
+  final String? model;
+  final String? year;
+  final String? trim;
+  final String? vehicleType;
+  final String? transmission;
+  final String? driveTrain;
+  final String? power;
+  final String? bodyType;
+  final String? manufacturer;
+  final String? manufacturerRegion;
+  final String? manufacturerCountry;
+  final String? manufacturerPlantCity;
+  final String? restraint;
+  final String? engineSize;
+  final String? engineDescription;
+  final String? engineCapacity;
+  final String? dimensions;
+  final String? vehicleId;
 
   DetailModel._({
     this.make,
@@ -152,6 +161,15 @@ class DetailModel {
     this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
+    this.manufacturer,
+    this.manufacturerRegion,
+    this.manufacturerCountry,
+    this.manufacturerPlantCity,
+    this.restraint,
+    this.engineSize,
+    this.engineDescription,
+    this.engineCapacity,
+    this.dimensions,
   });
 
   factory DetailModel.fromJson(Map<String, dynamic> json) {
@@ -171,6 +189,15 @@ class DetailModel {
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
+      manufacturer: json['manufacturer'],
+      manufacturerRegion: json['manufacturerRegion'],
+      manufacturerCountry: json['manufacturerCountry'],
+      manufacturerPlantCity: json['manufacturerPlantCity'],
+      restraint: json['restraint'],
+      engineSize: json['engineSize'],
+      engineDescription: json['engineDescription'],
+      engineCapacity: json['engineCapacity'],
+      dimensions: json['dimensions'],
     );
   }
 
@@ -213,6 +240,35 @@ class DetailModel {
     }
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+
+    if (manufacturer != null) {
+      data['manufacturer'] = manufacturer;
+    }
+    if (manufacturerRegion != null) {
+      data['manufacturerRegion'] = manufacturerRegion;
+    }
+    if (manufacturerCountry != null) {
+      data['manufacturerCountry'] = manufacturerCountry;
+    }
+    if (manufacturerPlantCity != null) {
+      data['manufacturerPlantCity'] = manufacturerPlantCity;
+    }
+    if (restraint != null) {
+      data['restraint'] = restraint;
+    }
+    if (engineSize != null) {
+      data['engineSize'] = engineSize;
+    }
+    if (engineDescription != null) {
+      data['engineDescription'] = engineDescription;
+    }
+    if (engineCapacity != null) {
+      data['engineCapacity'] = engineCapacity;
+    }
+    if (dimensions != null) {
+      data['dimensions'] = dimensions;
+    }
+
     return data;
   }
 
@@ -233,6 +289,15 @@ class DetailModel {
       updatedBy: entity.updatedBy,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
+      manufacturer: entity.manufacturer,
+      manufacturerRegion: entity.manufacturerRegion,
+      manufacturerCountry: entity.manufacturerCountry,
+      manufacturerPlantCity: entity.manufacturerPlantCity,
+      restraint: entity.restraint,
+      engineSize: entity.engineSize,
+      engineDescription: entity.engineDescription,
+      engineCapacity: entity.engineCapacity,
+      dimensions: entity.dimensions,
     );
   }
 
@@ -253,22 +318,34 @@ class DetailModel {
       updatedBy: updatedBy,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      manufacturer: manufacturer,
+      manufacturerRegion: manufacturerRegion,
+      manufacturerCountry: manufacturerCountry,
+      manufacturerPlantCity: manufacturerPlantCity,
+      restraint: restraint,
+      engineSize: engineSize,
+      engineDescription: engineDescription,
+      engineCapacity: engineCapacity,
+      dimensions: dimensions,
     );
   }
 }
 
 class MediaModel {
-  final String sourceUrl;
-  final String? capturedUrl;
-  final String? type;
-  final String? mediaId;
-  final String? fileId;
-  final String? fileUrl;
   final String? id;
   final String? createdBy;
   final String? updatedBy;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? type;
+  final String sourceUrl;
+  final String? capturedUrl;
+  final String? mediaId;
+  final String? fileId;
+  final String? fileUrl;
+  final String? source;
+  final List<String>? items;
+  final String? mainItemUrl;
 
   MediaModel({
     required this.sourceUrl,
@@ -277,6 +354,9 @@ class MediaModel {
     this.mediaId,
     this.fileId,
     this.fileUrl,
+    this.mainItemUrl,
+    this.items,
+    this.source,
     this.id,
     this.createdBy,
     this.updatedBy,
@@ -294,6 +374,9 @@ class MediaModel {
         id: json["id"],
         createdBy: json["createdBy"],
         updatedBy: json["updatedBy"],
+        mainItemUrl: json['mainItemUrl'],
+        items: json['items'],
+        source: json['source'],
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -314,6 +397,9 @@ class MediaModel {
         updatedBy: entity.updatedBy,
         createdAt: entity.createdAt,
         updatedAt: entity.updatedAt,
+        mainItemUrl: entity.mainItemUrl,
+        items: entity.items,
+        source: entity.source,
       );
 
   Map<String, dynamic> toJson() => {
@@ -328,19 +414,24 @@ class MediaModel {
         "updatedBy": updatedBy,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
+        "mainItemUrl": mainItemUrl,
+        "items": items,
+        "source": source
       };
 
   Media toEntity() => Media.create(
-        sourceUrl: sourceUrl,
-        capturedUrl: capturedUrl,
-        type: type,
-        mediaId: mediaId,
-        fileId: fileId,
-        fileUrl: fileUrl,
-        id: id,
-        createdBy: createdBy,
-        updatedBy: updatedBy,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-      );
+      sourceUrl: sourceUrl,
+      capturedUrl: capturedUrl,
+      type: type,
+      mediaId: mediaId,
+      fileId: fileId,
+      fileUrl: fileUrl,
+      id: id,
+      createdBy: createdBy,
+      updatedBy: updatedBy,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      mainItemUrl: mainItemUrl,
+      items: items,
+      source: source);
 }

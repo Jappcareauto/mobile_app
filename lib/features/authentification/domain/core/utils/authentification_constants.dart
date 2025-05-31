@@ -6,6 +6,7 @@ class AuthentificationConstants {
   // Add other constants here
   static const String loginPostUri = '/auth/login';
   static const String googleLoginPostUri = '/auth/oauth2/google/login';
+  static const String googleSignUpPostUri = '/auth/oauth2/google/signup';
   static const String registerPostUri = '/auth/register';
   static const String verifyEmailPostUri = '/auth/verify';
   static const String resendOtpPostUri = '/auth/register/verify-resend';

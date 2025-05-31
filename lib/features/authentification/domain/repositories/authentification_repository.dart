@@ -14,6 +14,13 @@ abstract class AuthentificationRepository {
   Future<Either<AuthentificationException, Login>> googleLogin(
       {required String bearerId});
 
+  Future<Either<AuthentificationException, Register>> googleRegister(
+      {required String bearerId});
+
+  Future<Either<AuthentificationException, Login>> googleSignIn();
+
+  Future<Either<AuthentificationException, Register>> googleSignUp();
+
   Future<Either<AuthentificationException, Register>> register(
       {required String name,
       String? email,
@@ -32,5 +39,7 @@ abstract class AuthentificationRepository {
       String email);
 
   Future<Either<AuthentificationException, ResetPassword>> resetPassword(
-      String code, String newPassword);
+      {required String email,
+      required String code,
+      required String newPassword});
 }

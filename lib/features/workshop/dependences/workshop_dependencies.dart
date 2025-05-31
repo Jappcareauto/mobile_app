@@ -8,7 +8,7 @@ import 'package:jappcare/features/workshop/ui/appointment_details/controllers/ap
 import 'package:jappcare/features/workshop/ui/autoshop_detail/controllers/autoshop_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/map_controller.dart';
-import 'package:jappcare/features/workshop/ui/chat/controllers/chat_controller.dart';
+import 'package:jappcare/features/workshop/ui/chat/controllers/workshop_chat_controller.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/controllers/services_locator_controller.dart';
 import 'package:jappcare/features/workshop/ui/sucess_payment/controller/success_payment_controller.dart';
@@ -23,6 +23,8 @@ import '../application/usecases/get_all_services_center_usecase.dart';
 import '../application/usecases/get_all_services_usecase.dart';
 import '../application/usecases/get_place_autocomplete_usecase.dart';
 import '../application/usecases/get_place_details_usecase.dart';
+import '../application/usecases/get_service_center_services_usecase.dart';
+import '../application/usecases/get_all_available_service_center_services_usecase.dart';
 
 class WorkshopDependencies {
   static void init() {
@@ -43,7 +45,8 @@ class WorkshopDependencies {
         () => ConfirmeAppointmentController(Get.find()));
     Get.lazyPut<WorkshopDetailsController>(
         () => WorkshopDetailsController(Get.find()));
-    Get.lazyPut<ChatController>(() => ChatController(Get.find()));
+    Get.lazyPut<WorkshopChatController>(
+        () => WorkshopChatController(Get.find()));
     Get.lazyPut<PayWithCardController>(() => PayWithCardController(Get.find()));
     Get.lazyPut<PayWithPhoneController>(
         () => PayWithPhoneController(Get.find()));
@@ -59,5 +62,8 @@ class WorkshopDependencies {
     Get.lazyPut(() => GetAllservicesUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetPlaceAutocompleteUsecase(Get.find()), fenix: true);
     Get.lazyPut(() => GetPlaceDetailsUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => GetServiceCenterServicesUsecase(Get.find()), fenix: true);
+    Get.lazyPut(() => GetAllAvailableServiceCenterServicesUsecase(Get.find()),
+        fenix: true);
   }
 }

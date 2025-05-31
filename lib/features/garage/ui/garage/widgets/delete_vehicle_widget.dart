@@ -18,6 +18,7 @@ class DeleteVehicleWidget extends StatelessWidget {
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          spacing: 35,
           children: [
             const Flexible(
               child: Text(
@@ -29,10 +30,8 @@ class DeleteVehicleWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(
-              height: 35,
-            ),
             Row(
+              spacing: 10,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
@@ -42,9 +41,6 @@ class DeleteVehicleWidget extends StatelessWidget {
                     haveBorder: true,
                     strech: false,
                   ),
-                ),
-                const SizedBox(
-                  width: 10,
                 ),
                 Expanded(
                   child: CustomDeleteButton(

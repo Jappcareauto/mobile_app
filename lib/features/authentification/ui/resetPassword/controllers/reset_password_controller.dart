@@ -48,6 +48,7 @@ class ResetPasswordController extends GetxController {
         "newPassword": Validators.requiredField,
       },
       onSubmit: (data) => _resetPasswordUseCase.call(ResetPasswordCommand(
+        email: email,
         code: codeController.text,
         newPassword: data['newPassword']!,
       )),

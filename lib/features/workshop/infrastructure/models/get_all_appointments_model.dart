@@ -2,6 +2,7 @@ import 'package:jappcare/core/ui/domain/models/location.model.dart';
 import 'package:jappcare/core/ui/domain/models/pagination.model.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_service_center_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/get_all_services_model.dart';
 
 class GetAllAppointmentsModel {
@@ -48,6 +49,8 @@ class GetAllAppointmentsModel {
 
 class AppointmentModel {
   final String id;
+  final String createdBy;
+  final String updatedBy;
   final String createdAt;
   final String updatedAt;
   final String? status;
@@ -57,10 +60,14 @@ class AppointmentModel {
   final String? note;
   final LocationModel? location;
   final ServiceModel? service;
+  final ServiceCenterModel? serviceCenter;
   final VehicleModel? vehicle;
+  // final ServiceCenterMode? serviceCenter;
 
   AppointmentModel._({
     required this.id,
+    required this.createdBy,
+    required this.updatedBy,
     required this.createdAt,
     required this.updatedAt,
     this.status,
@@ -70,12 +77,15 @@ class AppointmentModel {
     required this.locationType,
     this.location,
     this.service,
+    this.serviceCenter,
     this.vehicle,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel._(
       id: json['id'],
+      createdBy: json['createdBy'],
+      updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
       status: json['status'],
@@ -87,10 +97,19 @@ class AppointmentModel {
           ? LocationModel.fromJson(json['location'])
           : null,
       service: json['service'] != null
-          ? ServiceModel.fromJson(json['service'])
+          ? ServiceModel.fromJson({
+              ...json['service'],
+              'serviceCenterId': json['serviceCenter']['id']
+            })
+          : null,
+      serviceCenter: json['serviceCenter'] != null
+          ? ServiceCenterModel.fromJson(json['serviceCenter'])
           : null,
       vehicle: json['vehicle'] != null
-          ? VehicleModel.fromJson(json['vehicle'])
+          ? VehicleModel.fromJson({
+              ...json['vehicle'],
+              'serviceCenterId': json['serviceCenter']['id']
+            })
           : null,
     );
   }
@@ -98,6 +117,8 @@ class AppointmentModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
+    data['createdBy'] = createdBy;
+    data['updatedBy'] = updatedBy;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['status'] = status;
@@ -107,6 +128,7 @@ class AppointmentModel {
     data['locationType'] = locationType;
     data['location'] = location?.toJson();
     data['service'] = service?.toJson();
+    data['serviceCenter'] = serviceCenter?.toJson();
     data['vehicle'] = vehicle?.toJson();
     return data;
   }
@@ -114,6 +136,8 @@ class AppointmentModel {
   factory AppointmentModel.fromEntity(AppointmentEntity entity) {
     return AppointmentModel._(
       id: entity.id,
+      createdBy: entity.createdBy,
+      updatedBy: entity.updatedBy,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       status: entity.status,
@@ -123,6 +147,7 @@ class AppointmentModel {
       locationType: entity.locationType,
       location: entity.location?.toModel(),
       service: entity.service?.toModel(),
+      serviceCenter: entity.serviceCenter?.toModel(),
       vehicle: entity.vehicle?.toModel(),
     );
   }
@@ -130,6 +155,8 @@ class AppointmentModel {
   AppointmentEntity toEntity() {
     return AppointmentEntity.create(
       id: id,
+      createdBy: createdBy,
+      updatedBy: updatedBy,
       createdAt: createdAt,
       updatedAt: updatedAt,
       status: status,
@@ -139,6 +166,7 @@ class AppointmentModel {
       locationType: locationType,
       location: location?.toEntity(),
       service: service?.toEntity(),
+      serviceCenter: serviceCenter?.toEntity(),
       vehicle: vehicle?.toEntity(),
     );
   }
