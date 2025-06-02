@@ -111,6 +111,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                               BorderRadius.circular(16),
                                           selectedFilter: controller
                                               .selectedServiceIndex.value,
+                                          haveBorder: true,
                                           onSelected: (index) {
                                             if (controller.selectedServiceIndex
                                                     .value ==
