@@ -6,5 +6,8 @@ class ChatConstants {
       'wss://bpi.jappcare.com/api/v1/chat?chatRoomId=';
 
   static const String sendMessagePostUri = '/chat-message';
+
+  static const String getAllChatRoomUri = '/chatroom/list';
+  static const String getChatRoomByAppointmentIdUri = '/chatroom/appointment';
   // Add other constants here
 }
