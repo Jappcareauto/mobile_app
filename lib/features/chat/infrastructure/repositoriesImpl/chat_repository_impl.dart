@@ -5,7 +5,9 @@ import 'package:jappcare/core/exceptions/base_exception.dart';
 import 'package:jappcare/features/chat/domain/core/exceptions/chat_exception.dart';
 import 'package:jappcare/features/chat/domain/core/utils/chat_constants.dart';
 import 'package:jappcare/features/chat/domain/entities/get_all_chat_room.entity.dart';
+import 'package:jappcare/features/chat/domain/entities/send_message.entity.dart';
 import 'package:jappcare/features/chat/infrastructure/models/get_all_chatrooms.model.dart';
+import 'package:jappcare/features/chat/infrastructure/models/send_message_model.dart';
 
 // import 'package:jappcare/features/chat/domain/entities/send_message.dart';
 
@@ -64,18 +66,31 @@ class ChatRepositoryImpl implements ChatRepository {
   //   }
   // }
 
-  // @override
-  // Future<Either<ChatException, SendMessage>> sendMessage(String senderId, String content, String chatRoomId, String timestamp, String type, String appointmentId) {
-  //   try {
-  //     final response = await networkService.post(
-  //       ChatConstants.sendMessagePostUri,
-  //       body: {'senderId': senderId, 'content': content, 'chatRoomId': chatRoomId, 'timestamp': timestamp, 'type': type, 'appointmentId': appointmentId, },
-  //     );
-  //     return Right(SendMessageModel.fromJson(response).toEntity());
-  //   } on BaseException catch (e) {
-  //     return Left(ChatException(e.message));
-  //   }
-  // }
+  @override
+  Future<Either<ChatException, SendMessageEntity>> sendMessage(
+      {required String senderId,
+      required String content,
+      required String chatRoomId,
+      required String timestamp,
+      required String type,
+      String? appointmentId}) async {
+    try {
+      final response = await networkService.post(
+        ChatConstants.sendMessagePostUri,
+        body: {
+          'senderId': senderId,
+          'content': content,
+          'chatRoomId': chatRoomId,
+          'timestamp': timestamp,
+          'type': type,
+          'appointmentId': appointmentId,
+        },
+      );
+      return Right(SendMessageModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(ChatException(e.message));
+    }
+  }
 
   @override
   Future<Either<ChatException, GetAllChatRoomsEntity>> getAllChatRooms() async {

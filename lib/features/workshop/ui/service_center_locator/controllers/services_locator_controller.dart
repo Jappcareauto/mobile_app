@@ -41,7 +41,7 @@ class ServicesLocatorController extends GetxController {
     _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails);
   }
 
-  Future<void> _checkLocationPermission() async {
+  Future<void> checkLocationPermission() async {
     var status = await Permission.location.status;
 
     // Si la permission est refusée ou restreinte, demandez-la

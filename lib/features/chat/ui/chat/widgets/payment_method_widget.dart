@@ -32,8 +32,8 @@ class PaymentMethodeWidget extends StatelessWidget {
                 ),
                 ...List.generate(chatController.paymentDetails.length, (index) {
                   final paymentDetail = chatController.paymentDetails[index];
-                  final isSelected =
-                      chatController.selectedMethod == paymentDetail["name"];
+                  final isSelected = chatController.selectedMethod.value ==
+                      paymentDetail["name"];
 
                   return InkWell(
                     onTap: () {

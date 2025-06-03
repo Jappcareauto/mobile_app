@@ -11,15 +11,13 @@ import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/functions.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/chat/application/usecases/get_all_chatrooms.usecase.dart';
+import 'package:jappcare/features/chat/application/usecases/send_message.usecase.dart';
 import 'package:jappcare/features/chat/domain/core/exceptions/chat_exception.dart';
 import 'package:jappcare/features/chat/domain/entities/get_all_chat_room.entity.dart';
 import 'package:jappcare/features/chat/navigation/private/chat_private_routes.dart';
-import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_real_time_message.dart';
 import 'package:jappcare/features/workshop/application/command/get_vehicul_by_id_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_id_usecase.dart';
-import 'package:jappcare/features/workshop/application/command/send_message_command.dart';
-import 'package:jappcare/features/workshop/application/usecases/send_message_usecase.dart';
 // import 'package:jappcare/features/workshop/domain/core/utils/workshop_constants.dart';
 import 'package:jappcare/features/workshop/domain/entities/send_message.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
@@ -238,52 +236,6 @@ class ChatController extends GetxController {
 
   void removeImage(int index) {
     selectedImages.removeAt(index);
-  }
-
-  void sendMessage() async {
-    if (messageController.text.isNotEmpty || selectedImages.isNotEmpty) {
-      try {
-        // Créer une instance de SendMessage
-        final newMessage = SendMessage.create(
-          senderId: Get.find<ProfileController>().userInfos!.id,
-          content: messageController.text,
-          chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
-          timestamp: DateTime.now().toIso8601String(),
-          type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
-          appointmentId: globalControllerWorkshop.workshopData['appointmentId'],
-        );
-        // Ajouter à la liste des messages
-        messages.add(newMessage);
-        await insertMessageToDataBase();
-        // Réinitialiser les champs
-        messageController.clear();
-        selectedImages.clear();
-        // Mettre à jour l'état
-        update();
-        scrollToBottom();
-        //sauvegarder le message dans la base de donneee
-      } catch (e) {
-        print("Erreur lors de l'envoi du message : $e");
-      }
-    }
-  }
-
-  Future<void> insertMessageToDataBase() async {
-    final result = await sendMessageUseCase.call(SendMessageCommand(
-        appointmentId: globalControllerWorkshop.workshopData[
-            'appointmentId'], // a remplacer lorsque le enpoint de creation des rendez voux seras fonctionnel,
-        chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
-        content: messageController.text,
-        type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
-        senderId: Get.find<ProfileController>().userInfos!.id,
-        timestamp: DateTime.now().toIso8601String()));
-    result.fold((e) {
-      print('erreur d\'envoie du message $e');
-      Get.showCustomSnackBar(e.message);
-    }, (response) {
-      print('message envoyer avec succes');
-      print(response);
-    });
   }
 
   void openMore() {

@@ -4,7 +4,6 @@ import '../bindings/invoice_controller_binding.dart';
 import '../../ui/invoice/invoice_screen.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/apointment_detail_bindings.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/book_appointment_binding.dart';
-import 'package:jappcare/features/workshop/navigation/bindings/chat_appointment_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/confirme_appointement_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/detail_autoshop_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/pay_with_card_binding.dart';
@@ -16,7 +15,6 @@ import 'package:jappcare/features/workshop/ui/PayWithPhone/pay_with_phone_screen
 import 'package:jappcare/features/workshop/ui/appointment_details/appointment_details_screen.dart';
 import 'package:jappcare/features/workshop/ui/autoshop_detail/autoshop_screen.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/book_appointment_screen.dart';
-import 'package:jappcare/features/workshop/ui/chat/chat_screen.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/confirm_appointment_screen.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/services_center_location_screen.dart';
 import 'package:jappcare/features/workshop/ui/sucess_payment/sucess_payment_screen.dart';
@@ -69,10 +67,6 @@ class WorkshopPages implements FeaturePages {
             name: WorkshopPrivateRoutes.confirmappointment,
             page: () => ConfirmeAppointmentScreen(),
             binding: ConfirmAppointmentBinding()),
-        GetPage(
-            name: WorkshopPrivateRoutes.processChat,
-            page: () => ChatDetailsScreen(),
-            binding: ChatAppointmentBinding()),
         GetPage(
             name: WorkshopPrivateRoutes.payWithCard,
             page: () => const PayWithCardScreen(),

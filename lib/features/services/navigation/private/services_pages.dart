@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../bindings/vehicul_report_controller_binding.dart';
-import '../../ui/vehiculReport/vehicul_report_screen.dart';
+import '../bindings/vehicle_report_controller_binding.dart';
+import '../../ui/vehicleReport/vehicul_report_screen.dart';
 
 import '../bindings/generatingsuccess_controller_binding.dart';
 import '../../ui/generatingsuccess/generatingsuccess_screen.dart';
@@ -9,8 +9,8 @@ import '../../ui/generatingsuccess/generatingsuccess_screen.dart';
 import '../bindings/generating_loading_controller_binding.dart';
 import '../../ui/generatingLoading/generating_loading_screen.dart';
 
-import '../bindings/oder_detail_controller_binding.dart';
-import '../../ui/oderDetail/oder_detail_screen.dart';
+import '../bindings/order_detail_controller_binding.dart';
+import '../../ui/oderDetail/order_detail_screen.dart';
 
 import '../bindings/add_vehicle_controller_binding.dart';
 import '../../ui/addVehicle/add_vehicle_screen.dart';
@@ -43,7 +43,7 @@ class ServicesPages implements FeaturePages {
         GetPage(
           name: ServicesPrivateRoutes.oderDetail,
           page: () => OrderDetailScreen(),
-          binding: OderDetailControllerBinding(),
+          binding: OrderDetailControllerBinding(),
         ),
         GetPage(
           name: ServicesPrivateRoutes.generatingLoading,
@@ -57,8 +57,8 @@ class ServicesPages implements FeaturePages {
         ),
         GetPage(
           name: ServicesPrivateRoutes.vehiculReport,
-          page: () => const VehiculReportScreen(),
-          binding: VehiculReportControllerBinding(),
+          page: () => const VehicleReportScreen(),
+          binding: VehicleReportControllerBinding(),
         ),
         // Add other routes here
       ];

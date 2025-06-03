@@ -2,7 +2,9 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
+import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
+import 'package:jappcare/core/utils/app_images.dart';
 // import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_controller.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_list_tile.widget.dart';
@@ -85,17 +87,16 @@ class ChatScreen extends GetView<ChatController> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.chat_bubble_outline,
-                              size: 64,
-                              color: Colors.grey,
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 40),
+                              child: ImageComponent(
+                                  assetPath: AppImages.boiteLettre, width: 150),
                             ),
                             SizedBox(height: 16),
                             Text(
-                              'No chats found',
+                              'No Message',
                               style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.grey,
+                                fontSize: 20,
                               ),
                             ),
                           ],

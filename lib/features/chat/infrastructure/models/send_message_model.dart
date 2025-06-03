@@ -1,7 +1,6 @@
-import '../../domain/entities/send_message.dart';
+import '../../domain/entities/send_message.entity.dart';
 
 class SendMessageModel {
-
   final String senderId;
   final String content;
   final String chatRoomId;
@@ -40,7 +39,7 @@ class SendMessageModel {
     return data;
   }
 
-  factory SendMessageModel.fromEntity(SendMessage entity) {
+  factory SendMessageModel.fromEntity(SendMessageEntity entity) {
     return SendMessageModel._(
       senderId: entity.senderId,
       content: entity.content,
@@ -51,8 +50,8 @@ class SendMessageModel {
     );
   }
 
-  SendMessage toEntity() {
-    return SendMessage.create(
+  SendMessageEntity toEntity() {
+    return SendMessageEntity.create(
       senderId: senderId,
       content: content,
       chatRoomId: chatRoomId,

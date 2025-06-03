@@ -2,13 +2,13 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
-import 'package:jappcare/features/chat/ui/chat/controllers/chat_controller.dart';
+import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
 
-class ChatInputWidget extends GetView<ChatController> {
+class ChatInputWidget extends StatelessWidget {
   final VoidCallback onAttach;
 
   final VoidCallback onMic;
-  final ChatController chatController;
+  final ChatDetailsController chatController;
   const ChatInputWidget({
     super.key,
     required this.chatController,
@@ -22,7 +22,7 @@ class ChatInputWidget extends GetView<ChatController> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            if (controller.selectedImages.isNotEmpty)
+            if (chatController.selectedImages.isNotEmpty)
               Container(
                 decoration: const BoxDecoration(
                     color: AppColors.black,
@@ -33,7 +33,7 @@ class ChatInputWidget extends GetView<ChatController> {
                     scrollDirection: Axis.horizontal,
                     child: Obx(
                       () => Row(
-                        children: controller.selectedImages
+                        children: chatController.selectedImages
                             .asMap()
                             .entries
                             .map((entry) {
@@ -52,7 +52,7 @@ class ChatInputWidget extends GetView<ChatController> {
                               Positioned(
                                   child: IconButton(
                                       onPressed: () {
-                                        controller.removeImage(index);
+                                        chatController.removeImage(index);
                                       },
                                       icon: const Icon(
                                           FluentIcons.dismiss_12_filled)))
@@ -108,7 +108,7 @@ class ChatInputWidget extends GetView<ChatController> {
                   onTap: () {
                     chatController.sendMessage();
                     print('bonjour a tous');
-                    print(controller.messageController.text);
+                    print(chatController.messageController.text);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12.0),

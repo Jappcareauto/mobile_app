@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
-import '../../ui/oderSummary/controllers/oder_summary_controller.dart';
+import '../../ui/orderSummary/controllers/order_summary_controller.dart';
 
-class OderSummaryControllerBinding extends Bindings {
+class OrderSummaryControllerBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<OderSummaryController>(() => OderSummaryController(Get.find()));
+    Get.lazyPut<OrderSummaryController>(
+        () => OrderSummaryController(Get.find()));
   }
 }

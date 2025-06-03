@@ -4,14 +4,14 @@ import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/shop/ui/odersummary2/controllers/odersummary2_controller.dart';
-import 'package:jappcare/features/shop/ui/odersummary2/widgets/items_widgets.dart';
+import 'package:jappcare/features/shop/ui/ordersummary2/controllers/ordersummary2_controller.dart';
+import 'package:jappcare/features/shop/ui/ordersummary2/widgets/items_widgets.dart';
 import 'controllers/recepit_controller.dart';
 import 'package:get/get.dart';
 
 class RecepitScreen extends GetView<RecepitController> {
-  final Odersummary2Controller _odersummary2controller =
-      Get.put(Odersummary2Controller(Get.find()));
+  final Ordersummary2Controller _odersummary2controller =
+      Get.put(Ordersummary2Controller(Get.find()));
 
   RecepitScreen({super.key});
 

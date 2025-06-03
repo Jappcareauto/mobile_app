@@ -12,11 +12,11 @@ import '../../ui/checkoutCardDetails/checkout_card_details_screen.dart';
 import '../bindings/checkout_phone_detail_controller_binding.dart';
 import '../../ui/checkoutPhoneDetail/checkout_phone_detail_screen.dart';
 
-import '../bindings/odersummary2_controller_binding.dart';
-import '../../ui/odersummary2/odersummary2_screen.dart';
+import '../bindings/ordersummary2_controller_binding.dart';
+import '../../ui/ordersummary2/ordersummary2_screen.dart';
 
 import '../bindings/oder_summary_controller_binding.dart';
-import '../../ui/oderSummary/oder_summary_screen.dart';
+import '../../ui/orderSummary/order_summary_screen.dart';
 
 import '../bindings/checkout_controller_binding.dart';
 import '../../ui/checkout/checkout_screen.dart';
@@ -57,12 +57,12 @@ class ShopPages implements FeaturePages {
         GetPage(
           name: ShopPrivateRoutes.oderSummary,
           page: () => OderSummaryScreen(),
-          binding: OderSummaryControllerBinding(),
+          binding: OrderSummaryControllerBinding(),
         ),
         GetPage(
           name: ShopPrivateRoutes.odersummary2,
-          page: () => const Odersummary2Screen(),
-          binding: Odersummary2ControllerBinding(),
+          page: () => const Ordersummary2Screen(),
+          binding: Ordersummary2ControllerBinding(),
         ),
         GetPage(
           name: ShopPrivateRoutes.checkoutPhoneDetail,
