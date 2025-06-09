@@ -89,14 +89,15 @@ class EarningsGraph extends StatelessWidget {
                           dotData: const FlDotData(show: true),
                           belowBarData: BarAreaData(
                               show: true,
-                              color: Get.theme.primaryColor.withOpacity(0.1),
+                              color:
+                                  Get.theme.primaryColor.withValues(alpha: 0.1),
                               gradient: LinearGradient(
                                   begin: Alignment.bottomCenter,
                                   end: Alignment.topCenter,
                                   colors: [
                                     Get.theme.scaffoldBackgroundColor
-                                        .withOpacity(.1),
-                                    Get.theme.primaryColor.withOpacity(.4)
+                                        .withValues(alpha: .1),
+                                    Get.theme.primaryColor.withValues(alpha: .4)
                                   ])),
                           barWidth: 1,
                           color: Get.theme.primaryColor),

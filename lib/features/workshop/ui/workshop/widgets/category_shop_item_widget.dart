@@ -38,7 +38,7 @@ class CategoryShopItemWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: Container(
             decoration: BoxDecoration(
-              color: color ?? Get.theme.primaryColor.withOpacity(.1),
+              color: color ?? Get.theme.primaryColor.withValues(alpha: .1),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

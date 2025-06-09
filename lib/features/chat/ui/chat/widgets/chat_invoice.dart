@@ -33,7 +33,7 @@ class InvoiceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
             blurRadius: 8,
             spreadRadius: 2,
           ),
@@ -83,17 +83,14 @@ class InvoiceCard extends StatelessWidget {
                           ),
                         ],
                       )
-
                     ],
                   )
-
-
                 ],
               ),
               // Status badge
               Container(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: status == "Pending"
                       ? Colors.red.shade100
@@ -175,17 +172,14 @@ class InvoiceCard extends StatelessWidget {
           const SizedBox(height: 16),
           // View Invoice button
           Align(
-            alignment: Alignment.bottomRight,
-            child:
-            CustomButton(
-              strech: false,
-                haveBorder: true,
-                borderRadius: BorderRadius.circular(30),
-                width: 170,
-                text: 'View invoice',
-                onPressed: onViewInvoice
-            )
-          ),
+              alignment: Alignment.bottomRight,
+              child: CustomButton(
+                  strech: false,
+                  haveBorder: true,
+                  borderRadius: BorderRadius.circular(30),
+                  width: 170,
+                  text: 'View invoice',
+                  onPressed: onViewInvoice)),
         ],
       ),
     );
