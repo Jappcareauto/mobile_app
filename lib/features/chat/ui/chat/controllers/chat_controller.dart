@@ -10,16 +10,17 @@ import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/functions.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
-import 'package:jappcare/features/chat/application/usecases/get_all_chatrooms.usecase.dart';
+import 'package:jappcare/features/chat/application/usecases/get_all_user_chatrooms.usecase.dart';
+import 'package:jappcare/features/chat/application/usecases/get_real_time_message.usecase.dart';
 import 'package:jappcare/features/chat/application/usecases/send_message.usecase.dart';
 import 'package:jappcare/features/chat/domain/core/exceptions/chat_exception.dart';
 import 'package:jappcare/features/chat/domain/entities/get_all_chat_room.entity.dart';
 import 'package:jappcare/features/chat/navigation/private/chat_private_routes.dart';
-import 'package:jappcare/features/workshop/application/usecases/get_real_time_message.dart';
+import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+// import 'package:jappcare/features/workshop/application/usecases/get_real_time_message.dart';
 import 'package:jappcare/features/workshop/application/command/get_vehicul_by_id_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_id_usecase.dart';
 // import 'package:jappcare/features/workshop/domain/core/utils/workshop_constants.dart';
-import 'package:jappcare/features/workshop/domain/entities/send_message.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 // import 'package:jappcare/features/workshop/infrastructure/models/send_message_model.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
@@ -34,7 +35,7 @@ class ChatController extends GetxController {
   final ConfirmeAppointmentController confirmeAppointmentController =
       ConfirmeAppointmentController(Get.find());
 
-  final _getAllChatRoomsUseCase = GetAllChatRoomsUseCase(Get.find());
+  final _getAllChatRoomsUseCase = GetAllUserChatRoomsUseCase(Get.find());
 
   final loading = false.obs;
   final searchQuery = ''.obs;
@@ -46,7 +47,6 @@ class ChatController extends GetxController {
   ChatController(this._appNavigation);
   late WebSocketChannel channel;
   final ScrollController scrollController = ScrollController();
-  final RxList<SendMessage> messages = <SendMessage>[].obs;
 
   final RxList<ChatRoomEntity> chatrooms = <ChatRoomEntity>[].obs;
 
@@ -110,7 +110,8 @@ class ChatController extends GetxController {
   // Fetch chats from service
   Future<void> fetchChats() async {
     loading.value = true;
-    final result = await _getAllChatRoomsUseCase.call();
+    final result = await _getAllChatRoomsUseCase
+        .call(Get.find<ProfileController>().userInfos!.id);
 
     result.fold(
       (e) {
@@ -227,6 +228,7 @@ class ChatController extends GetxController {
 
   void goToChat(ChatRoomEntity chatRoom) {
     _appNavigation.toNamed(ChatPrivateRoutes.chat, arguments: chatRoom.id);
+    // globalControllerWorkshop.addData('appointmentId', chatRoom.appointmentDTO);
   }
 
   void goToAppointmentDetail() {

@@ -1,4 +1,4 @@
-import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
+// import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_input_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
@@ -54,7 +54,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(
-                                '2This is the biginning of your conversation with Japcare AutoShop',
+                                'This is the biginning of your conversation with Japcare AutoShop',
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal,
@@ -62,33 +62,33 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                           ),
                         ),
 
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width * .6),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Row(
-                              children: [
-                                if (Get.isRegistered<FeatureWidgetInterface>(
-                                    tag: 'AvatarWidget'))
-                                  Get.find<FeatureWidgetInterface>(
-                                          tag: 'AvatarWidget')
-                                      .buildView({"haveName": true}),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                    Get.find<ProfileController>()
-                                            .userInfos
-                                            ?.name ??
-                                        "Unknow",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold))
-                              ],
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   margin: EdgeInsets.only(
+                        //       left: MediaQuery.of(context).size.width * .6),
+                        //   child: Align(
+                        //     alignment: Alignment.topRight,
+                        //     child: Row(
+                        //       children: [
+                        //         if (Get.isRegistered<FeatureWidgetInterface>(
+                        //             tag: 'AvatarWidget'))
+                        //           Get.find<FeatureWidgetInterface>(
+                        //                   tag: 'AvatarWidget')
+                        //               .buildView({"haveName": true}),
+                        //         SizedBox(
+                        //           width: 10,
+                        //         ),
+                        //         Text(
+                        //             Get.find<ProfileController>()
+                        //                     .userInfos
+                        //                     ?.name ??
+                        //                 "Unknow",
+                        //             style: TextStyle(
+                        //                 fontSize: 16,
+                        //                 fontWeight: FontWeight.bold))
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
 
                         SizedBox(
                           height: 20,

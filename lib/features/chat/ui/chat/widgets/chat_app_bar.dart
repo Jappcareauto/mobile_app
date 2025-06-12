@@ -25,11 +25,15 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       elevation: .0,
-      leadingWidth: 20,
-      leading: IconButton(
-        icon: Icon(Icons.arrow_back_ios),
-        onPressed: Get.back,
-      ),
+      leadingWidth: 40,
+      leading: Padding(
+          padding: EdgeInsets.only(left: 10),
+          child: SizedBox(
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: Get.back,
+            ),
+          )),
       centerTitle: false,
       toolbarHeight: 80,
       title: Row(

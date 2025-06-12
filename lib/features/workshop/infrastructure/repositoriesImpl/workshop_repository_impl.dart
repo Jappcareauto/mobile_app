@@ -26,11 +26,6 @@ import '../models/book_appointment_model.dart';
 import '../../domain/entities/created_rome_chat.dart';
 import '../models/created_rome_chat_model.dart';
 
-import '../../domain/entities/send_message.dart';
-import '../models/send_message_model.dart';
-import 'dart:convert';
-import 'dart:io';
-import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../domain/entities/get_all_services.entity.dart';
 import '../models/get_all_services_model.dart';
@@ -63,32 +58,6 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       final response = await networkService
           .post(WorkshopConstants.getAllservicesGetUri, body: {});
       return Right(GetAllServicesModel.fromJson(response).toEntity());
-    } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
-    }
-  }
-
-  @override
-  Future<Either<WorkshopException, SendMessage>> sendMessage(
-      String senderId,
-      String content,
-      String chatRoomId,
-      String timestamp,
-      String type,
-      String appointmentId) async {
-    try {
-      final response = await networkService.post(
-        WorkshopConstants.sendMessagePostUri,
-        body: {
-          'senderId': senderId,
-          'content': content,
-          'chatRoomId': chatRoomId,
-          'timestamp': timestamp,
-          'type': type,
-          'appointmentId': appointmentId,
-        },
-      );
-      return Right(SendMessageModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
@@ -148,52 +117,52 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-  @override
-  Future<Either<WorkshopException, List<SendMessage>>> getRealTimeMessages(
-      String chatroom, String token) async {
-    final Uri uri = Uri.parse('${WorkshopConstants.chatUri}$chatroom');
+// @override
+// Future<Either<WorkshopException, List<SendMessage>>> getRealTimeMessages(
+//   String chatroom, String token) async {
+// final Uri uri = Uri.parse('${WorkshopConstants.chatUri}$chatroom');
 
-    try {
-      // Crée une connexion WebSocket avec les headers nécessaires
-      final webSocket = await WebSocket.connect(
-        uri.toString(),
-        headers: {'Authorization': 'Bearer $token'},
-      );
+// try {
+//   // Crée une connexion WebSocket avec les headers nécessaires
+//   final webSocket = await WebSocket.connect(
+//     uri.toString(),
+//     headers: {'Authorization': 'Bearer $token'},
+//   );
 
-      // Initialise le canal WebSocket
-      channel = IOWebSocketChannel(webSocket);
+//   // Initialise le canal WebSocket
+//   channel = IOWebSocketChannel(webSocket);
 
-      // Liste pour stocker les messages reçus
-      final List<SendMessage> receivedMessages = [];
+//   // Liste pour stocker les messages reçus
+//   final List<SendMessage> receivedMessages = [];
 
-      // Écoute les messages en temps réel
-      channel!.stream.listen(
-        (message) {
-          final decodedMessage = jsonDecode(message);
-          final chatMessage =
-              SendMessageModel.fromJson(decodedMessage).toEntity();
+//   // Écoute les messages en temps réel
+//   channel!.stream.listen(
+//     (message) {
+//       final decodedMessage = jsonDecode(message);
+//       final chatMessage =
+//           SendMessageModel.fromJson(decodedMessage).toEntity();
 
-          receivedMessages.add(chatMessage);
-          print("Nouveau message reçu : $chatMessage");
-        },
-        onError: (error) {
-          print("Erreur WebSocket : $error");
-        },
-        onDone: () {
-          print("Connexion WebSocket fermée.");
-        },
-      );
+//       receivedMessages.add(chatMessage);
+//       print("Nouveau message reçu : $chatMessage");
+//     },
+//     onError: (error) {
+//       print("Erreur WebSocket : $error");
+//     },
+//     onDone: () {
+//       print("Connexion WebSocket fermée.");
+//     },
+//   );
 
-      // Retourne la liste des messages reçus
-      return Right(receivedMessages);
-    } on SocketException catch (e) {
-      print("Erreur réseau : $e");
-      return Left(WorkshopException('Erreur réseau : $e'));
-    } catch (e) {
-      print("Erreur inattendue : $e");
-      return Left(WorkshopException('Erreur inattendue : $e'));
-    }
-  }
+//   // Retourne la liste des messages reçus
+//   return Right(receivedMessages);
+// } on SocketException catch (e) {
+//   print("Erreur réseau : $e");
+//   return Left(WorkshopException('Erreur réseau : $e'));
+// } catch (e) {
+//   print("Erreur inattendue : $e");
+//   return Left(WorkshopException('Erreur inattendue : $e'));
+// }
+// }
 
   @override
   Future<Either<WorkshopException, GetAllServiceCenterEntity>>

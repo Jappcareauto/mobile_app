@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/chat/navigation/chat_public_routes.dart';
 import 'package:jappcare/features/home/navigation/home_public_routes.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/application/command/book_appointment_command.dart';
@@ -78,6 +79,16 @@ class ConfirmeAppointmentController extends GetxController {
     );
     globalControllerWorkshop.addMultipleData(
         {'chatroomId': chatRoomId, 'appointmentId': appointmentId.value});
+  }
+
+  void goToChatScreen() {
+    print('got to chat');
+    Get.back();
+    _appNavigation.toNamed(
+      ChatPublicRoutes.home,
+    );
+    globalControllerWorkshop
+        .addMultipleData({'appointmentId': appointmentId.value});
   }
 
   void goToHome() {

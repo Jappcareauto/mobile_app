@@ -39,7 +39,7 @@ class ChatInputWidget extends StatelessWidget {
                             .map((entry) {
                           final index = entry.key;
                           final imagePath = entry.value;
-                          return Container(
+                          return SizedBox(
                               child: Stack(
                             children: [
                               ClipRRect(
@@ -94,10 +94,12 @@ class ChatInputWidget extends StatelessWidget {
                           icon: const Icon(Icons.camera_alt),
                           onPressed: chatController.pickImage,
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.mic),
-                          onPressed: onMic,
-                        ),
+
+                        if (chatController.messageController.text.isEmpty)
+                          IconButton(
+                            icon: const Icon(Icons.mic),
+                            onPressed: onMic,
+                          ),
                       ],
                     ),
                   ),
@@ -106,7 +108,8 @@ class ChatInputWidget extends StatelessWidget {
                 // Bouton d'envoi
                 GestureDetector(
                   onTap: () {
-                    chatController.sendMessage();
+                    chatController
+                        .sendMessage(chatController.messageController.text);
                     print('bonjour a tous');
                     print(chatController.messageController.text);
                   },

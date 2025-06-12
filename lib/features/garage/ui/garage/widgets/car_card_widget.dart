@@ -132,7 +132,10 @@ class CarCardWidget extends GetView<GarageController> {
                   ImageComponent(
                     imageUrl: pathImageCar,
                     assetPath: AppImages.car,
-                    width: Get.width * 0.35,
+                    // width: Get.width * 0.35,
+
+                    width: 160,
+                    // height: 120,
                   ),
                   Text(
                     nameCar,
