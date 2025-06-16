@@ -10,7 +10,6 @@ import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/functions.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/chat/domain/entities/send_message.entity.dart';
-import 'package:jappcare/features/chat/infrastructure/models/send_message.model.dart';
 import 'package:jappcare/features/chat/application/command/send_message.command.dart';
 import 'package:jappcare/features/chat/application/command/get_all_chatroom_messages.command.dart';
 import 'package:jappcare/features/chat/application/usecases/get_all_chatroom_messages.usecase.dart';
@@ -19,9 +18,11 @@ import 'package:jappcare/features/chat/application/usecases/send_message.usecase
 import 'package:jappcare/features/chat/domain/core/utils/chat_constants.dart';
 import 'package:jappcare/features/chat/domain/entities/get_all_chat_room_messages.entity.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+import 'package:jappcare/features/garage/application/usecases/get_appointment_by_chatroom_id.usecase.dart';
 // import 'package:jappcare/features/workshop/application/command/get_service_center_command.dart';
 // import 'package:jappcare/features/workshop/application/command/get_vehicul_by_id_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_id_usecase.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
@@ -55,9 +56,11 @@ class ChatDetailsController extends GetxController {
   SendMessageUseCase sendMessageUseCase = SendMessageUseCase(Get.find());
   GetRealTimeMessageUseCase getRealTimeMessageUseCase =
       GetRealTimeMessageUseCase(Get.find());
-
   final GetAllChatRoomMessagesUseCase _getAllMessagesUseCase =
       GetAllChatRoomMessagesUseCase(Get.find());
+  final GetAppointmentByChatRoomIdUseCase
+      _getAppointmentByAppointmentIdUseCase =
+      GetAppointmentByChatRoomIdUseCase(Get.find());
 
   // Observable variables
   final Rx<WebSocketStatus> connectionStatus = WebSocketStatus.disconnected.obs;
@@ -66,9 +69,11 @@ class ChatDetailsController extends GetxController {
   final chatRoomId = ''.obs;
   final appointmentId = ''.obs;
   final loading = false.obs;
+  final appointmentLoading = false.obs;
   final selectedMethod = 'Orange Money'.obs;
   var selectedImages = <File>[].obs;
   final RxList<ChatMessageEntity> messages = <ChatMessageEntity>[].obs;
+  late AppointmentEntity appointment;
 
   // Configuration
   final int maxReconnectAttempts = 5;
@@ -104,26 +109,51 @@ class ChatDetailsController extends GetxController {
   final RxDouble playbackProgress = 0.0.obs;
   final RxString currentlyPlayingId = ''.obs;
 
+  var paymentDetails = [
+    {"name": "MTN Momo", "icon": AppImages.mtnLogo, "numero": "+237691121881"},
+    {
+      "name": "Orange Money",
+      "icon": AppImages.orangeLogo,
+      "numero": "+237691121881"
+    },
+    {"name": "Card", "icon": AppImages.card, "numero": "**** **** **** 7890"},
+    {"name": "Cash", "icon": AppImages.money, "numero": ""}
+  ];
+
   @override
   void onInit() {
     super.onInit();
-    // globalControllerWorkshop.addData("chatroomId", "123456");
-
     chatRoomId.value = Get.arguments;
-    appointmentId.value = Get.arguments;
+    // appointmentId.value = Get.arguments;
     print('chatroom ${chatRoomId.value}');
-    // getRealTimeMessage(chatroom, _localStorage.read(AppConstants.tokenKey));
-
-    if (connectionStatus.value == WebSocketStatus.connected) {
-      print('Two WebSocket connected successfully');
-    } else {
-      print('One WebSocket connection failed');
-    }
-    // connect();
 
     _initializeAudio();
     connectToWebSocket();
+    getAppoitmentByChatRoomId();
     getAllMessages();
+  }
+
+  @override
+  void onClose() {
+    // Fermer proprement la connexion WebSocket
+    _audioRecorder.dispose();
+    _audioPlayer.dispose();
+    _messageController.close();
+    _typingController.close();
+    _presenceController.close();
+    // scrollController.dispose();
+    disconnect();
+    super.onClose();
+  }
+
+  void scrollToBottom() {
+    if (scrollController.hasClients) {
+      scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   Future<void> getAllMessages() async {
@@ -144,43 +174,7 @@ class ChatDetailsController extends GetxController {
     );
   }
 
-  var paymentDetails = [
-    {"name": "MTN Momo", "icon": AppImages.mtnLogo, "numero": "+237691121881"},
-    {
-      "name": "Orange Money",
-      "icon": AppImages.orangeLogo,
-      "numero": "+237691121881"
-    },
-    {"name": "Card", "icon": AppImages.card, "numero": "**** **** **** 7890"},
-    {"name": "Cash", "icon": AppImages.money, "numero": ""}
-  ];
-
-  void disconnect() {
-    if (_stompClient != null) {
-      _stompClient!.deactivate();
-      _stompClient = null;
-    }
-  }
-
-  void _initializeAudio() {
-    // Listen to audio player position changes
-    _audioPlayer.positionStream.listen((position) {
-      final duration = _audioPlayer.duration;
-      if (duration != null && duration.inMilliseconds > 0) {
-        playbackProgress.value =
-            position.inMilliseconds / duration.inMilliseconds;
-      }
-    });
-
-    // Listen to player state changes
-    _audioPlayer.playerStateStream.listen((state) {
-      isPlaying.value = state.playing;
-      if (state.processingState == ProcessingState.completed) {
-        currentlyPlayingId.value = '';
-        playbackProgress.value = 0.0;
-      }
-    });
-  }
+  // Websocket methods
 
   void connectToWebSocket() {
     try {
@@ -219,6 +213,13 @@ class ChatDetailsController extends GetxController {
     }
   }
 
+  void disconnect() {
+    if (_stompClient != null) {
+      _stompClient!.deactivate();
+      _stompClient = null;
+    }
+  }
+
   void onConnected(StompFrame frame) {
     print('Connected to STOMP server');
     connectionStatus.value = WebSocketStatus.connected;
@@ -236,10 +237,12 @@ class ChatDetailsController extends GetxController {
         if (frame.body != null) {
           try {
             final messageData = json.decode(frame.body!);
-            final chatMessage =
-                SendMessageModel.fromJson(messageData).toEntity();
-            // messages.add(chatMessage);
-            print('Received message: ${chatMessage.content}');
+
+            final chatMessage = ChatMessageEntity.fromJson(messageData);
+            messages.add(chatMessage);
+            update();
+            scrollToBottom();
+            print('Received message: ${messageData}');
           } catch (e) {
             print('Error parsing message: $e');
           }
@@ -250,6 +253,8 @@ class ChatDetailsController extends GetxController {
     print('Subscribed to topic: $topicDestination');
   }
 
+  // Text message methods
+
   void sendMessage(String content) {
     if (_stompClient != null &&
         connectionStatus.value == WebSocketStatus.connected &&
@@ -259,28 +264,61 @@ class ChatDetailsController extends GetxController {
         'content': content,
         'chatRoomId': chatRoomId.value,
         'type': 'TEXT',
-        'appointmentId': ''
-        // 'timestamp': DateTime.now().millisecondsSinceEpoch,
       };
 
       _stompClient!.send(
         destination: ChatConstants.chatMessageDestination,
         body: json.encode(messageData),
       );
-      // messages.add(SendMessageModel.fromJson(messageData).toEntity());
-      // update();
-
+      messages.add(ChatMessageEntity.create(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        senderId: Get.find<ProfileController>().userInfos!.id,
+        content: content,
+        chatRoomId: chatRoomId.value,
+        type: 'TEXT',
+        timestamp: DateTime.now().toIso8601String(),
+        createdBy: Get.find<ProfileController>().userInfos!.id,
+        updatedBy: Get.find<ProfileController>().userInfos!.id,
+        createdAt: DateTime.now().toIso8601String(),
+        updatedAt: DateTime.now().toIso8601String(),
+      ));
+      messageController.clear();
+      update();
+      scrollToBottom();
       print('Message sent: $content');
     } else {
       print('Cannot send message. Connected: ${connectionStatus.value}');
     }
   }
 
-  // Voice recording methods
+  // Audio message methods
+
+  void _initializeAudio() {
+    // Listen to audio player position changes
+    _audioPlayer.positionStream.listen((position) {
+      final duration = _audioPlayer.duration;
+      if (duration != null && duration.inMilliseconds > 0) {
+        playbackProgress.value =
+            position.inMilliseconds / duration.inMilliseconds;
+      }
+    });
+
+    // Listen to player state changes
+    _audioPlayer.playerStateStream.listen((state) {
+      isPlaying.value = state.playing;
+      if (state.processingState == ProcessingState.completed) {
+        currentlyPlayingId.value = '';
+        playbackProgress.value = 0.0;
+      }
+    });
+  }
+
   Future<bool> _requestPermissions() async {
     final microphoneStatus = await Permission.microphone.request();
     return microphoneStatus == PermissionStatus.granted;
   }
+
+  // Voice recording methods
 
   Future<void> startRecording() async {
     try {
@@ -461,6 +499,138 @@ class ChatDetailsController extends GetxController {
     }
   }
 
+  // Image message methods
+
+  Future<void> sendImageMessage(String imagePath, String caption) async {
+    if (_stompClient != null &&
+        connectionStatus.value == WebSocketStatus.connected &&
+        imagePath.isNotEmpty) {
+      try {
+        // Read image file and convert to base64
+        final imageFile = File(imagePath);
+        final imageBytes = await imageFile.readAsBytes();
+        final base64Image = base64Encode(imageBytes);
+
+        final messageData = {
+          'senderId': Get.find<ProfileController>().userInfos!.id,
+          'content': base64Image, // Base64 encoded image
+          'caption': caption, // Text caption
+          'chatRoomId': chatRoomId,
+          'type': 'IMAGE',
+          'timestamp': DateTime.now().millisecondsSinceEpoch,
+        };
+
+        print(messageData);
+        print(base64Image);
+
+        // _stompClient!.send(
+        //   destination: '/app/chat/message',
+        //   body: json.encode(messageData),
+        // );
+        final message = ChatMessageEntity.create(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          senderId: Get.find<ProfileController>().userInfos!.id,
+          content: caption,
+          chatRoomId: chatRoomId.value,
+          type: 'IMAGE',
+          mediaUrl: imagePath,
+          timestamp: DateTime.now().toIso8601String(),
+          createdBy: Get.find<ProfileController>().userInfos!.id,
+          updatedBy: Get.find<ProfileController>().userInfos!.id,
+          createdAt: DateTime.now().toIso8601String(),
+          updatedAt: DateTime.now().toIso8601String(),
+        );
+        messages.add(message);
+        update();
+        scrollToBottom();
+
+        print('Image message sent with caption: $caption');
+      } catch (e) {
+        print('Error sending image message: $e');
+        Get.snackbar('Error', 'Failed to send image message');
+      }
+    }
+  }
+
+  Future<void> pickImage() async {
+    final images = await getImage(many: true);
+    if (images != null) {
+      selectedImages.addAll(images);
+    }
+  }
+
+  void removeImage(int index) {
+    selectedImages.removeAt(index);
+  }
+
+  // Sending the message to the api server
+
+  Future<void> insertMessageToDataBase() async {
+    final result = await sendMessageUseCase.call(SendMessageCommand(
+        appointmentId: globalControllerWorkshop.workshopData[
+            'appointmentId'], // a remplacer lorsque le enpoint de creation des rendez voux seras fonctionnel,
+        chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
+        content: messageController.text,
+        type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
+        senderId: Get.find<ProfileController>().userInfos!.id,
+        timestamp: DateTime.now().toIso8601String()));
+    result.fold((e) {
+      print('erreur d\'envoie du message $e');
+      Get.showCustomSnackBar(e.message);
+    }, (response) {
+      print('message envoyer avec succes');
+      print(response);
+    });
+  }
+
+  Future<void> getAppoitmentByChatRoomId() async {
+    appointmentLoading.value = true;
+    final result = await _getAppointmentByAppointmentIdUseCase.call(
+        chatroomId: chatRoomId.value);
+    result.fold((e) {
+      print('erreur $e');
+      Get.showCustomSnackBar(e.message);
+      appointmentLoading.value = false;
+    }, (response) {
+      print(response);
+      appointment = response;
+      update();
+      appointmentLoading.value = false;
+    });
+  }
+
+  void goToAppointmentDetail() {
+    _appNavigation.toNamed(WorkshopPrivateRoutes.appointmentDetail,
+        arguments: globalControllerWorkshop.selectVehicle);
+  }
+
+  void openMore() {
+    showModalBottomSheet(
+      context: Get.context!,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => const Placeholder(),
+    );
+  }
+
+  void goBack() {
+    _appNavigation.goBack();
+  }
+
+  void selectMethode(String methode) {
+    selectedMethod.value = methode;
+  }
+
+  void goToAddPaymentMethodForm(String? methode) {
+    Get.back();
+    if (methode == 'Card') {
+      _appNavigation.toNamed(WorkshopPrivateRoutes.payWithCard);
+    }
+    if (methode == 'MTN Momo' || methode == 'Orange Money') {
+      _appNavigation.toNamed(WorkshopPrivateRoutes.payWithPhone);
+    }
+  }
+
   // // Connect to WebSocket
   // Future<void> connect() async {
   //   if (connectionStatus.value == WebSocketStatus.connecting) return;
@@ -584,22 +754,6 @@ class ChatDetailsController extends GetxController {
   //   });
   // }
 
-  Future<void> pickImage() async {
-    final images = await getImage(many: true);
-    if (images != null) {
-      selectedImages.addAll(images);
-    }
-  }
-
-  void goToAppointmentDetail() {
-    _appNavigation.toNamed(WorkshopPrivateRoutes.appointmentDetail,
-        arguments: globalControllerWorkshop.selectVehicle);
-  }
-
-  void removeImage(int index) {
-    selectedImages.removeAt(index);
-  }
-
   // void sendMessage() async {
   //   if (messageController.text.isNotEmpty || selectedImages.isNotEmpty) {
   //     try {
@@ -627,74 +781,6 @@ class ChatDetailsController extends GetxController {
   //     }
   //   }
   // }
-
-  Future<void> insertMessageToDataBase() async {
-    final result = await sendMessageUseCase.call(SendMessageCommand(
-        appointmentId: globalControllerWorkshop.workshopData[
-            'appointmentId'], // a remplacer lorsque le enpoint de creation des rendez voux seras fonctionnel,
-        chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
-        content: messageController.text,
-        type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
-        senderId: Get.find<ProfileController>().userInfos!.id,
-        timestamp: DateTime.now().toIso8601String()));
-    result.fold((e) {
-      print('erreur d\'envoie du message $e');
-      Get.showCustomSnackBar(e.message);
-    }, (response) {
-      print('message envoyer avec succes');
-      print(response);
-    });
-  }
-
-  void openMore() {
-    showModalBottomSheet(
-      context: Get.context!,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (context) => const Placeholder(),
-    );
-  }
-
-  void goBack() {
-    _appNavigation.goBack();
-  }
-
-  void selectMethode(String methode) {
-    selectedMethod.value = methode;
-  }
-
-  void goToAddPaymentMethodForm(String? methode) {
-    Get.back();
-    if (methode == 'Card') {
-      _appNavigation.toNamed(WorkshopPrivateRoutes.payWithCard);
-    }
-    if (methode == 'MTN Momo' || methode == 'Orange Money') {
-      _appNavigation.toNamed(WorkshopPrivateRoutes.payWithPhone);
-    }
-  }
-
-  void scrollToBottom() {
-    if (scrollController.hasClients) {
-      scrollController.animateTo(
-        scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    }
-  }
-
-  @override
-  void onClose() {
-    // Fermer proprement la connexion WebSocket
-    _audioRecorder.dispose();
-    _audioPlayer.dispose();
-    _messageController.close();
-    _typingController.close();
-    _presenceController.close();
-    disconnect();
-    // channel.sink.close();
-    super.onClose();
-  }
 
   // Private methods
 

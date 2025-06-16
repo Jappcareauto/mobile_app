@@ -1,16 +1,18 @@
 // import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_input_widget.dart';
+import 'package:jappcare/features/chat/ui/chat/widgets/chat_appointment_summary.dart';
+import 'package:jappcare/features/chat/ui/chat/widgets/image_message_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_app_bar.dart';
-// import 'package:jappcare/features/workshop/ui/chat/widgets/chat_invoice.dart';
+import 'package:jappcare/features/chat/ui/chat/widgets/chat_invoice.dart';
 
 // import 'controllers/chat_controller.dart';
 // import 'widgets/chat_app_bar.dart';
 // import 'widgets/chat_input_field.dart';
-import 'widgets/chat_message.dart';
+import 'widgets/chat_message_widget.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -46,6 +48,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                       ),
                   child: ClipRRect(
                     child: ListView(
+                      controller: controller.scrollController,
                       reverse: false,
                       padding: const EdgeInsets.all(12.0),
                       children: [
@@ -61,6 +64,37 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                                     color: Colors.grey)),
                           ),
                         ),
+
+                        Obx(() {
+                          if (controller.loading.value) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            spacing: 10,
+                            children: [
+                              Align(
+                                alignment: Alignment.topRight,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  spacing: 5,
+                                  children: [
+                                    Text('User'),
+                                    CircleAvatar(
+                                      backgroundImage:
+                                          AssetImage(AppImages.avatar),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              ChatAppointmentSummary(),
+                            ],
+                          );
+                        }),
 
                         // Container(
                         //   margin: EdgeInsets.only(
@@ -100,59 +134,66 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                         //     note: bookController.noteController.text,
                         //     fee: '5,000 Frs',
                         //     time: bookController.selectedTime.value)),
-                        SizedBox(
-                          height: 20,
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
+
+                        Column(
+                          spacing: 10,
+                          children: [
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage(AppImages.avatar),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text('Japtech AutoShop'),
+                                ],
+                              ),
+                            ),
+                            InvoiceCard(
+                              name: "Sara May",
+                              email: "Body Shop Appointment",
+                              service: "Inspection Fee",
+                              invoiceNumber: "JC564739300",
+                              dateIssued: "Oct 20, 2024",
+                              amount: "7,000 Frs",
+                              status: "Pending",
+                              onViewInvoice: () {
+                                // Action pour voir la facture
+                                print("View Invoice clicked");
+                                onpenModalPaymentMethod(
+                                    controller.goToAddPaymentMethodForm);
+                              },
+                            ),
+                          ],
                         ),
+                        const SizedBox(height: 20),
 
                         ...controller.messages.map((message) {
-                          return SingleChildScrollView(
-                              controller: controller.scrollController,
-                              child: ChatMessage(
-                                text: message
-                                    .content, // Utilise une chaîne vide si "text" est null
-                                isSender: message.senderId ==
-                                        Get.find<ProfileController>()
-                                            .userInfos
-                                            ?.id
-                                    ? true
-                                    : false, // Valeur par défaut pour "isSender"
-                              ));
+                          final isSender = message.senderId ==
+                                  Get.find<ProfileController>().userInfos?.id
+                              ? true
+                              : false;
+                          return message.isImageMessage
+                              ? ImageMessageWidget(
+                                  message: message,
+                                  isMyMessage: isSender,
+                                )
+                              : ChatMessageWidget(
+                                  text: message
+                                      .content, // Utilise une chaîne vide si "text" est null
+                                  isSender:
+                                      isSender, // Valeur par défaut pour "isSender"
+                                );
                         }),
 
-                        const SizedBox(height: 20),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 5,
-                              ),
-                              // CircleAvatar(
-                              //
-                              //   backgroundImage: AssetImage(AppImages.avatar),
-                              // ),
-                              const SizedBox(width: 5),
-
-                              // Text('Japtech AutoShop'),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-
-                        // InvoiceCard(
-                        //   name: "Sara May",
-                        //   email: "jamesmay@gmail.com",
-                        //   service: "Inspection Fee",
-                        //   invoiceNumber: "JC564739300",
-                        //   dateIssued: "Oct 20, 2024",
-                        //   amount: "7,000 Frs",
-                        //   status: "Pending",
-                        //   onViewInvoice: () {
-                        //     // Action pour voir la facture
-                        //     print("View Invoice clicked");
-                        //    onpenModalPaymentMethod(controller.goToAddPaymentMethodForm);
-                        //   },
-                        // ),
                         const SizedBox(height: 100),
                       ],
                     ),

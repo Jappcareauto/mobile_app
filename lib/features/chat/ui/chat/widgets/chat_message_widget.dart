@@ -2,13 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChatMessage extends StatelessWidget {
+class ChatMessageWidget extends StatelessWidget {
   final String? text;
   final bool isSender;
 
   final List<File>? images;
 
-  const ChatMessage({
+  const ChatMessageWidget({
     super.key,
     this.text,
     required this.isSender,

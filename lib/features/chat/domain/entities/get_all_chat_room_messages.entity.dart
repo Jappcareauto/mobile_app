@@ -90,6 +90,25 @@ class ChatMessageEntity {
     );
   }
 
+  factory ChatMessageEntity.fromJson(Map<String, dynamic> json) {
+    return ChatMessageEntity._(
+      id: json['id'],
+      createdBy: json['createdBy'],
+      updatedBy: json['updatedBy'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'],
+      senderId: json['senderId'],
+      content: json['content'],
+      chatRoomId: json['chatRoomId'],
+      timestamp: json['timestamp'],
+      type: json['type'],
+      appointmentId: json['appointmentId'],
+      sender: json['sender'],
+      duration: json['duration'],
+      mediaUrl: json['mediaUrl'],
+    );
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;

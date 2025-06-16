@@ -23,17 +23,15 @@ import '../models/get_all_service_center_model.dart';
 import '../../domain/entities/book_appointment.dart';
 import '../models/book_appointment_model.dart';
 
-import '../../domain/entities/created_rome_chat.dart';
-import '../models/created_rome_chat_model.dart';
+// import '../../domain/entities/created_rome_chat.dart';
+// import '../models/created_rome_chat_model.dart';
 
-import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../domain/entities/get_all_services.entity.dart';
 import '../models/get_all_services_model.dart';
 import '../models/get_all_service_center_services_model.dart';
 
 class WorkshopRepositoryImpl implements WorkshopRepository {
   final NetworkService networkService;
-  WebSocketChannel? channel;
   WorkshopRepositoryImpl({
     required this.networkService,
   });
@@ -58,23 +56,6 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       final response = await networkService
           .post(WorkshopConstants.getAllservicesGetUri, body: {});
       return Right(GetAllServicesModel.fromJson(response).toEntity());
-    } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
-    }
-  }
-
-  @override
-  Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(
-      String name, List<String> participantUserIds) async {
-    try {
-      final response = await networkService.post(
-        WorkshopConstants.createdRomeChatPostUri,
-        body: {
-          'name': name,
-          'participantUserIds': participantUserIds,
-        },
-      );
-      return Right(CreatedRomeChatModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message));
     }
@@ -117,53 +98,6 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-// @override
-// Future<Either<WorkshopException, List<SendMessage>>> getRealTimeMessages(
-//   String chatroom, String token) async {
-// final Uri uri = Uri.parse('${WorkshopConstants.chatUri}$chatroom');
-
-// try {
-//   // Crée une connexion WebSocket avec les headers nécessaires
-//   final webSocket = await WebSocket.connect(
-//     uri.toString(),
-//     headers: {'Authorization': 'Bearer $token'},
-//   );
-
-//   // Initialise le canal WebSocket
-//   channel = IOWebSocketChannel(webSocket);
-
-//   // Liste pour stocker les messages reçus
-//   final List<SendMessage> receivedMessages = [];
-
-//   // Écoute les messages en temps réel
-//   channel!.stream.listen(
-//     (message) {
-//       final decodedMessage = jsonDecode(message);
-//       final chatMessage =
-//           SendMessageModel.fromJson(decodedMessage).toEntity();
-
-//       receivedMessages.add(chatMessage);
-//       print("Nouveau message reçu : $chatMessage");
-//     },
-//     onError: (error) {
-//       print("Erreur WebSocket : $error");
-//     },
-//     onDone: () {
-//       print("Connexion WebSocket fermée.");
-//     },
-//   );
-
-//   // Retourne la liste des messages reçus
-//   return Right(receivedMessages);
-// } on SocketException catch (e) {
-//   print("Erreur réseau : $e");
-//   return Left(WorkshopException('Erreur réseau : $e'));
-// } catch (e) {
-//   print("Erreur inattendue : $e");
-//   return Left(WorkshopException('Erreur inattendue : $e'));
-// }
-// }
-
   @override
   Future<Either<WorkshopException, GetAllServiceCenterEntity>>
       getAllServicesCenter(
@@ -175,7 +109,6 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           bool? aroundMe,
           bool? availableNow}) async {
     try {
-      print(serviceId);
       final response = await networkService
           .post(WorkshopConstants.getAllServicesCenterGetUri, body: {
         'name': name,
@@ -196,7 +129,6 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
       getAllServicesCenterServices(String serviceCenterId) async {
     try {
-      print(serviceCenterId);
       final response = await networkService.get(
           '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.services}');
       return Right(
@@ -206,11 +138,23 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
+  // @override
+  // Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
+  //     getAllServicesCenterServices(String serviceCenterId) async {
+  //   try {
+  //     final response = await networkService.get(
+  //         '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.services}');
+  //     return Right(
+  //         GetAllServiceCenterServicesModel.fromJson(response).toEntity());
+  //   } on BaseException catch (e) {
+  //     return Left(WorkshopException(e.message));
+  //   }
+  // }
+
   @override
   Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
       getAllAvailableServicesCenterServices(String serviceCenterId) async {
     try {
-      print(serviceCenterId);
       final response = await networkService.get(
           '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.availableServices}');
       return Right(
@@ -234,7 +178,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
         'key': k,
         'components': 'country:cm',
       });
-      print(response);
+      // print(response);
       return Right((response.data['predictions'] as List)
           .map((p) => PlacePredictionModel.fromJson(p).toEntity())
           .toList());
@@ -243,7 +187,6 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-  // 1. Autocomplete → gets a list of { description, place_id }
   @override
   Future<Either<WorkshopException, PlaceDetails>> fetchPlaceDetails(
       String placeId) async {

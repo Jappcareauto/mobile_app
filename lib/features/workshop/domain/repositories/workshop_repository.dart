@@ -10,7 +10,7 @@ import '../entities/get_all_services_center.entity.dart';
 
 import '../entities/book_appointment.dart';
 
-import '../entities/created_rome_chat.dart';
+// import '../entities/created_rome_chat.dart';
 
 import '../entities/get_all_services.entity.dart';
 
@@ -38,8 +38,8 @@ abstract class WorkshopRepository {
     required String serviceCenterId,
   });
 
-  Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(
-      String name, List<String> participantUserIds);
+  // Future<Either<WorkshopException, CreatedRomeChat>> createdRomeChat(
+  //     String name, List<String> participantUserIds);
 
   Future<Either<WorkshopException, GetAllServicesEntity>> getAllservices();
 

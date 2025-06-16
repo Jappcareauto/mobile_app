@@ -51,10 +51,11 @@ class WorkshopDependencies {
         () => SuccessPaymentController(Get.find()));
     Get.lazyPut<AppointmentDetailsController>(
         () => AppointmentDetailsController(Get.find()));
-    Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);
-    Get.lazyPut<MapController>(() => MapController(Get.find()));
-    Get.lazyPut(() => BookAppointmentUseCase(Get.find()));
     Get.lazyPut<GlobalcontrollerWorkshop>(() => GlobalcontrollerWorkshop());
+    Get.lazyPut<MapController>(() => MapController(Get.find()));
+    // Use cases
+    Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => BookAppointmentUseCase(Get.find()));
     // Get.put(WorkshopController(Get.find<AppNavigation>(), Get.find<GetAllServicesCenter>()));
     Get.lazyPut(() => GetAllservicesUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetPlaceAutocompleteUsecase(Get.find()), fenix: true);

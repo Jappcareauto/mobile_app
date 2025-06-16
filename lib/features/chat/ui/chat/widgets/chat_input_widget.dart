@@ -82,24 +82,28 @@ class ChatInputWidget extends StatelessWidget {
                             decoration: const InputDecoration(
                               hintText: "Write a message",
                               border: InputBorder.none,
+                              hintStyle: TextStyle(
+                                  color: AppColors.black,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
                         ),
                         // Icônes d'actions
-                        IconButton(
-                          icon: const Icon(Icons.attach_file),
-                          onPressed: onAttach,
-                        ),
+                        // IconButton(
+                        //   icon: const Icon(Icons.attach_file),
+                        //   onPressed: onAttach,
+                        // ),
                         IconButton(
                           icon: const Icon(Icons.camera_alt),
                           onPressed: chatController.pickImage,
                         ),
 
-                        if (chatController.messageController.text.isEmpty)
-                          IconButton(
-                            icon: const Icon(Icons.mic),
-                            onPressed: onMic,
-                          ),
+                        // if (chatController.messageController.text.isEmpty)
+                        //   IconButton(
+                        //     icon: const Icon(Icons.mic),
+                        //     onPressed: onMic,
+                        //   ),
                       ],
                     ),
                   ),
@@ -110,16 +114,16 @@ class ChatInputWidget extends StatelessWidget {
                   onTap: () {
                     chatController
                         .sendMessage(chatController.messageController.text);
-                    print('bonjour a tous');
                     print(chatController.messageController.text);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12.0),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.orange, // Couleur du bouton d'envoi
+                      color:
+                          Get.theme.primaryColor, // Couleur du bouton d'envoi
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.send,
                       color: Colors.white,
                     ),

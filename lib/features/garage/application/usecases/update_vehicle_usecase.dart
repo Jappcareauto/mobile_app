@@ -1,5 +1,5 @@
 //Don't translate me
-import 'package:jappcare/features/garage/application/usecases/update_vehicle_command.dart';
+import 'package:jappcare/features/garage/application/command/update_vehicle_command.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/core/exceptions/garage_exception.dart';

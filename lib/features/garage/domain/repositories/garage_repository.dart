@@ -36,4 +36,7 @@ abstract class GarageRepository {
 
   Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments(
       {String? status});
+
+  Future<Either<GarageException, AppointmentEntity>> getAppointmentByChatroomId(
+      {required String chatroomId});
 }

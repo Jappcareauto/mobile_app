@@ -6,8 +6,8 @@ import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_all_appointments_usecase.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import '../../../application/usecases/delete_vehicle_usecase.dart';
-import '../../../application/usecases/delete_vehicle_command.dart';
-import 'package:jappcare/features/garage/application/usecases/get_place_name_command.dart';
+import '../../../application/command/delete_vehicle_command.dart';
+import 'package:jappcare/features/garage/application/command/get_place_name_command.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../domain/entities/get_garage_by_owner_id.dart';
@@ -15,7 +15,7 @@ import '../../../domain/entities/get_vehicle_list.dart';
 import '../../../navigation/private/garage_private_routes.dart';
 import '../../../../../core/utils/getx_extensions.dart';
 import '../../../application/usecases/get_garage_by_owner_id_usecase.dart';
-import '../../../application/usecases/get_garage_by_owner_id_command.dart';
+import '../../../application/command/get_garage_by_owner_id_command.dart';
 
 import '../../../application/usecases/get_vehicle_list_usecase.dart';
 
