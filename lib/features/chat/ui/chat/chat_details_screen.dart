@@ -58,6 +58,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                             alignment: Alignment.center,
                             child: Text(
                                 'This is the biginning of your conversation with Japcare AutoShop',
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.normal,

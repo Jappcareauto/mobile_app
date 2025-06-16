@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:jappcare/core/navigation/app_navigation.dart';
+import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
@@ -599,11 +600,6 @@ class ChatDetailsController extends GetxController {
     });
   }
 
-  void goToAppointmentDetail() {
-    _appNavigation.toNamed(WorkshopPrivateRoutes.appointmentDetail,
-        arguments: globalControllerWorkshop.selectVehicle);
-  }
-
   void openMore() {
     showModalBottomSheet(
       context: Get.context!,
@@ -619,6 +615,11 @@ class ChatDetailsController extends GetxController {
 
   void selectMethode(String methode) {
     selectedMethod.value = methode;
+  }
+
+  void goToAppointmentDetail() {
+    _appNavigation.toNamed(AppRoutes.appointmentDetails,
+        arguments: appointment);
   }
 
   void goToAddPaymentMethodForm(String? methode) {

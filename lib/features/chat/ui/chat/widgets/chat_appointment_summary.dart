@@ -183,7 +183,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                   width: 140,
                   height: 40,
                   text: 'See Details',
-                  onPressed: () {},
+                  onPressed: controller.goToAppointmentDetail,
                 ),
               ),
               // if (images.isNotEmpty)
