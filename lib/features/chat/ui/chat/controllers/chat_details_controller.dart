@@ -75,6 +75,7 @@ class ChatDetailsController extends GetxController {
   var selectedImages = <File>[].obs;
   final RxList<ChatMessageEntity> messages = <ChatMessageEntity>[].obs;
   late AppointmentEntity appointment;
+  final currentUser = Get.find<ProfileController>().userInfos;
 
   // Configuration
   final int maxReconnectAttempts = 5;
@@ -240,9 +241,11 @@ class ChatDetailsController extends GetxController {
             final messageData = json.decode(frame.body!);
 
             final chatMessage = ChatMessageEntity.fromJson(messageData);
-            messages.add(chatMessage);
-            update();
-            scrollToBottom();
+            if (chatMessage.createdBy != currentUser?.id) {
+              messages.add(chatMessage);
+              update();
+              scrollToBottom();
+            }
             print('Received message: ${messageData}');
           } catch (e) {
             print('Error parsing message: $e');
@@ -283,9 +286,9 @@ class ChatDetailsController extends GetxController {
         createdAt: DateTime.now().toIso8601String(),
         updatedAt: DateTime.now().toIso8601String(),
       ));
+      scrollToBottom();
       messageController.clear();
       update();
-      scrollToBottom();
       print('Message sent: $content');
     } else {
       print('Cannot send message. Connected: ${connectionStatus.value}');
