@@ -4,7 +4,7 @@ import '../bindings/invoice_controller_binding.dart';
 import '../../ui/invoice/invoice_screen.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/apointment_detail_bindings.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/book_appointment_binding.dart';
-import 'package:jappcare/features/workshop/navigation/bindings/confirme_appointement_binding.dart';
+import 'package:jappcare/features/workshop/navigation/bindings/confirm_appointement_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/detail_autoshop_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/pay_with_card_binding.dart';
 import 'package:jappcare/features/workshop/navigation/bindings/pay_with_phone_bindings.dart';

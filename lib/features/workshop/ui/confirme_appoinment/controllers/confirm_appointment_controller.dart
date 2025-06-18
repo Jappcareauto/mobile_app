@@ -17,7 +17,7 @@ import 'package:jappcare/features/workshop/navigation/private/workshop_private_r
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/confirm_model.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/confirmation_appointment_modal.dart';
 
-class ConfirmeAppointmentController extends GetxController {
+class ConfirmAppointmentController extends GetxController {
   final AppNavigation _appNavigation;
   // CreatedRomeChatUseCase createdRomeChatUseCase =
   //     CreatedRomeChatUseCase(Get.find());
@@ -30,7 +30,7 @@ class ConfirmeAppointmentController extends GetxController {
   var appointmentId = ''.obs;
   final requestIsSend = false.obs;
   // final argument = Get.arguments ;
-  ConfirmeAppointmentController(this._appNavigation);
+  ConfirmAppointmentController(this._appNavigation);
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   @override
   void onInit() {
@@ -122,8 +122,13 @@ class ConfirmeAppointmentController extends GetxController {
       (e) {
         loading.value = false;
         print(e.message);
-        Get.showCustomSnackBar("Une erreur s'est produite");
-        return Left(WorkshopException(e.message));
+        if (e.statusCode == 400) {
+          Get.showCustomSnackBar(
+              "Has Pending Appointment with Service and Service Center");
+        } else {
+          Get.showCustomSnackBar("Une erreur s'est produite");
+        }
+        return Left(WorkshopException(e.message, e.statusCode));
       },
       (response) {
         loading.value = false;

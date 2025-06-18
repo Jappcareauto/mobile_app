@@ -8,7 +8,7 @@ import 'package:jappcare/features/workshop/ui/appointment_details/controllers/ap
 import 'package:jappcare/features/workshop/ui/autoshop_detail/controllers/autoshop_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/map_controller.dart';
-import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/controllers/services_locator_controller.dart';
 import 'package:jappcare/features/workshop/ui/sucess_payment/controller/success_payment_controller.dart';
 import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
@@ -40,8 +40,8 @@ class WorkshopDependencies {
     Get.lazyPut<WorkshopController>(() => WorkshopController(
           Get.find(),
         ));
-    Get.lazyPut<ConfirmeAppointmentController>(
-        () => ConfirmeAppointmentController(Get.find()));
+    Get.lazyPut<ConfirmAppointmentController>(
+        () => ConfirmAppointmentController(Get.find()));
     Get.lazyPut<WorkshopDetailsController>(
         () => WorkshopDetailsController(Get.find()));
     Get.lazyPut<PayWithCardController>(() => PayWithCardController(Get.find()));

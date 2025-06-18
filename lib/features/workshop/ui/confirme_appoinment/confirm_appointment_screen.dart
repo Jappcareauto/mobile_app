@@ -5,11 +5,11 @@ import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_card_widget.dart';
 // import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
-import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/summary.dart';
 // import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 
-class ConfirmeAppointmentScreen extends GetView<ConfirmeAppointmentController> {
+class ConfirmeAppointmentScreen extends GetView<ConfirmAppointmentController> {
   // final BookAppointmentController bookAppointmentController = BookAppointmentController(Get.find());
 
   const ConfirmeAppointmentScreen({super.key});

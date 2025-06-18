@@ -54,7 +54,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       );
       return Right(ResetPasswordModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 
@@ -70,7 +70,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       );
       return Right(ForgotPasswordModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 
@@ -82,7 +82,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
           .get("${AuthentificationConstants.resendOtpPostUri}?email=$email");
       return const Right(true);
     } on BaseException catch (e) {
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 
@@ -94,7 +94,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
           .get("${AuthentificationConstants.verifyEmailPostUri}/$code");
       return const Right(true);
     } on BaseException catch (e) {
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 
@@ -130,7 +130,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       );
       return Right(RegisterModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 
@@ -159,7 +159,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       );
       return Right(LoginModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 
@@ -178,7 +178,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       });
       return Right(LoginModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 
@@ -197,7 +197,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       });
       return Right(RegisterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 
@@ -236,7 +236,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       return await googleLogin(bearerId: finalToken);
     } on BaseException catch (e) {
       print(e);
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 
@@ -265,7 +265,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       return await googleRegister(bearerId: idToken);
     } on BaseException catch (e) {
       print(e);
-      return Left(AuthentificationException(e.message));
+      return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
 

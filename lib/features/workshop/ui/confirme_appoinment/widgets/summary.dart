@@ -5,10 +5,10 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
-import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 import 'package:intl/intl.dart';
 
-class Summary extends GetView<ConfirmeAppointmentController> {
+class Summary extends GetView<ConfirmAppointmentController> {
   final BookAppointmentController bookController =
       Get.put(BookAppointmentController(Get.find()));
   final images = Get.find<GlobalcontrollerWorkshop>().selectedImages;
@@ -81,19 +81,19 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                 ),
               ],
             ),
-            Column(
-              spacing: 5,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Estimated inspection fee',
-                    style:
-                        TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-                Text('${argument['servicePrice']} Frs',
-                    style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-              ],
-            ),
+            // Column(
+            //   spacing: 5,
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     const Text('Estimated inspection fee',
+            //         style:
+            //             TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
+            //     Text('${argument['servicePrice']} Frs',
+            //         style:
+            //             TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            //   ],
+            // ),
             Column(
               spacing: 5,
               mainAxisAlignment: MainAxisAlignment.start,

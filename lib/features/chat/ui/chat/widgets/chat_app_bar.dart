@@ -27,13 +27,12 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: .0,
       leadingWidth: 40,
       leading: Padding(
-          padding: EdgeInsets.only(left: 10),
-          child: SizedBox(
-            child: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: Get.back,
-            ),
-          )),
+        padding: EdgeInsets.only(left: 10),
+        child: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: Get.back,
+        ),
+      ),
       centerTitle: false,
       toolbarHeight: 80,
       title: Row(
@@ -47,13 +46,16 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           // if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
           //   Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
           //       .buildView({"haveName": true}),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(Get.find<ProfileController>().userInfos?.name ?? "Unknow",
+          Text(Get.find<ProfileController>().userInfos?.name ?? "Unknown",
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
         ],
       ),
+      // actions: [
+      //   IconButton(
+      //     icon: const Icon(Icons.more_vert),
+      //     onPressed: () {},
+      //   ),
+      // ],
     );
   }
 

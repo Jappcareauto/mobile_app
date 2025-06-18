@@ -28,7 +28,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
       return const Right(true);
     } on BaseException catch (e) {
-      return Left(ProfileException(e.message));
+      return Left(ProfileException(e.message, e.statusCode));
     }
   }
 
@@ -40,7 +40,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
       return Right(GetUserInfosModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
-      return Left(ProfileException(e.message));
+      return Left(ProfileException(e.message, e.statusCode));
     }
   }
 
@@ -56,7 +56,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       );
       return Right(GetUserInfosModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(ProfileException(e.message));
+      return Left(ProfileException(e.message, e.statusCode));
     }
   }
 

@@ -41,7 +41,7 @@ class GarageRepositoryImpl implements GarageRepository {
       print(response);
       return Right(VehicleModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
-      return Left(GarageException(e.message));
+      return Left(GarageException(e.message, e.statusCode));
     }
   }
 
@@ -54,7 +54,7 @@ class GarageRepositoryImpl implements GarageRepository {
           .map((e) => VehicleModel.fromJson(e).toEntity())
           .toList());
     } on BaseException catch (e) {
-      return Left(GarageException(e.message));
+      return Left(GarageException(e.message, e.statusCode));
     }
   }
 
@@ -68,7 +68,7 @@ class GarageRepositoryImpl implements GarageRepository {
           .map((e) => VehicleModel.fromJson(e).toEntity())
           .toList());
     } on BaseException catch (e) {
-      return Left(GarageException(e.message));
+      return Left(GarageException(e.message, e.statusCode));
     }
   }
 
@@ -80,7 +80,7 @@ class GarageRepositoryImpl implements GarageRepository {
           .get('${GarageConstants.getVehicleByIdUri}/$vehicleId');
       return Right(VehicleModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
-      return Left(GarageException(e.message));
+      return Left(GarageException(e.message, e.statusCode));
     }
   }
 
@@ -95,7 +95,7 @@ class GarageRepositoryImpl implements GarageRepository {
           .map((e) => AppointmentModel.fromJson(e).toEntity())
           .toList());
     } on BaseException catch (e) {
-      return Left(GarageException(e.message));
+      return Left(GarageException(e.message, e.statusCode));
     }
   }
 
@@ -108,7 +108,7 @@ class GarageRepositoryImpl implements GarageRepository {
       );
       return Right(AppointmentModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
-      return Left(GarageException(e.message));
+      return Left(GarageException(e.message, e.statusCode));
     }
   }
 
@@ -123,7 +123,7 @@ class GarageRepositoryImpl implements GarageRepository {
           GetGarageByOwnerIdModel.fromJson((response["data"] as List).first)
               .toEntity());
     } on BaseException catch (e) {
-      return Left(GarageException(e.message));
+      return Left(GarageException(e.message, e.statusCode));
     }
   }
 
@@ -148,7 +148,7 @@ class GarageRepositoryImpl implements GarageRepository {
         throw Exception("Erreur API : ${response.statusCode}");
       }
     } catch (e) {
-      return Left(GarageException("Erreur : $e"));
+      return Left(GarageException("Erreur : $e", 500));
     }
   }
 
@@ -161,7 +161,7 @@ class GarageRepositoryImpl implements GarageRepository {
       print(response);
       return const Right("Vehicle deleted successfully");
     } on BaseException catch (e) {
-      return Left(GarageException(e.message));
+      return Left(GarageException(e.message, e.statusCode));
     }
   }
 
@@ -187,7 +187,7 @@ class GarageRepositoryImpl implements GarageRepository {
       );
       return Right(VehicleModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(GarageException(e.message));
+      return Left(GarageException(e.message, e.statusCode));
     }
   }
 

@@ -45,7 +45,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       );
       return Right(VehicleModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
@@ -57,7 +57,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           .post(WorkshopConstants.getAllservicesGetUri, body: {});
       return Right(GetAllServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
@@ -94,7 +94,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       );
       return Right(BookAppointmentModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
@@ -121,7 +121,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       });
       return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
@@ -134,7 +134,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       return Right(
           GetAllServiceCenterServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
@@ -147,7 +147,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   //     return Right(
   //         GetAllServiceCenterServicesModel.fromJson(response).toEntity());
   //   } on BaseException catch (e) {
-  //     return Left(WorkshopException(e.message));
+  //     return Left(WorkshopException(e.message, e.statusCode));
   //   }
   // }
 
@@ -160,7 +160,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       return Right(
           GetAllServiceCenterServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
@@ -183,7 +183,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           .map((p) => PlacePredictionModel.fromJson(p).toEntity())
           .toList());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
@@ -203,7 +203,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       return Right(
           PlaceDetailsModel.fromJson(response.data['result']).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 

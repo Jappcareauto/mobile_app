@@ -26,7 +26,7 @@ import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_i
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
-import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
 // import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:record/record.dart';
@@ -95,8 +95,8 @@ class ChatDetailsController extends GetxController {
   Stream<Map<String, dynamic>> get typingStream => _typingController.stream;
   Stream<Map<String, dynamic>> get presenceStream => _presenceController.stream;
 
-  final ConfirmeAppointmentController confirmeAppointmentController =
-      ConfirmeAppointmentController(Get.find());
+  final ConfirmAppointmentController confirmAppointmentController =
+      ConfirmAppointmentController(Get.find());
 
   final AppNavigation _appNavigation;
 

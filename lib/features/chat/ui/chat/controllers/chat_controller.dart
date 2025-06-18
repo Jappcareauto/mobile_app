@@ -24,7 +24,7 @@ import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_i
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 // import 'package:jappcare/features/workshop/infrastructure/models/send_message_model.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
-import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 // import 'package:web_socket_channel/io.dart';
@@ -32,8 +32,8 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class ChatController extends GetxController {
   final AppNavigation _appNavigation;
 
-  final ConfirmeAppointmentController confirmeAppointmentController =
-      ConfirmeAppointmentController(Get.find());
+  final ConfirmAppointmentController confirmeAppointmentController =
+      ConfirmAppointmentController(Get.find());
 
   final _getAllChatRoomsUseCase = GetAllUserChatRoomsUseCase(Get.find());
 

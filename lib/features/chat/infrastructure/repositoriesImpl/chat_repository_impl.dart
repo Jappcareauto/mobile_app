@@ -70,10 +70,10 @@ class ChatRepositoryImpl implements ChatRepository {
       return Right(receivedMessages);
     } on SocketException catch (e) {
       print("Erreur réseau : $e");
-      return Left(ChatException('Erreur réseau : $e'));
+      return Left(ChatException('Erreur réseau : $e', 400));
     } catch (e) {
       print("Erreur inattendue : $e");
-      return Left(ChatException('Erreur inattendue : $e'));
+      return Left(ChatException('Erreur inattendue : $e', 500));
     }
   }
 
@@ -122,9 +122,10 @@ class ChatRepositoryImpl implements ChatRepository {
     //   print("Erreur réseau : $e");
     //   return Left(ChatException('Erreur réseau : $e'));
     // }
-    catch (e) {
+    on BaseException catch (e) {
       print("Erreur inattendue : $e");
-      return Left(ChatException('Erreur inattendue : $e'));
+      return Left(
+          ChatException('Erreur inattendue : ${e.message}', e.statusCode));
     }
   }
 
@@ -150,7 +151,7 @@ class ChatRepositoryImpl implements ChatRepository {
       );
       return Right(SendMessageModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(ChatException(e.message));
+      return Left(ChatException(e.message, e.statusCode));
     }
   }
 
@@ -163,7 +164,7 @@ class ChatRepositoryImpl implements ChatRepository {
       );
       return Right(GetAllChatRoomsModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(ChatException(e.message));
+      return Left(ChatException(e.message, e.statusCode));
     }
   }
 
@@ -176,7 +177,7 @@ class ChatRepositoryImpl implements ChatRepository {
       );
       return Right(GetAllChatRoomsModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(ChatException(e.message));
+      return Left(ChatException(e.message, e.statusCode));
     }
   }
 
@@ -190,7 +191,7 @@ class ChatRepositoryImpl implements ChatRepository {
       );
       return Right(ChatRoomModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
-      return Left(ChatException(e.message));
+      return Left(ChatException(e.message, e.statusCode));
     }
   }
 
