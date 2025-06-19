@@ -11,6 +11,7 @@ import '../infrastructure/repositoriesImpl/garage_repository_impl.dart';
 import '../ui/garage/widgets/recent_activities_widget.dart';
 
 import '../application/usecases/get_garage_by_owner_id_usecase.dart';
+import '../application/usecases/get_appointment_by_chatroom_id.usecase.dart';
 
 import '../application/usecases/get_vehicle_list_usecase.dart';
 
@@ -31,6 +32,11 @@ class GarageDependencies {
     Get.lazyPut<FeatureWidgetInterface>(
         () => RecentActivitiesWidget(haveTabBar: false),
         tag: 'RecentActivitiesWidget',
+        fenix: true);
+
+    // Use cases
+
+    Get.lazyPut(() => GetAppointmentByChatRoomIdUseCase(Get.find()),
         fenix: true);
     Get.lazyPut(() => GetGarageByOwnerIdUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetVehicleListUseCase(Get.find()), fenix: true);

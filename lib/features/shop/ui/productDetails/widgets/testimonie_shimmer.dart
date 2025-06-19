@@ -9,11 +9,12 @@ class TestimonieShimmer extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: List.generate(3, (index) { // Génère plusieurs conteneurs
+        children: List.generate(3, (index) {
+          // Génère plusieurs conteneurs
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Shimmer.fromColors(
-              baseColor: Colors.grey.withOpacity(.5),
+              baseColor: Colors.grey.withValues(alpha: .5),
               highlightColor: Colors.white,
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.85,

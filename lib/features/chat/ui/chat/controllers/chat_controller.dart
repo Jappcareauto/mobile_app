@@ -10,15 +10,17 @@ import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/functions.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/chat/application/usecases/get_all_user_chatrooms.usecase.dart';
+import 'package:jappcare/features/chat/application/usecases/get_real_time_message.usecase.dart';
+import 'package:jappcare/features/chat/application/usecases/send_message.usecase.dart';
 import 'package:jappcare/features/chat/domain/core/exceptions/chat_exception.dart';
+import 'package:jappcare/features/chat/domain/entities/get_all_chat_room.entity.dart';
+import 'package:jappcare/features/chat/navigation/private/chat_private_routes.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
-import 'package:jappcare/features/workshop/application/usecases/get_real_time_message.dart';
+// import 'package:jappcare/features/workshop/application/usecases/get_real_time_message.dart';
 import 'package:jappcare/features/workshop/application/command/get_vehicul_by_id_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_id_usecase.dart';
-import 'package:jappcare/features/workshop/application/command/send_message_command.dart';
-import 'package:jappcare/features/workshop/application/usecases/send_message_usecase.dart';
 // import 'package:jappcare/features/workshop/domain/core/utils/workshop_constants.dart';
-import 'package:jappcare/features/workshop/domain/entities/send_message.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 // import 'package:jappcare/features/workshop/infrastructure/models/send_message_model.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
@@ -28,18 +30,26 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 // import 'package:web_socket_channel/io.dart';
 
 class ChatController extends GetxController {
+  final AppNavigation _appNavigation;
+
   final ConfirmeAppointmentController confirmeAppointmentController =
       ConfirmeAppointmentController(Get.find());
-  final AppNavigation _appNavigation;
+
+  final _getAllChatRoomsUseCase = GetAllUserChatRoomsUseCase(Get.find());
+
   final loading = false.obs;
+  final searchQuery = ''.obs;
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+
   GetVehiculByIdUseCase getVehiculByIdUseCase =
       GetVehiculByIdUseCase(Get.find());
   final selectedMethod = 'Orange Money'.obs;
   ChatController(this._appNavigation);
   late WebSocketChannel channel;
   final ScrollController scrollController = ScrollController();
-  final RxList<SendMessage> messages = <SendMessage>[].obs;
+
+  final RxList<ChatRoomEntity> chatrooms = <ChatRoomEntity>[].obs;
+
   var selectedImages = <File>[].obs;
   final TextEditingController messageController = TextEditingController();
   // final LocalStorageService _localStorage = Get.find<LocalStorageService>();
@@ -52,6 +62,7 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchChats();
     // globalControllerWorkshop.addData("chatroomId", "123456");
     // final chatroom = globalControllerWorkshop.workshopData['chatroomId'];
     // print('chatroom $chatroom');
@@ -78,6 +89,61 @@ class ChatController extends GetxController {
         // _appNavigation.goBack();
       },
     );
+  }
+
+  // Filtered chats based on search
+  List<ChatRoomEntity> get filteredChats {
+    if (searchQuery.value.isEmpty) {
+      return chatrooms;
+    }
+    return chatrooms
+        .where((chat) => chat.name
+                .toLowerCase()
+                .contains(searchQuery.value.toLowerCase())
+            // ||
+            // chat.lastMessage.toLowerCase().contains(searchQuery.value.toLowerCase()
+            // )
+            )
+        .toList();
+  }
+
+  // Fetch chats from service
+  Future<void> fetchChats() async {
+    loading.value = true;
+    final result = await _getAllChatRoomsUseCase
+        .call(Get.find<ProfileController>().userInfos!.id);
+
+    result.fold(
+      (e) {
+        loading.value = false;
+        if (Get.context != null) {
+          Get.showCustomSnackBar(e.message);
+        }
+      },
+      (response) {
+        loading.value = false;
+        chatrooms.assignAll(response.data);
+      },
+    );
+
+    // try {
+    //   isLoading(true);
+    //   final chatList = await _chatService.fetchChats();
+    //   chats.assignAll(chatList);
+    // } catch (e) {
+    //   Get.snackbar(
+    //     'Error',
+    //     'Failed to load chats: $e',
+    //     snackPosition: SnackPosition.BOTTOM,
+    //   );
+    // } finally {
+    //   isLoading(false);
+    // }
+  }
+
+  // Refresh chats
+  Future<void> refreshChats() async {
+    await fetchChats();
   }
 
   var paymentDetails = [
@@ -160,6 +226,11 @@ class ChatController extends GetxController {
     }
   }
 
+  void goToChat(ChatRoomEntity chatRoom) {
+    _appNavigation.toNamed(ChatPrivateRoutes.chat, arguments: chatRoom.id);
+    // globalControllerWorkshop.addData('appointmentId', chatRoom.appointmentDTO);
+  }
+
   void goToAppointmentDetail() {
     _appNavigation.toNamed(WorkshopPrivateRoutes.appointmentDetail,
         arguments: globalControllerWorkshop.selectVehicle);
@@ -167,52 +238,6 @@ class ChatController extends GetxController {
 
   void removeImage(int index) {
     selectedImages.removeAt(index);
-  }
-
-  void sendMessage() async {
-    if (messageController.text.isNotEmpty || selectedImages.isNotEmpty) {
-      try {
-        // Créer une instance de SendMessage
-        final newMessage = SendMessage.create(
-          senderId: Get.find<ProfileController>().userInfos!.id,
-          content: messageController.text,
-          chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
-          timestamp: DateTime.now().toIso8601String(),
-          type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
-          appointmentId: globalControllerWorkshop.workshopData['appointmentId'],
-        );
-        // Ajouter à la liste des messages
-        messages.add(newMessage);
-        await insertMessageToDataBase();
-        // Réinitialiser les champs
-        messageController.clear();
-        selectedImages.clear();
-        // Mettre à jour l'état
-        update();
-        scrollToBottom();
-        //sauvegarder le message dans la base de donneee
-      } catch (e) {
-        print("Erreur lors de l'envoi du message : $e");
-      }
-    }
-  }
-
-  Future<void> insertMessageToDataBase() async {
-    final result = await sendMessageUseCase.call(SendMessageCommand(
-        appointmentId: globalControllerWorkshop.workshopData[
-            'appointmentId'], // a remplacer lorsque le enpoint de creation des rendez voux seras fonctionnel,
-        chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
-        content: messageController.text,
-        type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
-        senderId: Get.find<ProfileController>().userInfos!.id,
-        timestamp: DateTime.now().toIso8601String()));
-    result.fold((e) {
-      print('erreur d\'envoie du message $e');
-      Get.showCustomSnackBar(e.message);
-    }, (response) {
-      print('message envoyer avec succes');
-      print(response);
-    });
   }
 
   void openMore() {

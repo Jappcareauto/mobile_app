@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
@@ -85,7 +85,7 @@ class ServiceWidget extends StatelessWidget {
                                 : item.definition == "VIN_DETECTION"
                                     ? AppImages.vin
                                     : AppImages.maintenance,
-                        width: Get.width * 0.38,
+                        width: 120,
                       ),
                     ],
                   ),

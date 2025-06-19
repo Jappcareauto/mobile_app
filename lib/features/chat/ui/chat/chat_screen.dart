@@ -2,16 +2,19 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
+import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
+import 'package:jappcare/core/utils/app_images.dart';
 // import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_controller.dart';
+import 'package:jappcare/features/chat/ui/chat/widgets/chat_list_tile.widget.dart';
 // import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 // import 'package:jappcare/features/workshop/ui/chat/controllers/workshop_chat_controller.dart';
 // import 'package:jappcare/features/workshop/ui/chat/widgets/chat_app_bar.dart';
 // import 'package:jappcare/features/workshop/ui/chat/widgets/chat_input_widget.dart';
 // import 'package:jappcare/features/workshop/ui/chat/widgets/chat_invoice.dart';
-import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
-import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_widgets.dart';
+// import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
+// import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_widgets.dart';
 
 // import 'controllers/chat_controller.dart';
 // import 'widgets/chat_app_bar.dart';
@@ -30,7 +33,7 @@ class ChatScreen extends GetView<ChatController> {
   Widget build(BuildContext context) {
     // final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: Get.theme.secondaryHeaderColor,
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: "Messages",
@@ -40,19 +43,18 @@ class ChatScreen extends GetView<ChatController> {
             Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
         ],
       ),
-      body: MixinBuilder<ChatController>(
+      body: GetBuilder<ChatController>(
         init: ChatController(Get.find()),
         initState: (_) {},
         builder: (controller) {
-          return SafeArea(
-              child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                // mainAxisSize: MainAxisSize.min,
-                spacing: 20,
-                children: [
-                  Form(
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              spacing: 20,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Form(
                     key: controller.messageSearchFormHelper.formKey,
                     autovalidateMode: controller
                         .messageSearchFormHelper.autovalidateMode.value,
@@ -60,25 +62,75 @@ class ChatScreen extends GetView<ChatController> {
                       controller: controller
                           .messageSearchFormHelper.controllers['name'],
                       borderRadius: 32,
-                      filColor: AppColors.primary.withAlpha(1),
+                      filColor: AppColors.primary,
                       hintText: "Search",
                       prefix: const Icon(FluentIcons.search_24_regular),
                       validator:
                           controller.messageSearchFormHelper.validators['name'],
                     ),
                   ),
-                  const SizedBox(
-                      // height: 300, // Hauteur fixée
-                      child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        WorkshopShimmerWidgets(),
-                        WorkshopShimmerWidgets(),
-                      ],
-                    ),
-                  )),
-                ]),
-          ));
+                ),
+
+                // Chat List
+                Expanded(
+                  child: Obx(() {
+                    if (controller.loading.value) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    final chats = controller.filteredChats;
+
+                    if (chats.isEmpty) {
+                      return const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 40),
+                              child: ImageComponent(
+                                  assetPath: AppImages.boiteLettre, width: 150),
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              'No Message',
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    return RefreshIndicator(
+                      onRefresh: controller.refreshChats,
+                      child: ListView.builder(
+                        itemCount: chats.length,
+                        itemBuilder: (context, index) {
+                          final chat = chats[index];
+                          return ChatListTile(
+                            chat: chat,
+                            onTap: () => controller.goToChat(chat),
+                          );
+                        },
+                      ),
+                    );
+                  }),
+                ),
+
+                // const SizedBox(
+                //     // height: 300, // Hauteur fixée
+                //     child: SingleChildScrollView(
+                //   child: Column(
+                //     children: [
+                //       WorkshopShimmerWidgets(),
+                //       WorkshopShimmerWidgets(),
+                //     ],
+                //   ),
+                // )),
+              ]);
           // return Stack(
           //   children: [
           //     Container(
@@ -242,9 +294,9 @@ void onpenModalPaymentMethod(void onConfirm) {
           padding: const EdgeInsets.all(16), // Espacement intérieur
           child: Wrap(
             children: [
-              PaymentMethodeWidget(onConfirm: () {
-                onConfirm;
-              }),
+              // PaymentMethodeWidget(onConfirm: () {
+              //   onConfirm;
+              // }),
             ],
           ),
         ),

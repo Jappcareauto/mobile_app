@@ -7,7 +7,6 @@ import '../../../../../core/navigation/app_navigation.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class BagController extends GetxController {
   final AppNavigation _appNavigation;
   var quantity = 1.obs;
@@ -56,10 +55,9 @@ class BagController extends GetxController {
     cartItems.refresh();
     _appNavigation.goBack();
 
-    if(cartItems.value.isEmpty){
+    if (cartItems.isEmpty) {
       _appNavigation.goBack();
       _appNavigation.goBack();
-
     }
   }
 
@@ -90,12 +88,11 @@ class BagController extends GetxController {
       Get.snackbar("Panier vide", "Ajoutez des articles avant de continuer !");
     }
   }
-  void showDeleteModal(String id){
+
+  void showDeleteModal(String id) {
     showDialog(
       context: Get.context!,
-      builder: (BuildContext context) =>  DeleteModel(
-          id:id
-      ),
+      builder: (BuildContext context) => DeleteModel(id: id),
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 
 class ImageGallerry extends StatelessWidget {
-  @override
   final Iterable<dynamic> images;
   final String title;
   const ImageGallerry({super.key, required this.images, required this.title});

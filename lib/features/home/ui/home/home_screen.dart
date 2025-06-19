@@ -9,7 +9,6 @@ import 'package:jappcare/features/home/ui/dashboard/controllers/dashboard_contro
 import 'package:jappcare/features/home/ui/home/widgets/dismiss_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/tip_modal_bottom.dart';
-import 'package:jappcare/features/home/ui/home/widgets/title_section.dart';
 import '../../../../core/utils/app_images.dart';
 import 'controllers/home_controller.dart';
 import 'widgets/notification_widget.dart';

@@ -1,6 +1,6 @@
 //Don't translate me
 import '../../domain/entities/get_vehicle_list.dart';
-import 'add_vehicle_command.dart';
+import '../command/add_vehicle_command.dart';
 import 'package:dartz/dartz.dart';
 import '../../domain/core/exceptions/garage_exception.dart';
 import '../../domain/repositories/garage_repository.dart';

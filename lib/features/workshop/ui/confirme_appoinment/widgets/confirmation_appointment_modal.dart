@@ -64,7 +64,7 @@ class ConfirmationAppointmentModal
                     strech: false,
                     text: 'Proceed to Chat',
                     isLoading: controller.proceedChatLoading,
-                    onPressed: () => controller.createdRoomChat())
+                    onPressed: () => controller.goToChatScreen())
               ],
             ),
           ],

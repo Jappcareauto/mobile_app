@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image/image.dart';
 import 'package:image_picker/image_picker.dart';
+import '../widgets/image_preview.screen.dart';
 
 class PickImage extends StatelessWidget {
   PickImage({super.key, this.many = false});
@@ -26,82 +27,91 @@ class PickImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      height: 80,
-      width: Get.width,
-      decoration: BoxDecoration(
-          color: isDarkMode ? Colors.grey : Colors.white,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(30))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          InkWell(
-            onTap: () async {
-              final pickedFile = await picker.pickImage(
-                source: ImageSource.camera,
-              );
-              if (pickedFile != null) {
-                final result = pickedFile;
-                Get.back(result: [result]);
-                return;
-              }
-              Get.back();
-            },
-            child:  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  backgroundColor: Get.theme.primaryColor,
-                  radius: 20,
-                  child: const Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-                const Text("Camera")
-              ],
-            ),
-          ),
-          InkWell(
-            onTap: () async {
-              final pickedFile = many
-                  ? await picker.pickMultiImage()
-                  : await picker.pickImage(
-                      source: ImageSource.gallery,
-                    );
+    return SafeArea(
+      child: Container(
+        height: 80,
+        width: Get.width,
+        decoration: BoxDecoration(
+            color: isDarkMode ? Colors.grey : Colors.white,
+            borderRadius:
+                const BorderRadius.vertical(top: Radius.circular(30))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            InkWell(
+              onTap: () async {
+                final pickedFile = await picker.pickImage(
+                  source: ImageSource.camera,
+                );
+                if (pickedFile != null) {
+                  final result = await Get.to(
+                      () => ImagePreviewScreen(imagePath: pickedFile.path));
 
-              if (pickedFile != null && !many) {
-                final result = pickedFile as XFile;
-                return Get.back(result: [File(result.path)]);
-              } else if (pickedFile != null && many) {
-                List<File>? result = [];
-                for (var i in (pickedFile as List<XFile>)) {
-                  final f = i;
-                  result.add(File(f.path));
+                  if (result != null) {
+                    Get.back(result: [result]);
+                  } else {
+                    Get.back();
+                  }
+                  return;
                 }
-                return Get.back(result: result);
-              } else {
                 Get.back();
-              }
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  backgroundColor: Get.theme.primaryColor,
-                  radius: 20,
-                  child: const Icon(
-                    Icons.image,
-                    color: Colors.white,
-                    size: 20,
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Get.theme.primaryColor,
+                    radius: 20,
+                    child: const Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
-                ),
-                const Text("Galerie")
-              ],
+                  const Text("Camera")
+                ],
+              ),
             ),
-          ),
-        ],
+            InkWell(
+              onTap: () async {
+                final pickedFile = many
+                    ? await picker.pickMultiImage()
+                    : await picker.pickImage(
+                        source: ImageSource.gallery,
+                      );
+
+                if (pickedFile != null && !many) {
+                  final result = pickedFile as XFile;
+                  return Get.back(result: [File(result.path)]);
+                } else if (pickedFile != null && many) {
+                  List<File>? result = [];
+                  for (var i in (pickedFile as List<XFile>)) {
+                    final f = i;
+                    result.add(File(f.path));
+                  }
+                  return Get.back(result: result);
+                } else {
+                  Get.back();
+                }
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Get.theme.primaryColor,
+                    radius: 20,
+                    child: const Icon(
+                      Icons.image,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                  const Text("Galerie")
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

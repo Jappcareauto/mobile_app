@@ -7,7 +7,7 @@ import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/utils/getx_extensions.dart';
 
 import '../../../application/usecases/add_vehicle_usecase.dart';
-import '../../../application/usecases/add_vehicle_command.dart';
+import '../../../application/command/add_vehicle_command.dart';
 import '../../../../../core/services/form/validators.dart';
 
 import '../../../../../core/services/form/form_helper.dart';
@@ -45,8 +45,6 @@ class AddVehicleController extends GetxController {
 
     serviceCenterId.value =
         globalControllerWorkshop.workshopData['serviceCenterId'];
-
-    print(globalControllerWorkshop.workshopData['serviceCenterId']);
 
     addVehicleFormHelper = FormHelper<GarageException, Vehicle>(
       fields: {

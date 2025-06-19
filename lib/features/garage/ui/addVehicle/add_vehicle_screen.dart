@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
-import 'package:jappcare/features/workshop/ui/chat/widgets/payment_method_widget.dart';
+import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
 import 'controllers/add_vehicle_controller.dart';
 import 'package:get/get.dart';
 

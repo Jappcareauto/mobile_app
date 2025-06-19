@@ -3,15 +3,19 @@ import 'package:jappcare/core/utils/app_colors.dart';
 
 enum ChipSize { small, normal }
 
+enum ChipStyle { bold, light }
+
 class ChipWidget extends StatelessWidget {
   const ChipWidget({
     super.key,
     required this.status,
     this.variant = ChipSize.normal,
+    this.style = ChipStyle.bold,
   });
 
   final String status;
   final ChipSize? variant;
+  final ChipStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +23,16 @@ class ChipWidget extends StatelessWidget {
     Color chipTextColor;
 
     if (status == 'IN_PROGRESS') {
-      chipColor = Color(0xFFFFEDE6);
-      chipTextColor = AppColors.orange;
+      chipColor =
+          style == ChipStyle.bold ? AppColors.orange : Color(0xFFFFEDE6);
+      chipTextColor = style == ChipStyle.bold ? Colors.white : AppColors.orange;
     } else if (status == 'COMPLETED') {
-      chipColor = AppColors.green.withValues(alpha: .1);
-      chipTextColor = Colors.green;
+      chipColor =
+          ChipStyle.bold == style ? AppColors.green : Colors.green.shade100;
+      chipTextColor = ChipStyle.bold == style ? Colors.white : Colors.green;
     } else {
-      chipColor = AppColors.red;
-      chipTextColor = Colors.white;
+      chipColor = style == ChipStyle.bold ? AppColors.red : Colors.red.shade100;
+      chipTextColor = style == ChipStyle.bold ? Colors.white : Colors.red;
     }
 
     double chipPadding;

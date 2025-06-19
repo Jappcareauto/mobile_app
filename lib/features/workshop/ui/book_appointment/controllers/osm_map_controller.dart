@@ -107,4 +107,8 @@ class OSMMapController extends GetxController {
     addMarker(latitude, longitude); // Ajout du marqueur
     goToLocation(latitude, longitude); // Centrage de la carte
   }
+
+  void goBack() {
+    _appNavigation.goBack();
+  }
 }

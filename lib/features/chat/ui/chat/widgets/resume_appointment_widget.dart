@@ -5,31 +5,29 @@ import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+
 class ResumeAppointmentWidget extends StatelessWidget {
-  final String services ;
+  final String services;
 
-  final DateTime date ;
-  final String note ;
-  final String fee ;
-  final String time ;
+  final DateTime date;
+  final String note;
+  final String fee;
+  final String time;
   final String caseId;
-    const ResumeAppointmentWidget({
-      super.key,
+  const ResumeAppointmentWidget(
+      {super.key,
       required this.services,
-
       required this.date,
       required this.note,
       required this.fee,
       required this.time,
-      required this.caseId
-    });
+      required this.caseId});
   @override
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withOpacity(0.2)),
+          border: Border.all(color: Colors.grey.withValues(alpha: 0.2)),
           borderRadius: BorderRadius.circular(20),
-
         ),
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -37,110 +35,111 @@ class ResumeAppointmentWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('Service Offered by',
-                  style: TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.normal)),
+                  style:
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
               Text(services,
                   style: const TextStyle(
-                      fontSize: 14,fontWeight: FontWeight.bold )),
-              const SizedBox(height: 20,),
+                      fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: 20,
+              ),
               const Text('From',
                   style: TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
-              const SizedBox(height: 10,),
-
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.grey)),
+              const SizedBox(
+                height: 10,
+              ),
               Row(
                 children: [
                   if (Get.isRegistered<FeatureWidgetInterface>(
                       tag: 'AvatarWidget'))
                     Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
-                        .buildView({
-                      "haveName":true
-                    }),
-                  const SizedBox(width: 10,),
-
-                  Text( Get.find<ProfileController>().userInfos?.name?? "Unknow",  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                        .buildView({"haveName": true}),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                      Get.find<ProfileController>().userInfos?.name ?? "Unknow",
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.bold))
                 ],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               const Text('Estimated inspection Fee',
                   style: TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.grey)),
               Text(fee,
                   style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold )),
-              const SizedBox(height: 20,),
+                      fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: 20,
+              ),
               const Text('Case ID',
-                  style: TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.normal)),
+                  style:
+                      TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
               Text(caseId,
                   style: const TextStyle(
-                      fontSize: 14,fontWeight: FontWeight.bold )),
-              const SizedBox(height: 20,),
-
+                      fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: 20,
+              ),
               const Text('Date',
                   style: TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.normal , color:  Colors.grey)),
-              Row(
-                  children: [
-                    const Icon(
-                      FluentIcons.calendar_3_day_20_regular,
-
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.grey)),
+              Row(children: [
+                const Icon(
+                  FluentIcons.calendar_3_day_20_regular,
+                ),
+                Container(
+                  child: Text(
+                    DateFormat('EEE, MMM dd, yyyy').format(date),
+                    // Format personnalisé
+                    style: const TextStyle(
+                      fontSize: 14,
                     ),
-
-                        Container(
-                          child: Text(
-                            DateFormat('EEE, MMM dd, yyyy').format(
-                               date),
-                            // Format personnalisé
-                            style: const TextStyle(
-                              fontSize: 14,
-
-                            ),
-                          ),
-                        ),
-
-
-                    const SizedBox(width: 20),
-                    const Icon(
-                      FluentIcons.clock_12_regular,
-
-                    ),
-
-                        Text(
-                           time, style: const TextStyle(
-                            fontSize: 14,fontWeight: FontWeight.w300 ))
-
-                  ]
+                  ),
+                ),
+                const SizedBox(width: 20),
+                const Icon(
+                  FluentIcons.clock_12_regular,
+                ),
+                Text(time,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w300))
+              ]),
+              const SizedBox(
+                height: 20,
               ),
-              const SizedBox(height: 20,),
               const Text('Note',
                   style: TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.normal, color:  Colors.grey)),
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.grey)),
               Text(note,
                   style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold )),
-              const SizedBox(height: 20,),
-
-
-             Align(
-               alignment: Alignment.bottomRight,
-            child:
-                 CustomButton(
-                     text: 'See Details',
-                     strech: false,
-                     width: 170,
-                     borderRadius: BorderRadius.circular(30),
-                     haveBorder: true,
-                     onPressed: (){
-                   print('view detail');
-                 }
-                 )
-
-             )
-            ]
-        )
-    );
+                      fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: 20,
+              ),
+              Align(
+                  alignment: Alignment.bottomRight,
+                  child: CustomButton(
+                      text: 'See Details',
+                      strech: false,
+                      width: 170,
+                      borderRadius: BorderRadius.circular(30),
+                      haveBorder: true,
+                      onPressed: () {
+                        print('view detail');
+                      }))
+            ]));
   }
-
-
 }

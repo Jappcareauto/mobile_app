@@ -120,7 +120,7 @@ class RecentActivitiesWidget extends StatelessWidget
                 filteredActivities.isNotEmpty)
               isHorizontal
                   ? SizedBox(
-                      height: 230,
+                      height: 250,
                       width: MediaQuery.of(context).size.width,
                       child: ListView(
                         scrollDirection: Axis.horizontal,

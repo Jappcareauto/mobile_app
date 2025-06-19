@@ -1,6 +1,7 @@
 //Don't translate me
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jappcare/features/chat/dependences/chat_dependencies.dart';
 import 'package:jappcare/features/chat/navigation/private/chat_pages.dart';
 import 'package:jappcare/features/garage/application/usecases/get_place_name_use_case.dart';
 import '../events/app_events_service.dart';
@@ -99,7 +100,7 @@ class AppDependency {
     WorkshopDependencies.init();
     ProfileDependencies.init();
     NotificationsDependencies.init();
-    // ChatDependencies.init();
+    ChatDependencies.init();
     ServicesDependencies.init();
     EmergencyDependencies.init();
     VehicleFinderDependencies.init();
