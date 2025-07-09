@@ -63,7 +63,7 @@ class BookAppointmentController extends GetxController {
   RxString selectedLocation = "SERVICE_CENTER".obs;
   RxString placeInput = "".obs;
   RxList<PlacePrediction> placePredictions = <PlacePrediction>[].obs;
-  late final PlaceDetails placeDetails;
+  Rx<PlaceDetails?> placeDetails = Rx<PlaceDetails?>(null); // placeDetails;
   // End on the location state of the form
 
   var images = [
@@ -229,7 +229,7 @@ class BookAppointmentController extends GetxController {
   // }
 
   Future<void> getPlaceDetails(String placeId) async {
-    // loading.value = true;
+    loading.value = true;
     final result = await _getPlaceDetailsUseCase.call(placeId);
     result.fold(
       (e) {
@@ -237,8 +237,11 @@ class BookAppointmentController extends GetxController {
         Get.showCustomSnackBar(e.message);
       },
       (success) {
-        placeDetails = success;
+        loading.value = false;
+        placeDetails.value = success;
         placeInput.value = success.name;
+        locationController.text = success.name;
+        placePredictions.value = [];
         update();
         // loading.value = false;
       },

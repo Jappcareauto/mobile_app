@@ -167,7 +167,13 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              CustomMapWidget(),
+                              CustomMapWidget(
+                                latitude:
+                                    controller.placeDetails.value?.lat ?? 0,
+                                longitude:
+                                    controller.placeDetails.value?.lng ?? 0,
+                                placeName: controller.placeDetails.value?.name,
+                              ),
                               const SizedBox(
                                 height: 10,
                               ),

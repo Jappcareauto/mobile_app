@@ -122,6 +122,9 @@ class ChatMessageEntity {
     data['timestamp'] = timestamp;
     data['type'] = type;
     data['appointmentId'] = appointmentId;
+    data['sender'] = sender;
+    data['duration'] = duration;
+    data['mediaUrl'] = mediaUrl;
     return data;
   }
 

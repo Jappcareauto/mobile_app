@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 // import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
@@ -73,6 +74,14 @@ class WorkshopDetailsController extends GetxController {
           .toList();
       getAllServiceCenterServices(arguments['serviceCenterId']);
     }
+    Get.find<AppEventService>()
+        .on<String>(AppConstants.garageIdEvent)
+        .listen((userId) {
+      vehicles.value = garageController.vehicleList
+          .where((e) => e.serviceCenterId == arguments['serviceCenterId'])
+          .toList();
+      update();
+    });
 
     getPosition();
 

@@ -74,6 +74,8 @@ class ChatDetailsController extends GetxController {
   final selectedMethod = 'Orange Money'.obs;
   var selectedImages = <File>[].obs;
   final RxList<ChatMessageEntity> messages = <ChatMessageEntity>[].obs;
+  final RxMap<String, List<ChatMessageEntity>> groupedMessages =
+      <String, List<ChatMessageEntity>>{}.obs;
   late AppointmentEntity appointment;
   final currentUser = Get.find<ProfileController>().userInfos;
 
@@ -158,6 +160,19 @@ class ChatDetailsController extends GetxController {
     }
   }
 
+  Map<String, List<ChatMessageEntity>> groupMessages(
+      List<ChatMessageEntity> messages) {
+    messages.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    final groupedMessages = <String, List<ChatMessageEntity>>{};
+    for (final message in messages) {
+      final date =
+          DateTime.parse(message.createdAt).toLocal().toString().split(' ')[0];
+      groupedMessages.putIfAbsent(date, () => []);
+      groupedMessages[date]?.add(message);
+    }
+    return groupedMessages;
+  }
+
   Future<void> getAllMessages() async {
     loading.value = true;
     final result = await _getAllMessagesUseCase
@@ -172,6 +187,9 @@ class ChatDetailsController extends GetxController {
       (response) {
         loading.value = false;
         messages.value = response.data;
+        groupedMessages.value = groupMessages(response.data);
+        scrollToBottom();
+        update();
       },
     );
   }

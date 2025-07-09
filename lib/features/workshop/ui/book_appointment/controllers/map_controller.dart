@@ -14,9 +14,9 @@ class MapController extends GetxController {
   final GarageController _garageController =
       GarageController(Get.find(), Get.find());
   final loading = true.obs;
-  final vehicleLoading = true.obs;
+  // final vehicleLoading = true.obs;
   final AppNavigation _appNavigation;
-  final arguments = Get.arguments;
+  // final arguments = Get.arguments;
   final locationPermissionGranted = false.obs;
   final Completer<GoogleMapController> mapController = Completer();
   final Rx<BitmapDescriptor> serviceLocation =
@@ -42,7 +42,7 @@ class MapController extends GetxController {
     if (Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent) !=
         null) {
       loading.value = false;
-      vehicleLoading.value = false;
+      // vehicleLoading.value = false;
     }
   }
 
@@ -69,17 +69,24 @@ class MapController extends GetxController {
     serviceLocation.value = BitmapDescriptor.bytes(serviceIconBytes);
   }
 
-  void addMarker(double latitude, double longitude) async {
+  void clearMarkers() {
+    markers.clear();
+    update();
+    update();
+  }
+
+  void addMarker(double latitude, double longitude, String? placeName) async {
     await loadCustomIcons();
     final marker = Marker(
       markerId: const MarkerId('custom-marker'),
       position: LatLng(latitude, longitude),
       icon: serviceLocation.value,
       infoWindow: InfoWindow(
-        title: arguments['name'],
+        title: placeName,
         snippet: 'Latitude: $latitude, Longitude: $longitude',
       ),
     );
+    print('marker added');
     markers.add(marker);
     update();
   }
@@ -103,8 +110,11 @@ class MapController extends GetxController {
     );
   }
 
-  void locatePoint(double latitude, double longitude) {
-    addMarker(latitude, longitude); // Ajout du marqueur
+  void locatePoint(
+      {required double latitude,
+      required double longitude,
+      String? placeName}) {
+    addMarker(latitude, longitude, placeName); // Ajout du marqueur
     goToLocation(latitude, longitude); // Centrage de la carte
   }
 

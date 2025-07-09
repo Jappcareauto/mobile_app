@@ -66,6 +66,7 @@ class AddVehicleController extends GetxController {
         Get.find<GarageController>()
             .getVehicleList(Get.find<ProfileController>().userInfos!.id);
         _appNavigation.goBack();
+        update();
       },
     );
     // Listen for VIN input changes

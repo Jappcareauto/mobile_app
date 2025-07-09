@@ -4,7 +4,6 @@ import 'package:jappcare/features/chat/ui/chat/widgets/chat_input_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_appointment_summary.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/image_message_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
-import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_app_bar.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_invoice.dart';
@@ -31,7 +30,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
         profileImageUrl: AppImages.avatar,
         username: "Sara",
       ),
-      body: MixinBuilder<ChatDetailsController>(
+      body: GetBuilder<ChatDetailsController>(
         initState: (_) {},
         builder: (controller) {
           return SafeArea(
@@ -134,6 +133,51 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                                   ),
                                 ],
                               ),
+                              ...controller.groupedMessages.keys.map((key) {
+                                final messages =
+                                    controller.groupedMessages[key]!;
+                                return Column(children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 5),
+                                        decoration: BoxDecoration(
+                                          color:
+                                              Get.theme.primaryColor.withValues(
+                                            alpha: 0.6,
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                        ),
+                                        child: Text(
+                                          key,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  ...messages.map((message) {
+                                    // print(
+                                    //     "message: ${message.content}, isImageMessage: ${message.isImageMessage} ${message.toJson()}");
+                                    return message.isImageMessage
+                                        ? ImageMessageWidget(
+                                            message: message,
+                                          )
+                                        : ChatMessageWidget(
+                                            message:
+                                                message, // Utilise une chaîne vide si "text" est null
+                                          );
+                                  }),
+                                ]);
+                              }),
                             ],
                           );
                         }),
@@ -166,9 +210,6 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                         //   ),
                         // ),
 
-                        SizedBox(
-                          height: 20,
-                        ),
                         // Obx(() => ResumeAppointmentWidget(
                         //     services: Get.arguments['serviceName'],
                         //     date: bookController.selectedDate.value,
@@ -180,23 +221,39 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                         //   height: 20,
                         // ),
 
-                        ...controller.messages.map((message) {
-                          final isSender = message.senderId ==
-                                  Get.find<ProfileController>().userInfos?.id
-                              ? true
-                              : false;
-                          return message.isImageMessage
-                              ? ImageMessageWidget(
-                                  message: message,
-                                  isMyMessage: isSender,
-                                )
-                              : ChatMessageWidget(
-                                  text: message
-                                      .content, // Utilise une chaîne vide si "text" est null
-                                  isSender:
-                                      isSender, // Valeur par défaut pour "isSender"
-                                );
-                        }),
+                        // ...controller.groupedMessages.entries.map((entry) {
+                        //   final messages = entry.value;
+                        //   final isSender = messages.first.senderId ==
+                        //           Get.find<ProfileController>().userInfos?.id
+                        //       ? true
+                        //       : false;
+                        //   return ChatDateWidget(
+                        //     date: entry.key,
+                        //     isSender: isSender,
+                        //   );
+
+                        // final isSender = message.senderId ==
+                        //         Get.find<ProfileController>().userInfos?.id
+                        //     ? true
+                        //     : false;
+                        // return message.isImageMessage
+                        //     ? ImageMessageWidget(
+                        //         message: message,
+                        //         isMyMessage: isSender,
+                        //       )
+                        //     : ChatMessageWidget(
+                        //         text: message
+                        //             .content, // Utilise une chaîne vide si "text" est null
+                        //         isSender:
+                        //             isSender, // Valeur par défaut pour "isSender"
+                        //       );
+                        // }),
+
+                        // Obx(() => controller.isLoading.value
+                        //     ? const Center(
+                        //         child: CircularProgressIndicator(),
+                        //       )
+                        //     : const SizedBox.shrink()),
 
                         const SizedBox(height: 100),
                       ],

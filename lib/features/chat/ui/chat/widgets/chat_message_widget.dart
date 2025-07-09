@@ -1,23 +1,25 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/features/chat/domain/entities/get_all_chat_room_messages.entity.dart';
+import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 
 class ChatMessageWidget extends StatelessWidget {
-  final String? text;
-  final bool isSender;
-
-  final List<File>? images;
+  final ChatMessageEntity message;
 
   const ChatMessageWidget({
     super.key,
-    this.text,
-    required this.isSender,
-    this.images,
+    required this.message,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isSender =
+        message.senderId == Get.find<ProfileController>().userInfos?.id
+            ? true
+            : false;
+    final date = DateTime.tryParse(message.timestamp)?.toString();
+    print("$date ${date?.length}, message: ${message.content}");
     return Align(
       alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
       child: Padding(
@@ -29,12 +31,17 @@ class ChatMessageWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12.0),
               decoration: BoxDecoration(
-                color: isSender
-                    ? Get.theme.primaryColor.withValues(alpha: .2)
-                    : isDarkMode
-                        ? Get.theme.scaffoldBackgroundColor
-                            .withValues(alpha: .2)
-                        : Colors.grey.shade200,
+                color: Get.theme.primaryColor.withValues(alpha: .2),
+                // : isDarkMode
+                //     ? Get.theme.scaffoldBackgroundColor
+                //         .withValues(alpha: .2)
+                //     : Colors.grey.shade200
+                // color: isSender
+                //     ? Get.theme.primaryColor.withValues(alpha: .2)
+                //     : isDarkMode
+                //         ? Get.theme.scaffoldBackgroundColor
+                //             .withValues(alpha: .2)
+                //         : Colors.grey.shade200,
                 borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(16))
                     .copyWith(
@@ -50,31 +57,27 @@ class ChatMessageWidget extends StatelessWidget {
                     ? CrossAxisAlignment.end
                     : CrossAxisAlignment.start,
                 children: [
-                  if (text != null)
-                    Text(
-                      text!,
-                      style: TextStyle(
-                        color: isSender || isDarkMode
-                            ? Colors.black
-                            : Colors.black,
-                      ),
+                  Text(
+                    message.content,
+                    style: TextStyle(
+                      color:
+                          isSender || isDarkMode ? Colors.black : Colors.black,
                     ),
+                  ),
                 ],
               ),
             ),
-            if (images != null)
-              Wrap(
-                spacing: 2.0,
-                runSpacing: 2.0,
-                children: images!.map((imagePath) {
-                  final imageFile = File(imagePath.path);
-                  return Image.file(
-                    imageFile,
-                    width: 150.0,
-                    height: 150.0,
-                    fit: BoxFit.cover,
-                  );
-                }).toList(),
+            // Timestamp
+            if (date != null)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
+                child: Text(
+                  date.substring(11, 16),
+                  style: const TextStyle(
+                    fontSize: 10,
+                    color: Colors.grey,
+                  ),
+                ),
               ),
           ],
         ),
