@@ -88,18 +88,19 @@ class HomeScreen extends GetView<HomeController> {
                     ],
                   ),
                 ),
-                if (Get.isRegistered<FeatureWidgetInterface>(
-                    tag: 'ListVehicleWidget'))
-                  Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
-                      .buildView({
-                    "pageController": controller.pageController,
-                    "currentPage": controller.currentPage,
-                    "title": "My Garage",
-                    'viewCarDetailsOnCardPress': true,
-                    "onTapeAddVehicle": () {
-                      print("clique");
-                    },
-                  }),
+                // TODO: Implement the add vehicle functionality at this level to be capable to get the list of vehicles and create too
+                // if (Get.isRegistered<FeatureWidgetInterface>(
+                //     tag: 'ListVehicleWidget'))
+                //   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+                //       .buildView({
+                //     "pageController": controller.pageController,
+                //     "currentPage": controller.currentPage,
+                //     "title": "My Garage",
+                //     'viewCarDetailsOnCardPress': true,
+                //     "onTapeAddVehicle": () {
+                //       print("clique");
+                //     },
+                //   }),
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'RecentActivitiesWidget')) ...[
                   Get.find<FeatureWidgetInterface>(

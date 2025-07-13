@@ -1,9 +1,9 @@
 // import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jappcare/core/ui/widgets/image_component.dart';
+// import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
-import 'package:jappcare/core/utils/app_images.dart';
+// import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
 
 class ServiceWidget extends StatelessWidget {
@@ -31,15 +31,21 @@ class ServiceWidget extends StatelessWidget {
         spacing: 4,
         children: List.generate(tabs.length, (index) {
           final item = tabs[index];
+          final serviceTItle = item.title
+              .split("_")
+              .map(
+                  (e) => '${e[0].toUpperCase()}${e.substring(1).toLowerCase()}')
+              .join(" ");
+
           return GestureDetector(
             onTap: () {
               onSelected?.call(index);
             },
             child: Container(
-              width: 175,
-              height: 200,
+              // width: 175,
+              // height: 200,
               margin: const EdgeInsets.only(right: 8),
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: selectedFilter == index
                     ? haveBorder == true
@@ -60,35 +66,36 @@ class ServiceWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
-                      item.title.split("_").join(" "),
+                      serviceTItle,
                       style: TextStyle(
-                        fontSize: 16,
-                        color: selectedFilter == index
-                            ? haveBorder == true
-                                ? AppColors.black
-                                : AppColors.white
-                            : AppColors.black,
-                      ),
+                          fontSize: 14,
+                          color: selectedFilter == index
+                              ? haveBorder == true
+                                  ? AppColors.black
+                                  : AppColors.white
+                              : AppColors.black,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.1),
                     ),
                   ),
                   const SizedBox(
                     height: 6,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ImageComponent(
-                        assetPath: item.definition == "VEHICLE_MAINTENANCE"
-                            ? AppImages.maintenance
-                            : item.definition == "ENGINE_DIAGNOSTICS"
-                                ? AppImages.vehicule
-                                : item.definition == "VIN_DETECTION"
-                                    ? AppImages.vin
-                                    : AppImages.maintenance,
-                        width: 120,
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     ImageComponent(
+                  //       assetPath: item.definition == "VEHICLE_MAINTENANCE"
+                  //           ? AppImages.maintenance
+                  //           : item.definition == "ENGINE_DIAGNOSTICS"
+                  //               ? AppImages.vehicule
+                  //               : item.definition == "VIN_DETECTION"
+                  //                   ? AppImages.vin
+                  //                   : AppImages.maintenance,
+                  //       width: 120,
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

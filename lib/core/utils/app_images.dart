@@ -46,4 +46,5 @@ class AppImages {
   static const String noActivities = "assets/images/noactivities.png";
   static const String money = "assets/icons/money.png";
   static const String card = "assets/icons/card.png";
+  static const String notification = "assets/icons/notification.svg";
 }

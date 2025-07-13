@@ -52,6 +52,7 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                           onErrorWidget: Container(
                             padding: const EdgeInsets.all(3),
                             decoration: BoxDecoration(
+                                color: AppColors.black,
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(
                                     color: Get.theme.primaryColor, width: 2)),
@@ -92,7 +93,8 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                                               fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                          )),
+                          ),
+                        ),
                   if (canEdit)
                     Positioned(
                       bottom: 0,

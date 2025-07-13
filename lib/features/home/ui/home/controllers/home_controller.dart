@@ -15,7 +15,7 @@ class HomeController extends GetxController {
   final RxInt currentPage = 0.obs;
   List<String> notifications = [
     "Your repair from the Jappcare Autotech shop is ready, and available for pickup.",
-    "Votre commande a été expédiée.",
+    // "Votre commande a été expédiée.",
   ];
   Future<void> refreshData() async {
     print("debut du refresh");

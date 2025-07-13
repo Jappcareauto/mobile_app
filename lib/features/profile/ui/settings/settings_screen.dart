@@ -39,11 +39,11 @@ class SettingsScreen extends GetView<SettingsController> {
                   icon: FluentIcons.alert_24_regular,
                   onTap: controller.goToNotifications,
                 ),
-                SettingItem(
-                  title: "Help & Support",
-                  icon: FluentIcons.person_support_24_regular,
-                  onTap: () {},
-                ),
+                // SettingItem(
+                //   title: "Help & Support",
+                //   icon: FluentIcons.person_support_24_regular,
+                //   onTap: () {},
+                // ),
                 SettingItem(
                   title: "Privacy Policy",
                   icon: FluentIcons.document_24_regular,

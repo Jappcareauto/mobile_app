@@ -25,10 +25,10 @@ class WorkshopScreen extends GetView<WorkshopController>
         appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: "Service Centers",
         canBack: false,
-        actions: [
-          if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
-            Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
-        ],
+        // actions: [
+        //   if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
+        //     Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
+        // ],
       ),
       body: MixinBuilder<WorkshopController>(
         init: WorkshopController(Get.find()),
