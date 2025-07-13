@@ -4,6 +4,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/ui/widgets/phone_form_field.dart';
 import 'package:jappcare/features/profile/ui/profile/widgets/avatar_widget.dart';
+import 'package:jappcare/core/ui/widgets/custom_app_bar_with_back_and_avatar.dart';
 import 'controllers/edit_profile_controller.dart';
 import 'package:get/get.dart';
 
@@ -13,11 +14,12 @@ class EditProfileScreen extends GetView<EditProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Edit Profile",
-        canBack: true,
-        appBarcolor: Get.theme.scaffoldBackgroundColor,
-      ),
+      appBar: CustomAppBarWithBackAndAvatar(title: "Edit Profile"),
+      // CustomAppBar(
+      //   title: "Edit Profile",
+      //   canBack: true,
+      //   appBarcolor: Get.theme.scaffoldBackgroundColor,
+      // ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Form(
@@ -45,7 +47,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
               CustomFormField(
                 controller:
                     controller.editProfileFormHelper.controllers['address'],
-                label: "Address",
+                label: "Home Address",
                 validator:
                     controller.editProfileFormHelper.validators['address'],
                 hintText: "Ex. 123 Main St, Anytown, USA",

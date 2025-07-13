@@ -13,26 +13,52 @@ class ListVehicleShimmer extends StatelessWidget {
     return Shimmer.fromColors(
         baseColor: Colors.grey.withValues(alpha: .5),
         highlightColor: Colors.white,
-        child: Container(
-          height: 190,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView(
-            scrollDirection: isHorizontal ? Axis.horizontal : Axis.vertical,
-            children: <Widget>[
-              CarContainer(
-                carName: 'Avensis Turbo',
-                carDetails: 'DW056663',
-                imagePath: AppImages.car,
-                principalColor: Get.theme.primaryColor,
-              ),
-              CarContainer(
-                carName: 'Avensis Turbo',
-                carDetails: 'DW056663',
-                imagePath: AppImages.car,
-                principalColor: Get.theme.primaryColor,
+        child: isHorizontal
+            ? Container(
+                height: 190,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    CarContainer(
+                      carName: 'Avensis Turbo',
+                      carDetails: 'DW056663',
+                      imagePath: AppImages.car,
+                      principalColor: Get.theme.primaryColor,
+                    ),
+                    CarContainer(
+                      carName: 'Avensis Turbo',
+                      carDetails: 'DW056663',
+                      imagePath: AppImages.car,
+                      principalColor: Get.theme.primaryColor,
+                    )
+                  ],
+                ),
               )
-            ],
-          ),
-        ));
+            : Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  spacing: 10,
+                  children: <Widget>[
+                    CarContainer(
+                      carName: 'Avensis Turbo',
+                      carDetails: 'DW056663',
+                      imagePath: AppImages.car,
+                      principalColor: Get.theme.primaryColor,
+                    ),
+                    CarContainer(
+                      carName: 'Avensis Turbo',
+                      carDetails: 'DW056663',
+                      imagePath: AppImages.car,
+                      principalColor: Get.theme.primaryColor,
+                    ),
+                    CarContainer(
+                      carName: 'Avensis Turbo',
+                      carDetails: 'DW056663',
+                      imagePath: AppImages.car,
+                      principalColor: Get.theme.primaryColor,
+                    )
+                  ],
+                )));
   }
 }
