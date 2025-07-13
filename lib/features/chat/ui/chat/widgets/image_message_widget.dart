@@ -58,43 +58,46 @@ class ImageMessageWidget extends StatelessWidget {
                     ),
 
                   // Image
-                  message.mediaUrl != null
-                      ? ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(12),
-                            topRight: Radius.circular(12),
-                            bottomLeft: Radius.circular(4),
-                            bottomRight: Radius.circular(4),
-                          ),
-                          child: GestureDetector(
-                            onTap: () => _showFullScreenImage(context),
-                            // child: Image.memory(
-                            //   base64Decode(message.mediaUrl!),
-                            //   width: 250,
-                            //   height: 200,
-                            //   fit: BoxFit.cover,
-                            // ),
-                            child: Image.file(
-                              File(message.mediaUrl!),
-                              // base64Decode(message.mediaUrl!),
-                              width: 200,
-                              height: 200,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        )
-                      : Container(
-                          width: 200,
-                          height: 200,
-                          color: Colors.grey,
+                  if (message.mediaUrl != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                          bottomLeft: Radius.circular(4),
+                          bottomRight: Radius.circular(4),
                         ),
+                        child: GestureDetector(
+                          onTap: () => _showFullScreenImage(context),
+                          // child: Image.memory(
+                          //   base64Decode(message.mediaUrl!),
+                          //   width: 250,
+                          //   height: 200,
+                          //   fit: BoxFit.cover,
+                          // ),
+                          child: Image.file(
+                            File(message.mediaUrl ?? ""),
+                            // base64Decode(message.mediaUrl!),
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ),
+                  // : Container(
+                  //     width: 200,
+                  //     height: 200,
+                  //     color: Colors.grey,
+                  //   ),
 
                   // Caption and timestamp
                   if (message.isImageMessage && message.content.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
                       child: Text(
-                        "${message.content} ${isMyMessage ? "mine" : "Other"}",
+                        message.content,
                         style: const TextStyle(fontSize: 14),
                       ),
                     ),
@@ -102,14 +105,19 @@ class ImageMessageWidget extends StatelessWidget {
                   // Timestamp
                   Padding(
                     padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
-                    child: Text(
-                      DateTime.tryParse(message.timestamp)
-                          .toString()
-                          .substring(11, 16),
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          DateTime.tryParse(message.timestamp)
+                              .toString()
+                              .substring(11, 16),
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

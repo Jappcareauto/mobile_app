@@ -29,25 +29,25 @@ class ChatMessageWidget extends StatelessWidget {
               isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 6),
               decoration: BoxDecoration(
-                color: Get.theme.primaryColor.withValues(alpha: .2),
+                // color: Get.theme.primaryColor.withValues(alpha: .2),
                 // : isDarkMode
                 //     ? Get.theme.scaffoldBackgroundColor
                 //         .withValues(alpha: .2)
                 //     : Colors.grey.shade200
-                // color: isSender
-                //     ? Get.theme.primaryColor.withValues(alpha: .2)
-                //     : isDarkMode
-                //         ? Get.theme.scaffoldBackgroundColor
-                //             .withValues(alpha: .2)
-                //         : Colors.grey.shade200,
+                color: isSender
+                    ? Get.theme.primaryColor.withValues(alpha: .2)
+                    : isDarkMode
+                        ? Get.theme.scaffoldBackgroundColor
+                            .withValues(alpha: .2)
+                        : Colors.grey.shade200,
                 borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(16))
+                        top: Radius.circular(12))
                     .copyWith(
-                        bottomLeft: isSender ? const Radius.circular(16) : null,
+                        bottomLeft: isSender ? const Radius.circular(12) : null,
                         bottomRight:
-                            isSender ? null : const Radius.circular(16)),
+                            isSender ? null : const Radius.circular(12)),
               ),
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width * 0.7,
@@ -64,21 +64,26 @@ class ChatMessageWidget extends StatelessWidget {
                           isSender || isDarkMode ? Colors.black : Colors.black,
                     ),
                   ),
+                  if (date != null)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 4, 4, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            date.substring(11, 16),
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),
             // Timestamp
-            if (date != null)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
-                child: Text(
-                  date.substring(11, 16),
-                  style: const TextStyle(
-                    fontSize: 10,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
           ],
         ),
       ),

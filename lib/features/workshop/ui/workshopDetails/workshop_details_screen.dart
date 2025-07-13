@@ -3,6 +3,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
+import 'package:jappcare/features/workshop/ui/book_appointment/controllers/map_controller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
@@ -13,6 +14,7 @@ import 'controllers/workshop_details_controller.dart';
 import 'package:get/get.dart';
 
 class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
+  final MapController garageController = Get.put(MapController(Get.find()));
   final globalcontrollerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   // final WorkshopController workshopController = WorkshopController(Get.find());
 

@@ -188,8 +188,8 @@ class ChatDetailsController extends GetxController {
         loading.value = false;
         messages.value = response.data;
         groupedMessages.value = groupMessages(response.data);
-        scrollToBottom();
         update();
+        scrollToBottom();
       },
     );
   }

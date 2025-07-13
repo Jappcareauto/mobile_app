@@ -8,7 +8,11 @@ class PaymentsController extends GetxController {
   final selectedMethod = ''.obs;
   PaymentsController(this._appNavigation);
 
-  final payments = [AppImages.cardPayment, AppImages.momo];
+  final paymentsMethods = [
+    AppImages.cardPayment,
+    AppImages.momo,
+    // AppImages.orangeLogo
+  ];
 
   @override
   void onInit() {

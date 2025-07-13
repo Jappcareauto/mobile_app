@@ -27,6 +27,7 @@ class AppConstants {
 
   //Illustrations
   static const String mapLocalisation = "assets/icons/maplocalisation.png";
+  static const String localisation = "assets/icons/location.svg";
   static const String noActivities = "assets/images/noactivities.png";
   static const String login = "assets/images/login.png";
   static const String singUp = "assets/images/Singup.png";

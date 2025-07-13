@@ -70,8 +70,8 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                     if (vhcle.imageUrl != null) ...[
                       Container(
                         width: Get.width,
-                        height: 200,
-                        padding: const EdgeInsets.only(right: 10),
+                        height: 230,
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(16)),

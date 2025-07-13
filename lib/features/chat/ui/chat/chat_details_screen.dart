@@ -75,64 +75,64 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                           return Column(
                             spacing: 20,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                spacing: 10,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      spacing: 5,
-                                      children: [
-                                        Text('User'),
-                                        CircleAvatar(
-                                          backgroundImage:
-                                              AssetImage(AppImages.avatar),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  ChatAppointmentSummary(),
-                                ],
-                              ),
-                              Column(
-                                spacing: 10,
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        CircleAvatar(
-                                          backgroundImage:
-                                              AssetImage(AppImages.avatar),
-                                        ),
-                                        const SizedBox(width: 5),
-                                        Text('Japtech AutoShop'),
-                                      ],
-                                    ),
-                                  ),
-                                  InvoiceCard(
-                                    name: "Sara May",
-                                    email: "Body Shop Appointment",
-                                    service: "Inspection Fee",
-                                    invoiceNumber: "JC564739300",
-                                    dateIssued: "Oct 20, 2024",
-                                    amount: "7,000 Frs",
-                                    status: "Pending",
-                                    onViewInvoice: () {
-                                      // Action pour voir la facture
-                                      print("View Invoice clicked");
-                                      onpenModalPaymentMethod(
-                                          controller.goToAddPaymentMethodForm);
-                                    },
-                                  ),
-                                ],
-                              ),
+                              // Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.end,
+                              //   mainAxisAlignment: MainAxisAlignment.start,
+                              //   spacing: 10,
+                              //   children: [
+                              //     Align(
+                              //       alignment: Alignment.topRight,
+                              //       child: Row(
+                              //         mainAxisAlignment: MainAxisAlignment.end,
+                              //         spacing: 5,
+                              //         children: [
+                              //           Text('User'),
+                              //           CircleAvatar(
+                              //             backgroundImage:
+                              //                 AssetImage(AppImages.avatar),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     ChatAppointmentSummary(),
+                              //   ],
+                              // ),
+                              // Column(
+                              //   spacing: 10,
+                              //   children: [
+                              //     Align(
+                              //       alignment: Alignment.topRight,
+                              //       child: Row(
+                              //         children: [
+                              //           SizedBox(
+                              //             width: 5,
+                              //           ),
+                              //           CircleAvatar(
+                              //             backgroundImage:
+                              //                 AssetImage(AppImages.avatar),
+                              //           ),
+                              //           const SizedBox(width: 5),
+                              //           Text('Japtech AutoShop'),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     InvoiceCard(
+                              //       name: "Sara May",
+                              //       email: "Body Shop Appointment",
+                              //       service: "Inspection Fee",
+                              //       invoiceNumber: "JC564739300",
+                              //       dateIssued: "Oct 20, 2024",
+                              //       amount: "7,000 Frs",
+                              //       status: "Pending",
+                              //       onViewInvoice: () {
+                              //         // Action pour voir la facture
+                              //         print("View Invoice clicked");
+                              //         onpenModalPaymentMethod(
+                              //             controller.goToAddPaymentMethodForm);
+                              //       },
+                              //     ),
+                              //   ],
+                              // ),
                               ...controller.groupedMessages.keys.map((key) {
                                 final messages =
                                     controller.groupedMessages[key]!;

@@ -65,7 +65,7 @@ class CarCardAddVehicle extends StatelessWidget {
                   assetPath: imageUrl == null ? imagePath : "",
                   imageUrl: imageUrl,
                   width: 200,
-                  height: 120,
+                  height: 130,
                 ),
               Positioned(
                 top: 8,

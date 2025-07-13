@@ -63,9 +63,18 @@ class MapController extends GetxController {
     }
   }
 
+//   Future<Uint8List> svgToBytes(String assetName) async {
+//   final svgString = await rootBundle.loadString(assetName);
+//   final svgDrawable = await svg.fromSvgString(svgString, assetName);
+//   final picture = svgDrawable.toPicture();
+//   final ui.Image image = await picture.toImage(200, 200); // resize to 200x200
+//   final ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+//   return byteData!.buffer.asUint8List();
+// }
+
   Future<void> loadCustomIcons() async {
     final Uint8List serviceIconBytes =
-        await getBytesFromAsset(AppConstants.mapLocalisation, 150);
+        await getBytesFromAsset(AppConstants.mapLocalisation, 200);
     serviceLocation.value = BitmapDescriptor.bytes(serviceIconBytes);
   }
 
