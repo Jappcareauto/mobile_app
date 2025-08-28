@@ -9,7 +9,7 @@ import 'package:jappcare/core/utils/getx_extensions.dart';
 // import 'package:jappcare/features/garage/application/usecases/get_garage_by_owner_id_usecase.dart';
 // import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_command.dart';
 // import 'package:jappcare/features/garage/application/usecases/get_vehicle_list_usecase.dart';
-import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+// import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/workshop/domain/entities/service_center_service.entity.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
@@ -45,7 +45,7 @@ class BookAppointmentController extends GetxController {
   // Selected service observables
   final RxList<ServiceCenterServiceEntity> serviceCenterServices =
       <ServiceCenterServiceEntity>[].obs;
-  final RxList<Vehicle> vehicles = <Vehicle>[].obs;
+  // final RxList<Vehicle> vehicles = <Vehicle>[].obs;
   final selectedServiceId = ''.obs;
   final selectedServiceName = ''.obs;
   final RxInt selectedServicePrice = 0.obs;
@@ -87,13 +87,13 @@ class BookAppointmentController extends GetxController {
         globalControllerWorkshop.workshopData['serviceCenterServices']
             as List<ServiceCenterServiceEntity>;
 
-    if (globalControllerWorkshop.workshopData['serviceCenterId'] != null) {
-      vehicles.value = garageController.vehicleList
-          .where((e) =>
-              e.serviceCenterId ==
-              globalControllerWorkshop.workshopData['serviceCenterId'])
-          .toList();
-    }
+    // if (globalControllerWorkshop.workshopData['serviceCenterId'] != null) {
+    //   vehicles.value = garageController.vehicleList
+    //       .where((e) =>
+    //           e.serviceCenterId ==
+    //           globalControllerWorkshop.workshopData['serviceCenterId'])
+    //       .toList();
+    // }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (serviceCenterServices.isNotEmpty) {
@@ -154,6 +154,8 @@ class BookAppointmentController extends GetxController {
 
   void gotToConfirmAppointment() {
     _appNavigation.toNamed(WorkshopPrivateRoutes.confirmappointment);
+    // print(vehicles);
+    // print(vehicles[currentPage.value]);
     globalControllerWorkshop.addMultipleData({
       "selectedDate": selectedDate.value,
       "selectedLocation": selectedLocation.value,
@@ -161,7 +163,7 @@ class BookAppointmentController extends GetxController {
       "servicePrice": selectedServicePrice.value,
       "serviceId": selectedServiceId.value,
       "noteController": noteController.text,
-      "vehicle": vehicles[currentPage.value],
+      "vehicle": garageController.vehicleList[currentPage.value],
       "selectedTime": selectedTime.value
     });
     globalControllerWorkshop.setImages(selectedImages);

@@ -1,12 +1,12 @@
 // import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_input_widget.dart';
-import 'package:jappcare/features/chat/ui/chat/widgets/chat_appointment_summary.dart';
+// import 'package:jappcare/features/chat/ui/chat/widgets/chat_appointment_summary.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/image_message_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_app_bar.dart';
-import 'package:jappcare/features/chat/ui/chat/widgets/chat_invoice.dart';
+// import 'package:jappcare/features/chat/ui/chat/widgets/chat_invoice.dart';
 
 // import 'controllers/chat_controller.dart';
 // import 'widgets/chat_app_bar.dart';

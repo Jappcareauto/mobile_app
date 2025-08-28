@@ -25,6 +25,7 @@ class ChatInputWidget extends StatelessWidget {
         children: [
           if (chatController.selectedImages.isNotEmpty)
             Container(
+              height: 100,
               decoration: const BoxDecoration(
                   color: AppColors.black,
                   borderRadius: BorderRadius.only(

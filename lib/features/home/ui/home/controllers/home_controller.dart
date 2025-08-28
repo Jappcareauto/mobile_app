@@ -17,6 +17,12 @@ class HomeController extends GetxController {
     "Your repair from the Jappcare Autotech shop is ready, and available for pickup.",
     // "Votre commande a été expédiée.",
   ];
+
+  List<String> tips = [
+    "Check your vehicle's tire pressure",
+    "Rotate your tires regularly to ensure they wear evenly and last longer.",
+  ];
+
   Future<void> refreshData() async {
     print("debut du refresh");
     // Simule un délai de chargement (par exemple, une requête réseau)

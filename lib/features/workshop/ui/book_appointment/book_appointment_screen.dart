@@ -13,7 +13,7 @@ import 'package:jappcare/features/workshop/ui/book_appointment/widgets/booking_w
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
-import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
+// import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
 
@@ -46,39 +46,25 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 10,
                     children: [
-                      VehicleListWidget(
-                        vehiclesLoading: false.obs,
-                        vehicles: controller.vehicles,
-                        pageController: controller.pageController,
-                        currentPage: controller.currentPage,
-                        onSelected: (selectedCar) {
-                          controller.vehicleId.value = selectedCar.id;
-                          controller.vehicleVin.value = selectedCar.vin;
-                          controller.globalControllerWorkshop
-                              .addVehicle(selectedCar);
-                          print(
-                              "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
-                        },
-                      ),
-                      // if (Get.isRegistered<FeatureWidgetInterface>(
-                      //     tag: 'ListVehicleWidget'))
-                      //   Get.find<FeatureWidgetInterface>(
-                      //           tag: 'ListVehicleWidget')
-                      //       .buildView({
-                      //     "pageController": controller.pageController,
-                      //     "currentPage": controller.currentPage,
-                      //     "haveAddVehicule": false,
-                      //     "title": "Select Vehicle",
-                      //     "viewCarDetailsOnCardPress": false,
-                      //     "onSelected": (selectedCar) {
-                      //       controller.vehicleId.value = selectedCar.id;
-                      //       controller.vehicleVin.value = selectedCar.vin;
-                      //       controller.globalControllerWorkshop
-                      //           .addVehicle(selectedCar);
-                      //       print(
-                      //           "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
-                      //     },
-                      //   }),
+                      if (Get.isRegistered<FeatureWidgetInterface>(
+                          tag: 'ListVehicleWidget'))
+                        Get.find<FeatureWidgetInterface>(
+                                tag: 'ListVehicleWidget')
+                            .buildView({
+                          "pageController": controller.pageController,
+                          "currentPage": controller.currentPage,
+                          "haveAddVehicule": false,
+                          "title": "Select Vehicle",
+                          "viewCarDetailsOnCardPress": false,
+                          "onSelected": (selectedCar) {
+                            controller.vehicleId.value = selectedCar.id;
+                            controller.vehicleVin.value = selectedCar.vin;
+                            controller.globalControllerWorkshop
+                                .addVehicle(selectedCar);
+                            print(
+                                "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
+                          },
+                        }),
 
                       // Padding(
                       //     padding: const EdgeInsets.symmetric(horizontal: 20.0),

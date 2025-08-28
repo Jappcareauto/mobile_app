@@ -76,13 +76,13 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       final response = await networkService.post(
         WorkshopConstants.bookAppointmentPostUri,
         body: {
-          'id': "",
+          // 'id': "",
           "createdBy": createdBy,
           "updatedBy": createdBy,
           "createdAt": date,
           "updatedAt": date,
           'date': date,
-          'location': null,
+          // 'location': null,
           'locationType': locationType,
           'note': note,
           'serviceId': serviceId,

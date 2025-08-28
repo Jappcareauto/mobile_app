@@ -35,6 +35,7 @@ class ConfirmAppointmentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print('data ${globalControllerWorkshop.workshopData['vehicle']}');
     participantId.add(Get.find<ProfileController>().userInfos!.id);
   }
 

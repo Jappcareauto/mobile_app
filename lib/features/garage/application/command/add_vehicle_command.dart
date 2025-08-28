@@ -1,10 +1,10 @@
 class AddVehicleCommand {
-  final String serviceCenterId;
+  final String userId;
   final String vin;
   final String registrationNumber;
 
   const AddVehicleCommand({
-    required this.serviceCenterId,
+    required this.userId,
     required this.vin,
     required this.registrationNumber,
   });

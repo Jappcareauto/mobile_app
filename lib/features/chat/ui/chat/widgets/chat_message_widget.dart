@@ -19,7 +19,6 @@ class ChatMessageWidget extends StatelessWidget {
             ? true
             : false;
     final date = DateTime.tryParse(message.timestamp)?.toString();
-    print("$date ${date?.length}, message: ${message.content}");
     return Align(
       alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
       child: Padding(

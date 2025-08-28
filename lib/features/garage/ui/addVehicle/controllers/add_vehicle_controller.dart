@@ -23,7 +23,9 @@ class AddVehicleController extends GetxController {
   late FormHelper addVehicleFormHelper;
   final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
 
-  RxString serviceCenterId = ''.obs;
+  final user = Get.find<ProfileController>().userInfos!;
+
+  // RxString serviceCenterId = ''.obs;
 
   final AppNavigation _appNavigation;
   AddVehicleController(this._appNavigation);
@@ -43,8 +45,8 @@ class AddVehicleController extends GetxController {
     // Generate by Menosi_cli
     super.onInit();
 
-    serviceCenterId.value =
-        globalControllerWorkshop.workshopData['serviceCenterId'];
+    // serviceCenterId.value =
+    //     globalControllerWorkshop.workshopData['serviceCenterId'] ?? '';
 
     addVehicleFormHelper = FormHelper<GarageException, Vehicle>(
       fields: {
@@ -57,14 +59,13 @@ class AddVehicleController extends GetxController {
       },
       onSubmit: (data) {
         return _addVehicleUseCase.call(AddVehicleCommand(
-            serviceCenterId: serviceCenterId.value,
+            userId: user.id,
             vin: data['vin']!,
             registrationNumber: data['registration']!));
       },
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
-        Get.find<GarageController>()
-            .getVehicleList(Get.find<ProfileController>().userInfos!.id);
+        Get.find<GarageController>().getVehicleList(user.id);
         _appNavigation.goBack();
         update();
       },

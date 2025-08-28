@@ -183,16 +183,16 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                       WorkshopCustomMapView(),
                     ],
                   )),
-              const SizedBox(height: 20),
-              VehicleListWidget(
-                vehiclesLoading: false.obs,
-                vehicles: controller.vehicles,
-                pageController: controller.pageController,
-                currentPage: controller.currentPage,
-                onTapAddVehicle: controller.garageController.goToAddVehicle,
-                onTapViewVehicle:
-                    controller.garageController.goToVehicleDetails,
-              ),
+              // const SizedBox(height: 20),
+              // VehicleListWidget(
+              //   vehiclesLoading: false.obs,
+              //   vehicles: controller.vehicles,
+              //   pageController: controller.pageController,
+              //   currentPage: controller.currentPage,
+              //   onTapAddVehicle: controller.garageController.goToAddVehicle,
+              //   onTapViewVehicle:
+              //       controller.garageController.goToVehicleDetails,
+              // ),
               const SizedBox(height: 20),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),

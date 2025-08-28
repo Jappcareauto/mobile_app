@@ -54,11 +54,14 @@ class ChatDetailsController extends GetxController {
   // Use cases
   GetVehiculByIdUseCase getVehiculByIdUseCase =
       GetVehiculByIdUseCase(Get.find());
+
   SendMessageUseCase sendMessageUseCase = SendMessageUseCase(Get.find());
   GetRealTimeMessageUseCase getRealTimeMessageUseCase =
       GetRealTimeMessageUseCase(Get.find());
+
   final GetAllChatRoomMessagesUseCase _getAllMessagesUseCase =
       GetAllChatRoomMessagesUseCase(Get.find());
+
   final GetAppointmentByChatRoomIdUseCase
       _getAppointmentByAppointmentIdUseCase =
       GetAppointmentByChatRoomIdUseCase(Get.find());
@@ -188,8 +191,9 @@ class ChatDetailsController extends GetxController {
         loading.value = false;
         messages.value = response.data;
         groupedMessages.value = groupMessages(response.data);
-        update();
         scrollToBottom();
+        update();
+        update();
       },
     );
   }
@@ -254,16 +258,18 @@ class ChatDetailsController extends GetxController {
     _stompClient!.subscribe(
       destination: topicDestination,
       callback: (StompFrame frame) {
+        print('New message: ${frame.body}');
         if (frame.body != null) {
           try {
             final messageData = json.decode(frame.body!);
 
             final chatMessage = ChatMessageEntity.fromJson(messageData);
-            if (chatMessage.createdBy != currentUser?.id) {
-              messages.add(chatMessage);
-              update();
-              scrollToBottom();
-            }
+            print("messageData $messageData, chatMessage $chatMessage");
+            // if (chatMessage.createdBy != currentUser?.id) {
+            //   messages.add(chatMessage);
+            //   update();
+            //   scrollToBottom();
+            // }
             print('Received message: ${messageData}');
           } catch (e) {
             print('Error parsing message: $e');
@@ -286,26 +292,30 @@ class ChatDetailsController extends GetxController {
         'content': content,
         'chatRoomId': chatRoomId.value,
         'type': 'TEXT',
+        "fileIds": []
       };
 
       _stompClient!.send(
         destination: ChatConstants.chatMessageDestination,
         body: json.encode(messageData),
       );
-      messages.add(ChatMessageEntity.create(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        senderId: Get.find<ProfileController>().userInfos!.id,
-        content: content,
-        chatRoomId: chatRoomId.value,
-        type: 'TEXT',
-        timestamp: DateTime.now().toIso8601String(),
-        createdBy: Get.find<ProfileController>().userInfos!.id,
-        updatedBy: Get.find<ProfileController>().userInfos!.id,
-        createdAt: DateTime.now().toIso8601String(),
-        updatedAt: DateTime.now().toIso8601String(),
-      ));
-      scrollToBottom();
+
+      final textMessage = ChatMessageEntity.create(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          senderId: Get.find<ProfileController>().userInfos!.id,
+          content: content,
+          chatRoomId: chatRoomId.value,
+          type: 'TEXT',
+          timestamp: DateTime.now().toIso8601String(),
+          createdBy: Get.find<ProfileController>().userInfos!.id,
+          updatedBy: Get.find<ProfileController>().userInfos!.id,
+          createdAt: DateTime.now().toIso8601String(),
+          updatedAt: DateTime.now().toIso8601String());
       messageController.clear();
+      groupedMessages.value = groupMessages([...messages, textMessage]);
+      messages.add(textMessage);
+      scrollToBottom();
+      update();
       update();
       print('Message sent: $content');
     } else {
@@ -535,7 +545,7 @@ class ChatDetailsController extends GetxController {
 
         final messageData = {
           'senderId': Get.find<ProfileController>().userInfos!.id,
-          'content': base64Image, // Base64 encoded image
+          'content': caption, // Base64 encoded image
           'caption': caption, // Text caption
           'chatRoomId': chatRoomId,
           'type': 'IMAGE',
@@ -562,9 +572,15 @@ class ChatDetailsController extends GetxController {
           createdAt: DateTime.now().toIso8601String(),
           updatedAt: DateTime.now().toIso8601String(),
         );
+        // messages.add(message);
+
+        groupedMessages.value = groupMessages([...messages, message]);
         messages.add(message);
-        update();
         scrollToBottom();
+        update();
+        update();
+
+        // scrollToBottom();
 
         print('Image message sent with caption: $caption');
       } catch (e) {
@@ -575,7 +591,7 @@ class ChatDetailsController extends GetxController {
   }
 
   Future<void> pickImage() async {
-    final images = await getImage(many: true);
+    final images = await getImage(many: false);
     if (images != null) {
       selectedImages.addAll(images);
     }

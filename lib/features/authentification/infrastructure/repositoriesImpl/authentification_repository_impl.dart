@@ -1,4 +1,5 @@
 //Don't translate me
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 
@@ -204,7 +205,9 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   @override
   Future<Either<AuthentificationException, Login>> googleSignIn() async {
     final GoogleSignIn googleSignIn = GoogleSignIn(
-      scopes: <String>['email'],
+      clientId:
+          "415070003598-pc9dsnpisbn9uvil4lpuh339bh6ran3p.apps.googleusercontent.com",
+      scopes: <String>['email', 'profile'],
     );
     try {
       final GoogleSignInAccount? account = await googleSignIn.signIn();
@@ -225,15 +228,37 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       // print('BearerId $idToken');
       // String base64IdToken = base64Url.encode(utf8.encode(idToken));
       // print(base64IdToken);
-      List<String> part = idToken.split("."); // or 1 or 2
-      String part0 = part[0];
-      String fixed = padBase64(part0); // add padding if needed
-      String finalToken = [fixed, part[1], part[2]].join(".");
-      debugPrint('final token $finalToken ${finalToken.length}');
-      debugPrint('idToken $idToken ${idToken.length}');
+
+      // List<String> part = idToken.split("."); // or 1 or 2
+      // String part0 = part[0];
+      // String fixed = padBase64(part0); // add padding if needed
+      // String finalToken = [fixed, part[1], part[2]].join(".");
+      // debugPrint('final token $finalToken ${finalToken.length}');
+      // debugPrint('idToken $idToken ${idToken.length}');
 
       // print(idToken.length);
-      return await googleLogin(bearerId: finalToken);
+
+      final parts = idToken.split('.');
+      if (parts.length != 3) throw Exception('Missing Google ID Token 2');
+
+      final String normalized =
+          parts[1].replaceAll('-', '+').replaceAll('_', '/');
+      final String padded = normalized.padRight(
+        normalized.length + (4 - normalized.length % 4) % 4,
+        '=',
+      );
+      final String jsonStr = utf8.decode(base64Url.decode(padded));
+      print(idToken);
+      print(jsonStr);
+      print(padded);
+      // final Map<String, dynamic> userInfo = json.decode(jsonStr);
+
+      // setState(() {
+      //   _userInfo = userInfo;
+      // });
+
+      return await googleLogin(bearerId: padded);
+      // throw Exception('Missing Google ID Token 3');
     } on BaseException catch (e) {
       print(e);
       return Left(AuthentificationException(e.message, e.statusCode));

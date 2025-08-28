@@ -152,7 +152,7 @@ class ListVehicleWidget extends StatelessWidget
                             controller.goToVehicleDetails(vehicle);
                           }
                         },
-                        next: vehiclesToDisplay.length > 1
+                        next: vehiclesToDisplay.isNotEmpty
                             ? () {
                                 if (index == (vehiclesToDisplay.length - 1) &&
                                     (haveAddVehicule == null ||

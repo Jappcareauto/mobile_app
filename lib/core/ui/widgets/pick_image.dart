@@ -79,10 +79,20 @@ class PickImage extends StatelessWidget {
                     : await picker.pickImage(
                         source: ImageSource.gallery,
                       );
+                print(pickedFile);
 
-                if (pickedFile != null && !many) {
+                if (pickedFile != null) {
                   final result = pickedFile as XFile;
-                  return Get.back(result: [File(result.path)]);
+
+                  final sendImage = await Get.to(
+                      () => ImagePreviewScreen(imagePath: result.path));
+
+                  if (sendImage != null) {
+                    Get.back(result: [sendImage]);
+                  } else {
+                    Get.back();
+                  }
+                  return;
                 } else if (pickedFile != null && many) {
                   List<File>? result = [];
                   for (var i in (pickedFile as List<XFile>)) {
