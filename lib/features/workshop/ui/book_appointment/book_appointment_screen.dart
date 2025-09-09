@@ -8,7 +8,7 @@ import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
+// import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/booking_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
@@ -180,7 +180,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                         ),
                       ),
 
-                      const AddImageWidget(),
+                      // const AddImageWidget(),
                       // EstimatedInspectionFee(),
                       Container(
                         margin: const EdgeInsets.symmetric(

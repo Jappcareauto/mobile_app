@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
+import 'package:jappcare/features/chat/navigation/private/chat_private_routes.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 
@@ -27,6 +28,10 @@ class AppointmentDetailsController extends GetxController {
   void onInit() {
     super.onInit();
     appointment = Get.arguments;
+  }
+
+    void goToChatScreen() {
+    _appNavigation.toNamed(ChatPrivateRoutes.chat, arguments: appointment.id);
   }
 
   void goToInvoice() {

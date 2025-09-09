@@ -3,6 +3,7 @@ import '../../domain/entities/get_user_infos.dart';
 class GetUserInfosModel {
   final String name;
   final String email;
+  final String dateOfBirth;
   final String? image;
   final bool verified;
   final String id;
@@ -14,6 +15,7 @@ class GetUserInfosModel {
   GetUserInfosModel._({
     required this.name,
     required this.email,
+    required this.dateOfBirth,
     this.image,
     required this.verified,
     required this.id,
@@ -27,6 +29,7 @@ class GetUserInfosModel {
     return GetUserInfosModel._(
       name: json['name'],
       email: json['email'],
+      dateOfBirth: json['dateOfBirth'],
       image: json['profileImageUrl'],
       // verified: json['verified'],
       verified: true,
@@ -42,6 +45,7 @@ class GetUserInfosModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['email'] = email;
+    data['dateOfBirth'] = dateOfBirth;
     if (image != null) {
       data['profileImageUrl'] = image;
     }
@@ -66,6 +70,7 @@ class GetUserInfosModel {
     return GetUserInfosModel._(
       name: entity.name,
       email: entity.email,
+      dateOfBirth: entity.dateOfBirth,
       image: entity.image,
       verified: entity.verified,
       id: entity.id,
@@ -80,6 +85,7 @@ class GetUserInfosModel {
     return GetUserInfos.create(
       name: name,
       email: email,
+      dateOfBirth: dateOfBirth,
       image: image,
       verified: verified,
       id: id,

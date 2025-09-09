@@ -10,6 +10,8 @@ import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/functions.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/chat/application/command/get_chatroom_by_appointment_id.command.dart';
+import 'package:jappcare/features/chat/application/usecases/get_chatroom_by_appointment_id.usecase.dart';
 import 'package:jappcare/features/chat/domain/entities/send_message.entity.dart';
 import 'package:jappcare/features/chat/application/command/send_message.command.dart';
 import 'package:jappcare/features/chat/application/command/get_all_chatroom_messages.command.dart';
@@ -66,11 +68,15 @@ class ChatDetailsController extends GetxController {
       _getAppointmentByAppointmentIdUseCase =
       GetAppointmentByChatRoomIdUseCase(Get.find());
 
+    final GetChatRoomByAppointmentIdUseCase
+      _getChatRoomByAppointmentIdUseCase =
+      GetChatRoomByAppointmentIdUseCase(Get.find());
+
   // Observable variables
   final Rx<WebSocketStatus> connectionStatus = WebSocketStatus.disconnected.obs;
   final RxBool isReconnecting = false.obs;
   final RxInt reconnectAttempts = 0.obs;
-  final chatRoomId = ''.obs;
+  var chatRoomId = ''.obs;
   final appointmentId = ''.obs;
   final loading = false.obs;
   final appointmentLoading = false.obs;
@@ -130,13 +136,15 @@ class ChatDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    chatRoomId.value = Get.arguments;
-    // appointmentId.value = Get.arguments;
+    // chatRoomId.value = Get.arguments;
+    appointmentId.value = Get.arguments;
     print('chatroom ${chatRoomId.value}');
+    print('appointment ${appointmentId.value}');
 
     _initializeAudio();
     connectToWebSocket();
-    getAppoitmentByChatRoomId();
+    getChatRoomByAppointmentId();
+    getAppointmentByChatRoomId();
     getAllMessages();
   }
 
@@ -621,7 +629,7 @@ class ChatDetailsController extends GetxController {
     });
   }
 
-  Future<void> getAppoitmentByChatRoomId() async {
+  Future<void> getAppointmentByChatRoomId() async {
     appointmentLoading.value = true;
     final result = await _getAppointmentByAppointmentIdUseCase.call(
         chatroomId: chatRoomId.value);
@@ -632,6 +640,22 @@ class ChatDetailsController extends GetxController {
     }, (response) {
       print(response);
       appointment = response;
+      update();
+      appointmentLoading.value = false;
+    });
+  }
+
+    Future<void> getChatRoomByAppointmentId() async {
+    appointmentLoading.value = true;
+    final result = await _getChatRoomByAppointmentIdUseCase.call(
+        GetChatroomByAppointmentIdCommand(appointmentId: appointmentId.value));
+    result.fold((e) {
+      print('erreur $e');
+      Get.showCustomSnackBar(e.message);
+      appointmentLoading.value = false;
+    }, (response) {
+      print(response);
+      chatRoomId.value = response.id;
       update();
       appointmentLoading.value = false;
     });

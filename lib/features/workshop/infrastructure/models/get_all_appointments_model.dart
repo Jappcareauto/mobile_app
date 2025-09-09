@@ -62,6 +62,8 @@ class AppointmentModel {
   final ServiceModel? service;
   final ServiceCenterModel? serviceCenter;
   final VehicleModel? vehicle;
+  final String? diagnosesToMake;
+  final String? diagnosesMade;
   // final ServiceCenterMode? serviceCenter;
 
   AppointmentModel._({
@@ -79,6 +81,8 @@ class AppointmentModel {
     this.service,
     this.serviceCenter,
     this.vehicle,
+    this.diagnosesToMake,
+    this.diagnosesMade,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -111,6 +115,8 @@ class AppointmentModel {
               'serviceCenterId': json['serviceCenter']['id']
             })
           : null,
+      diagnosesToMake: json['diagnosesToMake'],
+      diagnosesMade: json['diagnosesMade'],
     );
   }
 
@@ -130,6 +136,8 @@ class AppointmentModel {
     data['service'] = service?.toJson();
     data['serviceCenter'] = serviceCenter?.toJson();
     data['vehicle'] = vehicle?.toJson();
+    data['diagnosesToMake'] = diagnosesToMake;
+    data['diagnosesMade'] = diagnosesMade;
     return data;
   }
 
@@ -149,6 +157,8 @@ class AppointmentModel {
       service: entity.service?.toModel(),
       serviceCenter: entity.serviceCenter?.toModel(),
       vehicle: entity.vehicle?.toModel(),
+      diagnosesToMake: entity.diagnosesToMake,
+      diagnosesMade: entity.diagnosesMade,
     );
   }
 
@@ -168,6 +178,8 @@ class AppointmentModel {
       service: service?.toEntity(),
       serviceCenter: serviceCenter?.toEntity(),
       vehicle: vehicle?.toEntity(),
+      diagnosesToMake: diagnosesToMake,
+      diagnosesMade: diagnosesMade,
     );
   }
 }

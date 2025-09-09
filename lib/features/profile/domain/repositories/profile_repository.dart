@@ -13,6 +13,7 @@ abstract class ProfileRepository {
   Future<Either<ProfileException, GetUserInfos>> updateUserInfos(
       {required String name,
       required String email,
+      required String dateOfBirth,
       String? address,
       String? phone});
 }

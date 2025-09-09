@@ -14,7 +14,7 @@ class ChatDependencies {
         () => ChatRepositoryImpl(networkService: Get.find()),
         fenix: true);
 
-    Get.lazyPut(() => GetChatRoomByAppoitmentIdUseCase(Get.find()),
+    Get.lazyPut(() => GetChatRoomByAppointmentIdUseCase(Get.find()),
         fenix: true);
     Get.lazyPut(() => GetAllChatRoomsUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetAllChatRoomMessagesUseCase(Get.find()), fenix: true);

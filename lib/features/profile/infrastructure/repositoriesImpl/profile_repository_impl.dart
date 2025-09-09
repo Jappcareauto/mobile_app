@@ -48,11 +48,19 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<ProfileException, GetUserInfos>> updateUserInfos(
       {required String name,
       required String email,
+      required String dateOfBirth,
       String? address,
       String? phone}) async {
     try {
-      final response = await networkService.get(
-        ProfileConstants.getUserInfosGetUri,
+      final response = await networkService.put(
+        ProfileConstants.updateUserDetailsUri,
+        body:  {
+          'name': name,
+          'email': email,
+          'dateOfBirth': dateOfBirth,
+          // if (address != null) 'location': address,
+          // if (phone != null) 'phone': phone,
+        }
       );
       return Right(GetUserInfosModel.fromJson(response).toEntity());
     } on BaseException catch (e) {

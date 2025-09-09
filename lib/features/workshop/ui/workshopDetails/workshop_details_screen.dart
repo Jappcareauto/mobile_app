@@ -66,6 +66,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
+                  spacing: 10,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,7 +120,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                           child: Row(
                             children: [
                               Icon(
-                                Icons.place_outlined,
+                                Icons.place_rounded,
                                 color: Get.theme.primaryColor,
                               ),
                               const SizedBox(width: 5),
@@ -139,13 +140,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                             ],
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              '|',
-                              style: TextStyle(
-                                  fontSize: 20, color: Get.theme.primaryColor),
-                            ),
+                        
                             const Row(
                               children: [
                                 Icon(Icons.star_rounded,
@@ -162,8 +157,6 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                               ],
                             ),
                           ],
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -207,7 +200,13 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                       ),
                       Obx(() {
                         return SizedBox(
-                          child: controller.serviceCenterServices.isNotEmpty
+                          child: controller.serviceCenterServicesLoading.value
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              :
+                          
+                          controller.serviceCenterServices.isNotEmpty
                               ? ServiceWidget(
                                   tabs: controller.serviceCenterServices
                                       .map((e) => e.service)

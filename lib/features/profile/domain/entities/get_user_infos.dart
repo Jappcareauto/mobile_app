@@ -2,6 +2,7 @@ class GetUserInfos {
 
   final String name;
   final String email;
+  final String dateOfBirth;
   final String? image;
   final bool verified;
   final String id;
@@ -13,6 +14,7 @@ class GetUserInfos {
   GetUserInfos._({
     required this.name,
     required this.email,
+    required this.dateOfBirth,
     this.image,
     required this.verified,
     required this.id,
@@ -25,6 +27,7 @@ class GetUserInfos {
   factory GetUserInfos.create({
     required name,
     required email,
+    required dateOfBirth,
     image,
     required verified,
     required id,
@@ -37,6 +40,7 @@ class GetUserInfos {
     return GetUserInfos._(
       name: name,
       email: email,
+      dateOfBirth: dateOfBirth,
       image: image,
       verified: verified,
       id: id,

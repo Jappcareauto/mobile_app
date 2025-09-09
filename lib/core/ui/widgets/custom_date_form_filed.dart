@@ -28,6 +28,15 @@ class _CustomDateFormFieldState extends State<CustomDateFormField> {
   @override
   void initState() {
     super.initState();
+    if (widget.controller != null) {
+      final date = widget.controller!.text;
+      final parts = date.split('-');
+      if (parts.length == 3) {
+        dayController.text = parts[2];
+        monthController.text = parts[1];
+        yearController.text = parts[0];
+      }
+    }
   }
 
   @override

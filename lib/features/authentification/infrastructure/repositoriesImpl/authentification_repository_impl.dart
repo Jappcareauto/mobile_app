@@ -1,7 +1,7 @@
 //Don't translate me
-import 'dart:convert';
+// import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 
 import '../../domain/repositories/authentification_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
@@ -30,6 +30,36 @@ String padBase64(String base64) {
     base64 += "=" * (4 - rem);
   }
   return base64;
+}
+
+final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+
+Future<void> _initializeGoogleSignIn() async {
+  try {
+    await _googleSignIn.initialize(serverClientId: "415070003598-pc9dsnpisbn9uvil4lpuh339bh6ran3p.apps.googleusercontent.com");
+  } catch (e) {
+    print('Failed to initialize Google Sign-In: $e');
+  }
+}
+
+Future<GoogleSignInAccount> signInWithGoogle() async {
+  try {
+    // It now throws a `GoogleSignInException` if the user cancels.
+    return await _googleSignIn.authenticate(
+      scopeHint: ['email', 'profile'],
+    );
+  } on GoogleSignInException catch (e) {
+    // You can now check the error code for specific cases, like cancellation.
+    if (e.code == GoogleSignInExceptionCode.canceled) {
+      // User cancelled
+      rethrow;
+    }
+    print('Google Sign-In error: ${e.code.name}');
+    rethrow;
+  } catch (error) {
+    print('Unexpected Google Sign-In error: $error');
+    rethrow;
+  }
 }
 
 class AuthentificationRepositoryImpl implements AuthentificationRepository {
@@ -183,6 +213,22 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     }
   }
 
+    @override
+  Future<Either<AuthentificationException, Login>> googleLogin2(
+      {required String bearerId, required String email, required String name}) async {
+    try {
+      final response = await networkService
+          .post(AuthentificationConstants.googleLoginPostUri2, headers: {
+        'Authorization': 'BearerId# $bearerId',
+        'Email': email,
+        'Name': name,
+      });
+      return Right(LoginModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message, e.statusCode));
+    }
+  }
+
   @override
   Future<Either<AuthentificationException, Register>> googleRegister(
       {required String bearerId}) async {
@@ -202,20 +248,33 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     }
   }
 
+      @override
+  Future<Either<AuthentificationException, Register>> googleRegister2(
+      {required String bearerId, required String email, required String name}) async {
+    try {
+      final response = await networkService
+          .post(AuthentificationConstants.googleLoginPostUri2, headers: {
+        'Authorization': 'BearerId# $bearerId',
+        'Email': email,
+        'Name': name,
+      });
+      return Right(RegisterModel.fromJson(response).toEntity());
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message, e.statusCode));
+    }
+  }
+
   @override
   Future<Either<AuthentificationException, Login>> googleSignIn() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      clientId:
-          "415070003598-pc9dsnpisbn9uvil4lpuh339bh6ran3p.apps.googleusercontent.com",
-      scopes: <String>['email', 'profile'],
-    );
+    
     try {
-      final GoogleSignInAccount? account = await googleSignIn.signIn();
-      if (account == null) {
-        throw Exception('The account was not found'); // user aborted
-      }
+      await _initializeGoogleSignIn();
+      final GoogleSignInAccount account = await signInWithGoogle();
+      // if (account == null) {
+      //   throw Exception('The account was not found'); // user aborted
+      // }
 
-      final GoogleSignInAuthentication auth = await account.authentication;
+      final GoogleSignInAuthentication auth = account.authentication;
       final String? idToken = auth.idToken;
       // final String? accessToken = auth.accessToken;
 
@@ -223,7 +282,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       // Now send `idToken` to your backend
       // await sendTokenToServer(idToken);
 
-      // print(account);
+      print(account.email);
       // print(accessToken);
       // print('BearerId $idToken');
       // String base64IdToken = base64Url.encode(utf8.encode(idToken));
@@ -238,26 +297,27 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
 
       // print(idToken.length);
 
-      final parts = idToken.split('.');
-      if (parts.length != 3) throw Exception('Missing Google ID Token 2');
+      // final parts = idToken.split('.');
+      // if (parts.length != 3) throw Exception('Missing Google ID Token 2');
 
-      final String normalized =
-          parts[1].replaceAll('-', '+').replaceAll('_', '/');
-      final String padded = normalized.padRight(
-        normalized.length + (4 - normalized.length % 4) % 4,
-        '=',
-      );
-      final String jsonStr = utf8.decode(base64Url.decode(padded));
-      print(idToken);
-      print(jsonStr);
-      print(padded);
+      // final String normalized =
+      //     parts[1].replaceAll('-', '+').replaceAll('_', '/');
+      // final String padded = normalized.padRight(
+      //   normalized.length + (4 - normalized.length % 4) % 4,
+      //   '=',
+      // );
+      // final String jsonStr = utf8.decode(base64Url.decode(padded));
+      // debugPrint(idToken);
+      // print(jsonStr);
+      // print(padded);
       // final Map<String, dynamic> userInfo = json.decode(jsonStr);
 
       // setState(() {
       //   _userInfo = userInfo;
       // });
 
-      return await googleLogin(bearerId: padded);
+      // return await googleLogin(bearerId: padded);
+      return await googleLogin2(bearerId: idToken, email: account.email, name: account.displayName ?? "");
       // throw Exception('Missing Google ID Token 3');
     } on BaseException catch (e) {
       print(e);
@@ -267,27 +327,28 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
 
   @override
   Future<Either<AuthentificationException, Register>> googleSignUp() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      scopes: <String>['email'],
-    );
+    // final GoogleSignIn googleSignIn = GoogleSignIn.instance(
+    //   scopes: <String>['email'],
+    // );
     try {
-      final GoogleSignInAccount? account = await googleSignIn.signIn();
-      if (account == null) {
-        throw Exception('The account was not found'); // user aborted
-      }
 
-      final GoogleSignInAuthentication auth = await account.authentication;
+      await _initializeGoogleSignIn();
+      final GoogleSignInAccount account = await signInWithGoogle();
+      // if (account == null) {
+      //   throw Exception('The account was not found'); // user aborted
+      // }
+
+      final GoogleSignInAuthentication auth = account.authentication;
       final String? idToken = auth.idToken;
-      final String? accessToken = auth.accessToken;
 
       if (idToken == null) throw Exception('Missing Google ID Token');
       // Now send `idToken` to your backend
       // await sendTokenToServer(idToken);
 
       print(account);
-      print(accessToken);
       print(idToken);
-      return await googleRegister(bearerId: idToken);
+      // return await googleRegister(bearerId: idToken);
+      return await googleRegister2(bearerId: idToken, email: account.email, name: account.displayName ?? "");
     } on BaseException catch (e) {
       print(e);
       return Left(AuthentificationException(e.message, e.statusCode));
@@ -320,11 +381,11 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   // }
 
   Future<void> googleLogout() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      scopes: <String>['email'],
-    );
+    // final GoogleSignIn googleSignIn = GoogleSignIn(
+    //   scopes: <String>['email'],
+    // );
 
-    googleSignIn.disconnect();
+    _googleSignIn.disconnect();
   }
 
   //Add methods here

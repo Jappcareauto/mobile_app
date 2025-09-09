@@ -99,6 +99,18 @@ class GarageRepositoryImpl implements GarageRepository {
     }
   }
 
+   @override
+  Future<Either<GarageException, AppointmentEntity>> getAppointmentById(
+      {required String appointmentId}) async {
+    try {
+      final response = await networkService.get(
+          '${GarageConstants.getAppointmentByIdUri}/$appointmentId');
+      return Right(AppointmentModel.fromJson(response['data']).toEntity());
+    } on BaseException catch (e) {
+      return Left(GarageException(e.message, e.statusCode));
+    }
+  }
+
   @override
   Future<Either<GarageException, AppointmentEntity>> getAppointmentByChatroomId(
       {required String chatroomId}) async {

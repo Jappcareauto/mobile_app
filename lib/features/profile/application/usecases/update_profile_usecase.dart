@@ -16,6 +16,7 @@ class UpdateProfileUseCase {
     return await repository.updateUserInfos(
         name: command.name,
         email: command.email,
+        dateOfBirth: command.dateOfBirth,
         address: command.address,
         phone: command.phone);
   }

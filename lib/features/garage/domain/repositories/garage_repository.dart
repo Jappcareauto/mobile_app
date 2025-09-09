@@ -39,4 +39,7 @@ abstract class GarageRepository {
 
   Future<Either<GarageException, AppointmentEntity>> getAppointmentByChatroomId(
       {required String chatroomId});
+
+  Future<Either<GarageException, AppointmentEntity>> getAppointmentById(
+      {required String appointmentId});
 }
