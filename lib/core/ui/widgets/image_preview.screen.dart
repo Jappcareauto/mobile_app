@@ -18,10 +18,10 @@ class ImagePreviewScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
-          'Send Image',
-          style: TextStyle(color: Colors.white),
-        ),
+        // title: const Text(
+        //   'Send Image',
+        //   style: TextStyle(color: Colors.white),
+        // ),
         elevation: 0,
       ),
       body: SafeArea(

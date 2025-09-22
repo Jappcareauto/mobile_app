@@ -2,13 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
+import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/error/ui/commingSoon/comming_soon_screen.dart';
+import 'package:jappcare/features/home/application/usecases/get_tips_list_usecase.dart';
+import 'package:jappcare/features/home/domain/entities/get_tips_list.entity.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../widgets/tip_modal_bottom.dart';
 
 class HomeController extends GetxController {
   final AppNavigation _appNavigation;
   HomeController(this._appNavigation);
+
+  // TIps loader
+  final RxBool tipsLoading = true.obs;
+  final getTipsListUseCase = GetTipsListUseCase(Get.find());
+  RxList<TipEntity> tipsList = <TipEntity>[].obs;
+
   final PageController pageController = PageController(
     viewportFraction: 0.9,
   );
@@ -18,10 +27,10 @@ class HomeController extends GetxController {
     // "Votre commande a été expédiée.",
   ];
 
-  List<String> tips = [
-    "Check your vehicle's tire pressure",
-    "Rotate your tires regularly to ensure they wear evenly and last longer.",
-  ];
+  // List<String> tips = [
+  //   "Check your vehicle's tire pressure",
+  //   "Rotate your tires regularly to ensure they wear evenly and last longer.",
+  // ];
 
   Future<void> refreshData() async {
     print("debut du refresh");
@@ -38,6 +47,8 @@ class HomeController extends GetxController {
       Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
           .refreshData();
     }
+
+    getAllTips();
     print('fin du refresh');
   }
 
@@ -51,6 +62,7 @@ class HomeController extends GetxController {
         currentPage.value = newPage;
       }
     });
+    getAllTips();
   }
 
   void navigateTCommingSoon() {
@@ -66,11 +78,11 @@ class HomeController extends GetxController {
   }
 
   //show modal bottom
-  void openTipModal() {
+  void openTipModal(TipEntity tip) {
     showModalBottomSheet(
         context: Get.context!,
         builder: (BuildContext context) {
-          return const TipModalBottomWidget();
+          return TipModalBottomWidget(tip: tip);
         });
   }
 
@@ -84,6 +96,23 @@ class HomeController extends GetxController {
 
   void goToVehicleFinder() {
     _appNavigation.toNamed(AppRoutes.workshop);
+  }
+
+  Future<void> getAllTips({String? status}) async {
+    tipsLoading.value = true;
+    final result = await getTipsListUseCase.call();
+    result.fold(
+      (e) {
+        tipsLoading.value = false;
+        if (Get.context != null) {
+          Get.showCustomSnackBar(e.message);
+        }
+      },
+      (response) {
+        tipsLoading.value = false;
+        tipsList.value = response;
+      },
+    );
   }
 
   void goToVehicleReport() =>

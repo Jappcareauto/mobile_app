@@ -31,7 +31,7 @@ class AppointmentDetailsController extends GetxController {
   }
 
     void goToChatScreen() {
-    _appNavigation.toNamed(ChatPrivateRoutes.chat, arguments: appointment.id);
+    _appNavigation.toNamed(ChatPrivateRoutes.chat, arguments: appointment);
   }
 
   void goToInvoice() {

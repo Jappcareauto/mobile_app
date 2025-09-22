@@ -98,4 +98,10 @@ class AppointmentEntity {
         diagnosesToMake: diagnosesToMake,
         diagnosesMade: diagnosesMade);
   }
+
+  String get formattedLocationType {
+    return locationType.split('_').map((word) {
+    return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+  }).join(' ');
+  }
 }

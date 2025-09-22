@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_avatar.widget.dart';
-import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
-
-// import '../controllers/chat_controller.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String profileImageUrl;
@@ -39,14 +36,14 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
         spacing: 10,
         children: [
           CustomAvatarWidget(
-            name: "Sinet Akhi",
+            name: username,
             haveName: false,
             // size: 50,
           ),
           // if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
           //   Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
           //       .buildView({"haveName": true}),
-          Text(Get.find<ProfileController>().userInfos?.name ?? "Unknown",
+          Text(username,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
         ],
       ),

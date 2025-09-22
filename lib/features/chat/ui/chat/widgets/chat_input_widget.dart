@@ -65,6 +65,7 @@ class ChatInputWidget extends StatelessWidget {
                   )),
             ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               // Zone de texte avec bordure arrondie
               Expanded(

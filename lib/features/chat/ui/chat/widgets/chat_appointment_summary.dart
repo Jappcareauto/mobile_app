@@ -1,11 +1,10 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
-import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
+import 'package:jappcare/features/profile/ui/profile/widgets/avatar_widget.dart';
 
 class ChatAppointmentSummary extends GetView<ChatDetailsController> {
   const ChatAppointmentSummary({super.key});
@@ -30,7 +29,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
           ),
           padding: const EdgeInsets.all(20),
           child: Column(
-            spacing: 20,
+            spacing: 16,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -71,16 +70,12 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                           fontSize: 12, fontWeight: FontWeight.normal)),
                   Row(
                     children: [
-                      if (Get.isRegistered<FeatureWidgetInterface>(
-                          tag: 'AvatarWidget'))
-                        Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget')
-                            .buildView({"haveName": true}),
+                      AvatarWidget(size: 40, canEdit: false),
                       const SizedBox(
                         width: 10,
                       ),
                       Text(
-                          Get.find<ProfileController>().userInfos?.name ??
-                              "Unknown",
+                          controller.currentUser?.name ?? "Unknown",
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold))
                     ],

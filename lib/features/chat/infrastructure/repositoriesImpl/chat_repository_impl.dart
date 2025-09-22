@@ -185,9 +185,8 @@ class ChatRepositoryImpl implements ChatRepository {
   Future<Either<ChatException, ChatRoomEntity>> getChatRoomByAppointmentId(
       String appointmentId) async {
     try {
-      final response = await networkService.post(
-        ChatConstants.getAllChatRoomUri,
-        body: {},
+      final response = await networkService.get(
+        '${ChatConstants.getChatRoomByAppointmentIdUri}/$appointmentId',
       );
       return Right(ChatRoomModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {

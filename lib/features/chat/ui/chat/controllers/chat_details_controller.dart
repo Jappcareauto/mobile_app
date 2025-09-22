@@ -12,6 +12,7 @@ import 'package:jappcare/core/utils/functions.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/chat/application/command/get_chatroom_by_appointment_id.command.dart';
 import 'package:jappcare/features/chat/application/usecases/get_chatroom_by_appointment_id.usecase.dart';
+import 'package:jappcare/features/chat/domain/entities/get_all_chat_room.entity.dart';
 import 'package:jappcare/features/chat/domain/entities/send_message.entity.dart';
 import 'package:jappcare/features/chat/application/command/send_message.command.dart';
 import 'package:jappcare/features/chat/application/command/get_all_chatroom_messages.command.dart';
@@ -76,8 +77,8 @@ class ChatDetailsController extends GetxController {
   final Rx<WebSocketStatus> connectionStatus = WebSocketStatus.disconnected.obs;
   final RxBool isReconnecting = false.obs;
   final RxInt reconnectAttempts = 0.obs;
-  var chatRoomId = ''.obs;
-  final appointmentId = ''.obs;
+  // var chatRoomId = ''.obs;
+  // final appointmentId = ''.obs;
   final loading = false.obs;
   final appointmentLoading = false.obs;
   final selectedMethod = 'Orange Money'.obs;
@@ -86,6 +87,7 @@ class ChatDetailsController extends GetxController {
   final RxMap<String, List<ChatMessageEntity>> groupedMessages =
       <String, List<ChatMessageEntity>>{}.obs;
   late AppointmentEntity appointment;
+  late ChatRoomEntity chatRoom;
   final currentUser = Get.find<ProfileController>().userInfos;
 
   // Configuration
@@ -137,15 +139,16 @@ class ChatDetailsController extends GetxController {
   void onInit() {
     super.onInit();
     // chatRoomId.value = Get.arguments;
-    appointmentId.value = Get.arguments;
-    print('chatroom ${chatRoomId.value}');
-    print('appointment ${appointmentId.value}');
+    appointment = Get.arguments;
+    // appointmentId.value = appointment.id;
+    // print('chatroom ${chatRoomId.value}');
+    // print('appointment ${appointmentId.value}');
 
-    _initializeAudio();
-    connectToWebSocket();
     getChatRoomByAppointmentId();
-    getAppointmentByChatRoomId();
-    getAllMessages();
+    // connectToWebSocket();
+    // _initializeAudio();
+    // getAppointmentByChatRoomId();
+    
   }
 
   @override
@@ -157,7 +160,7 @@ class ChatDetailsController extends GetxController {
     _typingController.close();
     _presenceController.close();
     // scrollController.dispose();
-    disconnect();
+    // disconnect();
     super.onClose();
   }
 
@@ -184,10 +187,10 @@ class ChatDetailsController extends GetxController {
     return groupedMessages;
   }
 
-  Future<void> getAllMessages() async {
+  Future<void> getAllMessages(String chatRoomId) async {
     loading.value = true;
     final result = await _getAllMessagesUseCase
-        .call(GetAllChatroomMessagesCommand(chatroom: chatRoomId.value));
+        .call(GetAllChatroomMessagesCommand(chatroom: chatRoomId));
     result.fold(
       (e) {
         loading.value = false;
@@ -261,7 +264,9 @@ class ChatDetailsController extends GetxController {
 
   void subscribeToTopic() {
     final topicDestination =
-        '${ChatConstants.chatRoomTopic}/${chatRoomId.value}';
+        '${ChatConstants.chatRoomTopic}/${chatRoom.id}';
+
+        print('Subscribing to topic: $topicDestination');
 
     _stompClient!.subscribe(
       destination: topicDestination,
@@ -291,6 +296,28 @@ class ChatDetailsController extends GetxController {
 
   // Text message methods
 
+  void handSentTextMessage(String content) {
+    messageController.clear();
+    if(content.trim().isNotEmpty) {
+    final textMessage = ChatMessageEntity.create(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          senderId: Get.find<ProfileController>().userInfos!.id,
+          content: content,
+          chatRoomId: chatRoom.id,
+          type: 'TEXT',
+          timestamp: DateTime.now().toIso8601String(),
+          createdBy: Get.find<ProfileController>().userInfos!.id,
+          updatedBy: Get.find<ProfileController>().userInfos!.id,
+          createdAt: DateTime.now().toIso8601String(),
+          updatedAt: DateTime.now().toIso8601String());
+      messageController.clear();
+      groupedMessages.value = groupMessages([...messages, textMessage]);
+      messages.add(textMessage);
+      scrollToBottom();
+      update();
+    }
+  }
+
   void sendMessage(String content) {
     if (_stompClient != null &&
         connectionStatus.value == WebSocketStatus.connected &&
@@ -298,7 +325,7 @@ class ChatDetailsController extends GetxController {
       final messageData = {
         'senderId': Get.find<ProfileController>().userInfos!.id,
         'content': content,
-        'chatRoomId': chatRoomId.value,
+        'chatRoomId': chatRoom.id,
         'type': 'TEXT',
         "fileIds": []
       };
@@ -312,7 +339,7 @@ class ChatDetailsController extends GetxController {
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           senderId: Get.find<ProfileController>().userInfos!.id,
           content: content,
-          chatRoomId: chatRoomId.value,
+          chatRoomId: chatRoom.id,
           type: 'TEXT',
           timestamp: DateTime.now().toIso8601String(),
           createdBy: Get.find<ProfileController>().userInfos!.id,
@@ -486,7 +513,7 @@ class ChatDetailsController extends GetxController {
       final messageData = {
         'senderId': Get.find<ProfileController>().userInfos!.id,
         'content': base64Audio, // Base64 encoded audio
-        'chatRoomId': chatRoomId,
+        'chatRoomId': chatRoom.id,
         'type': 'VOICE',
         'duration': duration,
         'timestamp': DateTime.now().millisecondsSinceEpoch,
@@ -555,7 +582,7 @@ class ChatDetailsController extends GetxController {
           'senderId': Get.find<ProfileController>().userInfos!.id,
           'content': caption, // Base64 encoded image
           'caption': caption, // Text caption
-          'chatRoomId': chatRoomId,
+          'chatRoomId': chatRoom.id,
           'type': 'IMAGE',
           'timestamp': DateTime.now().millisecondsSinceEpoch,
         };
@@ -571,7 +598,7 @@ class ChatDetailsController extends GetxController {
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           senderId: Get.find<ProfileController>().userInfos!.id,
           content: caption,
-          chatRoomId: chatRoomId.value,
+          chatRoomId: chatRoom.id,
           type: 'IMAGE',
           mediaUrl: imagePath,
           timestamp: DateTime.now().toIso8601String(),
@@ -629,10 +656,11 @@ class ChatDetailsController extends GetxController {
     });
   }
 
+
   Future<void> getAppointmentByChatRoomId() async {
     appointmentLoading.value = true;
     final result = await _getAppointmentByAppointmentIdUseCase.call(
-        chatroomId: chatRoomId.value);
+        chatroomId: chatRoom.id);
     result.fold((e) {
       print('erreur $e');
       Get.showCustomSnackBar(e.message);
@@ -648,15 +676,16 @@ class ChatDetailsController extends GetxController {
     Future<void> getChatRoomByAppointmentId() async {
     appointmentLoading.value = true;
     final result = await _getChatRoomByAppointmentIdUseCase.call(
-        GetChatroomByAppointmentIdCommand(appointmentId: appointmentId.value));
+        GetChatroomByAppointmentIdCommand(appointmentId: appointment.id));
     result.fold((e) {
       print('erreur $e');
       Get.showCustomSnackBar(e.message);
       appointmentLoading.value = false;
     }, (response) {
       print(response);
-      chatRoomId.value = response.id;
-      update();
+      chatRoom = response;
+      getAllMessages(chatRoom.id);
+      // update();
       appointmentLoading.value = false;
     });
   }

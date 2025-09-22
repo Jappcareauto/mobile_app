@@ -3,6 +3,8 @@
 import 'dart:io';
 // import 'package:flutter/foundation.dart';
 
+import 'package:flutter/material.dart';
+
 import '../../domain/repositories/authentification_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
 
@@ -30,6 +32,12 @@ String padBase64(String base64) {
     base64 += "=" * (4 - rem);
   }
   return base64;
+}
+
+void printWrapped(String text) {
+  // 800 is a good chunk size that should prevent truncation.
+  final pattern = RegExp('.{1,800}'); 
+  pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
 
 final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
@@ -217,6 +225,10 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   Future<Either<AuthentificationException, Login>> googleLogin2(
       {required String bearerId, required String email, required String name}) async {
     try {
+      // debugPrint(bearerId);
+      print('BearerId#');
+      printWrapped(bearerId);
+      print('End printing');
       final response = await networkService
           .post(AuthentificationConstants.googleLoginPostUri2, headers: {
         'Authorization': 'BearerId# $bearerId',
