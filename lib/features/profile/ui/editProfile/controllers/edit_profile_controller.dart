@@ -24,7 +24,7 @@ class EditProfileController extends GetxController {
   EditProfileController(this._appNavigation);
 
   ProfileController currentUserController = Get.find<ProfileController>();
-  
+
   // Update profile details form helper
   late FormHelper editProfileFormHelper;
 
@@ -37,7 +37,8 @@ class EditProfileController extends GetxController {
   final GetPlaceDetailsUseCase _getPlaceDetailsUseCase = Get.find();
   final GetPlaceAutocompleteUsecase _getPlaceAutocompleteUseCase = Get.find();
 
-  RxString placeInput = "".obs; // Text input observable for location debounce search
+  RxString placeInput =
+      "".obs; // Text input observable for location debounce search
   final locationLoading = true.obs; // Loading observable
 
   RxList<PlacePrediction> placePredictions = <PlacePrediction>[].obs;
@@ -60,10 +61,9 @@ class EditProfileController extends GetxController {
         "email": Validators.email,
         // "address": Validators.requiredField,
         // "phoneNumber": Validators.requiredField,
-        "dateOfBirth": Validators.requiredField,
+        "dateOfBirth": Validators.validateDateOfBirth,
       },
       onSubmit: (data) {
-        print(placeDetails.value);
         return _editProfileUseCase.call(UpdateProfileCommand(
           name: data['name']!,
           email: data['email']!,
@@ -81,7 +81,6 @@ class EditProfileController extends GetxController {
       },
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
-        print(response);
         if (response.state == true) {
           Get.showCustomSnackBar("Profile updated successfully",
               isError: false);
@@ -118,6 +117,7 @@ class EditProfileController extends GetxController {
       }
     });
   }
+
 
   void goBack() {
     _appNavigation.goBack();

@@ -55,6 +55,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                               label: "Email",
                               hintText: "Ex. jOq5i@example.com",
                               keyboardType: TextInputType.emailAddress,
+                              isEnabled: false,
                               validator: controller
                                   .editProfileFormHelper.validators['email'],
                             ),

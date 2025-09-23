@@ -59,6 +59,7 @@ class _CustomDateFormFieldState extends State<CustomDateFormField> {
           ),
         if (widget.label != null) const SizedBox(height: 8),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: CustomFormField(
