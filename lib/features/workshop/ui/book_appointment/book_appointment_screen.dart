@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
@@ -147,23 +148,51 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       Obx(() {
                         return Column(
                           children: [
-                            if (controller.selectedLocation.value == "CUSTOM" ||
-                                controller.selectedLocation.value ==
-                                    "HOME") ...[
+                            if (controller.selectedLocation.value ==
+                                "HOME") ...[
                               const SizedBox(
                                 height: 20,
                               ),
-                              CustomMapWidget(
-                                latitude:
-                                    controller.placeDetails.value?.lat ?? 0,
-                                longitude:
-                                    controller.placeDetails.value?.lng ?? 0,
-                                placeName: controller.placeDetails.value?.name,
+                              // CustomMapWidget(
+                              //   latitude:
+                              //       controller.placeDetails.value?.lat ?? 0,
+                              //   longitude:
+                              //       controller.placeDetails.value?.lng ?? 0,
+                              //   placeName: controller.placeDetails.value?.name,
+                              // ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                height: 300,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18),
+                                  border: Border.all(
+                                      color: Get.theme.primaryColor, width: 1),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(18),
+                                  child: GoogleMap(
+                                    mapType: MapType.normal,
+                                    initialCameraPosition: controller.kYaounde,
+                                    markers: controller.markers,
+                                    onMapCreated: (GoogleMapController c) {
+                                      if (!controller
+                                          .mapController.isCompleted) {
+                                        controller.mapController.complete(c);
+                                      }
+                                    },
+                                    myLocationEnabled:
+                                        true, // Shows the blue dot for current location
+                                    myLocationButtonEnabled:
+                                        false, // We use a custom button
+                                  ),
+                                ),
                               ),
+
                               const SizedBox(
                                 height: 10,
                               ),
-                              const FormLocationWidget(),
+                              // const FormLocationWidget(),
                             ],
                           ],
                         );

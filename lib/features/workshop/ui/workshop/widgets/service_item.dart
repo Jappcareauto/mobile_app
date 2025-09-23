@@ -51,13 +51,22 @@ class ServiceItemWidget extends StatelessWidget {
                 ],
               ),
               Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(FluentIcons.location_24_regular,
-                      color: Get.theme.primaryColor, size: 18),
                   Expanded(
-                    child: Text(location,
-                        style: Get.textTheme.bodyMedium
-                            ?.copyWith(color: Get.theme.primaryColor)),
+                    child: Row(
+                      spacing: 4,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(FluentIcons.location_24_regular,
+                            color: Get.theme.primaryColor, size: 18),
+                        Flexible(
+                          child: Text(location,
+                              style: Get.textTheme.bodyMedium
+                                  ?.copyWith(color: Get.theme.primaryColor)),
+                        ),
+                      ],
+                    ),
                   ),
                   Text(
                     "View Details",

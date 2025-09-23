@@ -10,7 +10,7 @@ class GetPlaceDetailsUseCase {
 
   GetPlaceDetailsUseCase(this.repository);
 
-  Future<Either<WorkshopException, PlaceDetails>> call(String placeId) async {
-    return await repository.fetchPlaceDetails(placeId);
+  Future<Either<WorkshopException, PlaceDetails>> call(String placeId, String sessionToken) async {
+    return await repository.fetchPlaceDetails(placeId, sessionToken);
   }
 }

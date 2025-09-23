@@ -96,8 +96,7 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                               assetPath: AppImages.google, width: 25),
                           isLoading: Get.find<AuthentificationController>()
                               .loadingGoogle,
-                          onPressed: Get.find<AuthentificationController>()
-                              .googleLogin,
+                          onPressed: null,
                         ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,

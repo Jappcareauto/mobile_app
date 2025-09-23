@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_card_widget.dart';
+import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
 // import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/summary.dart';
@@ -55,9 +57,23 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmAppointmentController> {
                     isLoading: controller.loading,
                     text: 'Book Appointment',
                     onPressed: () {
+                      var place = controller.globalControllerWorkshop
+                          .workshopData['location'] as PlaceDetails?;
+                      
+                      LocationEntity? location;
+
+                      if (place != null) {
+                        location = LocationEntity.create(
+                          latitude: place.lat,
+                          longitude: place.lng,
+                          name: place.name,
+                        );
+                      }
+
                       controller.booknewAppointment(
                         date: controller.globalControllerWorkshop
                             .workshopData['selectedDate'],
+                            location: location,
                         locationType: controller.globalControllerWorkshop
                             .workshopData['selectedLocation'],
                         note: controller.globalControllerWorkshop

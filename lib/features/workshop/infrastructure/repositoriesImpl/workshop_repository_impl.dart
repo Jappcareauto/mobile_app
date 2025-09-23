@@ -1,8 +1,11 @@
 //Don't translate me
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/features/garage/domain/core/utils/garage_constants.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
+import 'package:jappcare/features/workshop/domain/entities/geocode_position.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_service_center_services.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/place_prediction_model.dart';
@@ -29,6 +32,11 @@ import '../models/book_appointment_model.dart';
 import '../../domain/entities/get_all_services.entity.dart';
 import '../models/get_all_services_model.dart';
 import '../models/get_all_service_center_services_model.dart';
+void printWrapped(String text) {
+  // 800 is a good chunk size that should prevent truncation.
+  final pattern = RegExp('.{1,800}'); 
+  pattern.allMatches(text).forEach((match) => print(match.group(0)));
+}
 
 class WorkshopRepositoryImpl implements WorkshopRepository {
   final NetworkService networkService;
@@ -65,6 +73,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   Future<Either<WorkshopException, BookAppointment>> bookAppointment({
     required String date,
     required String locationType,
+    LocationEntity? location,
     String? note,
     required String serviceId,
     required String vehicleId,
@@ -83,6 +92,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           "updatedAt": date,
           'date': date,
           // 'location': null,
+          if (location != null && locationType == "HOME") 'location': location.toJson(),
           'locationType': locationType,
           'note': note,
           'serviceId': serviceId,
@@ -167,7 +177,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   // 1. Autocomplete → gets a list of { description, place_id }
   @override
   Future<Either<WorkshopException, List<PlacePrediction>>> fetchAutocomplete(
-      String input) async {
+      String input, String sessionToken) async {
     final Dio dio = Dio();
 
     try {
@@ -176,6 +186,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           .post(WorkshopConstants.googleAutocompleteUri, queryParameters: {
         'input': input,
         'key': k,
+        'sessiontoken': sessionToken,
         'components': 'country:cm',
       });
       // print(response);
@@ -189,7 +200,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
 
   @override
   Future<Either<WorkshopException, PlaceDetails>> fetchPlaceDetails(
-      String placeId) async {
+      String placeId, String sessionToken) async {
     final Dio dio = Dio();
 
     try {
@@ -198,6 +209,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           .post(WorkshopConstants.googlePlaceDetailsUri, queryParameters: {
         'place_id': placeId,
         'key': k,
+        'sessiontoken': sessionToken,
         'fields': 'formatted_address,geometry',
       });
       return Right(
@@ -207,5 +219,48 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     }
   }
 
-  //Add methods here
+  @override
+  Future<Either<WorkshopException, GeocodePosition>> getAddressFromLatLng(
+      double latitude, double longitude) async {
+    final Dio dio = Dio();
+
+    try {
+      final k = GarageConstants.apiKey;
+      final response =
+          await dio.get(WorkshopConstants.googleGeocodeUri, queryParameters: {
+        'latlng': '$latitude,$longitude',
+        'key': k,
+      });
+
+      printWrapped('Geocode response: ${response.data['results'][0]}');
+
+      var data = response.data['results'];
+      if (data == null || data.isEmpty) {
+        return Left(WorkshopException('No address found', 404));
+      }
+
+      return Right(
+          GeocodePosition.fromJson(response.data['results'][0]));
+    } on BaseException catch (e) {
+      print(e);
+      return Left(WorkshopException(e.message, e.statusCode));
+    }
+  }
+
+  // final apiKey = 'YOUR_API_KEY';
+  // final url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$apiKey';
+
+  // final response = await http.get(Uri.parse(url));
+
+  // if (response.statusCode == 200) {
+  //   final data = json.decode(response.body);
+  //   if (data['status'] == 'OK') {
+  //     final results = data['results'];
+  //     if (results.isNotEmpty) {
+  //       // Get the formatted address from the first result
+  //       return results[0]['formatted_address'];
+  //     }
+  //   }
+  // }
+  // return 'Address not found';
 }

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/chat/navigation/chat_public_routes.dart';
 import 'package:jappcare/features/home/navigation/home_public_routes.dart';
@@ -103,6 +104,7 @@ class ConfirmAppointmentController extends GetxController {
   Future<Either<WorkshopException, BookAppointment>> booknewAppointment(
       {required DateTime date,
       required String locationType,
+      required LocationEntity? location,
       required String note,
       required String serviceId,
       required String vehicleId,
@@ -112,6 +114,7 @@ class ConfirmAppointmentController extends GetxController {
     final result = await bookAppointmentUseCase.call(BookAppointmentCommand(
       date: date.toUtc().toIso8601String(),
       locationType: locationType,
+      location: location,
       note: note,
       serviceId: serviceId,
       vehicleId: vehicleId,

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
+import 'package:jappcare/features/workshop/application/usecases/get_place_latlng_usecase.dart';
 import 'package:jappcare/features/workshop/domain/repositories/workshop_repository.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/PayWithCard/controllers/pay_with_card_controller.dart';
@@ -60,6 +61,7 @@ class WorkshopDependencies {
     Get.lazyPut(() => GetAllservicesUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetPlaceAutocompleteUsecase(Get.find()), fenix: true);
     Get.lazyPut(() => GetPlaceDetailsUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => GetPlaceLatLngUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetServiceCenterServicesUsecase(Get.find()), fenix: true);
     Get.lazyPut(() => GetAllAvailableServiceCenterServicesUsecase(Get.find()),
         fenix: true);

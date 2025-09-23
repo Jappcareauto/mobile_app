@@ -26,14 +26,6 @@ import '../models/reset_password_model.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 
-String padBase64(String base64) {
-  int rem = base64.length % 4;
-  if (rem > 0) {
-    base64 += "=" * (4 - rem);
-  }
-  return base64;
-}
-
 void printWrapped(String text) {
   // 800 is a good chunk size that should prevent truncation.
   final pattern = RegExp('.{1,800}'); 
@@ -235,7 +227,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
         'Email': email,
         'Name': name,
       });
-      return Right(LoginModel.fromJson(response).toEntity());
+      return Right(LoginModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message, e.statusCode));
     }

@@ -81,7 +81,6 @@ class MapController extends GetxController {
   void clearMarkers() {
     markers.clear();
     update();
-    update();
   }
 
   void addMarker(double latitude, double longitude, String? placeName) async {

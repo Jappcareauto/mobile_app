@@ -16,6 +16,7 @@ class TipModalBottomWidget extends StatelessWidget {
       // height: 390,
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       child: Column(
+        spacing: 20,
         children: [
           Container(
             width: 28,
@@ -23,22 +24,16 @@ class TipModalBottomWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 color: AppColors.black, borderRadius: BorderRadius.circular(6)),
           ),
-          const SizedBox(
-            height: 20,
-          ),
           Text("Tip",
               style: Get.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.bold)),
-          const SizedBox(height: 20),
           Text(
               tip.title,
               style: Get.textTheme.bodyMedium?.copyWith(
                   color: Get.theme.primaryColor, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 20),
           Text(
               tip.description,
               style: Get.textTheme.bodyMedium),
-          const SizedBox(height: 20),
           CustomButton(
             text: "Done",
             onPressed: Get.back,

@@ -11,7 +11,7 @@ class GetPlaceAutocompleteUsecase {
   GetPlaceAutocompleteUsecase(this.repository);
 
   Future<Either<WorkshopException, List<PlacePrediction>>> call(
-      String input) async {
-    return await repository.fetchAutocomplete(input);
+      String input, String sessiontoken) async {
+    return await repository.fetchAutocomplete(input, sessiontoken);
   }
 }

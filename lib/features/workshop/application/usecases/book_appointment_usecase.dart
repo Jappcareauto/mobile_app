@@ -15,6 +15,7 @@ class BookAppointmentUseCase {
     return await repository.bookAppointment(
         date: command.date,
         locationType: command.locationType,
+        location: command.location,
         note: command.note,
         serviceId: command.serviceId,
         vehicleId: command.vehicleId,

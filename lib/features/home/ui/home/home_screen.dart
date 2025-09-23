@@ -80,9 +80,6 @@ class HomeScreen extends GetView<HomeController> {
                       Obx(() {
                         if (controller.tipsLoading.value) {
                           return Shimmer.fromColors(
-                            // baseColor: Colors.grey[300]!,
-                            // highlightColor: Colors.grey[100]!,
-
                             baseColor: Colors.grey.withValues(alpha: .3),
                             highlightColor: Colors.grey.withValues(alpha: .1),
                             child: Container(
@@ -141,7 +138,7 @@ class HomeScreen extends GetView<HomeController> {
                     'title': 'Upcoming Activities',
                     'status': 'NOT_STARTED',
                     'isHorizontal': true,
-                    'limit': 1,
+                    'limit': 2,
                     'noActivitiesPlaceholder':
                         'You have no upcoming activities at the moment'
                   }),

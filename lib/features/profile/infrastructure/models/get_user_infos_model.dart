@@ -1,9 +1,11 @@
+import 'package:jappcare/core/ui/domain/models/location.model.dart';
+
 import '../../domain/entities/get_user_infos.dart';
 
 class GetUserInfosModel {
   final String name;
   final String email;
-  final String dateOfBirth;
+  final String? dateOfBirth;
   final String? image;
   final bool verified;
   final String id;
@@ -11,6 +13,7 @@ class GetUserInfosModel {
   final String? updatedBy;
   final String? createdAt;
   final String? updatedAt;
+  final LocationModel? location;
 
   GetUserInfosModel._({
     required this.name,
@@ -23,6 +26,7 @@ class GetUserInfosModel {
     this.updatedBy,
     this.createdAt,
     this.updatedAt,
+    this.location,
   });
 
   factory GetUserInfosModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +42,9 @@ class GetUserInfosModel {
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
+      location: json['location'] != null
+          ? LocationModel.fromJson(json['location'])
+          : null,
     );
   }
 
@@ -45,7 +52,7 @@ class GetUserInfosModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['email'] = email;
-    data['dateOfBirth'] = dateOfBirth;
+    if (dateOfBirth != null) data['dateOfBirth'] = dateOfBirth;
     if (image != null) {
       data['profileImageUrl'] = image;
     }
@@ -63,6 +70,9 @@ class GetUserInfosModel {
     if (updatedAt != null) {
       data['updatedAt'] = updatedAt;
     }
+    if (location != null) {
+      data['location'] = location!.toJson();
+    }
     return data;
   }
 
@@ -78,6 +88,7 @@ class GetUserInfosModel {
       updatedBy: entity.updatedBy,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
+      location: entity.location?.toModel(),
     );
   }
 
@@ -93,6 +104,7 @@ class GetUserInfosModel {
       updatedBy: updatedBy,
       createdAt: createdAt,
       updatedAt: updatedAt,
+      location: location?.toEntity(),
     );
   }
 }

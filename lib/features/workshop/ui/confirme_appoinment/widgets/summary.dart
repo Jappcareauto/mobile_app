@@ -17,6 +17,7 @@ class Summary extends GetView<ConfirmAppointmentController> {
   Summary({super.key});
   @override
   Widget build(BuildContext context) {
+    print('argument ${argument['location']}, selectedLocation ${argument['selectedLocation']}');
     return Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.withValues(alpha: .2)),
@@ -152,6 +153,21 @@ class Summary extends GetView<ConfirmAppointmentController> {
                         )
                       ]),
                 ]),
+            if (argument['location'] != null &&
+                argument['selectedLocation'] == "HOME")
+              Column(
+                spacing: 5,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Location',
+                      style: TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.normal)),
+                  Text(argument['location'].name ?? "Unknown",
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.normal)),
+                ],
+              ),
             if (argument['noteController'].isNotEmpty)
               Column(
                 spacing: 5,

@@ -8,6 +8,7 @@ class CustomFormField extends StatefulWidget {
   final TextEditingController? controller;
   final Color? hintStyleColor;
   final String? label;
+  final FocusNode? focusNode;
   final String? hintText;
   final String? helperText;
   final bool isPassword;
@@ -42,6 +43,7 @@ class CustomFormField extends StatefulWidget {
     this.isEnabled = true,
     this.keyboardType = TextInputType.text,
     this.validator,
+    this.focusNode,
     this.prefix,
     this.suffix,
     this.onSuffixIconTap,
@@ -65,10 +67,11 @@ class CustomFormField extends StatefulWidget {
 
 class _CustomFormFieldState extends State<CustomFormField> {
   bool _obscureText = false;
-  final FocusNode _focusNode = FocusNode();
+  late FocusNode _focusNode;
   @override
   void initState() {
     super.initState();
+    _focusNode = widget.focusNode ?? FocusNode();
     _obscureText = widget.isPassword;
 
     // Listen for focus changes

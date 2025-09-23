@@ -1,6 +1,10 @@
 //Don't translate me
 import 'dart:io';
 
+import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
+import 'package:jappcare/features/profile/domain/entities/update_user_details.dart';
+import 'package:jappcare/features/profile/infrastructure/models/update_user_details_model.dart';
+
 import '../../domain/repositories/profile_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
 
@@ -45,24 +49,32 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<ProfileException, GetUserInfos>> updateUserInfos(
+  Future<Either<ProfileException, UpdateUserDetails>> updateUserInfos(
       {required String name,
       required String email,
       required String dateOfBirth,
+      LocationEntity? location,
       String? address,
       String? phone}) async {
+        print(location);
     try {
       final response = await networkService.put(
         ProfileConstants.updateUserDetailsUri,
         body:  {
           'name': name,
-          'email': email,
+          // 'email': email,
           'dateOfBirth': dateOfBirth,
+          if (location != null) 'location': {
+            'latitude': location.latitude,
+            'longitude': location.longitude,
+            'name': location.name,
+            'description': location.description,
+          },
           // if (address != null) 'location': address,
           // if (phone != null) 'phone': phone,
         }
       );
-      return Right(GetUserInfosModel.fromJson(response).toEntity());
+      return Right(UpdateUserDetailsModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(ProfileException(e.message, e.statusCode));
     }

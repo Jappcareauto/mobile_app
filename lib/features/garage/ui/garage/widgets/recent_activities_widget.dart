@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
@@ -41,25 +42,24 @@ class RecentActivitiesWidget extends StatelessWidget
       init: GarageController(Get.find(), Get.find()),
       autoRemove: false,
       builder: (controller) {
+        var filteredAppointments = controller.appointments.toList();
         var filteredActivities = <CarCardWidget>[];
 
         if (controller.appointments.isNotEmpty) {
-          var limitedActivities = limit != null
-              ? limit! > controller.appointments.length
-                  ? controller.appointments
-                  : controller.appointments.sublist(0, limit!)
-              : controller.appointments;
+          // Applying the filters
+          filteredAppointments = filteredAppointments
+              .where(
+                  (e) => vehicleId != null ? e.vehicle?.id == vehicleId : true)
+              .where((e) => status != null ? e.status == status : true)
+              .toList();
 
-          var filteredByVehicle = vehicleId != null
-              ? limitedActivities.where((e) => e.vehicle?.id == vehicleId)
-              : limitedActivities;
-
-          filteredActivities = filteredByVehicle.map((e) {
+          filteredActivities = filteredAppointments.map((e) {
             return CarCardWidget(
               latitude: e.location?.latitude ?? 0,
               longitude: e.location?.longitude ?? 0,
               date:
-                  "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
+                  // "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
+                  DateFormat('MMM, d, yyyy').format(DateTime.parse(e.date)),
               time:
                   "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
               localisation: e.locationType == "SERVICE_CENTER"
@@ -75,10 +75,20 @@ class RecentActivitiesWidget extends StatelessWidget
             );
           }).toList();
 
-          if (status != null) {
-            filteredActivities =
-                filteredActivities.where((w) => w.status == status).toList();
-          }
+          // Apply limit if provided
+          filteredActivities = limit != null
+              ? limit! > filteredActivities.length
+                  ? filteredActivities
+                  : filteredActivities.sublist(0, limit!)
+              : filteredActivities;
+
+          filteredActivities = filteredActivities.sublist(
+              0,
+              limit != null
+                  ? limit! > filteredActivities.length
+                      ? filteredActivities.length
+                      : limit!
+                  : filteredActivities.length);
         }
 
         return Column(

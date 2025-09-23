@@ -19,4 +19,6 @@ class WorkshopConstants {
       'https://maps.googleapis.com/maps/api/place/autocomplete/json';
   static const String googlePlaceDetailsUri =
       'https://maps.googleapis.com/maps/api/place/details/json';
+  static const String googleGeocodeUri =
+      'https://maps.googleapis.com/maps/api/geocode/json';
 }

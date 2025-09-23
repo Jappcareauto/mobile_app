@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+import 'package:jappcare/features/workshop/domain/entities/geocode_position.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_service_center_services.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
 import 'package:jappcare/features/workshop/domain/entities/place_prediction.dart';
@@ -30,6 +32,7 @@ abstract class WorkshopRepository {
   Future<Either<WorkshopException, BookAppointment>> bookAppointment({
     required String date,
     required String locationType,
+    LocationEntity? location,
     String note,
     required String serviceId,
     required String vehicleId,
@@ -52,7 +55,10 @@ abstract class WorkshopRepository {
   Future<Either<WorkshopException, Vehicle>> getVehiculById(String id);
 
   Future<Either<WorkshopException, List<PlacePrediction>>> fetchAutocomplete(
-      String input);
+      String input, String sessionToken);
   Future<Either<WorkshopException, PlaceDetails>> fetchPlaceDetails(
-      String placeId);
+      String placeId, String sessionToken);
+
+    Future<Either<WorkshopException, GeocodePosition>> getAddressFromLatLng(
+      double lat, double lng);
 }
