@@ -54,27 +54,32 @@ class ProfileRepositoryImpl implements ProfileRepository {
       required String email,
       required String dateOfBirth,
       LocationEntity? location,
-      String? address,
-      String? phone}) async {
-        print(location);
+      String? phone,
+      String? phoneCode}) async {
+    print("Phone: $phone, phoneCode: $phoneCode");
     try {
-      final response = await networkService.put(
-        ProfileConstants.updateUserDetailsUri,
-        body:  {
-          'name': name,
-          // 'email': email,
-          'dateOfBirth': dateOfBirth,
-          if (location != null) 'location': {
+      final response = await networkService
+          .put(ProfileConstants.updateUserDetailsUri, body: {
+        'name': name,
+        // 'email': email,
+        'dateOfBirth': dateOfBirth,
+        if (location != null)
+          'location': {
             'latitude': location.latitude,
             'longitude': location.longitude,
             'name': location.name,
-            'description': location.description,
+            if (location.description != null &&
+                location.description!.isNotEmpty)
+              'description': location.description,
           },
-          // if (address != null) 'location': address,
-          // if (phone != null) 'phone': phone,
-        }
-      );
-      return Right(UpdateUserDetailsModel.fromJson(response["data"]).toEntity());
+        if (phone != null &&
+            phoneCode != null &&
+            phoneCode.isNotEmpty &&
+            phone.isNotEmpty)
+          'phone': {'code': phoneCode, 'number': phone},
+      });
+      return Right(
+          UpdateUserDetailsModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(ProfileException(e.message, e.statusCode));
     }

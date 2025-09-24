@@ -31,6 +31,9 @@ class CustomFormField extends StatefulWidget {
   final bool forceUpperCase;
   final int? maxLine;
   final Color? filColor;
+  final bool? readOnly;
+  final void Function()? onTap;
+
   const CustomFormField({
     super.key,
     this.controller,
@@ -59,6 +62,8 @@ class CustomFormField extends StatefulWidget {
     this.maxLength,
     this.forceUpperCase = false,
     this.hintStyleColor,
+    this.readOnly = false,
+    this.onTap,
   });
 
   @override
@@ -111,8 +116,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
           keyboardType: widget.keyboardType,
           validator: widget.validator,
           enabled: widget.isEnabled,
+          readOnly: widget.readOnly ?? false,
           style: Theme.of(context).textTheme.bodyMedium,
           onChanged: widget.onChanged,
+          onTap: widget.onTap,
           maxLength: widget.maxLength,
           inputFormatters: widget.forceUpperCase
               ? [

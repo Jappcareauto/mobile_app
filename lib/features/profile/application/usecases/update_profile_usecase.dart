@@ -17,8 +17,9 @@ class UpdateProfileUseCase {
         name: command.name,
         email: command.email,
         dateOfBirth: command.dateOfBirth,
-        address: command.address,
         location: command.location,
-        phone: command.phone);
+        phone: command.phone,
+        phoneCode: command.phoneCode,
+        );
   }
 }

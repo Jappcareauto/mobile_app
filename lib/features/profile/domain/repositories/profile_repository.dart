@@ -17,6 +17,7 @@ abstract class ProfileRepository {
       required String email,
       required String dateOfBirth,
       LocationEntity? location,
-      String? address,
-      String? phone});
+      String? phone,
+      String? phoneCode
+      });
 }

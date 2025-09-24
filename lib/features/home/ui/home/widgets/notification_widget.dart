@@ -29,65 +29,137 @@ class NotificationWidget extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Column(
-        children: [
-          InkWell(
-            onTap: onTap,
-            child: ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              title: haveTitle == true
-                  ? Row(
-                      spacing: 10,
-                      children: [
-                        circleIcon == true
-                            ? Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                    color: coloriage, shape: BoxShape.circle),
-                                child:
-                                    Icon(icon, size: 16, color: Colors.white),
-                              )
-                            : Icon(icon, size: 20, color: coloriage),
-                        Text(
-                          title,
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: coloriage),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius:
+              BorderRadius.circular(20), // Match container's border radius
+          splashColor:
+              coloriage.withValues(alpha: 0.2), // Customize splash color
+          highlightColor:
+              coloriage.withValues(alpha: 0.1), // Customize highlight color
+          child: ListTile(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            title: haveTitle == true
+                ? Row(
+                    spacing: 10,
+                    children: [
+                      circleIcon == true
+                          ? Container(
+                              padding: const EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                  color: coloriage, shape: BoxShape.circle),
+                              child:
+                                  Icon(icon, size: 16, color: Colors.white),
+                            )
+                          : Icon(icon, size: 20, color: coloriage),
+                      Text(
+                        title,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: coloriage),
+                      ),
+                    ],
+                  )
+                : null,
+            subtitle: Row(
+              spacing: 16,
+              children: [
+                Flexible(
+                  child: Text(
+                    bodyText,
+                    style: TextStyle(fontSize: textSize ?? 16),
+                  ),
+                ),
+                CircleAvatar(
+                    backgroundColor: coloriage.withValues(alpha: .1),
+                    radius: 35,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: CircleAvatar(
+                        backgroundColor: coloriage,
+                        radius: 20,
+                        child: Icon(
+                          icon,
+                          color: Colors.white,
                         ),
-                      ],
-                    )
-                  : const SizedBox(),
-              subtitle: Row(
-                spacing: 16,
-                children: [
-                  Flexible(
-                    child: Text(
-                      bodyText,
-                      style: TextStyle(fontSize: textSize ?? 16),
+                      ),
                     ),
                   ),
-                  CircleAvatar(
-                      backgroundColor: coloriage.withValues(alpha: .1),
-                      radius: 35,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: CircleAvatar(
-                          backgroundColor: coloriage,
-                          radius: 20,
-                          child: Icon(
-                            icon,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )),
-                ],
-              ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
+
+    // Container(
+    //   decoration: BoxDecoration(
+    //     color: backgroundColor,
+    //     borderRadius: BorderRadius.circular(20),
+    //   ),
+    //   child: Column(
+    //     children: [
+    //       InkWell(
+    //         onTap: onTap,
+    //         child: ListTile(
+    //           contentPadding:
+    //               const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    //           title: haveTitle == true
+    //               ? Row(
+    //                   spacing: 10,
+    //                   children: [
+    //                     circleIcon == true
+    //                         ? Container(
+    //                             padding: const EdgeInsets.all(3),
+    //                             decoration: BoxDecoration(
+    //                                 color: coloriage, shape: BoxShape.circle),
+    //                             child:
+    //                                 Icon(icon, size: 16, color: Colors.white),
+    //                           )
+    //                         : Icon(icon, size: 20, color: coloriage),
+    //                     Text(
+    //                       title,
+    //                       style: TextStyle(
+    //                           fontSize: 16,
+    //                           fontWeight: FontWeight.w600,
+    //                           color: coloriage),
+    //                     ),
+    //                   ],
+    //                 )
+    //               : const SizedBox(),
+    //           subtitle: Row(
+    //             spacing: 16,
+    //             children: [
+    //               Flexible(
+    //                 child: Text(
+    //                   bodyText,
+    //                   style: TextStyle(fontSize: textSize ?? 16),
+    //                 ),
+    //               ),
+    //               CircleAvatar(
+    //                   backgroundColor: coloriage.withValues(alpha: .1),
+    //                   radius: 35,
+    //                   child: Padding(
+    //                     padding: const EdgeInsets.all(10.0),
+    //                     child: CircleAvatar(
+    //                       backgroundColor: coloriage,
+    //                       radius: 20,
+    //                       child: Icon(
+    //                         icon,
+    //                         color: Colors.white,
+    //                       ),
+    //                     ),
+    //                   )),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }

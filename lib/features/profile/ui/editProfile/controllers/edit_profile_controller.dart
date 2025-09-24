@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/core/services/form/validators.dart';
@@ -19,9 +20,12 @@ import '../../../application/command/update_profile_command.dart';
 
 class EditProfileController extends GetxController {
   final AppNavigation _appNavigation;
-  final UpdateProfileUseCase _editProfileUseCase = Get.find();
-
   EditProfileController(this._appNavigation);
+
+  // Use cases
+  final UpdateProfileUseCase _editProfileUseCase = Get.find();
+  final GetPlaceDetailsUseCase _getPlaceDetailsUseCase = Get.find();
+  final GetPlaceAutocompleteUsecase _getPlaceAutocompleteUseCase = Get.find();
 
   ProfileController currentUserController = Get.find<ProfileController>();
 
@@ -34,20 +38,25 @@ class EditProfileController extends GetxController {
   // A new session token should be generated for each autocomplete session.
   Rx<String?> sessionToken = Rx<String?>(null);
 
-  final GetPlaceDetailsUseCase _getPlaceDetailsUseCase = Get.find();
-  final GetPlaceAutocompleteUsecase _getPlaceAutocompleteUseCase = Get.find();
-
   RxString placeInput =
       "".obs; // Text input observable for location debounce search
   final locationLoading = true.obs; // Loading observable
-
   RxList<PlacePrediction> placePredictions = <PlacePrediction>[].obs;
   Rx<PlaceDetails?> placeDetails = Rx<PlaceDetails?>(null); // placeDetails;
+  final Rx<DateTime?> _selectedDate = Rx<DateTime?>(null);
+  final RxString phoneCode = ''.obs;
 
   @override
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    if(currentUserController.userInfos?.location != null){
+      placeDetails.value = PlaceDetails.create(
+        name: currentUserController.userInfos!.location!.name!,
+        lat: currentUserController.userInfos!.location!.latitude!,
+        lng: currentUserController.userInfos!.location!.longitude!,
+      );
+    }
     editProfileFormHelper = FormHelper<ProfileException, UpdateUserDetails>(
       fields: {
         "name": currentUserController.userInfos?.name,
@@ -60,7 +69,7 @@ class EditProfileController extends GetxController {
         "name": Validators.requiredField,
         "email": Validators.email,
         // "address": Validators.requiredField,
-        // "phoneNumber": Validators.requiredField,
+        "phoneNumber": Validators.requiredField,
         "dateOfBirth": Validators.validateDateOfBirth,
       },
       onSubmit: (data) {
@@ -69,7 +78,8 @@ class EditProfileController extends GetxController {
           email: data['email']!,
           dateOfBirth: data['dateOfBirth']!,
           phone: data['phoneNumber'],
-          address: data['address'],
+          phoneCode: phoneCode.value.replaceAll("+", ""),
+          // address: data['address'],
           location: placeDetails.value != null
               ? LocationEntity.create(
                   latitude: placeDetails.value!.lat,
@@ -81,16 +91,14 @@ class EditProfileController extends GetxController {
       },
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
-        if (response.state == true) {
-          Get.showCustomSnackBar("Profile updated successfully",
-              isError: false);
-          currentUserController.getUserInfos();
-          _appNavigation.goBack();
-          update();
-        } else {
-          Get.showCustomSnackBar(response.message ?? "An error occurred");
-        }
-        // Get.find<GarageController>().getVehicleList(user.id);
+        // _appNavigation.goBack();
+        Get.showCustomSnackBar("Profile updated successfully",
+            title: "Profile updated", isError: false);
+        currentUserController.getUserInfos(refreshAll: false);
+        // update();
+        // } else {
+        //   Get.showCustomSnackBar(response.message ?? "An error occurred");
+        // }
       },
     );
 
@@ -117,7 +125,6 @@ class EditProfileController extends GetxController {
       }
     });
   }
-
 
   void goBack() {
     _appNavigation.goBack();
@@ -165,5 +172,20 @@ class EditProfileController extends GetxController {
       },
     );
     return places;
+  }
+
+  Future<void> selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: Get.context!,
+      initialDate: _selectedDate.value ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != _selectedDate.value) {
+      _selectedDate.value = picked;
+      editProfileFormHelper.controllers['dateOfBirth']?.text =
+          "${picked.year}-${picked.month < 10 ? "0${picked.month}" : picked.month}-${picked.day < 10 ? "0${picked.day}" : picked.day}";
+      update();
+    }
   }
 }

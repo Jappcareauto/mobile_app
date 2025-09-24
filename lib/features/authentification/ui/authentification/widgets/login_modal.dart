@@ -40,6 +40,7 @@ class LoginModalWidget extends StatelessWidget {
                     assetPath: AppImages.google,
                     height: 25,
                   ),
+                  isLoading: controller.loadingGoogle,
                   onPressed: controller.googleLogin,
                   // _BottomSheetLogin();
                 ),

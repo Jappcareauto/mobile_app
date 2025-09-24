@@ -7,7 +7,8 @@ class UpdateProfileCommand {
   final String? address;
   final LocationEntity? location;
   final String? phone;
+  final String? phoneCode;
 
   UpdateProfileCommand(
-      {required this.name, required this.email, this.location, required this.dateOfBirth, this.address, this.phone});
+      {required this.name, required this.email, this.location, required this.dateOfBirth, this.address, this.phoneCode, this.phone});
 }

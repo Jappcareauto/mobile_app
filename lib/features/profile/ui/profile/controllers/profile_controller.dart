@@ -66,7 +66,7 @@ class ProfileController extends GetxController {
     _appNavigation.toNamed(ProfilePrivateRoutes.settings);
   }
 
-  Future<void> getUserInfos() async {
+  Future<void> getUserInfos({bool refreshAll = true}) async {
     loading.value = true;
     final result = await _getUserInfosUseCase.call();
     result.fold(
@@ -78,10 +78,13 @@ class ProfileController extends GetxController {
         userInfos = success;
         _localStorageService.write(AppConstants.userId, success.id);
 
-        Get.find<AppEventService>().emit<String>(AppConstants.userIdEvent, '');
+        if (refreshAll == true) {
+          Get.find<AppEventService>()
+              .emit<String>(AppConstants.userIdEvent, '');
+          Get.find<AppEventService>()
+              .emit<String>(AppConstants.userIdEvent, success.id);
+        }
 
-        Get.find<AppEventService>()
-            .emit<String>(AppConstants.userIdEvent, success.id);
         update();
       },
     );
