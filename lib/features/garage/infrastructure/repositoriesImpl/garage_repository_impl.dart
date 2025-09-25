@@ -46,10 +46,12 @@ class GarageRepositoryImpl implements GarageRepository {
   }
 
   @override
-  Future<Either<GarageException, List<Vehicle>>> getVehicleList() async {
+  Future<Either<GarageException, List<Vehicle>>> getVehicleList({String? userId}) async {
     try {
       final response = await networkService
-          .post(GarageConstants.getVehicleListGetUri, body: {});
+          .post(GarageConstants.getVehicleListGetUri, body: {
+        if (userId != null) 'userId': userId,
+      });
       return Right((response['data'] as List)
           .map((e) => VehicleModel.fromJson(e).toEntity())
           .toList());
@@ -85,12 +87,25 @@ class GarageRepositoryImpl implements GarageRepository {
   }
 
   @override
-  Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments(
-      {String? status}) async {
+  Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments({
+    String? status,
+    String? vehicleId,
+    String? serviceCenterId,
+    String? userId,
+    String? locationType,
+  }) async {
     try {
-      final response = await networkService.post(
-          GarageConstants.getAllAppointmentsUri,
-          body: {'status': status});
+      final response = await networkService
+          .post(GarageConstants.getAllAppointmentsUri, body: {
+        if (status != null) 'status': status,
+        if (vehicleId != null) 'vehicleId': vehicleId,
+        if (serviceCenterId != null) 'serviceCenterId': serviceCenterId,
+        if (userId != null)
+          'audit': {
+            'createdBy': userId,
+          },
+        if (locationType != null) 'locationType': locationType,
+      });
       return Right((response["data"] as List)
           .map((e) => AppointmentModel.fromJson(e).toEntity())
           .toList());
@@ -99,12 +114,12 @@ class GarageRepositoryImpl implements GarageRepository {
     }
   }
 
-   @override
+  @override
   Future<Either<GarageException, AppointmentEntity>> getAppointmentById(
       {required String appointmentId}) async {
     try {
-      final response = await networkService.get(
-          '${GarageConstants.getAppointmentByIdUri}/$appointmentId');
+      final response = await networkService
+          .get('${GarageConstants.getAppointmentByIdUri}/$appointmentId');
       return Right(AppointmentModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message, e.statusCode));

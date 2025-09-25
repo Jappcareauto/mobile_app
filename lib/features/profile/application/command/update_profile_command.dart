@@ -1,4 +1,5 @@
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
+import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
 
 class UpdateProfileCommand {
   final String name;
@@ -6,9 +7,8 @@ class UpdateProfileCommand {
   final String dateOfBirth;
   final String? address;
   final LocationEntity? location;
-  final String? phone;
-  final String? phoneCode;
+  final PhoneCommand? phone;
 
   UpdateProfileCommand(
-      {required this.name, required this.email, this.location, required this.dateOfBirth, this.address, this.phoneCode, this.phone});
+      {required this.name, required this.email, this.location, required this.dateOfBirth, this.address, this.phone});
 }

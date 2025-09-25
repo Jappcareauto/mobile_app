@@ -1,6 +1,5 @@
 //Don't translate me
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/features/garage/domain/core/utils/garage_constants.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
@@ -78,6 +77,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
     required String serviceId,
     required String vehicleId,
     required String timeOfDay,
+    required String selectedTimeRange,
     required String createdBy,
     required String serviceCenterId,
   }) async {

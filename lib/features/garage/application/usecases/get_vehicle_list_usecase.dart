@@ -9,7 +9,7 @@ class GetVehicleListUseCase {
 
   GetVehicleListUseCase(this.repository);
 
-  Future<Either<GarageException, List<Vehicle>>> call() async {
-    return await repository.getVehicleList();
+  Future<Either<GarageException, List<Vehicle>>> call({String? userId}) async {
+    return await repository.getVehicleList(userId: userId);
   }
 }

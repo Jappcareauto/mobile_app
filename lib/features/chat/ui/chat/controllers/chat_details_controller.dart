@@ -145,7 +145,7 @@ class ChatDetailsController extends GetxController {
     // print('appointment ${appointmentId.value}');
 
     getChatRoomByAppointmentId();
-    // connectToWebSocket();
+    connectToWebSocket();
     // _initializeAudio();
     // getAppointmentByChatRoomId();
     

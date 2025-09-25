@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
+import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
 import 'package:jappcare/features/profile/domain/entities/update_user_details.dart';
 import 'package:jappcare/features/profile/infrastructure/models/update_user_details_model.dart';
 
@@ -54,7 +55,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
       required String email,
       required String dateOfBirth,
       LocationEntity? location,
-      String? phone,
+      PhoneCommand? phone,
       String? phoneCode}) async {
     print("Phone: $phone, phoneCode: $phoneCode");
     try {
@@ -72,11 +73,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
                 location.description!.isNotEmpty)
               'description': location.description,
           },
-        if (phone != null &&
-            phoneCode != null &&
-            phoneCode.isNotEmpty &&
-            phone.isNotEmpty)
-          'phone': {'code': phoneCode, 'number': phone},
+        if (phone != null)
+          'phone': {'code': phone.code, 'number': phone.number},
       });
       return Right(
           UpdateUserDetailsModel.fromJson(response["data"]).toEntity());

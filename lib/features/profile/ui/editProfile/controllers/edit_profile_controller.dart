@@ -6,6 +6,7 @@ import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/core/services/form/validators.dart';
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
 import 'package:jappcare/features/profile/domain/core/exceptions/profile_exception.dart';
 import 'package:jappcare/features/profile/domain/entities/update_user_details.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
@@ -77,9 +78,10 @@ class EditProfileController extends GetxController {
           name: data['name']!,
           email: data['email']!,
           dateOfBirth: data['dateOfBirth']!,
-          phone: data['phoneNumber'],
-          phoneCode: phoneCode.value.replaceAll("+", ""),
-          // address: data['address'],
+          phone: data['phoneNumber'] != null ? PhoneCommand(
+            number: data['phoneNumber']!,
+            code: phoneCode.value.replaceAll("+", ""),
+          ) : null,
           location: placeDetails.value != null
               ? LocationEntity.create(
                   latitude: placeDetails.value!.lat,

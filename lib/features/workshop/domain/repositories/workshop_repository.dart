@@ -37,6 +37,7 @@ abstract class WorkshopRepository {
     required String serviceId,
     required String vehicleId,
     required String timeOfDay,
+    required String selectedTimeRange,
     required String createdBy,
     required String serviceCenterId,
   });

@@ -14,12 +14,11 @@ class UpdateProfileUseCase {
   Future<Either<ProfileException, UpdateUserDetails>> call(
       UpdateProfileCommand command) async {
     return await repository.updateUserInfos(
-        name: command.name,
-        email: command.email,
-        dateOfBirth: command.dateOfBirth,
-        location: command.location,
-        phone: command.phone,
-        phoneCode: command.phoneCode,
-        );
+      name: command.name,
+      email: command.email,
+      dateOfBirth: command.dateOfBirth,
+      location: command.location,
+      phone: command.phone,
+    );
   }
 }

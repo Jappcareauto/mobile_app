@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
+import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
 import 'package:jappcare/features/profile/domain/entities/update_user_details.dart';
 
 import '../core/exceptions/profile_exception.dart';
@@ -17,7 +18,6 @@ abstract class ProfileRepository {
       required String email,
       required String dateOfBirth,
       LocationEntity? location,
-      String? phone,
-      String? phoneCode
+      PhoneCommand? phone,
       });
 }

@@ -89,6 +89,7 @@ class AuthentificationController extends GetxController {
       if (Get.context != null) {
         Get.showCustomSnackBar(e.message);
       }
+      update();
     }, (success) {
       loadingGoogle.value = false;
       // print(response);

@@ -109,7 +109,9 @@ class ConfirmAppointmentController extends GetxController {
       required String serviceId,
       required String vehicleId,
       required String serviceCenterId,
-      required String timeOfDay}) async {
+      required String timeOfDay,
+      required String selectedTimeRange
+      }) async {
     loading.value = true;
     final result = await bookAppointmentUseCase.call(BookAppointmentCommand(
       date: date.toUtc().toIso8601String(),
@@ -120,6 +122,7 @@ class ConfirmAppointmentController extends GetxController {
       vehicleId: vehicleId,
       timeOfDay: timeOfDay,
       serviceCenterId: serviceCenterId,
+      selectedTimeRange: selectedTimeRange,
       createdBy: Get.find<ProfileController>().userInfos!.id,
     ));
     return result.fold(

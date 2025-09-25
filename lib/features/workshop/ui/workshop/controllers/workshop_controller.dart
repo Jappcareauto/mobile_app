@@ -52,12 +52,6 @@ class WorkshopController extends GetxController {
     super.onInit();
     getAllservices();
     getAllServicesCenter();
-    // ever(services, (serviceModel) {
-    //   if (serviceModel != null && serviceModel.data.isNotEmpty) {
-    //     selectedFilter.value = 0;
-    //     selectedCategory.value = serviceModel.data.first.title;
-    //   }
-    // });
 
     debounce(serviceCenterName, (value) {
       filterServiceCenters(

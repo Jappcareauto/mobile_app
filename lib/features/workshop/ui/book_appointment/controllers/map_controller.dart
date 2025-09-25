@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'dart:async';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:ui' as ui;
 import 'package:permission_handler/permission_handler.dart';
 
@@ -63,6 +67,20 @@ class MapController extends GetxController {
     }
   }
 
+  Future<BitmapDescriptor> getBitmapDescriptorFromSvgAsset(
+      String assetName, double size) async {
+    final picture = await vg.loadPicture(SvgAssetLoader(assetName), null);
+
+    final image = await picture.picture.toImage(size.toInt(), size.toInt());
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
+    final tempDir = await getTemporaryDirectory();
+    final tempFile = File('${tempDir.path}/temp_marker.png');
+    await tempFile.writeAsBytes(byteData!.buffer.asUint8List());
+
+    return BitmapDescriptor.bytes(await tempFile.readAsBytes());
+  }
+
 //   Future<Uint8List> svgToBytes(String assetName) async {
 //   final svgString = await rootBundle.loadString(assetName);
 //   final svgDrawable = await svg.fromSvgString(svgString, assetName);
@@ -73,9 +91,10 @@ class MapController extends GetxController {
 // }
 
   Future<void> loadCustomIcons() async {
-    final Uint8List serviceIconBytes =
-        await getBytesFromAsset(AppConstants.mapLocalisation, 200);
-    serviceLocation.value = BitmapDescriptor.bytes(serviceIconBytes);
+    final BitmapDescriptor serviceIconBytes =
+        // await getBytesFromAsset(AppConstants.mapLocalisation, 200);
+        await getBitmapDescriptorFromSvgAsset(AppConstants.localisation, 50);
+    serviceLocation.value = serviceIconBytes;
   }
 
   void clearMarkers() {

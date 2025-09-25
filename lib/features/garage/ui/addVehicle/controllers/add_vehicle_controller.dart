@@ -65,7 +65,7 @@ class AddVehicleController extends GetxController {
       },
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
-        Get.find<GarageController>().getVehicleList(user.id);
+        Get.find<GarageController>().getVehicleList(ownerId: user.id);
         _appNavigation.goBack();
         update();
       },

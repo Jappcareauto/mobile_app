@@ -11,8 +11,8 @@ import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dar
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 // import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/booking_widget.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
+// import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
+// import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
 // import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';

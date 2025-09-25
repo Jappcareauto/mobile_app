@@ -39,6 +39,7 @@ class BookAppointmentController extends GetxController {
   var selectedYear = DateTime.now().year.obs; // Année actuelle
   var selectedMonth = DateTime.now().month.obs; // Mois actuel
   RxString selectedTime = "MORNING".obs;
+  RxString selectedTimeRange = "8am-12am".obs;
 
   var selectedImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();
@@ -198,6 +199,7 @@ class BookAppointmentController extends GetxController {
       "noteController": noteController.text,
       "vehicle": garageController.vehicleList[currentPage.value],
       "selectedTime": selectedTime.value,
+      "selectedTimeRange": selectedTimeRange.value,
       "location": placeDetails.value,
     });
     globalControllerWorkshop.setImages(selectedImages);

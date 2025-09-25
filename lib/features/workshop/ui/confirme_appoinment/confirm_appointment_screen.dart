@@ -59,7 +59,7 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmAppointmentController> {
                     onPressed: () {
                       var place = controller.globalControllerWorkshop
                           .workshopData['location'] as PlaceDetails?;
-                      
+
                       LocationEntity? location;
 
                       if (place != null) {
@@ -73,7 +73,7 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmAppointmentController> {
                       controller.booknewAppointment(
                         date: controller.globalControllerWorkshop
                             .workshopData['selectedDate'],
-                            location: location,
+                        location: location,
                         locationType: controller.globalControllerWorkshop
                             .workshopData['selectedLocation'],
                         note: controller.globalControllerWorkshop
@@ -86,6 +86,8 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmAppointmentController> {
                             .workshopData['selectedTime'],
                         serviceCenterId: controller.globalControllerWorkshop
                             .workshopData['serviceCenterId'],
+                        selectedTimeRange: controller.globalControllerWorkshop
+                            .workshopData['selectedTimeRange'],
                       );
                     },
                   ),

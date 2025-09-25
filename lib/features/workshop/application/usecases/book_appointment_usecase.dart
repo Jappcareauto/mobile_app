@@ -21,6 +21,7 @@ class BookAppointmentUseCase {
         vehicleId: command.vehicleId,
         serviceCenterId: command.serviceCenterId,
         createdBy: command.createdBy,
-        timeOfDay: command.timeOfDay);
+        timeOfDay: command.timeOfDay,
+        selectedTimeRange: command.selectedTimeRange);
   }
 }
