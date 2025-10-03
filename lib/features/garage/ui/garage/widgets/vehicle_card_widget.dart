@@ -15,13 +15,17 @@ class VehicleCardWidget extends StatelessWidget {
   final bool? showDelete;
   final bool haveBGColor;
   final bool haveBorder;
+  final EdgeInsets? margin;
 
   final double? containerheight;
+  final double? containerWidth;
   const VehicleCardWidget({
     super.key,
     required this.haveBorder,
+    this.margin,
     this.imageUrl,
     this.containerheight,
+    this.containerWidth,
     this.showDelete,
     required this.carName,
     required this.carDetails,
@@ -35,8 +39,8 @@ class VehicleCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: containerheight,
-      margin: const EdgeInsets.only(right: 12),
-      width: 360,
+      margin: margin ?? const EdgeInsets.only(right: 12),
+      width: containerWidth ?? 360,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         color: haveBGColor ? Get.theme.primaryColor : AppColors.white,

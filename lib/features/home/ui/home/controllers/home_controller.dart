@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
-import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
+// import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
+import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/error/ui/commingSoon/comming_soon_screen.dart';
+import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/home/application/usecases/get_tips_list_usecase.dart';
 import 'package:jappcare/features/home/domain/entities/get_tips_list.entity.dart';
 import '../../../../../core/navigation/app_navigation.dart';
@@ -12,6 +15,10 @@ import '../widgets/tip_modal_bottom.dart';
 class HomeController extends GetxController {
   final AppNavigation _appNavigation;
   HomeController(this._appNavigation);
+
+
+  final GarageController garageController =
+      GarageController(Get.find(), Get.find());
 
   // TIps loader
   final RxBool tipsLoading = true.obs;
@@ -38,17 +45,22 @@ class HomeController extends GetxController {
     await Future.delayed(const Duration(seconds: 2));
 
     // Rafraîchir les données des widgets dynamiques
-    if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ListVehicleWidget')) {
-      Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget').refreshData();
-    }
+    // if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ListVehicleWidget')) {
+    //   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget').refreshData();
+    // }
 
-    if (Get.isRegistered<FeatureWidgetInterface>(
-        tag: 'RecentActivitiesWidget')) {
-      Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
-          .refreshData();
-    }
+    // if (Get.isRegistered<FeatureWidgetInterface>(
+    //     tag: 'RecentActivitiesWidget')) {
+    //   Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
+    //       .refreshData();
+    // }
 
     getAllTips();
+    final lastUserId =
+        Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
+    if (lastUserId != null) {
+      garageController.fetchData(lastUserId);
+    }
     print('fin du refresh');
   }
 

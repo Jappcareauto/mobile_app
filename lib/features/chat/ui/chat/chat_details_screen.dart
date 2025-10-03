@@ -1,13 +1,13 @@
 // import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/chat/ui/chat/widgets/chat_input_widget.dart';
+// import 'package:jappcare/features/chat/ui/chat/widgets/chat_input_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_appointment_summary.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/image_message_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_app_bar.dart';
-import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+// import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/profile/ui/profile/widgets/avatar_widget.dart';
 // import 'package:jappcare/features/chat/ui/chat/widgets/chat_invoice.dart';
 
@@ -26,7 +26,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    // final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: ChatAppBar(

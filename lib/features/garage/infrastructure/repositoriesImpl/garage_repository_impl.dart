@@ -111,6 +111,9 @@ class GarageRepositoryImpl implements GarageRepository {
           .toList());
     } on BaseException catch (e) {
       return Left(GarageException(e.message, e.statusCode));
+    } catch (e) {
+      print(e);
+      return Left(GarageException(e.toString(), 500));
     }
   }
 

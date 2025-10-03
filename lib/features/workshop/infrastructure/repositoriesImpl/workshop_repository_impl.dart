@@ -5,8 +5,10 @@ import 'package:jappcare/features/garage/domain/core/utils/garage_constants.dart
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
 import 'package:jappcare/features/workshop/domain/entities/geocode_position.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_service_center_services.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_appointments_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/place_prediction_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/place_details_model.dart';
 import 'package:jappcare/features/workshop/domain/entities/place_prediction.dart';
@@ -69,7 +71,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   }
 
   @override
-  Future<Either<WorkshopException, BookAppointment>> bookAppointment({
+  Future<Either<WorkshopException, AppointmentEntity>> bookAppointment({
     required String date,
     required String locationType,
     LocationEntity? location,
@@ -102,7 +104,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           'timeOfDay': timeOfDay,
         },
       );
-      return Right(BookAppointmentModel.fromJson(response["data"]).toEntity());
+      return Right(AppointmentModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message, e.statusCode));
     }
@@ -132,6 +134,9 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message, e.statusCode));
+    } catch (e) {
+      print(e);
+      return Left(WorkshopException(e.toString(), 500));
     }
   }
 

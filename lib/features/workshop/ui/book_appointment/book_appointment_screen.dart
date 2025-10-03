@@ -81,10 +81,11 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                             spacing: 10,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                               Text(
                                 "Select Service",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                style: Get.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                               ),
                               SizedBox(
                                 child: controller
@@ -166,8 +167,6 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                 height: 300,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(18),
-                                  border: Border.all(
-                                      color: Get.theme.primaryColor, width: 1),
                                 ),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(18),

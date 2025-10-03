@@ -34,17 +34,17 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                           baseColor: Colors.grey,
                           highlightColor: Colors.white,
                           child: ImageComponent(
-                            file: controller.file,
+                            file: controller.file.value,
                             width: size,
                             height: size,
                             borderRadius: 50,
                           ),
                         )
                       : ImageComponent(
-                          imageUrl: controller.file != null
+                          imageUrl: controller.file.value != null
                               ? null
                               : controller.userInfos?.image,
-                          file: controller.file,
+                          file: controller.file.value,
                           onTap: controller.goToProfile,
                           width: size,
                           height: size,

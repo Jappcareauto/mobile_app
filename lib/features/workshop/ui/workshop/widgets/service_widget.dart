@@ -29,23 +29,20 @@ class ServiceWidget extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         spacing: 4,
-        children: List.generate(tabs.length, (index) {
-          final item = tabs[index];
-          final serviceTItle = item.title
-              .split("_")
-              .map(
-                  (e) => '${e[0].toUpperCase()}${e.substring(1).toLowerCase()}')
-              .join(" ");
+        children: List.generate(
+          tabs.length,
+          (index) {
+            final item = tabs[index];
+            final serviceTItle = item.title
+                .split("_")
+                .map((e) =>
+                    '${e[0].toUpperCase()}${e.substring(1).toLowerCase()}')
+                .join(" ");
 
-          return GestureDetector(
-            onTap: () {
-              onSelected?.call(index);
-            },
-            child: Container(
+            return Container(
               // width: 175,
               // height: 200,
               margin: const EdgeInsets.only(right: 8),
-              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: selectedFilter == index
                     ? haveBorder == true
@@ -59,48 +56,63 @@ class ServiceWidget extends StatelessWidget {
                     width: 1.5),
                 borderRadius: borderRadius,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      serviceTItle,
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: selectedFilter == index
-                              ? haveBorder == true
-                                  ? AppColors.black
-                                  : AppColors.white
-                              : AppColors.black,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.1),
+              child: Material(
+                color: Colors.transparent,
+                borderRadius: borderRadius,
+                child: InkWell(
+                  onTap: () {
+                    onSelected?.call(index);
+                  },
+                  borderRadius: borderRadius,
+                  splashColor: AppColors.primary.withValues(alpha: 0.2),
+                  highlightColor: AppColors.primary.withValues(alpha: 0.1),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            serviceTItle,
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: selectedFilter == index
+                                    ? haveBorder == true
+                                        ? AppColors.black
+                                        : AppColors.white
+                                    : AppColors.black,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0.1),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   children: [
+                        //     ImageComponent(
+                        //       assetPath: item.definition == "VEHICLE_MAINTENANCE"
+                        //           ? AppImages.maintenance
+                        //           : item.definition == "ENGINE_DIAGNOSTICS"
+                        //               ? AppImages.vehicule
+                        //               : item.definition == "VIN_DETECTION"
+                        //                   ? AppImages.vin
+                        //                   : AppImages.maintenance,
+                        //       width: 120,
+                        //     ),
+                        //   ],
+                        // ),
+                      ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.end,
-                  //   children: [
-                  //     ImageComponent(
-                  //       assetPath: item.definition == "VEHICLE_MAINTENANCE"
-                  //           ? AppImages.maintenance
-                  //           : item.definition == "ENGINE_DIAGNOSTICS"
-                  //               ? AppImages.vehicule
-                  //               : item.definition == "VIN_DETECTION"
-                  //                   ? AppImages.vin
-                  //                   : AppImages.maintenance,
-                  //       width: 120,
-                  //     ),
-                  //   ],
-                  // ),
-                ],
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }

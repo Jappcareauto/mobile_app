@@ -17,11 +17,13 @@ class Summary extends GetView<ConfirmAppointmentController> {
   Summary({super.key});
   @override
   Widget build(BuildContext context) {
-    print('argument ${argument['location']}, selectedLocation ${argument['selectedLocation']}');
+    print(
+        'argument ${argument['location']}, selectedLocation ${argument['selectedLocation']}');
     return Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withValues(alpha: .2)),
-          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.withValues(alpha: .3)),
+          borderRadius: BorderRadius.circular(16),
         ),
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -39,7 +41,7 @@ class Summary extends GetView<ConfirmAppointmentController> {
                         TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
                 Text(argument['serviceCenterName'] ?? "Unknown",
                     style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.bold)),
+                        fontSize: 14, fontWeight: FontWeight.w600)),
               ],
             ),
             Column(
@@ -53,7 +55,7 @@ class Summary extends GetView<ConfirmAppointmentController> {
                 Text(
                     '${argument['serviceName']?.toString().replaceAll("_", " ").capitalizeFirst} Appointment',
                     style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
               ],
             ),
             Column(
@@ -77,7 +79,7 @@ class Summary extends GetView<ConfirmAppointmentController> {
                         Get.find<ProfileController>().userInfos?.name ??
                             "Unknown",
                         style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold))
+                            fontSize: 16, fontWeight: FontWeight.w600))
                   ],
                 ),
               ],
@@ -105,7 +107,7 @@ class Summary extends GetView<ConfirmAppointmentController> {
                         TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
                 Text(argument['serviceId'] ?? "Unknown",
                     style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.bold)),
+                        fontSize: 14, fontWeight: FontWeight.w600)),
               ],
             ),
             Column(
@@ -117,38 +119,37 @@ class Summary extends GetView<ConfirmAppointmentController> {
                       style: TextStyle(
                           fontSize: 12, fontWeight: FontWeight.normal)),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       spacing: 10,
                       children: [
                         Row(
+                          spacing: 5,
                           children: [
                             const Icon(
                               FluentIcons.calendar_12_regular,
                               size: 24,
                             ),
-                            Obx(
-                              () => Text(
-                                DateFormat('EEE, MMM dd, yyyy')
-                                    .format(argument['selectedDate']),
-                                // Format personnalisé
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                            Text(
+                              DateFormat('EEE, MMM dd, yyyy')
+                                  .format(argument['selectedDate']),
+                              // Format personnalisé
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
                               ),
                             ),
                           ],
                         ),
                         Row(
+                          spacing: 5,
                           children: [
                             const Icon(
                               FluentIcons.clock_12_regular,
                               size: 24,
                             ),
-                            Obx(() => Text(argument['selectedTime'],
+                            Text(argument['selectedTimeRange'],
                                 style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400))),
+                                    fontSize: 14, fontWeight: FontWeight.normal)),
                           ],
                         )
                       ]),

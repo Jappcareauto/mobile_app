@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
+// import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/map_controller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
@@ -9,6 +9,7 @@ import 'package:jappcare/features/workshop/ui/book_appointment/controllers/map_c
 import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/views/workshop_custom_map_view.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/widgets/text_shimmer.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/shimmers/services_shimmer.dart';
 import '../widgets/workshop_carrousel.dart';
 import 'controllers/workshop_details_controller.dart';
 import 'package:get/get.dart';
@@ -140,23 +141,22 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                             ],
                           ),
                         ),
-                        
-                            const Row(
-                              children: [
-                                Icon(Icons.star_rounded,
-                                    color: Colors
-                                        .orange), // Utiliser une couleur appropriée
-                                Text(
-                                  '4.5',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                              ],
+                        const Row(
+                          children: [
+                            Icon(Icons.star_rounded,
+                                color: Colors
+                                    .orange), // Utiliser une couleur appropriée
+                            Text(
+                              '4.5',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orange,
+                              ),
                             ),
                           ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -172,7 +172,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
-                    spacing: 20,
+                    spacing: 12,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
@@ -183,20 +183,16 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                       Obx(() {
                         return SizedBox(
                           child: controller.serviceCenterServicesLoading.value
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              :
-                          
-                          controller.serviceCenterServices.isNotEmpty
-                              ? ServiceWidget(
-                                  tabs: controller.serviceCenterServices
-                                      .map((e) => e.service)
-                                      .toList(),
-                                  borderRadius: BorderRadius.circular(16),
-                                  haveBorder: true,
-                                )
-                              : const Text('Aucun service disponible'),
+                              ? ServicesShimmer(isHorizontal: true)
+                              : controller.serviceCenterServices.isNotEmpty
+                                  ? ServiceWidget(
+                                      tabs: controller.serviceCenterServices
+                                          .map((e) => e.service)
+                                          .toList(),
+                                      borderRadius: BorderRadius.circular(16),
+                                      haveBorder: true,
+                                    )
+                                  : const Text('Aucun service disponible'),
                         );
                       }),
                     ]),
@@ -204,11 +200,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
               const SizedBox(height: 20),
               const SizedBox(
                   height: 300,
-                  child: Row(
-                    children: [
-                      WorkshopCustomMapView(),
-                    ],
-                  )),
+                  child: WorkshopCustomMapView()),
               // const SizedBox(height: 20),
               // VehicleListWidget(
               //   vehiclesLoading: false.obs,
@@ -219,7 +211,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
               //   onTapViewVehicle:
               //       controller.garageController.goToVehicleDetails,
               // ),
-              
+
               const SizedBox(height: 20),
               Container(
                 width: Get.width,

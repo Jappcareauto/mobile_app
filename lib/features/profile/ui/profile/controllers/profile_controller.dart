@@ -28,7 +28,7 @@ class ProfileController extends GetxController {
 
   GetUserInfos? userInfos;
 
-  File? file;
+  Rx<File?> file = Rx<File?>(null);
   final updateImageLoading = false.obs;
 
   @override
@@ -93,7 +93,7 @@ class ProfileController extends GetxController {
   Future<void> updateProfileImage() async {
     updateImageLoading.value = true;
     final result = await _updateProfileImageUseCase.call(
-        UpdateProfileImageCommand(userId: userInfos!.id, file: file!.path));
+        UpdateProfileImageCommand(userId: userInfos!.id, file: file.value!));
     result.fold(
       (e) {
         updateImageLoading.value = false;
@@ -107,9 +107,10 @@ class ProfileController extends GetxController {
   }
 
   void getAndUpdateProfileImage() async {
-    final imgs = await Get.getImage();
+    final imgs = await Get.getImage(many: true);
+    print("Selected image path: ${imgs?.first.path}");
     if (imgs != null && imgs.isNotEmpty) {
-      file = imgs.first;
+      file.value = imgs.first;
       update();
       updateProfileImage();
     }

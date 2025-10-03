@@ -56,7 +56,7 @@ class ConfirmationAppointmentModal
                   child: CustomButton(
                       strech: false,
                       haveBorder: true,
-                      text: 'Cancel',
+                      text: 'Return Home',
                       onPressed: controller.goToHome),
                 ),
                 // Proceed to Chat button

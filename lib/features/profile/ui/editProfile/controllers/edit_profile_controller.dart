@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/form_helper.dart';
@@ -94,8 +93,8 @@ class EditProfileController extends GetxController {
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
         // _appNavigation.goBack();
-        Get.showCustomSnackBar("Profile updated successfully",
-            title: "Profile updated", isError: false);
+        Get.showCustomSnackBar("Profile updated successfully. But phone number update is not yet supported",
+            title: "Profile updated", type: CustomSnackbarType.success);
         currentUserController.getUserInfos(refreshAll: false);
         // update();
         // } else {

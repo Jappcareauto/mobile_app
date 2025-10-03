@@ -6,6 +6,7 @@ import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 // import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/vertical_list_shimmer.dart';
 
 import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
@@ -42,7 +43,7 @@ class RecentActivitiesWidget extends StatelessWidget
       init: GarageController(Get.find(), Get.find()),
       autoRemove: false,
       builder: (controller) {
-        var filteredAppointments = controller.appointments.toList();
+        List<AppointmentEntity> filteredAppointments = controller.appointments;
         var filteredActivities = <CarCardWidget>[];
 
         if (controller.appointments.isNotEmpty) {
@@ -60,8 +61,9 @@ class RecentActivitiesWidget extends StatelessWidget
               date:
                   // "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
                   DateFormat('MMM, d, yyyy').format(DateTime.parse(e.date)),
-              time:
-                  "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
+              // time:
+              //     "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
+               time: e.timeOfDay,
               localisation: e.locationType == "SERVICE_CENTER"
                   ? "On Site"
                   : e.locationType,

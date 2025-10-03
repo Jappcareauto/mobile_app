@@ -41,7 +41,7 @@ class BookAppointmentModel {
           ? LocationModel.fromJson(json['location'])
           : null,
       note: json['note'],
-      serviceId: json['serviceId'],
+      serviceId: json['service'],
       vehicleId: json['vehicleId'],
       status: json['status'],
       id: json['id'],

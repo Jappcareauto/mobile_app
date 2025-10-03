@@ -145,7 +145,7 @@ class ChatDetailsController extends GetxController {
     // print('appointment ${appointmentId.value}');
 
     getChatRoomByAppointmentId();
-    connectToWebSocket();
+    _connectToWebSocket();
     // _initializeAudio();
     // getAppointmentByChatRoomId();
     
@@ -160,7 +160,7 @@ class ChatDetailsController extends GetxController {
     _typingController.close();
     _presenceController.close();
     // scrollController.dispose();
-    // disconnect();
+    disconnect();
     super.onClose();
   }
 
@@ -211,11 +211,12 @@ class ChatDetailsController extends GetxController {
 
   // Websocket methods
 
-  void connectToWebSocket() {
+  void _connectToWebSocket() {
     try {
       connectionStatus.value = WebSocketStatus.connecting;
 
       final token = _localStorage.read(AppConstants.tokenKey);
+      print('Token for WebSocket: $token');
 
       _stompClient = StompClient(
         config: StompConfig.sockJS(

@@ -141,7 +141,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                           ),
                           Flexible(
                               child: ChipWidget(
-                                  status: appointment.status ?? "Unknown")),
+                                  status: appointment.status ?? "Unknown", variant: ChipSize.small,)),
                           // Container(
                           //   padding:
                           //       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -286,18 +286,18 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                       //     tax: 2500,
                       //     amount: 54000),
                       const SizedBox(
-                        height: 10,
+                        height: 120,
                       ),
-                      if (controller.appointment.status == 'NOT_STARTED') ...[
-                        CustomButton(
-                            text: 'Pay Invoice',
-                            onPressed: () {
-                              controller.goToInvoice();
-                            }),
-                        const SizedBox(
-                          height: 50,
-                        )
-                      ],
+                      // if (controller.appointment.status == 'NOT_STARTED') ...[
+                      //   CustomButton(
+                      //       text: 'Pay Invoice',
+                      //       onPressed: () {
+                      //         controller.goToInvoice();
+                      //       }),
+                      //   const SizedBox(
+                      //     height: 50,
+                      //   )
+                      // ],
                       if (controller.appointment.status == 'IN_PROGRESS') ...[
                         CustomButton(text: 'Mark as completed', onPressed: () {}),
                         const SizedBox(

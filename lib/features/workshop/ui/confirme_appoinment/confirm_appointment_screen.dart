@@ -12,8 +12,6 @@ import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/summar
 // import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 
 class ConfirmeAppointmentScreen extends GetView<ConfirmAppointmentController> {
-  // final BookAppointmentController bookAppointmentController = BookAppointmentController(Get.find());
-
   const ConfirmeAppointmentScreen({super.key});
 
   @override
@@ -36,7 +34,8 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmAppointmentController> {
                 children: [
                   VehicleCardWidget(
                     haveBGColor: false,
-                    haveBorder: true,
+                    haveBorder: false,
+                    margin: EdgeInsets.zero,
                     containerheight: 200,
                     carName: controller.globalControllerWorkshop
                             .workshopData['vehicle'].detail?.model ??

@@ -1,5 +1,6 @@
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/core/ui/domain/entities/pagination.entity.dart';
+import 'package:jappcare/features/chat/domain/entities/get_all_chat_room.entity.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.entity.dart';
@@ -43,6 +44,7 @@ class AppointmentEntity {
   final Vehicle? vehicle;
   final String? diagnosesToMake;
   final String? diagnosesMade;
+  final ChatRoomEntity? chatRoom;
 
   AppointmentEntity._(
       {required this.id,
@@ -58,6 +60,7 @@ class AppointmentEntity {
       required this.location,
       required this.service,
       required this.serviceCenter,
+      this.chatRoom,
       required this.vehicle,
       this.diagnosesToMake,
       this.diagnosesMade});
@@ -76,6 +79,7 @@ class AppointmentEntity {
       required String locationType,
       required ServiceCenterEntity? serviceCenter,
       required ServiceEntity? service,
+      ChatRoomEntity? chatRoom,
       required Vehicle? vehicle,
       required String? diagnosesToMake,
       required String? diagnosesMade}) {
@@ -93,6 +97,7 @@ class AppointmentEntity {
         locationType: locationType,
         location: location,
         serviceCenter: serviceCenter,
+        chatRoom: chatRoom,
         service: service,
         vehicle: vehicle,
         diagnosesToMake: diagnosesToMake,

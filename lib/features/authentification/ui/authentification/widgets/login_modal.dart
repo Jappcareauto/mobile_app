@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/authentification/ui/authentification/controllers/authentification_controller.dart';
 
 import '../../../../../core/utils/app_images.dart';
@@ -49,6 +50,13 @@ class LoginModalWidget extends StatelessWidget {
                     text: "Login with Email",
                     haveBorder: true,
                     onPressed: controller.goToLoginWithEmail),
+
+                CustomButton(
+                    text: "Snack bar",
+                    haveBorder: true,
+                    onPressed: () {
+                      Get.showCustomSnackBar("This is an error", type: CustomSnackbarType.info);
+                    }),
                 // const SizedBox(height: 16),
                 // CustomButton(
                 //     text: "Login with Phone",

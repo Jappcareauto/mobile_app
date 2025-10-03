@@ -63,14 +63,26 @@ class WorkshopScreen extends GetView<WorkshopController>
                           ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () => controller.showFiltersDialog(),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: AppColors.white),
-                          child: const Icon(FluentIcons.options_16_regular),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: AppColors.white,
+                            border: Border.all(
+                                color: Colors.grey.withValues(alpha: .3),
+                                width: 1.5)),
+                        child: Material(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(50),
+                          child: InkWell(
+                            onTap: () => controller.showFiltersDialog(),
+                            splashColor:
+                                Get.theme.primaryColor.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(50),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: const Icon(FluentIcons.options_16_regular),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -108,19 +120,20 @@ class WorkshopScreen extends GetView<WorkshopController>
                       return Column(
                         children: controller.loading.value
                             ? [
-                                // Encapsuler ListVehicleShimmer dans un conteneur de hauteur définie
-                                Column(
-                                  children: [
-                                    WorkshopShimmerWidgets(),
-                                  ],
-                                ),
+                                WorkshopShimmerWidgets(),
                               ]
                             : (controller.servicesCenter.value?.data != null &&
                                     controller
                                         .servicesCenter.value!.data.isNotEmpty)
                                 ? controller.servicesCenter.value!.data
                                     .map<Widget>((serviceCenter) {
-                                    return GestureDetector(
+                                    return ServiceItemWidget(
+                                      image: serviceCenter.imageUrl ??
+                                          AppImages.shopCar,
+                                      title: serviceCenter.name ?? 'Inconnu',
+                                      rate: '4.5',
+                                      location: serviceCenter.location?.name ??
+                                          'Douala, Cameroun',
                                       onTap: () {
                                         controller.goToWorkshopDetails(
                                             name:
@@ -143,15 +156,6 @@ class WorkshopScreen extends GetView<WorkshopController>
                                             locationName:
                                                 serviceCenter.location?.name);
                                       },
-                                      child: ServiceItemWidget(
-                                        image: serviceCenter.imageUrl ??
-                                            AppImages.shopCar,
-                                        title: serviceCenter.name ?? 'Inconnu',
-                                        rate: '4.5',
-                                        location:
-                                            serviceCenter.location?.name ??
-                                                'Douala, Cameroun',
-                                      ),
                                     );
                                   }).toList()
                                 : [

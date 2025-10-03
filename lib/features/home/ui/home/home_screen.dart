@@ -72,6 +72,7 @@ class HomeScreen extends GetView<HomeController> {
                                 bodyText: notification,
                                 coloriage: Get.theme.primaryColor,
                                 icon: FluentIcons.alert_16_filled,
+                                onTap: () => {print('Notification tapped')},
                               ),
                             );
                           }).toList(),
@@ -258,7 +259,11 @@ void openModalTipsMethod(TipEntity tip) {
           ),
           padding: const EdgeInsets.all(16), // Espacement intérieur
           child: Wrap(
-            children: [TipModalBottomWidget(tip: tip,)],
+            children: [
+              TipModalBottomWidget(
+                tip: tip,
+              )
+            ],
           ),
         ),
       );

@@ -20,40 +20,42 @@ class NotificationsScreen extends GetView<NotificationsController> {
             Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            spacing: 10,
-            children: [
-              if (controller.notifications.isNotEmpty) ...[
-                Column(
-                  spacing: 10,
-                  children:
-                      controller.notifications.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final notification = entry.value;
-
-                    return Dismissible(
-                      // key: Key(index.toString()),
-                      key: UniqueKey(),
-                      direction: DismissDirection.endToStart,
-                      background: const DismissWidget(),
-                      onDismissed: (direction) {
-                        // Action après la suppression
-                        controller.notifications.removeAt(index);
-                      },
-                      child: NotificationItemWidget(
-                        title: "Notification",
-                        isRead: false,
-                        description: notification,
-                        date: "01-01-2025",
-                      ),
-                    );
-                  }).toList(),
-                ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              spacing: 10,
+              children: [
+                if (controller.notifications.isNotEmpty) ...[
+                  Column(
+                    spacing: 10,
+                    children:
+                        controller.notifications.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final notification = entry.value;
+        
+                      return Dismissible(
+                        // key: Key(index.toString()),
+                        key: UniqueKey(),
+                        direction: DismissDirection.endToStart,
+                        background: const DismissWidget(),
+                        onDismissed: (direction) {
+                          // Action après la suppression
+                          controller.notifications.removeAt(index);
+                        },
+                        child: NotificationItemWidget(
+                          title: "Notification",
+                          isRead: false,
+                          description: notification,
+                          date: "01-01-2025",
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

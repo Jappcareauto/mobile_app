@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
@@ -11,7 +13,7 @@ abstract class ProfileRepository {
   Future<Either<ProfileException, GetUserInfos>> getUserInfos();
 
   Future<Either<ProfileException, bool>> updateProfileImage(
-      String userId, String file);
+      String userId, File file);
 
   Future<Either<ProfileException, UpdateUserDetails>> updateUserInfos(
       {required String name,

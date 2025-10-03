@@ -1,18 +1,17 @@
-import 'package:dartz/dartz.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
-import 'package:jappcare/features/chat/navigation/chat_public_routes.dart';
+import 'package:jappcare/features/chat/navigation/private/chat_private_routes.dart';
 import 'package:jappcare/features/home/navigation/home_public_routes.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/application/command/book_appointment_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
 // import 'package:jappcare/features/workshop/application/command/created_rome_chat_command.dart';
 // import 'package:jappcare/features/workshop/application/usecases/created_rome_chat_usecase.dart';
-import 'package:jappcare/features/workshop/domain/core/exceptions/workshop_exception.dart';
-import 'package:jappcare/features/workshop/domain/entities/book_appointment.dart';
+// import 'package:jappcare/features/workshop/domain/entities/book_appointment.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/widgets/confirm_model.dart';
@@ -28,7 +27,7 @@ class ConfirmAppointmentController extends GetxController {
   final RxList<String> participantId = RxList();
   final proceedChatLoading = false.obs;
   var chatRoomID = ''.obs;
-  var appointmentId = ''.obs;
+  final Rx<AppointmentEntity?> appointment = Rx<AppointmentEntity?>(null);
   final requestIsSend = false.obs;
   // final argument = Get.arguments ;
   ConfirmAppointmentController(this._appNavigation);
@@ -80,17 +79,17 @@ class ConfirmAppointmentController extends GetxController {
       WorkshopPrivateRoutes.processChat,
     );
     globalControllerWorkshop.addMultipleData(
-        {'chatroomId': chatRoomId, 'appointmentId': appointmentId.value});
+        {'chatroomId': chatRoomId, 'appointmentId': appointment.value?.id});
   }
 
   void goToChatScreen() {
-    print('got to chat');
     Get.back();
     _appNavigation.toNamed(
-      ChatPublicRoutes.home,
+      ChatPrivateRoutes.chat,
+      arguments: appointment.value,
     );
-    globalControllerWorkshop
-        .addMultipleData({'appointmentId': appointmentId.value});
+    // globalControllerWorkshop
+    //     .addMultipleData({'appointmentId': appointmentId.value});
   }
 
   void goToHome() {
@@ -101,7 +100,7 @@ class ConfirmAppointmentController extends GetxController {
     globalControllerWorkshop.resetData();
   }
 
-  Future<Either<WorkshopException, BookAppointment>> booknewAppointment(
+  Future<void> booknewAppointment(
       {required DateTime date,
       required String locationType,
       required LocationEntity? location,
@@ -116,7 +115,7 @@ class ConfirmAppointmentController extends GetxController {
     final result = await bookAppointmentUseCase.call(BookAppointmentCommand(
       date: date.toUtc().toIso8601String(),
       locationType: locationType,
-      location: location,
+      location: locationType == "HOME" ? location : null,
       note: note,
       serviceId: serviceId,
       vehicleId: vehicleId,
@@ -135,14 +134,11 @@ class ConfirmAppointmentController extends GetxController {
         } else {
           Get.showCustomSnackBar("Une erreur s'est produite");
         }
-        return Left(WorkshopException(e.message, e.statusCode));
       },
       (response) {
         loading.value = false;
-        appointmentId.value = response.id;
+        appointment.value = response;
         onpenModalConfirmMethod();
-        print(response);
-        return Right(response);
       },
     );
   }
