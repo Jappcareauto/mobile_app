@@ -58,12 +58,22 @@ class GetXNavigationImpl implements AppNavigation {
   @override
   Future<void>? toNamedAndReplaceAll(String routeName, {dynamic arguments}) {
     try {
-      Get.offAllNamed(routeName, arguments: arguments);
-      return AppDependency.init();
+      return Get.offAllNamed(routeName, arguments: arguments);
+      // return AppDependency.init();
     } catch (e) {
       return Get.toNamed(notFoundPage, arguments: arguments);
     }
   }
+
+    @override
+  Future<void>? toFirstAndPushNamed(String routeName, {dynamic arguments, Map<String, String>? parameters}) {
+    try {
+      return Get.offNamedUntil(routeName, (route) => route.isFirst , arguments: arguments, parameters: parameters);
+    } catch (e) {
+      return Get.toNamed(notFoundPage, arguments: arguments);
+    }
+  }
+
 
   @override
   void goBack<T>({T? result}) {

@@ -46,13 +46,13 @@ class ServiceWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: selectedFilter == index
                     ? haveBorder == true
-                        ? AppColors.secondary
+                        ? AppColors.secondary2
                         : AppColors.primary
-                    : AppColors.secondary,
+                    : AppColors.secondary2,
                 border: Border.all(
                     color: selectedFilter == index
                         ? AppColors.primary
-                        : const Color(0xFFFFEDE6),
+                        : AppColors.secondary2,
                     width: 1.5),
                 borderRadius: borderRadius,
               ),

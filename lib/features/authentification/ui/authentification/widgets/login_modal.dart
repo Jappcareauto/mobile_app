@@ -50,13 +50,6 @@ class LoginModalWidget extends StatelessWidget {
                     text: "Login with Email",
                     haveBorder: true,
                     onPressed: controller.goToLoginWithEmail),
-
-                CustomButton(
-                    text: "Snack bar",
-                    haveBorder: true,
-                    onPressed: () {
-                      Get.showCustomSnackBar("This is an error", type: CustomSnackbarType.info);
-                    }),
                 // const SizedBox(height: 16),
                 // CustomButton(
                 //     text: "Login with Phone",

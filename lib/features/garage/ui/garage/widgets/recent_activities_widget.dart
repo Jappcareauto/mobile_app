@@ -43,7 +43,14 @@ class RecentActivitiesWidget extends StatelessWidget
       init: GarageController(Get.find(), Get.find()),
       autoRemove: false,
       builder: (controller) {
-        List<AppointmentEntity> filteredAppointments = controller.appointments;
+        if (controller.appointmentsLoading.value) {
+          return ListVehicleShimmer(
+            isHorizontal: isHorizontal,
+          );
+        }
+        List<AppointmentEntity> filteredAppointments = List<AppointmentEntity>.from(controller.appointments);
+        filteredAppointments.sort(
+            (a, b) => DateTime.parse(b.date).compareTo(DateTime.parse(a.date)));
         var filteredActivities = <CarCardWidget>[];
 
         if (controller.appointments.isNotEmpty) {
@@ -63,7 +70,7 @@ class RecentActivitiesWidget extends StatelessWidget
                   DateFormat('MMM, d, yyyy').format(DateTime.parse(e.date)),
               // time:
               //     "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
-               time: e.timeOfDay,
+              time: e.timeOfDay,
               localisation: e.locationType == "SERVICE_CENTER"
                   ? "On Site"
                   : e.locationType,
@@ -125,12 +132,7 @@ class RecentActivitiesWidget extends StatelessWidget
                 ),
               ),
             if (haveTabBar) const SizedBox(height: 20),
-            if (controller.appointmentsLoading.value)
-              ListVehicleShimmer(
-                isHorizontal: isHorizontal,
-              ),
-            if (!controller.appointmentsLoading.value &&
-                filteredActivities.isNotEmpty)
+            if (filteredActivities.isNotEmpty)
               isHorizontal
                   ? SizedBox(
                       height: 250,

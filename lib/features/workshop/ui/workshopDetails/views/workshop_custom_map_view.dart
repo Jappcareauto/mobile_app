@@ -13,15 +13,18 @@ class WorkshopCustomMapView extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return MixinBuilder<WorkshopDetailsController>(
-          initState: (_) {},
-          builder: (controller) {
-    return CustomMapWidget(
-      latitude: controller.arguments['latitude'],
-      longitude: controller.arguments['longitude'],
-      placeName: controller.arguments['locationName'],
+      initState: (_) {},
+      builder: (controller) {
+        return controller.arguments['latitude'] != null ? CustomMapWidget(
+          latitude: controller.arguments['latitude'],
+          longitude: controller.arguments['longitude'],
+          placeName: controller.arguments['locationName'],
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          height: 300,
+          isFullScreen: true,
+        ) : Container();
+      },
     );
-          },
-        );
   }
 
   @override

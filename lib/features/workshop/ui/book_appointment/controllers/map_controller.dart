@@ -36,7 +36,7 @@ class MapController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _requestLocationPermission();
+    requestLocationPermission();
     loadCustomIcons();
     Get.find<AppEventService>()
         .on<String>(AppConstants.userIdEvent)
@@ -118,8 +118,9 @@ class MapController extends GetxController {
     update();
   }
 
-  Future<void> _requestLocationPermission() async {
+  Future<void> requestLocationPermission() async {
     var status = await Permission.locationWhenInUse.request();
+    print("s, ${status.isGranted}");
     if (status.isGranted) {
       locationPermissionGranted.value = true;
     }

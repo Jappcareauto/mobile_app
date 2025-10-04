@@ -4,6 +4,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_date_form_filed.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/utils/app_dimensions.dart';
+import 'package:jappcare/core/utils/getx_extensions.dart';
 // import 'package:jappcare/core/ui/widgets/phone_form_field.dart';
 import 'package:jappcare/features/profile/ui/profile/widgets/avatar_widget.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar_with_back_and_avatar.dart';
@@ -50,6 +51,8 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                   .editProfileFormHelper.controllers['name'],
                               label: "Name",
                               hintText: "Ex. John",
+                              readOnly: controller
+                                  .editProfileFormHelper.isLoading.value,
                               validator: controller
                                   .editProfileFormHelper.validators['name'],
                             ),
@@ -72,7 +75,10 @@ class EditProfileScreen extends GetView<EditProfileController> {
                               validator: controller.editProfileFormHelper
                                   .validators['dateOfBirth'],
                               readOnly: true,
-                              onTap: controller.selectDate,
+                              onTap: controller
+                                      .editProfileFormHelper.isLoading.value
+                                  ? null
+                                  : controller.selectDate,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,11 +93,14 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                 ),
                                 // const SizedBox(height: 8),
                                 IntlPhoneField(
-                                  controller: controller
-                                      .editProfileFormHelper.controllers['phoneNumber'],
+                                  controller: controller.editProfileFormHelper
+                                      .controllers['phoneNumber'],
                                   validator: (phoneNumber) {
-                                    final validator = controller.editProfileFormHelper.validators['phoneNumber'];
-                                    print('phoneNumber: $phoneNumber, validator: ${phoneNumber?.number}');
+                                    final validator = controller
+                                        .editProfileFormHelper
+                                        .validators['phoneNumber'];
+                                    print(
+                                        'phoneNumber: $phoneNumber, validator: ${phoneNumber?.number}');
                                     return validator != null
                                         ? validator(phoneNumber?.number)
                                         : null;
@@ -101,8 +110,12 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                     hintText: 'Ex. 655002200',
                                     fillColor: Colors.white,
                                     filled: true,
-                                    errorStyle: const TextStyle(color: Color(0XFFFF553B)),
-                                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                                    errorStyle: const TextStyle(
+                                        color: Color(0XFFFF553B)),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(color: Colors.grey),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
                                           AppDimensions.radiusSmall),
@@ -131,7 +144,8 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                   onChanged: (phone) {
                                     // You can get the full phone number with country code here
                                     print(phone.completeNumber);
-                                    controller.phoneCode.value = phone.countryCode;
+                                    controller.phoneCode.value =
+                                        phone.countryCode;
                                   },
                                 ),
                               ],
@@ -183,6 +197,10 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                         .controllers['address']!
                                         .text = location.name;
                                   }
+                                  Get.showCustomSnackBar("Location selected",
+                                      type: CustomSnackbarType.success,
+                                      duration:
+                                          const Duration(milliseconds: 1250));
                                 }
 
                                 // Invalidate the session token after a place is selected.

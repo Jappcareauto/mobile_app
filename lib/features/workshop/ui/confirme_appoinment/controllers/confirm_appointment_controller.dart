@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/chat/navigation/private/chat_private_routes.dart';
-import 'package:jappcare/features/home/navigation/home_public_routes.dart';
+import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/application/command/book_appointment_command.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
@@ -24,7 +25,7 @@ class ConfirmAppointmentController extends GetxController {
   final BookAppointmentUseCase bookAppointmentUseCase =
       BookAppointmentUseCase(Get.find());
   final loading = false.obs;
-  final RxList<String> participantId = RxList();
+  // final RxList<String> participantId = RxList();
   final proceedChatLoading = false.obs;
   var chatRoomID = ''.obs;
   final Rx<AppointmentEntity?> appointment = Rx<AppointmentEntity?>(null);
@@ -36,7 +37,7 @@ class ConfirmAppointmentController extends GetxController {
   void onInit() {
     super.onInit();
     print('data ${globalControllerWorkshop.workshopData['vehicle']}');
-    participantId.add(Get.find<ProfileController>().userInfos!.id);
+    // participantId.add(Get.find<ProfileController>().userInfos!.id);
   }
 
   final PageController pageController = PageController();
@@ -84,6 +85,13 @@ class ConfirmAppointmentController extends GetxController {
 
   void goToChatScreen() {
     Get.back();
+        _appNavigation.toNamedAndReplaceAll(
+      AppRoutes.home,
+    );
+    _appNavigation.toNamed(
+      AppRoutes.appointmentDetails,
+      arguments: appointment,
+    );
     _appNavigation.toNamed(
       ChatPrivateRoutes.chat,
       arguments: appointment.value,
@@ -95,7 +103,7 @@ class ConfirmAppointmentController extends GetxController {
   void goToHome() {
     Get.back();
     _appNavigation.toNamedAndReplaceAll(
-      HomePublicRoutes.home,
+      AppRoutes.home,
     );
     globalControllerWorkshop.resetData();
   }
@@ -109,8 +117,7 @@ class ConfirmAppointmentController extends GetxController {
       required String vehicleId,
       required String serviceCenterId,
       required String timeOfDay,
-      required String selectedTimeRange
-      }) async {
+      required String selectedTimeRange}) async {
     loading.value = true;
     final result = await bookAppointmentUseCase.call(BookAppointmentCommand(
       date: date.toUtc().toIso8601String(),
@@ -138,19 +145,24 @@ class ConfirmAppointmentController extends GetxController {
       (response) {
         loading.value = false;
         appointment.value = response;
+        Get.find<GarageController>().getAllAppointments(
+            userId: Get.find<ProfileController>().userInfos!.id);
         onpenModalConfirmMethod();
       },
     );
   }
 
   void onpenModalConfirmMethod() {
-    showModalBottomSheet(
-      context: Get.context!,
-      isScrollControlled: true, // Permet un contrôle précis sur la hauteur
+    Get.bottomSheet(
+      ConfirmModal(),
       backgroundColor: Colors.transparent, // Rendre l'arrière-plan transparent
-      builder: (BuildContext context) {
-        return const ConfirmModal();
-      },
+      enableDrag: false,
+      isDismissible: false,
+      // context: Get.context!,
+      isScrollControlled: true, // Permet un contrôle précis sur la hauteur
+      // builder: (BuildContext context) {
+      //   return const );
+      // },
     );
   }
 }

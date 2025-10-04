@@ -44,7 +44,16 @@ class HomeController extends GetxController {
     // Simule un délai de chargement (par exemple, une requête réseau)
     await Future.delayed(const Duration(seconds: 2));
 
-    // Rafraîchir les données des widgets dynamiques
+    // // Rafraîchir les données des widgets dynamiquesRafraîchir les données des widgets dynamiques
+    // if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ListVehicleWidget')) {
+    //   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget').refreshData();
+    // }
+
+    // if (Get.isRegistered<FeatureWidgetInterface>(
+    //     tag: 'RecentActivitiesWidget')) {
+    //   Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
+    //       .refreshData();
+    // }
     // if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ListVehicleWidget')) {
     //   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget').refreshData();
     // }
@@ -56,11 +65,13 @@ class HomeController extends GetxController {
     // }
 
     getAllTips();
+
     final lastUserId =
         Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
     if (lastUserId != null) {
       garageController.fetchData(lastUserId);
     }
+    update();
     print('fin du refresh');
   }
 

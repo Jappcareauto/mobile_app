@@ -42,7 +42,7 @@ extension Utils on GetInterface {
   SnackbarController? showCustomSnackBar(String message,
       {String title = "Error",
       CustomSnackbarType type = CustomSnackbarType.error,
-      Color? color}) {
+      Color? color, Duration? duration = const Duration(seconds: 2)}) {
     return Get.context == null || message.isEmpty
         ? null
         : Get.showSnackbar(GetSnackBar(
@@ -70,7 +70,7 @@ extension Utils on GetInterface {
                       ? Color(0xFF18B760)
                       : Get.theme.primaryColor,
             ),
-            duration: const Duration(seconds: 2),
+            duration: duration,
             borderColor: type == CustomSnackbarType.error
                 ? Color(0XFFF1351B)
                 : type == CustomSnackbarType.success

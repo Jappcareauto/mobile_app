@@ -199,7 +199,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
               ),
               const SizedBox(height: 20),
               const SizedBox(
-                  height: 300,
+                  // height: 300,
                   child: WorkshopCustomMapView()),
               // const SizedBox(height: 20),
               // VehicleListWidget(
