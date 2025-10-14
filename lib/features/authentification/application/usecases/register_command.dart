@@ -1,3 +1,5 @@
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
+
 class RegisterCommand {
   final String name;
   final String? email;
@@ -14,12 +16,3 @@ class RegisterCommand {
   });
 }
 
-class PhoneCommand {
-  final String code;
-  final String number;
-
-  const PhoneCommand({
-    required this.code,
-    required this.number,
-  });
-}

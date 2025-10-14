@@ -32,8 +32,8 @@ class SettingsScreen extends GetView<SettingsController> {
                 SettingItem(
                   title: "Payments",
                   icon: FluentIcons.wallet_24_regular,
-                  // onTap: controller.goToPayments,
-                  onTap: controller.navigateTCommingSoon
+                  onTap: controller.goToPayments,
+                  // onTap: controller.navigateTCommingSoon
                 ),
                 SettingItem(
                   title: "Notifications",

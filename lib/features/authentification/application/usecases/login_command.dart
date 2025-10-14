@@ -1,4 +1,4 @@
-import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 
 class LoginCommand {
   final String? email;

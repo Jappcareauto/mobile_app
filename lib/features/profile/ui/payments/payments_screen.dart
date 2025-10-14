@@ -1,11 +1,15 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 // import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar_with_back_and_avatar.dart';
-import 'package:jappcare/core/ui/widgets/custom_button.dart';
+// import 'package:jappcare/core/ui/widgets/custom_button.dart';
+import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/core/utils/app_colors.dart';
+import 'package:jappcare/core/utils/app_images.dart';
 // import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'controllers/payments_controller.dart';
 import 'package:get/get.dart';
-import './widgets/credit_card_widget.dart';
+// import './widgets/credit_card_widget.dart';
 
 class PaymentsScreen extends GetView<PaymentsController> {
   const PaymentsScreen({super.key});
@@ -22,33 +26,208 @@ class PaymentsScreen extends GetView<PaymentsController> {
               child:
                   // Column(children: [
                   Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+                padding: const EdgeInsets.fromLTRB(16, 20, 16, 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 12,
                   children: [
-                    const Text(
-                      'Select a payment method',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1F2937),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: AppColors.lightBorder,
+                          width: 1,
+                        ),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: controller.goToAddMtnMoneyPaymentMethod,
+                          splashColor:
+                              Get.theme.primaryColor.withValues(alpha: 0.2),
+                          highlightColor:
+                              Get.theme.primaryColor.withValues(alpha: 0.1),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  spacing: 12,
+                                  children: [
+                                    ImageComponent(
+                                      assetPath: AppImages.mtnLogo,
+                                    ),
+                                    Text(
+                                      "MTN Momo",
+                                      style: Get.textTheme.bodyMedium,
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  spacing: 6,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      FluentIcons.add_16_regular,
+                                      color: AppColors.greyText,
+                                      size: 18,
+                                    ),
+                                    Text(
+                                      "Add Number",
+                                      style: Get.textTheme.bodyMedium
+                                          ?.copyWith(color: AppColors.greyText),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: controller.creditCards.length,
-                        itemBuilder: (context, index) {
-                          return CreditCardWidget(
-                              card: controller.creditCards[index]);
-                        },
+
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: AppColors.lightBorder,
+                          width: 1,
+                        ),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: controller.goToAddOrangeMoneyPaymentMethod,
+                          splashColor:
+                              Get.theme.primaryColor.withValues(alpha: 0.2),
+                          highlightColor:
+                              Get.theme.primaryColor.withValues(alpha: 0.1),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  spacing: 12,
+                                  children: [
+                                    ImageComponent(
+                                      assetPath: AppImages.orangeLogo,
+                                    ),
+                                    Text(
+                                      "Orange Money",
+                                      style: Get.textTheme.bodyMedium,
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  spacing: 6,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      FluentIcons.add_16_regular,
+                                      color: AppColors.greyText,
+                                      size: 18,
+                                    ),
+                                    Text(
+                                      "Add Number",
+                                      style: Get.textTheme.bodyMedium
+                                          ?.copyWith(color: AppColors.greyText),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    CustomButton(
-                        text: "Add payment method",
-                        onPressed: controller.selectedMethod.value.isNotEmpty
-                            ? () => controller.goToAddPaymentMethods()
-                            : null),
+
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: AppColors.lightBorder,
+                          width: 1,
+                        ),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
+                          onTap: controller.goToAddCardPaymentMethod,
+                          splashColor:
+                              Get.theme.primaryColor.withValues(alpha: 0.2),
+                          highlightColor:
+                              Get.theme.primaryColor.withValues(alpha: 0.1),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  spacing: 12,
+                                  children: [
+                                    ImageComponent(
+                                      assetPath: AppImages.cardLogo,
+                                      color: Colors.white,
+                                      height: 34,
+                                      width: 34,
+                                    ),
+                                    Text(
+                                      "Card",
+                                      style: Get.textTheme.bodyMedium,
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  spacing: 6,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      FluentIcons.add_16_regular,
+                                      color: AppColors.greyText,
+                                      size: 18,
+                                    ),
+                                    Text(
+                                      "Add Number",
+                                      style: Get.textTheme.bodyMedium
+                                          ?.copyWith(color: AppColors.greyText),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Expanded(
+                    //   child: ListView.builder(
+                    //     itemCount: controller.creditCards.length,
+                    //     itemBuilder: (context, index) {
+                    //       return CreditCardWidget(
+                    //           card: controller.creditCards[index]);
+                    //     },
+                    //   ),
+                    // ),
+                    // CustomButton(
+                    //     text: "Add payment method",
+                    //     onPressed: controller.selectedMethod.value.isNotEmpty
+                    //         ? () => controller.goToAddPaymentMethods()
+                    //         : null),
                   ],
                 ),
               ),

@@ -1,6 +1,8 @@
 //Don't translate me
 import 'dart:io';
 
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
+
 import '../../domain/repositories/authentification_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
 
@@ -12,7 +14,6 @@ import 'package:dartz/dartz.dart';
 import '../models/login_model.dart';
 import '../../domain/entities/register.dart';
 import '../models/register_model.dart';
-import '../../application/usecases/register_command.dart';
 
 import '../../domain/entities/forgot_password.dart';
 import '../models/forgot_password_model.dart';

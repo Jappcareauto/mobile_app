@@ -1,5 +1,5 @@
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
-import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 
 class UpdateProfileCommand {
   final String name;

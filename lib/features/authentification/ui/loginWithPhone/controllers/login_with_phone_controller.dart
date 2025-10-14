@@ -4,7 +4,7 @@ import 'package:jappcare/core/services/form/validators.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/authentification/application/usecases/login_command.dart';
 import 'package:jappcare/features/authentification/application/usecases/login_usecase.dart';
-import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import 'package:jappcare/features/authentification/domain/core/exceptions/authentification_exception.dart';
 import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';

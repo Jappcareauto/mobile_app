@@ -111,30 +111,30 @@ class ImagePreviewScreen extends StatelessWidget {
     print(imagePath);
 
     // // Show loading dialog
-    // Get.dialog(
-    //   const Center(child: CircularProgressIndicator()),
-    //   barrierDismissible: false,
-    // );
+    Get.dialog(
+      const Center(child: CircularProgressIndicator()),
+      barrierDismissible: false,
+    );
 
     // // Get the chat controller and send the image
     final chatController = Get.find<ChatDetailsController>();
     chatController.sendImageMessage(imagePath, caption).then((_) {
       Get.back(); // Close loading dialog
-      Get.back(); // Go back to chat screen
-      Get.snackbar(
-        'Success',
-        'Image sent successfully!',
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
+      Get.back(result: imagePath); // Go back to chat screen
+      // Get.snackbar(
+      //   'Success',
+      //   'Image sent successfully!',
+      //   backgroundColor: Colors.green,
+      //   colorText: Colors.white,
+      // );
     }).catchError((error) {
       Get.back(); // Close loading dialog
-      Get.snackbar(
-        'Error',
-        'Failed to send image: $error',
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      // Get.snackbar(
+      //   'Error',
+      //   'Failed to send image: $error',
+      //   backgroundColor: Colors.red,
+      //   colorText: Colors.white,
+      // );
     });
   }
 }

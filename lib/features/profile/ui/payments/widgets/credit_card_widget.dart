@@ -16,7 +16,7 @@ class CreditCardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         child: Container(
-          height: 200,
+          height: 209,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,

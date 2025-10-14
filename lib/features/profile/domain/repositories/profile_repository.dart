@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
-import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
+import 'package:jappcare/core/utils/enums.dart';
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import 'package:jappcare/features/profile/domain/entities/update_user_details.dart';
 
 import '../core/exceptions/profile_exception.dart';
@@ -22,4 +23,9 @@ abstract class ProfileRepository {
       LocationEntity? location,
       PhoneCommand? phone,
       });
+
+  Future<Either<ProfileException, String>> addPaymentMethod({
+    required PaymentMethod type,
+    PhoneCommand? phone,
+  });
 }

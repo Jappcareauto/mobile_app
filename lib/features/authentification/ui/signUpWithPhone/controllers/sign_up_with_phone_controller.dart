@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/services/form/form_helper.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
 import 'package:jappcare/features/authentification/application/usecases/register_usecase.dart';
 import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';

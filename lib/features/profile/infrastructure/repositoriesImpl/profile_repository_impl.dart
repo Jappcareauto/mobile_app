@@ -1,9 +1,9 @@
 //Don't translate me
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
-import 'package:jappcare/features/authentification/application/usecases/register_command.dart';
+import 'package:jappcare/core/utils/enums.dart';
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import 'package:jappcare/features/profile/domain/entities/update_user_details.dart';
 import 'package:jappcare/features/profile/infrastructure/models/update_user_details_model.dart';
 
@@ -26,10 +26,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   Future<List<String>?> uploadImages(List<File> files) async {
     try {
-
       final response = await networkService.post(
         ProfileConstants.uploadImagesUri,
-        files: { for (var elemt in files) "files" : elemt },
+        files: {for (var elemt in files) "files": elemt},
       );
       return response['data'];
     } on BaseException catch (e) {
@@ -106,6 +105,24 @@ class ProfileRepositoryImpl implements ProfileRepository {
       });
       return Right(
           UpdateUserDetailsModel.fromJson(response["data"]).toEntity());
+    } on BaseException catch (e) {
+      return Left(ProfileException(e.message, e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<ProfileException, String>> addPaymentMethod(
+      {required PaymentMethod type, PhoneCommand? phone}) async {
+    try {
+      final response = await networkService
+          .post(ProfileConstants.updateUserDetailsUri, body: {
+        "userId": "",
+        "paymentMethod": type.name,
+        "approved": "",
+        "mobileMoney": {"mobileWalletNumber": "${phone?.code}${phone?.number}"}
+      });
+      // return Right(UpdateUserDetailsModel.fromJson(response["data"]).toEntity());
+      return Right("${response["data"]}");
     } on BaseException catch (e) {
       return Left(ProfileException(e.message, e.statusCode));
     }

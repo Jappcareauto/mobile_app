@@ -11,8 +11,8 @@ class GetAllChatRoomMessagesEntity {
   });
 
   factory GetAllChatRoomMessagesEntity.create({
-    required data,
-    required pagination,
+    required List<ChatMessageEntity> data,
+    required Pagination pagination,
   }) {
     // Add any validation or business logic here
     return GetAllChatRoomMessagesEntity._(
@@ -56,20 +56,20 @@ class ChatMessageEntity {
   });
 
   factory ChatMessageEntity.create({
-    required id,
-    required createdBy,
-    required updatedBy,
-    required createdAt,
-    required updatedAt,
-    required senderId,
-    required content,
-    required chatRoomId,
-    required timestamp,
-    required type,
-    appointmentId,
-    sender,
-    duration,
-    mediaUrl,
+    required String id,
+    required String createdBy,
+    required String updatedBy,
+    required String createdAt,
+    required String updatedAt,
+    required String senderId,
+    required String content,
+    required String chatRoomId,
+    required String timestamp,
+    required String type,
+    String? appointmentId,
+    String? sender,
+    String? duration,
+    String? mediaUrl,
   }) {
     // Add any validation or business logic here
     return ChatMessageEntity._(

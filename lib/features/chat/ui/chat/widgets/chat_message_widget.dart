@@ -5,10 +5,12 @@ import 'package:jappcare/features/profile/ui/profile/controllers/profile_control
 
 class ChatMessageWidget extends StatelessWidget {
   final ChatMessageEntity message;
+  final bool isSender;
 
   const ChatMessageWidget({
     super.key,
     required this.message,
+    required this.isSender,
   });
 
   @override
@@ -30,26 +32,16 @@ class ChatMessageWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 6),
               decoration: BoxDecoration(
-                // color: Get.theme.primaryColor.withValues(alpha: .2),
-                // : isDarkMode
-                //     ? Get.theme.scaffoldBackgroundColor
-                //         .withValues(alpha: .2)
-                //     : Colors.grey.shade200
                 color: isSender
-                    ? Get.theme.primaryColor.withValues(alpha: .2)
+                    ? Color(0xFFFE8F41)
                     : isDarkMode
                         ? Get.theme.scaffoldBackgroundColor
                             .withValues(alpha: .2)
-                        : Colors.grey.shade200,
-                borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(12))
-                    .copyWith(
-                        bottomLeft: isSender ? const Radius.circular(12) : null,
-                        bottomRight:
-                            isSender ? null : const Radius.circular(12)),
+                        : Color(0xFFE0E0E0),
+                borderRadius: _getMessageBorderRadius(isSender),
               ),
               constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.7,
+                maxWidth: MediaQuery.of(context).size.width * 0.75,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,20 +50,22 @@ class ChatMessageWidget extends StatelessWidget {
                     message.content,
                     style: TextStyle(
                       color:
-                          isSender || isDarkMode ? Colors.black : Colors.black,
+                          isSender || isDarkMode ? Colors.white : Colors.black,
                     ),
                   ),
                   if (date != null)
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 4, 4, 0),
+                      padding: const EdgeInsets.only(top: 4.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
                             date.substring(11, 16),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 10,
-                              color: Colors.grey,
+                              color: isSender || isDarkMode
+                                  ? Colors.black
+                                  : Colors.grey,
                             ),
                           )
                         ],
@@ -84,6 +78,20 @@ class ChatMessageWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  // Helper for consistent border radius
+  BorderRadius _getMessageBorderRadius(bool isMyMessage) {
+    const radius = Radius.circular(16);
+    const zero =
+        Radius.circular(4); // Use a slight curve for the pointed corner
+
+    return BorderRadius.only(
+      topLeft: radius,
+      topRight: radius,
+      bottomLeft: isMyMessage ? radius : zero,
+      bottomRight: isMyMessage ? zero : radius,
     );
   }
 }

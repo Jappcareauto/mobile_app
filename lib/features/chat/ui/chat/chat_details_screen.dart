@@ -1,5 +1,6 @@
 // import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 // import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 // import 'package:jappcare/features/chat/ui/chat/widgets/chat_input_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_appointment_summary.dart';
@@ -7,6 +8,7 @@ import 'package:jappcare/features/chat/ui/chat/widgets/image_message_widget.dart
 import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_app_bar.dart';
+import 'package:jappcare/features/chat/ui/chat/widgets/voice_message_widget.dart';
 // import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/profile/ui/profile/widgets/avatar_widget.dart';
 // import 'package:jappcare/features/chat/ui/chat/widgets/chat_invoice.dart';
@@ -28,7 +30,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
   Widget build(BuildContext context) {
     // final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: Get.theme.scaffoldBackgroundColor,
+      backgroundColor: Color(0xFFF7F7F7),
       appBar: ChatAppBar(
         profileImageUrl: AppImages.avatar,
         username: controller.appointment.serviceCenter?.name ?? '',
@@ -41,6 +43,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
             children: [
               Flexible(
                 child: ListView(
+                  scrollDirection: Axis.vertical,
                   controller: controller.scrollController,
                   reverse: false,
                   padding: const EdgeInsets.all(12.0),
@@ -94,6 +97,9 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                           child: CircularProgressIndicator(),
                         );
                       }
+
+                      var groupedMessages =
+                          controller.groupMessages(controller.messages);
                       return Column(
                         spacing: 20,
                         children: [
@@ -134,8 +140,11 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                           //   ],
                           // ),
 
-                          ...controller.groupedMessages.keys.map((key) {
-                            final messages = controller.groupedMessages[key]!;
+                          // ...controller.groupedMessages.keys.map((key) {
+                          //   final messages = controller.groupedMessages[key]!;
+
+                          ...groupedMessages.keys.map((key) {
+                            final messages = groupedMessages[key]!;
                             return Column(children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -146,7 +155,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                                         horizontal: 10, vertical: 5),
                                     decoration: BoxDecoration(
                                       color: Get.theme.primaryColor.withValues(
-                                        alpha: 0.6,
+                                        alpha: 0.8,
                                       ),
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(10)),
@@ -163,16 +172,25 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                                 ],
                               ),
                               ...messages.map((message) {
+                                final isSender = message.senderId ==
+                                        controller.currentUser?.id
+                                    ? true
+                                    : false;
                                 // print(
                                 //     "message: ${message.content}, isImageMessage: ${message.isImageMessage} ${message.toJson()}");
-                                return message.isImageMessage
-                                    ? ImageMessageWidget(
-                                        message: message,
-                                      )
-                                    : ChatMessageWidget(
-                                        message:
-                                            message, // Utilise une chaîne vide si "text" est null
-                                      );
+                                return message.isVoiceMessage
+                                    ? VoiceMessageWidget(
+                                        message: message, isSender: isSender)
+                                    : message.isImageMessage
+                                        ? ImageMessageWidget(
+                                            message: message,
+                                            isSender: isSender,
+                                          )
+                                        : ChatMessageWidget(
+                                            message:
+                                                message, // Utilise une chaîne vide si "text" est null,
+                                            isSender: isSender,
+                                          );
                               }),
                             ]);
                           }),
@@ -257,13 +275,10 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                   ],
                 ),
               ),
-              const Divider(
-                height: 1.0,
-              ),
-              Container(
-                decoration: BoxDecoration(color: Theme.of(context).cardColor),
-                child: _buildTextComposer(),
-              ),
+              // const Divider(
+              //   height: 1.0,
+              // ),
+              _buildTextComposer(),
             ],
           ));
         },
@@ -282,41 +297,96 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
         children: <Widget>[
           Expanded(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18.0),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFEDE6), // Couleur d'arrière-plan rosé
+                color: Colors.white, // Couleur d'arrière-plan rosé
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: Row(
-                children: [
-                  // Flexible text field
-                  Expanded(
-                    child: TextField(
-                      controller: controller.messageController,
-                      onSubmitted: controller.handSentTextMessage,
-                      decoration: const InputDecoration.collapsed(
-                        hintText: 'Write a message',
-                      ),
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  // Image picker button
-                  IconButton(
-                    icon: const Icon(Icons.photo_library),
-                    onPressed: controller.pickImage,
-                  ),
-                ],
+              child: Obx(
+                () => AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  child: controller.isRecording.value
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: const Icon(Icons.delete_forever,
+                                    color: Colors.red),
+                                onPressed: controller
+                                    .cancelRecording, // Cancel recording
+                              ),
+                              const Expanded(
+                                child: Text(
+                                  'Recording...',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                ),
+                              ),
+                              Obx(() => Text(
+                                    // Placeholder for displaying recording time
+                                    // '${controller.recordingPath != null ? '0:0' : '0:00'}',
+                                    controller.isRecording.value
+                                        ? controller.recordingDuration.value
+                                        : '00:00',
+                                    style: const TextStyle(color: Colors.grey),
+                                  )),
+                              // The long press end on the IconButton above will trigger stop/send
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(left: 18.0),
+                          child: Row(
+                            children: [
+                              // Flexible text field
+                              Expanded(
+                                child: TextField(
+                                  controller: controller.messageController,
+                                  onSubmitted: controller.handSentTextMessage,
+                                  decoration: const InputDecoration.collapsed(
+                                    hintText: 'Write a message',
+                                  ),
+                                  style: const TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              // Image picker button
+                              IconButton(
+                                icon: const Icon(
+                                  FluentIcons.image_copy_24_filled,
+                                  size: 24.0,
+                                ),
+                                onPressed: controller.pickImage,
+                              ),
+
+                              IconButton(
+                                icon: const Icon(Icons.mic),
+                                onPressed: controller.startRecording,
+                                // onLongPress: ,
+                                // onTap or onLongPress determined by your design
+                                // onLongPressEnd: (details) => controller.sendVoiceMessage(),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
               ),
             ),
           ),
 
           // Send button
           GestureDetector(
-            onTap: () => controller
-                .handSentTextMessage(controller.messageController.text),
+            onTap: () {
+              if (controller.isRecording.value) {
+                controller.stopRecording();
+              } else {
+                controller
+                    .handSentTextMessage(controller.messageController.text);
+              }
+            },
             child: Container(
               padding: const EdgeInsets.all(12.0),
               decoration: BoxDecoration(
@@ -324,7 +394,8 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                 color: Get.theme.primaryColor, // Couleur du bouton d'envoi
               ),
               child: Icon(
-                Icons.send,
+                FluentIcons.send_20_filled,
+                size: 20.0,
                 color: Colors.white,
               ),
             ),

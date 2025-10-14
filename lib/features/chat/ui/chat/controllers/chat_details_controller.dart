@@ -7,7 +7,7 @@ import 'package:jappcare/core/navigation/app_navigation.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
-import 'package:jappcare/core/utils/app_images.dart';
+// import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/functions.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/chat/application/command/get_chatroom_by_appointment_id.command.dart';
@@ -50,7 +50,7 @@ class ChatDetailsController extends GetxController {
 
   // Controllers
   final ScrollController scrollController = ScrollController();
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  // final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   final TextEditingController messageController = TextEditingController();
   final LocalStorageService _localStorage = Get.find<LocalStorageService>();
 
@@ -69,8 +69,7 @@ class ChatDetailsController extends GetxController {
       _getAppointmentByAppointmentIdUseCase =
       GetAppointmentByChatRoomIdUseCase(Get.find());
 
-    final GetChatRoomByAppointmentIdUseCase
-      _getChatRoomByAppointmentIdUseCase =
+  final GetChatRoomByAppointmentIdUseCase _getChatRoomByAppointmentIdUseCase =
       GetChatRoomByAppointmentIdUseCase(Get.find());
 
   // Observable variables
@@ -84,8 +83,8 @@ class ChatDetailsController extends GetxController {
   final selectedMethod = 'Orange Money'.obs;
   var selectedImages = <File>[].obs;
   final RxList<ChatMessageEntity> messages = <ChatMessageEntity>[].obs;
-  final RxMap<String, List<ChatMessageEntity>> groupedMessages =
-      <String, List<ChatMessageEntity>>{}.obs;
+  // final RxMap<String, List<ChatMessageEntity>> groupedMessages =
+  //     <String, List<ChatMessageEntity>>{}.obs;
   late AppointmentEntity appointment;
   late ChatRoomEntity chatRoom;
   final currentUser = Get.find<ProfileController>().userInfos;
@@ -116,24 +115,30 @@ class ChatDetailsController extends GetxController {
   ChatDetailsController(this._appNavigation);
 
   // Voice recording
-  final AudioRecorder _audioRecorder = AudioRecorder();
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioRecorder _audioRecorder = AudioRecorder(); // To record voice
+  final AudioPlayer _audioPlayer = AudioPlayer(); // To play recorded audio
   final RxBool isRecording = false.obs;
   final RxBool isPlaying = false.obs;
   final RxString recordingDuration = '00:00'.obs;
   final RxDouble playbackProgress = 0.0.obs;
+  final Rx<Duration> currentPosition = Duration.zero.obs;
+  final Rx<Duration> totalDuration = Duration.zero.obs;
   final RxString currentlyPlayingId = ''.obs;
+  // --- Lifecycle and Stream Subscriptions ---
+  late StreamSubscription<PlayerState> _stateSubscription;
+  late StreamSubscription<Duration?> _durationSubscription;
+  late StreamSubscription<Duration> _positionSubscription;
 
-  var paymentDetails = [
-    {"name": "MTN Momo", "icon": AppImages.mtnLogo, "numero": "+237691121881"},
-    {
-      "name": "Orange Money",
-      "icon": AppImages.orangeLogo,
-      "numero": "+237691121881"
-    },
-    {"name": "Card", "icon": AppImages.card, "numero": "**** **** **** 7890"},
-    {"name": "Cash", "icon": AppImages.money, "numero": ""}
-  ];
+  // var paymentDetails = [
+  //   {"name": "MTN Momo", "icon": AppImages.mtnLogo, "numero": "+237691121881"},
+  //   {
+  //     "name": "Orange Money",
+  //     "icon": AppImages.orangeLogo,
+  //     "numero": "+237691121881"
+  //   },
+  //   {"name": "Card", "icon": AppImages.card, "numero": "**** **** **** 7890"},
+  //   {"name": "Cash", "icon": AppImages.money, "numero": ""}
+  // ];
 
   @override
   void onInit() {
@@ -145,10 +150,9 @@ class ChatDetailsController extends GetxController {
     // print('appointment ${appointmentId.value}');
 
     getChatRoomByAppointmentId();
-    _connectToWebSocket();
-    // _initializeAudio();
+    // _connectToWebSocket();
+    _initializeAudio();
     // getAppointmentByChatRoomId();
-    
   }
 
   @override
@@ -160,8 +164,46 @@ class ChatDetailsController extends GetxController {
     _typingController.close();
     _presenceController.close();
     // scrollController.dispose();
-    disconnect();
+    // disconnect();
     super.onClose();
+  }
+
+  // --- Main Action: Play/Pause/Stop ---
+
+  void togglePlayPause(String messageId, String audioUrl) async {
+    // 1. If the message is already playing, pause it.
+    if (messageId == currentlyPlayingId.value && isPlaying.value) {
+      await _audioPlayer.pause();
+      isPlaying.value = false;
+      return;
+    }
+
+    // 2. If a DIFFERENT message is playing or paused, stop it first.
+    if (currentlyPlayingId.value.isNotEmpty &&
+        messageId != currentlyPlayingId.value) {
+      await _audioPlayer.stop();
+      currentlyPlayingId.value = '';
+      currentPosition.value = Duration.zero;
+    }
+
+    // 3. Start playback for the new message.
+    try {
+      currentlyPlayingId.value = messageId;
+      await _audioPlayer.setFilePath(audioUrl);
+      await _audioPlayer.play();
+    } catch (e) {
+      print('Error playing audio: $e');
+      currentlyPlayingId.value = '';
+    }
+  }
+
+  void seekToPosition(double milliseconds) {
+    _audioPlayer.seek(Duration(milliseconds: milliseconds.toInt()));
+  }
+
+  // Helper for UI to check if THIS message is active
+  bool isMessageActive(String messageId) {
+    return currentlyPlayingId.value == messageId;
   }
 
   void scrollToBottom() {
@@ -201,10 +243,8 @@ class ChatDetailsController extends GetxController {
       (response) {
         loading.value = false;
         messages.value = response.data;
-        groupedMessages.value = groupMessages(response.data);
+        // groupedMessages.value = groupMessages(response.data);
         scrollToBottom();
-        update();
-        update();
       },
     );
   }
@@ -264,10 +304,9 @@ class ChatDetailsController extends GetxController {
   }
 
   void subscribeToTopic() {
-    final topicDestination =
-        '${ChatConstants.chatRoomTopic}/${chatRoom.id}';
+    final topicDestination = '${ChatConstants.chatRoomTopic}/${chatRoom.id}';
 
-        print('Subscribing to topic: $topicDestination');
+    print('Subscribing to topic: $topicDestination');
 
     _stompClient!.subscribe(
       destination: topicDestination,
@@ -298,24 +337,26 @@ class ChatDetailsController extends GetxController {
   // Text message methods
 
   void handSentTextMessage(String content) {
-    messageController.clear();
-    if(content.trim().isNotEmpty) {
-    final textMessage = ChatMessageEntity.create(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          senderId: Get.find<ProfileController>().userInfos!.id,
-          content: content,
-          chatRoomId: chatRoom.id,
-          type: 'TEXT',
-          timestamp: DateTime.now().toIso8601String(),
-          createdBy: Get.find<ProfileController>().userInfos!.id,
-          updatedBy: Get.find<ProfileController>().userInfos!.id,
-          createdAt: DateTime.now().toIso8601String(),
-          updatedAt: DateTime.now().toIso8601String());
-      messageController.clear();
-      groupedMessages.value = groupMessages([...messages, textMessage]);
-      messages.add(textMessage);
+    // messageController.clear();
+    String trimmedContent = content.trim();
+    if (trimmedContent.isNotEmpty) {
+      final textMessage = ChatMessageEntity.create(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        senderId: Get.find<ProfileController>().userInfos!.id,
+        content: trimmedContent,
+        chatRoomId: chatRoom.id,
+        type: 'TEXT',
+        timestamp: DateTime.now().toIso8601String(),
+        createdBy: Get.find<ProfileController>().userInfos!.id,
+        updatedBy: Get.find<ProfileController>().userInfos!.id,
+        createdAt: DateTime.now().toIso8601String(),
+        updatedAt: DateTime.now().toIso8601String(),
+      );
+      messages.value = [...messages, textMessage];
       scrollToBottom();
-      update();
+      messageController.clear();
+      // groupedMessages.value = groupMessages([...messages, textMessage]);
+      // update();
     }
   }
 
@@ -348,8 +389,10 @@ class ChatDetailsController extends GetxController {
           createdAt: DateTime.now().toIso8601String(),
           updatedAt: DateTime.now().toIso8601String());
       messageController.clear();
-      groupedMessages.value = groupMessages([...messages, textMessage]);
-      messages.add(textMessage);
+      // groupedMessages.value = groupMessages([...messages, textMessage]);
+      // messages.add(textMessage);
+
+      messages.value = [...messages, textMessage];
       scrollToBottom();
       update();
       update();
@@ -372,16 +415,25 @@ class ChatDetailsController extends GetxController {
     });
 
     // Listen to player state changes
-    _audioPlayer.playerStateStream.listen((state) {
+    _stateSubscription = _audioPlayer.playerStateStream.listen((state) {
       isPlaying.value = state.playing;
       if (state.processingState == ProcessingState.completed) {
         currentlyPlayingId.value = '';
         playbackProgress.value = 0.0;
+        _audioPlayer.stop(); // Stop the player to reset it fully
       }
+    });
+
+    _durationSubscription = _audioPlayer.durationStream.listen((duration) {
+      totalDuration.value = duration ?? Duration.zero;
+    });
+
+    _positionSubscription = _audioPlayer.positionStream.listen((position) {
+      currentPosition.value = position;
     });
   }
 
-  Future<bool> _requestPermissions() async {
+  Future<bool> _requestMicPermissions() async {
     final microphoneStatus = await Permission.microphone.request();
     return microphoneStatus == PermissionStatus.granted;
   }
@@ -390,7 +442,7 @@ class ChatDetailsController extends GetxController {
 
   Future<void> startRecording() async {
     try {
-      if (!await _requestPermissions()) {
+      if (!await _requestMicPermissions()) {
         Get.snackbar('Permission Denied', 'Microphone permission is required');
         return;
       }
@@ -424,7 +476,8 @@ class ChatDetailsController extends GetxController {
 
       if (path != null) {
         // Show confirmation dialog before sending
-        _showVoiceNotePreview(path);
+        // _showVoiceNotePreview(path);
+        _sendVoiceNote(path, null);
       }
     } catch (e) {
       print('Error stopping recording: $e');
@@ -444,98 +497,182 @@ class ChatDetailsController extends GetxController {
     });
   }
 
-  void _showVoiceNotePreview(String filePath) {
-    Get.dialog(
-      AlertDialog(
-        title: const Text('Send Voice Note?'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Duration: '),
-            Obx(() => Text(recordingDuration.value)),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () => _playPreview(filePath),
-                  icon: const Icon(Icons.play_arrow),
-                  label: const Text('Play'),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () => _sendVoiceNote(filePath),
-                  icon: const Icon(Icons.send),
-                  label: const Text('Send'),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.back();
-              File(filePath).deleteSync(); // Clean up
-            },
-            child: const Text('Cancel'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _playPreview(String filePath) async {
-    try {
-      await _audioPlayer.setFilePath(filePath);
-      await _audioPlayer.play();
-    } catch (e) {
-      print('Error playing preview: $e');
+  // --- 3. Cancel Recording ---
+  Future<void> cancelRecording() async {
+    final path = await _audioRecorder.stop(); // Stop also handles cancellation
+    isRecording.value = false;
+    if (path != null) {
+      // Optional: Delete the file if cancelled
+      final file = File(path);
+      if (await file.exists()) {
+        await file.delete();
+      }
     }
+    // recordingPath = null;
   }
 
-  Future<void> _sendVoiceNote(String filePath) async {
+  // void _showVoiceNotePreview(String filePath) {
+  //   Get.dialog(
+  //     AlertDialog(
+  //       title: const Text('Send Voice Note?'),
+  //       content: Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           const Text('Duration: '),
+  //           Obx(() => Text(recordingDuration.value)),
+  //           const SizedBox(height: 16),
+  //           Row(
+  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //             children: [
+  //               ElevatedButton.icon(
+  //                 onPressed: () => _playPreview(filePath),
+  //                 icon: const Icon(Icons.play_arrow),
+  //                 label: const Text('Play'),
+  //               ),
+  //               ElevatedButton.icon(
+  //                 onPressed: () => _sendVoiceNote(filePath, null),
+  //                 icon: const Icon(Icons.send),
+  //                 label: const Text('Send'),
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () {
+  //             Get.back();
+  //             File(filePath).deleteSync(); // Clean up
+  //           },
+  //           child: const Text('Cancel'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // Future<void> _playPreview(String filePath) async {
+  //   try {
+  //     await _audioPlayer.setFilePath(filePath);
+  //     await _audioPlayer.play();
+  //   } catch (e) {
+  //     print('Error playing preview: $e');
+  //   }
+  // }
+
+  // --- Formatting Helper (can be moved to controller/utility) ---
+  String formatVoiceMessageDuration(Duration d) {
+    final minutes = d.inMinutes.remainder(60).toString().padLeft(2, '0');
+    final seconds = d.inSeconds.remainder(60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
+
+  Future<void> _sendVoiceNote(String filePath, String? caption) async {
     try {
-      Get.back(); // Close dialog
+      // Get.back(); // Close dialog
 
       // Show loading
-      Get.dialog(
-        const Center(child: CircularProgressIndicator()),
-        barrierDismissible: false,
-      );
+      // Get.dialog(
+      //   const Center(child: CircularProgressIndicator()),
+      //   barrierDismissible: false,
+      // );
 
-      final file = File(filePath);
-      final bytes = await file.readAsBytes();
+      // final file = File(filePath);
+      // final bytes = await file.readAsBytes();
 
-      // Convert to base64 for transmission
-      final base64Audio = base64Encode(bytes);
-      final duration = recordingDuration.value;
+      // // Convert to base64 for transmission
+      // final base64Audio = base64Encode(bytes);
+      // final duration = recordingDuration.value;
 
       // Send voice message through WebSocket
-      final messageData = {
-        'senderId': Get.find<ProfileController>().userInfos!.id,
-        'content': base64Audio, // Base64 encoded audio
-        'chatRoomId': chatRoom.id,
-        'type': 'VOICE',
-        'duration': duration,
-        'timestamp': DateTime.now().millisecondsSinceEpoch,
-      };
+      // final messageData = {
+      //   'senderId': Get.find<ProfileController>().userInfos!.id,
+      //   'content': base64Audio, // Base64 encoded audio
+      //   'caption': caption, // Text caption
+      //   'chatRoomId': chatRoom.id,
+      //   'type': 'VOICE',
+      //   'duration': duration,
+      //   'timestamp': DateTime.now().millisecondsSinceEpoch,
+      // };
 
-      _stompClient!.send(
-        destination: ChatConstants.chatMessageDestination,
-        body: json.encode(messageData),
+      // _stompClient!.send(
+      //   destination: ChatConstants.chatMessageDestination,
+      //   body: json.encode(messageData),
+      // );
+
+      print("filePath $filePath, caption $caption");
+      final message = ChatMessageEntity.create(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        senderId: Get.find<ProfileController>().userInfos!.id,
+        content: "",
+        chatRoomId: chatRoom.id,
+        type: 'VOICE',
+        mediaUrl: filePath,
+        timestamp: DateTime.now().toIso8601String(),
+        createdBy: Get.find<ProfileController>().userInfos!.id,
+        updatedBy: Get.find<ProfileController>().userInfos!.id,
+        createdAt: DateTime.now().toIso8601String(),
+        updatedAt: DateTime.now().toIso8601String(),
       );
 
-      Get.back(); // Close loading dialog
-      print('Voice note sent');
+      // Get.back(); // Close loading dialog
+      messages.value = [...messages, message];
+      scrollToBottom();
+      // update();
+      update();
 
       // Clean up temp file
-      file.deleteSync();
+      // file.deleteSync();
     } catch (e) {
       Get.back(); // Close loading dialog
       print('Error sending voice note: $e');
       Get.snackbar('Error', 'Failed to send voice note');
     }
   }
+
+  // Future<void> _sendVoiceNote(String filePath) async {
+  //   try {
+  //     Get.back(); // Close dialog
+
+  //     // Show loading
+  //     Get.dialog(
+  //       const Center(child: CircularProgressIndicator()),
+  //       barrierDismissible: false,
+  //     );
+
+  //     final file = File(filePath);
+  //     final bytes = await file.readAsBytes();
+
+  //     // Convert to base64 for transmission
+  //     final base64Audio = base64Encode(bytes);
+  //     final duration = recordingDuration.value;
+
+  //     // Send voice message through WebSocket
+  //     final messageData = {
+  //       'senderId': Get.find<ProfileController>().userInfos!.id,
+  //       'content': base64Audio, // Base64 encoded audio
+  //       'chatRoomId': chatRoom.id,
+  //       'type': 'VOICE',
+  //       'duration': duration,
+  //       'timestamp': DateTime.now().millisecondsSinceEpoch,
+  //     };
+
+  //     _stompClient!.send(
+  //       destination: ChatConstants.chatMessageDestination,
+  //       body: json.encode(messageData),
+  //     );
+
+  //     Get.back(); // Close loading dialog
+  //     print('Voice note sent');
+
+  //     // Clean up temp file
+  //     file.deleteSync();
+  //   } catch (e) {
+  //     Get.back(); // Close loading dialog
+  //     print('Error sending voice note: $e');
+  //     Get.snackbar('Error', 'Failed to send voice note');
+  //   }
+  // }
 
   Future<void> playVoiceNote(SendMessageEntity message) async {
     try {
@@ -570,64 +707,65 @@ class ChatDetailsController extends GetxController {
   // Image message methods
 
   Future<void> sendImageMessage(String imagePath, String caption) async {
-    if (_stompClient != null &&
-        connectionStatus.value == WebSocketStatus.connected &&
-        imagePath.isNotEmpty) {
-      try {
-        // Read image file and convert to base64
-        final imageFile = File(imagePath);
-        final imageBytes = await imageFile.readAsBytes();
-        final base64Image = base64Encode(imageBytes);
+    // if (_stompClient != null &&
+    //     connectionStatus.value == WebSocketStatus.connected &&
+    //     imagePath.isNotEmpty) {
+    try {
+      // Read image file and convert to base64
+      // final imageFile = File(imagePath);
+      // final imageBytes = await imageFile.readAsBytes();
+      // final base64Image = base64Encode(imageBytes);
 
-        final messageData = {
-          'senderId': Get.find<ProfileController>().userInfos!.id,
-          'content': caption, // Base64 encoded image
-          'caption': caption, // Text caption
-          'chatRoomId': chatRoom.id,
-          'type': 'IMAGE',
-          'timestamp': DateTime.now().millisecondsSinceEpoch,
-        };
+      // final messageData = {
+      //   'senderId': Get.find<ProfileController>().userInfos!.id,
+      //   'content': caption, // Base64 encoded image
+      //   'caption': caption, // Text caption
+      //   'chatRoomId': chatRoom.id,
+      //   'type': 'IMAGE',
+      //   'timestamp': DateTime.now().millisecondsSinceEpoch,
+      // };
 
-        print(messageData);
-        print(base64Image);
+      // print(messageData);
+      // print(base64Image);
 
-        // _stompClient!.send(
-        //   destination: '/app/chat/message',
-        //   body: json.encode(messageData),
-        // );
-        final message = ChatMessageEntity.create(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          senderId: Get.find<ProfileController>().userInfos!.id,
-          content: caption,
-          chatRoomId: chatRoom.id,
-          type: 'IMAGE',
-          mediaUrl: imagePath,
-          timestamp: DateTime.now().toIso8601String(),
-          createdBy: Get.find<ProfileController>().userInfos!.id,
-          updatedBy: Get.find<ProfileController>().userInfos!.id,
-          createdAt: DateTime.now().toIso8601String(),
-          updatedAt: DateTime.now().toIso8601String(),
-        );
-        // messages.add(message);
+      // _stompClient!.send(
+      //   destination: '/app/chat/message',
+      //   body: json.encode(messageData),
+      // );
+      final message = ChatMessageEntity.create(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        senderId: Get.find<ProfileController>().userInfos!.id,
+        content: caption,
+        chatRoomId: chatRoom.id,
+        type: 'IMAGE',
+        mediaUrl: imagePath,
+        timestamp: DateTime.now().toIso8601String(),
+        createdBy: Get.find<ProfileController>().userInfos!.id,
+        updatedBy: Get.find<ProfileController>().userInfos!.id,
+        createdAt: DateTime.now().toIso8601String(),
+        updatedAt: DateTime.now().toIso8601String(),
+      );
+      // messages.add(message);
 
-        groupedMessages.value = groupMessages([...messages, message]);
-        messages.add(message);
-        scrollToBottom();
-        update();
-        update();
+      // groupedMessages.value = groupMessages([...messages, message]);
+      // messages.add(message);
+      messages.value = [...messages, message];
+      scrollToBottom();
+      // update();
+      update();
 
-        // scrollToBottom();
+      // scrollToBottom();
 
-        print('Image message sent with caption: $caption');
-      } catch (e) {
-        print('Error sending image message: $e');
-        Get.snackbar('Error', 'Failed to send image message');
-      }
+      print('Image message sent with caption: $caption');
+    } catch (e) {
+      print('Error sending image message: $e');
+      Get.showCustomSnackBar('Failed to send image message');
     }
+    // }
   }
 
   Future<void> pickImage() async {
-    final images = await getImage(many: false);
+    final images = await getImage(many: false, withPreview: true);
     if (images != null) {
       selectedImages.addAll(images);
     }
@@ -639,24 +777,23 @@ class ChatDetailsController extends GetxController {
 
   // Sending the message to the api server
 
-  Future<void> insertMessageToDataBase() async {
-    final result = await sendMessageUseCase.call(SendMessageCommand(
-        appointmentId: globalControllerWorkshop.workshopData[
-            'appointmentId'], // a remplacer lorsque le enpoint de creation des rendez voux seras fonctionnel,
-        chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
-        content: messageController.text,
-        type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
-        senderId: Get.find<ProfileController>().userInfos!.id,
-        timestamp: DateTime.now().toIso8601String()));
-    result.fold((e) {
-      print('erreur d\'envoie du message $e');
-      Get.showCustomSnackBar(e.message);
-    }, (response) {
-      print('message envoyer avec succes');
-      print(response);
-    });
-  }
-
+  // Future<void> insertMessageToDataBase() async {
+  //   final result = await sendMessageUseCase.call(SendMessageCommand(
+  //       appointmentId: globalControllerWorkshop.workshopData[
+  //           'appointmentId'], // a remplacer lorsque le enpoint de creation des rendez voux seras fonctionnel,
+  //       chatRoomId: globalControllerWorkshop.workshopData['chatroomId'],
+  //       content: messageController.text,
+  //       type: selectedImages.isNotEmpty ? "image" : "TEXT_SIMPLE",
+  //       senderId: Get.find<ProfileController>().userInfos!.id,
+  //       timestamp: DateTime.now().toIso8601String()));
+  //   result.fold((e) {
+  //     print('erreur d\'envoie du message $e');
+  //     Get.showCustomSnackBar(e.message);
+  //   }, (response) {
+  //     print('message envoyer avec succes');
+  //     print(response);
+  //   });
+  // }
 
   Future<void> getAppointmentByChatRoomId() async {
     appointmentLoading.value = true;
@@ -674,10 +811,10 @@ class ChatDetailsController extends GetxController {
     });
   }
 
-    Future<void> getChatRoomByAppointmentId() async {
+  Future<void> getChatRoomByAppointmentId() async {
     appointmentLoading.value = true;
-    final result = await _getChatRoomByAppointmentIdUseCase.call(
-        GetChatroomByAppointmentIdCommand(appointmentId: appointment.id));
+    final result = await _getChatRoomByAppointmentIdUseCase
+        .call(GetChatroomByAppointmentIdCommand(appointmentId: appointment.id));
     result.fold((e) {
       print('erreur $e');
       Get.showCustomSnackBar(e.message);

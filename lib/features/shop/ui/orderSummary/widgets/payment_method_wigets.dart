@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/core/utils/enums.dart';
 import 'package:jappcare/features/shop/ui/orderSummary/controllers/order_summary_controller.dart';
 
 class PaymentMethodWidget extends StatelessWidget {

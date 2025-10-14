@@ -1,51 +1,52 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/features/chat/domain/entities/get_all_chat_room_messages.entity.dart';
-import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import '../widgets/full_screen_image_view.dart';
 
 class ImageMessageWidget extends StatelessWidget {
   final ChatMessageEntity message;
+  final bool isSender;
 
   const ImageMessageWidget({
     super.key,
     required this.message,
+    required this.isSender,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isMyMessage =
-        message.senderId == Get.find<ProfileController>().userInfos?.id
-            ? true
-            : false;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final date = DateTime.tryParse(message.timestamp)?.toString();
+
     return Align(
-      alignment: isMyMessage ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Column(
           crossAxisAlignment:
-              isMyMessage ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Container(
-              constraints: const BoxConstraints(maxWidth: 200, minWidth: 200),
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.75,
+                // maxHeight: MediaQuery.of(context).size.height * 0.45,
+              ),
               decoration: BoxDecoration(
-                color: isMyMessage ? Colors.blue[100] : Colors.grey[200],
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(16))
-                        .copyWith(
-                            bottomLeft:
-                                isMyMessage ? const Radius.circular(16) : null,
-                            bottomRight:
-                                isMyMessage ? null : const Radius.circular(16)),
+                color: isSender
+                    ? Color(0xFFFE8F41)
+                    : isDarkMode
+                        ? Get.theme.scaffoldBackgroundColor
+                            .withValues(alpha: .2)
+                        : Color(0xFFE0E0E0),
+                borderRadius: _getMessageBorderRadius(isSender),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Sender name (if not my message)
-                  if (!isMyMessage && message.sender != null)
+                  if (!isSender && message.sender != null)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
                       child: Text(
@@ -60,14 +61,9 @@ class ImageMessageWidget extends StatelessWidget {
                   // Image
                   if (message.mediaUrl != null)
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12),
-                          bottomLeft: Radius.circular(4),
-                          bottomRight: Radius.circular(4),
-                        ),
+                        borderRadius: BorderRadius.circular(8),
                         child: GestureDetector(
                           onTap: () => _showFullScreenImage(context),
                           // child: Image.memory(
@@ -76,12 +72,13 @@ class ImageMessageWidget extends StatelessWidget {
                           //   height: 200,
                           //   fit: BoxFit.cover,
                           // ),
+                          // child: AspectRatio(
+                          //   aspectRatio: 4 / 3,
                           child: Image.file(
                             File(message.mediaUrl ?? ""),
                             // base64Decode(message.mediaUrl!),
-                            width: 200,
-                            height: 200,
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover,
+                            // ),
                           ),
                         ),
                       ),
@@ -95,7 +92,7 @@ class ImageMessageWidget extends StatelessWidget {
                   // Caption and timestamp
                   if (message.isImageMessage && message.content.isNotEmpty)
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
+                      padding: const EdgeInsets.fromLTRB(12, 4, 12, 2),
                       child: Text(
                         message.content,
                         style: const TextStyle(fontSize: 14),
@@ -103,23 +100,24 @@ class ImageMessageWidget extends StatelessWidget {
                     ),
 
                   // Timestamp
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          DateTime.tryParse(message.timestamp)
-                              .toString()
-                              .substring(11, 16),
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
+                  if (date != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            date.substring(11, 16),
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: isSender || isDarkMode
+                                  ? Colors.black
+                                  : Colors.grey,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -129,13 +127,28 @@ class ImageMessageWidget extends StatelessWidget {
     );
   }
 
+  // Helper for consistent border radius
+  BorderRadius _getMessageBorderRadius(bool isMyMessage) {
+    const radius = Radius.circular(16);
+    const zero =
+        Radius.circular(4); // Use a slight curve for the pointed corner
+
+    return BorderRadius.only(
+      topLeft: radius,
+      topRight: radius,
+      bottomLeft: isMyMessage ? radius : zero,
+      bottomRight: isMyMessage ? zero : radius,
+    );
+  }
+
   void _showFullScreenImage(BuildContext context) {
     if (message.mediaUrl != null) {
-      Get.to(() => FullScreenImageView(
-            imageData: base64Decode(message.mediaUrl!),
-            // caption: message.caption,
-            caption: message.content,
-          ));
+      Get.to(
+        () => FullScreenImageView(
+          imageUrl: message.mediaUrl!,
+          caption: message.content,
+        ),
+      );
     }
   }
 }

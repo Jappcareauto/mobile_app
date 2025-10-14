@@ -1,15 +1,18 @@
 //Don't translate me
 import 'dart:io';
+// import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image/image.dart';
 import 'package:image_picker/image_picker.dart';
-import '../widgets/image_preview.screen.dart';
+import 'package:jappcare/core/ui/widgets/image_preview.screen.dart';
 
 class PickImage extends StatelessWidget {
-  PickImage({super.key, this.many = false, this.title});
+  PickImage(
+      {super.key, this.many = false, this.title, this.withPreview = false});
   final bool many;
   final String? title;
+  final bool withPreview;
   final picker = ImagePicker();
 
   File parseImage(String parent, String path) {
@@ -76,8 +79,10 @@ class PickImage extends StatelessWidget {
                         );
                         if (pickedFile != null) {
                           print("Camera image path: ${pickedFile.path}");
-                          // final result = await Get.to(
-                          //     () => ImagePreviewScreen(imagePath: pickedFile.path));
+                          if (withPreview) {
+                            await Get.to(() =>
+                                ImagePreviewScreen(imagePath: pickedFile.path));
+                          }
 
                           Get.back(result: [File(pickedFile.path)]);
 
@@ -113,6 +118,7 @@ class PickImage extends StatelessWidget {
                     const SizedBox(height: 16),
                     InkWell(
                       onTap: () async {
+                        // final Either<List<XFile>, XFile?> pickedFile = many
                         final pickedFile = many
                             ? await picker.pickMultiImage()
                             : await picker.pickImage(
@@ -122,6 +128,11 @@ class PickImage extends StatelessWidget {
 
                         if (pickedFile != null) {
                           final result = pickedFile;
+
+                          // if(withPreview) {
+                          // final result = await Get.to(
+                          //     () => ImagePreviewScreen(imagePath: pickedFile.));
+                          // }
 
                           // final sendImage = await Get.to(
                           //     () => ImagePreviewScreen(imagePath: result.path));
@@ -139,7 +150,7 @@ class PickImage extends StatelessWidget {
                           // } else {
                           // }
                           return;
-                        } 
+                        }
                         // else if (pickedFile != null) {
                         //   List<File>? result = [];
                         //   for (var i in (pickedFile as List<XFile>)) {
@@ -147,7 +158,7 @@ class PickImage extends StatelessWidget {
                         //     result.add(File(f.path));
                         //   }
                         //   return Get.back(result: result);
-                        // } 
+                        // }
                         else {
                           Get.back();
                         }

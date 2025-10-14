@@ -23,7 +23,8 @@ class AppImages {
   static const String avatar = "assets/images/avatar.png";
   static const String mtnLogo = "assets/icons/mtn-logo.png";
   static const String orangeLogo = "assets/icons/orange.png";
-  static const String cardLogo = "assets/icons/card-logo.png";
+  // static const String cardLogo = "assets/icons/card-logo.png";
+  static const String cardLogo = "assets/icons/card.svg";
 
   //Icons
   static const String logo = "assets/icons/logo.png";

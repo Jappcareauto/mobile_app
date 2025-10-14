@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import '../core/exceptions/authentification_exception.dart';
 import '../entities/login.dart';
 import '../entities/register.dart';
-import '../../application/usecases/register_command.dart';
 import '../entities/forgot_password.dart';
 import '../entities/reset_password.dart';
 
