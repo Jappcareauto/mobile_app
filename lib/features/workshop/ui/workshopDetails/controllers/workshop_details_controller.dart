@@ -44,8 +44,8 @@ class WorkshopDetailsController extends GetxController {
   final locationLoading = false.obs;
   final locationPermissionGranted = false.obs;
 
-  final globalWorkshopController = Get.find<GlobalcontrollerWorkshop>();
-  final arguments = Get.find<GlobalcontrollerWorkshop>().workshopData;
+  late GlobalcontrollerWorkshop globalWorkshopController;
+  late dynamic arguments;
 
   final RxList<Vehicle> vehicles = <Vehicle>[].obs;
 
@@ -68,6 +68,8 @@ class WorkshopDetailsController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    globalWorkshopController = Get.find<GlobalcontrollerWorkshop>();
+    arguments = globalWorkshopController.workshopData;
     if (arguments['serviceCenterId'] != null) {
       vehicles.value = garageController.vehicleList
           .where((e) => e.serviceCenterId == arguments['serviceCenterId'])

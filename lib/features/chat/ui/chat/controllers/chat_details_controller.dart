@@ -150,8 +150,8 @@ class ChatDetailsController extends GetxController {
     // print('appointment ${appointmentId.value}');
 
     getChatRoomByAppointmentId();
-    // _connectToWebSocket();
     _initializeAudio();
+    _connectToWebSocket();
     // getAppointmentByChatRoomId();
   }
 
@@ -164,7 +164,7 @@ class ChatDetailsController extends GetxController {
     _typingController.close();
     _presenceController.close();
     // scrollController.dispose();
-    // disconnect();
+    disconnect();
     super.onClose();
   }
 

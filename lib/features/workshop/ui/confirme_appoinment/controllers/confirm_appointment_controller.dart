@@ -32,10 +32,11 @@ class ConfirmAppointmentController extends GetxController {
   final requestIsSend = false.obs;
   // final argument = Get.arguments ;
   ConfirmAppointmentController(this._appNavigation);
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  late GlobalcontrollerWorkshop globalControllerWorkshop;
   @override
   void onInit() {
     super.onInit();
+    globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
     print('data ${globalControllerWorkshop.workshopData['vehicle']}');
     // participantId.add(Get.find<ProfileController>().userInfos!.id);
   }
@@ -85,7 +86,7 @@ class ConfirmAppointmentController extends GetxController {
 
   void goToChatScreen() {
     Get.back();
-        _appNavigation.toNamedAndReplaceAll(
+    _appNavigation.toNamedAndReplaceAll(
       AppRoutes.home,
     );
     _appNavigation.toNamed(

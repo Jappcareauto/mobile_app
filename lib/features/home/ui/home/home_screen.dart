@@ -78,40 +78,42 @@ class HomeScreen extends GetView<HomeController> {
                           }).toList(),
                         ),
                       ],
-                      Obx(() {
-                        if (controller.tipsLoading.value) {
-                          return Shimmer.fromColors(
-                            baseColor: Colors.grey.withValues(alpha: .3),
-                            highlightColor: Colors.grey.withValues(alpha: .1),
-                            child: Container(
-                              width: double.infinity,
-                              height: 90,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[300]!,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(15)),
-                                border: Border.all(
-                                    width: 1, color: Colors.grey[200]!),
+                      Obx(
+                        () {
+                          if (controller.tipsLoading.value) {
+                            return Shimmer.fromColors(
+                              baseColor: Colors.grey.withValues(alpha: .3),
+                              highlightColor: Colors.grey.withValues(alpha: .1),
+                              child: Container(
+                                width: double.infinity,
+                                height: 90,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300]!,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  border: Border.all(
+                                      width: 1, color: Colors.grey[200]!),
+                                ),
                               ),
-                            ),
+                            );
+                          }
+                          if (controller.tipsList.isEmpty) {
+                            return const SizedBox.shrink();
+                          }
+                          final lastTip = controller.tipsList.last;
+                          return NotificationWidget(
+                            haveTitle: true,
+                            backgroundColor: const Color(0xFFF4EEFF),
+                            title: 'Tip',
+                            textSize: 14,
+                            bodyText: lastTip.title,
+                            coloriage: Get.theme.colorScheme.secondary,
+                            icon: FluentIcons.question_16_filled,
+                            circleIcon: true,
+                            onTap: () => openModalTipsMethod(lastTip),
                           );
-                        }
-                        return Column(
-                          children: controller.tipsList
-                              .map((tip) => NotificationWidget(
-                                    haveTitle: true,
-                                    backgroundColor: const Color(0xFFF4EEFF),
-                                    title: 'Tip',
-                                    textSize: 14,
-                                    bodyText: tip.title,
-                                    coloriage: Get.theme.colorScheme.secondary,
-                                    icon: FluentIcons.question_16_filled,
-                                    circleIcon: true,
-                                    onTap: () => openModalTipsMethod(tip),
-                                  ))
-                              .toList(),
-                        );
-                      }),
+                        },
+                      ),
                     ],
                   ),
                 ),

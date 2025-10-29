@@ -39,7 +39,7 @@ class ChatController extends GetxController {
 
   final loading = false.obs;
   final searchQuery = ''.obs;
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  late GlobalcontrollerWorkshop globalControllerWorkshop;
 
   GetVehiculByIdUseCase getVehiculByIdUseCase =
       GetVehiculByIdUseCase(Get.find());
@@ -62,6 +62,7 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
     fetchChats();
     // globalControllerWorkshop.addData("chatroomId", "123456");
     // final chatroom = globalControllerWorkshop.workshopData['chatroomId'];

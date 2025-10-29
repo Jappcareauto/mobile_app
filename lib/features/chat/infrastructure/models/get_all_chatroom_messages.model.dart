@@ -84,7 +84,7 @@ class ChatMessageModel {
       updatedAt: json['updatedAt'],
       senderId: json['senderId'],
       content: json['content'],
-      chatRoomId: json['chatRoomId'],
+      chatRoomId: json['chatId'],
       timestamp: json['timestamp'].toString(),
       type: json['type'],
       appointmentId: json['appointmentId'],

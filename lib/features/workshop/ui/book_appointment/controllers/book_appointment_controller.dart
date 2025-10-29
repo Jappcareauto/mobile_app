@@ -70,7 +70,7 @@ class BookAppointmentController extends GetxController {
   final vehicleVin = ''.obs;
   // List<Vehicle> vehicleList = [];
 
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  late GlobalcontrollerWorkshop globalControllerWorkshop;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   // The location state of the form
@@ -112,6 +112,7 @@ class BookAppointmentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
     // Listener pour synchroniser la page actuelle
     serviceCenterServices.value =
         globalControllerWorkshop.workshopData['serviceCenterServices']
@@ -297,13 +298,13 @@ class BookAppointmentController extends GetxController {
       if (place != null) {
         // print(
         //     'Current location: ${place.street}, ${place.locality}, ${place.country}');
-      clearMarkers(); // Clear old markers
+        clearMarkers(); // Clear old markers
 
-      addMarker(
-        position.latitude,
-        position.longitude,
-        place.formattedAddress,
-      );
+        addMarker(
+          position.latitude,
+          position.longitude,
+          place.formattedAddress,
+        );
       }
 
       // 4. Animate the map camera to the new position.
@@ -353,8 +354,8 @@ class BookAppointmentController extends GetxController {
 
   Future<GeocodePosition?> getPlacemark(Position position) async {
     GeocodePosition? location;
-    final result =
-        await _getPlaceLatLngUseCase.call(position.latitude, position.longitude);
+    final result = await _getPlaceLatLngUseCase.call(
+        position.latitude, position.longitude);
     result.fold(
       (e) {
         // locationLoading.value = false;
@@ -362,7 +363,10 @@ class BookAppointmentController extends GetxController {
       },
       (success) {
         // locationLoading.value = false;
-        placeDetails.value = PlaceDetails.create(name: success.formattedAddress, lat: position.latitude, lng: position.longitude);
+        placeDetails.value = PlaceDetails.create(
+            name: success.formattedAddress,
+            lat: position.latitude,
+            lng: position.longitude);
         location = success;
         update();
 

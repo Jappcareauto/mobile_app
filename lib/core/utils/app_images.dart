@@ -5,6 +5,7 @@ class AppImages {
   static const String noImage = "assets/images/noimage.jpg";
   static const String Actualite = "assets/images/actualite.png";
   static const String commingSoon = "assets/images/commingSoon.png";
+  static const String noInternet = "assets/images/noInternet.png";
 
   static const String car1 = "assets/images/car1.png";
   static const String car2 = "assets/images/car2.png";

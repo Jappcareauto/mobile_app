@@ -27,16 +27,29 @@ class TipModalBottomWidget extends StatelessWidget {
           Text("Tip",
               style: Get.textTheme.titleLarge
                   ?.copyWith(fontWeight: FontWeight.bold)),
-          Text(
-              tip.title,
+          Text(tip.title,
               style: Get.textTheme.bodyMedium?.copyWith(
                   color: Get.theme.primaryColor, fontWeight: FontWeight.bold)),
-          Text(
-              tip.description,
-              style: Get.textTheme.bodyMedium),
-          CustomButton(
-            text: "Done",
-            onPressed: Get.back,
+          Text(tip.description, style: Get.textTheme.bodyMedium),
+          Row(
+            spacing: 10,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: CustomButton(
+                  // strech: false,
+                  text: "Done",
+                  onPressed: Get.back,
+                ),
+              ),
+              // Flexible(
+              //   child: CustomButton(
+              //     strech: false,
+              //     text: "Next",
+              //     onPressed: Get.back,
+              //   ),
+              // ),
+            ],
           ),
         ],
       ),

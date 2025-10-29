@@ -49,6 +49,7 @@ import '../../features/vehicleFinder/navigation/private/vehicle_finder_pages.dar
 
 import '../../features/error/dependences/error_dependencies.dart';
 import '../../features/error/navigation/private/error_pages.dart';
+import '../controllers/connectivity_controller.dart';
 
 class AppDependency {
   static Future<void> init() async {
@@ -77,6 +78,10 @@ class AppDependency {
     //initialize AppNavigation
     Get.lazyPut<AppNavigation>(() => GetXNavigationImpl(AppRoutes.notFoundPage),
         fenix: true);
+
+    // Connectivity watcher: register early so it can show network error screen
+    // when connectivity is lost.
+    Get.put(ConnectivityController(Get.find()), permanent: true);
 
     //initialize Views
 

@@ -31,6 +31,8 @@ class WorkshopDependencies {
     Get.lazyPut<WorkshopRepository>(
         () => WorkshopRepositoryImpl(networkService: Get.find()),
         fenix: true);
+    Get.lazyPut<GlobalcontrollerWorkshop>(() => GlobalcontrollerWorkshop(),
+        fenix: true);
     Get.lazyPut<FeatureWidgetInterface>(() => const WorkshopScreen(),
         tag: 'WorkshopScreen', fenix: true);
     Get.lazyPut<BookAppointmentController>(
@@ -52,7 +54,6 @@ class WorkshopDependencies {
         () => SuccessPaymentController(Get.find()));
     Get.lazyPut<AppointmentDetailsController>(
         () => AppointmentDetailsController(Get.find()));
-    Get.lazyPut<GlobalcontrollerWorkshop>(() => GlobalcontrollerWorkshop());
     Get.lazyPut<MapController>(() => MapController(Get.find()));
     // Use cases
     Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);

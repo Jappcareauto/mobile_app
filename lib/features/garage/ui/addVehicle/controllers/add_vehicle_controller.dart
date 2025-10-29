@@ -21,7 +21,7 @@ class AddVehicleController extends GetxController {
       Get.find(); // Reactive variable to track character count
   var vinCharacterCount = 0.obs;
   late FormHelper addVehicleFormHelper;
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  late GlobalcontrollerWorkshop globalControllerWorkshop;
 
   final user = Get.find<ProfileController>().userInfos!;
 
@@ -44,6 +44,7 @@ class AddVehicleController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
 
     // serviceCenterId.value =
     //     globalControllerWorkshop.workshopData['serviceCenterId'] ?? '';
@@ -67,6 +68,8 @@ class AddVehicleController extends GetxController {
       onSuccess: (response) {
         Get.find<GarageController>().getVehicleList(ownerId: user.id);
         _appNavigation.goBack();
+        Get.showCustomSnackBar("Your vehicle has been added successfully",
+            title: "Vehicle Added", type: CustomSnackbarType.success);
         update();
       },
     );
