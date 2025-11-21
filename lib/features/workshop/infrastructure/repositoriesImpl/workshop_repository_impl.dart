@@ -24,18 +24,13 @@ import 'package:dartz/dartz.dart';
 import '../../domain/entities/get_all_services_center.entity.dart';
 import '../models/get_all_service_center_model.dart';
 
-import '../../domain/entities/book_appointment.dart';
-import '../models/book_appointment_model.dart';
-
-// import '../../domain/entities/created_rome_chat.dart';
-// import '../models/created_rome_chat_model.dart';
-
 import '../../domain/entities/get_all_services.entity.dart';
 import '../models/get_all_services_model.dart';
 import '../models/get_all_service_center_services_model.dart';
+
 void printWrapped(String text) {
   // 800 is a good chunk size that should prevent truncation.
-  final pattern = RegExp('.{1,800}'); 
+  final pattern = RegExp('.{1,800}');
   pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
 
@@ -94,7 +89,8 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           "updatedAt": date,
           'date': date,
           // 'location': null,
-          if (location != null && locationType == "HOME") 'location': location.toJson(),
+          if (location != null && locationType == "HOME")
+            'location': location.toJson(),
           'locationType': locationType,
           'note': note,
           'serviceId': serviceId,
@@ -152,19 +148,6 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       return Left(WorkshopException(e.message, e.statusCode));
     }
   }
-
-  // @override
-  // Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
-  //     getAllServicesCenterServices(String serviceCenterId) async {
-  //   try {
-  //     final response = await networkService.get(
-  //         '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.services}');
-  //     return Right(
-  //         GetAllServiceCenterServicesModel.fromJson(response).toEntity());
-  //   } on BaseException catch (e) {
-  //     return Left(WorkshopException(e.message, e.statusCode));
-  //   }
-  // }
 
   @override
   Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
@@ -244,28 +227,10 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
         return Left(WorkshopException('No address found', 404));
       }
 
-      return Right(
-          GeocodePosition.fromJson(response.data['results'][0]));
+      return Right(GeocodePosition.fromJson(response.data['results'][0]));
     } on BaseException catch (e) {
       print(e);
       return Left(WorkshopException(e.message, e.statusCode));
     }
   }
-
-  // final apiKey = 'YOUR_API_KEY';
-  // final url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$apiKey';
-
-  // final response = await http.get(Uri.parse(url));
-
-  // if (response.statusCode == 200) {
-  //   final data = json.decode(response.body);
-  //   if (data['status'] == 'OK') {
-  //     final results = data['results'];
-  //     if (results.isNotEmpty) {
-  //       // Get the formatted address from the first result
-  //       return results[0]['formatted_address'];
-  //     }
-  //   }
-  // }
-  // return 'Address not found';
 }

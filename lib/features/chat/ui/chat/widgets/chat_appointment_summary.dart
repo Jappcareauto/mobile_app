@@ -74,8 +74,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text(
-                          controller.currentUser?.name ?? "Unknown",
+                      Text(controller.currentUser?.name ?? "Unknown",
                           style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold))
                     ],

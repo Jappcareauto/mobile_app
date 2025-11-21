@@ -1,424 +1,321 @@
-// import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
-// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-// import 'package:jappcare/features/chat/ui/chat/widgets/chat_input_widget.dart';
+import 'package:jappcare/features/chat/domain/entities/chat_list_item.dart';
+import 'package:jappcare/features/chat/ui/chat/widgets/recording_waveform_painter.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_appointment_summary.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/image_message_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/chat_app_bar.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/voice_message_widget.dart';
-// import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/profile/ui/profile/widgets/avatar_widget.dart';
-// import 'package:jappcare/features/chat/ui/chat/widgets/chat_invoice.dart';
-
-// import 'controllers/chat_controller.dart';
-// import 'widgets/chat_app_bar.dart';
-// import 'widgets/chat_input_field.dart';
 import 'widgets/chat_message_widget.dart';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 
 class ChatDetailsScreen extends GetView<ChatDetailsController> {
-  // final BookAppointmentController bookController =
-  //     Get.put(BookAppointmentController(Get.find()));
-
   const ChatDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: Color(0xFFF7F7F7),
+      backgroundColor: const Color(0xFFF7F7F7),
       appBar: ChatAppBar(
         profileImageUrl: AppImages.avatar,
         username: controller.appointment.serviceCenter?.name ?? '',
       ),
       body: GetBuilder<ChatDetailsController>(
-        initState: (_) {},
         builder: (controller) {
           return SafeArea(
-              child: Column(
-            children: [
-              Flexible(
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  controller: controller.scrollController,
-                  reverse: false,
-                  padding: const EdgeInsets.all(12.0),
-                  children: [
-                    Container(
-                      margin: EdgeInsets.all(20),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'This is the beginning of your conversation with Jappcare AutoShop',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      spacing: 10,
-                      children: [
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            spacing: 5,
+            child: Column(
+              children: [
+                Flexible(
+                  child: Obx(() {
+                    if (controller.loading.value) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    return ListView.builder(
+                      controller: controller.scrollController,
+                      padding: const EdgeInsets.all(12.0),
+                      itemCount: controller.flattenedItems.length +
+                          1, // +1 for welcome message
+                      itemBuilder: (context, index) {
+                        if (index == 0) {
+                          return Column(
                             children: [
-                              Text(controller.currentUser?.name ?? 'Unknown'),
-                              AvatarWidget(size: 40, canEdit: false)
-
-                              // CircleAvatar(
-                              //   backgroundImage: CachedNetworkImageProvider(controller.currentUser?.image ?? '',
-                              //     placeholder: (context, url) => _buildShimmer(),
-                              //     errorWidget: (context, url, error) => _buildDefaultImage(),
-                              //     fit: BoxFit.cover,
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ),
-                        ChatAppointmentSummary(),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Obx(() {
-                      if (controller.loading.value) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-
-                      var groupedMessages =
-                          controller.groupMessages(controller.messages);
-                      return Column(
-                        spacing: 20,
-                        children: [
-                          // Column(
-                          //   spacing: 10,
-                          //   children: [
-                          //     Align(
-                          //       alignment: Alignment.topRight,
-                          //       child: Row(
-                          //         children: [
-                          //           SizedBox(
-                          //             width: 5,
-                          //           ),
-                          //           CircleAvatar(
-                          //             backgroundImage:
-                          //                 AssetImage(AppImages.avatar),
-                          //           ),
-                          //           const SizedBox(width: 5),
-                          //           Text('Japtech AutoShop'),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //     InvoiceCard(
-                          //       name: "Sara May",
-                          //       email: "Body Shop Appointment",
-                          //       service: "Inspection Fee",
-                          //       invoiceNumber: "JC564739300",
-                          //       dateIssued: "Oct 20, 2024",
-                          //       amount: "7,000 Frs",
-                          //       status: "Pending",
-                          //       onViewInvoice: () {
-                          //         // Action pour voir la facture
-                          //         print("View Invoice clicked");
-                          //         onpenModalPaymentMethod(
-                          //             controller.goToAddPaymentMethodForm);
-                          //       },
-                          //     ),
-                          //   ],
-                          // ),
-
-                          // ...controller.groupedMessages.keys.map((key) {
-                          //   final messages = controller.groupedMessages[key]!;
-
-                          ...groupedMessages.keys.map((key) {
-                            final messages = groupedMessages[key]!;
-                            return Column(children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(bottom: 10),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    decoration: BoxDecoration(
-                                      color: Get.theme.primaryColor.withValues(
-                                        alpha: 0.8,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                    ),
-                                    child: Text(
-                                      key,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                              Container(
+                                margin: const EdgeInsets.all(20),
+                                child: const Text(
+                                  'This is the beginning of your conversation with Jappcare AutoShop',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.grey,
                                   ),
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(controller.currentUser?.name ??
+                                          'Unknown'),
+                                      const SizedBox(width: 5),
+                                      const AvatarWidget(
+                                          size: 40, canEdit: false),
+                                    ],
+                                  ),
+                                  const ChatAppointmentSummary(),
                                 ],
                               ),
-                              ...messages.map((message) {
-                                final isSender = message.senderId ==
-                                        controller.currentUser?.id
-                                    ? true
-                                    : false;
-                                // print(
-                                //     "message: ${message.content}, isImageMessage: ${message.isImageMessage} ${message.toJson()}");
-                                return message.isVoiceMessage
-                                    ? VoiceMessageWidget(
-                                        message: message, isSender: isSender)
-                                    : message.isImageMessage
-                                        ? ImageMessageWidget(
-                                            message: message,
-                                            isSender: isSender,
-                                          )
-                                        : ChatMessageWidget(
-                                            message:
-                                                message, // Utilise une chaîne vide si "text" est null,
-                                            isSender: isSender,
-                                          );
-                              }),
-                            ]);
-                          }),
-                        ],
-                      );
-                    }),
+                              const SizedBox(height: 20),
+                            ],
+                          );
+                        }
 
-                    // Container(
-                    //   margin: EdgeInsets.only(
-                    //       left: MediaQuery.of(context).size.width * .6),
-                    //   child: Align(
-                    //     alignment: Alignment.topRight,
-                    //     child: Row(
-                    //       children: [
-                    //         if (Get.isRegistered<FeatureWidgetInterface>(
-                    //             tag: 'AvatarWidget'))
-                    //           Get.find<FeatureWidgetInterface>(
-                    //                   tag: 'AvatarWidget')
-                    //               .buildView({"haveName": true}),
-                    //         SizedBox(
-                    //           width: 10,
-                    //         ),
-                    //         Text(
-                    //             Get.find<ProfileController>()
-                    //                     .userInfos
-                    //                     ?.name ??
-                    //                 "Unknow",
-                    //             style: TextStyle(
-                    //                 fontSize: 16,
-                    //                 fontWeight: FontWeight.bold))
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                        final itemIndex = index - 1;
+                        final item = controller.flattenedItems[itemIndex];
 
-                    // Obx(() => ResumeAppointmentWidget(
-                    //     services: Get.arguments['serviceName'],
-                    //     date: bookController.selectedDate.value,
-                    //     caseId: bookController.vehicleVin.value,
-                    //     note: bookController.noteController.text,
-                    //     fee: '5,000 Frs',
-                    //     time: bookController.selectedTime.value)),
-                    // SizedBox(
-                    //   height: 20,
-                    // ),
+                        if (item is DateHeaderItem) {
+                          return _buildDateHeader(item.date);
+                        } else if (item is MessageItem) {
+                          final message = item.message;
+                          final isSender =
+                              message.senderId == controller.currentUser?.id;
 
-                    // ...controller.groupedMessages.entries.map((entry) {
-                    //   final messages = entry.value;
-                    //   final isSender = messages.first.senderId ==
-                    //           Get.find<ProfileController>().userInfos?.id
-                    //       ? true
-                    //       : false;
-                    //   return ChatDateWidget(
-                    //     date: entry.key,
-                    //     isSender: isSender,
-                    //   );
+                          if (message.isVoiceMessage) {
+                            return VoiceMessageWidget(
+                                message: message, isSender: isSender);
+                          } else if (message.isImageMessage) {
+                            return ImageMessageWidget(
+                                message: message, isSender: isSender);
+                          } else {
+                            return ChatMessageWidget(
+                                message: message, isSender: isSender);
+                          }
+                        }
 
-                    // final isSender = message.senderId ==
-                    //         Get.find<ProfileController>().userInfos?.id
-                    //     ? true
-                    //     : false;
-                    // return message.isImageMessage
-                    //     ? ImageMessageWidget(
-                    //         message: message,
-                    //         isMyMessage: isSender,
-                    //       )
-                    //     : ChatMessageWidget(
-                    //         text: message
-                    //             .content, // Utilise une chaîne vide si "text" est null
-                    //         isSender:
-                    //             isSender, // Valeur par défaut pour "isSender"
-                    //       );
-                    // }),
-
-                    // Obx(() => controller.isLoading.value
-                    //     ? const Center(
-                    //         child: CircularProgressIndicator(),
-                    //       )
-                    //     : const SizedBox.shrink()),
-
-                    const SizedBox(height: 100),
-                  ],
+                        return const SizedBox.shrink();
+                      },
+                    );
+                  }),
                 ),
-              ),
-              // const Divider(
-              //   height: 1.0,
-              // ),
-              _buildTextComposer(),
-            ],
-          ));
+                _buildInputComposer(),
+              ],
+            ),
+          );
         },
       ),
     );
   }
 
-  /// Builds the text input composer widget at the bottom of the screen.
-  Widget _buildTextComposer() {
+  Widget _buildDateHeader(String date) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            color: Get.theme.primaryColor.withValues(alpha: .8),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+          ),
+          child: Text(
+            date,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInputComposer() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       color: Get.theme.scaffoldBackgroundColor,
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        spacing: 8,
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white, // Couleur d'arrière-plan rosé
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Obx(
-                () => AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200),
-                  child: controller.isRecording.value
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: const Icon(Icons.delete_forever,
-                                    color: Colors.red),
-                                onPressed: controller
-                                    .cancelRecording, // Cancel recording
-                              ),
-                              const Expanded(
-                                child: Text(
-                                  'Recording...',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
-                              ),
-                              Obx(() => Text(
-                                    // Placeholder for displaying recording time
-                                    // '${controller.recordingPath != null ? '0:0' : '0:00'}',
-                                    controller.isRecording.value
-                                        ? controller.recordingDuration.value
-                                        : '00:00',
-                                    style: const TextStyle(color: Colors.grey),
-                                  )),
-                              // The long press end on the IconButton above will trigger stop/send
-                            ],
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(left: 18.0),
-                          child: Row(
-                            children: [
-                              // Flexible text field
-                              Expanded(
-                                child: TextField(
-                                  controller: controller.messageController,
-                                  onSubmitted: controller.handSentTextMessage,
-                                  decoration: const InputDecoration.collapsed(
-                                    hintText: 'Write a message',
-                                  ),
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              // Image picker button
-                              IconButton(
-                                icon: const Icon(
-                                  FluentIcons.image_copy_24_filled,
-                                  size: 24.0,
-                                ),
-                                onPressed: controller.pickImage,
-                              ),
-
-                              IconButton(
-                                icon: const Icon(Icons.mic),
-                                onPressed: controller.startRecording,
-                                // onLongPress: ,
-                                // onTap or onLongPress determined by your design
-                                // onLongPressEnd: (details) => controller.sendVoiceMessage(),
-                              ),
-                            ],
-                          ),
-                        ),
+      child: Container(
+        color: Get.theme.scaffoldBackgroundColor,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade300),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Obx(
+                  () => AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: controller.isRecording.value
+                        ? _buildRecordingIndicator()
+                        : _buildTextInput(),
+                  ),
                 ),
               ),
             ),
-          ),
+            const SizedBox(width: 8),
+            _buildSendButton(),
+          ],
+        ),
+      ),
+    );
+  }
 
-          // Send button
-          GestureDetector(
-            onTap: () {
-              if (controller.isRecording.value) {
-                controller.stopRecording();
-              } else {
-                controller
-                    .handSentTextMessage(controller.messageController.text);
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.all(12.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Get.theme.primaryColor, // Couleur du bouton d'envoi
+  Widget _buildRecordingIndicator() {
+    return Builder(
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.only(left: 6.0, right: 16.0),
+          constraints: const BoxConstraints(minHeight: 48.0),
+          child: Row(
+            children: [
+              Material(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(8.0),
+                child: GestureDetector(
+                  onTap: controller.cancelRecording,
+                  child: InkWell(
+                    onTap: controller.cancelRecording,
+                    borderRadius: BorderRadius.circular(8.0),
+                    splashColor: Colors.white24,
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      alignment: Alignment.center,
+                      child: const Icon(
+                        Icons.delete_forever,
+                        color: Colors.black,
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                ),
               ),
-              child: Icon(
-                FluentIcons.send_20_filled,
-                size: 20.0,
-                color: Colors.white,
+              Expanded(
+                child: GestureDetector(
+                  onHorizontalDragUpdate: (details) {
+                    // Convert drag position to progress (0.0 to 1.0)
+                    final box = context.findRenderObject() as RenderBox;
+                    final progress = details.localPosition.dx / box.size.width;
+                    controller
+                        .updateRecordingLockState(progress.clamp(0.0, 1.0));
+                  },
+                  child: Container(
+                    height: 32,
+                    constraints: const BoxConstraints(minWidth: 32.0),
+                    margin: const EdgeInsets.only(left: 0.0, right: 8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Obx(() {
+                      final samples = controller.currentWaveformData.value
+                              ?.getNormalizedSamples(count: 50) ??
+                          List.generate(50, (i) => 0.0 + i / 50.0);
+                      return CustomPaint(
+                        painter: RecordingWaveformPainter(
+                          waveformPoints: samples,
+                          progress: 10.0,
+                          primaryColor: Get.theme.primaryColor,
+                          secondaryColor: Get.theme.primaryColor.withAlpha(150),
+                          animationValue: 0.0,
+                          isPlaying: false,
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ),
+              Obx(
+                () => Text(
+                  controller.recordingDuration.value,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTextInput() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: controller.messageController,
+              onSubmitted: controller.sendMessage,
+              decoration: const InputDecoration.collapsed(
+                hintText: 'Write a message',
+              ),
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
-
-          // Container(
-          //   margin: const EdgeInsets.symmetric(horizontal: 4.0),
-          //   child: IconButton(
-          //     icon: const Icon(Icons.send),
-          //     onPressed: () => ,
-          //   ),
-          // ),
+          IconButton(
+            icon: const Icon(
+              FluentIcons.image_copy_24_filled,
+              size: 24.0,
+            ),
+            onPressed: controller.pickImage,
+          ),
+          IconButton(
+            icon: const Icon(Icons.mic),
+            onPressed: controller.startRecording,
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSendButton() {
+    return GestureDetector(
+      onTap: () {
+        if (controller.isRecording.value) {
+          controller.stopRecording();
+        } else {
+          controller.sendMessage(controller.messageController.text);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Get.theme.primaryColor,
+        ),
+        child: const Icon(
+          FluentIcons.send_20_filled,
+          size: 20.0,
+          color: Colors.white,
+        ),
       ),
     );
   }
 }
 
-void onpenModalPaymentMethod(void onConfirm) {
+void onpenModalPaymentMethod(void Function(String?) onConfirm) {
   showModalBottomSheet(
     context: Get.context!,
-    isScrollControlled: true, // Permet un contrôle précis sur la hauteur
-    backgroundColor: Colors.transparent, // Rendre l'arrière-plan transparent
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
     builder: (BuildContext context) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
@@ -434,11 +331,11 @@ void onpenModalPaymentMethod(void onConfirm) {
               ),
             ],
           ),
-          padding: const EdgeInsets.all(16), // Espacement intérieur
+          padding: const EdgeInsets.all(16),
           child: Wrap(
             children: [
               PaymentMethodeWidget(onConfirm: () {
-                onConfirm;
+                onConfirm(null);
               }),
             ],
           ),
@@ -447,250 +344,3 @@ void onpenModalPaymentMethod(void onConfirm) {
     },
   );
 }
-
-
-// Stack(
-//               children: [
-//                 // Container(
-//                 //   width: Get.width,
-//                 //   height: Get.height,
-//                 //   decoration: BoxDecoration(
-//                 //       color: isDarkMode
-//                 //           ? Colors.black.withValues(alpha: .9)
-//                 //           : Get.theme.scaffoldBackgroundColor
-//                 //       // : Colors.white,
-//                 //       ),
-//                   // child: 
-//                   Flexible(
-//                     child: ListView(
-//                       controller: controller.scrollController,
-//                       reverse: false,
-//                       padding: const EdgeInsets.all(12.0),
-//                       children: [
-//                         Container(
-//                           margin: EdgeInsets.all(20),
-//                           child: Align(
-//                             alignment: Alignment.center,
-//                             child: Text(
-//                               'This is the beginning of your conversation with Jappcare AutoShop',
-//                               textAlign: TextAlign.center,
-//                               style: TextStyle(
-//                                 fontSize: 12,
-//                                 fontWeight: FontWeight.normal,
-//                                 color: Colors.grey,
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                         Column(
-//                           crossAxisAlignment: CrossAxisAlignment.end,
-//                           mainAxisAlignment: MainAxisAlignment.start,
-//                           spacing: 10,
-//                           children: [
-//                             Align(
-//                               alignment: Alignment.topRight,
-//                               child: Row(
-//                                 mainAxisAlignment: MainAxisAlignment.end,
-//                                 spacing: 5,
-//                                 children: [
-//                                   Text(controller.currentUser?.name ?? 'Unknown'),
-//                                   AvatarWidget(size: 40, canEdit: false)
-                                  
-//                                   // CircleAvatar(
-//                                   //   backgroundImage: CachedNetworkImageProvider(controller.currentUser?.image ?? '',
-//                                   //     placeholder: (context, url) => _buildShimmer(),
-//                                   //     errorWidget: (context, url, error) => _buildDefaultImage(),
-//                                   //     fit: BoxFit.cover,
-//                                   //   ),
-//                                   // ),
-//                                 ],
-//                               ),
-//                             ),
-//                             ChatAppointmentSummary(),
-//                           ],
-//                         ),
-//                         SizedBox(height: 20),
-//                         Obx(() {
-//                           if (controller.loading.value) {
-//                             return Center(
-//                               child: CircularProgressIndicator(),
-//                             );
-//                           }
-//                           return Column(
-//                             spacing: 20,
-//                             children: [
-//                               // Column(
-//                               //   spacing: 10,
-//                               //   children: [
-//                               //     Align(
-//                               //       alignment: Alignment.topRight,
-//                               //       child: Row(
-//                               //         children: [
-//                               //           SizedBox(
-//                               //             width: 5,
-//                               //           ),
-//                               //           CircleAvatar(
-//                               //             backgroundImage:
-//                               //                 AssetImage(AppImages.avatar),
-//                               //           ),
-//                               //           const SizedBox(width: 5),
-//                               //           Text('Japtech AutoShop'),
-//                               //         ],
-//                               //       ),
-//                               //     ),
-//                               //     InvoiceCard(
-//                               //       name: "Sara May",
-//                               //       email: "Body Shop Appointment",
-//                               //       service: "Inspection Fee",
-//                               //       invoiceNumber: "JC564739300",
-//                               //       dateIssued: "Oct 20, 2024",
-//                               //       amount: "7,000 Frs",
-//                               //       status: "Pending",
-//                               //       onViewInvoice: () {
-//                               //         // Action pour voir la facture
-//                               //         print("View Invoice clicked");
-//                               //         onpenModalPaymentMethod(
-//                               //             controller.goToAddPaymentMethodForm);
-//                               //       },
-//                               //     ),
-//                               //   ],
-//                               // ),
-                    
-//                               ...controller.groupedMessages.keys.map((key) {
-//                                 final messages =
-//                                     controller.groupedMessages[key]!;
-//                                 return Column(children: [
-//                                   Row(
-//                                     mainAxisAlignment: MainAxisAlignment.center,
-//                                     children: [
-//                                       Container(
-//                                         margin:
-//                                             const EdgeInsets.only(bottom: 10),
-//                                         padding: const EdgeInsets.symmetric(
-//                                             horizontal: 10, vertical: 5),
-//                                         decoration: BoxDecoration(
-//                                           color:
-//                                               Get.theme.primaryColor.withValues(
-//                                             alpha: 0.6,
-//                                           ),
-//                                           borderRadius: BorderRadius.all(
-//                                               Radius.circular(10)),
-//                                         ),
-//                                         child: Text(
-//                                           key,
-//                                           style: const TextStyle(
-//                                             fontSize: 12,
-//                                             fontWeight: FontWeight.bold,
-//                                             color: Colors.white,
-//                                           ),
-//                                         ),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                   ...messages.map((message) {
-//                                     // print(
-//                                     //     "message: ${message.content}, isImageMessage: ${message.isImageMessage} ${message.toJson()}");
-//                                     return message.isImageMessage
-//                                         ? ImageMessageWidget(
-//                                             message: message,
-//                                           )
-//                                         : ChatMessageWidget(
-//                                             message:
-//                                                 message, // Utilise une chaîne vide si "text" est null
-//                                           );
-//                                   }),
-//                                 ]);
-//                               }),
-//                             ],
-//                           );
-//                         }),
-                    
-//                         // Container(
-//                         //   margin: EdgeInsets.only(
-//                         //       left: MediaQuery.of(context).size.width * .6),
-//                         //   child: Align(
-//                         //     alignment: Alignment.topRight,
-//                         //     child: Row(
-//                         //       children: [
-//                         //         if (Get.isRegistered<FeatureWidgetInterface>(
-//                         //             tag: 'AvatarWidget'))
-//                         //           Get.find<FeatureWidgetInterface>(
-//                         //                   tag: 'AvatarWidget')
-//                         //               .buildView({"haveName": true}),
-//                         //         SizedBox(
-//                         //           width: 10,
-//                         //         ),
-//                         //         Text(
-//                         //             Get.find<ProfileController>()
-//                         //                     .userInfos
-//                         //                     ?.name ??
-//                         //                 "Unknow",
-//                         //             style: TextStyle(
-//                         //                 fontSize: 16,
-//                         //                 fontWeight: FontWeight.bold))
-//                         //       ],
-//                         //     ),
-//                         //   ),
-//                         // ),
-                    
-//                         // Obx(() => ResumeAppointmentWidget(
-//                         //     services: Get.arguments['serviceName'],
-//                         //     date: bookController.selectedDate.value,
-//                         //     caseId: bookController.vehicleVin.value,
-//                         //     note: bookController.noteController.text,
-//                         //     fee: '5,000 Frs',
-//                         //     time: bookController.selectedTime.value)),
-//                         // SizedBox(
-//                         //   height: 20,
-//                         // ),
-                    
-//                         // ...controller.groupedMessages.entries.map((entry) {
-//                         //   final messages = entry.value;
-//                         //   final isSender = messages.first.senderId ==
-//                         //           Get.find<ProfileController>().userInfos?.id
-//                         //       ? true
-//                         //       : false;
-//                         //   return ChatDateWidget(
-//                         //     date: entry.key,
-//                         //     isSender: isSender,
-//                         //   );
-                    
-//                         // final isSender = message.senderId ==
-//                         //         Get.find<ProfileController>().userInfos?.id
-//                         //     ? true
-//                         //     : false;
-//                         // return message.isImageMessage
-//                         //     ? ImageMessageWidget(
-//                         //         message: message,
-//                         //         isMyMessage: isSender,
-//                         //       )
-//                         //     : ChatMessageWidget(
-//                         //         text: message
-//                         //             .content, // Utilise une chaîne vide si "text" est null
-//                         //         isSender:
-//                         //             isSender, // Valeur par défaut pour "isSender"
-//                         //       );
-//                         // }),
-                    
-//                         // Obx(() => controller.isLoading.value
-//                         //     ? const Center(
-//                         //         child: CircularProgressIndicator(),
-//                         //       )
-//                         //     : const SizedBox.shrink()),
-                    
-//                         const SizedBox(height: 100),
-//                       ],
-//                     ),
-//                   ),
-//                 // ),
-//                 Positioned(
-//                     bottom: 0,
-//                     right: 0,
-//                     left: 0,
-//                     child: ChatInputWidget(
-//                       onAttach: () {},
-//                       onMic: () {},
-//                       chatController: controller,
-//                     )),
-//               ],
-//             ),

@@ -91,7 +91,7 @@ class PayWithCardScreen extends GetView<PayWithCardController> {
                         print('la valeur du switch:$value');
                         controller.saveCardPaymentMethode.value = value;
                       },
-                      activeColor: Get.theme.primaryColor,
+                      activeThumbColor: Get.theme.primaryColor,
                     ),
                   )
                 ],

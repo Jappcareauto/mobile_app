@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/features/chat/domain/entities/get_all_chat_room_messages.entity.dart';
@@ -74,12 +75,7 @@ class ImageMessageWidget extends StatelessWidget {
                           // ),
                           // child: AspectRatio(
                           //   aspectRatio: 4 / 3,
-                          child: Image.file(
-                            File(message.mediaUrl ?? ""),
-                            // base64Decode(message.mediaUrl!),
-                            fit: BoxFit.cover,
-                            // ),
-                          ),
+                          child: _buildImage(message.mediaUrl!),
                         ),
                       ),
                     ),
@@ -149,6 +145,19 @@ class ImageMessageWidget extends StatelessWidget {
           caption: message.content,
         ),
       );
+    }
+  }
+
+  Widget _buildImage(String mediaUrl) {
+    if (mediaUrl.startsWith('http')) {
+      return CachedNetworkImage(
+        imageUrl: mediaUrl,
+        placeholder: (_, __) => Placeholder(), // or shimmer
+        errorWidget: (_, __, ___) => Icon(Icons.broken_image),
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Image.file(File(mediaUrl), fit: BoxFit.cover);
     }
   }
 }

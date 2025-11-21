@@ -1,10 +1,73 @@
+import 'dart:math';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/features/chat/domain/entities/get_all_chat_room_messages.entity.dart';
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
 
-class VoiceMessageWidget extends StatelessWidget {
+class WaveformPainter extends CustomPainter {
+  final List<double> waveformPoints;
+  final double progress;
+  final Color primaryColor;
+  final Color secondaryColor;
+  final double animationValue;
+  final bool isPlaying;
+
+  WaveformPainter({
+    required this.waveformPoints,
+    required this.progress,
+    required this.primaryColor,
+    required this.secondaryColor,
+    required this.animationValue,
+    required this.isPlaying,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.round;
+
+    final pointWidth = size.width / waveformPoints.length;
+    final middle = size.height / 2;
+
+    for (var i = 0; i < waveformPoints.length; i++) {
+      final x = i * pointWidth;
+      final normalizedHeight = waveformPoints[i];
+      final height = normalizedHeight * size.height;
+
+      // Calculate active/inactive sections based on progress
+      final isActive = x / size.width <= progress;
+      paint.color = isActive ? primaryColor : secondaryColor;
+
+      // Add animation effect for the currently playing section
+      // if (isPlaying && isActive) {
+      //   final animationOffset = (animationValue * 0.3);
+      //   final adjustedHeight = height * (1.0 + animationOffset);
+      //   canvas.drawLine(
+      //     Offset(x, middle + (height / 2)),
+      //     Offset(x, middle - (height / 2)),
+      //     paint,
+      //   );
+      // } else {
+      canvas.drawLine(
+        Offset(x, middle + (height / 2)),
+        Offset(x, middle - (height / 2)),
+        paint,
+      );
+      // }
+    }
+  }
+
+  @override
+  bool shouldRepaint(WaveformPainter oldDelegate) {
+    return oldDelegate.progress != progress ||
+        oldDelegate.animationValue != animationValue ||
+        oldDelegate.isPlaying != isPlaying;
+  }
+}
+
+class VoiceMessageWidget extends StatefulWidget {
   final ChatMessageEntity message;
   final bool isSender;
 
@@ -15,137 +78,154 @@ class VoiceMessageWidget extends StatelessWidget {
   });
 
   @override
+  State<VoiceMessageWidget> createState() => _VoiceMessageWidgetState();
+}
+
+class _VoiceMessageWidgetState extends State<VoiceMessageWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  bool _isLoading = true;
+  List<double> _waveformPoints = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    )..repeat(reverse: true);
+    _generateWaveformPoints();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _generateWaveformPoints() {
+    // Generate some random-looking but consistent waveform points based on the message ID
+    final seed = widget.message.id.hashCode;
+    final rng = Random(seed);
+    _waveformPoints = List.generate(
+      50,
+      (index) => (0.3 + rng.nextDouble() * 0.7).clamp(0.0, 1.0),
+    );
+    setState(() => _isLoading = false);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Get your controller instance
     final controller = Get.find<ChatDetailsController>();
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final date = DateTime.tryParse(message.timestamp)?.toString();
-    // Display the widget using similar styling as your image message bubble
+    final date = DateTime.tryParse(widget.message.timestamp)?.toString();
+
     return Obx(() {
-      final isActive = controller.isMessageActive(message.id);
+      final isActive = controller.isMessageActive(widget.message.id);
       final isPlaying = isActive && controller.isPlaying.value;
       final icon =
           isPlaying ? FluentIcons.pause_20_filled : FluentIcons.play_20_filled;
 
-      // Determine position and duration based on active state
       final currentPosition =
           isActive ? controller.currentPosition.value : Duration.zero;
       final totalDuration = isActive
           ? controller.totalDuration.value
-          : Duration(seconds: 10); // Use a default/saved duration
+          : const Duration(seconds: 10);
 
       return Align(
-        alignment: isSender ? Alignment.centerRight : Alignment.centerLeft,
+        alignment:
+            widget.isSender ? Alignment.centerRight : Alignment.centerLeft,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
-          child: Column(
-            crossAxisAlignment:
-                isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-            children: [
-              Container(
-                constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width * 0.75,
-                  // minWidth: 150,
-                ),
-                padding: const EdgeInsets.fromLTRB(0, 12, 12, 6),
-                decoration: BoxDecoration(
-                  color: isSender
-                      ? Color(0xFFFE8F41)
-                      : isDarkMode
-                          ? Get.theme.scaffoldBackgroundColor
-                              .withValues(alpha: .2)
-                          : Color(0xFFE0E0E0),
-                  borderRadius: _getMessageBorderRadius(isSender),
-                ),
-                child: Column(
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.75,
+            ),
+            padding: const EdgeInsets.fromLTRB(0, 12, 12, 6),
+            decoration: BoxDecoration(
+              color: widget.isSender
+                  ? const Color(0xFFFE8F41)
+                  : isDarkMode
+                      ? Get.theme.scaffoldBackgroundColor.withValues(alpha: .2)
+                      : const Color(0xFFE0E0E0),
+              borderRadius: _getMessageBorderRadius(widget.isSender),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 10,
-                      children: [
-                        // Play/Pause Button
-                        IconButton(
-                          icon: Icon(icon,
-                              color: isSender ? Colors.white : Colors.black),
-                          onPressed: () => controller.togglePlayPause(
-                            message.id,
-                            message
-                                .mediaUrl!, // Pass the unique message ID and URL
-                          ),
-                        ),
-
-                        // Progress Slider
-                        Expanded(
-                          child: Column(
-                            spacing: 8,
+                    IconButton(
+                      icon: Icon(icon,
+                          color: widget.isSender ? Colors.white : Colors.black),
+                      onPressed: () => controller.togglePlayPause(
+                        widget.message.id,
+                        widget.message.mediaUrl!,
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (_isLoading)
+                            const LinearProgressIndicator()
+                          else
+                            AnimatedBuilder(
+                              animation: _animationController,
+                              builder: (context, child) {
+                                return CustomPaint(
+                                  size: const Size(double.infinity, 40),
+                                  painter: WaveformPainter(
+                                    waveformPoints: _waveformPoints,
+                                    progress: currentPosition.inMilliseconds /
+                                        totalDuration.inMilliseconds,
+                                    primaryColor: widget.isSender
+                                        ? Colors.white
+                                        : Theme.of(context).primaryColor,
+                                    secondaryColor: widget.isSender
+                                        ? Colors.white.withValues(alpha: .3)
+                                        : Colors.grey.withValues(alpha: .3),
+                                    animationValue: _animationController.value,
+                                    isPlaying: isPlaying,
+                                  ),
+                                );
+                              },
+                            ),
+                          const SizedBox(height: 4),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Slider(
-                                padding: EdgeInsets.zero,
-                                min: 0,
-                                max: totalDuration.inMilliseconds.toDouble(),
-                                value: currentPosition.inMilliseconds
-                                    .toDouble()
-                                    .clamp(
-                                        0,
-                                        totalDuration.inMilliseconds
-                                            .toDouble()),
-                                onChanged: (value) {
-                                  if (isActive) {
-                                    controller.seekToPosition(value);
-                                  }
-                                },
-                                activeColor:
-                                    isSender ? Colors.white : Colors.black,
-                                inactiveColor:
-                                    isSender ? Colors.white54 : Colors.grey,
+                              Text(
+                                controller.formatVoiceMessageDuration(
+                                    totalDuration - currentPosition),
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: widget.isSender
+                                      ? Colors.white
+                                      : Colors.black87,
+                                ),
                               ),
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // Time Display
-                                    Text(
-                                      controller.formatVoiceMessageDuration(
-                                          totalDuration - currentPosition),
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        color: isSender
-                                            ? Colors.white
-                                            : Colors.black87,
-                                      ),
-                                    ),
-                                    if (date != null)
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 4.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              date.substring(11, 16),
-                                              style: TextStyle(
-                                                fontSize: 10,
-                                                color: isSender || isDarkMode
-                                                    ? Colors.black
-                                                    : Colors.grey,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                  ]),
+                              if (date != null)
+                                Text(
+                                  date.substring(11, 16),
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: widget.isSender || isDarkMode
+                                        ? Colors.black
+                                        : Colors.grey,
+                                  ),
+                                ),
                             ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    // Timestamp
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
