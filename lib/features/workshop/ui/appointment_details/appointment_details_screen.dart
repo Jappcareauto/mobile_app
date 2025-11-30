@@ -1,4 +1,5 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -38,7 +39,8 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
           children: [
             SingleChildScrollView(
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -104,36 +106,43 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                           Row(
                             spacing: 5,
                             children: [
-                              controller.appointment.serviceCenter != null && controller.appointment.serviceCenter?.imageUrl != null ?
-                              ImageComponent(
-                                imageUrl: "",
-                                width: 60,
-                                height: 60,
-                                borderRadius: 100,
-                              )
-                               : Container(
-                                padding: const EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    border: Border.all(
-                                        color: Get.theme.primaryColor, width: 2)),
-                                child: CircleAvatar(
-                                  backgroundColor: AppColors.black,
-                                  radius: 25,
-                                  child: Text(
-                                    controller.appointment.serviceCenter?.name?[0]
-                                            .toUpperCase() ??
-                                        '',
-                                    style: Get.textTheme.headlineLarge?.copyWith(
-                                        color: Get.theme.primaryColor,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              )
-                              ,
+                              controller.appointment.serviceCenter != null &&
+                                      controller.appointment.serviceCenter
+                                              ?.imageUrl !=
+                                          null
+                                  ? ImageComponent(
+                                      imageUrl: "",
+                                      width: 60,
+                                      height: 60,
+                                      borderRadius: 100,
+                                    )
+                                  : Container(
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          border: Border.all(
+                                              color: Get.theme.primaryColor,
+                                              width: 2)),
+                                      child: CircleAvatar(
+                                        backgroundColor: AppColors.black,
+                                        radius: 25,
+                                        child: Text(
+                                          controller.appointment.serviceCenter
+                                                  ?.name?[0]
+                                                  .toUpperCase() ??
+                                              '',
+                                          style: Get.textTheme.headlineLarge
+                                              ?.copyWith(
+                                                  color: Get.theme.primaryColor,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ),
                               Text(
-                                controller.appointment.serviceCenter?.name ?? '',
+                                controller.appointment.serviceCenter?.name ??
+                                    '',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 16),
                               )
@@ -141,7 +150,9 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                           ),
                           Flexible(
                               child: ChipWidget(
-                                  status: appointment.status ?? "Unknown", variant: ChipSize.small,)),
+                            status: appointment.status ?? "Unknown",
+                            variant: ChipSize.small,
+                          )),
                           // Container(
                           //   padding:
                           //       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -258,7 +269,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                           child: Container(
                               padding: const EdgeInsets.all(12.0),
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                  color: Colors.white,
                                   border: Border.all(
                                       color: Colors.grey.withValues(alpha: .2),
                                       width: 1),
@@ -268,11 +279,11 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                                 children: [
                                   Text(
                                     'Repairs made',
-                                    style:
-                                        TextStyle(color: Get.theme.primaryColor),
+                                    style: TextStyle(
+                                        color: Get.theme.primaryColor),
                                   ),
-                                  Text(
-                                      controller.appointment.diagnosesMade ?? ""),
+                                  Text(controller.appointment.diagnosesMade ??
+                                      ""),
                                 ],
                               )),
                         ),
@@ -299,7 +310,8 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                       //   )
                       // ],
                       if (controller.appointment.status == 'IN_PROGRESS') ...[
-                        CustomButton(text: 'Mark as completed', onPressed: () {}),
+                        CustomButton(
+                            text: 'Mark as completed', onPressed: () {}),
                         const SizedBox(
                           height: 50,
                         )
@@ -307,19 +319,20 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                     ]),
               ),
             ),
-            Positioned(
-              bottom: 20,
-              right: 20,
-              child: FloatingActionButton(
-                backgroundColor: Get.theme.primaryColor,
-                onPressed: () => controller.goToChatScreen(),
-                child: Icon(
-                  FluentIcons.chat_16_regular,
-                  color: Get.theme.scaffoldBackgroundColor,
-                  size: 30,
+            if (kDebugMode)
+              Positioned(
+                bottom: 20,
+                right: 20,
+                child: FloatingActionButton(
+                  backgroundColor: Get.theme.primaryColor,
+                  onPressed: () => controller.goToChatScreen(),
+                  child: Icon(
+                    FluentIcons.chat_16_regular,
+                    color: Get.theme.scaffoldBackgroundColor,
+                    size: 30,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
