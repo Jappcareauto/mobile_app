@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/workshop/ui/workshop/widgets/service_item.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/shimmers/service_item_shimmer.dart';
 import 'package:shimmer/shimmer.dart';
 
 class WorkshopShimmerWidgets extends StatelessWidget {
@@ -14,24 +13,9 @@ class WorkshopShimmerWidgets extends StatelessWidget {
         highlightColor: Colors.white,
         child: Column(
           children: [
-            GestureDetector(
-              onTap: () {},
-              child: const ServiceItemWidget(
-                image: AppImages.shopCar,
-                title: 'Inconnu',
-                rate: '4.5',
-                location: 'Douala, Cameroun',
-              ),
-            ),
-            GestureDetector(
-              onTap: () {},
-              child: const ServiceItemWidget(
-                image: AppImages.shopCar,
-                title: 'Inconnu',
-                rate: '4.5',
-                location: 'Douala, Cameroun',
-              ),
-            ),
+            ServiceItemShimmer(),
+            ServiceItemShimmer(),
+            ServiceItemShimmer(),
           ],
         ),
       ),

@@ -80,6 +80,8 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                       .controllers['dateOfBirth'],
                                   validator: controller.registerFormHelper
                                       .validators['dateOfBirth'],
+                                  readOnly: true,
+                                  onTap: controller.selectDate,
                                 ),
                                 Row(
                                   mainAxisAlignment:

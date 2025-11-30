@@ -67,7 +67,7 @@ class PayWithPhoneScreen extends GetView<PayWithPhoneController> {
                         print('la valeur du switch:$value');
                         controller.savePhoneNumberPaymentMethod.value = value;
                       },
-                      activeColor: Get.theme.primaryColor,
+                      activeThumbColor: Get.theme.primaryColor,
                     ),
                   )
                 ],

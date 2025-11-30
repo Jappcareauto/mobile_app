@@ -4,6 +4,7 @@ import 'package:jappcare/core/services/form/validators.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/authentification/application/usecases/login_command.dart';
 import 'package:jappcare/features/authentification/application/usecases/login_usecase.dart';
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import 'package:jappcare/features/authentification/domain/core/exceptions/authentification_exception.dart';
 import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
@@ -11,10 +12,11 @@ import '../../../domain/entities/login.dart';
 
 class LoginWithPhoneController extends GetxController {
   final LoginUseCase _loginUseCase = Get.find();
+  late FormHelper loginFormHelper;
+  final RxString phoneCode = ''.obs;
+
   final AppNavigation _appNavigation;
   LoginWithPhoneController(this._appNavigation);
-
-  late FormHelper loginFormHelper;
 
   @override
   void onInit() {
@@ -22,18 +24,21 @@ class LoginWithPhoneController extends GetxController {
     super.onInit();
     loginFormHelper = FormHelper<AuthentificationException, Login>(
       fields: {
-        "code": null,
+        // "code": null,
         "phone": null,
         "password": null,
       },
       validators: {
-        "code": Validators.requiredField,
+        // "code": Validators.requiredField,
         "phone": Validators.requiredField,
         "password": Validators.requiredField,
       },
       onSubmit: (data) => _loginUseCase.call(LoginCommand(
-        email: data['email']!,
-        password: "${data['phone']!}${data['code']!}",
+        phone: PhoneCommand(
+          code: phoneCode.value.replaceAll("+", ""),
+          number: data['phone']!,
+        ),
+        password: data['password']!,
         extend: true,
       )),
       onError: (e) {

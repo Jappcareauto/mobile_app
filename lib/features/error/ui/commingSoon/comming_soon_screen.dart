@@ -12,14 +12,14 @@ class CommingSoonScreen extends GetView<CommingSoonController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
         title: '',
       ),
       body: SafeArea(
         child: Center(
             child: Container(
-          margin:
-              EdgeInsets.only(top: MediaQuery.of(context).size.height * .15),
+          margin: EdgeInsets.only(top: Get.size.height * .10),
           child: Column(
             // mainAxisSize: MainAxisSize.min,
             children: [
@@ -32,10 +32,11 @@ class CommingSoonScreen extends GetView<CommingSoonController> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 24,
               ),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                spacing: 24,
                 children: [
                   Text(
                     'Coming Soon',

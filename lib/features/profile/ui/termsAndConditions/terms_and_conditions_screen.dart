@@ -9,9 +9,14 @@ class TermsAndConditionsScreen extends GetView<TermsAndConditionsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Terms & Conditions", canBack: true),
+      appBar: CustomAppBar(
+        title: "Terms & Conditions",
+        canBack: true,
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+      ),
       body: SingleChildScrollView(
         child: Container(
+          margin: const EdgeInsets.only(top: 20),
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(controller.textData),
         ),

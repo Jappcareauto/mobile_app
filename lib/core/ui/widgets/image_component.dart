@@ -39,9 +39,9 @@ class ImageComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(borderRadius ?? 0),
+      // borderRadius: BorderRadius.circular(borderRadius ?? 0),
       child: Container(
         width: width,
         height: height,

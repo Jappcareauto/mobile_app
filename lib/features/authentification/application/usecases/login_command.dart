@@ -1,6 +1,8 @@
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
+
 class LoginCommand {
   final String? email;
-  final String? phone;
+  final PhoneCommand? phone;
   final String password;
   final bool? extend;
 

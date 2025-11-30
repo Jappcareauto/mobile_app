@@ -6,12 +6,17 @@ import 'package:get/get.dart';
 class PrivacyPolicyScreen extends GetView<PrivacyPolicyController> {
   const PrivacyPolicyScreen({super.key});
 
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: "Privacy Policy", canBack: true),
+      appBar: CustomAppBar(
+        title: "Privacy Policy",
+        canBack: true,
+        appBarcolor: Get.theme.scaffoldBackgroundColor,
+      ),
       body: SingleChildScrollView(
         child: Container(
+          margin: const EdgeInsets.only(top: 20),
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(controller.textData),
         ),

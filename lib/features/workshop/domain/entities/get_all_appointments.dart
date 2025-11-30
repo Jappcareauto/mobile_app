@@ -1,5 +1,6 @@
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/core/ui/domain/entities/pagination.entity.dart';
+import 'package:jappcare/features/chat/domain/entities/get_all_chat_room.entity.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.entity.dart';
@@ -41,6 +42,9 @@ class AppointmentEntity {
   final ServiceEntity? service;
   final ServiceCenterEntity? serviceCenter;
   final Vehicle? vehicle;
+  final String? diagnosesToMake;
+  final String? diagnosesMade;
+  final ChatRoomEntity? chatRoom;
 
   AppointmentEntity._(
       {required this.id,
@@ -56,23 +60,29 @@ class AppointmentEntity {
       required this.location,
       required this.service,
       required this.serviceCenter,
-      required this.vehicle});
+      this.chatRoom,
+      required this.vehicle,
+      this.diagnosesToMake,
+      this.diagnosesMade});
 
   factory AppointmentEntity.create(
-      {required id,
-      required location,
-      required createdBy,
-      required updatedBy,
-      required createdAt,
-      required updatedAt,
-      status,
-      note,
-      required timeOfDay,
-      required date,
-      required locationType,
-      required serviceCenter,
-      required service,
-      required vehicle}) {
+      {required String id,
+      required LocationEntity? location,
+      required String createdBy,
+      required String updatedBy,
+      required String createdAt,
+      required String updatedAt,
+      String? status,
+      String? note,
+      required String timeOfDay,
+      required String date,
+      required String locationType,
+      required ServiceCenterEntity? serviceCenter,
+      required ServiceEntity? service,
+      ChatRoomEntity? chatRoom,
+      required Vehicle? vehicle,
+      required String? diagnosesToMake,
+      required String? diagnosesMade}) {
     // Add any validation or business logic here
     return AppointmentEntity._(
         id: id,
@@ -87,7 +97,16 @@ class AppointmentEntity {
         locationType: locationType,
         location: location,
         serviceCenter: serviceCenter,
+        chatRoom: chatRoom,
         service: service,
-        vehicle: vehicle);
+        vehicle: vehicle,
+        diagnosesToMake: diagnosesToMake,
+        diagnosesMade: diagnosesMade);
+  }
+
+  String get formattedLocationType {
+    return locationType.split('_').map((word) {
+    return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
+  }).join(' ');
   }
 }

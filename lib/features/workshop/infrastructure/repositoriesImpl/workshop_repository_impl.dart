@@ -1,10 +1,14 @@
 //Don't translate me
 import 'package:dio/dio.dart';
+import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/features/garage/domain/core/utils/garage_constants.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
+import 'package:jappcare/features/workshop/domain/entities/geocode_position.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_service_center_services.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/place_details.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_appointments_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/place_prediction_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/place_details_model.dart';
 import 'package:jappcare/features/workshop/domain/entities/place_prediction.dart';
@@ -20,15 +24,15 @@ import 'package:dartz/dartz.dart';
 import '../../domain/entities/get_all_services_center.entity.dart';
 import '../models/get_all_service_center_model.dart';
 
-import '../../domain/entities/book_appointment.dart';
-import '../models/book_appointment_model.dart';
-
-// import '../../domain/entities/created_rome_chat.dart';
-// import '../models/created_rome_chat_model.dart';
-
 import '../../domain/entities/get_all_services.entity.dart';
 import '../models/get_all_services_model.dart';
 import '../models/get_all_service_center_services_model.dart';
+
+void printWrapped(String text) {
+  // 800 is a good chunk size that should prevent truncation.
+  final pattern = RegExp('.{1,800}');
+  pattern.allMatches(text).forEach((match) => print(match.group(0)));
+}
 
 class WorkshopRepositoryImpl implements WorkshopRepository {
   final NetworkService networkService;
@@ -45,7 +49,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       );
       return Right(VehicleModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
@@ -57,18 +61,20 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           .post(WorkshopConstants.getAllservicesGetUri, body: {});
       return Right(GetAllServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
   @override
-  Future<Either<WorkshopException, BookAppointment>> bookAppointment({
+  Future<Either<WorkshopException, AppointmentEntity>> bookAppointment({
     required String date,
     required String locationType,
+    LocationEntity? location,
     String? note,
     required String serviceId,
     required String vehicleId,
     required String timeOfDay,
+    required String selectedTimeRange,
     required String createdBy,
     required String serviceCenterId,
   }) async {
@@ -76,13 +82,15 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       final response = await networkService.post(
         WorkshopConstants.bookAppointmentPostUri,
         body: {
-          'id': "",
+          // 'id': "",
           "createdBy": createdBy,
           "updatedBy": createdBy,
           "createdAt": date,
           "updatedAt": date,
           'date': date,
-          'location': null,
+          // 'location': null,
+          if (location != null && locationType == "HOME")
+            'location': location.toJson(),
           'locationType': locationType,
           'note': note,
           'serviceId': serviceId,
@@ -92,9 +100,9 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           'timeOfDay': timeOfDay,
         },
       );
-      return Right(BookAppointmentModel.fromJson(response["data"]).toEntity());
+      return Right(AppointmentModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
@@ -121,7 +129,10 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       });
       return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
+    } catch (e) {
+      print(e);
+      return Left(WorkshopException(e.toString(), 500));
     }
   }
 
@@ -134,22 +145,9 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       return Right(
           GetAllServiceCenterServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
-
-  // @override
-  // Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
-  //     getAllServicesCenterServices(String serviceCenterId) async {
-  //   try {
-  //     final response = await networkService.get(
-  //         '${WorkshopConstants.getServiceCenterGetUri}/$serviceCenterId${WorkshopConstants.services}');
-  //     return Right(
-  //         GetAllServiceCenterServicesModel.fromJson(response).toEntity());
-  //   } on BaseException catch (e) {
-  //     return Left(WorkshopException(e.message));
-  //   }
-  // }
 
   @override
   Future<Either<WorkshopException, GetAllServiceCenterServicesEntity>>
@@ -160,14 +158,14 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       return Right(
           GetAllServiceCenterServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
   // 1. Autocomplete → gets a list of { description, place_id }
   @override
   Future<Either<WorkshopException, List<PlacePrediction>>> fetchAutocomplete(
-      String input) async {
+      String input, String sessionToken) async {
     final Dio dio = Dio();
 
     try {
@@ -176,6 +174,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           .post(WorkshopConstants.googleAutocompleteUri, queryParameters: {
         'input': input,
         'key': k,
+        'sessiontoken': sessionToken,
         'components': 'country:cm',
       });
       // print(response);
@@ -183,13 +182,13 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           .map((p) => PlacePredictionModel.fromJson(p).toEntity())
           .toList());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
   @override
   Future<Either<WorkshopException, PlaceDetails>> fetchPlaceDetails(
-      String placeId) async {
+      String placeId, String sessionToken) async {
     final Dio dio = Dio();
 
     try {
@@ -198,14 +197,40 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           .post(WorkshopConstants.googlePlaceDetailsUri, queryParameters: {
         'place_id': placeId,
         'key': k,
+        'sessiontoken': sessionToken,
         'fields': 'formatted_address,geometry',
       });
       return Right(
           PlaceDetailsModel.fromJson(response.data['result']).toEntity());
     } on BaseException catch (e) {
-      return Left(WorkshopException(e.message));
+      return Left(WorkshopException(e.message, e.statusCode));
     }
   }
 
-  //Add methods here
+  @override
+  Future<Either<WorkshopException, GeocodePosition>> getAddressFromLatLng(
+      double latitude, double longitude) async {
+    final Dio dio = Dio();
+
+    try {
+      final k = GarageConstants.apiKey;
+      final response =
+          await dio.get(WorkshopConstants.googleGeocodeUri, queryParameters: {
+        'latlng': '$latitude,$longitude',
+        'key': k,
+      });
+
+      printWrapped('Geocode response: ${response.data['results'][0]}');
+
+      var data = response.data['results'];
+      if (data == null || data.isEmpty) {
+        return Left(WorkshopException('No address found', 404));
+      }
+
+      return Right(GeocodePosition.fromJson(response.data['results'][0]));
+    } on BaseException catch (e) {
+      print(e);
+      return Left(WorkshopException(e.message, e.statusCode));
+    }
+  }
 }

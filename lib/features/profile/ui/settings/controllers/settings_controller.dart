@@ -3,6 +3,7 @@ import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/error/ui/commingSoon/comming_soon_screen.dart';
 import 'package:jappcare/features/profile/navigation/private/profile_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
@@ -39,4 +40,7 @@ class SettingsController extends GetxController {
       _appNavigation.toNamed(ProfilePrivateRoutes.editProfile);
   void goToHistory() => _appNavigation.toNamed(ProfilePrivateRoutes.history);
   void goToPayments() => _appNavigation.toNamed(ProfilePrivateRoutes.payments);
+    void navigateTCommingSoon() {
+    Get.to(() => const CommingSoonScreen(), transition: Transition.leftToRight);
+  }
 }

@@ -107,27 +107,36 @@ class ListVehicleWidget extends StatelessWidget
                   itemBuilder: (context, index) {
                     if (haveAddVehicule == true &&
                         index == vehiclesToDisplay.length) {
-                      return GestureDetector(
-                        onTap: controller.goToAddVehicle,
-                        child: Container(
-                          height: 200,
-                          // margin: const EdgeInsets.only(right: 12),
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
-                            color: Colors.white,
-                            border: Border.all(
-                              color: Get.theme.primaryColor,
-                              width: 1.3,
-                            ),
+                      return Container(
+                        height: 200,
+                        // margin: const EdgeInsets.only(right: 12),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24),
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Get.theme.primaryColor,
+                            width: 1.3,
                           ),
-                          child: Center(
-                            child: Text(
-                              '+ Add Vehicle',
-                              style: TextStyle(
-                                  color: Get.theme.primaryColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400),
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onTap: controller.goToAddVehicle,
+                            borderRadius: BorderRadius.circular(
+                                24), // Match container's border radius
+                            splashColor: Get.theme.primaryColor.withValues(
+                                alpha: 0.2), // Customize splash color
+                            highlightColor: Get.theme.primaryColor.withValues(
+                                alpha: 0.1), // Customize highlight color
+                            child: Center(
+                              child: Text(
+                                '+ Add Vehicle',
+                                style: TextStyle(
+                                    color: Get.theme.primaryColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400),
+                              ),
                             ),
                           ),
                         ),
@@ -152,7 +161,7 @@ class ListVehicleWidget extends StatelessWidget
                             controller.goToVehicleDetails(vehicle);
                           }
                         },
-                        next: vehiclesToDisplay.length > 1
+                        next: vehiclesToDisplay.isNotEmpty
                             ? () {
                                 if (index == (vehiclesToDisplay.length - 1) &&
                                     (haveAddVehicule == null ||

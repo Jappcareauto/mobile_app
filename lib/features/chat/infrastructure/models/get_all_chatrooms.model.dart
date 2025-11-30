@@ -71,7 +71,7 @@ class ChatRoomModel {
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
-      name: json['name'],
+      name: json['name'] ?? "",
       appointmentDTO: json['appointmentDTO'],
       participantIds: json['participantIds'],
     );

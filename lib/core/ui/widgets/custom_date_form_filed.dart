@@ -7,6 +7,11 @@ class CustomDateFormField extends StatefulWidget {
   final Color? datehintstyle;
   final String? label;
   final String? Function(String?)? validator;
+  final bool? readOnly;
+  final void Function()? onTap;
+  final void Function()? onDayTap;
+  final void Function()? onMonthTap;
+  final void Function()? onYearTap;
 
   const CustomDateFormField({
     super.key,
@@ -14,6 +19,11 @@ class CustomDateFormField extends StatefulWidget {
     this.label,
     this.validator,
     this.datehintstyle,
+    this.readOnly,
+    this.onTap,
+    this.onDayTap,
+    this.onMonthTap,
+    this.onYearTap,
   });
 
   @override
@@ -28,15 +38,38 @@ class _CustomDateFormFieldState extends State<CustomDateFormField> {
   @override
   void initState() {
     super.initState();
+    if (widget.controller != null) {
+      final date = widget.controller!.text;
+      final parts = date.split('-');
+      if (parts.length == 3) {
+        dayController.text = parts[2];
+        monthController.text = parts[1];
+        yearController.text = parts[0];
+      }
+    }
   }
 
   @override
   void dispose() {
+    dayController.dispose();
+    monthController.dispose();
+    yearController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.controller != null) {
+        final date = widget.controller!.text;
+        final parts = date.split('-');
+        if (parts.length == 3) {
+          dayController.text = parts[2];
+          monthController.text = parts[1];
+          yearController.text = parts[0];
+        }
+      }
+    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,12 +83,15 @@ class _CustomDateFormFieldState extends State<CustomDateFormField> {
           ),
         if (widget.label != null) const SizedBox(height: 8),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: CustomFormField(
                 hintStyleColor: widget.datehintstyle,
                 controller: dayController,
                 keyboardType: TextInputType.number,
+                readOnly: widget.readOnly,
+                onTap: widget.onDayTap ?? widget.onTap,
                 hintText: 'Day',
                 validator: (p0) =>
                     (int.tryParse(p0 ?? '0') ?? 0) > 31 ? "Invalid Day" : null,
@@ -74,6 +110,8 @@ class _CustomDateFormFieldState extends State<CustomDateFormField> {
                   controller: monthController,
                   keyboardType: TextInputType.number,
                   maxLength: 2,
+                  readOnly: widget.readOnly,
+                  onTap: widget.onMonthTap ?? widget.onTap,
                   hintText: 'Month',
                   validator: (p0) => (int.tryParse(p0 ?? '0') ?? 0) > 12
                       ? "Invalid Month"
@@ -89,6 +127,8 @@ class _CustomDateFormFieldState extends State<CustomDateFormField> {
               child: CustomFormField(
                   hintStyleColor: widget.datehintstyle,
                   controller: yearController,
+                  readOnly: widget.readOnly,
+                  onTap: widget.onYearTap ?? widget.onTap,
                   maxLength: 4,
                   keyboardType: TextInputType.number,
                   hintText: 'Year',

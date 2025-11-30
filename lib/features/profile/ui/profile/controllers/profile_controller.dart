@@ -28,7 +28,7 @@ class ProfileController extends GetxController {
 
   GetUserInfos? userInfos;
 
-  File? file;
+  Rx<File?> file = Rx<File?>(null);
   final updateImageLoading = false.obs;
 
   @override
@@ -66,7 +66,7 @@ class ProfileController extends GetxController {
     _appNavigation.toNamed(ProfilePrivateRoutes.settings);
   }
 
-  Future<void> getUserInfos() async {
+  Future<void> getUserInfos({bool refreshAll = true}) async {
     loading.value = true;
     final result = await _getUserInfosUseCase.call();
     result.fold(
@@ -78,10 +78,13 @@ class ProfileController extends GetxController {
         userInfos = success;
         _localStorageService.write(AppConstants.userId, success.id);
 
-        Get.find<AppEventService>().emit<String>(AppConstants.userIdEvent, '');
+        if (refreshAll == true) {
+          Get.find<AppEventService>()
+              .emit<String>(AppConstants.userIdEvent, '');
+          Get.find<AppEventService>()
+              .emit<String>(AppConstants.userIdEvent, success.id);
+        }
 
-        Get.find<AppEventService>()
-            .emit<String>(AppConstants.userIdEvent, success.id);
         update();
       },
     );
@@ -90,7 +93,7 @@ class ProfileController extends GetxController {
   Future<void> updateProfileImage() async {
     updateImageLoading.value = true;
     final result = await _updateProfileImageUseCase.call(
-        UpdateProfileImageCommand(userId: userInfos!.id, file: file!.path));
+        UpdateProfileImageCommand(userId: userInfos!.id, file: file.value!));
     result.fold(
       (e) {
         updateImageLoading.value = false;
@@ -104,9 +107,10 @@ class ProfileController extends GetxController {
   }
 
   void getAndUpdateProfileImage() async {
-    final imgs = await Get.getImage();
+    final imgs = await Get.getImage(many: true);
+    print("Selected image path: ${imgs?.first.path}");
     if (imgs != null && imgs.isNotEmpty) {
-      file = imgs.first;
+      file.value = imgs.first;
       update();
       updateProfileImage();
     }

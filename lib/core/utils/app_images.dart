@@ -5,6 +5,7 @@ class AppImages {
   static const String noImage = "assets/images/noimage.jpg";
   static const String Actualite = "assets/images/actualite.png";
   static const String commingSoon = "assets/images/commingSoon.png";
+  static const String noInternet = "assets/images/noInternet.png";
 
   static const String car1 = "assets/images/car1.png";
   static const String car2 = "assets/images/car2.png";
@@ -23,7 +24,8 @@ class AppImages {
   static const String avatar = "assets/images/avatar.png";
   static const String mtnLogo = "assets/icons/mtn-logo.png";
   static const String orangeLogo = "assets/icons/orange.png";
-  static const String cardLogo = "assets/icons/card-logo.png";
+  // static const String cardLogo = "assets/icons/card-logo.png";
+  static const String cardLogo = "assets/icons/card.svg";
 
   //Icons
   static const String logo = "assets/icons/logo.png";
@@ -46,4 +48,5 @@ class AppImages {
   static const String noActivities = "assets/images/noactivities.png";
   static const String money = "assets/icons/money.png";
   static const String card = "assets/icons/card.png";
+  static const String notification = "assets/icons/notification.svg";
 }

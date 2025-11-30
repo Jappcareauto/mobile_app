@@ -48,113 +48,123 @@ class CarCardWidget extends GetView<GarageController> {
       width: widthCard,
       height: heightCard,
       margin: const EdgeInsets.only(bottom: 12, left: 20),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: AppColors.lightBorder),
           color: Get.theme.cardColor),
-      child: InkWell(
-        onTap: onPressed,
-        child: Column(spacing: 20, children: [
-          Row(
-            spacing: 10,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '$appointmentType Appointment',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.orange),
-                    ),
-                    Text(
-                      serviceCenterName ?? 'Japcare AutoShop',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ),
-              ChipWidget(
-                status: status,
-                variant: ChipSize.small,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  spacing: 6,
-                  children: [
-                    Row(
-                      spacing: 8,
-                      children: [
-                        const Icon(
-                          FluentIcons.calendar_ltr_12_regular,
-                          color: Colors.grey,
-                        ),
-                        Text(date, style: Get.textTheme.bodySmall),
-                      ],
-                    ),
-                    Row(
-                      spacing: 8,
-                      children: [
-                        const Icon(
-                          FluentIcons.clock_12_regular,
-                          color: Colors.grey,
-                        ),
-                        Text(time, style: Get.textTheme.bodySmall),
-                      ],
-                    ),
-                    Row(
-                      spacing: 8,
-                      children: [
-                        const Icon(
-                          FluentIcons.location_12_regular,
-                          color: Colors.grey,
-                        ),
-                        Text(localisation, style: Get.textTheme.bodySmall),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 4,
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(24),
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: BorderRadius.circular(24),
+          splashColor: Get.theme.primaryColor.withValues(alpha: 0.2),
+          highlightColor: Get.theme.primaryColor.withValues(alpha: 0.1),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            child: Column(spacing: 20, children: [
+              Row(
+                spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ImageComponent(
-                    imageUrl: pathImageCar,
-                    assetPath: AppImages.car,
-                    // width: Get.width * 0.35,
-
-                    width: 160,
-                    // height: 120,
-                  ),
-                  Text(
-                    nameCar,
-                    textAlign: TextAlign.center,
-                    // Centre le texte
-                    overflow: TextOverflow.ellipsis,
-                    // Tronque le texte si trop long
-                    maxLines: 1,
-                    // Limite le texte à une seule ligne
-                    style: const TextStyle(
-                      fontSize: 14, // Ajuste la taille de la police
-                      fontWeight: FontWeight.bold, // Style en gras
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '$appointmentType Appointment',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange),
+                        ),
+                        Text(
+                          serviceCenterName ?? 'Japcare AutoShop',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
                     ),
+                  ),
+                  ChipWidget(
+                    status: status,
+                    variant: ChipSize.small,
                   ),
                 ],
               ),
-            ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      spacing: 6,
+                      children: [
+                        Row(
+                          spacing: 8,
+                          children: [
+                            const Icon(
+                              FluentIcons.calendar_ltr_12_regular,
+                              color: Colors.grey,
+                            ),
+                            Text(date, style: Get.textTheme.bodySmall),
+                          ],
+                        ),
+                        Row(
+                          spacing: 8,
+                          children: [
+                            const Icon(
+                              FluentIcons.clock_12_regular,
+                              color: Colors.grey,
+                            ),
+                            Text(time, style: Get.textTheme.bodySmall),
+                          ],
+                        ),
+                        Row(
+                          spacing: 8,
+                          children: [
+                            const Icon(
+                              FluentIcons.location_12_regular,
+                              color: Colors.grey,
+                            ),
+                            Text(localisation, style: Get.textTheme.bodySmall),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 4,
+                    children: [
+                      ImageComponent(
+                        imageUrl: pathImageCar,
+                        assetPath: AppImages.car,
+                        // width: Get.width * 0.35,
+
+                        width: 160,
+                        // height: 120,
+                      ),
+                      Text(
+                        nameCar,
+                        textAlign: TextAlign.center,
+                        // Centre le texte
+                        overflow: TextOverflow.ellipsis,
+                        // Tronque le texte si trop long
+                        maxLines: 1,
+                        // Limite le texte à une seule ligne
+                        style: const TextStyle(
+                          fontSize: 14, // Ajuste la taille de la police
+                          fontWeight: FontWeight.bold, // Style en gras
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ]),
           ),
-        ]),
+        ),
       ),
     );
   }

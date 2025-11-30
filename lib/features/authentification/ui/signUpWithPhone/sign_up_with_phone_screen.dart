@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
-import 'package:jappcare/core/ui/widgets/phone_form_field.dart';
+// import 'package:jappcare/core/ui/widgets/phone_form_field.dart';
+import 'package:jappcare/core/utils/app_dimensions.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/authentification/ui/authentification/controllers/authentification_controller.dart';
 import '../../../../core/ui/widgets/custom_button.dart';
@@ -49,25 +51,87 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                                   .registerFormHelper.validators['name'],
                               keyboardType: TextInputType.text,
                             ),
-                            CustomPhoneFormField(
-                              label: 'Phone',
-                              hintText: 'Enter your phone',
-                              controller: controller
-                                  .registerFormHelper.controllers['phone'],
-                              validator: controller
-                                  .registerFormHelper.validators['phone'],
-                              onCountryChange: (value) {
-                                if (value.dialCode != null) {
-                                  controller
-                                      .registerFormHelper
-                                      .controllers['code']
-                                      ?.text = value.dialCode!;
-                                }
-                              },
-                              onChanged: (value) {
-                                controller.registerFormHelper
-                                    .controllers["phone"]?.text = value;
-                              },
+                            // CustomPhoneFormField(
+                            //   label: 'Phone',
+                            //   hintText: 'Enter your phone',
+                            //   controller: controller
+                            //       .registerFormHelper.controllers['phone'],
+                            //   validator: controller
+                            //       .registerFormHelper.validators['phone'],
+                            //   onCountryChange: (value) {
+                            //     if (value.dialCode != null) {
+                            //       controller
+                            //           .registerFormHelper
+                            //           .controllers['code']
+                            //           ?.text = value.dialCode!;
+                            //     }
+                            //   },
+                            //   onChanged: (value) {
+                            //     controller.registerFormHelper
+                            //         .controllers["phone"]?.text = value;
+                            //   },
+                            // ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 8,
+                              children: [
+                                Text(
+                                  "Phone",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(color: Colors.black),
+                                ),
+                                // const SizedBox(height: 8),
+                                IntlPhoneField(
+                                  controller: controller
+                                      .registerFormHelper.controllers['phone'],
+                                  validator: (phoneNumber) {
+                                    final validator = controller.registerFormHelper.validators['phone'];
+                                    print('phone: $phoneNumber, validator: ${phoneNumber?.number}');
+                                    return validator != null
+                                        ? validator(phoneNumber?.number)
+                                        : null;
+                                  },
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                  decoration: InputDecoration(
+                                    hintText: 'Ex. 655002200',
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    errorStyle: const TextStyle(color: Color(0XFFFF553B)),
+                                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          AppDimensions.radiusSmall),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          AppDimensions.radiusSmall),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFFE5E2E1)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          AppDimensions.radiusSmall),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          AppDimensions.radiusSmall),
+                                      borderSide: BorderSide(
+                                          color: Get.theme.primaryColor),
+                                    ),
+                                  ),
+                                  initialCountryCode:
+                                      'CM', // Set a default country code, e.g., for Cameroon
+                                  onChanged: (phone) {
+                                    // You can get the full phone number with country code here
+                                    print(phone.completeNumber);
+                                    controller.phoneCode.value = phone.countryCode;
+                                  },
+                                ),
+                              ],
                             ),
                             CustomFormField(
                               label: 'Password',
@@ -85,6 +149,8 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                                   .controllers['dateOfBirth'],
                               validator: controller
                                   .registerFormHelper.validators['dateOfBirth'],
+                              readOnly: true,
+                              onTap: controller.selectDate,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

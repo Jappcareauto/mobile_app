@@ -1,5 +1,11 @@
+// import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/events/app_events_service.dart';
+import 'package:jappcare/core/navigation/routes/app_routes.dart';
+import 'package:jappcare/core/services/localServices/local_storage_service.dart';
+import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';
 import 'package:jappcare/features/authentification/ui/authentification/widgets/signup_modal.dart';
@@ -10,6 +16,7 @@ import '../widgets/login_modal.dart';
 
 class AuthentificationController extends GetxController {
   final AppNavigation _appNavigation;
+  final LocalStorageService _localStorageService = Get.find();
   final GoogleLoginUseCase _googleLoginUseCase = Get.find();
   final GoogleSignupUseCase _googleSignupUseCase = Get.find();
   AuthentificationController(this._appNavigation);
@@ -82,8 +89,17 @@ class AuthentificationController extends GetxController {
       if (Get.context != null) {
         Get.showCustomSnackBar(e.message);
       }
+      update();
     }, (success) {
       loadingGoogle.value = false;
+      // print(response);
+      _localStorageService.write(AppConstants.tokenKey, success.accessToken);
+      // _localStorageService.write(AppConstants.userId, success.id);
+      _localStorageService.write(
+          AppConstants.refreshTokenKey, success.refreshToken);
+      _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
+      Get.find<AppEventService>()
+          .emit<String>(AppConstants.userLoginEvent, success.accessToken);
     });
   }
 

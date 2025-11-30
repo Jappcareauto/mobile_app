@@ -3,10 +3,10 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:get/get.dart';
-import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 
 class ConfirmationAppointmentModal
-    extends GetView<ConfirmeAppointmentController> {
+    extends GetView<ConfirmAppointmentController> {
   const ConfirmationAppointmentModal({super.key});
 
   @override

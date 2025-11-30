@@ -52,125 +52,135 @@ class CarCardAddVehicle extends StatelessWidget {
             ? Border.all(color: Get.theme.primaryColor, width: 2)
             : Border.all(color: AppColors.lightBorder),
       ),
-      child: InkWell(
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(24),
-        onTap: onPressed,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(24),
-          child: Stack(
-            alignment: Alignment.bottomRight,
-            children: [
-              if (imageUrl != null)
-                ImageComponent(
-                  assetPath: imageUrl == null ? imagePath : "",
-                  imageUrl: imageUrl,
-                  width: 200,
-                  height: 120,
-                ),
-              Positioned(
-                top: 8,
-                left: 8,
-                right: 0,
-                child: SizedBox(
-                  width: Get.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${carDetails[1]} $carName",
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: haveBGColor
-                                  ? Colors.white
-                                  : Get.theme.primaryColor,
-                            ),
-                          ),
-                          Text(
-                            "${carDetails[0]}, ${carDetails[1]}",
-                            style: TextStyle(
-                                color:
-                                    haveBGColor ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14),
-                          ),
-                        ],
-                      ),
-                      if (showDelete == true) ...{
-                        Flexible(
-                            child: Ink(
-                          color: Colors.grey,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(24),
-                            onTap: delete,
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              margin: const EdgeInsets.only(right: 5),
-                              child: Icon(
-                                FluentIcons.delete_24_regular,
-                                color:
-                                    haveBGColor ? Colors.white : Colors.black,
-                              ),
-                            ),
-                          ),
-                        ))
-                      },
-                    ],
+        child: Stack(
+          alignment: Alignment.bottomRight,
+          children: [
+            if (imageUrl != null)
+              ImageComponent(
+                assetPath: imageUrl == null ? imagePath : "",
+                imageUrl: imageUrl,
+                width: 200,
+                height: 130,
+              ),
+            // Splash layer on top of the image
+            if (imageUrl != null)
+              Positioned.fill(
+                child: Material(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(24),
+                  child: InkWell(
+                    onTap: onPressed,
+                    borderRadius: BorderRadius.circular(24),
+                    splashColor: Get.theme.primaryColor.withValues(alpha: 0.2),
+                    highlightColor:
+                        Get.theme.primaryColor.withValues(alpha: 0.1),
+                    child: Container(), // Transparent, just for splash
                   ),
                 ),
               ),
-              if (next != null) ...[
-                Positioned(
-                    bottom: 8,
-                    left: 8,
-                    child: GestureDetector(
-                      onTap: next,
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.only(right: 5),
-                        child: Icon(
-                          FluentIcons.arrow_right_24_regular,
-                          color: haveBGColor ? Colors.white : Colors.black,
+            Positioned(
+              top: 8,
+              left: 8,
+              right: 0,
+              child: SizedBox(
+                width: Get.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${carDetails[1]} $carName",
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: haveBGColor
+                                ? Colors.white
+                                : Get.theme.primaryColor,
+                          ),
                         ),
-                      ),
-                    ))
-              ],
-              if (!hideblure) ...[
-                BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.5),
+                        Text(
+                          "${carDetails[0]}, ${carDetails[1]}",
+                          style: TextStyle(
+                              color: haveBGColor ? Colors.white : Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  top: 0,
-                  left: 16,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Text(
-                            '+ Add Vehicle',
-                            style: Get.textTheme.bodyLarge?.copyWith(
-                              color: Get.theme.primaryColor,
+                    if (showDelete == true) ...{
+                      Flexible(
+                          child: Ink(
+                        color: Colors.grey,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(24),
+                          onTap: delete,
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(right: 5),
+                            child: Icon(
+                              FluentIcons.delete_24_regular,
+                              color: haveBGColor ? Colors.white : Colors.black,
                             ),
                           ),
-                        ],
+                        ),
+                      ))
+                    },
+                  ],
+                ),
+              ),
+            ),
+            if (next != null) ...[
+              Positioned(
+                  bottom: 8,
+                  left: 8,
+                  child: GestureDetector(
+                    onTap: next,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      margin: const EdgeInsets.only(right: 5),
+                      child: Icon(
+                        FluentIcons.arrow_right_24_regular,
+                        color: haveBGColor ? Colors.white : Colors.black,
                       ),
-                    ],
+                    ),
+                  ))
+            ],
+            if (!hideblure) ...[
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.5),
                   ),
                 ),
-              ]
-            ],
-          ),
+              ),
+              Positioned(
+                bottom: 0,
+                top: 0,
+                left: 16,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text(
+                          '+ Add Vehicle',
+                          style: Get.textTheme.bodyLarge?.copyWith(
+                            color: Get.theme.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ]
+          ],
         ),
       ),
     );

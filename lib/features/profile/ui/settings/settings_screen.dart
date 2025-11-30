@@ -33,17 +33,18 @@ class SettingsScreen extends GetView<SettingsController> {
                   title: "Payments",
                   icon: FluentIcons.wallet_24_regular,
                   onTap: controller.goToPayments,
+                  // onTap: controller.navigateTCommingSoon
                 ),
                 SettingItem(
                   title: "Notifications",
                   icon: FluentIcons.alert_24_regular,
                   onTap: controller.goToNotifications,
                 ),
-                SettingItem(
-                  title: "Help & Support",
-                  icon: FluentIcons.person_support_24_regular,
-                  onTap: () {},
-                ),
+                // SettingItem(
+                //   title: "Help & Support",
+                //   icon: FluentIcons.person_support_24_regular,
+                //   onTap: () {},
+                // ),
                 SettingItem(
                   title: "Privacy Policy",
                   icon: FluentIcons.document_24_regular,
@@ -58,12 +59,14 @@ class SettingsScreen extends GetView<SettingsController> {
                   title: "Logout",
                   icon: FluentIcons.sign_out_24_regular,
                   onTap: controller.logout,
+                  trailing: SizedBox(),
                 ),
                 SettingItem(
                   title: "Delete Account",
                   icon: FluentIcons.delete_24_regular,
                   onTap: () {},
                   color: Colors.red,
+                  trailing: SizedBox(),
                 ),
                 const SizedBox(height: 20),
               ],

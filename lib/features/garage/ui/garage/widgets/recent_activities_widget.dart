@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+// import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/vertical_list_shimmer.dart';
 
 import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../../../../../core/ui/widgets/custom_tab_bar.dart';
@@ -40,27 +43,34 @@ class RecentActivitiesWidget extends StatelessWidget
       init: GarageController(Get.find(), Get.find()),
       autoRemove: false,
       builder: (controller) {
+        if (controller.appointmentsLoading.value) {
+          return ListVehicleShimmer(
+            isHorizontal: isHorizontal,
+          );
+        }
+        List<AppointmentEntity> filteredAppointments = List<AppointmentEntity>.from(controller.appointments);
+        filteredAppointments.sort(
+            (a, b) => DateTime.parse(b.date).compareTo(DateTime.parse(a.date)));
         var filteredActivities = <CarCardWidget>[];
 
         if (controller.appointments.isNotEmpty) {
-          var limitedActivities = limit != null
-              ? limit! > controller.appointments.length
-                  ? controller.appointments
-                  : controller.appointments.sublist(0, limit!)
-              : controller.appointments;
+          // Applying the filters
+          filteredAppointments = filteredAppointments
+              .where(
+                  (e) => vehicleId != null ? e.vehicle?.id == vehicleId : true)
+              .where((e) => status != null ? e.status == status : true)
+              .toList();
 
-          var filteredByVehicle = vehicleId != null
-              ? limitedActivities.where((e) => e.vehicle?.id == vehicleId)
-              : limitedActivities;
-
-          filteredActivities = filteredByVehicle.map((e) {
+          filteredActivities = filteredAppointments.map((e) {
             return CarCardWidget(
               latitude: e.location?.latitude ?? 0,
               longitude: e.location?.longitude ?? 0,
               date:
-                  "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
-              time:
-                  "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
+                  // "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
+                  DateFormat('MMM, d, yyyy').format(DateTime.parse(e.date)),
+              // time:
+              //     "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
+              time: e.timeOfDay,
               localisation: e.locationType == "SERVICE_CENTER"
                   ? "On Site"
                   : e.locationType,
@@ -74,10 +84,20 @@ class RecentActivitiesWidget extends StatelessWidget
             );
           }).toList();
 
-          if (status != null) {
-            filteredActivities =
-                filteredActivities.where((w) => w.status == status).toList();
-          }
+          // Apply limit if provided
+          filteredActivities = limit != null
+              ? limit! > filteredActivities.length
+                  ? filteredActivities
+                  : filteredActivities.sublist(0, limit!)
+              : filteredActivities;
+
+          filteredActivities = filteredActivities.sublist(
+              0,
+              limit != null
+                  ? limit! > filteredActivities.length
+                      ? filteredActivities.length
+                      : limit!
+                  : filteredActivities.length);
         }
 
         return Column(
@@ -112,12 +132,7 @@ class RecentActivitiesWidget extends StatelessWidget
                 ),
               ),
             if (haveTabBar) const SizedBox(height: 20),
-            if (controller.appointmentsLoading.value)
-              ListVehicleShimmer(
-                isHorizontal: isHorizontal,
-              ),
-            if (!controller.appointmentsLoading.value &&
-                filteredActivities.isNotEmpty)
+            if (filteredActivities.isNotEmpty)
               isHorizontal
                   ? SizedBox(
                       height: 250,

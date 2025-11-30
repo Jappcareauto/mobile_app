@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
+import 'package:jappcare/features/profile/application/usecases/add_payment_method_usecase.dart';
 
 import '../domain/repositories/profile_repository.dart';
 import '../infrastructure/repositoriesImpl/profile_repository_impl.dart';
@@ -21,5 +22,6 @@ class ProfileDependencies {
     Get.lazyPut(() => GetUserInfosUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => UpdateProfileImageUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => UpdateProfileUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => AddPaymentMethodUseCase(Get.find()), fenix: true);
   }
 }

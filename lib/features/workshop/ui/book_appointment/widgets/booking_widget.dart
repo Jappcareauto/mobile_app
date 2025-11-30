@@ -59,7 +59,10 @@ class BookingWidget extends GetView<BookAppointmentController> {
                       label: "Morning",
                       timeRange: "8:00 AM - 12:00 AM",
                       isSelected: controller.selectedTime.value == "MORNING",
-                      onTap: () => controller.selectTime("MORNING"),
+                      onTap: () => {
+                        controller.selectedTimeRange.value = "8am-12pm",
+                      controller.selectTime("MORNING")
+                      }, 
                     ),
                   )),
               const SizedBox(width: 10),
@@ -68,7 +71,10 @@ class BookingWidget extends GetView<BookAppointmentController> {
                       label: "Afternoon",
                       timeRange: "12:00 PM - 5:00 PM",
                       isSelected: controller.selectedTime.value == "AFTERNOON",
-                      onTap: () => controller.selectTime("AFTERNOON"),
+                      onTap: () => {
+                        controller.selectedTimeRange.value = "12pm-5pm",
+                        controller.selectTime("AFTERNOON")
+                      },
                     ),
                   )),
             ],
@@ -87,11 +93,13 @@ class BookingWidget extends GetView<BookAppointmentController> {
             children: [
               Obx(() => Expanded(
                     child: LocationOption(
-                      label: "Home",
-                      icon: FluentIcons.home_12_regular,
-                      isSelected: controller.selectedLocation.value == "HOME",
-                      onTap: () => controller.selectLocation("HOME"),
-                    ),
+                        label: "Home",
+                        icon: FluentIcons.home_12_regular,
+                        isSelected: controller.selectedLocation.value == "HOME",
+                        onTap: () {
+                          controller.selectLocation("HOME");
+                          controller.getUserLocationAndAnimateCamera();
+                        }),
                   )),
               Obx(() => Expanded(
                     child: LocationOption(

@@ -40,7 +40,7 @@ class DioNetworkService extends NetworkService {
       priority: CachePriority.normal,
       maxStale: const Duration(days: 3),
       keyBuilder: CacheOptions.defaultCacheKeyBuilder,
-      allowPostMethod: false, 
+      allowPostMethod: false,
     );
 
     // Ajout de l'intercepteur de cache
@@ -98,7 +98,8 @@ class DioNetworkService extends NetworkService {
     return error.type == DioException.connectionTimeout ||
         error.type == DioException.sendTimeout ||
         error.type == DioException.receiveTimeout ||
-        (error.type == DioExceptionType.unknown && error.error is SocketException);
+        (error.type == DioExceptionType.unknown &&
+            error.error is SocketException);
   }
 
   /// Méthode pour obtenir les en-têtes avec le token
@@ -115,6 +116,8 @@ class DioNetworkService extends NetworkService {
 
   void _handleError(dynamic error) {
     String errorMessage = 'Une erreur est survenue';
+    int? statusCode = 500;
+    print('Error Programmed-${error.toString()}');
     if (error is DioException) {
       if (error.response != null && error.response?.data != null) {
         final data = error.response?.data;
@@ -125,6 +128,7 @@ class DioNetworkService extends NetworkService {
           errorMessage = data;
         } else {
           errorMessage = 'Erreur du serveur : ${error.response?.statusCode}';
+          statusCode = error.response?.statusCode;
         }
       } else {
         errorMessage = error.message ?? 'Une erreur est survenue';
@@ -132,7 +136,7 @@ class DioNetworkService extends NetworkService {
     } else {
       errorMessage = error.toString();
     }
-    throw BaseException(errorMessage);
+    throw BaseException(errorMessage, statusCode);
   }
 
   /// Création de FormData pour les requêtes avec fichiers
@@ -197,7 +201,6 @@ class DioNetworkService extends NetworkService {
       _handleError(e);
       print("error in dio network services");
       print(e);
-
     }
   }
 

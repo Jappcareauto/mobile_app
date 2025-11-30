@@ -8,8 +8,6 @@ import 'package:jappcare/features/emergency/domain/entities/emergency.dart';
 import 'package:jappcare/features/emergency/domain/repositories/emergency_repository.dart';
 import 'package:jappcare/features/emergency/infrastructure/models/emergency_model.dart';
 
-
-
 import '../../domain/entities/declined_emergency.dart';
 import '../models/declined_emergency_model.dart';
 
@@ -21,25 +19,29 @@ class EmergencyRepositoryImpl implements EmergencyRepository {
   });
 
   @override
-  Future<Either<EmergencyException, DeclinedEmergency>> declinedEmergency(String id, String status) async {
+  Future<Either<EmergencyException, DeclinedEmergency>> declinedEmergency(
+      String id, String status) async {
     try {
       final response = await networkService.patch(
         "${EmergencyConstants.declinedEmergencyPatchUri}/$id/status",
-        body: {'status': status, },
+        body: {
+          'status': status,
+        },
       );
       return Right(DeclinedEmergencyModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(EmergencyException(e.message));
+      return Left(EmergencyException(e.message, e.statusCode));
     }
   }
 
-
   @override
   Future<Either<EmergencyException, Emergency>> emergency(
-      String serviceCenterId , String vehicleId , String title ,String note , String status  ,
-      Location location
-
-      ) async {
+      String serviceCenterId,
+      String vehicleId,
+      String title,
+      String note,
+      String status,
+      Location location) async {
     try {
       final response = await networkService.post(
         EmergencyConstants.emergencyPostUri,
@@ -57,10 +59,9 @@ class EmergencyRepositoryImpl implements EmergencyRepository {
       print("error from repositorie");
 
       print(e);
-      return Left(EmergencyException(e.message));
+      return Left(EmergencyException(e.message, e.statusCode));
     }
   }
-
 
 //Add methods here
 }

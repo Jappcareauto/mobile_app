@@ -4,9 +4,9 @@ class PlaceDetails {
   PlaceDetails._({required this.name, required this.lat, required this.lng});
 
   factory PlaceDetails.create({
-    required name,
-    required lat,
-    required lng,
+    required String name,
+    required double lat,
+    required double lng,
   }) {
     // Add any validation or business logic here
     return PlaceDetails._(

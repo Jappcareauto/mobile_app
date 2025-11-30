@@ -1,5 +1,6 @@
 import 'package:jappcare/core/ui/domain/models/location.model.dart';
 import 'package:jappcare/core/ui/domain/models/pagination.model.dart';
+import 'package:jappcare/features/chat/infrastructure/models/get_all_chatrooms.model.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/get_all_service_center_model.dart';
@@ -62,6 +63,9 @@ class AppointmentModel {
   final ServiceModel? service;
   final ServiceCenterModel? serviceCenter;
   final VehicleModel? vehicle;
+  final ChatRoomModel? chatRoom;
+  final String? diagnosesToMake;
+  final String? diagnosesMade;
   // final ServiceCenterMode? serviceCenter;
 
   AppointmentModel._({
@@ -79,6 +83,9 @@ class AppointmentModel {
     this.service,
     this.serviceCenter,
     this.vehicle,
+    this.chatRoom,
+    this.diagnosesToMake,
+    this.diagnosesMade,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -111,6 +118,12 @@ class AppointmentModel {
               'serviceCenterId': json['serviceCenter']['id']
             })
           : null,
+      // chatRoom: json['chatRoom'] != null
+      //     ? ChatRoomModel.fromJson(json['chatRoom'])
+      //     : null,
+      chatRoom: null,
+      diagnosesToMake: json['diagnosesToMake'],
+      diagnosesMade: json['diagnosesMade'],
     );
   }
 
@@ -130,6 +143,9 @@ class AppointmentModel {
     data['service'] = service?.toJson();
     data['serviceCenter'] = serviceCenter?.toJson();
     data['vehicle'] = vehicle?.toJson();
+    data['chatRoom'] = chatRoom?.toJson();
+    data['diagnosesToMake'] = diagnosesToMake;
+    data['diagnosesMade'] = diagnosesMade;
     return data;
   }
 
@@ -149,6 +165,9 @@ class AppointmentModel {
       service: entity.service?.toModel(),
       serviceCenter: entity.serviceCenter?.toModel(),
       vehicle: entity.vehicle?.toModel(),
+      chatRoom: entity.chatRoom?.toModel(),
+      diagnosesToMake: entity.diagnosesToMake,
+      diagnosesMade: entity.diagnosesMade,
     );
   }
 
@@ -168,6 +187,9 @@ class AppointmentModel {
       service: service?.toEntity(),
       serviceCenter: serviceCenter?.toEntity(),
       vehicle: vehicle?.toEntity(),
+      chatRoom: chatRoom?.toEntity(),
+      diagnosesToMake: diagnosesToMake,
+      diagnosesMade: diagnosesMade,
     );
   }
 }

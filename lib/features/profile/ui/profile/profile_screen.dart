@@ -46,13 +46,15 @@ class ProfileScreen extends GetView<ProfileController> {
                                           "Unknown name",
                                       style: Get.textTheme.headlineLarge
                                           ?.copyWith(
-                                              fontWeight: FontWeight.w700),
+                                              fontWeight: FontWeight.bold, fontSize: 22),
                                     ),
                               const SizedBox(height: 8),
                               SizedBox(
-                                width: 130,
+                                // width: 110,
                                 child: CustomButton(
                                     text: "Manage",
+                                    strech: false,
+                                    width: 110,
                                     onPressed: controller.goToSettings,
                                     borderRadius: BorderRadius.circular(30),
                                     haveBorder: true),

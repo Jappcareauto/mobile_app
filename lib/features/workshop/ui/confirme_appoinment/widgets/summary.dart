@@ -5,10 +5,10 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
-import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 import 'package:intl/intl.dart';
 
-class Summary extends GetView<ConfirmeAppointmentController> {
+class Summary extends GetView<ConfirmAppointmentController> {
   final BookAppointmentController bookController =
       Get.put(BookAppointmentController(Get.find()));
   final images = Get.find<GlobalcontrollerWorkshop>().selectedImages;
@@ -17,10 +17,13 @@ class Summary extends GetView<ConfirmeAppointmentController> {
   Summary({super.key});
   @override
   Widget build(BuildContext context) {
+    print(
+        'argument ${argument['location']}, selectedLocation ${argument['selectedLocation']}');
     return Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.withValues(alpha: .2)),
-          borderRadius: BorderRadius.circular(20),
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.withValues(alpha: .3)),
+          borderRadius: BorderRadius.circular(16),
         ),
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -38,7 +41,7 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                         TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
                 Text(argument['serviceCenterName'] ?? "Unknown",
                     style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.bold)),
+                        fontSize: 14, fontWeight: FontWeight.w600)),
               ],
             ),
             Column(
@@ -52,7 +55,7 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                 Text(
                     '${argument['serviceName']?.toString().replaceAll("_", " ").capitalizeFirst} Appointment',
                     style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
               ],
             ),
             Column(
@@ -76,24 +79,24 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                         Get.find<ProfileController>().userInfos?.name ??
                             "Unknown",
                         style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold))
+                            fontSize: 16, fontWeight: FontWeight.w600))
                   ],
                 ),
               ],
             ),
-            Column(
-              spacing: 5,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Estimated inspection fee',
-                    style:
-                        TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-                Text('${argument['servicePrice']} Frs',
-                    style:
-                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-              ],
-            ),
+            // Column(
+            //   spacing: 5,
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     const Text('Estimated inspection fee',
+            //         style:
+            //             TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
+            //     Text('${argument['servicePrice']} Frs',
+            //         style:
+            //             TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            //   ],
+            // ),
             Column(
               spacing: 5,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -104,7 +107,7 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                         TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
                 Text(argument['serviceId'] ?? "Unknown",
                     style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.bold)),
+                        fontSize: 14, fontWeight: FontWeight.w600)),
               ],
             ),
             Column(
@@ -116,42 +119,56 @@ class Summary extends GetView<ConfirmeAppointmentController> {
                       style: TextStyle(
                           fontSize: 12, fontWeight: FontWeight.normal)),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       spacing: 10,
                       children: [
                         Row(
+                          spacing: 5,
                           children: [
                             const Icon(
                               FluentIcons.calendar_12_regular,
                               size: 24,
                             ),
-                            Obx(
-                              () => Text(
-                                DateFormat('EEE, MMM dd, yyyy')
-                                    .format(argument['selectedDate']),
-                                // Format personnalisé
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                            Text(
+                              DateFormat('EEE, MMM dd, yyyy')
+                                  .format(argument['selectedDate']),
+                              // Format personnalisé
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
                               ),
                             ),
                           ],
                         ),
                         Row(
+                          spacing: 5,
                           children: [
                             const Icon(
                               FluentIcons.clock_12_regular,
                               size: 24,
                             ),
-                            Obx(() => Text(argument['selectedTime'],
+                            Text(argument['selectedTimeRange'],
                                 style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400))),
+                                    fontSize: 14, fontWeight: FontWeight.normal)),
                           ],
                         )
                       ]),
                 ]),
+            if (argument['location'] != null &&
+                argument['selectedLocation'] == "HOME")
+              Column(
+                spacing: 5,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Location',
+                      style: TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.normal)),
+                  Text(argument['location'].name ?? "Unknown",
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.normal)),
+                ],
+              ),
             if (argument['noteController'].isNotEmpty)
               Column(
                 spacing: 5,

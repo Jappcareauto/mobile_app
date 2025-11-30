@@ -16,7 +16,7 @@ import '../../../application/usecases/get_all_services_usecase.dart';
 class WorkshopController extends GetxController {
   final GetAllservicesUseCase _getAllservicesUseCase =
       Get.find(); // Get.find() is an instance method used to get a class
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  late GlobalcontrollerWorkshop globalControllerWorkshop;
   final loading = false.obs;
   final serviceloading = false.obs;
 
@@ -50,14 +50,9 @@ class WorkshopController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
     getAllservices();
     getAllServicesCenter();
-    // ever(services, (serviceModel) {
-    //   if (serviceModel != null && serviceModel.data.isNotEmpty) {
-    //     selectedFilter.value = 0;
-    //     selectedCategory.value = serviceModel.data.first.title;
-    //   }
-    // });
 
     debounce(serviceCenterName, (value) {
       filterServiceCenters(

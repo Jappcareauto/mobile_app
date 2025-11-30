@@ -39,6 +39,7 @@ class SignUpModalWidget extends StatelessWidget {
                     assetPath: AppImages.google,
                     height: 25,
                   ),
+                  isLoading: controller.loadingGoogle,
                   onPressed: controller.googleLogin,
                 ),
                 const SizedBox(height: 16),

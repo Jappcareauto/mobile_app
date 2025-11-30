@@ -151,7 +151,7 @@ class EmergencyDetailScreen extends GetView<EmergencyDetailController> {
                               controller.savePhoneNumberPaymentMethod.value =
                                   value;
                             },
-                            activeColor: Get.theme.primaryColor,
+                            activeThumbColor: Get.theme.primaryColor,
                           ),
                         ))
                   ],

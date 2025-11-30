@@ -34,6 +34,18 @@ abstract class AppNavigation {
   /// [arguments] is an optional parameter that can be used to pass data to the route.
   Future<void>? toNamedAndReplaceAll(String routeName, {dynamic arguments});
 
+
+  /// Navigate to a named route in the app, removing all routes in the navigation stack till the first route.
+  ///
+  /// [routeName] is the name of the route to navigate to.
+  /// [arguments] is an optional parameter that can be used to pass data to the route.
+  /// [parameters] is an optional parameter that can be used to pass query parameters to the route.
+  Future<void>? toFirstAndPushNamed(
+  String routeName, {
+  dynamic arguments,
+  Map<String, String>? parameters,
+});
+
   /// Navigate to a named route in the app, replacing all routes in the navigation stack.
   ///
   /// [page] the widget to navigate to.

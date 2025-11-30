@@ -27,28 +27,25 @@ class ShopRepositoryImpl implements ShopRepository {
     try {
       final response = await networkService.get(
         "${ShopConstants.getReviewGetUri}/$productId",
-        
       );
       return Right(GetReviewModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(ShopException(e.message));
+      return Left(ShopException(e.message, e.statusCode));
     }
   }
 
-
   @override
-  Future<Either<ShopException, GetProductDetail>> getProductDetail(String productId) async {
+  Future<Either<ShopException, GetProductDetail>> getProductDetail(
+      String productId) async {
     try {
       final response = await networkService.get(
         "${ShopConstants.getProductDetailGetUri}/$productId",
-        
       );
       return Right(GetProductDetailModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(ShopException(e.message));
+      return Left(ShopException(e.message, e.statusCode));
     }
   }
-
 
   @override
   Future<Either<ShopException, List<Data>>> getProducts() async {
@@ -57,15 +54,14 @@ class ShopRepositoryImpl implements ShopRepository {
         ShopConstants.getProductsGetUri,
       );
       final List<dynamic> decodedResponse = response;
-      final products = decodedResponse.map((json) => DataModel.fromJson(json).toEntity()).toList();
+      final products = decodedResponse
+          .map((json) => DataModel.fromJson(json).toEntity())
+          .toList();
       return Right(products);
     } on BaseException catch (e) {
-      return Left(ShopException(e.message));
+      return Left(ShopException(e.message, e.statusCode));
     }
   }
 
-
-
 //Add methods here
-
 }

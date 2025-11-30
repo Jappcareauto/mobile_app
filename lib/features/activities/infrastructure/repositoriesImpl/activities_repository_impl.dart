@@ -25,7 +25,7 @@ class ActivitiesRepositoryImpl implements ActivitiesRepository {
           body: {'garageId': garageId});
       return Right(GetAllActivitiesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
-      return Left(ActivitiesException(e.message));
+      return Left(ActivitiesException(e.message, e.statusCode));
     }
   }
 

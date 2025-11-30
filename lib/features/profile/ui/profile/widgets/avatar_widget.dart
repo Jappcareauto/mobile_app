@@ -34,17 +34,17 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                           baseColor: Colors.grey,
                           highlightColor: Colors.white,
                           child: ImageComponent(
-                            file: controller.file,
+                            file: controller.file.value,
                             width: size,
                             height: size,
                             borderRadius: 50,
                           ),
                         )
                       : ImageComponent(
-                          imageUrl: controller.file != null
+                          imageUrl: controller.file.value != null
                               ? null
                               : controller.userInfos?.image,
-                          file: controller.file,
+                          file: controller.file.value,
                           onTap: controller.goToProfile,
                           width: size,
                           height: size,
@@ -52,6 +52,7 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                           onErrorWidget: Container(
                             padding: const EdgeInsets.all(3),
                             decoration: BoxDecoration(
+                                color: AppColors.black,
                                 borderRadius: BorderRadius.circular(100),
                                 border: Border.all(
                                     color: Get.theme.primaryColor, width: 2)),
@@ -92,7 +93,8 @@ class AvatarWidget extends StatelessWidget implements FeatureWidgetInterface {
                                               fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                          )),
+                          ),
+                        ),
                   if (canEdit)
                     Positioned(
                       bottom: 0,

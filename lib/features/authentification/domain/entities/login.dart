@@ -9,8 +9,8 @@ class Login {
   });
 
   factory Login.create({
-    required accessToken,
-    required refreshToken
+    required String accessToken,
+    required String refreshToken
   }) {
     // Add any validation or business logic here
     return Login._(

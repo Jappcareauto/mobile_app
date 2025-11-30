@@ -11,7 +11,7 @@ abstract class GarageRepository {
   Future<Either<GarageException, GetGarageByOwnerId>> getGarageByOwnerId(
       String userId);
 
-  Future<Either<GarageException, List<Vehicle>>> getVehicleList();
+  Future<Either<GarageException, List<Vehicle>>> getVehicleList({String? userId});
 
   Future<Either<GarageException, List<Vehicle>>> getVehicleListByOwnerId(
       String ownerId);
@@ -19,7 +19,7 @@ abstract class GarageRepository {
   Future<Either<GarageException, Vehicle>> getVehicleById(String id);
 
   Future<Either<GarageException, Vehicle>> addVehicle(
-      String serviceCenterId, String vin, String registrationNumber);
+      String userId, String vin, String registrationNumber);
 
   Future<Either<GarageException, String>> getPlaceName(
       double longitude, double latitude);
@@ -35,8 +35,15 @@ abstract class GarageRepository {
   Future<Either<GarageException, String>> deleteVehicle(String id);
 
   Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments(
-      {String? status});
+      {String? status,
+    String? vehicleId,
+    String? serviceCenterId,
+    String? userId,
+    String? locationType,});
 
   Future<Either<GarageException, AppointmentEntity>> getAppointmentByChatroomId(
       {required String chatroomId});
+
+  Future<Either<GarageException, AppointmentEntity>> getAppointmentById(
+      {required String appointmentId});
 }

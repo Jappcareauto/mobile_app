@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
@@ -8,12 +9,12 @@ import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
+// import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/booking_widget.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
+// import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
+// import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
-import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
+// import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
 
@@ -46,39 +47,25 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 10,
                     children: [
-                      VehicleListWidget(
-                        vehiclesLoading: false.obs,
-                        vehicles: controller.vehicles,
-                        pageController: controller.pageController,
-                        currentPage: controller.currentPage,
-                        onSelected: (selectedCar) {
-                          controller.vehicleId.value = selectedCar.id;
-                          controller.vehicleVin.value = selectedCar.vin;
-                          controller.globalControllerWorkshop
-                              .addVehicle(selectedCar);
-                          print(
-                              "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
-                        },
-                      ),
-                      // if (Get.isRegistered<FeatureWidgetInterface>(
-                      //     tag: 'ListVehicleWidget'))
-                      //   Get.find<FeatureWidgetInterface>(
-                      //           tag: 'ListVehicleWidget')
-                      //       .buildView({
-                      //     "pageController": controller.pageController,
-                      //     "currentPage": controller.currentPage,
-                      //     "haveAddVehicule": false,
-                      //     "title": "Select Vehicle",
-                      //     "viewCarDetailsOnCardPress": false,
-                      //     "onSelected": (selectedCar) {
-                      //       controller.vehicleId.value = selectedCar.id;
-                      //       controller.vehicleVin.value = selectedCar.vin;
-                      //       controller.globalControllerWorkshop
-                      //           .addVehicle(selectedCar);
-                      //       print(
-                      //           "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
-                      //     },
-                      //   }),
+                      if (Get.isRegistered<FeatureWidgetInterface>(
+                          tag: 'ListVehicleWidget'))
+                        Get.find<FeatureWidgetInterface>(
+                                tag: 'ListVehicleWidget')
+                            .buildView({
+                          "pageController": controller.pageController,
+                          "currentPage": controller.currentPage,
+                          "haveAddVehicule": false,
+                          "title": "Select Vehicle",
+                          "viewCarDetailsOnCardPress": false,
+                          "onSelected": (selectedCar) {
+                            controller.vehicleId.value = selectedCar.id;
+                            controller.vehicleVin.value = selectedCar.vin;
+                            controller.globalControllerWorkshop
+                                .addVehicle(selectedCar);
+                            print(
+                                "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
+                          },
+                        }),
 
                       // Padding(
                       //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -94,10 +81,11 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                             spacing: 10,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                               Text(
                                 "Select Service",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                style: Get.textTheme.bodyLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                               ),
                               SizedBox(
                                 child: controller
@@ -161,17 +149,49 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                       Obx(() {
                         return Column(
                           children: [
-                            if (controller.selectedLocation.value == "CUSTOM" ||
-                                controller.selectedLocation.value ==
-                                    "HOME") ...[
+                            if (controller.selectedLocation.value ==
+                                "HOME") ...[
                               const SizedBox(
                                 height: 20,
                               ),
-                              CustomMapWidget(),
+                              // CustomMapWidget(
+                              //   latitude:
+                              //       controller.placeDetails.value?.lat ?? 0,
+                              //   longitude:
+                              //       controller.placeDetails.value?.lng ?? 0,
+                              //   placeName: controller.placeDetails.value?.name,
+                              // ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                height: 300,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(18),
+                                  child: GoogleMap(
+                                    mapType: MapType.normal,
+                                    initialCameraPosition: controller.kYaounde,
+                                    markers: controller.markers,
+                                    onMapCreated: (GoogleMapController c) {
+                                      if (!controller
+                                          .mapController.isCompleted) {
+                                        controller.mapController.complete(c);
+                                      }
+                                    },
+                                    myLocationEnabled:
+                                        true, // Shows the blue dot for current location
+                                    myLocationButtonEnabled:
+                                        false, // We use a custom button
+                                  ),
+                                ),
+                              ),
+
                               const SizedBox(
                                 height: 10,
                               ),
-                              const FormLocationWidget(),
+                              // const FormLocationWidget(),
                             ],
                           ],
                         );
@@ -188,7 +208,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                         ),
                       ),
 
-                      const AddImageWidget(),
+                      // const AddImageWidget(),
                       // EstimatedInspectionFee(),
                       Container(
                         margin: const EdgeInsets.symmetric(

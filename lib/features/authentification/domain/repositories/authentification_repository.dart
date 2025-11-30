@@ -1,21 +1,27 @@
 import 'package:dartz/dartz.dart';
+import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import '../core/exceptions/authentification_exception.dart';
 import '../entities/login.dart';
 import '../entities/register.dart';
-import '../../application/usecases/register_command.dart';
 import '../entities/forgot_password.dart';
 import '../entities/reset_password.dart';
 
 abstract class AuthentificationRepository {
   //Add methods here
   Future<Either<AuthentificationException, Login>> login(
-      {String? email, String? phone, required String password, bool? extend});
+      {String? email, PhoneCommand? phone, required String password, bool? extend});
 
   Future<Either<AuthentificationException, Login>> googleLogin(
       {required String bearerId});
 
+  Future<Either<AuthentificationException, Login>> googleLogin2(
+      {required String bearerId, required String email, required String name});
+
   Future<Either<AuthentificationException, Register>> googleRegister(
       {required String bearerId});
+
+  Future<Either<AuthentificationException, Register>> googleRegister2(
+      {required String bearerId, required String email, required String name});
 
   Future<Either<AuthentificationException, Login>> googleSignIn();
 

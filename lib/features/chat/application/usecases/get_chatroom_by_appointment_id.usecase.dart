@@ -6,10 +6,10 @@ import 'package:jappcare/features/chat/domain/repositories/chat_repository.dart'
 
 import 'package:dartz/dartz.dart';
 
-class GetChatRoomByAppoitmentIdUseCase {
+class GetChatRoomByAppointmentIdUseCase {
   final ChatRepository repository;
 
-  GetChatRoomByAppoitmentIdUseCase(this.repository);
+  GetChatRoomByAppointmentIdUseCase(this.repository);
 
   Future<Either<ChatException, ChatRoomEntity>> call(
       GetChatroomByAppointmentIdCommand command) async {

@@ -24,28 +24,28 @@ import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_i
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 // import 'package:jappcare/features/workshop/infrastructure/models/send_message_model.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
-import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
+// import 'package:web_socket_channel/web_socket_channel.dart';
 
 // import 'package:web_socket_channel/io.dart';
 
 class ChatController extends GetxController {
   final AppNavigation _appNavigation;
 
-  final ConfirmeAppointmentController confirmeAppointmentController =
-      ConfirmeAppointmentController(Get.find());
+  final ConfirmAppointmentController confirmeAppointmentController =
+      ConfirmAppointmentController(Get.find());
 
   final _getAllChatRoomsUseCase = GetAllUserChatRoomsUseCase(Get.find());
 
   final loading = false.obs;
   final searchQuery = ''.obs;
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  late GlobalcontrollerWorkshop globalControllerWorkshop;
 
   GetVehiculByIdUseCase getVehiculByIdUseCase =
       GetVehiculByIdUseCase(Get.find());
   final selectedMethod = 'Orange Money'.obs;
   ChatController(this._appNavigation);
-  late WebSocketChannel channel;
+  // late WebSocketChannel channel;
   final ScrollController scrollController = ScrollController();
 
   final RxList<ChatRoomEntity> chatrooms = <ChatRoomEntity>[].obs;
@@ -62,6 +62,7 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
     fetchChats();
     // globalControllerWorkshop.addData("chatroomId", "123456");
     // final chatroom = globalControllerWorkshop.workshopData['chatroomId'];
@@ -280,7 +281,7 @@ class ChatController extends GetxController {
   @override
   void onClose() {
     // Fermer proprement la connexion WebSocket
-    channel.sink.close();
+    // channel.sink.close();
     super.onClose();
   }
 }

@@ -25,6 +25,7 @@ class ChatInputWidget extends StatelessWidget {
         children: [
           if (chatController.selectedImages.isNotEmpty)
             Container(
+              height: 100,
               decoration: const BoxDecoration(
                   color: AppColors.black,
                   borderRadius: BorderRadius.only(
@@ -64,6 +65,7 @@ class ChatInputWidget extends StatelessWidget {
                   )),
             ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               // Zone de texte avec bordure arrondie
               Expanded(

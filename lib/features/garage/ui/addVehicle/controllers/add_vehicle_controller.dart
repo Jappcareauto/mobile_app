@@ -21,9 +21,11 @@ class AddVehicleController extends GetxController {
       Get.find(); // Reactive variable to track character count
   var vinCharacterCount = 0.obs;
   late FormHelper addVehicleFormHelper;
-  final globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
+  late GlobalcontrollerWorkshop globalControllerWorkshop;
 
-  RxString serviceCenterId = ''.obs;
+  final user = Get.find<ProfileController>().userInfos!;
+
+  // RxString serviceCenterId = ''.obs;
 
   final AppNavigation _appNavigation;
   AddVehicleController(this._appNavigation);
@@ -42,9 +44,10 @@ class AddVehicleController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    globalControllerWorkshop = Get.find<GlobalcontrollerWorkshop>();
 
-    serviceCenterId.value =
-        globalControllerWorkshop.workshopData['serviceCenterId'];
+    // serviceCenterId.value =
+    //     globalControllerWorkshop.workshopData['serviceCenterId'] ?? '';
 
     addVehicleFormHelper = FormHelper<GarageException, Vehicle>(
       fields: {
@@ -57,15 +60,17 @@ class AddVehicleController extends GetxController {
       },
       onSubmit: (data) {
         return _addVehicleUseCase.call(AddVehicleCommand(
-            serviceCenterId: serviceCenterId.value,
+            userId: user.id,
             vin: data['vin']!,
             registrationNumber: data['registration']!));
       },
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
-        Get.find<GarageController>()
-            .getVehicleList(Get.find<ProfileController>().userInfos!.id);
+        Get.find<GarageController>().getVehicleList(ownerId: user.id);
         _appNavigation.goBack();
+        Get.showCustomSnackBar("Your vehicle has been added successfully",
+            title: "Vehicle Added", type: CustomSnackbarType.success);
+        update();
       },
     );
     // Listen for VIN input changes

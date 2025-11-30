@@ -1,18 +1,7 @@
 import 'package:get/get.dart';
+import 'package:jappcare/core/utils/enums.dart';
 import 'package:jappcare/features/shop/navigation/private/shop_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
-
-enum PaymentMethod { orange, mtn, card }
-
-extension PaymentMethodExtension on PaymentMethod {
-  String get value => _paymentMethodValues[this] ?? '';
-
-  static const _paymentMethodValues = {
-    PaymentMethod.orange: 'ORANGE',
-    PaymentMethod.mtn: 'MTN',
-    PaymentMethod.card: 'CARD',
-  };
-}
 
 class OrderSummaryController extends GetxController {
   final AppNavigation _appNavigation;

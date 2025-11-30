@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
+import 'package:jappcare/features/workshop/application/usecases/get_place_latlng_usecase.dart';
 import 'package:jappcare/features/workshop/domain/repositories/workshop_repository.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/PayWithCard/controllers/pay_with_card_controller.dart';
@@ -8,7 +9,7 @@ import 'package:jappcare/features/workshop/ui/appointment_details/controllers/ap
 import 'package:jappcare/features/workshop/ui/autoshop_detail/controllers/autoshop_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/map_controller.dart';
-import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirme_appointment_controller.dart';
+import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/service_center_locator/controllers/services_locator_controller.dart';
 import 'package:jappcare/features/workshop/ui/sucess_payment/controller/success_payment_controller.dart';
 import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
@@ -30,6 +31,8 @@ class WorkshopDependencies {
     Get.lazyPut<WorkshopRepository>(
         () => WorkshopRepositoryImpl(networkService: Get.find()),
         fenix: true);
+    Get.lazyPut<GlobalcontrollerWorkshop>(() => GlobalcontrollerWorkshop(),
+        fenix: true);
     Get.lazyPut<FeatureWidgetInterface>(() => const WorkshopScreen(),
         tag: 'WorkshopScreen', fenix: true);
     Get.lazyPut<BookAppointmentController>(
@@ -40,8 +43,8 @@ class WorkshopDependencies {
     Get.lazyPut<WorkshopController>(() => WorkshopController(
           Get.find(),
         ));
-    Get.lazyPut<ConfirmeAppointmentController>(
-        () => ConfirmeAppointmentController(Get.find()));
+    Get.lazyPut<ConfirmAppointmentController>(
+        () => ConfirmAppointmentController(Get.find()));
     Get.lazyPut<WorkshopDetailsController>(
         () => WorkshopDetailsController(Get.find()));
     Get.lazyPut<PayWithCardController>(() => PayWithCardController(Get.find()));
@@ -51,7 +54,6 @@ class WorkshopDependencies {
         () => SuccessPaymentController(Get.find()));
     Get.lazyPut<AppointmentDetailsController>(
         () => AppointmentDetailsController(Get.find()));
-    Get.lazyPut<GlobalcontrollerWorkshop>(() => GlobalcontrollerWorkshop());
     Get.lazyPut<MapController>(() => MapController(Get.find()));
     // Use cases
     Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);
@@ -60,6 +62,7 @@ class WorkshopDependencies {
     Get.lazyPut(() => GetAllservicesUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetPlaceAutocompleteUsecase(Get.find()), fenix: true);
     Get.lazyPut(() => GetPlaceDetailsUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => GetPlaceLatLngUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetServiceCenterServicesUsecase(Get.find()), fenix: true);
     Get.lazyPut(() => GetAllAvailableServiceCenterServicesUsecase(Get.find()),
         fenix: true);

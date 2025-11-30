@@ -8,13 +8,13 @@ class ExpandableContainer extends StatelessWidget {
   final Widget subtitle;
   final String description;
   final RxBool visibility;
-  final VoidCallback onpresse;
+  final VoidCallback onExpand;
   final List<String> imageUrls;
   final AppointmentDetailsController controller;
 
   const ExpandableContainer({
     super.key,
-    required this.onpresse,
+    required this.onExpand,
     required this.title,
     required this.visibility,
     required this.subtitle,
@@ -30,6 +30,7 @@ class ExpandableContainer extends StatelessWidget {
       children: [
         // Titre avec bouton d'extension/réduction
         ListTile(
+          contentPadding: EdgeInsets.zero,
           title: Text(
             title,
             style: const TextStyle(
@@ -44,7 +45,7 @@ class ExpandableContainer extends StatelessWidget {
                     ? Icons.keyboard_arrow_down
                     : Icons.keyboard_arrow_right,
               ),
-              onPressed: onpresse,
+              onPressed: onExpand,
             ),
           ),
         ),
@@ -54,51 +55,56 @@ class ExpandableContainer extends StatelessWidget {
             visible: visibility.value,
             child: Container(
               decoration: BoxDecoration(
+                  color: Colors.white,
                   border: Border.all(
                       color: Colors.grey.withValues(alpha: .2), width: 1),
                   borderRadius: BorderRadius.circular(20)),
               padding: const EdgeInsets.all(16.0),
               child: Column(
+                spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   subtitle,
                   // Description
-                  Text(
-                    description,
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      height: 1.5,
-                    ),
-                  ),
-                  const SizedBox(height: 12.0),
-                  if (imageUrls.isNotEmpty)
-                    const Text(
-                      'Images',
-                      style: TextStyle(
-                          fontSize: 14.0, height: 1.5, color: Colors.grey),
-                    ),
-
-                  // Images horizontales
-                  if (imageUrls.isNotEmpty)
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: imageUrls.map((imageUrl) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: ImageComponent(
-                                assetPath: imageUrl,
-                                height: 80,
-                                width: 80,
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                  Column(
+                    children: [
+                      Text(
+                        description,
+                        style: const TextStyle(
+                          fontSize: 14.0,
+                          height: 1.5,
+                        ),
                       ),
-                    ),
-                  const SizedBox(height: 16.0),
+                      const SizedBox(height: 12.0),
+                      // if (imageUrls.isNotEmpty)
+                      //   const Text(
+                      //     'Images',
+                      //     style: TextStyle(
+                      //         fontSize: 14.0, height: 1.5, color: Colors.grey),
+                      //   ),
+
+                      // Images horizontales
+                      if (imageUrls.isNotEmpty)
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: imageUrls.map((imageUrl) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: ImageComponent(
+                                    assetPath: imageUrl,
+                                    height: 80,
+                                    width: 80,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                    ],
+                  ),
                 ],
               ),
             ),

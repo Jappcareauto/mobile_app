@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/utils/app_images.dart';
-import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
+// import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
+import 'package:jappcare/features/workshop/ui/book_appointment/controllers/map_controller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/controllers/workshop_controller.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/views/workshop_custom_map_view.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/widgets/text_shimmer.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/shimmers/services_shimmer.dart';
 import '../widgets/workshop_carrousel.dart';
 import 'controllers/workshop_details_controller.dart';
 import 'package:get/get.dart';
 
 class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
+  final MapController garageController = Get.put(MapController(Get.find()));
   final globalcontrollerWorkshop = Get.find<GlobalcontrollerWorkshop>();
   // final WorkshopController workshopController = WorkshopController(Get.find());
 
@@ -64,6 +67,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
+                  spacing: 10,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,7 +121,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                           child: Row(
                             children: [
                               Icon(
-                                Icons.place_outlined,
+                                Icons.place_rounded,
                                 color: Get.theme.primaryColor,
                               ),
                               const SizedBox(width: 5),
@@ -137,27 +141,18 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                             ],
                           ),
                         ),
-                        Row(
+                        const Row(
                           children: [
+                            Icon(Icons.star_rounded,
+                                color: Colors
+                                    .orange), // Utiliser une couleur appropriée
                             Text(
-                              '|',
+                              '4.5',
                               style: TextStyle(
-                                  fontSize: 20, color: Get.theme.primaryColor),
-                            ),
-                            const Row(
-                              children: [
-                                Icon(Icons.star_rounded,
-                                    color: Colors
-                                        .orange), // Utiliser une couleur appropriée
-                                Text(
-                                  '4.5',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                              ],
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.orange,
+                              ),
                             ),
                           ],
                         ),
@@ -174,28 +169,10 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                       fontWeight: FontWeight.w400, fontSize: 16),
                 ),
               ),
-              const SizedBox(
-                  height: 300,
-                  child: Row(
-                    children: [
-                      WorkshopCustomMapView(),
-                    ],
-                  )),
-              const SizedBox(height: 20),
-              VehicleListWidget(
-                vehiclesLoading: false.obs,
-                vehicles: controller.vehicles,
-                pageController: controller.pageController,
-                currentPage: controller.currentPage,
-                onTapAddVehicle: controller.garageController.goToAddVehicle,
-                onTapViewVehicle:
-                    controller.garageController.goToVehicleDetails,
-              ),
-              const SizedBox(height: 20),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
-                    spacing: 20,
+                    spacing: 12,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
@@ -205,19 +182,36 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                       ),
                       Obx(() {
                         return SizedBox(
-                          child: controller.serviceCenterServices.isNotEmpty
-                              ? ServiceWidget(
-                                  tabs: controller.serviceCenterServices
-                                      .map((e) => e.service)
-                                      .toList(),
-                                  borderRadius: BorderRadius.circular(16),
-                                  haveBorder: true,
-                                )
-                              : const Text('Aucun service disponible'),
+                          child: controller.serviceCenterServicesLoading.value
+                              ? ServicesShimmer(isHorizontal: true)
+                              : controller.serviceCenterServices.isNotEmpty
+                                  ? ServiceWidget(
+                                      tabs: controller.serviceCenterServices
+                                          .map((e) => e.service)
+                                          .toList(),
+                                      borderRadius: BorderRadius.circular(16),
+                                      haveBorder: true,
+                                    )
+                                  : const Text('Aucun service disponible'),
                         );
                       }),
                     ]),
               ),
+              const SizedBox(height: 20),
+              const SizedBox(
+                  // height: 300,
+                  child: WorkshopCustomMapView()),
+              // const SizedBox(height: 20),
+              // VehicleListWidget(
+              //   vehiclesLoading: false.obs,
+              //   vehicles: controller.vehicles,
+              //   pageController: controller.pageController,
+              //   currentPage: controller.currentPage,
+              //   onTapAddVehicle: controller.garageController.goToAddVehicle,
+              //   onTapViewVehicle:
+              //       controller.garageController.goToVehicleDetails,
+              // ),
+
               const SizedBox(height: 20),
               Container(
                 width: Get.width,

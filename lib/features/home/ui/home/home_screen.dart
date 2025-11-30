@@ -5,10 +5,12 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/app_bar_with_salutation.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:jappcare/features/home/domain/entities/get_tips_list.entity.dart';
 import 'package:jappcare/features/home/ui/dashboard/controllers/dashboard_controller.dart';
 import 'package:jappcare/features/home/ui/home/widgets/dismiss_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/tip_modal_bottom.dart';
+import 'package:shimmer/shimmer.dart';
 import '../../../../core/utils/app_images.dart';
 import 'controllers/home_controller.dart';
 import 'widgets/notification_widget.dart';
@@ -65,29 +67,57 @@ class HomeScreen extends GetView<HomeController> {
                               child: NotificationWidget(
                                 haveTitle: true,
                                 textSize: 14,
-                                backgrounColor: const Color(0xFFFFEDE6),
+                                backgroundColor: const Color(0xFFFFEDE6),
                                 title: "Notification",
                                 bodyText: notification,
                                 coloriage: Get.theme.primaryColor,
                                 icon: FluentIcons.alert_16_filled,
+                                onTap: () => {print('Notification tapped')},
                               ),
                             );
                           }).toList(),
                         ),
                       ],
-                      NotificationWidget(
-                        haveTitle: true,
-                        backgrounColor: const Color(0xFFF4EEFF),
-                        title: "Tip",
-                        bodyText:
-                            'Rotate your tires regulary to ensure they wear evenly and last longer.',
-                        coloriage: Get.theme.colorScheme.secondary,
-                        icon: FluentIcons.question_16_filled,
-                        onTap: openModalTipsMethod,
+                      Obx(
+                        () {
+                          if (controller.tipsLoading.value) {
+                            return Shimmer.fromColors(
+                              baseColor: Colors.grey.withValues(alpha: .3),
+                              highlightColor: Colors.grey.withValues(alpha: .1),
+                              child: Container(
+                                width: double.infinity,
+                                height: 90,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300]!,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  border: Border.all(
+                                      width: 1, color: Colors.grey[200]!),
+                                ),
+                              ),
+                            );
+                          }
+                          if (controller.tipsList.isEmpty) {
+                            return const SizedBox.shrink();
+                          }
+                          final lastTip = controller.tipsList.last;
+                          return NotificationWidget(
+                            haveTitle: true,
+                            backgroundColor: const Color(0xFFF4EEFF),
+                            title: 'Tip',
+                            textSize: 14,
+                            bodyText: lastTip.title,
+                            coloriage: Get.theme.colorScheme.secondary,
+                            icon: FluentIcons.question_16_filled,
+                            circleIcon: true,
+                            onTap: () => openModalTipsMethod(lastTip),
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
+                // TODO: Implement the add vehicle functionality at this level to be capable to get the list of vehicles and create too
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'ListVehicleWidget'))
                   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
@@ -96,6 +126,7 @@ class HomeScreen extends GetView<HomeController> {
                     "currentPage": controller.currentPage,
                     "title": "My Garage",
                     'viewCarDetailsOnCardPress': true,
+                    'haveAddVehicule': true,
                     "onTapeAddVehicle": () {
                       print("clique");
                     },
@@ -110,7 +141,7 @@ class HomeScreen extends GetView<HomeController> {
                     'title': 'Upcoming Activities',
                     'status': 'NOT_STARTED',
                     'isHorizontal': true,
-                    'limit': 1,
+                    'limit': 2,
                     'noActivitiesPlaceholder':
                         'You have no upcoming activities at the moment'
                   }),
@@ -208,7 +239,7 @@ class HomeScreen extends GetView<HomeController> {
   }
 }
 
-void openModalTipsMethod() {
+void openModalTipsMethod(TipEntity tip) {
   showModalBottomSheet(
     context: Get.context!,
     isScrollControlled: true, // Permet un contrôle précis sur la hauteur
@@ -229,8 +260,12 @@ void openModalTipsMethod() {
             ],
           ),
           padding: const EdgeInsets.all(16), // Espacement intérieur
-          child: const Wrap(
-            children: [TipModalBottomWidget()],
+          child: Wrap(
+            children: [
+              TipModalBottomWidget(
+                tip: tip,
+              )
+            ],
           ),
         ),
       );

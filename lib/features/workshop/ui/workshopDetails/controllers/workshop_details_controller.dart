@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 // import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
@@ -43,8 +44,8 @@ class WorkshopDetailsController extends GetxController {
   final locationLoading = false.obs;
   final locationPermissionGranted = false.obs;
 
-  final globalWorkshopController = Get.find<GlobalcontrollerWorkshop>();
-  final arguments = Get.find<GlobalcontrollerWorkshop>().workshopData;
+  late GlobalcontrollerWorkshop globalWorkshopController;
+  late dynamic arguments;
 
   final RxList<Vehicle> vehicles = <Vehicle>[].obs;
 
@@ -67,12 +68,22 @@ class WorkshopDetailsController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
+    globalWorkshopController = Get.find<GlobalcontrollerWorkshop>();
+    arguments = globalWorkshopController.workshopData;
     if (arguments['serviceCenterId'] != null) {
       vehicles.value = garageController.vehicleList
           .where((e) => e.serviceCenterId == arguments['serviceCenterId'])
           .toList();
       getAllServiceCenterServices(arguments['serviceCenterId']);
     }
+    Get.find<AppEventService>()
+        .on<String>(AppConstants.garageIdEvent)
+        .listen((userId) {
+      vehicles.value = garageController.vehicleList
+          .where((e) => e.serviceCenterId == arguments['serviceCenterId'])
+          .toList();
+      update();
+    });
 
     getPosition();
 

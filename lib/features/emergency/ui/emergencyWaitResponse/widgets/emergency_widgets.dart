@@ -101,7 +101,7 @@ class EmergencyWidgets extends GetView<EmergencyWaitResponseController> {
                           'Your request has been sent, waiting for a response from a service provider',
                       coloriage: AppColors.primary,
                       icon: FluentIcons.alert_16_regular,
-                      backgrounColor: AppColors.secondary,
+                      backgroundColor: AppColors.secondary,
                       title: ''),
                   const SizedBox(height: 8),
                   Text(

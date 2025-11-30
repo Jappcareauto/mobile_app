@@ -4,7 +4,6 @@ import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/chat_widget.dart';
 import 'controllers/activities_controller.dart';
 import 'package:get/get.dart';
 
@@ -84,15 +83,15 @@ class ActivitiesScreen extends GetView<ActivitiesController>
                           ],
                         ),
                       ),
-                Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).size.height * .60,
-                        left: MediaQuery.of(context).size.width * .80),
-                    child: ChatWidget(
-                      onTap: () {
-                        controller.goToChatScreen();
-                      },
-                    ))
+                // Container(
+                //     margin: EdgeInsets.only(
+                //         top: MediaQuery.of(context).size.height * .60,
+                //         left: MediaQuery.of(context).size.width * .80),
+                //     child: ChatWidget(
+                //       onTap: () {
+                //         controller.goToChatScreen();
+                //       },
+                //     ))
               ],
             );
           },

@@ -1,7 +1,9 @@
+import 'dart:io';
+
 class UpdateProfileImageCommand {
 
   final String userId;
-  final String file;
+  final File file;
 
   const UpdateProfileImageCommand({
     required this.userId,
