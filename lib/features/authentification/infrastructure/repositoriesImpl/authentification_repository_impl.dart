@@ -169,7 +169,6 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       PhoneCommand? phone,
       required String password,
       bool? extend}) async {
-
     try {
       final response = await networkService.post(
         AuthentificationConstants.loginPostUri,
@@ -183,6 +182,14 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       );
       return Right(LoginModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
+      if (e.statusCode != null && e.statusCode == 404 && email != null) {
+        return Left(AuthentificationException(
+            'User not found with email: $email', e.statusCode));
+      } else if (e.statusCode != null && e.statusCode == 404 && phone != null) {
+        return Left(AuthentificationException(
+            'User not found with phone: ${phone.code}${phone.number}',
+            e.statusCode));
+      }
       return Left(AuthentificationException(e.message, e.statusCode));
     }
   }
