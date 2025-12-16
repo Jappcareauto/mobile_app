@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
@@ -56,15 +57,16 @@ class ConfirmationAppointmentModal
                   child: CustomButton(
                       strech: false,
                       haveBorder: true,
-                      text: 'Cancel',
+                      text: 'Go to home',
                       onPressed: controller.goToHome),
                 ),
                 // Proceed to Chat button
-                CustomButton(
-                    strech: false,
-                    text: 'Proceed to Chat',
-                    isLoading: controller.proceedChatLoading,
-                    onPressed: () => controller.goToChatScreen())
+                if (kDebugMode)
+                  CustomButton(
+                      strech: false,
+                      text: 'Proceed to Chat',
+                      isLoading: controller.proceedChatLoading,
+                      onPressed: () => controller.goToChatScreen())
               ],
             ),
           ],
