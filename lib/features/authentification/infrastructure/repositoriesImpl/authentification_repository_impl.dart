@@ -33,9 +33,12 @@ final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
 Future<void> _initializeGoogleSignIn() async {
   try {
+    print('Initializing Google Sign-In');
     await _googleSignIn.initialize(
         serverClientId:
-            "415070003598-pc9dsnpisbn9uvil4lpuh339bh6ran3p.apps.googleusercontent.com");
+            "303138649390-cmphfbl2cseqbpqmc28ie7a141hq8utg.apps.googleusercontent.com"
+        // "415070003598-pc9dsnpisbn9uvil4lpuh339bh6ran3p.apps.googleusercontent.com"
+        );
   } catch (e) {
     print('Failed to initialize Google Sign-In: $e');
   }
@@ -198,6 +201,9 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   Future<Either<AuthentificationException, Login>> googleLogin(
       {required String bearerId}) async {
     try {
+      print('BearerId#');
+      printWrapped(bearerId);
+      print('End printing');
       final response = await networkService
           .post(AuthentificationConstants.googleLoginPostUri, headers: {
         'Authorization': 'BearerId $bearerId',
@@ -288,10 +294,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       if (idToken == null) throw Exception('Missing Google ID Token');
 
       // return await googleLogin(bearerId: idToken);
-      return await googleLogin2(
-          bearerId: idToken,
-          email: account.email,
-          name: account.displayName ?? "");
+      return await googleLogin(bearerId: idToken);
     } on BaseException catch (e) {
       print(e);
 

@@ -869,6 +869,7 @@ class ChatDetailsController extends GetxController {
       final result = await _getChatRoomByAppointmentIdUseCase.call(
           GetChatroomByAppointmentIdCommand(appointmentId: appointment.id));
 
+      print('Chat room: ${result.toString()}');
       result.fold(
         (error) {
           print('Error: $error');
