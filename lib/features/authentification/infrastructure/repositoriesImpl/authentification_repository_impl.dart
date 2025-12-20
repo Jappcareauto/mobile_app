@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
+import 'package:jappcare/features/authentification/infrastructure/services/google_auth_service.service.dart';
 
 import '../../domain/repositories/authentification_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
@@ -27,45 +28,6 @@ void printWrapped(String text) {
   // 800 is a good chunk size that should prevent truncation.
   final pattern = RegExp('.{1,800}');
   pattern.allMatches(text).forEach((match) => print(match.group(0)));
-}
-
-final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
-
-Future<void> _initializeGoogleSignIn() async {
-  try {
-    print('Initializing Google Sign-In');
-    await _googleSignIn.initialize(
-        serverClientId:
-            "303138649390-t63gmvdrrnuct9a6ka8rjfjdfop977s4.apps.googleusercontent.com"
-        // "415070003598-pc9dsnpisbn9uvil4lpuh339bh6ran3p.apps.googleusercontent.com"
-        ,
-        clientId:
-            "303138649390-t63gmvdrrnuct9a6ka8rjfjdfop977s4.apps.googleusercontent.com");
-  } catch (e) {
-    print('Failed to initialize Google Sign-In: $e');
-  }
-}
-
-Future<GoogleSignInAccount?> signInWithGoogle() async {
-  try {
-    await _initializeGoogleSignIn();
-    // It now throws a `GoogleSignInException` if the user cancels.
-    return await _googleSignIn.authenticate(
-      scopeHint: ['email', 'profile'],
-    );
-  } on GoogleSignInException catch (e) {
-    print('Google Sign-In error: $e');
-    print('Google Sign-In error: ${e.code.toString()}');
-    // You can now check the error code for specific cases, like cancellation.
-    if (e.code == GoogleSignInExceptionCode.canceled) {
-      // User cancelled
-      return null;
-    }
-    rethrow;
-  } catch (error) {
-    print('Unexpected Google Sign-In error: $error');
-    rethrow;
-  }
 }
 
 class AuthentificationRepositoryImpl implements AuthentificationRepository {
@@ -286,7 +248,8 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   @override
   Future<Either<AuthentificationException, Login>> googleSignIn() async {
     try {
-      final GoogleSignInAccount? account = await signInWithGoogle();
+      final GoogleSignInAccount? account =
+          await GoogleAuthService.instance.signIn();
 
       if (account == null) {
         throw Exception('The account was not found'); // user aborted
@@ -313,7 +276,8 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   @override
   Future<Either<AuthentificationException, Register>> googleSignUp() async {
     try {
-      final GoogleSignInAccount? account = await signInWithGoogle();
+      final GoogleSignInAccount? account =
+          await GoogleAuthService.instance.signIn();
       if (account == null) {
         throw Exception('The account was not found'); // user aborted
       }
@@ -363,11 +327,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   // }
 
   Future<void> googleLogout() async {
-    // final GoogleSignIn googleSignIn = GoogleSignIn(
-    //   scopes: <String>['email'],
-    // );
-
-    _googleSignIn.disconnect();
+    await GoogleAuthService.instance.signOut();
   }
 
   //Add methods here

@@ -5,6 +5,7 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:jappcare/core/themes/theme_controller.dart';
 import 'package:jappcare/core/themes/theme_dark.dart';
 import 'package:jappcare/core/themes/theme_light.dart';
+import 'package:jappcare/features/authentification/infrastructure/services/google_auth_service.service.dart';
 import 'package:jappcare/generated/locales.g.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:jappcare/core/navigation/routes/app_pages.dart';
@@ -12,8 +13,15 @@ import 'core/navigation/routes/app_routes.dart';
 import 'core/dependences/app_dependences.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await AppDependency.init();
   HttpOverrides.global = MyHttpOverrides();
+  try {
+    await GoogleAuthService.instance.initialize();
+    print("Google Sign-In initialized successfully.");
+  } catch (e) {
+    print("Error initializing Google Sign-In: $e");
+  }
   runApp(Main(AppRoutes.initialRoute));
 }
 
