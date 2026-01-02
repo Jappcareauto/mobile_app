@@ -57,11 +57,15 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
   Future<Either<WorkshopException, GetAllServicesEntity>>
       getAllservices() async {
     try {
-      final response = await networkService
-          .post(WorkshopConstants.getAllservicesGetUri, body: {});
+      final response =
+          await networkService.get(WorkshopConstants.getAllservicesGetUri);
+      print('getAllservices response: $response');
       return Right(GetAllServicesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message, e.statusCode));
+    } catch (e) {
+      print('getAllservices error: $e');
+      return Left(WorkshopException(e.toString(), 500));
     }
   }
 
@@ -117,16 +121,38 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           bool? aroundMe,
           bool? availableNow}) async {
     try {
-      final response = await networkService
-          .post(WorkshopConstants.getAllServicesCenterGetUri, body: {
-        'name': name,
-        'category': category,
-        'ownerId': ownerId,
-        // 'serviceId': serviceId,
-        'serviceCenterId': serviceCenterId,
-        // 'aroundMe': aroundMe,
-        // 'availableNow': availableNow
-      });
+      // Build query parameters from non-null filters
+      final queryParams = <String, String>{};
+      if (name != null && name.isNotEmpty) queryParams['name'] = name;
+      if (category != null && category.isNotEmpty) {
+        queryParams['category'] = category;
+      }
+      if (ownerId != null && ownerId.isNotEmpty) {
+        queryParams['ownerId'] = ownerId;
+      }
+      if (serviceCenterId != null && serviceCenterId.isNotEmpty) {
+        queryParams['serviceCenterId'] = serviceCenterId;
+      }
+      if (serviceId != null && serviceId.isNotEmpty) {
+        queryParams['serviceId'] = serviceId;
+      }
+      if (aroundMe != null) queryParams['aroundMe'] = aroundMe.toString();
+      if (availableNow != null) {
+        queryParams['availableNow'] = availableNow.toString();
+      }
+
+      // Build the URL with query parameters
+      String url = WorkshopConstants.getAllServicesCenterGetUri;
+      if (queryParams.isNotEmpty) {
+        final queryString = queryParams.entries
+            .map((e) =>
+                '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+            .join('&');
+        url = '$url?$queryString';
+      }
+
+      final response = await networkService.get(url);
+      print('getAllServicesCenter response: $response');
       return Right(GetAllServicesCenterModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(WorkshopException(e.message, e.statusCode));

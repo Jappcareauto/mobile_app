@@ -24,20 +24,20 @@ class GetAllChatRoomsEntity {
 
 class ChatRoomEntity {
   final String id;
-  final String createdBy;
-  final String updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdBy;
+  final String? updatedBy;
+  final String? createdAt;
+  final String? updatedAt;
   final String name;
-  final String? appointmentDTO;
-  final String? participantIds;
+  final dynamic appointmentDTO;
+  final dynamic participantIds;
 
   ChatRoomEntity._({
     required this.id,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.createdBy,
-    required this.updatedBy,
+    this.createdAt,
+    this.updatedAt,
+    this.createdBy,
+    this.updatedBy,
     required this.name,
     this.appointmentDTO,
     this.participantIds,
@@ -45,13 +45,13 @@ class ChatRoomEntity {
 
   factory ChatRoomEntity.create({
     required String id,
-    required String createdBy,
-    required String updatedBy,
-    required String createdAt,
-    required String updatedAt,
+    String? createdBy,
+    String? updatedBy,
+    String? createdAt,
+    String? updatedAt,
     required String name,
-    String? appointmentDTO,
-    String? participantIds,
+    dynamic appointmentDTO,
+    dynamic participantIds,
   }) {
     // Add any validation or business logic here
     return ChatRoomEntity._(

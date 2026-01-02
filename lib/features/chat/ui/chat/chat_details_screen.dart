@@ -29,13 +29,16 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
           return SafeArea(
             child: Column(
               children: [
-                Flexible(
+                // Connection status indicator
+                _buildConnectionStatus(),
+                Expanded(
                   child: Obx(() {
                     if (controller.loading.value) {
                       return const Center(child: CircularProgressIndicator());
                     }
 
                     return ListView.builder(
+                      key: const PageStorageKey('chat_messages_list'),
                       controller: controller.scrollController,
                       padding: const EdgeInsets.all(12.0),
                       itemCount: controller.flattenedItems.length +
@@ -111,6 +114,83 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
         },
       ),
     );
+  }
+
+  Widget _buildConnectionStatus() {
+    return Obx(() {
+      final status = controller.connectionStatus.value;
+
+      // Don't show anything when connected (after initial display)
+      if (status == WebSocketStatus.connected) {
+        return const SizedBox.shrink();
+      }
+
+      Color backgroundColor;
+      Color textColor;
+      String message;
+      IconData icon;
+      bool showSpinner = false;
+
+      switch (status) {
+        case WebSocketStatus.connecting:
+          backgroundColor = Colors.orange.shade100;
+          textColor = Colors.orange.shade800;
+          message = 'Connecting...';
+          icon = Icons.sync;
+          showSpinner = true;
+          break;
+        case WebSocketStatus.disconnected:
+          backgroundColor = Colors.red.shade100;
+          textColor = Colors.red.shade800;
+          message = 'Disconnected. Tap to reconnect';
+          icon = Icons.cloud_off;
+          break;
+        case WebSocketStatus.error:
+          backgroundColor = Colors.red.shade100;
+          textColor = Colors.red.shade800;
+          message = 'Connection error. Tap to retry';
+          icon = Icons.error_outline;
+          break;
+        default:
+          return const SizedBox.shrink();
+      }
+
+      return GestureDetector(
+        onTap: status != WebSocketStatus.connecting
+            ? () => controller.reconnect()
+            : null,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          color: backgroundColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (showSpinner)
+                SizedBox(
+                  width: 14,
+                  height: 14,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(textColor),
+                  ),
+                )
+              else
+                Icon(icon, size: 16, color: textColor),
+              const SizedBox(width: 8),
+              Text(
+                message,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
 
   Widget _buildDateHeader(String date) {
@@ -287,27 +367,34 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
   }
 
   Widget _buildSendButton() {
-    return GestureDetector(
-      onTap: () {
-        if (controller.isRecording.value) {
-          controller.stopRecording();
-        } else {
-          controller.sendMessage(controller.messageController.text);
-        }
-      },
-      child: Container(
-        padding: const EdgeInsets.all(12.0),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Get.theme.primaryColor,
+    return Obx(() {
+      // Access observables in the Obx build scope for proper reactivity
+      final isRecording = controller.isRecording.value;
+
+      return GestureDetector(
+        onTap: () {
+          final text = controller.messageController.text;
+
+          if (isRecording) {
+            controller.stopRecording();
+          } else {
+            controller.sendMessage(text);
+          }
+        },
+        child: Container(
+          padding: const EdgeInsets.all(12.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Get.theme.primaryColor,
+          ),
+          child: Icon(
+            isRecording ? Icons.stop : FluentIcons.send_20_filled,
+            size: 20.0,
+            color: Colors.white,
+          ),
         ),
-        child: const Icon(
-          FluentIcons.send_20_filled,
-          size: 20.0,
-          color: Colors.white,
-        ),
-      ),
-    );
+      );
+    });
   }
 }
 

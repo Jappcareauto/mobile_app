@@ -57,7 +57,9 @@ class PickImage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(onPressed: Get.back, icon: Icon(Icons.close)),
+                  IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: Icon(Icons.close)),
                   Text(
                     title ?? "Image",
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -80,18 +82,25 @@ class PickImage extends StatelessWidget {
                         if (pickedFile != null) {
                           print("Camera image path: ${pickedFile.path}");
                           if (withPreview) {
-                            await Get.to(() =>
-                                ImagePreviewScreen(imagePath: pickedFile.path));
+                            // Close the bottom sheet first using Navigator
+                            Navigator.of(context).pop();
+                            // Small delay to avoid navigation conflicts
+                            await Future.delayed(
+                                const Duration(milliseconds: 100));
+                            await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => ImagePreviewScreen(
+                                    imagePath: pickedFile.path),
+                              ),
+                            );
+                          } else {
+                            Navigator.of(context).pop([File(pickedFile.path)]);
                           }
-
-                          Get.back(result: [File(pickedFile.path)]);
-
                           return;
                         } else {
-                          Get.back();
+                          Navigator.of(context).pop();
                           return;
                         }
-                        // Get.back();
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -118,7 +127,6 @@ class PickImage extends StatelessWidget {
                     const SizedBox(height: 16),
                     InkWell(
                       onTap: () async {
-                        // final Either<List<XFile>, XFile?> pickedFile = many
                         final pickedFile = many
                             ? await picker.pickMultiImage()
                             : await picker.pickImage(
@@ -129,38 +137,31 @@ class PickImage extends StatelessWidget {
                         if (pickedFile != null) {
                           final result = pickedFile;
 
-                          // if(withPreview) {
-                          // final result = await Get.to(
-                          //     () => ImagePreviewScreen(imagePath: pickedFile.));
-                          // }
-
-                          // final sendImage = await Get.to(
-                          //     () => ImagePreviewScreen(imagePath: result.path));
-
                           if (many) {
-                            Get.back(
-                                result: (result as List<XFile>)
-                                    .map((xFile) => File(xFile.path))
-                                    .toList());
+                            Navigator.of(context).pop((result as List<XFile>)
+                                .map((xFile) => File(xFile.path))
+                                .toList());
                           } else {
-                            Get.back(result: [File((result as XFile).path)]);
+                            final imagePath = (result as XFile).path;
+                            if (withPreview) {
+                              // Close the bottom sheet first using Navigator
+                              Navigator.of(context).pop();
+                              // Small delay to avoid navigation conflicts
+                              await Future.delayed(
+                                  const Duration(milliseconds: 100));
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      ImagePreviewScreen(imagePath: imagePath),
+                                ),
+                              );
+                            } else {
+                              Navigator.of(context).pop([File(imagePath)]);
+                            }
                           }
-                          // if (result != null) {
-                          //   Get.back(result: [sendImage]);
-                          // } else {
-                          // }
                           return;
-                        }
-                        // else if (pickedFile != null) {
-                        //   List<File>? result = [];
-                        //   for (var i in (pickedFile as List<XFile>)) {
-                        //     final f = i;
-                        //     result.add(File(f.path));
-                        //   }
-                        //   return Get.back(result: result);
-                        // }
-                        else {
-                          Get.back();
+                        } else {
+                          Navigator.of(context).pop();
                         }
                       },
                       child: Row(

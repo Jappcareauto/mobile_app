@@ -32,14 +32,19 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:jappcare/features/chat/domain/entities/chat_list_item.dart';
 import 'package:jappcare/features/chat/domain/entities/waveform_data.dart';
+import 'package:jappcare/core/services/networkServices/network_service.dart';
 
 enum WebSocketStatus { connecting, connected, disconnected, error }
 
 class ChatDetailsController extends GetxController {
-  late StompClient? _stompClient;
+  StompClient? _stompClient;
   final ScrollController scrollController = ScrollController();
   final TextEditingController messageController = TextEditingController();
   final LocalStorageService _localStorage = Get.find<LocalStorageService>();
+  final NetworkService _networkService = Get.find<NetworkService>();
+
+  // Expose stompClient null check for UI debugging
+  bool get isStompClientNull => _stompClient == null;
 
   // Use cases
   final GetVehiculByIdUseCase getVehiculByIdUseCase =
@@ -122,13 +127,21 @@ class ChatDetailsController extends GetxController {
   ChatDetailsController(this._appNavigation);
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
+    loading.value = true;
     appointment = Get.arguments;
-    await getChatRoomByAppointmentId(); // ensure chatRoom is set before connecting
-    _initializeAudio();
-    // _connectToWebSocket();
-    _setupScrollListener();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    try {
+      await getChatRoomByAppointmentId();
+      _initializeAudio();
+      _setupScrollListener();
+    } catch (e) {
+      // Debug log removed
+    }
   }
 
   void _setupScrollListener() {
@@ -153,29 +166,17 @@ class ChatDetailsController extends GetxController {
 
   @override
   void onClose() {
-    // First, properly disconnect WebSocket to ensure clean shutdown
+    // Disconnect WebSocket
     if (_stompClient != null) {
       try {
-        // Deactivate the client which will close all subscriptions
-        try {
-          _stompClient?.deactivate();
-          print('Successfully deactivated STOMP client');
-        } catch (e) {
-          print('Error deactivating STOMP client: $e');
-        }
-
-        _stompClient = null;
-
-        // Reset connection status
-        connectionStatus.value = WebSocketStatus.disconnected;
-        // Cancel any pending reconnection attempts
-        Future.delayed(Duration.zero, () {
-          isReconnecting.value = false;
-          reconnectAttempts.value = 0;
-        });
-      } catch (e) {
-        print('Error during StompClient cleanup: $e');
-      }
+        _stompClient?.deactivate();
+      } catch (_) {}
+      _stompClient = null;
+      connectionStatus.value = WebSocketStatus.disconnected;
+      Future.delayed(Duration.zero, () {
+        isReconnecting.value = false;
+        reconnectAttempts.value = 0;
+      });
     }
 
     // Cancel audio subscriptions
@@ -183,34 +184,26 @@ class ChatDetailsController extends GetxController {
       _stateSubscription.cancel();
       _durationSubscription.cancel();
       _positionSubscription.cancel();
-    } catch (e) {
-      print('Error canceling audio subscriptions: $e');
-    }
+    } catch (_) {}
 
     // Dispose audio resources
     try {
       _audioRecorder.dispose();
       _audioPlayer.dispose();
-    } catch (e) {
-      print('Error disposing audio resources: $e');
-    }
+    } catch (_) {}
 
     // Dispose controllers
     try {
       messageController.dispose();
       scrollController.dispose();
-    } catch (e) {
-      print('Error disposing controllers: $e');
-    }
+    } catch (_) {}
 
     // Close stream controllers
     try {
       _messageController.close();
       _typingController.close();
       _presenceController.close();
-    } catch (e) {
-      print('Error closing stream controllers: $e');
-    }
+    } catch (_) {}
 
     super.onClose();
   }
@@ -243,9 +236,7 @@ class ChatDetailsController extends GetxController {
       } else {
         scrollController.jumpTo(position);
       }
-    } catch (e) {
-      print('Error scrolling to bottom: $e');
-    }
+    } catch (_) {}
   }
 
   void _connectToWebSocket() {
@@ -257,22 +248,25 @@ class ChatDetailsController extends GetxController {
       final token = _localStorage.read(AppConstants.tokenKey);
       if (token == null) throw Exception("Token not found");
 
+      // Use HTTPS URL with explicit port :443 to fix stomp_dart_client's port:0 bug
+      // The library's SockJsUtils.generateTransportUrl() returns port 0 for URLs without explicit port
+      const wsUrl = 'https://bpi.jappcare.com:443/ws';
+
       _stompClient = StompClient(
         config: StompConfig.sockJS(
-          url: ChatConstants.chatWebsocketUri,
+          url: wsUrl,
           onConnect: onConnected,
           onWebSocketError: (dynamic error) {
-            print('WebSocket Error: $error');
+            // Debug log removed
             connectionStatus.value = WebSocketStatus.error;
             _scheduleReconnect();
           },
           onStompError: (StompFrame frame) {
-            print('Stomp Error: ${frame.body}');
+            // Debug log removed
             connectionStatus.value = WebSocketStatus.error;
             _scheduleReconnect();
           },
           onDisconnect: (StompFrame frame) {
-            print('Disconnected: ${frame.body}');
             connectionStatus.value = WebSocketStatus.disconnected;
             _scheduleReconnect();
           },
@@ -283,15 +277,17 @@ class ChatDetailsController extends GetxController {
 
       _stompClient!.activate();
     } catch (e) {
-      print('Connection error: $e');
+      // Debug log removed
       connectionStatus.value = WebSocketStatus.error;
       _scheduleReconnect();
     }
   }
 
   void _scheduleReconnect() {
-    if (reconnectAttempts.value >= maxReconnectAttempts || isReconnecting.value)
+    if (reconnectAttempts.value >= maxReconnectAttempts ||
+        isReconnecting.value) {
       return;
+    }
 
     isReconnecting.value = true;
     reconnectAttempts.value++;
@@ -305,6 +301,14 @@ class ChatDetailsController extends GetxController {
     );
   }
 
+  /// Manual reconnect triggered by user
+  void reconnect() {
+    // Reset attempts and reconnect immediately
+    reconnectAttempts.value = 0;
+    isReconnecting.value = false;
+    _connectToWebSocket();
+  }
+
   void disconnect() {
     if (_stompClient != null) {
       _stompClient!.deactivate();
@@ -316,7 +320,6 @@ class ChatDetailsController extends GetxController {
   }
 
   void onConnected(StompFrame frame) {
-    print('Connected to STOMP server');
     connectionStatus.value = WebSocketStatus.connected;
     reconnectAttempts.value = 0;
     subscribeToTopic();
@@ -324,7 +327,6 @@ class ChatDetailsController extends GetxController {
 
   void subscribeToTopic() {
     final topicDestination = '${ChatConstants.chatRoomTopic}/${chatRoom.id}';
-    print('Subscribing to topic: $topicDestination');
 
     _stompClient?.subscribe(
       destination: topicDestination,
@@ -334,6 +336,57 @@ class ChatDetailsController extends GetxController {
         try {
           final messageData = json.decode(frame.body!);
           final chatMessage = ChatMessageEntity.fromJson(messageData);
+
+          // Check if message already exists by ID (avoid duplicates)
+          final existingIndex =
+              messages.indexWhere((m) => m.id == chatMessage.id);
+          if (existingIndex != -1) {
+            messages[existingIndex] = chatMessage;
+            _updateFlattenedItems();
+            return;
+          }
+
+          // Check if this is our own message that we sent optimistically
+          // Remove optimistic message if this is the server confirmation
+          if (chatMessage.senderId == currentUser?.id) {
+            final optimisticIndex = messages.indexWhere((m) =>
+                m.id.startsWith('temp_') &&
+                m.senderId == currentUser?.id &&
+                m.content == chatMessage.content &&
+                m.type == chatMessage.type);
+
+            if (optimisticIndex != -1) {
+              final optimisticMessage = messages[optimisticIndex];
+
+              // If the server message has no valid media URL but the optimistic one does,
+              // preserve the optimistic media URL (since we know it works from the upload)
+              ChatMessageEntity finalMessage = chatMessage;
+              if (!chatMessage.hasMedia && optimisticMessage.hasMedia) {
+                finalMessage = ChatMessageEntity.create(
+                  id: chatMessage.id,
+                  senderId: chatMessage.senderId,
+                  content: chatMessage.content,
+                  chatRoomId: chatMessage.chatRoomId,
+                  type: chatMessage.type,
+                  timestamp: chatMessage.timestamp,
+                  createdBy: chatMessage.createdBy,
+                  updatedBy: chatMessage.updatedBy,
+                  createdAt: chatMessage.createdAt,
+                  updatedAt: chatMessage.updatedAt,
+                  appointmentId: chatMessage.appointmentId,
+                  sender: chatMessage.sender,
+                  duration: chatMessage.duration,
+                  mediaUrl:
+                      optimisticMessage.mediaUrl, // Preserve the working URL
+                  mediaUrls: optimisticMessage.mediaUrls,
+                );
+              }
+
+              messages[optimisticIndex] = finalMessage;
+              _updateFlattenedItems();
+              return;
+            }
+          }
 
           // Check if we're already near bottom before adding message
           final isNearBottom = scrollController.hasClients &&
@@ -345,13 +398,12 @@ class ChatDetailsController extends GetxController {
 
           // Only auto-scroll if we were already near bottom
           if (isNearBottom) {
-            // Wait for next frame after list update
             WidgetsBinding.instance.addPostFrameCallback((_) {
               scrollToBottom(animated: true);
             });
           }
         } catch (e) {
-          print('Error parsing message: $e');
+          // Debug log removed
         }
       },
     );
@@ -414,7 +466,7 @@ class ChatDetailsController extends GetxController {
       );
     } catch (e) {
       loading.value = false;
-      print('Error fetching messages: $e');
+      // Debug log removed
     }
   }
 
@@ -422,44 +474,29 @@ class ChatDetailsController extends GetxController {
     if (_stompClient == null ||
         connectionStatus.value != WebSocketStatus.connected ||
         content.isEmpty) {
-      print('Cannot send message. Connected: ${connectionStatus.value}');
       return;
     }
 
     final messageData = {
       'senderId': currentUser?.id,
       'content': content,
-      'chatRoomId': chatRoom.id,
       'type': 'TEXT',
       'fileIds': [],
-      'timestamp': DateTime.now().toIso8601String(),
     };
 
     try {
+      final destination =
+          '${ChatConstants.chatMessageDestination}/${chatRoom.id}/sendMessage';
+
       _stompClient!.send(
-        destination: ChatConstants.chatMessageDestination,
+        destination: destination,
         body: json.encode(messageData),
       );
 
-      final textMessage = ChatMessageEntity.create(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        senderId: currentUser?.id ?? '',
-        content: content,
-        chatRoomId: chatRoom.id,
-        type: 'TEXT',
-        timestamp: DateTime.now().toIso8601String(),
-        createdBy: currentUser?.id ?? '',
-        updatedBy: currentUser?.id ?? '',
-        createdAt: DateTime.now().toIso8601String(),
-        updatedAt: DateTime.now().toIso8601String(),
-      );
-
-      messages.add(textMessage);
-      _updateFlattenedItems();
       messageController.clear();
       scrollToBottom();
     } catch (e) {
-      print('Error sending message: $e');
+      // Debug log removed
       Get.snackbar('Error', 'Failed to send message');
     }
   }
@@ -541,7 +578,7 @@ class ChatDetailsController extends GetxController {
       // Haptic feedback for recording start
       HapticFeedback.mediumImpact();
     } catch (e) {
-      print('Error starting recording: $e');
+      // Debug log removed
       Get.snackbar('Error', 'Failed to start recording');
       _resetRecordingState();
     }
@@ -567,15 +604,14 @@ class ChatDetailsController extends GetxController {
           // Haptic feedback for successful recording
           HapticFeedback.lightImpact();
           _sendVoiceNote(path, null);
-        } catch (e) {
-          print('Error processing waveform: $e');
-          _sendVoiceNote(path, null); // Still send even if waveform fails
+        } catch (_) {
+          _sendVoiceNote(path, null);
         }
       }
 
       _resetRecordingState();
     } catch (e) {
-      print('Error stopping recording: $e');
+      // Debug log removed
       Get.snackbar('Error', 'Failed to stop recording');
     }
   }
@@ -631,9 +667,7 @@ class ChatDetailsController extends GetxController {
           sampleRate: waveformSampleRate,
           duration: Duration(milliseconds: samples.length * 50),
         );
-      } catch (e) {
-        print('Error getting amplitude: $e');
-      }
+      } catch (_) {}
     });
   }
 
@@ -698,7 +732,7 @@ class ChatDetailsController extends GetxController {
       // Clean up older temp files
       _cleanupTempVoiceFiles();
     } catch (e) {
-      print('Error sending voice note: $e');
+      // Debug log removed
       Get.snackbar('Error', 'Failed to send voice note');
     }
   }
@@ -720,9 +754,7 @@ class ChatDetailsController extends GetxController {
           }
         }
       }
-    } catch (e) {
-      print('Error cleaning temp files: $e');
-    }
+    } catch (_) {}
   }
 
   Future<void> togglePlayPause(String messageId, String audioUrl) async {
@@ -767,12 +799,12 @@ class ChatDetailsController extends GetxController {
         await _audioPlayer.setLoopMode(LoopMode.off);
         await _audioPlayer.play();
       } catch (e) {
-        print('Error loading audio: $e');
+        // Debug log removed
         _resetPlayback();
         rethrow;
       }
     } catch (e) {
-      print('Error playing audio: $e');
+      // Debug log removed
       Get.snackbar(
         'Error',
         'Failed to play audio message',
@@ -792,9 +824,7 @@ class ChatDetailsController extends GetxController {
 
       // Optional: Provide haptic feedback for seeking
       HapticFeedback.lightImpact();
-    } catch (e) {
-      print('Error seeking audio: $e');
-    }
+    } catch (_) {}
   }
 
   void _resetPlayback() {
@@ -812,9 +842,7 @@ class ChatDetailsController extends GetxController {
     try {
       await _audioPlayer.setSpeed(speed);
       HapticFeedback.selectionClick();
-    } catch (e) {
-      print('Error setting playback speed: $e');
-    }
+    } catch (_) {}
   }
 
   bool isMessageActive(String messageId) =>
@@ -838,15 +866,124 @@ class ChatDetailsController extends GetxController {
     selectedImages.removeAt(index);
   }
 
-  Future<void> sendImageMessage(String imagePath, String caption) async {
+  /// Convert a file to base64 attachment format
+  Future<Map<String, String>> _fileToBase64Attachment(File file) async {
+    final bytes = await file.readAsBytes();
+    final base64Content = base64Encode(bytes);
+    final fileName = file.path.split('/').last;
+    final contentType = _getMimeType(fileName);
+
+    return {
+      'base64Content': base64Content,
+      'fileName': fileName,
+      'contentType': contentType,
+    };
+  }
+
+  /// Get MIME type from file name
+  String _getMimeType(String fileName) {
+    final extension = fileName.split('.').last.toLowerCase();
+    switch (extension) {
+      case 'jpg':
+      case 'jpeg':
+        return 'image/jpeg';
+      case 'png':
+        return 'image/png';
+      case 'gif':
+        return 'image/gif';
+      case 'webp':
+        return 'image/webp';
+      case 'mp4':
+        return 'video/mp4';
+      case 'mov':
+        return 'video/quicktime';
+      case 'mp3':
+        return 'audio/mpeg';
+      case 'wav':
+        return 'audio/wav';
+      case 'm4a':
+        return 'audio/m4a';
+      case 'pdf':
+        return 'application/pdf';
+      default:
+        return 'application/octet-stream';
+    }
+  }
+
+  /// Upload files to server and get file data (URLs and IDs)
+  Future<List<Map<String, String>>?> _uploadFiles(List<File> files) async {
     try {
-      final message = ChatMessageEntity.create(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
+      final response = await _networkService.post(
+        '/file/chat-upload-multiple',
+        files: {for (var file in files) 'files': file},
+      );
+
+      if (response != null && response['data'] != null) {
+        final List<dynamic> dataList = response['data'];
+        final List<Map<String, String>> fileData = dataList.map((item) {
+          final url = item['url'] as String;
+          final fileId = url.split('/').last;
+          return {
+            'url': url,
+            'id': fileId,
+            'type': item['type'] as String? ?? '',
+            'name': item['name'] as String? ?? '',
+          };
+        }).toList();
+        return fileData;
+      }
+      return null;
+    } catch (e) {
+      // Debug log removed
+      return null;
+    }
+  }
+
+  Future<void> sendImageMessage(String imagePath, String caption) async {
+    if (_stompClient == null ||
+        connectionStatus.value != WebSocketStatus.connected) {
+      throw Exception('Not connected to chat server');
+    }
+
+    try {
+      final file = File(imagePath);
+
+      // Upload file to server via REST API
+      final fileData = await _uploadFiles([file]);
+
+      if (fileData == null || fileData.isEmpty) {
+        throw Exception('Failed to upload file to server');
+      }
+
+      final uploadedUrl = fileData.first['url']!;
+      final fileId = fileData.first['id']!;
+
+      // Build message data with file IDs
+      final messageData = {
+        'senderId': currentUser?.id,
+        'content': caption,
+        'type': caption.isNotEmpty ? 'TEXT_AND_OTHERS' : 'IMAGE',
+        'fileIds': [fileId],
+      };
+
+      // Send to WebSocket
+      final destination =
+          '${ChatConstants.chatMessageDestination}/${chatRoom.id}/sendMessage';
+
+      _stompClient!.send(
+        destination: destination,
+        body: json.encode(messageData),
+      );
+
+      // Add optimistic message with the actual URL so it displays immediately
+      final tempId = 'temp_${DateTime.now().millisecondsSinceEpoch}';
+      final optimisticMessage = ChatMessageEntity.create(
+        id: tempId,
         senderId: currentUser?.id ?? '',
         content: caption,
         chatRoomId: chatRoom.id,
-        type: 'IMAGE',
-        mediaUrl: imagePath,
+        type: caption.isNotEmpty ? 'TEXT_AND_OTHERS' : 'IMAGE',
+        mediaUrl: uploadedUrl,
         timestamp: DateTime.now().toIso8601String(),
         createdBy: currentUser?.id ?? '',
         updatedBy: currentUser?.id ?? '',
@@ -854,12 +991,95 @@ class ChatDetailsController extends GetxController {
         updatedAt: DateTime.now().toIso8601String(),
       );
 
-      messages.add(message);
+      messages.add(optimisticMessage);
       _updateFlattenedItems();
       scrollToBottom();
     } catch (e) {
-      print('Error sending image message: $e');
-      Get.showCustomSnackBar('Failed to send image message');
+      // Debug log removed
+      rethrow;
+    }
+  }
+
+  /// Send message with multiple file attachments
+  Future<void> sendMessageWithFiles({
+    String? content,
+    required List<File> files,
+  }) async {
+    if (_stompClient == null ||
+        connectionStatus.value != WebSocketStatus.connected) {
+      throw Exception('Not connected to chat server');
+    }
+
+    try {
+      // Convert files to base64 attachments
+      final attachments = <Map<String, String>>[];
+      for (final file in files) {
+        final attachment = await _fileToBase64Attachment(file);
+        attachments.add(attachment);
+      }
+
+      // Determine message type
+      String messageType = 'TEXT';
+      if (attachments.isNotEmpty) {
+        if (content != null && content.isNotEmpty) {
+          messageType = 'TEXT_AND_OTHERS';
+        } else {
+          // Determine type based on first file
+          final firstType = attachments.first['contentType'] ?? '';
+          if (firstType.startsWith('image/')) {
+            messageType = 'IMAGE';
+          } else if (firstType.startsWith('video/')) {
+            messageType = 'VIDEO';
+          } else if (firstType.startsWith('audio/')) {
+            messageType = 'AUDIO';
+          } else {
+            messageType = 'FILE';
+          }
+        }
+      }
+
+      final messageData = {
+        'senderId': currentUser?.id,
+        'content': content ?? '',
+        'type': messageType,
+        'attachments': attachments,
+      };
+
+      // Send to WebSocket
+      final destination =
+          '${ChatConstants.chatMessageDestination}/${chatRoom.id}/sendMessage';
+
+      _stompClient!.send(
+        destination: destination,
+        body: json.encode(messageData),
+      );
+
+      // Add optimistic local message for first file
+      if (files.isNotEmpty) {
+        final message = ChatMessageEntity.create(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          senderId: currentUser?.id ?? '',
+          content: content ?? '',
+          chatRoomId: chatRoom.id,
+          type: messageType,
+          mediaUrl: files.first.path,
+          timestamp: DateTime.now().toIso8601String(),
+          createdBy: currentUser?.id ?? '',
+          updatedBy: currentUser?.id ?? '',
+          createdAt: DateTime.now().toIso8601String(),
+          updatedAt: DateTime.now().toIso8601String(),
+        );
+
+        messages.add(message);
+        _updateFlattenedItems();
+        scrollToBottom();
+      }
+
+      // Clear selected images
+      selectedImages.clear();
+    } catch (e) {
+      // Debug log removed
+      rethrow;
     }
   }
 
@@ -869,21 +1089,22 @@ class ChatDetailsController extends GetxController {
       final result = await _getChatRoomByAppointmentIdUseCase.call(
           GetChatroomByAppointmentIdCommand(appointmentId: appointment.id));
 
-      print('Chat room: ${result.toString()}');
       result.fold(
         (error) {
-          print('Error: $error');
-          Get.showCustomSnackBar(error.message);
           appointmentLoading.value = false;
+          if (Get.context != null) {
+            Get.showCustomSnackBar(error.message);
+          }
         },
         (response) {
           chatRoom = response;
           getAllMessages(chatRoom.id);
+          _connectToWebSocket();
           appointmentLoading.value = false;
         },
       );
     } catch (e) {
-      print('Error getting chat room: $e');
+      // Debug log removed
       appointmentLoading.value = false;
     }
   }

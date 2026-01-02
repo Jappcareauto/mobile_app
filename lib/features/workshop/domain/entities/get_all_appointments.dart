@@ -35,7 +35,7 @@ class AppointmentEntity {
   final String updatedAt;
   final String? status;
   final String? note;
-  final String timeOfDay;
+  final String? timeOfDay;
   final String date;
   final String locationType;
   final LocationEntity? location;
@@ -54,7 +54,7 @@ class AppointmentEntity {
       required this.updatedAt,
       this.status,
       this.note,
-      required this.timeOfDay,
+      this.timeOfDay,
       required this.date,
       required this.locationType,
       required this.location,
@@ -74,7 +74,7 @@ class AppointmentEntity {
       required String updatedAt,
       String? status,
       String? note,
-      required String timeOfDay,
+      String? timeOfDay,
       required String date,
       required String locationType,
       required ServiceCenterEntity? serviceCenter,
@@ -106,7 +106,8 @@ class AppointmentEntity {
 
   String get formattedLocationType {
     return locationType.split('_').map((word) {
-    return word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase();
-  }).join(' ');
+      return word.substring(0, 1).toUpperCase() +
+          word.substring(1).toLowerCase();
+    }).join(' ');
   }
 }

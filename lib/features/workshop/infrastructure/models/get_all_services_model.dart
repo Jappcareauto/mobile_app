@@ -15,7 +15,9 @@ class GetAllServicesModel {
     return GetAllServicesModel._(
       data: List<ServiceModel>.from(
           json['data'].map((x) => ServiceModel.fromJson(x))),
-      pagination: PaginationModel.fromJson(json['pagination']),
+      pagination: json['pagination'] != null
+          ? PaginationModel.fromJson(json['pagination'])
+          : PaginationModel.empty(),
     );
   }
 
@@ -51,8 +53,8 @@ class ServiceModel {
   final String id;
   final String? createdBy;
   final String? updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
 
   ServiceModel._({
     required this.title,
@@ -61,16 +63,16 @@ class ServiceModel {
     required this.id,
     this.createdBy,
     this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) {
     return ServiceModel._(
-      title: json['title'],
+      title: json['title'] ?? '',
       description: json['description'],
       serviceCenterId: json['serviceCenterId'],
-      id: json['id'],
+      id: json['id'] ?? '',
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],

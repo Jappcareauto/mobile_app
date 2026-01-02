@@ -13,12 +13,21 @@ class PaginationModel {
     required this.totalPages,
   });
 
+  factory PaginationModel.empty() {
+    return PaginationModel._(
+      page: 0,
+      size: 0,
+      totalItems: 0,
+      totalPages: 0,
+    );
+  }
+
   factory PaginationModel.fromJson(Map<String, dynamic> json) {
     return PaginationModel._(
-      page: json['page'],
-      size: json['size'],
-      totalItems: json['totalItems'],
-      totalPages: json['totalPages'],
+      page: json['page'] ?? 0,
+      size: json['size'] ?? 0,
+      totalItems: json['totalItems'] ?? 0,
+      totalPages: json['totalPages'] ?? 0,
     );
   }
 

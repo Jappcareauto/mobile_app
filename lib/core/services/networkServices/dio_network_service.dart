@@ -8,15 +8,16 @@ import 'package:path_provider/path_provider.dart';
 import '../../navigation/routes/app_routes.dart';
 import '../localServices/local_storage_service.dart';
 import 'network_service.dart';
-import 'package:talker/talker.dart';
-import 'package:talker_dio_logger/talker_dio_logger.dart';
+// Talker imports commented out - uncomment for debugging
+// import 'package:talker/talker.dart';
+// import 'package:talker_dio_logger/talker_dio_logger.dart';
 import '../../utils/app_constants.dart';
 import '../../exceptions/base_exception.dart';
 
 class DioNetworkService extends NetworkService {
   final LocalStorageService _localStorage = Get.find<LocalStorageService>();
   final Dio _dio = Dio();
-  final Talker _talker = Talker();
+  // final Talker _talker = Talker(); // Uncomment for debugging
   late CacheOptions _cacheOptions;
   late CacheStore _cacheStore;
 
@@ -46,18 +47,18 @@ class DioNetworkService extends NetworkService {
     // Ajout de l'intercepteur de cache
     _dio.interceptors.add(DioCacheInterceptor(options: _cacheOptions));
 
-    // Ajout de l'intercepteur TalkerDioLogger pour les logs
-    _dio.interceptors.add(
-      TalkerDioLogger(
-        talker: _talker,
-        settings: const TalkerDioLoggerSettings(
-          printRequestHeaders: true,
-          printResponseHeaders: false,
-          printRequestData: true,
-          printResponseData: true,
-        ),
-      ),
-    );
+    // TalkerDioLogger disabled for production - uncomment for debugging
+    // _dio.interceptors.add(
+    //   TalkerDioLogger(
+    //     talker: _talker,
+    //     settings: const TalkerDioLoggerSettings(
+    //       printRequestHeaders: true,
+    //       printResponseHeaders: false,
+    //       printRequestData: true,
+    //       printResponseData: true,
+    //     ),
+    //   ),
+    // );
 
     // Ajout d'un intercepteur pour gérer les erreurs de cache
     _dio.interceptors.add(

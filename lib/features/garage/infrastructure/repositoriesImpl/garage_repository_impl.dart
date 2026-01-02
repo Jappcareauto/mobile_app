@@ -46,7 +46,8 @@ class GarageRepositoryImpl implements GarageRepository {
   }
 
   @override
-  Future<Either<GarageException, List<Vehicle>>> getVehicleList({String? userId}) async {
+  Future<Either<GarageException, List<Vehicle>>> getVehicleList(
+      {String? userId}) async {
     try {
       final response = await networkService
           .post(GarageConstants.getVehicleListGetUri, body: {
@@ -95,17 +96,34 @@ class GarageRepositoryImpl implements GarageRepository {
     String? locationType,
   }) async {
     try {
-      final response = await networkService
-          .post(GarageConstants.getAllAppointmentsUri, body: {
-        if (status != null) 'status': status,
-        if (vehicleId != null) 'vehicleId': vehicleId,
-        if (serviceCenterId != null) 'serviceCenterId': serviceCenterId,
-        if (userId != null)
-          'audit': {
-            'createdBy': userId,
-          },
-        if (locationType != null) 'locationType': locationType,
-      });
+      // Build query parameters from non-null filters
+      final queryParams = <String, String>{};
+      if (status != null && status.isNotEmpty) queryParams['status'] = status;
+      if (vehicleId != null && vehicleId.isNotEmpty) {
+        queryParams['vehicleId'] = vehicleId;
+      }
+      if (serviceCenterId != null && serviceCenterId.isNotEmpty) {
+        queryParams['serviceCenterId'] = serviceCenterId;
+      }
+      if (userId != null && userId.isNotEmpty) {
+        queryParams['createdBy'] = userId;
+      }
+      if (locationType != null && locationType.isNotEmpty) {
+        queryParams['locationType'] = locationType;
+      }
+
+      // Build the URL with query parameters
+      String url = GarageConstants.getAllAppointmentsUri;
+      if (queryParams.isNotEmpty) {
+        final queryString = queryParams.entries
+            .map((e) =>
+                '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+            .join('&');
+        url = '$url?$queryString';
+      }
+
+      final response = await networkService.get(url);
+      print('getAllAppointments response: $response');
       return Right((response["data"] as List)
           .map((e) => AppointmentModel.fromJson(e).toEntity())
           .toList());

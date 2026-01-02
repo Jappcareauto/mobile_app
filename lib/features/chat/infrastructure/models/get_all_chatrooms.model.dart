@@ -14,7 +14,9 @@ class GetAllChatRoomsModel {
     return GetAllChatRoomsModel._(
       chatrooms: List<ChatRoomModel>.from(
           json['data'].map((x) => ChatRoomModel.fromJson(x))),
-      pagination: PaginationModel.fromJson(json['pagination']),
+      pagination: json['pagination'] != null
+          ? PaginationModel.fromJson(json['pagination'])
+          : PaginationModel.empty(),
     );
   }
 
@@ -45,28 +47,27 @@ class GetAllChatRoomsModel {
 
 class ChatRoomModel {
   final String id;
-  final String createdBy;
-  final String updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdBy;
+  final String? updatedBy;
+  final String? createdAt;
+  final String? updatedAt;
   final String name;
-  final String? appointmentDTO;
-  final String? participantIds;
+  final dynamic appointmentDTO;
+  final dynamic participantIds;
 
-  ChatRoomModel._({
-    required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.name,
-    this.appointmentDTO,
-    this.participantIds,
-  });
+  ChatRoomModel._(
+      {required this.id,
+      this.createdBy,
+      this.updatedBy,
+      this.createdAt,
+      this.updatedAt,
+      required this.name,
+      this.appointmentDTO,
+      this.participantIds});
 
   factory ChatRoomModel.fromJson(Map<String, dynamic> json) {
     return ChatRoomModel._(
-      id: json['id'],
+      id: json['id'] ?? '',
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
@@ -106,10 +107,10 @@ class ChatRoomModel {
   ChatRoomEntity toEntity() {
     return ChatRoomEntity.create(
       id: id,
-      createdBy: createdBy,
-      updatedBy: updatedBy,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
+      createdBy: createdBy ?? '',
+      updatedBy: updatedBy ?? '',
+      createdAt: createdAt ?? '',
+      updatedAt: updatedAt ?? '',
       name: name,
       appointmentDTO: appointmentDTO,
       participantIds: participantIds,

@@ -48,7 +48,8 @@ class RecentActivitiesWidget extends StatelessWidget
             isHorizontal: isHorizontal,
           );
         }
-        List<AppointmentEntity> filteredAppointments = List<AppointmentEntity>.from(controller.appointments);
+        List<AppointmentEntity> filteredAppointments =
+            List<AppointmentEntity>.from(controller.appointments);
         filteredAppointments.sort(
             (a, b) => DateTime.parse(b.date).compareTo(DateTime.parse(a.date)));
         var filteredActivities = <CarCardWidget>[];
@@ -70,7 +71,7 @@ class RecentActivitiesWidget extends StatelessWidget
                   DateFormat('MMM, d, yyyy').format(DateTime.parse(e.date)),
               // time:
               //     "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
-              time: e.timeOfDay,
+              time: e.timeOfDay ?? '',
               localisation: e.locationType == "SERVICE_CENTER"
                   ? "On Site"
                   : e.locationType,

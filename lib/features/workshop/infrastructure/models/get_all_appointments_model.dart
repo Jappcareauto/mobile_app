@@ -55,7 +55,7 @@ class AppointmentModel {
   final String createdAt;
   final String updatedAt;
   final String? status;
-  final String timeOfDay;
+  final String? timeOfDay;
   final String date;
   final String locationType;
   final String? note;
@@ -76,7 +76,7 @@ class AppointmentModel {
     required this.updatedAt,
     this.status,
     this.note,
-    required this.timeOfDay,
+    this.timeOfDay,
     required this.date,
     required this.locationType,
     this.location,
