@@ -4,8 +4,8 @@ class VehicleModel {
   final String id;
   final String? createdBy;
   final String? updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   final String name;
   final String? description;
   final String? serviceCenterId;
@@ -26,8 +26,8 @@ class VehicleModel {
     required this.id,
     this.createdBy,
     this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
     this.media,
   });
 

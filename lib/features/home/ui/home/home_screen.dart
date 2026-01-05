@@ -16,8 +16,7 @@ import 'controllers/home_controller.dart';
 import 'widgets/notification_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  final GarageController garageController =
-      Get.put(GarageController(Get.find(), Get.find()));
+  final GarageController garageController = Get.find<GarageController>();
 
   final DashboardController dashboardController =
       Get.find<DashboardController>();

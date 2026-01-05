@@ -115,9 +115,11 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                                 size: 24,
                               ),
                               Text(
-                                DateFormat('EEE, MMM dd, yyyy').format(
-                                    DateTime.parse(
-                                        controller.appointment.createdAt)),
+                                controller.appointment.createdAt != null
+                                    ? DateFormat('EEE, MMM dd, yyyy').format(
+                                        DateTime.parse(
+                                            controller.appointment.createdAt!))
+                                    : '',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,

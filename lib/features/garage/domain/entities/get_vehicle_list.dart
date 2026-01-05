@@ -12,8 +12,8 @@ class Vehicle {
   final List<Media?>? media;
   final String? createdBy;
   final String? updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
 
   Vehicle._({
     this.serviceCenterId,
@@ -27,8 +27,8 @@ class Vehicle {
     this.media,
     this.createdBy,
     this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Vehicle.create({
@@ -43,8 +43,8 @@ class Vehicle {
     List<Media?>? media,
     createdBy,
     updatedBy,
-    required createdAt,
-    required updatedAt,
+    createdAt,
+    updatedAt,
   }) {
     // Add any validation or business logic here
     return Vehicle._(

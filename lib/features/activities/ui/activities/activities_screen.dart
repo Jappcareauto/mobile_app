@@ -9,8 +9,7 @@ import 'package:get/get.dart';
 
 class ActivitiesScreen extends GetView<ActivitiesController>
     implements FeatureWidgetInterface {
-  final GarageController garageController =
-      Get.put(GarageController(Get.find(), Get.find()));
+  final GarageController garageController = Get.find<GarageController>();
 
   ActivitiesScreen({super.key});
   @override

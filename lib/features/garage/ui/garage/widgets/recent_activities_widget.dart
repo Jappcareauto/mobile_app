@@ -63,19 +63,22 @@ class RecentActivitiesWidget extends StatelessWidget
               .toList();
 
           filteredActivities = filteredAppointments.map((e) {
+            final make = e.vehicle?.detail?.make;
+            final model = e.vehicle?.detail?.model;
+            final carName =
+                [make, model].where((s) => s != null && s.isNotEmpty).join(' ');
+
             return CarCardWidget(
               latitude: e.location?.latitude ?? 0,
               longitude: e.location?.longitude ?? 0,
-              date:
-                  // "${DateTime.parse(e.date).year}/${DateTime.parse(e.date).month.toString().padLeft(2, '0')}/${DateTime.parse(e.date).day.toString().padLeft(2, '0')}",
-                  DateFormat('MMM, d, yyyy').format(DateTime.parse(e.date)),
-              // time:
-              //     "${DateTime.parse(e.date).hour.toString().padLeft(2, '0')}:${DateTime.parse(e.date).minute.toString().padLeft(2, '0')}:${DateTime.parse(e.date).second.toString().padLeft(2, '0')}",
-              time: e.timeOfDay ?? '',
+              date: DateFormat('MMM d, yyyy').format(DateTime.parse(e.date)),
+              time: DateFormat('HH:mm').format(DateTime.parse(e.date)),
               localisation: e.locationType == "SERVICE_CENTER"
                   ? "On Site"
                   : e.locationType,
-              nameCar: "${e.vehicle?.detail?.make} ${e.vehicle?.detail?.model}",
+              nameCar: carName.isNotEmpty
+                  ? carName
+                  : (e.vehicle?.name ?? 'Unknown Vehicle'),
               pathImageCar: e.vehicle?.imageUrl ?? "",
               status: e.status ?? "Unknown",
               onPressed: () => controller.goToAppointmentDetail(e),

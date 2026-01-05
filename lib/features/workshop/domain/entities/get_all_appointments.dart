@@ -29,10 +29,10 @@ class GetAllAppointments {
 
 class AppointmentEntity {
   final String id;
-  final String createdBy;
-  final String updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdBy;
+  final String? updatedBy;
+  final String? createdAt;
+  final String? updatedAt;
   final String? status;
   final String? note;
   final String? timeOfDay;
@@ -48,41 +48,41 @@ class AppointmentEntity {
 
   AppointmentEntity._(
       {required this.id,
-      required this.createdBy,
-      required this.updatedBy,
-      required this.createdAt,
-      required this.updatedAt,
+      this.createdBy,
+      this.updatedBy,
+      this.createdAt,
+      this.updatedAt,
       this.status,
       this.note,
       this.timeOfDay,
       required this.date,
       required this.locationType,
-      required this.location,
-      required this.service,
-      required this.serviceCenter,
+      this.location,
+      this.service,
+      this.serviceCenter,
       this.chatRoom,
-      required this.vehicle,
+      this.vehicle,
       this.diagnosesToMake,
       this.diagnosesMade});
 
   factory AppointmentEntity.create(
       {required String id,
-      required LocationEntity? location,
-      required String createdBy,
-      required String updatedBy,
-      required String createdAt,
-      required String updatedAt,
+      LocationEntity? location,
+      String? createdBy,
+      String? updatedBy,
+      String? createdAt,
+      String? updatedAt,
       String? status,
       String? note,
       String? timeOfDay,
       required String date,
       required String locationType,
-      required ServiceCenterEntity? serviceCenter,
-      required ServiceEntity? service,
+      ServiceCenterEntity? serviceCenter,
+      ServiceEntity? service,
       ChatRoomEntity? chatRoom,
-      required Vehicle? vehicle,
-      required String? diagnosesToMake,
-      required String? diagnosesMade}) {
+      Vehicle? vehicle,
+      String? diagnosesToMake,
+      String? diagnosesMade}) {
     // Add any validation or business logic here
     return AppointmentEntity._(
         id: id,

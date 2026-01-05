@@ -50,10 +50,10 @@ class GetAllAppointmentsModel {
 
 class AppointmentModel {
   final String id;
-  final String createdBy;
-  final String updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdBy;
+  final String? updatedBy;
+  final String? createdAt;
+  final String? updatedAt;
   final String? status;
   final String? timeOfDay;
   final String date;
@@ -70,10 +70,10 @@ class AppointmentModel {
 
   AppointmentModel._({
     required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdBy,
+    this.updatedBy,
+    this.createdAt,
+    this.updatedAt,
     this.status,
     this.note,
     this.timeOfDay,
@@ -106,7 +106,7 @@ class AppointmentModel {
       service: json['service'] != null
           ? ServiceModel.fromJson({
               ...json['service'],
-              'serviceCenterId': json['serviceCenter']['id']
+              'serviceCenterId': json['serviceCenter']?['id']
             })
           : null,
       serviceCenter: json['serviceCenter'] != null
@@ -115,7 +115,7 @@ class AppointmentModel {
       vehicle: json['vehicle'] != null
           ? VehicleModel.fromJson({
               ...json['vehicle'],
-              'serviceCenterId': json['serviceCenter']['id']
+              'serviceCenterId': json['serviceCenter']?['id']
             })
           : null,
       // chatRoom: json['chatRoom'] != null

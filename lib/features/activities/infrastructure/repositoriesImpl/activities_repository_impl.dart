@@ -20,9 +20,8 @@ class ActivitiesRepositoryImpl implements ActivitiesRepository {
   Future<Either<ActivitiesException, GetAllActivities>> getAllActivities(
       String garageId) async {
     try {
-      final response = await networkService.post(
-          ActivitiesConstants.getAllActivitiesGetUri,
-          body: {'garageId': garageId});
+      final response = await networkService.get(
+          '${ActivitiesConstants.getAllActivitiesGetUri}?garageId=$garageId');
       return Right(GetAllActivitiesModel.fromJson(response).toEntity());
     } on BaseException catch (e) {
       return Left(ActivitiesException(e.message, e.statusCode));

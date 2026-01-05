@@ -31,18 +31,27 @@ extension Utils on GetInterface {
   }
 
   void closeLoader() {
-    if (isSnackbarOpen) {
-      Get.back();
+    try {
+      if (isSnackbarOpen) {
+        closeCurrentSnackbar();
+      }
+    } catch (_) {
+      // Ignore snackbar close errors
     }
-    if (isDialogOpen!) {
-      Get.back();
+    try {
+      if (isDialogOpen == true) {
+        Get.back();
+      }
+    } catch (_) {
+      // Ignore dialog close errors
     }
   }
 
   SnackbarController? showCustomSnackBar(String message,
       {String title = "Error",
       CustomSnackbarType type = CustomSnackbarType.error,
-      Color? color, Duration? duration = const Duration(seconds: 2)}) {
+      Color? color,
+      Duration? duration = const Duration(seconds: 2)}) {
     return Get.context == null || message.isEmpty
         ? null
         : Get.showSnackbar(GetSnackBar(
@@ -62,7 +71,8 @@ extension Utils on GetInterface {
               type == CustomSnackbarType.error
                   ? FluentIcons.dismiss_circle_20_regular
                   : type == CustomSnackbarType.success
-                      ? Icons.check_circle_outline_rounded : Icons.info_outline_rounded,
+                      ? Icons.check_circle_outline_rounded
+                      : Icons.info_outline_rounded,
               size: 24,
               color: type == CustomSnackbarType.error
                   ? Color(0XFFF1351B)

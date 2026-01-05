@@ -58,25 +58,17 @@ class _FullscreenMapViewState extends State<FullscreenMapView>
   }
 
   Future<void> _closeFullscreen() async {
+    if (!mounted) return;
     await _controller.reverse();
-    // if (mounted) {
-    //   Get.back();
-    // }
   }
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      // onWillPop: () async {
-      //   await _closeFullscreen();
-      //   return false;
-      // },
-      onPopInvokedWithResult: (didPop, result) async {
-        if (didPop) {
-          await _closeFullscreen();
-          return;
-        }
-        Get.back(result: result);
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        // Don't do anything here - the pop already happened
+        // The animation cleanup happens in dispose()
       },
       child: Scaffold(
         body: SafeArea(
