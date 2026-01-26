@@ -125,6 +125,8 @@ class DataModel {
   });
 
   factory DataModel.fromJson(Map<String, dynamic> json) {
+    print('DataModel.fromJson - raw json: $json');
+    print('DataModel.fromJson - id field: ${json['id']}');
     return DataModel._(
       name: json['name'],
       ownerId: json['ownerId'],

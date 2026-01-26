@@ -185,15 +185,26 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       );
       return Right(LoginModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {
-      if (e.statusCode != null && e.statusCode == 404 && email != null) {
-        return Left(AuthentificationException(
-            'User not found with email: $email', e.statusCode));
-      } else if (e.statusCode != null && e.statusCode == 404 && phone != null) {
-        return Left(AuthentificationException(
-            'User not found with phone: ${phone.code}${phone.number}',
-            e.statusCode));
+      print(e.message);
+      String errorMessage = e.message;
+
+      // Handle specific authentication errors
+      if (e.statusCode == 401) {
+        errorMessage = 'Invalid email or password';
+      } else if (e.statusCode == 403) {
+        errorMessage = 'Access denied. Please check your credentials.';
+      } else if (e.statusCode == 404 && email != null) {
+        errorMessage = 'User not found with email: $email';
+      } else if (e.statusCode == 404 && phone != null) {
+        errorMessage =
+            'User not found with phone: ${phone.code}${phone.number}';
+      } else if (errorMessage.isEmpty) {
+        errorMessage = 'Login failed. Please try again.';
+      } else if (e.statusCode == 500) {
+        errorMessage = 'Invalid email or password';
       }
-      return Left(AuthentificationException(e.message, e.statusCode));
+
+      return Left(AuthentificationException(errorMessage, e.statusCode));
     }
   }
 
@@ -296,12 +307,9 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       // return await googleLogin(bearerId: idToken);
       return await googleLogin(bearerId: idToken);
     } on BaseException catch (e) {
-      print(e);
 
-      print('Caught the error: $e');
       return Left(AuthentificationException(e.message, e.statusCode));
     } catch (e) {
-      print('Caught a non-base exception: $e');
       return Left(AuthentificationException(e.toString(), 0));
     }
   }
@@ -329,7 +337,6 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       print(e);
       return Left(AuthentificationException(e.message, e.statusCode));
     } catch (e) {
-      print('Caught a non-base exception: $e');
       return Left(AuthentificationException(e.toString(), 0));
     }
   }

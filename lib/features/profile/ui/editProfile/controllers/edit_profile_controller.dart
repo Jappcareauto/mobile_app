@@ -50,7 +50,7 @@ class EditProfileController extends GetxController {
   void onInit() {
     // Generate by Menosi_cli
     super.onInit();
-    if(currentUserController.userInfos?.location != null){
+    if (currentUserController.userInfos?.location != null) {
       placeDetails.value = PlaceDetails.create(
         name: currentUserController.userInfos!.location!.name!,
         lat: currentUserController.userInfos!.location!.latitude!,
@@ -77,10 +77,12 @@ class EditProfileController extends GetxController {
           name: data['name']!,
           email: data['email']!,
           dateOfBirth: data['dateOfBirth']!,
-          phone: data['phoneNumber'] != null ? PhoneCommand(
-            number: data['phoneNumber']!,
-            code: phoneCode.value.replaceAll("+", ""),
-          ) : null,
+          phone: data['phoneNumber'] != null
+              ? PhoneCommand(
+                  number: data['phoneNumber']!,
+                  code: phoneCode.value.replaceAll("+", ""),
+                )
+              : null,
           location: placeDetails.value != null
               ? LocationEntity.create(
                   latitude: placeDetails.value!.lat,
@@ -93,7 +95,7 @@ class EditProfileController extends GetxController {
       onError: (e) => Get.showCustomSnackBar(e.message),
       onSuccess: (response) {
         // _appNavigation.goBack();
-        Get.showCustomSnackBar("Profile updated successfully. But phone number update is not yet supported",
+        Get.showCustomSnackBar("Profile updated successfully.",
             title: "Profile updated", type: CustomSnackbarType.success);
         currentUserController.getUserInfos(refreshAll: false);
         // update();

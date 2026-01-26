@@ -14,6 +14,7 @@ class GarageConstants {
   static const String getAllAppointmentsUri = '/appointment/list';
   static const String getAppointmentByIdUri = '/appointment';
   static const String getAppointmentByChatroomIdUri = '/appointment/chat-room';
+  static const String getInvoiceByAppointmentIdUri = '/invoice';
   static const String googlePlaceUri =
       "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
   static const String apiKey = "AIzaSyBy9Mq91oGtmrw1jKiRrDvKWwGpQgtzt3I";

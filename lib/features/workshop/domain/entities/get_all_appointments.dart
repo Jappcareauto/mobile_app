@@ -2,6 +2,7 @@ import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 import 'package:jappcare/core/ui/domain/entities/pagination.entity.dart';
 import 'package:jappcare/features/chat/domain/entities/get_all_chat_room.entity.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
+import 'package:jappcare/features/workshop/domain/entities/appointment_invoice.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_services_center.entity.dart';
 // import 'package:jappcare/features/workshop/domain/entities/get_vehicule_by_id.dart';
@@ -45,6 +46,7 @@ class AppointmentEntity {
   final String? diagnosesToMake;
   final String? diagnosesMade;
   final ChatRoomEntity? chatRoom;
+  final AppointmentInvoiceEntity? invoice;
 
   AppointmentEntity._(
       {required this.id,
@@ -63,7 +65,8 @@ class AppointmentEntity {
       this.chatRoom,
       this.vehicle,
       this.diagnosesToMake,
-      this.diagnosesMade});
+      this.diagnosesMade,
+      this.invoice});
 
   factory AppointmentEntity.create(
       {required String id,
@@ -82,7 +85,8 @@ class AppointmentEntity {
       ChatRoomEntity? chatRoom,
       Vehicle? vehicle,
       String? diagnosesToMake,
-      String? diagnosesMade}) {
+      String? diagnosesMade,
+      AppointmentInvoiceEntity? invoice}) {
     // Add any validation or business logic here
     return AppointmentEntity._(
         id: id,
@@ -101,7 +105,8 @@ class AppointmentEntity {
         service: service,
         vehicle: vehicle,
         diagnosesToMake: diagnosesToMake,
-        diagnosesMade: diagnosesMade);
+        diagnosesMade: diagnosesMade,
+        invoice: invoice);
   }
 
   String get formattedLocationType {

@@ -1,5 +1,7 @@
 //Don't translate me
+import 'package:jappcare/features/workshop/domain/entities/appointment_invoice.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/appointment_invoice_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/get_all_appointments_model.dart';
 
 import '../../domain/repositories/garage_repository.dart';
@@ -155,6 +157,32 @@ class GarageRepositoryImpl implements GarageRepository {
       return Right(AppointmentModel.fromJson(response['data']).toEntity());
     } on BaseException catch (e) {
       return Left(GarageException(e.message, e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<GarageException, AppointmentInvoiceEntity>>
+      getInvoiceByAppointmentId({required String appointmentId}) async {
+    try {
+      final response = await networkService.get(
+        '${GarageConstants.getInvoiceByAppointmentIdUri}/$appointmentId',
+      );
+      print('Invoice API response: $response');
+      final data = response['data'];
+      if (data == null) {
+        return Left(GarageException('No invoice data in response', 404));
+      }
+      print('Invoice data to parse: $data');
+      final invoiceModel = AppointmentInvoiceModel.fromJson(data);
+      print('Invoice model parsed, status: ${invoiceModel.status}');
+      return Right(invoiceModel.toEntity());
+    } on BaseException catch (e) {
+      print('BaseException in getInvoiceByAppointmentId: ${e.message}');
+      return Left(GarageException(e.message, e.statusCode));
+    } catch (e, stackTrace) {
+      print('Exception in getInvoiceByAppointmentId: $e');
+      print('Stack trace: $stackTrace');
+      return Left(GarageException(e.toString(), 500));
     }
   }
 

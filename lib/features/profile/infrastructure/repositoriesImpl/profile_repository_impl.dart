@@ -44,13 +44,15 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Either<ProfileException, bool>> updateProfileImage(
       String userId, File file) async {
     try {
+      // According to API docs, use the same endpoint but with multipart/form-data
+      // Upload the image first
       final files = await uploadImages([file]);
 
       if (files != null) {
+        // Use the update-details endpoint with multipart/form-data
         await networkService.put(
-          "${ProfileConstants.updateProfileImagePutUri}/$userId/update-image",
-          // files: {'file': File(file)},
-          body: {'file': files.first},
+          ProfileConstants.updateUserDetailsUri,
+          body: {'profileImage': files.first},
         );
         return const Right(true);
       } else {
@@ -86,23 +88,33 @@ class ProfileRepositoryImpl implements ProfileRepository {
       String? phoneCode}) async {
     print("Phone: $phone, phoneCode: $phoneCode");
     try {
-      final response = await networkService
-          .put(ProfileConstants.updateUserDetailsUri, body: {
+      // Build the request body according to API documentation
+      Map<String, dynamic> requestBody = {
         'name': name,
-        // 'email': email,
         'dateOfBirth': dateOfBirth,
-        if (location != null)
-          'location': {
-            'latitude': location.latitude,
-            'longitude': location.longitude,
-            'name': location.name,
-            if (location.description != null &&
-                location.description!.isNotEmpty)
-              'description': location.description,
-          },
-        // if (phone != null)
-        //   'phone': {'code': phone.code, 'number': phone.number},
-      });
+      };
+
+      // Add phone if provided (with correct structure)
+      if (phone != null) {
+        requestBody['phone'] = {
+          'countryCode': "+${phone.code}",
+          'number': phone.number,
+        };
+      }
+
+      // Add location if provided
+      if (location != null) {
+        requestBody['location'] = {
+          'latitude': location.latitude,
+          'longitude': location.longitude,
+          'name': location.name,
+          if (location.description != null && location.description!.isNotEmpty)
+            'description': location.description,
+        };
+      }
+
+      final response = await networkService
+          .put(ProfileConstants.updateUserDetailsUri, body: requestBody);
       return Right(
           UpdateUserDetailsModel.fromJson(response["data"]).toEntity());
     } on BaseException catch (e) {

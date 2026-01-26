@@ -122,8 +122,7 @@ class WorkshopController extends GetxController {
       required String id,
       bool? availability,
       String? locationName}) {
-    _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails,
-        arguments: centerServices);
+    // Set data BEFORE navigation to ensure it's available in onInit
     globalControllerWorkshop.addMultipleData({
       "serviceCenterName": name,
       "description": description,
@@ -135,6 +134,8 @@ class WorkshopController extends GetxController {
       "availability": availability,
       "centerServices": centerServices
     });
+    _appNavigation.toNamed(WorkshopPrivateRoutes.workshopDetails,
+        arguments: centerServices);
   }
 
   void filterServiceCenters(

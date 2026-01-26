@@ -43,7 +43,19 @@ class LoginWithEmailController extends GetxController {
         extend: true,
       )),
       onError: (e) {
-        Get.showCustomSnackBar(e.message);
+        print("🔴 [LoginWithEmailController] onError called!");
+        print("🔴 [LoginWithEmailController] Error: $e");
+        print("🔴 [LoginWithEmailController] Error type: ${e.runtimeType}");
+        print("🔴 [LoginWithEmailController] Error message: ${e.message}");
+        print("🔴 [LoginWithEmailController] About to call Get.showCustomSnackBar...");
+        try {
+          Get.showCustomSnackBar(e.message);
+          print("🔴 [LoginWithEmailController] Get.showCustomSnackBar called successfully");
+        } catch (ex, stack) {
+          print("❌❌❌ [LoginWithEmailController] EXCEPTION calling showCustomSnackBar!");
+          print("❌ [LoginWithEmailController] Exception: $ex");
+          print("❌ [LoginWithEmailController] Stack: $stack");
+        }
         if (e.message.contains("not verified")) {
           _appNavigation.toNamed(AuthentificationPrivateRoutes.verifyYourEmail,
               arguments: loginFormHelper.controllers["email"]?.text);

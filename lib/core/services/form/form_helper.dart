@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dartz/dartz.dart';
 
+// Note: AuthentificationException is checked dynamically, no import needed
+
 class FormHelper<L, R> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final Rx<AutovalidateMode> autovalidateMode = AutovalidateMode.disabled.obs;
@@ -34,17 +36,40 @@ class FormHelper<L, R> {
   }
 
   void submit() async {
+    
     if (formKey.currentState?.validate() ?? false) {
       isLoading.value = true;
-      if (onSubmit == null) return;
+      if (onSubmit == null) {
+        return;
+      }
       try {
         final data = controllers
             .map((key, controller) => MapEntry(key, controller.text));
+       
         final result = await onSubmit!(data);
-        result?.fold(
+        
+        
+        if (result == null) {
+          isLoading.value = false;
+          return;
+        }
+        
+       
+        try {
+          result.fold(
           (error) {
+            
             if (onError != null) {
-              onError!(error);
+              try {
+                // Check if error has a message property (dynamic check, no import needed)
+                try {
+                  final errorMessage = (error as dynamic).message;
+                } catch (_) {
+                }
+                onError!(error);
+              } catch (e, stackTrace) {
+                
+              }
             } else {
               Get.snackbar('Error', error.toString(),
                   snackPosition: SnackPosition.BOTTOM);
@@ -58,8 +83,14 @@ class FormHelper<L, R> {
                   snackPosition: SnackPosition.BOTTOM);
             }
           },
-        );
-      } catch (e) {
+          );
+        } catch (e, stackTrace) {
+         
+          Get.snackbar('Error', e.toString(),
+              snackPosition: SnackPosition.BOTTOM);
+        }
+      } catch (e, stackTrace) {
+       
         Get.snackbar('Error', e.toString(),
             snackPosition: SnackPosition.BOTTOM);
       } finally {
