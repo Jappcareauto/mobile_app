@@ -72,10 +72,6 @@ class GarageController extends GetxController {
       fetchData(lastUserId);
     }
 
-    ever(selectedAppointStatusFilter, (value) {
-      getAllAppointments(status: value != "" ? value : null, userId: lastUserId);
-    });
-
     pageController.addListener(() {
       int newPage = pageController.page!.round();
       if (currentVehiclePage.value != newPage) {
@@ -133,8 +129,7 @@ class GarageController extends GetxController {
       (success) {
         vehicleDeleteLoading.value = false;
         Get.back();
-        Get.find<GarageController>()
-            .getVehicleList(ownerId: userId);
+        Get.find<GarageController>().getVehicleList(ownerId: userId);
       },
     );
   }
@@ -198,8 +193,7 @@ class GarageController extends GetxController {
   Future<void> getAllAppointments({String? status, String? userId}) async {
     appointmentsLoading.value = true;
     final result = await _getAllAppointmentsUsecase.call(
-        command: GetAllAppointmentsCommand(
-            status: status, userId: userId));
+        command: GetAllAppointmentsCommand(status: status, userId: userId));
     result.fold(
       (e) {
         appointmentsLoading.value = false;
