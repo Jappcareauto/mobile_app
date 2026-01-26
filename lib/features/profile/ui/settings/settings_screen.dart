@@ -26,6 +26,10 @@ class SettingsScreen extends GetView<SettingsController> {
                     icon: FluentIcons.person_24_regular,
                     onTap: controller.goToEditProfile),
                 SettingItem(
+                    title: "Manage Account",
+                    icon: FluentIcons.person_accounts_24_regular,
+                    onTap: controller.goToManageAccount),
+                SettingItem(
                     title: "History",
                     icon: FluentIcons.history_24_regular,
                     onTap: controller.goToHistory),
@@ -55,16 +59,11 @@ class SettingsScreen extends GetView<SettingsController> {
                   icon: FluentIcons.document_24_regular,
                   onTap: controller.goToTermsAndConditions,
                 ),
+                const SizedBox(height: 40),
                 SettingItem(
                   title: "Logout",
                   icon: FluentIcons.sign_out_24_regular,
                   onTap: controller.logout,
-                  trailing: SizedBox(),
-                ),
-                SettingItem(
-                  title: "Delete Account",
-                  icon: FluentIcons.delete_24_regular,
-                  onTap: () {},
                   color: Colors.red,
                   trailing: SizedBox(),
                 ),

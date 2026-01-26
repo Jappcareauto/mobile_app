@@ -4,6 +4,7 @@ class ProfilePrivateRoutes {
   // Add other privates routes here
   static const String settings = '$home/settings';
   static const String editProfile = '$home/editProfile';
+  static const String manageAccount = '$home/manageAccount';
   static const String termsAndConditions = '$home/termsAndConditions';
   static const String privacyPolicy = '$home/privacyPolicy';
   static const String history = '$home/history';

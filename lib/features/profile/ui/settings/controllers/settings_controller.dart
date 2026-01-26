@@ -40,7 +40,9 @@ class SettingsController extends GetxController {
       _appNavigation.toNamed(ProfilePrivateRoutes.editProfile);
   void goToHistory() => _appNavigation.toNamed(ProfilePrivateRoutes.history);
   void goToPayments() => _appNavigation.toNamed(ProfilePrivateRoutes.payments);
-    void navigateTCommingSoon() {
+  void goToManageAccount() =>
+      _appNavigation.toNamed(ProfilePrivateRoutes.manageAccount);
+  void navigateTCommingSoon() {
     Get.to(() => const CommingSoonScreen(), transition: Transition.leftToRight);
   }
 }

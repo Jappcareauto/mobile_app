@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jappcare/features/profile/ui/payments/addPaymentMethod/add_payment_method_screen.dart';
+import '../bindings/manage_account_controller_binding.dart';
+import '../../ui/manageAccount/manage_account_screen.dart';
 
 import '../bindings/payments_controller_binding.dart';
 import '../../ui/payments/payments_screen.dart';
@@ -40,6 +42,11 @@ class ProfilePages implements FeaturePages {
           name: ProfilePrivateRoutes.editProfile,
           page: () => const EditProfileScreen(),
           binding: EditProfileControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.manageAccount,
+          page: () => const ManageAccountScreen(),
+          binding: ManageAccountControllerBinding(),
         ),
         GetPage(
           name: ProfilePrivateRoutes.termsAndConditions,
