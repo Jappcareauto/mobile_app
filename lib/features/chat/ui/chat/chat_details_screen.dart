@@ -357,10 +357,6 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
             ),
             onPressed: controller.pickImage,
           ),
-          IconButton(
-            icon: const Icon(Icons.mic),
-            onPressed: controller.startRecording,
-          ),
         ],
       ),
     );
