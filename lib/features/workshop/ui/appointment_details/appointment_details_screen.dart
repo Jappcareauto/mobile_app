@@ -1,5 +1,4 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -349,20 +348,19 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
               //       onPressed: () => controller.markAsComplete(),
               //     ),
               //   ),
-              if (kDebugMode)
-                Positioned(
-                  bottom: appointment.invoice != null ? 90 : 20,
-                  right: 20,
-                  child: FloatingActionButton(
-                    backgroundColor: Get.theme.primaryColor,
-                    onPressed: () => controller.goToChatScreen(),
-                    child: Icon(
-                      FluentIcons.chat_16_regular,
-                      color: Get.theme.scaffoldBackgroundColor,
-                      size: 30,
-                    ),
+              Positioned(
+                bottom: appointment.invoice != null ? 90 : 20,
+                right: 20,
+                child: FloatingActionButton(
+                  backgroundColor: Get.theme.primaryColor,
+                  onPressed: () => controller.goToChatScreen(),
+                  child: Icon(
+                    FluentIcons.chat_16_regular,
+                    color: Get.theme.scaffoldBackgroundColor,
+                    size: 30,
                   ),
                 ),
+              ),
             ],
           );
         }),

@@ -36,9 +36,9 @@ android {
     signingConfigs {
         release {
             keyAlias "upload"
-            keyPassword "jappcare"
+            keyPassword "admin1158"
             storeFile file('upload-keystore.jks')
-            storePassword "jappcare"
+            storePassword "admin1158"
         }
     }
 
