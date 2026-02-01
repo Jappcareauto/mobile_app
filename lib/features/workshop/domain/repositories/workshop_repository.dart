@@ -20,6 +20,7 @@ abstract class WorkshopRepository {
           String? category,
           String? ownerId,
           String? serviceId,
+          List<String>? serviceIds,
           String? serviceCenterId,
           bool? aroundMe,
           bool? availableNow});

@@ -81,11 +81,11 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                             spacing: 10,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                               Text(
+                              Text(
                                 "Select Service",
                                 style: Get.textTheme.bodyLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               SizedBox(
                                 child: controller
@@ -140,7 +140,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                           },
                                         );
                                       })
-                                    : const Text('Aucun service disponible'),
+                                    : const Text('No services available'),
                               ),
                             ]),
                       ),

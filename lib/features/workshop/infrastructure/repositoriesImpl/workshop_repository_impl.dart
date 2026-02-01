@@ -118,6 +118,7 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
           String? ownerId,
           String? serviceCenterId,
           String? serviceId,
+          List<String>? serviceIds,
           bool? aroundMe,
           bool? availableNow}) async {
     try {
@@ -149,6 +150,16 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
                 '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
             .join('&');
         url = '$url?$queryString';
+      }
+
+      // Add serviceIds as repeated query parameters
+      if (serviceIds != null && serviceIds.isNotEmpty) {
+        final serviceIdsParams = serviceIds
+            .map((id) => 'serviceIds=${Uri.encodeComponent(id)}')
+            .join('&');
+        url = url.contains('?')
+            ? '$url&$serviceIdsParams'
+            : '$url?$serviceIdsParams';
       }
 
       final response = await networkService.get(url);

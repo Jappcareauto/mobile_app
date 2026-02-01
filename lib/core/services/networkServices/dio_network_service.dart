@@ -78,14 +78,14 @@ class DioNetworkService extends NetworkService {
             }
           }
 
-          // Si le jeton est invalide, redirection vers la page de connexion
+          // If the token is invalid, redirect to the login page
           if (error.response?.statusCode == 401) {
             Get.showLoader();
             await _localStorage.delete(AppConstants.tokenKey);
             await _localStorage.delete(AppConstants.refreshTokenKey);
             Get.closeLoader();
             await Get.offAllNamed(AppRoutes.home);
-            Get.showCustomSnackBar("Veuillez vous reconnecter");
+            Get.showCustomSnackBar("Please log in again");
           }
           // Passer l'erreur au prochain intercepteur si aucune réponse de cache n'est disponible
           return handler.next(error);
@@ -116,28 +116,75 @@ class DioNetworkService extends NetworkService {
   }
 
   void _handleError(dynamic error) {
-    String errorMessage = 'Une erreur est survenue';
+    String errorMessage = 'An error occurred. Please try again.';
     int? statusCode = 500;
     print('Error Programmed-${error.toString()}');
     if (error is DioException) {
+      statusCode = error.response?.statusCode;
       if (error.response != null && error.response?.data != null) {
         final data = error.response?.data;
         if (data is Map<String, dynamic> &&
             (data.containsKey('message') || data.containsKey('details'))) {
-          errorMessage = data['details'] ?? data['message'];
-        } else if (data is String) {
-          errorMessage = data;
+          // Get the API error message but clean it up for user display
+          final apiMessage = data['details'] ?? data['message'];
+          errorMessage = _getUserFriendlyErrorMessage(apiMessage, statusCode);
+        } else if (data is String && data.isNotEmpty) {
+          errorMessage = _getUserFriendlyErrorMessage(data, statusCode);
         } else {
-          errorMessage = 'Erreur du serveur : ${error.response?.statusCode}';
-          statusCode = error.response?.statusCode;
+          errorMessage = _getErrorMessageByStatusCode(statusCode);
         }
       } else {
-        errorMessage = error.message ?? 'Une erreur est survenue';
+        errorMessage = _getErrorMessageByStatusCode(statusCode);
       }
     } else {
-      errorMessage = error.toString();
+      errorMessage = 'An error occurred. Please try again.';
     }
     throw BaseException(errorMessage, statusCode);
+  }
+
+  /// Converts API error messages to user-friendly messages
+  String _getUserFriendlyErrorMessage(String? apiMessage, int? statusCode) {
+    if (apiMessage == null || apiMessage.isEmpty) {
+      return _getErrorMessageByStatusCode(statusCode);
+    }
+
+    // Don't show technical messages or status codes to users
+    final lowerMessage = apiMessage.toLowerCase();
+    if (lowerMessage.contains('exception') ||
+        lowerMessage.contains('error:') ||
+        lowerMessage.contains('statuscode') ||
+        RegExp(r'^\d{3}').hasMatch(apiMessage)) {
+      return _getErrorMessageByStatusCode(statusCode);
+    }
+
+    return apiMessage;
+  }
+
+  /// Returns a user-friendly error message based on HTTP status code
+  String _getErrorMessageByStatusCode(int? statusCode) {
+    switch (statusCode) {
+      case 400:
+        return 'Invalid request. Please check your input and try again.';
+      case 401:
+        return 'Your session has expired. Please log in again.';
+      case 403:
+        return 'You do not have permission to perform this action.';
+      case 404:
+        return 'The requested resource was not found.';
+      case 409:
+        return 'This action conflicts with existing data. Please try again.';
+      case 422:
+        return 'The provided data is invalid. Please check and try again.';
+      case 429:
+        return 'Too many requests. Please wait a moment and try again.';
+      case 500:
+      case 502:
+      case 503:
+      case 504:
+        return 'Server error. Please try again later.';
+      default:
+        return 'An error occurred. Please try again.';
+    }
   }
 
   /// Création de FormData pour les requêtes avec fichiers

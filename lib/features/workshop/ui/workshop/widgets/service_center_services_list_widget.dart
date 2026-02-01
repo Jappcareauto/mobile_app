@@ -53,7 +53,7 @@ class ServiceCenterServicesListWidget extends StatelessWidget {
                     haveBorder: true,
                   );
                 })
-              : const Text('Aucun service disponible'),
+              : const Text('No services available'),
         ),
       ],
     );

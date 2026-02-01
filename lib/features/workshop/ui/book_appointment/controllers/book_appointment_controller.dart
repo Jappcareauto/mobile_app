@@ -227,7 +227,7 @@ class BookAppointmentController extends GetxController {
       selectedImages.value =
           pickedFiles.map((file) => File(file.path)).toList();
     } else {
-      print('Aucune image sélectionnée.');
+      print('No image selected.');
     }
   }
 

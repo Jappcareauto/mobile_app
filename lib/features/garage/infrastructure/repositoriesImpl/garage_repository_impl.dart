@@ -214,15 +214,16 @@ class GarageRepositoryImpl implements GarageRepository {
         final data = json.decode(response.body);
         if (data['results'] != null && data['results'].isNotEmpty) {
           return Right(data['results'][0]
-              ['formatted_address']); // Récupère l'adresse formatée
+              ['formatted_address']); // Gets the formatted address
         } else {
-          return const Right("Adresse non trouvée");
+          return const Right("Address not found");
         }
       } else {
-        throw Exception("Erreur API : ${response.statusCode}");
+        throw Exception("Failed to fetch address");
       }
     } catch (e) {
-      return Left(GarageException("Erreur : $e", 500));
+      return Left(
+          GarageException("Failed to fetch address. Please try again.", 500));
     }
   }
 

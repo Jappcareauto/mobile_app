@@ -34,8 +34,7 @@ class ServicesListWidget extends GetView<WorkshopController> {
                           data: controller.services.value!.data,
                           onSelected: (data) {
                             print(controller.services.value?.data[0]);
-                            print(
-                                "L'IDENTIFIANT DU SERVICE SELECTIONNER EST : ${data.id}");
+                            print("Selected service ID: ${data.id}");
                             controller.servicesId.value = data.id;
                             globalControllerWorkshop.addData(
                                 'serviceId', data.id);
@@ -44,7 +43,7 @@ class ServicesListWidget extends GetView<WorkshopController> {
                           borderRadius: BorderRadius.circular(16),
                           haveBorder: true,
                         )
-                      : const Text('Aucun service disponible');
+                      : const Text('No services available');
             },
           ),
         ),

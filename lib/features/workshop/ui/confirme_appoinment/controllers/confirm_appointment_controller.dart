@@ -85,7 +85,7 @@ class ConfirmAppointmentController extends GetxController {
   }
 
   void goToChatScreen() {
-    Get.back();
+    // Navigate to home first, then to appointment details and chat
     _appNavigation.toNamedAndReplaceAll(
       AppRoutes.home,
     );
@@ -97,8 +97,8 @@ class ConfirmAppointmentController extends GetxController {
       ChatPrivateRoutes.chat,
       arguments: appointment.value,
     );
-    // globalControllerWorkshop
-    //     .addMultipleData({'appointmentId': appointmentId.value});
+    // Reset the workshop data after navigation
+    globalControllerWorkshop.resetData();
   }
 
   void goToHome() {
@@ -140,7 +140,7 @@ class ConfirmAppointmentController extends GetxController {
           Get.showCustomSnackBar(
               "Has Pending Appointment with Service and Service Center");
         } else {
-          Get.showCustomSnackBar("Une erreur s'est produite");
+          Get.showCustomSnackBar("An error occurred. Please try again.");
         }
       },
       (response) {
@@ -148,7 +148,8 @@ class ConfirmAppointmentController extends GetxController {
         appointment.value = response;
         Get.find<GarageController>().getAllAppointments(
             userId: Get.find<ProfileController>().userInfos!.id);
-        onpenModalConfirmMethod();
+        // Navigate directly to chat after successful appointment creation
+        goToChatScreen();
       },
     );
   }

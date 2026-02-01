@@ -192,7 +192,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                                       borderRadius: BorderRadius.circular(16),
                                       haveBorder: true,
                                     )
-                                  : const Text('Aucun service disponible'),
+                                  : const Text('No services available'),
                         );
                       }),
                     ]),

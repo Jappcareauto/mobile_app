@@ -18,6 +18,7 @@ class GetAllServicesCenterUseCase {
         category: command?.category,
         ownerId: command?.ownerId,
         serviceId: command?.serviceId,
+        serviceIds: command?.serviceIds,
         serviceCenterId: command?.serviceCenterId,
         aroundMe: command?.aroundMe,
         availableNow: command?.availableNow);

@@ -36,7 +36,6 @@ class FormHelper<L, R> {
   }
 
   void submit() async {
-    
     if (formKey.currentState?.validate() ?? false) {
       isLoading.value = true;
       if (onSubmit == null) {
@@ -45,52 +44,44 @@ class FormHelper<L, R> {
       try {
         final data = controllers
             .map((key, controller) => MapEntry(key, controller.text));
-       
+
         final result = await onSubmit!(data);
-        
-        
+
         if (result == null) {
           isLoading.value = false;
           return;
         }
-        
-       
+
         try {
           result.fold(
-          (error) {
-            
-            if (onError != null) {
-              try {
-                // Check if error has a message property (dynamic check, no import needed)
+            (error) {
+              if (onError != null) {
                 try {
-                  final errorMessage = (error as dynamic).message;
-                } catch (_) {
-                }
-                onError!(error);
-              } catch (e, stackTrace) {
-                
+                  // Check if error has a message property (dynamic check, no import needed)
+                  try {
+                    final errorMessage = (error as dynamic).message;
+                  } catch (_) {}
+                  onError!(error);
+                } catch (e, stackTrace) {}
+              } else {
+                Get.snackbar('Error', error.toString(),
+                    snackPosition: SnackPosition.BOTTOM);
               }
-            } else {
-              Get.snackbar('Error', error.toString(),
-                  snackPosition: SnackPosition.BOTTOM);
-            }
-          },
-          (success) {
-            if (onSuccess != null) {
-              onSuccess!(success);
-            } else {
-              Get.snackbar('Success', 'Opération réussie',
-                  snackPosition: SnackPosition.BOTTOM);
-            }
-          },
+            },
+            (success) {
+              if (onSuccess != null) {
+                onSuccess!(success);
+              } else {
+                Get.snackbar('Success', 'Operation completed successfully',
+                    snackPosition: SnackPosition.BOTTOM);
+              }
+            },
           );
         } catch (e, stackTrace) {
-         
           Get.snackbar('Error', e.toString(),
               snackPosition: SnackPosition.BOTTOM);
         }
       } catch (e, stackTrace) {
-       
         Get.snackbar('Error', e.toString(),
             snackPosition: SnackPosition.BOTTOM);
       } finally {
