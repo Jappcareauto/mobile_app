@@ -100,6 +100,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                           selectedFilter: controller
                                               .selectedServiceIndex.value,
                                           haveBorder: true,
+                                          showAllOption: false,
                                           onSelected: (index) {
                                             if (controller.selectedServiceIndex
                                                     .value ==

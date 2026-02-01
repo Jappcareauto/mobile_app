@@ -37,6 +37,7 @@ class ServiceCenterServicesListWidget extends StatelessWidget {
                   return ServiceWidget(
                     tabs: services,
                     selectedFilter: selectedService.value,
+                    showAllOption: false,
                     onSelected: (index) {
                       print(index);
 

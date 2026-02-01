@@ -105,7 +105,9 @@ class WorkshopScreen extends GetView<WorkshopController>
                         tabs: services,
                         selectedFilter: controller.selectedService.value,
                         onSelected: (index) {
-                          if (controller.selectedService.value == index) {
+                          // If "All" is clicked (index == -1) or same service is clicked again
+                          if (index == -1 ||
+                              controller.selectedService.value == index) {
                             controller.selectedService.value = -1;
                             controller.selectedCategory.value = '';
                           } else {

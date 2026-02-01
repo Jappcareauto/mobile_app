@@ -191,6 +191,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                                           .toList(),
                                       borderRadius: BorderRadius.circular(16),
                                       haveBorder: true,
+                                      showAllOption: false,
                                     )
                                   : const Text('No services available'),
                         );
