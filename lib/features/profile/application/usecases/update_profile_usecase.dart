@@ -19,6 +19,7 @@ class UpdateProfileUseCase {
       dateOfBirth: command.dateOfBirth,
       location: command.location,
       phone: command.phone,
+      profileImage: command.profileImage,
     );
   }
 }
