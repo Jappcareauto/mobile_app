@@ -81,19 +81,6 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                   ),
                 ],
               ),
-              // Column(
-              //   spacing: 5,
-              //   mainAxisAlignment: MainAxisAlignment.start,
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: [
-              //     const Text('Estimated inspection fee',
-              //         style:
-              //             TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-              //     Text('${argument['servicePrice']} Frs',
-              //         style:
-              //             TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-              //   ],
-              // ),
               Column(
                 spacing: 5,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -128,10 +115,11 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                                 size: 24,
                               ),
                               Text(
-                                DateFormat('EEE, MMM dd, yyyy').format(
-                                    DateTime.parse(
-                                        controller.appointment.createdAt)),
-                                // Format personnalisé
+                                controller.appointment.createdAt != null
+                                    ? DateFormat('EEE, MMM dd, yyyy').format(
+                                        DateTime.parse(
+                                            controller.appointment.createdAt!))
+                                    : '',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
@@ -145,7 +133,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                                 FluentIcons.clock_12_regular,
                                 size: 24,
                               ),
-                              Text(controller.appointment.timeOfDay,
+                              Text(controller.appointment.timeOfDay ?? '',
                                   style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400)),
@@ -180,41 +168,6 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                   onPressed: controller.goToAppointmentDetail,
                 ),
               ),
-              // if (images.isNotEmpty)
-              //   Column(
-              //     spacing: 10,
-              //     mainAxisAlignment: MainAxisAlignment.start,
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       const Text('Images',
-              //           style: TextStyle(
-              //               fontSize: 14, fontWeight: FontWeight.normal)),
-              //       SingleChildScrollView(
-              //         scrollDirection: Axis.horizontal,
-              //         child: Obx(
-              //           () => Padding(
-              //             padding: const EdgeInsets.only(right: 20.0),
-              //             child: Row(
-              //               spacing: 10,
-              //               children: images.map((imagePath) {
-              //                 return SizedBox(
-              //                   height: 100,
-              //                   width: MediaQuery.of(context).size.width * 0.25,
-              //                   child: ClipRRect(
-              //                     borderRadius: BorderRadius.circular(12),
-              //                     child: Image.file(
-              //                       imagePath, // Ajuster la taille de l'image
-              //                       fit: BoxFit.cover,
-              //                     ),
-              //                   ),
-              //                 );
-              //               }).toList(),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
             ],
           ));
     });

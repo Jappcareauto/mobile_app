@@ -14,7 +14,9 @@ class GetAllChatRoomMessagesModel {
     return GetAllChatRoomMessagesModel._(
       messages: List<ChatMessageModel>.from(
           json['data'].map((x) => ChatMessageModel.fromJson(x))),
-      pagination: PaginationModel.fromJson(json['pagination']),
+      pagination: json['pagination'] != null
+          ? PaginationModel.fromJson(json['pagination'])
+          : PaginationModel.empty(),
     );
   }
 
@@ -46,10 +48,10 @@ class GetAllChatRoomMessagesModel {
 
 class ChatMessageModel {
   final String id;
-  final String createdBy;
-  final String updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdBy;
+  final String? updatedBy;
+  final String? createdAt;
+  final String? updatedAt;
   final String senderId;
   final String content;
   final String chatRoomId;
@@ -57,14 +59,15 @@ class ChatMessageModel {
   final String type;
   final String? appointmentId;
   final String? mediaUrl;
+  final List<dynamic>? mediaUrls;
   final String? duration;
 
   ChatMessageModel._({
     required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdBy,
+    this.updatedBy,
+    this.createdAt,
+    this.updatedAt,
     required this.senderId,
     required this.content,
     required this.chatRoomId,
@@ -72,23 +75,25 @@ class ChatMessageModel {
     required this.type,
     this.appointmentId,
     this.mediaUrl,
+    this.mediaUrls,
     this.duration,
   });
 
   factory ChatMessageModel.fromJson(Map<String, dynamic> json) {
     return ChatMessageModel._(
-      id: json['id'],
+      id: json['id'] ?? '',
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
-      senderId: json['senderId'],
-      content: json['content'],
-      chatRoomId: json['chatId'],
-      timestamp: json['timestamp'].toString(),
-      type: json['type'],
+      senderId: json['senderId'] ?? '',
+      content: json['content'] ?? '',
+      chatRoomId: json['chatId'] ?? json['chatRoomId'] ?? '',
+      timestamp: json['timestamp']?.toString() ?? '',
+      type: json['type'] ?? 'TEXT',
       appointmentId: json['appointmentId'],
       mediaUrl: json['mediaUrl'],
+      mediaUrls: json['mediaUrls'],
       duration: json['duration'],
     );
   }
@@ -124,16 +129,27 @@ class ChatMessageModel {
       timestamp: entity.timestamp,
       type: entity.type,
       appointmentId: entity.appointmentId,
+      mediaUrl: entity.mediaUrl,
+      mediaUrls: entity.mediaUrls,
+      duration: entity.duration,
     );
   }
 
   ChatMessageEntity toEntity() {
+    // Parse mediaUrls to proper format
+    List<Map<String, dynamic>>? parsedMediaUrls;
+    if (mediaUrls != null) {
+      parsedMediaUrls = mediaUrls!
+          .map((item) => Map<String, dynamic>.from(item as Map))
+          .toList();
+    }
+
     return ChatMessageEntity.create(
       id: id,
-      createdBy: createdBy,
-      updatedBy: updatedBy,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
+      createdBy: createdBy ?? '',
+      updatedBy: updatedBy ?? '',
+      createdAt: createdAt ?? '',
+      updatedAt: updatedAt ?? '',
       senderId: senderId,
       content: content,
       chatRoomId: chatRoomId,
@@ -141,6 +157,7 @@ class ChatMessageModel {
       type: type,
       appointmentId: appointmentId,
       mediaUrl: mediaUrl,
+      mediaUrls: parsedMediaUrls,
       duration: duration,
     );
   }

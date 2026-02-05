@@ -56,24 +56,23 @@ class ChatRepositoryImpl implements ChatRepository {
               SendMessageModel.fromJson(decodedMessage).toEntity();
 
           receivedMessages.add(chatMessage);
-          print("Nouveau message reçu : $chatMessage");
         },
         onError: (error) {
-          print("Erreur WebSocket : $error");
+          // WebSocket error logged silently
         },
         onDone: () {
-          print("Connexion WebSocket fermée.");
+          // WebSocket connection closed
         },
       );
 
       // Retourne la liste des messages reçus
       return Right(receivedMessages);
-    } on SocketException catch (e) {
-      print("Erreur réseau : $e");
-      return Left(ChatException('Erreur réseau : $e', 400));
+    } on SocketException {
+      return Left(
+          ChatException('Network error. Please check your connection.', 400));
     } catch (e) {
-      print("Erreur inattendue : $e");
-      return Left(ChatException('Erreur inattendue : $e', 500));
+      return Left(
+          ChatException('Something went wrong. Please try again.', 500));
     }
   }
 
@@ -123,9 +122,8 @@ class ChatRepositoryImpl implements ChatRepository {
     //   return Left(ChatException('Erreur réseau : $e'));
     // }
     on BaseException catch (e) {
-      print("Erreur inattendue : $e");
-      return Left(
-          ChatException('Erreur inattendue : ${e.message}', e.statusCode));
+      return Left(ChatException(
+          'Something went wrong. Please try again.', e.statusCode));
     }
   }
 

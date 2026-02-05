@@ -101,7 +101,13 @@ class ProfileController extends GetxController {
       },
       (response) {
         updateImageLoading.value = false;
-        print(response);
+        // Clear the local file and refresh user info to get new image URL
+        file.value = null;
+        getUserInfos(refreshAll: false);
+        if (Get.context != null) {
+          Get.showCustomSnackBar("Profile image updated successfully",
+              title: "Success", type: CustomSnackbarType.success);
+        }
       },
     );
   }

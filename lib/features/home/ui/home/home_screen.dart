@@ -7,7 +7,7 @@ import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/home/domain/entities/get_tips_list.entity.dart';
 import 'package:jappcare/features/home/ui/dashboard/controllers/dashboard_controller.dart';
-import 'package:jappcare/features/home/ui/home/widgets/dismiss_widget.dart';
+// import 'package:jappcare/features/home/ui/home/widgets/dismiss_widget.dart'; // Commented out with notification banner
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/tip_modal_bottom.dart';
 import 'package:shimmer/shimmer.dart';
@@ -16,8 +16,7 @@ import 'controllers/home_controller.dart';
 import 'widgets/notification_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  final GarageController garageController =
-      Get.put(GarageController(Get.find(), Get.find()));
+  final GarageController garageController = Get.find<GarageController>();
 
   final DashboardController dashboardController =
       Get.find<DashboardController>();
@@ -45,39 +44,40 @@ class HomeScreen extends GetView<HomeController> {
                   child: Column(
                     spacing: 10,
                     children: [
-                      if (controller.notifications.isNotEmpty) ...[
-                        Column(
-                          spacing: 10,
-                          children: controller.notifications
-                              .asMap()
-                              .entries
-                              .map((entry) {
-                            final index = entry.key;
-                            final notification = entry.value;
+                      // Notification banner commented out temporarily
+                      // if (controller.notifications.isNotEmpty) ...[
+                      //   Column(
+                      //     spacing: 10,
+                      //     children: controller.notifications
+                      //         .asMap()
+                      //         .entries
+                      //         .map((entry) {
+                      //       final index = entry.key;
+                      //       final notification = entry.value;
 
-                            return Dismissible(
-                              // key: Key(index.toString()),
-                              key: UniqueKey(),
-                              direction: DismissDirection.endToStart,
-                              background: const DismissWidget(),
-                              onDismissed: (direction) {
-                                // Action après la suppression
-                                controller.notifications.removeAt(index);
-                              },
-                              child: NotificationWidget(
-                                haveTitle: true,
-                                textSize: 14,
-                                backgroundColor: const Color(0xFFFFEDE6),
-                                title: "Notification",
-                                bodyText: notification,
-                                coloriage: Get.theme.primaryColor,
-                                icon: FluentIcons.alert_16_filled,
-                                onTap: () => {print('Notification tapped')},
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ],
+                      //       return Dismissible(
+                      //         // key: Key(index.toString()),
+                      //         key: UniqueKey(),
+                      //         direction: DismissDirection.endToStart,
+                      //         background: const DismissWidget(),
+                      //         onDismissed: (direction) {
+                      //           // Action après la suppression
+                      //           controller.notifications.removeAt(index);
+                      //         },
+                      //         child: NotificationWidget(
+                      //           haveTitle: true,
+                      //           textSize: 14,
+                      //           backgroundColor: const Color(0xFFFFEDE6),
+                      //           title: "Notification",
+                      //           bodyText: notification,
+                      //           coloriage: Get.theme.primaryColor,
+                      //           icon: FluentIcons.alert_16_filled,
+                      //           onTap: () => {print('Notification tapped')},
+                      //         ),
+                      //       );
+                      //     }).toList(),
+                      //   ),
+                      // ],
                       Obx(
                         () {
                           if (controller.tipsLoading.value) {
@@ -141,7 +141,7 @@ class HomeScreen extends GetView<HomeController> {
                     'title': 'Upcoming Activities',
                     'status': 'NOT_STARTED',
                     'isHorizontal': true,
-                    'limit': 2,
+                    'limit': 3,
                     'noActivitiesPlaceholder':
                         'You have no upcoming activities at the moment'
                   }),
@@ -225,7 +225,7 @@ class HomeScreen extends GetView<HomeController> {
                           tag: 'RecentActivitiesWidget')
                       .buildView(
                     {
-                      'limit': 2,
+                      'limit': 3,
                       'haveTabBar': false,
                       'haveTitle': true,
                     },

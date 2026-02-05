@@ -38,19 +38,39 @@ class _CustomDateFormFieldState extends State<CustomDateFormField> {
   @override
   void initState() {
     super.initState();
-    if (widget.controller != null) {
+    _syncFromMainController();
+    // Listen to changes in the main controller to sync individual fields
+    widget.controller?.addListener(_syncFromMainController);
+  }
+
+  /// Syncs the day, month, year fields from the main controller
+  void _syncFromMainController() {
+    if (widget.controller != null && widget.controller!.text.isNotEmpty) {
       final date = widget.controller!.text;
       final parts = date.split('-');
       if (parts.length == 3) {
-        dayController.text = parts[2];
-        monthController.text = parts[1];
-        yearController.text = parts[0];
+        // Expected format from date picker: YYYY-MM-DD
+        final newYear = parts[0];
+        final newMonth = parts[1];
+        final newDay = parts[2];
+
+        // Only update if values are different to avoid unnecessary rebuilds
+        if (yearController.text != newYear) {
+          yearController.text = newYear;
+        }
+        if (monthController.text != newMonth) {
+          monthController.text = newMonth;
+        }
+        if (dayController.text != newDay) {
+          dayController.text = newDay;
+        }
       }
     }
   }
 
   @override
   void dispose() {
+    widget.controller?.removeListener(_syncFromMainController);
     dayController.dispose();
     monthController.dispose();
     yearController.dispose();
@@ -59,17 +79,6 @@ class _CustomDateFormFieldState extends State<CustomDateFormField> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.controller != null) {
-        final date = widget.controller!.text;
-        final parts = date.split('-');
-        if (parts.length == 3) {
-          dayController.text = parts[2];
-          monthController.text = parts[1];
-          yearController.text = parts[0];
-        }
-      }
-    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

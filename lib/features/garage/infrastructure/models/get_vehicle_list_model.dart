@@ -4,8 +4,8 @@ class VehicleModel {
   final String id;
   final String? createdBy;
   final String? updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   final String name;
   final String? description;
   final String? serviceCenterId;
@@ -26,12 +26,23 @@ class VehicleModel {
     required this.id,
     this.createdBy,
     this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
     this.media,
   });
 
   factory VehicleModel.fromJson(Map<String, dynamic> json) {
+    // Check if detail exists, otherwise create DetailModel from root-level properties
+    DetailModel? detailModel;
+    if (json['detail'] != null) {
+      detailModel = DetailModel.fromJson(json['detail']);
+    } else if (json['make'] != null ||
+        json['model'] != null ||
+        json['year'] != null) {
+      // Create DetailModel from root-level properties for flattened vehicle data
+      detailModel = DetailModel.fromFlattenedJson(json);
+    }
+
     return VehicleModel._(
       serviceCenterId: json['serviceCenterId'],
       name: json['name'],
@@ -39,8 +50,7 @@ class VehicleModel {
       description: json['description'],
       vin: json['vin'] ?? "",
       registrationNumber: json['registrationNumber'] ?? "",
-      detail:
-          json['detail'] != null ? DetailModel.fromJson(json['detail']) : null,
+      detail: detailModel,
       id: json['id'],
       media: json['media']?["items"] != null
           ? List.generate(
@@ -198,6 +208,19 @@ class DetailModel {
       engineDescription: json['engineDescription'],
       engineCapacity: json['engineCapacity'],
       dimensions: json['dimensions'],
+    );
+  }
+
+  /// Creates DetailModel from flattened vehicle JSON where make, model, year
+  /// are at root level instead of nested in a detail object
+  factory DetailModel.fromFlattenedJson(Map<String, dynamic> json) {
+    return DetailModel._(
+      make: json['make'],
+      model: json['model'],
+      year: json['year']?.toString(),
+      id: json['id'] ?? '',
+      createdAt: json['createdAt'] ?? '',
+      updatedAt: json['updatedAt'] ?? '',
     );
   }
 

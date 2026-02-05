@@ -34,8 +34,8 @@ class ServiceCenterEntity {
   final String id;
   final String? createdBy;
   final String? updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   final String? imageId;
   final String? imageUrl;
   final bool? available;
@@ -52,8 +52,8 @@ class ServiceCenterEntity {
     this.imageId,
     this.imageUrl,
     this.available,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory ServiceCenterEntity.create(

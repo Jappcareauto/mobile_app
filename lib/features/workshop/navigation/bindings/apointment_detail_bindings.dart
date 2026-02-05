@@ -4,6 +4,6 @@ import 'package:jappcare/features/workshop/ui/appointment_details/controllers/ap
 class AppointmentDetailsBinding extends Bindings{
   @override
   void dependencies(){
-    Get.lazyPut<AppointmentDetailsController>(() => AppointmentDetailsController(Get.find()));
+    Get.lazyPut<AppointmentDetailsController>(() => AppointmentDetailsController(Get.find(), Get.find()));
   }
 }

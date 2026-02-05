@@ -24,8 +24,8 @@ class GetAllServicesEntity {
 
 class ServiceEntity {
   final String id;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   final String? createdBy;
   final String? updatedBy;
   final String title;
@@ -41,8 +41,8 @@ class ServiceEntity {
     required this.id,
     this.createdBy,
     this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory ServiceEntity.create({

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class FullScreenImageView extends StatelessWidget {
@@ -27,10 +28,7 @@ class FullScreenImageView extends StatelessWidget {
             Expanded(
               child: Center(
                 child: InteractiveViewer(
-                  child: Image.file(
-                    File(imageUrl),
-                    fit: BoxFit.contain,
-                  ),
+                  child: _buildImage(),
                 ),
               ),
             ),
@@ -52,5 +50,38 @@ class FullScreenImageView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildImage() {
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return CachedNetworkImage(
+        imageUrl: imageUrl,
+        fit: BoxFit.contain,
+        placeholder: (_, __) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+        errorWidget: (_, url, error) {
+          return const Icon(
+            Icons.broken_image,
+            color: Colors.white,
+            size: 64,
+          );
+        },
+      );
+    } else {
+      final file = File(imageUrl);
+      if (file.existsSync()) {
+        return Image.file(
+          file,
+          fit: BoxFit.contain,
+        );
+      } else {
+        return const Icon(
+          Icons.broken_image,
+          color: Colors.white,
+          size: 64,
+        );
+      }
+    }
   }
 }

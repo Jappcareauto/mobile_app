@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
-// import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
+import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/error/ui/commingSoon/comming_soon_screen.dart';
@@ -15,7 +15,6 @@ import '../widgets/tip_modal_bottom.dart';
 class HomeController extends GetxController {
   final AppNavigation _appNavigation;
   HomeController(this._appNavigation);
-
 
   final GarageController garageController =
       GarageController(Get.find(), Get.find());
@@ -34,45 +33,39 @@ class HomeController extends GetxController {
     // "Votre commande a été expédiée.",
   ];
 
-  // List<String> tips = [
-  //   "Check your vehicle's tire pressure",
-  //   "Rotate your tires regularly to ensure they wear evenly and last longer.",
-  // ];
-
   Future<void> refreshData() async {
-    print("debut du refresh");
-    // Simule un délai de chargement (par exemple, une requête réseau)
-    await Future.delayed(const Duration(seconds: 2));
+    print("Starting refresh of all home page data");
 
-    // // Rafraîchir les données des widgets dynamiquesRafraîchir les données des widgets dynamiques
-    // if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ListVehicleWidget')) {
-    //   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget').refreshData();
-    // }
+    try {
+      // Refresh tips data
+      await getAllTips();
 
-    // if (Get.isRegistered<FeatureWidgetInterface>(
-    //     tag: 'RecentActivitiesWidget')) {
-    //   Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
-    //       .refreshData();
-    // }
-    // if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ListVehicleWidget')) {
-    //   Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget').refreshData();
-    // }
+      // Get user ID for personalized data
+      final lastUserId =
+          Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
 
-    // if (Get.isRegistered<FeatureWidgetInterface>(
-    //     tag: 'RecentActivitiesWidget')) {
-    //   Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
-    //       .refreshData();
-    // }
+      if (lastUserId != null) {
+        // Refresh garage data (vehicles and appointments)
+        await garageController.fetchData(lastUserId);
+      }
 
-    getAllTips();
+      // Refresh feature widgets if registered
+      if (Get.isRegistered<FeatureWidgetInterface>(tag: 'ListVehicleWidget')) {
+        Get.find<FeatureWidgetInterface>(tag: 'ListVehicleWidget')
+            .refreshData();
+      }
 
-    final lastUserId =
-        Get.find<AppEventService>().getLastValue(AppConstants.userIdEvent);
-    if (lastUserId != null) {
-      garageController.fetchData(lastUserId);
+      if (Get.isRegistered<FeatureWidgetInterface>(
+          tag: 'RecentActivitiesWidget')) {
+        Get.find<FeatureWidgetInterface>(tag: 'RecentActivitiesWidget')
+            .refreshData();
+      }
+
+      update();
+      print('Home page refresh completed successfully');
+    } catch (e) {
+      print('Error during home page refresh: $e');
     }
-    update();
-    print('fin du refresh');
   }
 
   @override

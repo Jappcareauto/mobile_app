@@ -59,23 +59,17 @@ class ImageMessageWidget extends StatelessWidget {
                       ),
                     ),
 
-                  // Image
-                  if (message.mediaUrl != null)
+                  // Image(s)
+                  if (message.hasMedia &&
+                      message.firstMediaUrl != null &&
+                      message.firstMediaUrl!.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: GestureDetector(
                           onTap: () => _showFullScreenImage(context),
-                          // child: Image.memory(
-                          //   base64Decode(message.mediaUrl!),
-                          //   width: 250,
-                          //   height: 200,
-                          //   fit: BoxFit.cover,
-                          // ),
-                          // child: AspectRatio(
-                          //   aspectRatio: 4 / 3,
-                          child: _buildImage(message.mediaUrl!),
+                          child: _buildImage(message.firstMediaUrl!),
                         ),
                       ),
                     ),
@@ -86,7 +80,7 @@ class ImageMessageWidget extends StatelessWidget {
                   //   ),
 
                   // Caption and timestamp
-                  if (message.isImageMessage && message.content.isNotEmpty)
+                  if (message.hasMedia && message.content.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(12, 4, 12, 2),
                       child: Text(
@@ -138,10 +132,11 @@ class ImageMessageWidget extends StatelessWidget {
   }
 
   void _showFullScreenImage(BuildContext context) {
-    if (message.mediaUrl != null) {
+    final url = message.firstMediaUrl;
+    if (url != null && url.isNotEmpty) {
       Get.to(
         () => FullScreenImageView(
-          imageUrl: message.mediaUrl!,
+          imageUrl: url,
           caption: message.content,
         ),
       );
@@ -149,15 +144,52 @@ class ImageMessageWidget extends StatelessWidget {
   }
 
   Widget _buildImage(String mediaUrl) {
-    if (mediaUrl.startsWith('http')) {
+    // Debug log removed
+    
+    // Handle empty or invalid URLs
+    if (mediaUrl.isEmpty) {
+      // Debug log removed
+      return const SizedBox(
+        width: 200,
+        height: 150,
+        child: Center(child: Icon(Icons.broken_image, size: 48)),
+      );
+    }
+
+    // Check if it's a network URL (http or https)
+    if (mediaUrl.startsWith('http://') || mediaUrl.startsWith('https://')) {
+      // Debug log removed
       return CachedNetworkImage(
         imageUrl: mediaUrl,
-        placeholder: (_, __) => Placeholder(), // or shimmer
-        errorWidget: (_, __, ___) => Icon(Icons.broken_image),
+        placeholder: (_, __) => const SizedBox(
+          width: 200,
+          height: 150,
+          child: Center(child: CircularProgressIndicator()),
+        ),
+        errorWidget: (_, url, error) {
+          // Debug log removed
+          return const SizedBox(
+            width: 200,
+            height: 150,
+            child: Center(child: Icon(Icons.broken_image, size: 48)),
+          );
+        },
         fit: BoxFit.cover,
       );
     } else {
-      return Image.file(File(mediaUrl), fit: BoxFit.cover);
+      // Local file - check if it exists before loading
+      // Debug log removed
+      final file = File(mediaUrl);
+      if (file.existsSync()) {
+        return Image.file(file, fit: BoxFit.cover);
+      } else {
+        // Debug log removed
+        return const SizedBox(
+          width: 200,
+          height: 150,
+          child: Center(child: Icon(Icons.broken_image, size: 48)),
+        );
+      }
     }
   }
 }

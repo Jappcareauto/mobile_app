@@ -7,6 +7,7 @@ import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_widgets.dart';
+import 'package:jappcare/features/workshop/ui/workshop/widgets/shimmers/services_shimmer.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import 'controllers/workshop_controller.dart';
 import 'package:get/get.dart';
@@ -91,30 +92,37 @@ class WorkshopScreen extends GetView<WorkshopController>
                     "Specialized Services",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
-                    child: controller.services.value != null &&
-                            controller.services.value!.data.isNotEmpty
-                        ? Obx(() {
-                            final services = controller.services.value!.data;
-                            return ServiceWidget(
-                              tabs: services,
-                              selectedFilter: controller.selectedService.value,
-                              onSelected: (index) {
-                                if (controller.selectedService.value == index) {
-                                  controller.selectedService.value = -1;
-                                  controller.selectedCategory.value = '';
-                                } else {
-                                  controller.selectedCategory.value =
-                                      services[index].title;
-                                  controller.selectedService.value = index;
-                                }
-                              },
-                              borderRadius: BorderRadius.circular(16),
-                              haveBorder: true,
-                            );
-                          })
-                        : const Text('Aucun service disponible'),
-                  ),
+                  Obx(() {
+                    // Show shimmer while loading
+                    if (controller.serviceloading.value) {
+                      return const ServicesShimmer(isHorizontal: true);
+                    }
+                    // Show services if available
+                    if (controller.services.value != null &&
+                        controller.services.value!.data.isNotEmpty) {
+                      final services = controller.services.value!.data;
+                      return ServiceWidget(
+                        tabs: services,
+                        selectedFilter: controller.selectedService.value,
+                        onSelected: (index) {
+                          // If "All" is clicked (index == -1) or same service is clicked again
+                          if (index == -1 ||
+                              controller.selectedService.value == index) {
+                            controller.selectedService.value = -1;
+                            controller.selectedCategory.value = '';
+                          } else {
+                            controller.selectedCategory.value =
+                                services[index].title;
+                            controller.selectedService.value = index;
+                          }
+                        },
+                        borderRadius: BorderRadius.circular(16),
+                        haveBorder: true,
+                      );
+                    }
+                    // Show empty state
+                    return const Text('No services available');
+                  }),
                   Obx(
                     () {
                       return Column(
@@ -160,7 +168,7 @@ class WorkshopScreen extends GetView<WorkshopController>
                                   }).toList()
                                 : [
                                     const Text(
-                                      'Aucun service disponible',
+                                      'No service centers available',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey,

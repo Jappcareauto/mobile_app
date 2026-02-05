@@ -35,6 +35,7 @@ class ChatMessageEntity {
   final String type;
   final String? appointmentId;
   final String? mediaUrl;
+  final List<Map<String, dynamic>>? mediaUrls; // List of {url, type, name}
   final String? sender;
   final String? duration; // For voice messages
 
@@ -53,6 +54,7 @@ class ChatMessageEntity {
     this.sender,
     this.duration,
     this.mediaUrl,
+    this.mediaUrls,
   });
 
   factory ChatMessageEntity.create({
@@ -70,6 +72,7 @@ class ChatMessageEntity {
     String? sender,
     String? duration,
     String? mediaUrl,
+    List<Map<String, dynamic>>? mediaUrls,
   }) {
     // Add any validation or business logic here
     return ChatMessageEntity._(
@@ -87,10 +90,19 @@ class ChatMessageEntity {
       sender: sender,
       duration: duration,
       mediaUrl: mediaUrl,
+      mediaUrls: mediaUrls,
     );
   }
 
   factory ChatMessageEntity.fromJson(Map<String, dynamic> json) {
+    // Parse mediaUrls array if present
+    List<Map<String, dynamic>>? parsedMediaUrls;
+    if (json['mediaUrls'] != null) {
+      parsedMediaUrls = (json['mediaUrls'] as List)
+          .map((item) => Map<String, dynamic>.from(item))
+          .toList();
+    }
+
     return ChatMessageEntity._(
       id: json['id'],
       createdBy: json['createdBy'],
@@ -99,13 +111,14 @@ class ChatMessageEntity {
       updatedAt: json['updatedAt'],
       senderId: json['senderId'],
       content: json['content'],
-      chatRoomId: json['chatRoomId'],
+      chatRoomId: json['chatRoomId'] ?? json['chatId'] ?? '',
       timestamp: json['timestamp'],
       type: json['type'],
       appointmentId: json['appointmentId'],
       sender: json['sender'],
       duration: json['duration'],
       mediaUrl: json['mediaUrl'],
+      mediaUrls: parsedMediaUrls,
     );
   }
 
@@ -125,6 +138,7 @@ class ChatMessageEntity {
     data['sender'] = sender;
     data['duration'] = duration;
     data['mediaUrl'] = mediaUrl;
+    data['mediaUrls'] = mediaUrls;
     return data;
   }
 
@@ -134,5 +148,40 @@ class ChatMessageEntity {
 
   bool get isVoiceMessage => type == 'VOICE';
   bool get isTextMessage => type == 'TEXT';
-  bool get isImageMessage => type == 'IMAGE';
+  bool get isImageMessage =>
+      type == 'IMAGE' || (type == 'TEXT_AND_OTHERS' && hasMedia);
+
+  /// Check if the message has any media attachments
+  bool get hasMedia {
+    if (mediaUrls != null && mediaUrls!.isNotEmpty) {
+      // Check if any URL in the list is actually valid
+      return mediaUrls!
+          .any((m) => m['url'] != null && (m['url'] as String).isNotEmpty);
+    }
+    return mediaUrl != null && mediaUrl!.isNotEmpty;
+  }
+
+  /// Get the first media URL (for single image display)
+  String? get firstMediaUrl {
+    if (mediaUrls != null && mediaUrls!.isNotEmpty) {
+      final url = mediaUrls!.first['url'] as String?;
+      return (url != null && url.isNotEmpty) ? url : null;
+    }
+    return (mediaUrl != null && mediaUrl!.isNotEmpty) ? mediaUrl : null;
+  }
+
+  /// Get all media URLs as strings (filtering out empty/null values)
+  List<String> get allMediaUrls {
+    if (mediaUrls != null && mediaUrls!.isNotEmpty) {
+      return mediaUrls!
+          .map((m) => m['url'] as String?)
+          .where((url) => url != null && url.isNotEmpty)
+          .cast<String>()
+          .toList();
+    }
+    if (mediaUrl != null && mediaUrl!.isNotEmpty) {
+      return [mediaUrl!];
+    }
+    return [];
+  }
 }

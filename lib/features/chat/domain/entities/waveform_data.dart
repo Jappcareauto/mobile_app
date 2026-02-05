@@ -81,7 +81,6 @@ class WaveformProcessor {
         minAmplitude: -1.0,
       );
     } catch (e) {
-      print('Error processing audio for waveform: $e');
       return null;
     }
   }

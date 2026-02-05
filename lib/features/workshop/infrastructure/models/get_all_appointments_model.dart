@@ -3,6 +3,7 @@ import 'package:jappcare/core/ui/domain/models/pagination.model.dart';
 import 'package:jappcare/features/chat/infrastructure/models/get_all_chatrooms.model.dart';
 import 'package:jappcare/features/garage/infrastructure/models/get_vehicle_list_model.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/appointment_invoice_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/get_all_service_center_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/get_all_services_model.dart';
 
@@ -50,12 +51,12 @@ class GetAllAppointmentsModel {
 
 class AppointmentModel {
   final String id;
-  final String createdBy;
-  final String updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdBy;
+  final String? updatedBy;
+  final String? createdAt;
+  final String? updatedAt;
   final String? status;
-  final String timeOfDay;
+  final String? timeOfDay;
   final String date;
   final String locationType;
   final String? note;
@@ -66,17 +67,17 @@ class AppointmentModel {
   final ChatRoomModel? chatRoom;
   final String? diagnosesToMake;
   final String? diagnosesMade;
-  // final ServiceCenterMode? serviceCenter;
+  final AppointmentInvoiceModel? invoice;
 
   AppointmentModel._({
     required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdBy,
+    this.updatedBy,
+    this.createdAt,
+    this.updatedAt,
     this.status,
     this.note,
-    required this.timeOfDay,
+    this.timeOfDay,
     required this.date,
     required this.locationType,
     this.location,
@@ -86,6 +87,7 @@ class AppointmentModel {
     this.chatRoom,
     this.diagnosesToMake,
     this.diagnosesMade,
+    this.invoice,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
@@ -106,7 +108,7 @@ class AppointmentModel {
       service: json['service'] != null
           ? ServiceModel.fromJson({
               ...json['service'],
-              'serviceCenterId': json['serviceCenter']['id']
+              'serviceCenterId': json['serviceCenter']?['id']
             })
           : null,
       serviceCenter: json['serviceCenter'] != null
@@ -115,7 +117,7 @@ class AppointmentModel {
       vehicle: json['vehicle'] != null
           ? VehicleModel.fromJson({
               ...json['vehicle'],
-              'serviceCenterId': json['serviceCenter']['id']
+              'serviceCenterId': json['serviceCenter']?['id']
             })
           : null,
       // chatRoom: json['chatRoom'] != null
@@ -124,6 +126,9 @@ class AppointmentModel {
       chatRoom: null,
       diagnosesToMake: json['diagnosesToMake'],
       diagnosesMade: json['diagnosesMade'],
+      invoice: json['invoice'] != null
+          ? AppointmentInvoiceModel.fromJson(json['invoice'])
+          : null,
     );
   }
 
@@ -146,6 +151,7 @@ class AppointmentModel {
     data['chatRoom'] = chatRoom?.toJson();
     data['diagnosesToMake'] = diagnosesToMake;
     data['diagnosesMade'] = diagnosesMade;
+    data['invoice'] = invoice?.toJson();
     return data;
   }
 
@@ -168,6 +174,9 @@ class AppointmentModel {
       chatRoom: entity.chatRoom?.toModel(),
       diagnosesToMake: entity.diagnosesToMake,
       diagnosesMade: entity.diagnosesMade,
+      invoice: entity.invoice != null
+          ? AppointmentInvoiceModel.fromEntity(entity.invoice!)
+          : null,
     );
   }
 
@@ -190,6 +199,7 @@ class AppointmentModel {
       chatRoom: chatRoom?.toEntity(),
       diagnosesToMake: diagnosesToMake,
       diagnosesMade: diagnosesMade,
+      invoice: invoice?.toEntity(),
     );
   }
 }

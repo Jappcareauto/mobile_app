@@ -5,11 +5,24 @@ import 'dart:io';
 
 import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controller.dart';
 
-class ImagePreviewScreen extends StatelessWidget {
+class ImagePreviewScreen extends StatefulWidget {
   final String imagePath;
-  final TextEditingController captionController = TextEditingController();
 
-  ImagePreviewScreen({super.key, required this.imagePath});
+  const ImagePreviewScreen({super.key, required this.imagePath});
+
+  @override
+  State<ImagePreviewScreen> createState() => _ImagePreviewScreenState();
+}
+
+class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
+  final TextEditingController captionController = TextEditingController();
+  bool _isSending = false;
+
+  @override
+  void dispose() {
+    captionController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,123 +31,137 @@ class ImagePreviewScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
-        // title: const Text(
-        //   'Send Image',
-        //   style: TextStyle(color: Colors.white),
-        // ),
         elevation: 0,
       ),
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            // Image Display
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: ImageComponent(
-                    file: File(imagePath),
-                    fit: BoxFit.contain,
+            Column(
+              children: [
+                // Image Display
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: ImageComponent(
+                        file: File(widget.imagePath),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
 
-            // Caption Input Section
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                spacing: 5,
-                children: [
-                  // Caption input field
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        // color: const Color(
-                        //     0xFFFFF2F0), // Couleur d'arrière-plan rosé
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: TextField(
-                        controller: captionController,
-                        decoration: InputDecoration(
-                          hintText: 'Add a caption...',
-                          hintStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w500),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
+                // Caption Input Section
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      // Caption input field
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
-                          filled: true,
-                          fillColor: Colors.grey[100],
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 12,
+                          child: TextField(
+                            controller: captionController,
+                            enabled: !_isSending,
+                            decoration: InputDecoration(
+                              hintText: 'Add a caption...',
+                              hintStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[100],
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 12,
+                              ),
+                            ),
+                            maxLines: 3,
+                            minLines: 1,
                           ),
                         ),
-                        maxLines: 3,
-                        minLines: 1,
                       ),
-                    ),
+                      const SizedBox(width: 5),
+                      // Send button
+                      GestureDetector(
+                        onTap: _isSending ? null : _sendImage,
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _isSending
+                                ? Colors.grey
+                                : Get.theme.primaryColor,
+                          ),
+                          child: _isSending
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : const Icon(
+                                  Icons.send,
+                                  color: Colors.white,
+                                ),
+                        ),
+                      ),
+                    ],
                   ),
-                  // Bouton d'envoi
-                  GestureDetector(
-                    onTap: () => _sendImage(),
-                    child: Container(
-                      padding: const EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color:
-                            Get.theme.primaryColor, // Couleur du bouton d'envoi
-                      ),
-                      child: const Icon(
-                        Icons.send,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+            // Loading overlay
+            if (_isSending)
+              Container(
+                color: Colors.black.withOpacity(0.3),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
           ],
         ),
       ),
     );
   }
 
-  void _sendImage() {
-    final caption = captionController.text.trim().toString();
+  Future<void> _sendImage() async {
+    final caption = captionController.text.trim();
 
-    print(caption);
-    print(imagePath);
-
-    // // Show loading dialog
-    Get.dialog(
-      const Center(child: CircularProgressIndicator()),
-      barrierDismissible: false,
-    );
-
-    // // Get the chat controller and send the image
-    final chatController = Get.find<ChatDetailsController>();
-    chatController.sendImageMessage(imagePath, caption).then((_) {
-      Get.back(); // Close loading dialog
-      Get.back(result: imagePath); // Go back to chat screen
-      // Get.snackbar(
-      //   'Success',
-      //   'Image sent successfully!',
-      //   backgroundColor: Colors.green,
-      //   colorText: Colors.white,
-      // );
-    }).catchError((error) {
-      Get.back(); // Close loading dialog
-      // Get.snackbar(
-      //   'Error',
-      //   'Failed to send image: $error',
-      //   backgroundColor: Colors.red,
-      //   colorText: Colors.white,
-      // );
+    setState(() {
+      _isSending = true;
     });
+
+    try {
+      // Get the chat controller and send the image
+      final chatController = Get.find<ChatDetailsController>();
+      await chatController.sendImageMessage(widget.imagePath, caption);
+
+      // Go back to chat screen using Navigator
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+    } catch (error) {
+      if (mounted) {
+        setState(() {
+          _isSending = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to send image. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 }

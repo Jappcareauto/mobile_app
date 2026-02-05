@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 import 'package:jappcare/features/workshop/application/usecases/book_appointment_usecase.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_place_latlng_usecase.dart';
+import 'package:jappcare/features/workshop/application/usecases/make_cash_payment_usecase.dart';
+import 'package:jappcare/features/workshop/domain/repositories/payment_repository.dart';
 import 'package:jappcare/features/workshop/domain/repositories/workshop_repository.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
+import 'package:jappcare/features/workshop/infrastructure/repositoriesImpl/payment_repository_impl.dart';
 import 'package:jappcare/features/workshop/ui/PayWithCard/controllers/pay_with_card_controller.dart';
 import 'package:jappcare/features/workshop/ui/PayWithPhone/controller/pay_with_phone_controller.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/controllers/appointment_details_controller.dart';
@@ -53,7 +56,7 @@ class WorkshopDependencies {
     Get.lazyPut<SuccessPaymentController>(
         () => SuccessPaymentController(Get.find()));
     Get.lazyPut<AppointmentDetailsController>(
-        () => AppointmentDetailsController(Get.find()));
+        () => AppointmentDetailsController(Get.find(), Get.find()));
     Get.lazyPut<MapController>(() => MapController(Get.find()));
     // Use cases
     Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);
@@ -65,6 +68,11 @@ class WorkshopDependencies {
     Get.lazyPut(() => GetPlaceLatLngUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => GetServiceCenterServicesUsecase(Get.find()), fenix: true);
     Get.lazyPut(() => GetAllAvailableServiceCenterServicesUsecase(Get.find()),
+        fenix: true);
+    // Payment dependencies
+    Get.lazyPut<PaymentRepository>(() => PaymentRepositoryImpl(), fenix: true);
+    Get.lazyPut<MakeCashPaymentUseCase>(
+        () => MakeCashPaymentUseCase(Get.find<PaymentRepository>()),
         fenix: true);
   }
 }

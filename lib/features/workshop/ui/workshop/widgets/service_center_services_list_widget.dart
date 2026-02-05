@@ -37,6 +37,7 @@ class ServiceCenterServicesListWidget extends StatelessWidget {
                   return ServiceWidget(
                     tabs: services,
                     selectedFilter: selectedService.value,
+                    showAllOption: false,
                     onSelected: (index) {
                       print(index);
 
@@ -53,7 +54,7 @@ class ServiceCenterServicesListWidget extends StatelessWidget {
                     haveBorder: true,
                   );
                 })
-              : const Text('Aucun service disponible'),
+              : const Text('No services available'),
         ),
       ],
     );

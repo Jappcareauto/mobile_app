@@ -1,5 +1,7 @@
 //Don't translate me
+import 'package:jappcare/features/workshop/domain/entities/appointment_invoice.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/appointment_invoice_model.dart';
 import 'package:jappcare/features/workshop/infrastructure/models/get_all_appointments_model.dart';
 
 import '../../domain/repositories/garage_repository.dart';
@@ -46,12 +48,11 @@ class GarageRepositoryImpl implements GarageRepository {
   }
 
   @override
-  Future<Either<GarageException, List<Vehicle>>> getVehicleList({String? userId}) async {
+  Future<Either<GarageException, List<Vehicle>>> getVehicleList(
+      {String? userId}) async {
     try {
-      final response = await networkService
-          .post(GarageConstants.getVehicleListGetUri, body: {
-        if (userId != null) 'userId': userId,
-      });
+      final response =
+          await networkService.get(GarageConstants.getVehicleListGetUri);
       return Right((response['data'] as List)
           .map((e) => VehicleModel.fromJson(e).toEntity())
           .toList());
@@ -95,17 +96,34 @@ class GarageRepositoryImpl implements GarageRepository {
     String? locationType,
   }) async {
     try {
-      final response = await networkService
-          .post(GarageConstants.getAllAppointmentsUri, body: {
-        if (status != null) 'status': status,
-        if (vehicleId != null) 'vehicleId': vehicleId,
-        if (serviceCenterId != null) 'serviceCenterId': serviceCenterId,
-        if (userId != null)
-          'audit': {
-            'createdBy': userId,
-          },
-        if (locationType != null) 'locationType': locationType,
-      });
+      // Build query parameters from non-null filters
+      final queryParams = <String, String>{};
+      if (status != null && status.isNotEmpty) queryParams['status'] = status;
+      if (vehicleId != null && vehicleId.isNotEmpty) {
+        queryParams['vehicleId'] = vehicleId;
+      }
+      if (serviceCenterId != null && serviceCenterId.isNotEmpty) {
+        queryParams['serviceCenterId'] = serviceCenterId;
+      }
+      if (userId != null && userId.isNotEmpty) {
+        queryParams['createdBy'] = userId;
+      }
+      if (locationType != null && locationType.isNotEmpty) {
+        queryParams['locationType'] = locationType;
+      }
+
+      // Build the URL with query parameters
+      String url = GarageConstants.getAllAppointmentsUri;
+      if (queryParams.isNotEmpty) {
+        final queryString = queryParams.entries
+            .map((e) =>
+                '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+            .join('&');
+        url = '$url?$queryString';
+      }
+
+      final response = await networkService.get(url);
+      print('getAllAppointments response: $response');
       return Right((response["data"] as List)
           .map((e) => AppointmentModel.fromJson(e).toEntity())
           .toList());
@@ -143,6 +161,32 @@ class GarageRepositoryImpl implements GarageRepository {
   }
 
   @override
+  Future<Either<GarageException, AppointmentInvoiceEntity>>
+      getInvoiceByAppointmentId({required String appointmentId}) async {
+    try {
+      final response = await networkService.get(
+        '${GarageConstants.getInvoiceByAppointmentIdUri}/$appointmentId',
+      );
+      print('Invoice API response: $response');
+      final data = response['data'];
+      if (data == null) {
+        return Left(GarageException('No invoice data in response', 404));
+      }
+      print('Invoice data to parse: $data');
+      final invoiceModel = AppointmentInvoiceModel.fromJson(data);
+      print('Invoice model parsed, status: ${invoiceModel.status}');
+      return Right(invoiceModel.toEntity());
+    } on BaseException catch (e) {
+      print('BaseException in getInvoiceByAppointmentId: ${e.message}');
+      return Left(GarageException(e.message, e.statusCode));
+    } catch (e, stackTrace) {
+      print('Exception in getInvoiceByAppointmentId: $e');
+      print('Stack trace: $stackTrace');
+      return Left(GarageException(e.toString(), 500));
+    }
+  }
+
+  @override
   Future<Either<GarageException, GetGarageByOwnerId>> getGarageByOwnerId(
       String userId) async {
     try {
@@ -170,15 +214,16 @@ class GarageRepositoryImpl implements GarageRepository {
         final data = json.decode(response.body);
         if (data['results'] != null && data['results'].isNotEmpty) {
           return Right(data['results'][0]
-              ['formatted_address']); // Récupère l'adresse formatée
+              ['formatted_address']); // Gets the formatted address
         } else {
-          return const Right("Adresse non trouvée");
+          return const Right("Address not found");
         }
       } else {
-        throw Exception("Erreur API : ${response.statusCode}");
+        throw Exception("Failed to fetch address");
       }
     } catch (e) {
-      return Left(GarageException("Erreur : $e", 500));
+      return Left(
+          GarageException("Failed to fetch address. Please try again.", 500));
     }
   }
 

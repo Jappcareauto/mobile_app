@@ -70,11 +70,15 @@ class WorkshopDetailsController extends GetxController {
     super.onInit();
     globalWorkshopController = Get.find<GlobalcontrollerWorkshop>();
     arguments = globalWorkshopController.workshopData;
+    print('WorkshopDetailsController onInit - arguments: $arguments');
+    print('serviceCenterId: ${arguments['serviceCenterId']}');
     if (arguments['serviceCenterId'] != null) {
       vehicles.value = garageController.vehicleList
           .where((e) => e.serviceCenterId == arguments['serviceCenterId'])
           .toList();
       getAllServiceCenterServices(arguments['serviceCenterId']);
+    } else {
+      print('WARNING: serviceCenterId is null, button will be disabled');
     }
     Get.find<AppEventService>()
         .on<String>(AppConstants.garageIdEvent)
@@ -100,17 +104,22 @@ class WorkshopDetailsController extends GetxController {
   }
 
   Future<void> getAllServiceCenterServices(String serviceCenterId) async {
+    print(
+        'getAllServiceCenterServices called with serviceCenterId: $serviceCenterId');
     serviceCenterServicesLoading.value = true;
     final result = await _getServiceCenterServicesUseCase.call(
         GetServiceCenterServicesCommand(serviceCenterId: serviceCenterId));
     result.fold(
       (e) {
+        print('getAllServiceCenterServices error: ${e.message}');
         serviceCenterServicesLoading.value = false;
         if (Get.context != null) {
           Get.showCustomSnackBar(e.message);
         }
       },
       (response) {
+        print(
+            'getAllServiceCenterServices success: ${response.data.length} services');
         serviceCenterServicesLoading.value = false;
         serviceCenterServices.value = response.data;
       },

@@ -20,6 +20,9 @@ class ServiceItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Determine if image is a network URL or asset path
+    final isNetworkImage = image.startsWith('http://') || image.startsWith('https://');
+    
     return Material(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(12.0),
@@ -36,7 +39,8 @@ class ServiceItemWidget extends StatelessWidget {
             child: Column(
               children: [
                 ImageComponent(
-                  assetPath: image,
+                  imageUrl: isNetworkImage ? image : null,
+                  assetPath: isNetworkImage ? null : image,
                   height: 200,
                   width: Get.width,
                   borderRadius: 12,

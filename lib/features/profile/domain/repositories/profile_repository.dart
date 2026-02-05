@@ -16,13 +16,14 @@ abstract class ProfileRepository {
   Future<Either<ProfileException, bool>> updateProfileImage(
       String userId, File file);
 
-  Future<Either<ProfileException, UpdateUserDetails>> updateUserInfos(
-      {required String name,
-      required String email,
-      required String dateOfBirth,
-      LocationEntity? location,
-      PhoneCommand? phone,
-      });
+  Future<Either<ProfileException, UpdateUserDetails>> updateUserInfos({
+    required String name,
+    required String email,
+    required String dateOfBirth,
+    LocationEntity? location,
+    PhoneCommand? phone,
+    File? profileImage,
+  });
 
   Future<Either<ProfileException, String>> addPaymentMethod({
     required PaymentMethod type,

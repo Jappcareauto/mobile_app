@@ -17,7 +17,9 @@ class GetAllServicesCenterModel {
     return GetAllServicesCenterModel._(
       data: List<ServiceCenterModel>.from(
           json['data'].map((x) => ServiceCenterModel.fromJson(x))),
-      pagination: PaginationModel.fromJson(json['pagination']),
+      pagination: json['pagination'] != null
+          ? PaginationModel.fromJson(json['pagination'])
+          : PaginationModel.empty(),
     );
   }
 
@@ -100,8 +102,8 @@ class DataModel {
   final String id;
   final String? createdBy;
   final String? updatedBy;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   final String? imageId;
   final String? imageUrl;
   final bool? available;
@@ -115,14 +117,16 @@ class DataModel {
     required this.id,
     this.createdBy,
     this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
     this.imageId,
     this.imageUrl,
     this.available,
   });
 
   factory DataModel.fromJson(Map<String, dynamic> json) {
+    print('DataModel.fromJson - raw json: $json');
+    print('DataModel.fromJson - id field: ${json['id']}');
     return DataModel._(
       name: json['name'],
       ownerId: json['ownerId'],
@@ -135,7 +139,7 @@ class DataModel {
           ? LocationModel.fromJson(json['location'])
           : null, // Gestion de la valeur null pour location
       category: json['category'],
-      id: json['id'],
+      id: json['id'] ?? '',
       createdBy: json['createdBy'],
       updatedBy: json['updatedBy'],
       createdAt: json['createdAt'],

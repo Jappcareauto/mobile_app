@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:jappcare/features/workshop/domain/entities/appointment_invoice.entity.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 
 import '../core/exceptions/garage_exception.dart';
@@ -11,7 +12,8 @@ abstract class GarageRepository {
   Future<Either<GarageException, GetGarageByOwnerId>> getGarageByOwnerId(
       String userId);
 
-  Future<Either<GarageException, List<Vehicle>>> getVehicleList({String? userId});
+  Future<Either<GarageException, List<Vehicle>>> getVehicleList(
+      {String? userId});
 
   Future<Either<GarageException, List<Vehicle>>> getVehicleListByOwnerId(
       String ownerId);
@@ -34,16 +36,20 @@ abstract class GarageRepository {
 
   Future<Either<GarageException, String>> deleteVehicle(String id);
 
-  Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments(
-      {String? status,
+  Future<Either<GarageException, List<AppointmentEntity>>> getAllAppointments({
+    String? status,
     String? vehicleId,
     String? serviceCenterId,
     String? userId,
-    String? locationType,});
+    String? locationType,
+  });
 
   Future<Either<GarageException, AppointmentEntity>> getAppointmentByChatroomId(
       {required String chatroomId});
 
   Future<Either<GarageException, AppointmentEntity>> getAppointmentById(
       {required String appointmentId});
+
+  Future<Either<GarageException, AppointmentInvoiceEntity>>
+      getInvoiceByAppointmentId({required String appointmentId});
 }
