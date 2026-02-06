@@ -31,9 +31,9 @@ jobs:
 
       # Setup Flutter environment
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2 # Use the latest version of the action
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.0' # Use the latest stable version, or set a specific version
+            flutter-version: '3.38.9' # Newer stable Flutter version with Dart 3.8+
 
       # Get dependencies
       - name: Install Dependencies
