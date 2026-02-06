@@ -51,8 +51,7 @@ jobs:
       - name: Upload APK as a Release Artifact
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/flutter-apk/*.apk" # Corrected path to Flutter APKs
+          artifacts: "build/app/outputs/flutter-apk/*.apk"
           tag: v0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }} # Use the specified token for authentication
-          target_commitish: ${{ github.ref }}  # Tag the commit of the current branch
-          release_name: "Development Build v0.${{ github.run_number }}"
+          token: ${{ secrets.TOKEN }}      # Your GitHub Personal Access Token
+          name: "Development Build v0.${{ github.run_number }}"
