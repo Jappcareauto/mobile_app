@@ -44,6 +44,11 @@ class SettingsScreen extends GetView<SettingsController> {
                   icon: FluentIcons.alert_24_regular,
                   onTap: controller.goToNotifications,
                 ),
+                SettingItem(
+                  title: "Language",
+                  icon: FluentIcons.local_language_24_regular,
+                  onTap: controller.goToLanguage,
+                ),
                 // SettingItem(
                 //   title: "Help & Support",
                 //   icon: FluentIcons.person_support_24_regular,

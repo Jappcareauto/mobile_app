@@ -39,7 +39,7 @@ class SignUpWithEmailController extends GetxController {
       validators: {
         "name": Validators.requiredField,
         "email": Validators.requiredField,
-        "password": Validators.requiredField,
+        "password": Validators.password,
         "phoneNumber": Validators.requiredField,
         "dateOfBirth": Validators.requiredField,
       },
@@ -58,7 +58,7 @@ class SignUpWithEmailController extends GetxController {
     );
   }
 
-    Future<void> selectDate() async {
+  Future<void> selectDate() async {
     final DateTime? picked = await showDatePicker(
       context: Get.context!,
       initialDate: _selectedDate.value ?? DateTime.now(),

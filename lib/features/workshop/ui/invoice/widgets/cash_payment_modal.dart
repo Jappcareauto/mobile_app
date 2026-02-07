@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart'
     show CustomFormField;
@@ -159,6 +160,8 @@ class _CashPaymentModalState extends State<CashPaymentModal> {
         if (result.fullyPaid) {
           Get.showCustomSnackBar('Invoice fully paid!',
               title: 'Success', type: CustomSnackbarType.success);
+          // Navigate to home screen after successful full payment
+          Get.offAllNamed(AppRoutes.home);
         } else {
           Get.showCustomSnackBar(
               'Payment successful. Remaining: ${_formatCurrency(result.remainingBalance)}',

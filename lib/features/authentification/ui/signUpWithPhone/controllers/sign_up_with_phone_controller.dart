@@ -35,7 +35,7 @@ class SignUpWithPhoneController extends GetxController {
       validators: {
         "name": Validators.requiredField,
         "phone": Validators.requiredField,
-        "password": Validators.requiredField,
+        "password": Validators.password,
         "dateOfBirth": Validators.requiredField,
       },
       onSubmit: (data) => _registerUseCase.call(RegisterCommand(
@@ -56,7 +56,7 @@ class SignUpWithPhoneController extends GetxController {
     );
   }
 
-    Future<void> selectDate() async {
+  Future<void> selectDate() async {
     final DateTime? picked = await showDatePicker(
       context: Get.context!,
       initialDate: _selectedDate.value ?? DateTime.now(),

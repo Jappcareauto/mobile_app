@@ -23,29 +23,30 @@ import '../models/reset_password_model.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 
-void printWrapped(String text) {
-  // 800 is a good chunk size that should prevent truncation.
-  final pattern = RegExp('.{1,800}');
-  pattern.allMatches(text).forEach((match) => print(match.group(0)));
-}
-
 final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+
+// This is the Web Client ID from Google Cloud Console
+// The backend MUST use this same clientId to verify the ID token
+const String _serverClientId =
+    "500790497314-6gbpppq0khotsi1lo119jdhmle30u37s.apps.googleusercontent.com";
 
 Future<void> _initializeGoogleSignIn() async {
   try {
-    print('Initializing Google Sign-In');
-    await _googleSignIn.initialize(
-        serverClientId:
-            "303138649390-cmphfbl2cseqbpqmc28ie7a141hq8utg.apps.googleusercontent.com"
-        // "415070003598-pc9dsnpisbn9uvil4lpuh339bh6ran3p.apps.googleusercontent.com"
-        );
+    await _googleSignIn.initialize(serverClientId: _serverClientId);
   } catch (e) {
-    print('Failed to initialize Google Sign-In: $e');
+    // Google Sign-In initialization failed
   }
 }
 
 Future<GoogleSignInAccount?> signInWithGoogle() async {
   try {
+    // Disconnect first to clear any cached credentials and force fresh account picker
+    try {
+      await _googleSignIn.disconnect();
+    } catch (_) {
+      // Ignore disconnect errors
+    }
+
     // It now throws a `GoogleSignInException` if the user cancels.
     return await _googleSignIn.authenticate(
       scopeHint: ['email', 'profile'],
@@ -58,7 +59,6 @@ Future<GoogleSignInAccount?> signInWithGoogle() async {
     }
     rethrow;
   } catch (error) {
-    print('Unexpected Google Sign-In error: $error');
     rethrow;
   }
 }
@@ -212,9 +212,6 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   Future<Either<AuthentificationException, Login>> googleLogin(
       {required String bearerId}) async {
     try {
-      print('BearerId#');
-      printWrapped(bearerId);
-      print('End printing');
       final response = await networkService
           .post(AuthentificationConstants.googleLoginPostUri, headers: {
         'Authorization': 'BearerId $bearerId',
@@ -224,7 +221,8 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
                 ? 'Ios'
                 : 'Web',
       });
-      return Right(LoginModel.fromJson(response).toEntity());
+      final data = response['data'] as Map<String, dynamic>;
+      return Right(LoginModel.fromJson(data).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message, e.statusCode));
     }
@@ -236,10 +234,6 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       required String email,
       required String name}) async {
     try {
-      // debugPrint(bearerId);
-      print('BearerId#');
-      printWrapped(bearerId);
-      print('End printing');
       final response = await networkService
           .post(AuthentificationConstants.googleLoginPostUri2, headers: {
         'Authorization': 'BearerId# $bearerId',
@@ -304,10 +298,8 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
 
       if (idToken == null) throw Exception('Missing Google ID Token');
 
-      // return await googleLogin(bearerId: idToken);
       return await googleLogin(bearerId: idToken);
     } on BaseException catch (e) {
-
       return Left(AuthentificationException(e.message, e.statusCode));
     } catch (e) {
       return Left(AuthentificationException(e.toString(), 0));
