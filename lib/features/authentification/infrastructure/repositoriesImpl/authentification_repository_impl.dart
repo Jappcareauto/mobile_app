@@ -32,6 +32,7 @@ const String _serverClientId =
 
 Future<void> _initializeGoogleSignIn() async {
   try {
+    print("========================================================================");
     await _googleSignIn.initialize(serverClientId: _serverClientId);
   } catch (e) {
     // Google Sign-In initialization failed
