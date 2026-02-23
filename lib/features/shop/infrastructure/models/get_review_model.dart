@@ -1,7 +1,6 @@
 import '../../domain/entities/get_review.dart';
 
 class GetReviewModel {
-
   final String productId;
   final int rating;
   final String comment;
@@ -24,14 +23,24 @@ class GetReviewModel {
 
   factory GetReviewModel.fromJson(Map<String, dynamic> json) {
     return GetReviewModel._(
-      productId: json['productId'],
+      productId: json['productId'] is String
+          ? json['productId']
+          : json['productId']?.toString() ?? '',
       rating: json['rating'],
       comment: json['comment'],
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 

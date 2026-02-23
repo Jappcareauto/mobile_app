@@ -51,34 +51,50 @@ class BookingWidget extends GetView<BookAppointmentController> {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Obx(() => Expanded(
-                    child: TimeSlot(
-                      label: "Morning",
-                      timeRange: "8:00 AM - 12:00 AM",
-                      isSelected: controller.selectedTime.value == "MORNING",
-                      onTap: () => {
-                        controller.selectedTimeRange.value = "8am-12pm",
-                      controller.selectTime("MORNING")
-                      }, 
-                    ),
-                  )),
-              const SizedBox(width: 10),
-              Obx(() => Expanded(
-                    child: TimeSlot(
-                      label: "Afternoon",
-                      timeRange: "12:00 PM - 5:00 PM",
-                      isSelected: controller.selectedTime.value == "AFTERNOON",
-                      onTap: () => {
-                        controller.selectedTimeRange.value = "12pm-5pm",
-                        controller.selectTime("AFTERNOON")
-                      },
-                    ),
-                  )),
-            ],
-          ),
+          Obx(() {
+            final now = DateTime.now();
+            final selectedDate = controller.selectedDate.value;
+            final isToday = selectedDate.year == now.year &&
+                selectedDate.month == now.month &&
+                selectedDate.day == now.day;
+            final isMorningPast = isToday && now.hour >= 12;
+            final isAfternoonPast = isToday && now.hour >= 17;
+
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: TimeSlot(
+                    label: "Morning",
+                    timeRange: "8:00 AM - 12:00 PM",
+                    isSelected: controller.selectedTime.value == "MORNING",
+                    isDisabled: isMorningPast,
+                    onTap: isMorningPast
+                        ? null
+                        : () => {
+                              controller.selectedTimeRange.value = "8am-12pm",
+                              controller.selectTime("MORNING")
+                            },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TimeSlot(
+                    label: "Afternoon",
+                    timeRange: "12:00 PM - 5:00 PM",
+                    isSelected: controller.selectedTime.value == "AFTERNOON",
+                    isDisabled: isAfternoonPast,
+                    onTap: isAfternoonPast
+                        ? null
+                        : () => {
+                              controller.selectedTimeRange.value = "12pm-5pm",
+                              controller.selectTime("AFTERNOON")
+                            },
+                  ),
+                ),
+              ],
+            );
+          }),
           const SizedBox(height: 20),
           const Center(
             child: Text(

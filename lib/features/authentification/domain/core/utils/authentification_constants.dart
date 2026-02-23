@@ -13,4 +13,5 @@ class AuthentificationConstants {
   static const String resendOtpPostUri = '/auth/register/verify-resend';
   static const String forgotPasswordPostUri = '/auth/forgot-password';
   static const String resetPasswordPostUri = '/auth/reset-password';
+  static const String refreshTokenPostUri = '/auth/refresh-token';
 }

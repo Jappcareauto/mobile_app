@@ -1,7 +1,6 @@
 import '../../domain/entities/created_rome_chat.dart';
 
 class CreatedRomeChatModel {
-
   final String name;
   final List<String> participantIds;
   final String id;
@@ -25,10 +24,18 @@ class CreatedRomeChatModel {
       name: json['name'],
       participantIds: List<String>.from(json['participantIds']),
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 

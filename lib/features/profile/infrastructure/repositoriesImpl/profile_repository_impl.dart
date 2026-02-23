@@ -160,4 +160,20 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   //Add methods here
+
+  @override
+  Future<Either<ProfileException, bool>> deleteUser({
+    required String userId,
+  }) async {
+    try {
+      await networkService.delete(
+        '${ProfileConstants.deleteUserUri}/$userId',
+      );
+      return const Right(true);
+    } on BaseException catch (e) {
+      return Left(ProfileException(e.message, e.statusCode));
+    } catch (e) {
+      return Left(ProfileException(e.toString(), 500));
+    }
+  }
 }

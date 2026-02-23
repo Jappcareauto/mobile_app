@@ -8,7 +8,6 @@ class InvoiceCard extends StatelessWidget {
   final String name;
   final String email;
   final String service;
-  final String invoiceNumber;
   final String dateIssued;
   final String amount;
   final String status;
@@ -19,7 +18,6 @@ class InvoiceCard extends StatelessWidget {
     required this.name,
     required this.email,
     required this.service,
-    required this.invoiceNumber,
     required this.dateIssued,
     required this.amount,
     required this.status,
@@ -274,19 +272,6 @@ class InvoiceCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
-          ),
-          Column(
-            spacing: 5,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Invoice Number',
-                  style:
-                      TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-              Text(invoiceNumber,
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold)),
             ],
           ),
           Column(

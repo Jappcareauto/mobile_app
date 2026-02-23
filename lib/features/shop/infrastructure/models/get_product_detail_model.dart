@@ -1,7 +1,6 @@
 import '../../domain/entities/get_product_detail.dart';
 
 class GetProductDetailModel {
-
   final String name;
   final String description;
   final PriceModel price;
@@ -37,10 +36,18 @@ class GetProductDetailModel {
       active: json['active'],
       media: MediaModel.fromJson(json['media']),
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 
@@ -92,8 +99,8 @@ class GetProductDetailModel {
     );
   }
 }
-class PriceModel {
 
+class PriceModel {
   final int amount;
   final String currency;
 
@@ -130,8 +137,8 @@ class PriceModel {
     );
   }
 }
-class MediaModel {
 
+class MediaModel {
   final String type;
   final String source;
   final List<ItemsModel> items;
@@ -156,12 +163,21 @@ class MediaModel {
     return MediaModel._(
       type: json['type'],
       source: json['source'],
-      items: List<ItemsModel>.from(json['items'].map((x) => ItemsModel.fromJson(x))),
+      items: List<ItemsModel>.from(
+          json['items'].map((x) => ItemsModel.fromJson(x))),
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 
@@ -182,7 +198,8 @@ class MediaModel {
     return MediaModel._(
       type: entity.type,
       source: entity.source,
-      items: List<ItemsModel>.from(entity.items.map((x) => ItemsModel.fromEntity(x))),
+      items: List<ItemsModel>.from(
+          entity.items.map((x) => ItemsModel.fromEntity(x))),
       id: entity.id,
       createdBy: entity.createdBy,
       updatedBy: entity.updatedBy,
@@ -204,8 +221,8 @@ class MediaModel {
     );
   }
 }
-class ItemsModel {
 
+class ItemsModel {
   final String sourceUrl;
   final String capturedUrl;
   final String type;
@@ -237,14 +254,28 @@ class ItemsModel {
       sourceUrl: json['sourceUrl'],
       capturedUrl: json['capturedUrl'],
       type: json['type'],
-      mediaId: json['mediaId'],
-      fileId: json['fileId'],
-      fileUrl: json['fileUrl'],
+      mediaId: json['mediaId'] is String
+          ? json['mediaId']
+          : json['mediaId']?.toString() ?? '',
+      fileId: json['fileId'] is String
+          ? json['fileId']
+          : json['fileId']?.toString() ?? '',
+      fileUrl: json['fileUrl'] is String
+          ? json['fileUrl']
+          : json['fileUrl']?.toString() ?? '',
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 

@@ -25,15 +25,25 @@ class GetGarageByOwnerIdModel {
   factory GetGarageByOwnerIdModel.fromJson(Map<String, dynamic> json) {
     return GetGarageByOwnerIdModel._(
       name: json['name'],
-      ownerId: json['ownerId'],
+      ownerId: json['ownerId'] is String
+          ? json['ownerId']
+          : json['ownerId']?.toString() ?? '',
       location: json['location'] != null
           ? LocationModel.fromJson(json['location'])
           : null,
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString(),
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString(),
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 
@@ -62,15 +72,15 @@ class GetGarageByOwnerIdModel {
       ownerId: entity.ownerId,
       location: entity.location != null
           ? LocationModel(
-        latitude: entity.location!.latitude,
-        longitude: entity.location!.longitude,
-        description: entity.location!.description,
-        id: entity.location!.id,
-        createdBy: entity.location!.createdBy,
-        updatedBy: entity.location!.updatedBy,
-        createdAt: entity.location!.createdAt,
-        updatedAt: entity.location!.updatedAt,
-      )
+              latitude: entity.location!.latitude,
+              longitude: entity.location!.longitude,
+              description: entity.location!.description,
+              id: entity.location!.id,
+              createdBy: entity.location!.createdBy,
+              updatedBy: entity.location!.updatedBy,
+              createdAt: entity.location!.createdAt,
+              updatedAt: entity.location!.updatedAt,
+            )
           : null,
       id: entity.id,
       createdBy: entity.createdBy,
@@ -92,5 +102,4 @@ class GetGarageByOwnerIdModel {
       updatedAt: updatedAt,
     );
   }
-
 }

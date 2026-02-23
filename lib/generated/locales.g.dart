@@ -41,6 +41,21 @@ class LocaleKeys {
       'home_screen_welcome_to_home_screen';
   static const main_4k = 'main_4k';
   static const main_jappcare = 'main_jappcare';
+  static const password_reset_success = 'password_reset_success';
+  static const success = 'success';
+  static const vehicle_added_success = 'vehicle_added_success';
+  static const vehicle_added_title = 'vehicle_added_title';
+  static const no_vehicles_found = 'no_vehicles_found';
+  static const add_vehicle = 'add_vehicle';
+  static const select_vehicle = 'select_vehicle';
+  static const select_service = 'select_service';
+  static const morning = 'morning';
+  static const afternoon = 'afternoon';
+  static const morning_time_range = 'morning_time_range';
+  static const afternoon_time_range = 'afternoon_time_range';
+  static const please_fill_all_fields = 'please_fill_all_fields';
+  static const book_appointment = 'book_appointment';
+  static const continue_button = 'continue_button';
 }
 
 class Locales {
@@ -71,5 +86,21 @@ class Locales {
     'home_screen_welcome_to_home_screen': 'Welcome to Home Screen',
     'main_4k': '4K',
     'main_jappcare': 'Jappcare',
+    'password_reset_success':
+        'Votre mot de passe a été réinitialisé avec succès',
+    'success': 'Succès',
+    'vehicle_added_success': 'Votre véhicule a été ajouté avec succès',
+    'vehicle_added_title': 'Véhicule ajouté',
+    'no_vehicles_found': 'Aucun véhicule trouvé',
+    'add_vehicle': '+ Ajouter un véhicule',
+    'select_vehicle': 'Sélectionner un véhicule',
+    'select_service': 'Sélectionner un service',
+    'morning': 'Matin',
+    'afternoon': 'Après-midi',
+    'morning_time_range': '8:00 AM - 12:00 PM',
+    'afternoon_time_range': '12:00 PM - 5:00 PM',
+    'please_fill_all_fields': 'Veuillez remplir tous les champs',
+    'book_appointment': 'Réserver un rendez-vous',
+    'continue_button': 'Continuer',
   };
 }

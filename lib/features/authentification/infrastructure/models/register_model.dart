@@ -27,10 +27,18 @@ class RegisterModel {
       name: json['name'],
       email: json['email'],
       verified: json['verified'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString(),
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString(),
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 

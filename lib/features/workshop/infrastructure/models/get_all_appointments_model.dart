@@ -93,12 +93,20 @@ class AppointmentModel {
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
     return AppointmentModel._(
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString(),
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString(),
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString(),
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString(),
       status: json['status'],
-      note: json['note'],
+      note: json['note'] is String ? json['note'] : json['note']?.toString(),
       timeOfDay: json['timeOfDay'],
       date: json['date'],
       locationType: json['locationType'],
@@ -124,8 +132,12 @@ class AppointmentModel {
       //     ? ChatRoomModel.fromJson(json['chatRoom'])
       //     : null,
       chatRoom: null,
-      diagnosesToMake: json['diagnosesToMake'],
-      diagnosesMade: json['diagnosesMade'],
+      diagnosesToMake: json['diagnosesToMake'] is String
+          ? json['diagnosesToMake']
+          : json['diagnosesToMake']?.toString(),
+      diagnosesMade: json['diagnosesMade'] is String
+          ? json['diagnosesMade']
+          : json['diagnosesMade']?.toString(),
       invoice: json['invoice'] != null
           ? AppointmentInvoiceModel.fromJson(json['invoice'])
           : null,

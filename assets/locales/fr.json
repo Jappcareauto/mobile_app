@@ -20,5 +20,20 @@
   "home_screen_home_screen": "Home Screen",
   "home_screen_welcome_to_home_screen": "Welcome to Home Screen",
   "main_4k": "4K",
-  "main_jappcare": "Jappcare"
+  "main_jappcare": "Jappcare",
+  "password_reset_success": "Votre mot de passe a été réinitialisé avec succès",
+  "success": "Succès",
+  "vehicle_added_success": "Votre véhicule a été ajouté avec succès",
+  "vehicle_added_title": "Véhicule ajouté",
+  "no_vehicles_found": "Aucun véhicule trouvé",
+  "add_vehicle": "+ Ajouter un véhicule",
+  "select_vehicle": "Sélectionner un véhicule",
+  "select_service": "Sélectionner un service",
+  "morning": "Matin",
+  "afternoon": "Après-midi",
+  "morning_time_range": "8:00 AM - 12:00 PM",
+  "afternoon_time_range": "12:00 PM - 5:00 PM",
+  "please_fill_all_fields": "Veuillez remplir tous les champs",
+  "book_appointment": "Réserver un rendez-vous",
+  "continue_button": "Continuer"
 }

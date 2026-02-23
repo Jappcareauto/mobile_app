@@ -75,11 +75,15 @@ class Summary extends GetView<ConfirmAppointmentController> {
                     const SizedBox(
                       width: 10,
                     ),
-                    Text(
-                        Get.find<ProfileController>().userInfos?.name ??
-                            "Unknown",
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600))
+                    Expanded(
+                      child: Text(
+                          Get.find<ProfileController>().userInfos?.name ??
+                              "Unknown",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600)),
+                    )
                   ],
                 ),
               ],
@@ -149,7 +153,8 @@ class Summary extends GetView<ConfirmAppointmentController> {
                             ),
                             Text(argument['selectedTimeRange'],
                                 style: const TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.normal)),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal)),
                           ],
                         )
                       ]),

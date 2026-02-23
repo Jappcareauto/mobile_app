@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_file_store/dio_cache_interceptor_file_store.dart';
-import 'package:get/get.dart' hide FormData, MultipartFile;
+import 'package:get/get.dart' hide FormData, MultipartFile, Response;
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:path_provider/path_provider.dart';
 import '../../navigation/routes/app_routes.dart';
@@ -20,6 +20,7 @@ class DioNetworkService extends NetworkService {
   // final Talker _talker = Talker(); // Uncomment for debugging
   late CacheOptions _cacheOptions;
   late CacheStore _cacheStore;
+  bool _isRefreshing = false;
 
   DioNetworkService();
 
@@ -78,20 +79,119 @@ class DioNetworkService extends NetworkService {
             }
           }
 
-          // If the token is invalid, redirect to the login page
+          // If the token is invalid, try to refresh it
           if (error.response?.statusCode == 401) {
-            Get.showLoader();
-            await _localStorage.delete(AppConstants.tokenKey);
-            await _localStorage.delete(AppConstants.refreshTokenKey);
-            Get.closeLoader();
-            await Get.offAllNamed(AppRoutes.home);
-            Get.showCustomSnackBar("Please log in again");
+            // Try to refresh the token
+            final refreshed = await _refreshToken();
+            if (refreshed) {
+              // Retry the original request with new token
+              try {
+                final retryResponse = await _retryRequest(error.requestOptions);
+                return handler.resolve(retryResponse);
+              } catch (retryError) {
+                // If retry fails, logout the user
+                await _logoutUser();
+                return handler.next(error);
+              }
+            } else {
+              // Token refresh failed, logout the user silently
+              await _logoutUser();
+            }
           }
           // Passer l'erreur au prochain intercepteur si aucune réponse de cache n'est disponible
           return handler.next(error);
         },
       ),
     );
+  }
+
+  /// Refreshes the authentication token using the refresh token
+  Future<bool> _refreshToken() async {
+    if (_isRefreshing) {
+      // Wait for the current refresh to complete
+      return Future.delayed(
+          const Duration(milliseconds: 500), () => _refreshToken());
+    }
+
+    _isRefreshing = true;
+
+    try {
+      final refreshToken =
+          await _localStorage.read(AppConstants.refreshTokenKey);
+
+      if (refreshToken == null || refreshToken.isEmpty) {
+        _isRefreshing = false;
+        return false;
+      }
+
+      // Create a separate Dio instance to avoid interceptor loops
+      final refreshDio = Dio();
+      refreshDio.options.baseUrl = AppConstants.baseUrl;
+      refreshDio.options.headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      };
+
+      final response = await refreshDio.post(
+        '/auth/refresh-token',
+        data: {'refreshToken': refreshToken},
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = response.data;
+        final newAccessToken =
+            data['data']?['accessToken'] ?? data['accessToken'];
+        final newRefreshToken =
+            data['data']?['refreshToken'] ?? data['refreshToken'];
+
+        if (newAccessToken != null) {
+          await _localStorage.write(AppConstants.tokenKey, newAccessToken);
+          if (newRefreshToken != null) {
+            await _localStorage.write(
+                AppConstants.refreshTokenKey, newRefreshToken);
+          }
+          _isRefreshing = false;
+          return true;
+        }
+      }
+
+      _isRefreshing = false;
+      return false;
+    } catch (e) {
+      print('Token refresh failed: $e');
+      _isRefreshing = false;
+      return false;
+    }
+  }
+
+  /// Retries a failed request with the new token
+  Future<Response<dynamic>> _retryRequest(RequestOptions requestOptions) async {
+    final token = await _localStorage.read(AppConstants.tokenKey) ?? '';
+
+    final options = Options(
+      method: requestOptions.method,
+      headers: {
+        ...requestOptions.headers,
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    return _dio.request(
+      requestOptions.path,
+      data: requestOptions.data,
+      queryParameters: requestOptions.queryParameters,
+      options: options,
+    );
+  }
+
+  /// Logs out the user silently without showing session expired message
+  Future<void> _logoutUser() async {
+    Get.showLoader();
+    await _localStorage.delete(AppConstants.tokenKey);
+    await _localStorage.delete(AppConstants.refreshTokenKey);
+    Get.closeLoader();
+    await Get.offAllNamed(AppRoutes.home);
+    // Don't show "session expired" message - user should only see logout when they manually logout
   }
 
   /// Vérifie si l'erreur est liée à un problème de réseau
@@ -124,9 +224,12 @@ class DioNetworkService extends NetworkService {
       if (error.response != null && error.response?.data != null) {
         final data = error.response?.data;
         if (data is Map<String, dynamic> &&
-            (data.containsKey('message') || data.containsKey('details'))) {
-          // Get the API error message but clean it up for user display
-          final apiMessage = data['details'] ?? data['message'];
+            (data.containsKey('message') ||
+                data.containsKey('details') ||
+                data.containsKey('error'))) {
+          // Get the API error message - check 'error' field first (backend format), then 'details', then 'message'
+          final apiMessage =
+              data['error'] ?? data['details'] ?? data['message'];
           errorMessage = _getUserFriendlyErrorMessage(apiMessage, statusCode);
         } else if (data is String && data.isNotEmpty) {
           errorMessage = _getUserFriendlyErrorMessage(data, statusCode);

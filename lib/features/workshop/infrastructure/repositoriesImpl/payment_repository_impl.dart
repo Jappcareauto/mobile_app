@@ -194,4 +194,42 @@ class PaymentRepositoryImpl implements PaymentRepository {
       return Left(PaymentException(e.toString(), 500));
     }
   }
+
+  @override
+  Future<Either<PaymentException, List<PaymentEntity>>>
+      getPaymentsByAppointmentId({
+    required String appointmentId,
+  }) async {
+    try {
+      final headers = await _getHeaders();
+      headers['Content-Type'] = 'application/json';
+
+      final response = await _dio.get(
+        '${PaymentConstants.getPaymentsByAppointmentUri}/$appointmentId',
+        options: Options(headers: headers),
+      );
+
+      final data = response.data;
+      final List<dynamic> paymentsJson = data['data'] ?? [];
+      final payments = paymentsJson
+          .map((json) => PaymentModel.fromJson(json).toEntity())
+          .toList();
+
+      return Right(payments);
+    } on DioException catch (e) {
+      String errorMessage = 'Failed to get payments';
+      int statusCode = e.response?.statusCode ?? 500;
+
+      if (e.response?.data != null) {
+        final data = e.response?.data;
+        if (data is Map<String, dynamic>) {
+          errorMessage = data['details'] ?? data['message'] ?? errorMessage;
+        }
+      }
+
+      return Left(PaymentException(errorMessage, statusCode));
+    } catch (e) {
+      return Left(PaymentException(e.toString(), 500));
+    }
+  }
 }

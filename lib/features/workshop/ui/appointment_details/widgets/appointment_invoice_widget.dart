@@ -8,12 +8,14 @@ class AppointmentInvoiceWidget extends StatefulWidget {
   final AppointmentInvoiceEntity invoice;
   final String? serviceName;
   final VoidCallback? onPayInvoice;
+  final VoidCallback? onViewAllPayments;
 
   const AppointmentInvoiceWidget({
     super.key,
     required this.invoice,
     this.serviceName,
     this.onPayInvoice,
+    this.onViewAllPayments,
   });
 
   @override
@@ -84,6 +86,33 @@ class _AppointmentInvoiceWidgetState extends State<AppointmentInvoiceWidget> {
                   color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ],
+
+        // View All Payments Button
+        if (widget.onViewAllPayments != null) ...[
+          const SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            height: 44,
+            child: OutlinedButton.icon(
+              onPressed: widget.onViewAllPayments,
+              icon: const Icon(Icons.receipt_long, size: 18),
+              label: const Text(
+                'View All Payments',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.orange,
+                side: BorderSide(color: AppColors.orange),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
             ),

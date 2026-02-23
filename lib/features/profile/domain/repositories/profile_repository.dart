@@ -29,4 +29,8 @@ abstract class ProfileRepository {
     required PaymentMethod type,
     PhoneCommand? phone,
   });
+
+  Future<Either<ProfileException, bool>> deleteUser({
+    required String userId,
+  });
 }

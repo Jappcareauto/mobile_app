@@ -60,10 +60,15 @@ class ResumeAppointmentWidget extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Text(
-                      Get.find<ProfileController>().userInfos?.name ?? "Unknow",
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold))
+                  Expanded(
+                    child: Text(
+                        Get.find<ProfileController>().userInfos?.name ??
+                            "Unknown",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                  )
                 ],
               ),
               const SizedBox(

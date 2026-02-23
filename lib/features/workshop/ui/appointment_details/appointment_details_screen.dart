@@ -329,6 +329,8 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                                             'PARTIALLY_PAID')
                                     ? () => controller.goToInvoice()
                                     : null,
+                            onViewAllPayments: () =>
+                                controller.viewAllPayments(),
                           ),
                         ],
                         const SizedBox(

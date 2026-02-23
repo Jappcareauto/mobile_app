@@ -57,6 +57,11 @@ class ResetPasswordController extends GetxController {
         _localStorageService.write(AppConstants.tokenKey, response.accessToken);
         _localStorageService.write(
             AppConstants.refreshTokenKey, response.refreshToken);
+        Get.showCustomSnackBar(
+          "Your password has been reset successfully",
+          title: "Success",
+          type: CustomSnackbarType.success,
+        );
         _appNavigation.toNamed(AppRoutes.home);
       },
     );
