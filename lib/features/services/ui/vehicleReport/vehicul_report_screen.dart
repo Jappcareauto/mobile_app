@@ -5,6 +5,7 @@ import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/services/ui/vehicleReport/widgets/card_details_widget.dart';
 import 'package:jappcare/features/shop/ui/shop/widgets/tabs_list_widgets.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/vehicle_report_controller.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,7 @@ class VehicleReportScreen extends GetView<VehicleReportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'Vehicle Report'),
+        appBar: CustomAppBar(title: LocaleKeys.vehicle_report.tr),
         body: SingleChildScrollView(
             child: Container(
           margin: const EdgeInsets.all(10),
@@ -40,7 +41,7 @@ class VehicleReportScreen extends GetView<VehicleReportController> {
                 height: 10,
               ),
               CustomButton(
-                  text: 'Download Report',
+                  text: LocaleKeys.download_report.tr,
                   strech: false,
                   width: 200,
                   borderRadius: BorderRadius.circular(30),

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../core/ui/widgets/custom_app_bar.dart';
 import '../../../../core/ui/widgets/custom_button.dart';
 import '../../../../core/ui/widgets/custom_date_form_filed.dart';
@@ -17,7 +18,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Register',
+        title: LocaleKeys.register.tr,
         appBarcolor: Get.theme.scaffoldBackgroundColor,
       ),
       body: MixinBuilder<SignUpWithEmailController>(
@@ -34,8 +35,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 16,
                       children: [
-                        const Text(
-                            'Hey there! Sign up with your email to get started'),
+                        Text(LocaleKeys.signup_subtitle.tr),
                         Column(
                           spacing: 24,
                           children: [
@@ -43,9 +43,9 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                               spacing: 12,
                               children: [
                                 CustomFormField(
-                                  label: 'Name',
+                                  label: LocaleKeys.name.tr,
                                   hintStyleColor: Colors.grey,
-                                  hintText: 'Enter your name',
+                                  hintText: LocaleKeys.enter_your_name.tr,
                                   controller: controller
                                       .registerFormHelper.controllers['name'],
                                   validator: controller
@@ -53,8 +53,8 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                   keyboardType: TextInputType.text,
                                 ),
                                 CustomFormField(
-                                  label: 'Email',
-                                  hintText: 'Enter your email',
+                                  label: LocaleKeys.email.tr,
+                                  hintText: LocaleKeys.enter_your_email.tr,
                                   hintStyleColor: Colors.grey,
                                   controller: controller
                                       .registerFormHelper.controllers['email'],
@@ -63,9 +63,9 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                   keyboardType: TextInputType.emailAddress,
                                 ),
                                 CustomFormField(
-                                  label: 'Password',
+                                  label: LocaleKeys.password.tr,
                                   isPassword: true,
-                                  hintText: 'Enter your password',
+                                  hintText: LocaleKeys.enter_your_password.tr,
                                   hintStyleColor: Colors.grey,
                                   controller: controller.registerFormHelper
                                       .controllers['password'],
@@ -74,7 +74,7 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                   obscureText: true,
                                 ),
                                 CustomDateFormField(
-                                  label: 'Date of Birth',
+                                  label: LocaleKeys.date_of_birth.tr,
                                   datehintstyle: Colors.grey,
                                   controller: controller.registerFormHelper
                                       .controllers['dateOfBirth'],
@@ -96,7 +96,6 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                       child: Container(
                                         width: 20,
                                         height: 20,
-                                        // Outer circle: orange border, white background
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           border: Border.all(
@@ -105,7 +104,6 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                           ),
                                           color: Colors.white,
                                         ),
-                                        // If checked, show a smaller orange dot in the center
                                         child: controller.acceptedTerms.value
                                             ? Center(
                                                 child: Container(
@@ -126,11 +124,12 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                         text: TextSpan(
                                           style: Get.textTheme.bodySmall,
                                           children: [
-                                            const TextSpan(
-                                                text:
-                                                    'By continuing, you agree to our '),
                                             TextSpan(
-                                              text: 'Terms & Conditions',
+                                                text: LocaleKeys
+                                                    .terms_agreement.tr),
+                                            TextSpan(
+                                              text: LocaleKeys
+                                                  .terms_and_conditions.tr,
                                               style: Get.textTheme.bodySmall
                                                   ?.copyWith(
                                                 color: Get.theme.primaryColor,
@@ -149,20 +148,19 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                 )
                               ],
                             ),
-                            // const SizedBox(height: 0.5),
                             Column(
                               spacing: 10,
                               children: [
                                 CustomButton(
                                   isLoading:
                                       controller.registerFormHelper.isLoading,
-                                  text: 'Register',
+                                  text: LocaleKeys.register.tr,
                                   onPressed: !controller.acceptedTerms.value
                                       ? null
                                       : controller.registerFormHelper.submit,
                                 ),
                                 CustomButton(
-                                  text: 'Continue',
+                                  text: LocaleKeys.continue_button.tr,
                                   haveBorder: true,
                                   prefixIcon: const ImageComponent(
                                       assetPath: AppImages.google, width: 25),
@@ -177,10 +175,11 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                   text: TextSpan(
                                     style: Get.textTheme.bodySmall,
                                     children: [
-                                      const TextSpan(
-                                          text: 'Already have an account? '),
                                       TextSpan(
-                                        text: 'Sign In instead',
+                                          text: LocaleKeys
+                                              .already_have_account.tr),
+                                      TextSpan(
+                                        text: LocaleKeys.sign_in_instead.tr,
                                         style:
                                             Get.textTheme.bodySmall?.copyWith(
                                           color: Get.theme.primaryColor,

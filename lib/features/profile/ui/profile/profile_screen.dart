@@ -4,6 +4,7 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/profile/ui/profile/widgets/avatar_widget.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/profile_controller.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,7 @@ class ProfileScreen extends GetView<ProfileController> {
     return Scaffold(
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
-        title: "Profile",
+        title: LocaleKeys.profile.tr,
         actions: [
           IconButton(
               onPressed: controller.goToSettings,
@@ -43,16 +44,16 @@ class ProfileScreen extends GetView<ProfileController> {
                                   ? const SizedBox()
                                   : Text(
                                       controller.userInfos?.name ??
-                                          "Unknown name",
+                                          LocaleKeys.unknown_name.tr,
                                       style: Get.textTheme.headlineLarge
                                           ?.copyWith(
-                                              fontWeight: FontWeight.bold, fontSize: 22),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 22),
                                     ),
                               const SizedBox(height: 8),
                               SizedBox(
-                                // width: 110,
                                 child: CustomButton(
-                                    text: "Manage",
+                                    text: LocaleKeys.manage.tr,
                                     strech: false,
                                     width: 110,
                                     onPressed: controller.goToSettings,
@@ -78,7 +79,7 @@ class ProfileScreen extends GetView<ProfileController> {
                       "pageController": controller.pageController,
                       "currentPage": controller.currentPage,
                       "haveAddVehicule": true,
-                      "title": "My Garage",
+                      "title": LocaleKeys.my_garage.tr,
                       "haveTitlePadding": false,
                       "onTapeAddVehicle": () {
                         print("clique");

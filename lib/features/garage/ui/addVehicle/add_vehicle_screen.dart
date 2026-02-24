@@ -3,6 +3,7 @@ import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/add_vehicle_controller.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: "Add Vehicle",
+          title: LocaleKeys.add_vehicle_title.tr,
           appBarcolor: Get.theme.scaffoldBackgroundColor,
         ),
         body: MixinBuilder<AddVehicleController>(
@@ -38,7 +39,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                               CustomFormField(
                                 controller: controller
                                     .addVehicleFormHelper.controllers['vin'],
-                                label: "VIN/Chassi Number",
+                                label: LocaleKeys.vin_label.tr,
                                 hintText: "Ex. 2GTEC13TX51385216",
                                 forceUpperCase: true,
                                 validator: controller
@@ -60,7 +61,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                               CustomFormField(
                                 controller: controller.addVehicleFormHelper
                                     .controllers['registration'],
-                                label: "License Plate Number",
+                                label: LocaleKeys.licence_plate.tr,
                                 hintText: "Ex. NW 905 AG",
                                 forceUpperCase: true,
                                 validator: controller.addVehicleFormHelper
@@ -75,7 +76,7 @@ class AddVehicleScreen extends GetView<AddVehicleController> {
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: CustomButton(
-                      text: "Add Vehicle",
+                      text: LocaleKeys.add_vehicle_title.tr,
                       onPressed: () => {
                         controller.addVehicleFormHelper.submit()
                         // onpenModalPaymentMethod(

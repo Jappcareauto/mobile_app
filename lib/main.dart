@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:jappcare/core/services/localServices/locale_service.dart';
 import 'package:jappcare/core/themes/theme_controller.dart';
 import 'package:jappcare/core/themes/theme_dark.dart';
 import 'package:jappcare/core/themes/theme_light.dart';
@@ -10,6 +12,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:jappcare/core/navigation/routes/app_pages.dart';
 import 'core/navigation/routes/app_routes.dart';
 import 'core/dependences/app_dependences.dart';
+import 'core/utils/app_constants.dart';
 
 void main() async {
   await AppDependency.init();
@@ -24,6 +27,14 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.put(ThemeController());
+
+    // Resolve saved locale — fall back to French (primary audience)
+    final String? savedLanguage =
+        GetStorage().read(AppConstants.languageKey) as String?;
+    final Locale initialLocale = savedLanguage != null
+        ? languageNameToLocale(savedLanguage)
+        : const Locale('fr');
+
     return ThemeProvider(
         initTheme: AppThemeLight.theme,
         builder: (context, myTheme) {
@@ -37,17 +48,18 @@ class Main extends StatelessWidget {
                       const Breakpoint(
                           start: 1921,
                           end: double.infinity,
-                          name: "4K"), //Don't translate line
+                          name: '4K'), //Don't translate line
                     ],
                   ),
               debugShowCheckedModeBanner: false,
-              title: "Jappcare",
+              title: 'Jappcare',
               initialRoute: initialRoute,
               getPages: Get.find<AppPages>().getAllPages(),
               theme: myTheme,
               darkTheme: AppThemeDark.theme,
               themeMode: themeController.currentTheme,
-              locale: const Locale('fr'), //Don't translate line
+              locale: initialLocale,
+              fallbackLocale: const Locale('fr'), //Don't translate line
               translationsKeys: AppTranslation.translations);
         });
   }

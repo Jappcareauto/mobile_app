@@ -9,6 +9,7 @@ import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/profile/ui/profile/widgets/avatar_widget.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar_with_back_and_avatar.dart';
 import 'package:jappcare/features/workshop/domain/entities/place_prediction.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/edit_profile_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -20,7 +21,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBarWithBackAndAvatar(title: "Edit Profile"),
+      appBar: CustomAppBarWithBackAndAvatar(title: LocaleKeys.edit_profile.tr),
       // CustomAppBar(
       //   title: "Edit Profile",
       //   canBack: true,
@@ -49,7 +50,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                             CustomFormField(
                               controller: controller
                                   .editProfileFormHelper.controllers['name'],
-                              label: "Name",
+                              label: LocaleKeys.name.tr,
                               hintText: "Ex. John",
                               readOnly: controller
                                   .editProfileFormHelper.isLoading.value,
@@ -59,7 +60,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                             CustomFormField(
                               controller: controller
                                   .editProfileFormHelper.controllers['email'],
-                              label: "Email",
+                              label: LocaleKeys.email.tr,
                               hintText: "Ex. jOq5i@example.com",
                               keyboardType: TextInputType.emailAddress,
                               readOnly: true,
@@ -67,7 +68,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                   .editProfileFormHelper.validators['email'],
                             ),
                             CustomDateFormField(
-                              label: 'Date of Birth',
+                              label: LocaleKeys.date_of_birth.tr,
                               datehintstyle: Colors.grey,
                               controller: controller.editProfileFormHelper
                                   .controllers['dateOfBirth'],
@@ -84,7 +85,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                               spacing: 8,
                               children: [
                                 Text(
-                                  "Phone Number",
+                                  LocaleKeys.phone_number.tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
@@ -156,7 +157,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                 return CustomFormField(
                                   controller: controller,
                                   focusNode: focusNode,
-                                  label: "Home Address",
+                                  label: LocaleKeys.home_address.tr,
                                   hintText: "Ex. 123 Main St, Anytown, USA",
                                   keyboardType: TextInputType.streetAddress,
                                 );
@@ -196,7 +197,8 @@ class EditProfileScreen extends GetView<EditProfileController> {
                                         .controllers['address']!
                                         .text = location.name;
                                   }
-                                  Get.showCustomSnackBar("Location selected",
+                                  Get.showCustomSnackBar(
+                                      LocaleKeys.location_selected.tr,
                                       type: CustomSnackbarType.success,
                                       duration:
                                           const Duration(milliseconds: 1250));
@@ -235,7 +237,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: CustomButton(
-                    text: "Save",
+                    text: LocaleKeys.save.tr,
                     onPressed: () {
                       // print(controller.editProfileFormHelper.formKey.currentState);
                       controller.editProfileFormHelper.submit();

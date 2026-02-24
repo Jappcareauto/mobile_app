@@ -3,6 +3,7 @@ import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/generated/locales.g.dart';
 // Other payment methods commented out - using cash only for MVP
 // import 'package:jappcare/features/chat/ui/chat/widgets/payment_method_widget.dart';
 import 'package:jappcare/features/workshop/ui/invoice/widgets/cash_payment_modal.dart';
@@ -20,7 +21,7 @@ class InvoiceScreen extends GetView<InvoiceController> {
       final invoiceNumber = controller.invoice.value?.number ?? '...';
       return Scaffold(
         appBar: CustomAppBar(
-          title: 'Invoice #$invoiceNumber',
+          title: '${LocaleKeys.invoice.tr} #$invoiceNumber',
           appBarcolor: Get.theme.scaffoldBackgroundColor,
         ),
         body: _buildBody(),
@@ -43,11 +44,11 @@ class InvoiceScreen extends GetView<InvoiceController> {
           children: [
             const Icon(Icons.receipt_long, size: 64, color: Colors.grey),
             const SizedBox(height: 16),
-            const Text('No invoice data available'),
+            Text(LocaleKeys.no_invoice_data.tr),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => controller.goBack(),
-              child: const Text('Go Back'),
+              child: Text(LocaleKeys.go_back.tr),
             ),
           ],
         ),
@@ -78,12 +79,12 @@ class InvoiceScreen extends GetView<InvoiceController> {
               // Invoiced To Section
               Column(
                 children: [
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'Invoiced to',
-                        style: TextStyle(
+                        LocaleKeys.invoiced_to.tr,
+                        style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.w400),
                       )
                     ],
@@ -172,7 +173,7 @@ class InvoiceScreen extends GetView<InvoiceController> {
                     child: CustomButton(
                       strech: false,
                       haveBorder: true,
-                      text: 'Review',
+                      text: LocaleKeys.review.tr,
                       onPressed: () {
                         controller.showReviewModal();
                       },
@@ -184,7 +185,7 @@ class InvoiceScreen extends GetView<InvoiceController> {
                     Expanded(
                       child: CustomButton(
                         strech: false,
-                        text: 'Pay with Cash',
+                        text: LocaleKeys.pay_with_cash.tr,
                         onPressed: () {
                           openCashPaymentModal(
                             invoiceId: invoice.id,
@@ -234,28 +235,28 @@ class InvoiceScreen extends GetView<InvoiceController> {
       case 'PAID':
         statusColor = Colors.green;
         statusIcon = Icons.check_circle;
-        statusText = 'Fully Paid';
+        statusText = LocaleKeys.fully_paid.tr;
         break;
       case 'PARTIALLY_PAID':
         statusColor = Colors.orange;
         statusIcon = Icons.timelapse;
-        statusText = 'Partially Paid';
+        statusText = LocaleKeys.partial_payment.tr;
         break;
       case 'OVERDUE':
         statusColor = Colors.red;
         statusIcon = Icons.warning;
-        statusText = 'Overdue';
+        statusText = LocaleKeys.overdue.tr;
         break;
       case 'CANCELLED':
       case 'DECLINED':
         statusColor = Colors.grey;
         statusIcon = Icons.cancel;
-        statusText = 'Cancelled';
+        statusText = LocaleKeys.cancelled_status.tr;
         break;
       default:
         statusColor = Colors.red;
         statusIcon = Icons.pending;
-        statusText = 'Unpaid';
+        statusText = LocaleKeys.unpaid.tr;
     }
 
     return Container(
@@ -289,9 +290,9 @@ class InvoiceScreen extends GetView<InvoiceController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Total Amount:',
-                style: TextStyle(fontSize: 14),
+              Text(
+                LocaleKeys.total_amount_label.tr,
+                style: const TextStyle(fontSize: 14),
               ),
               Text(
                 controller.formatAmount(totalAmount),
@@ -306,9 +307,9 @@ class InvoiceScreen extends GetView<InvoiceController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Amount Paid:',
-                style: TextStyle(fontSize: 14),
+              Text(
+                LocaleKeys.amount_paid.tr,
+                style: const TextStyle(fontSize: 14),
               ),
               Text(
                 controller.formatAmount(totalPaid),
@@ -325,7 +326,7 @@ class InvoiceScreen extends GetView<InvoiceController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Remaining:',
+                LocaleKeys.remaining_label.tr,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight:

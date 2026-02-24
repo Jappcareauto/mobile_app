@@ -15,6 +15,7 @@ import 'package:jappcare/features/workshop/ui/book_appointment/widgets/booking_w
 // import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 // import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
+import 'package:jappcare/generated/locales.g.dart';
 // import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
@@ -29,7 +30,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: 'Book Appointment',
+          title: LocaleKeys.book_appointment.tr,
           appBarcolor: Get.theme.scaffoldBackgroundColor,
           actions: [
             if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
@@ -68,7 +69,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Select Vehicle",
+                                  LocaleKeys.select_vehicle.tr,
                                   style: Get.textTheme.bodyLarge?.copyWith(
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -106,7 +107,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                           ),
                                           const SizedBox(height: 12),
                                           Text(
-                                            'No vehicles found',
+                                            LocaleKeys.no_vehicles_found.tr,
                                             style: TextStyle(
                                               color: AppColors.greyText,
                                               fontSize: 14,
@@ -114,7 +115,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                           ),
                                           const SizedBox(height: 8),
                                           Text(
-                                            '+ Add Vehicle',
+                                            LocaleKeys.add_vehicle.tr,
                                             style: TextStyle(
                                               color: Get.theme.primaryColor,
                                               fontSize: 16,
@@ -140,7 +141,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                             "pageController": controller.pageController,
                             "currentPage": controller.currentPage,
                             "haveAddVehicule": true,
-                            "title": "Select Vehicle",
+                            "title": LocaleKeys.select_vehicle.tr,
                             "viewCarDetailsOnCardPress": false,
                             "onSelected": (selectedCar) {
                               controller.vehicleId.value = selectedCar.id;
@@ -170,7 +171,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Select Service",
+                                LocaleKeys.select_service.tr,
                                 style: Get.textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -229,7 +230,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                           },
                                         );
                                       })
-                                    : const Text('No services available'),
+                                    : Text(LocaleKeys.no_services_available.tr),
                               ),
                             ]),
                       ),
@@ -293,7 +294,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                               AppColors.greyText.withValues(alpha: .1),
                           filColor: AppColors.white,
                           maxLine: 7,
-                          hintText: 'Add a Note (Optional)',
+                          hintText: LocaleKeys.add_note.tr,
                         ),
                       ),
 
@@ -306,15 +307,15 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                           margin: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           child: CustomButton(
-                              text: 'Continue',
+                              text: LocaleKeys.continue_button.tr,
                               color: hasVehicleSelected
                                   ? null
                                   : Colors.grey.shade400,
                               onPressed: () {
                                 if (!hasVehicleSelected) {
                                   Get.showCustomSnackBar(
-                                    'Please select a vehicle before booking an appointment',
-                                    title: 'No Vehicle Selected',
+                                    LocaleKeys.select_vehicle_first.tr,
+                                    title: LocaleKeys.no_vehicle_selected.tr,
                                     type: CustomSnackbarType.info,
                                   );
                                   return;
@@ -325,7 +326,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                   controller.gotToConfirmAppointment();
                                 } else {
                                   Get.showCustomSnackBar(
-                                      'Veuillez remplir tous les champs');
+                                      LocaleKeys.fill_all_fields.tr);
                                 }
                               }),
                         );

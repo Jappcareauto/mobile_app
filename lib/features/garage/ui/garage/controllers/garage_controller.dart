@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
@@ -26,7 +27,11 @@ class GarageController extends GetxController {
   final GetVehicleListUseCase _getVehicleListUseCase;
   final DeleteVehicleUseCase _deleteVehicleUseCase = Get.find();
   final GetAllAppointmentsUsecase _getAllAppointmentsUsecase = Get.find();
-  final List<String> statusFilters = <String>["All", "Ongoing", "Completed"];
+  List<String> get statusFilters => [
+        LocaleKeys.all.tr,
+        LocaleKeys.ongoing.tr,
+        LocaleKeys.completed.tr,
+      ];
 
   String? userId;
 

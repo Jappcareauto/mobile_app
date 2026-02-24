@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../core/navigation/app_navigation.dart';
+import '../../../../../core/services/localServices/locale_service.dart';
 import '../../../../../core/services/localServices/local_storage_service.dart';
 import '../../../../../core/utils/app_constants.dart';
 
@@ -8,8 +8,8 @@ class LanguageSettingsController extends GetxController {
   final AppNavigation _appNavigation;
   LanguageSettingsController(this._appNavigation);
 
-  String groupValue = 'English';
-  String selectedLanguage = 'English';
+  String groupValue = 'Français';
+  String selectedLanguage = 'Français';
   final _localService = Get.find<LocalStorageService>();
 
   @override
@@ -19,12 +19,17 @@ class LanguageSettingsController extends GetxController {
   }
 
   void _loadSavedLanguage() {
-    final savedLanguage = _localService.read(AppConstants.languageKey);
+    final savedLanguage =
+        _localService.read(AppConstants.languageKey) as String?;
     if (savedLanguage != null) {
       groupValue = savedLanguage;
       selectedLanguage = savedLanguage;
-      update();
+    } else {
+      // Default to French — matches the app's default locale in main.dart
+      groupValue = 'Français';
+      selectedLanguage = 'Français';
     }
+    update();
   }
 
   void goBack() {
@@ -35,14 +40,9 @@ class LanguageSettingsController extends GetxController {
     if (language == null) return;
     groupValue = language;
     selectedLanguage = language;
-    _localService.write(AppConstants.languageKey, language);
 
-    // Update the app locale based on selection
-    if (language == 'Français') {
-      Get.updateLocale(const Locale('fr'));
-    } else {
-      Get.updateLocale(const Locale('en'));
-    }
+    // Use LocaleService so persistence + locale update happen in one place
+    Get.find<LocaleService>().changeLocale(language);
 
     update();
   }

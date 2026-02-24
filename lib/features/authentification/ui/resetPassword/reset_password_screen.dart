@@ -5,6 +5,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/reset_password_controller.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -16,7 +17,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Reset Password",
+        title: LocaleKeys.reset_password.tr,
         appBarcolor: Get.theme.scaffoldBackgroundColor,
       ),
       body: MixinBuilder<ResetPasswordController>(
@@ -115,7 +116,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                                           const TextSpan(
                                               text: 'Didn\'t get the code? '),
                                           TextSpan(
-                                            text: 'Resend it',
+                                            text: LocaleKeys.resend_code.tr,
                                             style: Get.textTheme.bodyMedium
                                                 ?.copyWith(
                                               color: Get.theme.primaryColor,
@@ -134,17 +135,17 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                           ],
                           if (controller.index.value == 2)
                             CustomFormField(
-                              label: 'Password',
+                              label: LocaleKeys.password.tr,
                               isPassword: true,
-                              hintText: 'Enter new password',
+                              hintText: LocaleKeys.enter_your_password.tr,
                               controller: form.controllers['newPassword'],
                               validator: form.validators['newPassword'],
                               obscureText: true,
                             ),
                           if (controller.index.value == 0)
                             CustomFormField(
-                              label: 'Email',
-                              hintText: 'Enter your email',
+                              label: LocaleKeys.email.tr,
+                              hintText: LocaleKeys.enter_your_email.tr,
                               controller: form.controllers['email'],
                               validator: form.validators['email'],
                               keyboardType: TextInputType.emailAddress,
@@ -153,7 +154,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                       ),
                       CustomButton(
                         isLoading: form.isLoading,
-                        text: 'Continue',
+                        text: LocaleKeys.continue_button.tr,
                         onPressed: form.submit,
                       ),
                     ],

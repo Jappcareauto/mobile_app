@@ -5,6 +5,7 @@ import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/ui/widgets/image_decoration.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/authentification/ui/authentification/controllers/authentification_controller.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../core/ui/widgets/custom_button.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import '../../../../core/utils/app_images.dart';
@@ -19,9 +20,10 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
     return Scaffold(
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
-        title: 'Sign In',
+        title: LocaleKeys.sign_in.tr,
         actions: [
-          TextButton(onPressed: () => {}, child: const Text('Having Issues?'))
+          TextButton(
+              onPressed: () => {}, child: Text(LocaleKeys.having_issues.tr))
         ],
       ),
       body: MixinBuilder<LoginWithEmailController>(
@@ -47,7 +49,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                         children: [
                           CustomFormField(
                             filColor: Colors.white,
-                            label: 'Email',
+                            label: LocaleKeys.email.tr,
                             hintText: 'e.g.michealjason@gmail.com',
                             hintStyleColor: Colors.grey,
                             focusedBorderColor: Get.theme.primaryColor,
@@ -61,9 +63,9 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                             filColor: Colors.white,
                             hintStyleColor: Colors.grey,
                             focusedBorderColor: Get.theme.primaryColor,
-                            label: 'Password',
+                            label: LocaleKeys.password.tr,
                             isPassword: true,
-                            hintText: 'Password',
+                            hintText: LocaleKeys.password.tr,
                             controller: controller
                                 .loginFormHelper.controllers['password'],
                             validator: controller
@@ -78,7 +80,7 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                           TextButton(
                               onPressed: Get.find<AuthentificationController>()
                                   .navigateToForgotPassword,
-                              child: const Text('Forgot Password?')),
+                              child: Text(LocaleKeys.forgot_password.tr)),
                         ],
                       ),
                       Column(
@@ -86,11 +88,11 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                         children: [
                           CustomButton(
                             isLoading: controller.loginFormHelper.isLoading,
-                            text: 'Login',
+                            text: LocaleKeys.login.tr,
                             onPressed: controller.loginFormHelper.submit,
                           ),
                           CustomButton(
-                            text: 'Continue',
+                            text: LocaleKeys.continue_button.tr,
                             haveBorder: true,
                             prefixIcon: const ImageComponent(
                                 assetPath: AppImages.google, width: 25),
@@ -103,10 +105,9 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                             text: TextSpan(
                               style: Get.textTheme.bodySmall,
                               children: [
-                                const TextSpan(
-                                    text: 'Don\'t have an account? '),
+                                TextSpan(text: LocaleKeys.dont_have_account.tr),
                                 TextSpan(
-                                  text: 'Register',
+                                  text: LocaleKeys.register.tr,
                                   style: Get.textTheme.bodySmall?.copyWith(
                                     color: Get.theme.primaryColor,
                                   ),

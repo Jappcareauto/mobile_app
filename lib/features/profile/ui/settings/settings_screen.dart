@@ -2,6 +2,7 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/features/profile/ui/settings/widgets/setting_item.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/settings_controller.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +13,7 @@ class SettingsScreen extends GetView<SettingsController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: "Settings",
+          title: LocaleKeys.settings.tr,
           appBarcolor: Get.theme.scaffoldBackgroundColor,
         ),
         body: SingleChildScrollView(
@@ -22,51 +23,45 @@ class SettingsScreen extends GetView<SettingsController> {
               children: [
                 const SizedBox(height: 20),
                 SettingItem(
-                    title: "Edit Profile",
+                    title: LocaleKeys.edit_profile.tr,
                     icon: FluentIcons.person_24_regular,
                     onTap: controller.goToEditProfile),
                 SettingItem(
-                    title: "Manage Account",
+                    title: LocaleKeys.manage_account.tr,
                     icon: FluentIcons.person_accounts_24_regular,
                     onTap: controller.goToManageAccount),
                 SettingItem(
-                    title: "History",
+                    title: LocaleKeys.history.tr,
                     icon: FluentIcons.history_24_regular,
                     onTap: controller.goToHistory),
                 SettingItem(
-                  title: "Payments",
+                  title: LocaleKeys.payments.tr,
                   icon: FluentIcons.wallet_24_regular,
                   onTap: controller.goToPayments,
-                  // onTap: controller.navigateTCommingSoon
                 ),
                 SettingItem(
-                  title: "Notifications",
+                  title: LocaleKeys.notifications.tr,
                   icon: FluentIcons.alert_24_regular,
                   onTap: controller.goToNotifications,
                 ),
                 SettingItem(
-                  title: "Language",
+                  title: LocaleKeys.language.tr,
                   icon: FluentIcons.local_language_24_regular,
                   onTap: controller.goToLanguage,
                 ),
-                // SettingItem(
-                //   title: "Help & Support",
-                //   icon: FluentIcons.person_support_24_regular,
-                //   onTap: () {},
-                // ),
                 SettingItem(
-                  title: "Privacy Policy",
+                  title: LocaleKeys.privacy_policy.tr,
                   icon: FluentIcons.document_24_regular,
                   onTap: controller.goToPrivacyPolicy,
                 ),
                 SettingItem(
-                  title: "Terms & Conditions",
+                  title: LocaleKeys.terms_and_conditions.tr,
                   icon: FluentIcons.document_24_regular,
                   onTap: controller.goToTermsAndConditions,
                 ),
                 const SizedBox(height: 40),
                 SettingItem(
-                  title: "Logout",
+                  title: LocaleKeys.logout.tr,
                   icon: FluentIcons.sign_out_24_regular,
                   onTap: controller.logout,
                   color: Colors.red,

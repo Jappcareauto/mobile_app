@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/terms_and_conditions_controller.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +11,7 @@ class TermsAndConditionsScreen extends GetView<TermsAndConditionsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Terms & Conditions",
+        title: LocaleKeys.terms_and_conditions.tr,
         canBack: true,
         appBarcolor: Get.theme.scaffoldBackgroundColor,
       ),

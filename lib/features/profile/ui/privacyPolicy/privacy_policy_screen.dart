@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/privacy_policy_controller.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +11,7 @@ class PrivacyPolicyScreen extends GetView<PrivacyPolicyController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "Privacy Policy",
+        title: LocaleKeys.privacy_policy.tr,
         canBack: true,
         appBarcolor: Get.theme.scaffoldBackgroundColor,
       ),

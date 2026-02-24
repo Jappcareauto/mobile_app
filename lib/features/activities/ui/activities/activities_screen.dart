@@ -4,6 +4,7 @@ import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/activities_controller.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +18,7 @@ class ActivitiesScreen extends GetView<ActivitiesController>
     return Scaffold(
         appBar: CustomAppBar(
           appBarcolor: Get.theme.scaffoldBackgroundColor,
-          title: "Activities",
+          title: LocaleKeys.activities.tr,
           canBack: false,
           actions: [
             if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
@@ -31,29 +32,19 @@ class ActivitiesScreen extends GetView<ActivitiesController>
             return Stack(
               children: [
                 garageController.appointments.isEmpty
-                    ? const Center(
+                    ? Center(
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            ImageComponent(
+                            const ImageComponent(
                               assetPath: AppImages.noActivities,
                             ),
-                            Column(
-                              children: [
-                                Text(
-                                  'You have no recent activities',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16),
-                                ),
-                                Text(
-                                  'at the moment',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16),
-                                )
-                              ],
-                            )
+                            Text(
+                              LocaleKeys.no_recent_activities.tr,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w400, fontSize: 16),
+                            ),
                           ],
                         ),
                       )
