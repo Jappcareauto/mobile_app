@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
@@ -27,6 +28,9 @@ class SettingsController extends GetxController {
     Get.showLoader();
     await _localService.delete(AppConstants.tokenKey);
     await _localService.delete(AppConstants.refreshTokenKey);
+    // Clear the location disclosure consent so the next account that
+    // logs in on this device goes through the full disclosure flow.
+    await GetStorage().remove(AppConstants.locationDisclosureConsentKey);
     Get.closeLoader();
     await _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
   }

@@ -193,5 +193,71 @@
   "no_items_found": "No items found!",
   "location_permission_denied": "Location Permission Denied",
 
-  "authentication_module_missing": "The authentication module is missing"
+  "authentication_module_missing": "The authentication module is missing",
+
+  "loc_disclosure_title": "Location Data Access",
+  "loc_disclosure_how_we_use": "How Jappcare uses your location",
+  "loc_disclosure_intro": "Jappcare collects your device's precise location data to power the following features:",
+  "loc_disclosure_emergency_title": "Emergency Services",
+  "loc_disclosure_emergency_desc": "Your GPS coordinates are shared with responders when you trigger an emergency alert.",
+  "loc_disclosure_workshop_title": "Workshop & Service Center Locator",
+  "loc_disclosure_workshop_desc": "Jappcare finds nearby garages, mechanics, and service centers based on your current position.",
+  "loc_disclosure_vehicle_title": "Vehicle Finder & Roadside Assistance",
+  "loc_disclosure_vehicle_desc": "Location tracking helps tow trucks and assistance teams reach you quickly.",
+  "loc_disclosure_background_notice": "Jappcare may collect location data even when the app is closed or not in use to support emergency alerts and active roadside assistance requests.",
+  "loc_disclosure_privacy": "Your location data is never sold. It is only used to provide the services above. See our Privacy Policy for full details.",
+  "loc_disclosure_accept": "I Understand – Continue",
+  "loc_disclosure_decline": "Not Now",
+
+  "loc_bg_title": "Allow Background Location",
+  "loc_bg_subtitle": "Jappcare needs access to your location even when the app is closed or not in use.",
+  "loc_bg_emergency_text": "Send your GPS position to emergency responders the moment you trigger an SOS, even if you can no longer use your phone.",
+  "loc_bg_roadside_text": "Track active roadside-assistance and tow-truck missions in real time so the technician always knows where to find you.",
+  "loc_bg_settings_note": "On the next screen, select \"Allow all the time\" to enable background location.",
+  "loc_bg_accept": "Allow Background Location",
+  "loc_bg_decline": "Use Foreground Location Only",
+
+  "loc_bg_denied_title": "Background Location Denied",
+  "loc_fg_denied_message": "Please enable location permission in Settings > App > Permissions.",
+  "loc_bg_denied_message": "Please enable \"Allow all the time\" in Settings > App > Permissions to activate background location.",
+
+  "pp_title": "Privacy Policy",
+  "pp_last_updated": "Last updated: February 2026",
+  "pp_company": "Jappcare Technologies",
+  "pp_address": "Grand Moulin Deido, Douala, Cameroon",
+  "pp_email": "jappcareautotech@gmail.com",
+
+  "pp_s1_title": "1. Information We Collect",
+  "pp_s1_account_sub": "Account Information",
+  "pp_s1_account_body": "Name, email address, phone number, and vehicle details.",
+  "pp_s1_location_sub": "Location Data",
+  "pp_s1_location_body": "We may collect precise or approximate location data.",
+  "pp_s1_usage_sub": "Usage Information",
+  "pp_s1_usage_body": "App activity, service requests, and subscription details.",
+
+  "pp_s2_title": "2. How We Use Your Information",
+  "pp_s2_body": "We use your information to connect you with nearby mechanics or service providers, provide roadside assistance, improve service accuracy and response time, process payments and subscriptions, prevent fraud and enhance security, and improve app performance and user experience.",
+
+  "pp_s3_title": "3. Location Data Usage",
+  "pp_s3_body": "The Jappcare app may access your device location to connect you with nearby mechanics or service centers, to provide roadside assistance, and to improve safety and fraud prevention. Location data is collected only with your permission and only when required for active service functionality. You can disable location access at any time in your device settings. Disabling location may limit certain features. We do not sell your location data.",
+
+  "pp_s4_title": "4. Data Sharing",
+  "pp_s4_body": "We may share necessary information with independent technicians, spare part distributors, insurance providers, and payment processors. We do not sell personal data to third parties.",
+
+  "pp_s5_title": "5. Data Security",
+  "pp_s5_body": "We implement appropriate technical and organizational measures to protect your personal data from unauthorized access, loss, or misuse.",
+
+  "pp_s6_title": "6. Data Retention",
+  "pp_s6_body": "We retain your data only as long as necessary to provide services or comply with legal obligations.",
+
+  "pp_s7_title": "7. Your Rights",
+  "pp_s7_body": "You may access your personal data, request correction of inaccurate information, request deletion of your account, and withdraw consent for certain data processing. To make a request, contact us at jappcareautotech@gmail.com.",
+
+  "pp_s8_title": "8. Children's Privacy",
+  "pp_s8_body": "The Jappcare mobile app is intended for users aged 18 and above. We do not knowingly collect data from children.",
+
+  "pp_s9_title": "9. Contact Information",
+  "pp_s9_body": "Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroon\nEmail: jappcareautotech@gmail.com",
+
+  "pp_view_privacy_policy": "Privacy Policy"
 }

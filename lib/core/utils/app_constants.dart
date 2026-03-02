@@ -21,6 +21,13 @@ class AppConstants {
   static const String firstOpen = "firstOpenKey";
   static const String userIdKey = "userIdKey";
 
+  // ── Location / Google Play Prominent Disclosure ──────────────────────────
+  // Stored as bool via GetStorage.  Set to true once the user has accepted
+  // the Prominent Disclosure bottom sheet so it is never shown again.
+  // Required by Google Play User Data Policy – do NOT remove.
+  static const String locationDisclosureConsentKey =
+      "locationDisclosureConsentKey";
+
   //Events
   static const String userLoginEvent = "userLoginEvent";
   static const String userIdEvent = "userIdEvent";

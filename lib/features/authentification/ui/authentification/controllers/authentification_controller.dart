@@ -9,6 +9,7 @@ import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';
 import 'package:jappcare/features/authentification/ui/authentification/widgets/signup_modal.dart';
+import 'package:jappcare/features/profile/navigation/private/profile_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../application/usecases/google_login_usecase.dart';
 import '../../../application/usecases/google_signup_usecase.dart';
@@ -122,6 +123,10 @@ class AuthentificationController extends GetxController {
   }
 
   void goToTermsAndConditions() {
-    //TODO
+    _appNavigation.toNamed(ProfilePrivateRoutes.termsAndConditions);
+  }
+
+  void goToPrivacyPolicy() {
+    _appNavigation.toNamed(ProfilePrivateRoutes.privacyPolicy);
   }
 }

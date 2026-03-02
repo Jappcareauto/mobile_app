@@ -193,5 +193,72 @@
   "no_items_found": "Aucun élément trouvé !",
   "location_permission_denied": "Permission de localisation refusée",
 
-  "authentication_module_missing": "Le module d'authentification est absent"
+  "authentication_module_missing": "Le module d'authentification est absent",
+
+  "loc_disclosure_title": "Accès aux données de localisation",
+  "loc_disclosure_how_we_use": "Comment Jappcare utilise votre localisation",
+  "loc_disclosure_intro": "Jappcare collecte les données de localisation précises de votre appareil pour les fonctionnalités suivantes :",
+  "loc_disclosure_emergency_title": "Services d'urgence",
+  "loc_disclosure_emergency_desc": "Vos coordonnées GPS sont transmises aux secours lorsque vous déclenchez une alerte d'urgence.",
+  "loc_disclosure_workshop_title": "Localisation d'ateliers et centres de service",
+  "loc_disclosure_workshop_desc": "Jappcare trouve les garages, mécaniciens et centres de service à proximité de votre position actuelle.",
+  "loc_disclosure_vehicle_title": "Localisation de véhicule et assistance routière",
+  "loc_disclosure_vehicle_desc": "Le suivi de localisation aide les dépanneuses et équipes d'assistance à vous rejoindre rapidement.",
+  "loc_disclosure_background_notice": "Jappcare peut collecter des données de localisation même lorsque l'application est fermée ou non utilisée, afin de prendre en charge les alertes d'urgence et les demandes d'assistance routière actives.",
+  "loc_disclosure_privacy": "Vos données de localisation ne sont jamais vendues. Elles sont uniquement utilisées pour fournir les services ci-dessus. Consultez notre politique de confidentialité pour plus de détails.",
+  "loc_disclosure_accept": "Je comprends – Continuer",
+  "loc_disclosure_decline": "Pas maintenant",
+
+  "loc_bg_title": "Autoriser la localisation en arrière-plan",
+  "loc_bg_subtitle": "Jappcare a besoin d'accéder à votre localisation même lorsque l'application est fermée ou non utilisée.",
+  "loc_bg_emergency_text": "Envoyer votre position GPS aux secours dès que vous déclenchez un SOS, même si vous ne pouvez plus utiliser votre téléphone.",
+  "loc_bg_roadside_text": "Suivre les missions d'assistance routière et de dépannage en temps réel pour que le technicien sache toujours où vous trouver.",
+  "loc_bg_settings_note": "Sur l'écran suivant, sélectionnez \"Toujours autoriser\" pour activer la localisation en arrière-plan.",
+  "loc_bg_accept": "Autoriser la localisation en arrière-plan",
+  "loc_bg_decline": "Utiliser uniquement la localisation au premier plan",
+
+  "loc_bg_denied_title": "Localisation en arrière-plan refusée",
+  "loc_fg_denied_message": "Veuillez activer la permission de localisation dans Paramètres > Application > Autorisations.",
+  "loc_bg_denied_message": "Veuillez activer \"Toujours autoriser\" dans Paramètres > Application > Autorisations pour activer la localisation en arrière-plan.",
+
+  "pp_title": "Politique de confidentialité",
+  "pp_last_updated": "Dernière mise à jour : Février 2026",
+  "pp_company": "Jappcare Technologies",
+  "pp_address": "Grand Moulin Deido, Douala, Cameroun",
+  "pp_email": "jappcareautotech@gmail.com",
+
+  "pp_s1_title": "1. Informations que nous collectons",
+  "pp_s1_account_sub": "Informations de compte",
+  "pp_s1_account_body": "Nom, adresse e-mail, numéro de téléphone et détails du véhicule.",
+  "pp_s1_location_sub": "Données de localisation",
+  "pp_s1_location_body": "Nous pouvons collecter des données de localisation précises ou approximatives.",
+  "pp_s1_usage_sub": "Informations d'utilisation",
+  "pp_s1_usage_body": "Activité de l'application, demandes de service et détails d'abonnement.",
+
+  "pp_s2_title": "2. Comment nous utilisons vos informations",
+  "pp_s2_body": "Nous utilisons vos informations pour vous mettre en relation avec des mécaniciens ou prestataires à proximité, fournir une assistance routière, améliorer la précision du service et le temps de réponse, traiter les paiements et abonnements, prévenir la fraude et renforcer la sécurité, et améliorer les performances de l'application et l'expérience utilisateur.",
+
+  "pp_s3_title": "3. Utilisation des données de localisation",
+  "pp_s3_body": "L'application Jappcare peut accéder à votre localisation pour vous mettre en relation avec des mécaniciens ou centres de service à proximité, pour fournir une assistance routière, et pour améliorer la sécurité et la prévention de la fraude. Les données de localisation sont collectées uniquement avec votre permission et uniquement lorsque requis pour les fonctionnalités actives. Vous pouvez désactiver l'accès à la localisation à tout moment dans les paramètres de votre appareil. La désactivation peut limiter certaines fonctionnalités. Nous ne vendons pas vos données de localisation.",
+
+  "pp_s4_title": "4. Partage des données",
+  "pp_s4_body": "Nous pouvons partager les informations nécessaires avec des techniciens indépendants, des distributeurs de pièces détachées, des assureurs et des prestataires de paiement. Nous ne vendons pas de données personnelles à des tiers.",
+
+  "pp_s5_title": "5. Sécurité des données",
+  "pp_s5_body": "Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données personnelles contre tout accès non autorisé, perte ou utilisation abusive.",
+
+  "pp_s6_title": "6. Conservation des données",
+  "pp_s6_body": "Nous conservons vos données uniquement le temps nécessaire pour fournir les services ou respecter nos obligations légales.",
+
+  "pp_s7_title": "7. Vos droits",
+  "pp_s7_body": "Vous pouvez accéder à vos données personnelles, demander la correction d'informations inexactes, demander la suppression de votre compte et retirer votre consentement pour certains traitements de données. Pour faire une demande, contactez-nous à jappcareautotech@gmail.com.",
+
+  "pp_s8_title": "8. Confidentialité des enfants",
+  "pp_s8_body": "L'application Jappcare est destinée aux utilisateurs âgés de 18 ans et plus. Nous ne collectons pas sciemment de données provenant d'enfants.",
+
+  "pp_s9_title": "9. Coordonnées",
+  "pp_s9_body": "Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroun\nEmail : jappcareautotech@gmail.com",
+
+  "pp_view_privacy_policy": "Politique de confidentialité"
+}
 }

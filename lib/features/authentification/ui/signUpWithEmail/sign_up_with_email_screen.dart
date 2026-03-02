@@ -139,6 +139,19 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                                         AuthentificationController>()
                                                     .goToTermsAndConditions,
                                             ),
+                                            const TextSpan(text: ' & '),
+                                            TextSpan(
+                                              text: LocaleKeys
+                                                  .pp_view_privacy_policy.tr,
+                                              style: Get.textTheme.bodySmall
+                                                  ?.copyWith(
+                                                color: Get.theme.primaryColor,
+                                              ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = Get.find<
+                                                        AuthentificationController>()
+                                                    .goToPrivacyPolicy,
+                                            ),
                                             const TextSpan(text: '.'),
                                           ],
                                         ),
