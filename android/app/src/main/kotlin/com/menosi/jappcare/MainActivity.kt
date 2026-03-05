@@ -1,4 +1,4 @@
-package com.jappcare
+package com.menosi.jappcare
 
 import io.flutter.embedding.android.FlutterActivity
 

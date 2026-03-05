@@ -92,10 +92,14 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                               backgroundColor:
                                   Get.theme.primaryColor.withValues(alpha: .2),
                               bodyText:
-                                  'Your repair from the Japcare Autotech shop is ready, and available for pickup',
+                                  LocaleKeys.appointment_ready_pickup.trParams({
+                                'serviceCenterName': controller
+                                        .appointment.serviceCenter?.name ??
+                                    'the service center',
+                              }),
                               coloriage: Get.theme.primaryColor,
                               icon: FluentIcons.alert_12_regular,
-                              title: 'Notification'),
+                              title: LocaleKeys.notification.tr),
                           const SizedBox(
                             height: 20,
                           ),

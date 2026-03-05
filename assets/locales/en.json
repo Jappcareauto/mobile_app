@@ -259,5 +259,49 @@
   "pp_s9_title": "9. Contact Information",
   "pp_s9_body": "Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroon\nEmail: jappcareautotech@gmail.com",
 
-  "pp_view_privacy_policy": "Privacy Policy"
+  "pp_view_privacy_policy": "Privacy Policy",
+
+  "appointment_ready_pickup": "Your repair from @serviceCenterName is ready and available for pickup.",
+
+  "tc_title": "Terms & Conditions",
+  "tc_last_updated": "Last updated: February 2026",
+
+  "tc_s1_title": "1. Acceptance of Terms",
+  "tc_s1_body": "By creating an account or using the Jappcare mobile application (\"App\"), you agree to these Terms & Conditions.\n\nYou confirm that:\n• You are at least 18 years old\n• You have legal capacity to enter into binding agreements\n• You agree to comply with applicable laws of the Republic of Cameroon\n\nIf you do not agree, please do not use the App.",
+
+  "tc_s2_title": "2. About Jappcare",
+  "tc_s2_body": "Jappcare operates as a digital autotech marketplace that connects vehicle owners with independent service providers such as mechanics, spare part distributors, and insurers.\n\nJappcare:\n• Does not own or operate service centers\n• Does not directly supervise independent technicians\n• Is not responsible for workmanship, delays, or damages caused by third-party providers\n\nService-related disputes must be resolved directly with the service provider.",
+
+  "tc_s3_title": "3. User Accounts",
+  "tc_s3_body": "When creating an account, you agree to:\n• Provide accurate and complete information\n• Keep your login credentials secure\n• Not create multiple accounts\n• Notify us immediately of unauthorized access\n\nJappcare reserves the right to suspend or terminate accounts that violate these Terms.",
+
+  "tc_s4_title": "4. Services & Subscriptions",
+  "tc_s4_body": "• Subscription services may be billed monthly, quarterly, or annually\n• Subscription fees automatically renew unless canceled\n• Repair services require payment based on issued invoices\n• Payments are non-refundable unless otherwise stated\n• Billing disputes must be reported within 30 days to jappcareautotech@gmail.com\n\nJappcare reserves the right to modify pricing at any time.",
+
+  "tc_s5_title": "5. Technicians & Service Providers",
+  "tc_s5_body": "Technicians connected through Jappcare are independent contractors and not employees of Jappcare.\n\nBy requesting a service, you authorize Jappcare to connect you with a suitable independent technician.",
+
+  "tc_s6_title": "6. Payments",
+  "tc_s6_body": "All payments must be made through approved payment methods within the App.\n\nYou agree not to:\n• Circumvent the platform's payment system\n• Engage in fraudulent payment activity\n\nViolation may result in account suspension.",
+
+  "tc_s7_title": "7. Intellectual Property",
+  "tc_s7_body": "All content, branding, logos, software, and materials within the App are the exclusive property of Jappcare.\n\nYou may not copy, reproduce, reverse engineer, modify, or distribute any part of the App without written permission.",
+
+  "tc_s8_title": "8. Prohibited Activities",
+  "tc_s8_body": "You agree not to:\n• Use the App for illegal purposes\n• Attempt to hack, reverse engineer, or disrupt the platform\n• Post false, misleading, or fraudulent information\n• Collect other users' data without consent\n\nViolation may result in immediate account termination.",
+
+  "tc_s9_title": "9. Limitation of Liability",
+  "tc_s9_body": "Jappcare is not liable for:\n• Vehicle damage caused by third-party service providers\n• Indirect or consequential damages\n• Loss of profits or data\n• Events beyond our control (theft, fire, weather, government actions)\n\nAll services are provided \"AS IS\" without warranties.",
+
+  "tc_s10_title": "10. Termination",
+  "tc_s10_body": "Jappcare may suspend or terminate your access if you violate these Terms.\n\nYou may request account termination by contacting jappcareautotech@gmail.com.",
+
+  "tc_s11_title": "11. Governing Law",
+  "tc_s11_body": "These Terms are governed by the laws of the Republic of Cameroon.",
+
+  "tc_s12_title": "12. Changes to Terms",
+  "tc_s12_body": "Jappcare may update these Terms at any time. Continued use of the App after changes constitutes acceptance of the updated Terms.",
+
+  "tc_s13_title": "13. Contact Information",
+  "tc_s13_body": "Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroon\nEmail: jappcareautotech@gmail.com"
 }

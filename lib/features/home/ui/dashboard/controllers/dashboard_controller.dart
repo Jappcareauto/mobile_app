@@ -38,13 +38,18 @@ class DashboardController extends GetxController {
       // try to push a modal bottom sheet.  Calling showModalBottomSheet
       // while the Navigator is still locked (during route binding) throws
       // the "!_debugLocked" assertion.
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        final BuildContext? ctx = Get.context;
-        if (ctx != null && ctx.mounted) {
-          await LocationPermissionService.instance
-              .requestLocationPermissions(ctx);
-        }
-      });
+      // Only trigger the location permission flow if the user has never
+      // completed the prominent disclosure (i.e. first launch after install).
+      // On subsequent launches we skip to avoid showing popups every time.
+      final locationService = LocationPermissionService.instance;
+      if (!locationService.hasSeenDisclosure) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          final BuildContext? ctx = Get.context;
+          if (ctx != null && ctx.mounted) {
+            await locationService.requestLocationPermissions(ctx);
+          }
+        });
+      }
     }
   }
 

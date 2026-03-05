@@ -283,13 +283,15 @@ class LocaleKeys {
   static const loc_disclosure_title = 'loc_disclosure_title';
   static const loc_disclosure_how_we_use = 'loc_disclosure_how_we_use';
   static const loc_disclosure_intro = 'loc_disclosure_intro';
-  static const loc_disclosure_emergency_title = 'loc_disclosure_emergency_title';
+  static const loc_disclosure_emergency_title =
+      'loc_disclosure_emergency_title';
   static const loc_disclosure_emergency_desc = 'loc_disclosure_emergency_desc';
   static const loc_disclosure_workshop_title = 'loc_disclosure_workshop_title';
   static const loc_disclosure_workshop_desc = 'loc_disclosure_workshop_desc';
   static const loc_disclosure_vehicle_title = 'loc_disclosure_vehicle_title';
   static const loc_disclosure_vehicle_desc = 'loc_disclosure_vehicle_desc';
-  static const loc_disclosure_background_notice = 'loc_disclosure_background_notice';
+  static const loc_disclosure_background_notice =
+      'loc_disclosure_background_notice';
   static const loc_disclosure_privacy = 'loc_disclosure_privacy';
   static const loc_disclosure_accept = 'loc_disclosure_accept';
   static const loc_disclosure_decline = 'loc_disclosure_decline';
@@ -334,6 +336,39 @@ class LocaleKeys {
   static const pp_s9_title = 'pp_s9_title';
   static const pp_s9_body = 'pp_s9_body';
   static const pp_view_privacy_policy = 'pp_view_privacy_policy';
+
+  // Appointment
+  static const appointment_ready_pickup = 'appointment_ready_pickup';
+
+  // Terms & Conditions
+  static const tc_title = 'tc_title';
+  static const tc_last_updated = 'tc_last_updated';
+  static const tc_s1_title = 'tc_s1_title';
+  static const tc_s1_body = 'tc_s1_body';
+  static const tc_s2_title = 'tc_s2_title';
+  static const tc_s2_body = 'tc_s2_body';
+  static const tc_s3_title = 'tc_s3_title';
+  static const tc_s3_body = 'tc_s3_body';
+  static const tc_s4_title = 'tc_s4_title';
+  static const tc_s4_body = 'tc_s4_body';
+  static const tc_s5_title = 'tc_s5_title';
+  static const tc_s5_body = 'tc_s5_body';
+  static const tc_s6_title = 'tc_s6_title';
+  static const tc_s6_body = 'tc_s6_body';
+  static const tc_s7_title = 'tc_s7_title';
+  static const tc_s7_body = 'tc_s7_body';
+  static const tc_s8_title = 'tc_s8_title';
+  static const tc_s8_body = 'tc_s8_body';
+  static const tc_s9_title = 'tc_s9_title';
+  static const tc_s9_body = 'tc_s9_body';
+  static const tc_s10_title = 'tc_s10_title';
+  static const tc_s10_body = 'tc_s10_body';
+  static const tc_s11_title = 'tc_s11_title';
+  static const tc_s11_body = 'tc_s11_body';
+  static const tc_s12_title = 'tc_s12_title';
+  static const tc_s12_body = 'tc_s12_body';
+  static const tc_s13_title = 'tc_s13_title';
+  static const tc_s13_body = 'tc_s13_body';
 }
 
 class Locales {
@@ -629,11 +664,14 @@ class Locales {
     'pp_email': 'jappcareautotech@gmail.com',
     'pp_s1_title': '1. Informations que nous collectons',
     'pp_s1_account_sub': 'Informations de compte',
-    'pp_s1_account_body': 'Nom, adresse e-mail, numéro de téléphone et détails du véhicule.',
+    'pp_s1_account_body':
+        'Nom, adresse e-mail, numéro de téléphone et détails du véhicule.',
     'pp_s1_location_sub': 'Données de localisation',
-    'pp_s1_location_body': 'Nous pouvons collecter des données de localisation précises ou approximatives.',
+    'pp_s1_location_body':
+        'Nous pouvons collecter des données de localisation précises ou approximatives.',
     'pp_s1_usage_sub': 'Informations d\'utilisation',
-    'pp_s1_usage_body': 'Activité de l\'application, demandes de service et détails d\'abonnement.',
+    'pp_s1_usage_body':
+        'Activité de l\'application, demandes de service et détails d\'abonnement.',
     'pp_s2_title': '2. Comment nous utilisons vos informations',
     'pp_s2_body':
         'Nous utilisons vos informations pour vous mettre en relation avec des mécaniciens ou prestataires à proximité, fournir une assistance routière, améliorer la précision du service et le temps de réponse, traiter les paiements et abonnements, prévenir la fraude et renforcer la sécurité, et améliorer les performances de l\'application et l\'expérience utilisateur.',
@@ -656,8 +694,52 @@ class Locales {
     'pp_s8_body':
         'L\'application Jappcare est destinée aux utilisateurs âgés de 18 ans et plus. Nous ne collectons pas sciemment de données provenant d\'enfants.',
     'pp_s9_title': '9. Coordonnées',
-    'pp_s9_body': 'Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroun\nEmail : jappcareautotech@gmail.com',
+    'pp_s9_body':
+        'Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroun\nEmail : jappcareautotech@gmail.com',
     'pp_view_privacy_policy': 'Politique de confidentialité',
+    'appointment_ready_pickup':
+        'Votre réparation chez @serviceCenterName est prête et disponible pour le retrait.',
+    'tc_title': 'Conditions Générales',
+    'tc_last_updated': 'Dernière mise à jour : Février 2026',
+    'tc_s1_title': '1. Acceptation des Conditions',
+    'tc_s1_body':
+        'En créant un compte ou en utilisant l\'application mobile Jappcare ("Application"), vous acceptez les présentes Conditions Générales.\n\nVous confirmez que :\n• Vous avez au moins 18 ans\n• Vous avez la capacité juridique de conclure des accords contraignants\n• Vous acceptez de respecter les lois applicables de la République du Cameroun\n\nSi vous n\'acceptez pas, veuillez ne pas utiliser l\'Application.',
+    'tc_s2_title': '2. À propos de Jappcare',
+    'tc_s2_body':
+        'Jappcare opère en tant que marketplace autotech numérique qui connecte les propriétaires de véhicules avec des prestataires de services indépendants tels que des mécaniciens, des distributeurs de pièces détachées et des assureurs.\n\nJappcare :\n• Ne possède ni n\'exploite de centres de service\n• Ne supervise pas directement les techniciens indépendants\n• N\'est pas responsable de la qualité du travail, des retards ou des dommages causés par des prestataires tiers\n\nLes litiges liés aux services doivent être résolus directement avec le prestataire de services.',
+    'tc_s3_title': '3. Comptes Utilisateurs',
+    'tc_s3_body':
+        'En créant un compte, vous acceptez de :\n• Fournir des informations exactes et complètes\n• Garder vos identifiants de connexion sécurisés\n• Ne pas créer plusieurs comptes\n• Nous notifier immédiatement de tout accès non autorisé\n\nJappcare se réserve le droit de suspendre ou de fermer les comptes qui enfreignent ces Conditions.',
+    'tc_s4_title': '4. Services et Abonnements',
+    'tc_s4_body':
+        '• Les services d\'abonnement peuvent être facturés mensuellement, trimestriellement ou annuellement\n• Les frais d\'abonnement se renouvellent automatiquement sauf annulation\n• Les services de réparation nécessitent un paiement basé sur les factures émises\n• Les paiements ne sont pas remboursables sauf indication contraire\n• Les litiges de facturation doivent être signalés dans les 30 jours à jappcareautotech@gmail.com\n\nJappcare se réserve le droit de modifier les tarifs à tout moment.',
+    'tc_s5_title': '5. Techniciens et Prestataires de Services',
+    'tc_s5_body':
+        'Les techniciens connectés via Jappcare sont des prestataires indépendants et non des employés de Jappcare.\n\nEn demandant un service, vous autorisez Jappcare à vous mettre en relation avec un technicien indépendant approprié.',
+    'tc_s6_title': '6. Paiements',
+    'tc_s6_body':
+        'Tous les paiements doivent être effectués via les méthodes de paiement approuvées dans l\'Application.\n\nVous vous engagez à ne pas :\n• Contourner le système de paiement de la plateforme\n• Vous livrer à des activités de paiement frauduleuses\n\nToute violation peut entraîner la suspension du compte.',
+    'tc_s7_title': '7. Propriété Intellectuelle',
+    'tc_s7_body':
+        'Tout le contenu, les marques, logos, logiciels et matériaux de l\'Application sont la propriété exclusive de Jappcare.\n\nVous ne pouvez pas copier, reproduire, décompiler, modifier ou distribuer toute partie de l\'Application sans autorisation écrite.',
+    'tc_s8_title': '8. Activités Interdites',
+    'tc_s8_body':
+        'Vous vous engagez à ne pas :\n• Utiliser l\'Application à des fins illégales\n• Tenter de pirater, décompiler ou perturber la plateforme\n• Publier des informations fausses, trompeuses ou frauduleuses\n• Collecter les données d\'autres utilisateurs sans consentement\n\nToute violation peut entraîner la fermeture immédiate du compte.',
+    'tc_s9_title': '9. Limitation de Responsabilité',
+    'tc_s9_body':
+        'Jappcare n\'est pas responsable de :\n• Dommages aux véhicules causés par des prestataires de services tiers\n• Dommages indirects ou consécutifs\n• Perte de profits ou de données\n• Événements hors de notre contrôle (vol, incendie, intempéries, actions gouvernementales)\n\nTous les services sont fournis "EN L\'ÉTAT" sans garanties.',
+    'tc_s10_title': '10. Résiliation',
+    'tc_s10_body':
+        'Jappcare peut suspendre ou résilier votre accès si vous enfreignez ces Conditions.\n\nVous pouvez demander la résiliation de votre compte en contactant jappcareautotech@gmail.com.',
+    'tc_s11_title': '11. Droit Applicable',
+    'tc_s11_body':
+        'Les présentes Conditions sont régies par les lois de la République du Cameroun.',
+    'tc_s12_title': '12. Modifications des Conditions',
+    'tc_s12_body':
+        'Jappcare peut mettre à jour ces Conditions à tout moment. L\'utilisation continue de l\'Application après les modifications constitue l\'acceptation des Conditions mises à jour.',
+    'tc_s13_title': '13. Coordonnées',
+    'tc_s13_body':
+        'Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroun\nEmail : jappcareautotech@gmail.com',
   };
 
   static const en = {
@@ -944,11 +1026,14 @@ class Locales {
     'pp_email': 'jappcareautotech@gmail.com',
     'pp_s1_title': '1. Information We Collect',
     'pp_s1_account_sub': 'Account Information',
-    'pp_s1_account_body': 'Name, email address, phone number, and vehicle details.',
+    'pp_s1_account_body':
+        'Name, email address, phone number, and vehicle details.',
     'pp_s1_location_sub': 'Location Data',
-    'pp_s1_location_body': 'We may collect precise or approximate location data.',
+    'pp_s1_location_body':
+        'We may collect precise or approximate location data.',
     'pp_s1_usage_sub': 'Usage Information',
-    'pp_s1_usage_body': 'App activity, service requests, and subscription details.',
+    'pp_s1_usage_body':
+        'App activity, service requests, and subscription details.',
     'pp_s2_title': '2. How We Use Your Information',
     'pp_s2_body':
         'We use your information to connect you with nearby mechanics or service providers, provide roadside assistance, improve service accuracy and response time, process payments and subscriptions, prevent fraud and enhance security, and improve app performance and user experience.',
@@ -962,14 +1047,60 @@ class Locales {
     'pp_s5_body':
         'We implement appropriate technical and organizational measures to protect your personal data from unauthorized access, loss, or misuse.',
     'pp_s6_title': '6. Data Retention',
-    'pp_s6_body': 'We retain your data only as long as necessary to provide services or comply with legal obligations.',
+    'pp_s6_body':
+        'We retain your data only as long as necessary to provide services or comply with legal obligations.',
     'pp_s7_title': '7. Your Rights',
     'pp_s7_body':
         'You may access your personal data, request correction of inaccurate information, request deletion of your account, and withdraw consent for certain data processing. To make a request, contact us at jappcareautotech@gmail.com.',
     'pp_s8_title': '8. Children\'s Privacy',
-    'pp_s8_body': 'The Jappcare mobile app is intended for users aged 18 and above. We do not knowingly collect data from children.',
+    'pp_s8_body':
+        'The Jappcare mobile app is intended for users aged 18 and above. We do not knowingly collect data from children.',
     'pp_s9_title': '9. Contact Information',
-    'pp_s9_body': 'Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroon\nEmail: jappcareautotech@gmail.com',
+    'pp_s9_body':
+        'Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroon\nEmail: jappcareautotech@gmail.com',
     'pp_view_privacy_policy': 'Privacy Policy',
+    'appointment_ready_pickup':
+        'Your repair from @serviceCenterName is ready and available for pickup.',
+    'tc_title': 'Terms & Conditions',
+    'tc_last_updated': 'Last updated: February 2026',
+    'tc_s1_title': '1. Acceptance of Terms',
+    'tc_s1_body':
+        'By creating an account or using the Jappcare mobile application ("App"), you agree to these Terms & Conditions.\n\nYou confirm that:\n• You are at least 18 years old\n• You have legal capacity to enter into binding agreements\n• You agree to comply with applicable laws of the Republic of Cameroon\n\nIf you do not agree, please do not use the App.',
+    'tc_s2_title': '2. About Jappcare',
+    'tc_s2_body':
+        'Jappcare operates as a digital autotech marketplace that connects vehicle owners with independent service providers such as mechanics, spare part distributors, and insurers.\n\nJappcare:\n• Does not own or operate service centers\n• Does not directly supervise independent technicians\n• Is not responsible for workmanship, delays, or damages caused by third-party providers\n\nService-related disputes must be resolved directly with the service provider.',
+    'tc_s3_title': '3. User Accounts',
+    'tc_s3_body':
+        'When creating an account, you agree to:\n• Provide accurate and complete information\n• Keep your login credentials secure\n• Not create multiple accounts\n• Notify us immediately of unauthorized access\n\nJappcare reserves the right to suspend or terminate accounts that violate these Terms.',
+    'tc_s4_title': '4. Services & Subscriptions',
+    'tc_s4_body':
+        '• Subscription services may be billed monthly, quarterly, or annually\n• Subscription fees automatically renew unless canceled\n• Repair services require payment based on issued invoices\n• Payments are non-refundable unless otherwise stated\n• Billing disputes must be reported within 30 days to jappcareautotech@gmail.com\n\nJappcare reserves the right to modify pricing at any time.',
+    'tc_s5_title': '5. Technicians & Service Providers',
+    'tc_s5_body':
+        'Technicians connected through Jappcare are independent contractors and not employees of Jappcare.\n\nBy requesting a service, you authorize Jappcare to connect you with a suitable independent technician.',
+    'tc_s6_title': '6. Payments',
+    'tc_s6_body':
+        'All payments must be made through approved payment methods within the App.\n\nYou agree not to:\n• Circumvent the platform\'s payment system\n• Engage in fraudulent payment activity\n\nViolation may result in account suspension.',
+    'tc_s7_title': '7. Intellectual Property',
+    'tc_s7_body':
+        'All content, branding, logos, software, and materials within the App are the exclusive property of Jappcare.\n\nYou may not copy, reproduce, reverse engineer, modify, or distribute any part of the App without written permission.',
+    'tc_s8_title': '8. Prohibited Activities',
+    'tc_s8_body':
+        'You agree not to:\n• Use the App for illegal purposes\n• Attempt to hack, reverse engineer, or disrupt the platform\n• Post false, misleading, or fraudulent information\n• Collect other users\' data without consent\n\nViolation may result in immediate account termination.',
+    'tc_s9_title': '9. Limitation of Liability',
+    'tc_s9_body':
+        'Jappcare is not liable for:\n• Vehicle damage caused by third-party service providers\n• Indirect or consequential damages\n• Loss of profits or data\n• Events beyond our control (theft, fire, weather, government actions)\n\nAll services are provided "AS IS" without warranties.',
+    'tc_s10_title': '10. Termination',
+    'tc_s10_body':
+        'Jappcare may suspend or terminate your access if you violate these Terms.\n\nYou may request account termination by contacting jappcareautotech@gmail.com.',
+    'tc_s11_title': '11. Governing Law',
+    'tc_s11_body':
+        'These Terms are governed by the laws of the Republic of Cameroon.',
+    'tc_s12_title': '12. Changes to Terms',
+    'tc_s12_body':
+        'Jappcare may update these Terms at any time. Continued use of the App after changes constitutes acceptance of the updated Terms.',
+    'tc_s13_title': '13. Contact Information',
+    'tc_s13_body':
+        'Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroon\nEmail: jappcareautotech@gmail.com',
   };
 }

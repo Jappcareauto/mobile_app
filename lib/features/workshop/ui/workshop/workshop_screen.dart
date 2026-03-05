@@ -164,7 +164,8 @@ class WorkshopScreen extends GetView<WorkshopController>
                                                 serviceCenter.available ??
                                                     false,
                                             locationName:
-                                                serviceCenter.location?.name);
+                                                serviceCenter.location?.name,
+                                            imageUrl: serviceCenter.imageUrl);
                                       },
                                     );
                                   }).toList()

@@ -259,6 +259,50 @@
   "pp_s9_title": "9. Coordonnées",
   "pp_s9_body": "Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroun\nEmail : jappcareautotech@gmail.com",
 
-  "pp_view_privacy_policy": "Politique de confidentialité"
+  "pp_view_privacy_policy": "Politique de confidentialité",
+
+  "appointment_ready_pickup": "Votre réparation chez @serviceCenterName est prête et disponible pour le retrait.",
+
+  "tc_title": "Conditions Générales",
+  "tc_last_updated": "Dernière mise à jour : Février 2026",
+
+  "tc_s1_title": "1. Acceptation des Conditions",
+  "tc_s1_body": "En créant un compte ou en utilisant l'application mobile Jappcare (\"Application\"), vous acceptez les présentes Conditions Générales.\n\nVous confirmez que :\n• Vous avez au moins 18 ans\n• Vous avez la capacité juridique de conclure des accords contraignants\n• Vous acceptez de respecter les lois applicables de la République du Cameroun\n\nSi vous n'acceptez pas, veuillez ne pas utiliser l'Application.",
+
+  "tc_s2_title": "2. À propos de Jappcare",
+  "tc_s2_body": "Jappcare opère en tant que marketplace autotech numérique qui connecte les propriétaires de véhicules avec des prestataires de services indépendants tels que des mécaniciens, des distributeurs de pièces détachées et des assureurs.\n\nJappcare :\n• Ne possède ni n'exploite de centres de service\n• Ne supervise pas directement les techniciens indépendants\n• N'est pas responsable de la qualité du travail, des retards ou des dommages causés par des prestataires tiers\n\nLes litiges liés aux services doivent être résolus directement avec le prestataire de services.",
+
+  "tc_s3_title": "3. Comptes Utilisateurs",
+  "tc_s3_body": "En créant un compte, vous acceptez de :\n• Fournir des informations exactes et complètes\n• Garder vos identifiants de connexion sécurisés\n• Ne pas créer plusieurs comptes\n• Nous notifier immédiatement de tout accès non autorisé\n\nJappcare se réserve le droit de suspendre ou de fermer les comptes qui enfreignent ces Conditions.",
+
+  "tc_s4_title": "4. Services et Abonnements",
+  "tc_s4_body": "• Les services d'abonnement peuvent être facturés mensuellement, trimestriellement ou annuellement\n• Les frais d'abonnement se renouvellent automatiquement sauf annulation\n• Les services de réparation nécessitent un paiement basé sur les factures émises\n• Les paiements ne sont pas remboursables sauf indication contraire\n• Les litiges de facturation doivent être signalés dans les 30 jours à jappcareautotech@gmail.com\n\nJappcare se réserve le droit de modifier les tarifs à tout moment.",
+
+  "tc_s5_title": "5. Techniciens et Prestataires de Services",
+  "tc_s5_body": "Les techniciens connectés via Jappcare sont des prestataires indépendants et non des employés de Jappcare.\n\nEn demandant un service, vous autorisez Jappcare à vous mettre en relation avec un technicien indépendant approprié.",
+
+  "tc_s6_title": "6. Paiements",
+  "tc_s6_body": "Tous les paiements doivent être effectués via les méthodes de paiement approuvées dans l'Application.\n\nVous vous engagez à ne pas :\n• Contourner le système de paiement de la plateforme\n• Vous livrer à des activités de paiement frauduleuses\n\nToute violation peut entraîner la suspension du compte.",
+
+  "tc_s7_title": "7. Propriété Intellectuelle",
+  "tc_s7_body": "Tout le contenu, les marques, logos, logiciels et matériaux de l'Application sont la propriété exclusive de Jappcare.\n\nVous ne pouvez pas copier, reproduire, décompiler, modifier ou distribuer toute partie de l'Application sans autorisation écrite.",
+
+  "tc_s8_title": "8. Activités Interdites",
+  "tc_s8_body": "Vous vous engagez à ne pas :\n• Utiliser l'Application à des fins illégales\n• Tenter de pirater, décompiler ou perturber la plateforme\n• Publier des informations fausses, trompeuses ou frauduleuses\n• Collecter les données d'autres utilisateurs sans consentement\n\nToute violation peut entraîner la fermeture immédiate du compte.",
+
+  "tc_s9_title": "9. Limitation de Responsabilité",
+  "tc_s9_body": "Jappcare n'est pas responsable de :\n• Dommages aux véhicules causés par des prestataires de services tiers\n• Dommages indirects ou consécutifs\n• Perte de profits ou de données\n• Événements hors de notre contrôle (vol, incendie, intempéries, actions gouvernementales)\n\nTous les services sont fournis \"EN L'ÉTAT\" sans garanties.",
+
+  "tc_s10_title": "10. Résiliation",
+  "tc_s10_body": "Jappcare peut suspendre ou résilier votre accès si vous enfreignez ces Conditions.\n\nVous pouvez demander la résiliation de votre compte en contactant jappcareautotech@gmail.com.",
+
+  "tc_s11_title": "11. Droit Applicable",
+  "tc_s11_body": "Les présentes Conditions sont régies par les lois de la République du Cameroun.",
+
+  "tc_s12_title": "12. Modifications des Conditions",
+  "tc_s12_body": "Jappcare peut mettre à jour ces Conditions à tout moment. L'utilisation continue de l'Application après les modifications constitue l'acceptation des Conditions mises à jour.",
+
+  "tc_s13_title": "13. Coordonnées",
+  "tc_s13_body": "Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroun\nEmail : jappcareautotech@gmail.com"
 }
 }

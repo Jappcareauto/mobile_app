@@ -33,14 +33,21 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: const ImageCarousel(
-                      positionIndicator: MainAxisAlignment.center,
-                      imageUrls: [
-                        AppImages.shopCar,
-                        AppImages.carWhite,
-                        AppImages.shopCar
-                      ],
-                    ),
+                    child: globalcontrollerWorkshop.workshopData['imageUrl'] !=
+                            null
+                        ? ImageCarousel(
+                            positionIndicator: MainAxisAlignment.center,
+                            isNetworkImage: true,
+                            imageUrls: [
+                              globalcontrollerWorkshop.workshopData['imageUrl'],
+                            ],
+                          )
+                        : const ImageCarousel(
+                            positionIndicator: MainAxisAlignment.center,
+                            imageUrls: [
+                              AppImages.shopCar,
+                            ],
+                          ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

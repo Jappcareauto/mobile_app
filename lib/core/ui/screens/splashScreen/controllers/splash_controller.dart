@@ -35,10 +35,16 @@ class SplashController extends GetxController {
     // The outcome does NOT block navigation – the app works with any
     // combination of granted / denied permissions. Features that need
     // location show a localised placeholder when permission is absent.
-    final BuildContext? context = Get.context;
-    if (context != null && context.mounted) {
-      await LocationPermissionService.instance
-          .requestLocationPermissions(context);
+    // Only run the full permission flow on first launch (i.e. user has
+    // never seen the disclosure). On subsequent launches the disclosure
+    // consent is already persisted and the OS permission is retained, so
+    // we skip to avoid showing popups every time the app opens.
+    final locationService = LocationPermissionService.instance;
+    if (!locationService.hasSeenDisclosure) {
+      final BuildContext? context = Get.context;
+      if (context != null && context.mounted) {
+        await locationService.requestLocationPermissions(context);
+      }
     }
 
     _appNavigation.toNamedAndReplaceAll(AppRoutes.home);

@@ -16,10 +16,48 @@ class TermsAndConditionsScreen extends GetView<TermsAndConditionsController> {
         appBarcolor: Get.theme.scaffoldBackgroundColor,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.only(top: 20),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text(controller.textData),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              LocaleKeys.terms_and_conditions.tr,
+              style: Get.textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              controller.lastUpdated,
+              style: Get.textTheme.bodySmall?.copyWith(
+                color: Colors.grey[600],
+              ),
+            ),
+            const SizedBox(height: 24),
+            ...controller.sections.map((section) => Padding(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        section['title']!,
+                        style: Get.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        section['body']!,
+                        style: Get.textTheme.bodyMedium?.copyWith(
+                          height: 1.6,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+            const SizedBox(height: 40),
+          ],
         ),
       ),
     );
