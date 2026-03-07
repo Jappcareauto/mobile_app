@@ -184,6 +184,18 @@ class SignUpWithEmailScreen extends GetView<SignUpWithEmailController> {
                                       Get.find<AuthentificationController>()
                                           .googleSignup,
                                 ),
+                                CustomButton(
+                                  text: 'Continue with Apple',
+                                  haveBorder: true,
+                                  prefixIcon: const Icon(Icons.apple,
+                                      size: 25, color: Colors.black),
+                                  isLoading:
+                                      Get.find<AuthentificationController>()
+                                          .loadingAppleSignup,
+                                  onPressed:
+                                      Get.find<AuthentificationController>()
+                                          .appleSignup,
+                                ),
                                 RichText(
                                   text: TextSpan(
                                     style: Get.textTheme.bodySmall,

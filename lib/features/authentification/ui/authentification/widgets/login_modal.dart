@@ -42,18 +42,21 @@ class LoginModalWidget extends StatelessWidget {
                   ),
                   isLoading: controller.loadingGoogle,
                   onPressed: controller.googleLogin,
-                  // _BottomSheetLogin();
+                ),
+                const SizedBox(height: 16),
+                CustomButton(
+                  text: "Continue with Apple",
+                  haveBorder: true,
+                  prefixIcon:
+                      const Icon(Icons.apple, size: 25, color: Colors.black),
+                  isLoading: controller.loadingApple,
+                  onPressed: controller.appleLogin,
                 ),
                 const SizedBox(height: 16),
                 CustomButton(
                     text: "Login with Email",
                     haveBorder: true,
                     onPressed: controller.goToLoginWithEmail),
-                // const SizedBox(height: 16),
-                // CustomButton(
-                //     text: "Login with Phone",
-                //     haveBorder: true,
-                //     onPressed: controller.goToLoginWithPhone),
               ],
             )),
       ),

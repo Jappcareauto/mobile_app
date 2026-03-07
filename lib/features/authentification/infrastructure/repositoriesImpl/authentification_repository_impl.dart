@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../domain/repositories/authentification_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
@@ -32,7 +33,8 @@ const String _serverClientId =
 
 Future<void> _initializeGoogleSignIn() async {
   try {
-    print("========================================================================");
+    print(
+        "========================================================================");
     await _googleSignIn.initialize(serverClientId: _serverClientId);
   } catch (e) {
     // Google Sign-In initialization failed
@@ -360,11 +362,69 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   // }
 
   Future<void> googleLogout() async {
-    // final GoogleSignIn googleSignIn = GoogleSignIn(
-    //   scopes: <String>['email'],
-    // );
-
     _googleSignIn.disconnect();
+  }
+
+  // ── Apple Sign-In ────────────────────────────────────────────────────────
+
+  @override
+  Future<Either<AuthentificationException, Login>> appleLogin(
+      {required String identityToken, String? fullName}) async {
+    try {
+      final response = await networkService
+          .post(AuthentificationConstants.appleLoginPostUri, headers: {
+        'Authorization': 'BearerId $identityToken',
+        if (fullName != null && fullName.isNotEmpty) 'Name': fullName,
+      });
+      final data = response['data'] as Map<String, dynamic>;
+      return Right(LoginModel.fromJson(data).toEntity());
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message, e.statusCode));
+    }
+  }
+
+  @override
+  Future<Either<AuthentificationException, Login>> appleSignIn() async {
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+        webAuthenticationOptions: WebAuthenticationOptions(
+          clientId: 'com.jappcareautotech.jappcare.login',
+          redirectUri: Uri.parse(
+            'https://bpi.jappcare.com/api/v1/auth/oauth/apple/callback',
+          ),
+        ),
+      );
+
+      final String? identityToken = credential.identityToken;
+      if (identityToken == null) {
+        throw Exception('Apple Sign-In failed: No identity token received');
+      }
+
+      // Apple only provides the name on the FIRST sign-in
+      String? fullName;
+      if (credential.givenName != null || credential.familyName != null) {
+        fullName =
+            '${credential.givenName ?? ''} ${credential.familyName ?? ''}'
+                .trim();
+      }
+
+      return await appleLogin(identityToken: identityToken, fullName: fullName);
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message, e.statusCode));
+    } catch (e) {
+      return Left(AuthentificationException(e.toString(), 0));
+    }
+  }
+
+  @override
+  Future<Either<AuthentificationException, Login>> appleSignUp() async {
+    // Apple Sign-In uses the same flow for both login and signup.
+    // The backend handles new-user creation automatically.
+    return appleSignIn();
   }
 
   //Add methods here

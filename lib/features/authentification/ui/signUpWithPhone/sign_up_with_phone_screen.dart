@@ -243,6 +243,16 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                               onPressed: Get.find<AuthentificationController>()
                                   .googleSignup,
                             ),
+                            CustomButton(
+                              text: 'Continue with Apple',
+                              haveBorder: true,
+                              prefixIcon: const Icon(Icons.apple,
+                                  size: 25, color: Colors.black),
+                              isLoading: Get.find<AuthentificationController>()
+                                  .loadingApple,
+                              onPressed: Get.find<AuthentificationController>()
+                                  .appleLogin,
+                            ),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

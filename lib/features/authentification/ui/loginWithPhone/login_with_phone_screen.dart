@@ -171,6 +171,16 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                               .loadingGoogle,
                           onPressed: null,
                         ),
+                        CustomButton(
+                          text: 'Continue with Apple',
+                          haveBorder: true,
+                          prefixIcon: const Icon(Icons.apple,
+                              size: 25, color: Colors.black),
+                          isLoading: Get.find<AuthentificationController>()
+                              .loadingApple,
+                          onPressed:
+                              Get.find<AuthentificationController>().appleLogin,
+                        ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

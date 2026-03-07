@@ -101,6 +101,16 @@ class LoginWithEmailScreen extends GetView<LoginWithEmailController> {
                             onPressed: Get.find<AuthentificationController>()
                                 .googleLogin,
                           ),
+                          CustomButton(
+                            text: 'Continue with Apple',
+                            haveBorder: true,
+                            prefixIcon: const Icon(Icons.apple,
+                                size: 25, color: Colors.black),
+                            isLoading: Get.find<AuthentificationController>()
+                                .loadingApple,
+                            onPressed: Get.find<AuthentificationController>()
+                                .appleLogin,
+                          ),
                           RichText(
                             text: TextSpan(
                               style: Get.textTheme.bodySmall,

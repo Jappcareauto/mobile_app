@@ -44,6 +44,15 @@ class SignUpModalWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 CustomButton(
+                  text: "Continue with Apple",
+                  haveBorder: true,
+                  prefixIcon:
+                      const Icon(Icons.apple, size: 25, color: Colors.black),
+                  isLoading: controller.loadingApple,
+                  onPressed: controller.appleLogin,
+                ),
+                const SizedBox(height: 16),
+                CustomButton(
                     text: "Create Account with Email",
                     haveBorder: true,
                     onPressed: controller.goToSignUpWithEmail),
