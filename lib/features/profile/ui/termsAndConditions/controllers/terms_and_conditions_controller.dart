@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 
 class TermsAndConditionsController extends GetxController {
@@ -7,7 +8,6 @@ class TermsAndConditionsController extends GetxController {
 
   @override
   void onInit() {
-    // Generate by Menosi_cli
     super.onInit();
   }
 
@@ -15,11 +15,33 @@ class TermsAndConditionsController extends GetxController {
     _appNavigation.goBack();
   }
 
-  final textData = """
-The information you provided during the registration process does not currently meet our profile criteria. We appreciate your time and interest in teaching with us. You're always welcome to apply again in the future.
+  List<Map<String, String>> get sections => [
+        {'title': LocaleKeys.tc_s1_title.tr, 'body': LocaleKeys.tc_s1_body.tr},
+        {'title': LocaleKeys.tc_s2_title.tr, 'body': LocaleKeys.tc_s2_body.tr},
+        {'title': LocaleKeys.tc_s3_title.tr, 'body': LocaleKeys.tc_s3_body.tr},
+        {'title': LocaleKeys.tc_s4_title.tr, 'body': LocaleKeys.tc_s4_body.tr},
+        {'title': LocaleKeys.tc_s5_title.tr, 'body': LocaleKeys.tc_s5_body.tr},
+        {'title': LocaleKeys.tc_s6_title.tr, 'body': LocaleKeys.tc_s6_body.tr},
+        {'title': LocaleKeys.tc_s7_title.tr, 'body': LocaleKeys.tc_s7_body.tr},
+        {'title': LocaleKeys.tc_s8_title.tr, 'body': LocaleKeys.tc_s8_body.tr},
+        {'title': LocaleKeys.tc_s9_title.tr, 'body': LocaleKeys.tc_s9_body.tr},
+        {
+          'title': LocaleKeys.tc_s10_title.tr,
+          'body': LocaleKeys.tc_s10_body.tr
+        },
+        {
+          'title': LocaleKeys.tc_s11_title.tr,
+          'body': LocaleKeys.tc_s11_body.tr
+        },
+        {
+          'title': LocaleKeys.tc_s12_title.tr,
+          'body': LocaleKeys.tc_s12_body.tr
+        },
+        {
+          'title': LocaleKeys.tc_s13_title.tr,
+          'body': LocaleKeys.tc_s13_body.tr
+        },
+      ];
 
-The information you provided during the registration process does not currently meet our profile criteria. We appreciate your time and interest in teaching with us. You're always welcome to apply again in the future. The information you provided during the registration process does not currently meet our profile criteria. We appreciate your time and interest in teaching with us. You're always welcome to apply again in the future.
-
-The information you provided during the registration process does not currently meet our profile criteria. We appreciate your time and interest in teaching with us. You're always welcome to apply again in the future.
-""";
+  String get lastUpdated => LocaleKeys.tc_last_updated.tr;
 }

@@ -7,6 +7,7 @@ import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/features/shop/ui/shop/widgets/product_list-shimmer.dart';
 import 'package:jappcare/features/shop/ui/shop/widgets/tabs_list_widgets.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/shop_controller.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +20,7 @@ class ShopScreen extends GetView<ShopController>
     Get.put(ShopController(Get.find()));
     return Scaffold(
         appBar: CustomAppBar(
-          title: "Shop",
+          title: LocaleKeys.shop.tr,
           actions: [
             InkWell(
               onTap: () {},
@@ -35,11 +36,11 @@ class ShopScreen extends GetView<ShopController>
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: CustomFormField(
-                      hintText: "Search Centers",
-                      prefix: Icon(FluentIcons.search_24_regular),
+                      hintText: LocaleKeys.filter_by_research.tr,
+                      prefix: const Icon(FluentIcons.search_24_regular),
                     ),
                   ),
                   const SizedBox(height: 20),

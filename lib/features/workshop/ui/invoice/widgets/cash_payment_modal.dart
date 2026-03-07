@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart'
     show CustomFormField;
@@ -159,6 +160,8 @@ class _CashPaymentModalState extends State<CashPaymentModal> {
         if (result.fullyPaid) {
           Get.showCustomSnackBar('Invoice fully paid!',
               title: 'Success', type: CustomSnackbarType.success);
+          // Navigate to home screen after successful full payment
+          Get.offAllNamed(AppRoutes.home);
         } else {
           Get.showCustomSnackBar(
               'Payment successful. Remaining: ${_formatCurrency(result.remainingBalance)}',
@@ -179,184 +182,190 @@ class _CashPaymentModalState extends State<CashPaymentModal> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.85,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'Cash Payment',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-
-          // Payment Info
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Column(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Total Amount:'),
-                    Text(
-                      _formatCurrency(widget.totalAmount),
-                      style: const TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                const Text(
+                  'Cash Payment',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                const SizedBox(height: 4),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('Remaining Balance:'),
-                    Text(
-                      _formatCurrency(widget.remainingBalance),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: widget.remainingBalance > 0
-                            ? Colors.red
-                            : Colors.green,
-                      ),
-                    ),
-                  ],
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
-          // Amount Input
-          const Text(
-            'Payment Amount',
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(height: 8),
-          CustomFormField(
-            controller: _amountController,
-            hintText: 'Enter amount',
-            keyboardType: TextInputType.number,
-            suffix: Text(
-              widget.currency,
-              style: const TextStyle(color: Colors.grey),
-            ),
-          ),
-          const SizedBox(height: 16),
-
-          // Note Input
-          const Text(
-            'Note (Optional)',
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(height: 8),
-          CustomFormField(
-            controller: _noteController,
-            hintText: 'Add payment note...',
-            maxLine: 2,
-          ),
-          const SizedBox(height: 16),
-
-          // Receipt Upload
-          const Text(
-            'Receipt/Proof of Payment (Optional)',
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(height: 8),
-          if (_receiptFile != null) ...[
+            // Payment Info
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.green),
+                color: Colors.grey.shade100,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Row(
+              child: Column(
                 children: [
-                  const Icon(Icons.check_circle, color: Colors.green, size: 20),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      _fileName ?? 'Receipt attached',
-                      style: const TextStyle(fontSize: 14),
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Total Amount:'),
+                      Text(
+                        _formatCurrency(widget.totalAmount),
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.close, size: 20),
-                    onPressed: _removeReceipt,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
+                  const SizedBox(height: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Remaining Balance:'),
+                      Text(
+                        _formatCurrency(widget.remainingBalance),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: widget.remainingBalance > 0
+                              ? Colors.red
+                              : Colors.green,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-          ] else ...[
-            InkWell(
-              onTap: _pickReceiptFile,
-              child: Container(
-                padding: const EdgeInsets.all(16),
+            const SizedBox(height: 16),
+
+            // Amount Input
+            const Text(
+              'Payment Amount',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            CustomFormField(
+              controller: _amountController,
+              hintText: 'Enter amount',
+              keyboardType: TextInputType.number,
+              suffix: Text(
+                widget.currency,
+                style: const TextStyle(color: Colors.grey),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Note Input
+            const Text(
+              'Note (Optional)',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            CustomFormField(
+              controller: _noteController,
+              hintText: 'Add payment note...',
+              maxLine: 2,
+            ),
+            const SizedBox(height: 16),
+
+            // Receipt Upload
+            const Text(
+              'Receipt/Proof of Payment (Optional)',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+            const SizedBox(height: 8),
+            if (_receiptFile != null) ...[
+              Container(
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
+                  border: Border.all(color: Colors.green),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.upload_file, color: Get.theme.primaryColor),
+                    const Icon(Icons.check_circle,
+                        color: Colors.green, size: 20),
                     const SizedBox(width: 8),
-                    Text(
-                      'Upload Receipt',
-                      style: TextStyle(color: Get.theme.primaryColor),
+                    Expanded(
+                      child: Text(
+                        _fileName ?? 'Receipt attached',
+                        style: const TextStyle(fontSize: 14),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close, size: 20),
+                      onPressed: _removeReceipt,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
-          const SizedBox(height: 24),
-
-          // Action Buttons
-          Row(
-            children: [
-              Expanded(
-                child: CustomButton(
-                  text: 'Cancel',
-                  onPressed: () => Navigator.of(context).pop(),
-                  haveBorder: true,
-                  strech: false,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: CustomButton(
-                  text: _isLoading ? 'Processing...' : 'Pay Now',
-                  onPressed: _isLoading ? () {} : _submitPayment,
-                  strech: false,
+            ] else ...[
+              InkWell(
+                onTap: _pickReceiptFile,
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.upload_file, color: Get.theme.primaryColor),
+                      const SizedBox(width: 8),
+                      Text(
+                        'Upload Receipt',
+                        style: TextStyle(color: Get.theme.primaryColor),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
-          ),
-          const SizedBox(height: 16),
-        ],
+            const SizedBox(height: 24),
+
+            // Action Buttons
+            Row(
+              children: [
+                Expanded(
+                  child: CustomButton(
+                    text: 'Cancel',
+                    onPressed: () => Navigator.of(context).pop(),
+                    haveBorder: true,
+                    strech: false,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: CustomButton(
+                    text: _isLoading ? 'Processing...' : 'Pay Now',
+                    onPressed: _isLoading ? () {} : _submitPayment,
+                    strech: false,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
       ),
     );
   }

@@ -11,4 +11,5 @@ PRODUCT_NAME = jappcare
 PRODUCT_BUNDLE_IDENTIFIER = com.menosi.jappcare
 
 // The copyright displayed in application information
+// The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 com.menosi. All rights reserved.

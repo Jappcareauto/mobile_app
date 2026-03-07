@@ -5,7 +5,7 @@ class ManageAccountControllerBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<ManageAccountController>(
-      () => ManageAccountController(),
+      () => ManageAccountController(Get.find(), Get.find()),
     );
   }
 }

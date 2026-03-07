@@ -35,17 +35,27 @@ class GetVehiculByIdModel {
     return GetVehiculByIdModel._(
       name: json['name'],
       description: json['description'],
-      garageId: json['garageId'],
+      garageId: json['garageId'] is String
+          ? json['garageId']
+          : json['garageId']?.toString() ?? '',
       vin: json['vin'],
       registrationNumber: json['registrationNumber'],
       detail: DetailModel.fromJson(json['detail']),
       media: MediaModel.fromJson(json['media']),
       imageUrl: json['imageUrl'],
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 
@@ -147,12 +157,22 @@ class DetailModel {
       driveTrain: json['driveTrain'],
       power: json['power'],
       bodyType: json['bodyType'],
-      vehicleId: json['vehicleId'],
+      vehicleId: json['vehicleId'] is String
+          ? json['vehicleId']
+          : json['vehicleId']?.toString() ?? '',
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 
@@ -242,10 +262,18 @@ class MediaModel {
       items: List<ItemsModel>.from(
           json['items'].map((x) => ItemsModel.fromJson(x))),
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 
@@ -322,14 +350,28 @@ class ItemsModel {
       sourceUrl: json['sourceUrl'],
       capturedUrl: json['capturedUrl'],
       type: json['type'],
-      mediaId: json['mediaId'],
-      fileId: json['fileId'],
-      fileUrl: json['fileUrl'],
+      mediaId: json['mediaId'] is String
+          ? json['mediaId']
+          : json['mediaId']?.toString() ?? '',
+      fileId: json['fileId'] is String
+          ? json['fileId']
+          : json['fileId']?.toString() ?? '',
+      fileUrl: json['fileUrl'] is String
+          ? json['fileUrl']
+          : json['fileUrl']?.toString() ?? '',
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 

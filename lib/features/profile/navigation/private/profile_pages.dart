@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:jappcare/features/profile/ui/payments/addPaymentMethod/add_payment_method_screen.dart';
 import '../bindings/manage_account_controller_binding.dart';
 import '../../ui/manageAccount/manage_account_screen.dart';
+import '../bindings/language_settings_controller_binding.dart';
+import '../../ui/language/language_settings_screen.dart';
 
 import '../bindings/payments_controller_binding.dart';
 import '../../ui/payments/payments_screen.dart';
@@ -77,6 +79,11 @@ class ProfilePages implements FeaturePages {
           name: ProfilePrivateRoutes.addCardPaymentMethod,
           page: () => const AddPaymentMethodScreen(),
           binding: PaymentsControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.language,
+          page: () => const LanguageSettingsScreen(),
+          binding: LanguageSettingsControllerBinding(),
         ),
         // Add other routes here
       ];

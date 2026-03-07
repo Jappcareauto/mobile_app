@@ -9,7 +9,10 @@ import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';
 import 'package:jappcare/features/authentification/ui/authentification/widgets/signup_modal.dart';
+import 'package:jappcare/features/profile/navigation/private/profile_private_routes.dart';
 import '../../../../../core/navigation/app_navigation.dart';
+import '../../../application/usecases/apple_login_usecase.dart';
+import '../../../application/usecases/apple_signup_usecase.dart';
 import '../../../application/usecases/google_login_usecase.dart';
 import '../../../application/usecases/google_signup_usecase.dart';
 import '../widgets/login_modal.dart';
@@ -19,9 +22,13 @@ class AuthentificationController extends GetxController {
   final LocalStorageService _localStorageService = Get.find();
   final GoogleLoginUseCase _googleLoginUseCase = Get.find();
   final GoogleSignupUseCase _googleSignupUseCase = Get.find();
+  final AppleLoginUseCase _appleLoginUseCase = Get.find();
+  final AppleSignupUseCase _appleSignupUseCase = Get.find();
   AuthentificationController(this._appNavigation);
   final loadingGoogle = false.obs;
   final loadingGoogleSignup = false.obs;
+  final loadingApple = false.obs;
+  final loadingAppleSignup = false.obs;
 
   @override
   void onInit() {
@@ -122,6 +129,51 @@ class AuthentificationController extends GetxController {
   }
 
   void goToTermsAndConditions() {
-    //TODO
+    _appNavigation.toNamed(ProfilePrivateRoutes.termsAndConditions);
+  }
+
+  void goToPrivacyPolicy() {
+    _appNavigation.toNamed(ProfilePrivateRoutes.privacyPolicy);
+  }
+
+  void appleLogin() async {
+    loadingApple.value = true;
+    final response = await _appleLoginUseCase.call();
+
+    response.fold((e) {
+      loadingApple.value = false;
+      if (Get.context != null) {
+        Get.showCustomSnackBar(e.message);
+      }
+      update();
+    }, (success) {
+      loadingApple.value = false;
+      _localStorageService.write(AppConstants.tokenKey, success.accessToken);
+      _localStorageService.write(
+          AppConstants.refreshTokenKey, success.refreshToken);
+      _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
+      Get.find<AppEventService>()
+          .emit<String>(AppConstants.userLoginEvent, success.accessToken);
+    });
+  }
+
+  void appleSignup() async {
+    loadingAppleSignup.value = true;
+    final response = await _appleSignupUseCase.call();
+
+    response.fold((e) {
+      loadingAppleSignup.value = false;
+      if (Get.context != null) {
+        Get.showCustomSnackBar(e.message);
+      }
+    }, (success) {
+      loadingAppleSignup.value = false;
+      _localStorageService.write(AppConstants.tokenKey, success.accessToken);
+      _localStorageService.write(
+          AppConstants.refreshTokenKey, success.refreshToken);
+      _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
+      Get.find<AppEventService>()
+          .emit<String>(AppConstants.userLoginEvent, success.accessToken);
+    });
   }
 }

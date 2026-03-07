@@ -3,7 +3,6 @@ import 'package:jappcare/features/emergency/infrastructure/models/emergency_mode
 import '../../domain/entities/declined_emergency.dart';
 
 class DeclinedEmergencyModel {
-
   final String serviceCenterId;
   final String vehicleId;
   final String title;
@@ -32,17 +31,29 @@ class DeclinedEmergencyModel {
 
   factory DeclinedEmergencyModel.fromJson(Map<String, dynamic> json) {
     return DeclinedEmergencyModel._(
-      serviceCenterId: json['serviceCenterId'],
-      vehicleId: json['vehicleId'],
+      serviceCenterId: json['serviceCenterId'] is String
+          ? json['serviceCenterId']
+          : json['serviceCenterId']?.toString() ?? '',
+      vehicleId: json['vehicleId'] is String
+          ? json['vehicleId']
+          : json['vehicleId']?.toString() ?? '',
       title: json['title'],
       note: json['note'],
       status: json['status'],
       location: LocationModel.fromJson(json['location']),
       id: json['id'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
     );
   }
 

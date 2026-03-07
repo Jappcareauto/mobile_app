@@ -1,14 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/app_navigation.dart';
+import 'package:jappcare/core/utils/getx_extensions.dart';
 import 'package:jappcare/features/chat/navigation/private/chat_private_routes.dart';
 import 'package:jappcare/features/garage/domain/repositories/garage_repository.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/features/workshop/domain/entities/payment.entity.dart';
+import 'package:jappcare/features/workshop/domain/repositories/payment_repository.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
+import 'package:jappcare/features/workshop/ui/appointment_details/widgets/appointment_payments_modal.dart';
 
 class AppointmentDetailsController extends GetxController {
   final AppNavigation _appNavigation;
   final GarageRepository _garageRepository;
-  AppointmentDetailsController(this._appNavigation, this._garageRepository);
+  final PaymentRepository _paymentRepository;
+  AppointmentDetailsController(
+      this._appNavigation, this._garageRepository, this._paymentRepository);
   RxBool isExpanded = true.obs;
   RxBool isExpandedReportDetail = true.obs;
   RxBool isLoading = false.obs;
@@ -71,6 +78,56 @@ class AppointmentDetailsController extends GetxController {
       'Mark as Complete',
       'This feature will be implemented soon.',
       snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+
+  /// Shows a modal with all payments made for this appointment
+  Future<void> viewAllPayments() async {
+    // Show the modal immediately with loading state
+    showModalBottomSheet(
+      context: Get.context!,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return FutureBuilder<List<PaymentEntity>>(
+          future: _fetchAppointmentPayments(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const AppointmentPaymentsModal(
+                payments: [],
+                isLoading: true,
+              );
+            }
+
+            if (snapshot.hasError || !snapshot.hasData) {
+              return const AppointmentPaymentsModal(
+                payments: [],
+                isLoading: false,
+              );
+            }
+
+            return AppointmentPaymentsModal(
+              payments: snapshot.data!,
+              isLoading: false,
+            );
+          },
+        );
+      },
+    );
+  }
+
+  /// Fetches payments for this appointment from the API
+  Future<List<PaymentEntity>> _fetchAppointmentPayments() async {
+    final result = await _paymentRepository.getPaymentsByAppointmentId(
+      appointmentId: _appointment.value.id,
+    );
+    return result.fold(
+      (failure) {
+        Get.showCustomSnackBar(failure.message,
+            title: 'Error', type: CustomSnackbarType.error);
+        return <PaymentEntity>[];
+      },
+      (payments) => payments,
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/loading_widget.dart';
 import 'package:jappcare/features/home/ui/home/home_screen.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'controllers/dashboard_controller.dart';
 import 'package:get/get.dart';
 
@@ -52,7 +53,7 @@ class DashboardScreen extends GetView<DashboardController> {
                         ? FluentIcons.home_24_filled
                         : FluentIcons.home_24_regular,
                   ),
-                  label: 'Home',
+                  label: LocaleKeys.home.tr,
                 ),
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'ActivitiesScreen'))
@@ -62,7 +63,7 @@ class DashboardScreen extends GetView<DashboardController> {
                           ? FluentIcons.clock_24_filled
                           : FluentIcons.clock_24_regular,
                     ),
-                    label: 'Activities',
+                    label: LocaleKeys.activities.tr,
                   ),
                 if (Get.isRegistered<FeatureWidgetInterface>(
                     tag: 'WorkshopScreen'))
@@ -72,7 +73,7 @@ class DashboardScreen extends GetView<DashboardController> {
                           ? FluentIcons.home_garage_24_filled
                           : FluentIcons.home_garage_24_regular,
                     ),
-                    label: 'Workshops',
+                    label: LocaleKeys.workshop.tr,
                   ),
                 // BottomNavigationBarItem(
                 //   icon: Icon(
@@ -88,7 +89,7 @@ class DashboardScreen extends GetView<DashboardController> {
                     icon: Icon(controller.selectedIndex.value == 3
                         ? FluentIcons.vehicle_cab_24_filled
                         : FluentIcons.vehicle_cab_24_regular),
-                    label: 'Garage',
+                    label: LocaleKeys.my_garage.tr,
                   ),
               ],
               currentIndex: controller.selectedIndex.value,

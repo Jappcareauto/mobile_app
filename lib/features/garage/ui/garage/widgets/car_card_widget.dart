@@ -5,6 +5,7 @@ import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/chip_widget.dart';
+import 'package:jappcare/generated/locales.g.dart';
 
 import '../../../../../core/utils/app_images.dart';
 
@@ -73,14 +74,14 @@ class CarCardWidget extends GetView<GarageController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '$appointmentType Appointment',
-                          style: TextStyle(
+                          '$appointmentType ${LocaleKeys.appointment.tr}',
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.orange),
                         ),
                         Text(
                           serviceCenterName ?? 'Japcare AutoShop',
-                          style: TextStyle(color: Colors.grey),
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       ],
                     ),

@@ -3,7 +3,7 @@
 class AppConstants {
   static const String appVersion = "1.0.0";
   static const String baseUrl = "https://bpi.jappcare.com/api/v1";
-  // Local: static const String baseUrl = "http://192.168.1.176:8555/api/v1";
+  //static const String baseUrl = "http://192.168.1.165:8555/api/v1";
   //"https://japcare-be.onrender.com/api/v1";
   // "http://ec2-3-23-222-64.us-east-2.compute.amazonaws.com:8555/api/v1";
   static const String notFoundScreen = "/404";
@@ -20,6 +20,13 @@ class AppConstants {
   static const String languageKey = "languageKey";
   static const String firstOpen = "firstOpenKey";
   static const String userIdKey = "userIdKey";
+
+  // ── Location / Google Play Prominent Disclosure ──────────────────────────
+  // Stored as bool via GetStorage.  Set to true once the user has accepted
+  // the Prominent Disclosure bottom sheet so it is never shown again.
+  // Required by Google Play User Data Policy – do NOT remove.
+  static const String locationDisclosureConsentKey =
+      "locationDisclosureConsentKey";
 
   //Events
   static const String userLoginEvent = "userLoginEvent";

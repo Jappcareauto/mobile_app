@@ -57,13 +57,27 @@ class AppointmentInvoiceModel {
   factory AppointmentInvoiceModel.fromJson(Map<String, dynamic> json) {
     return AppointmentInvoiceModel._(
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      number: json['number'],
-      diagnosedIssue: json['diagnosedIssue'],
-      repairedMade: json['repairedMade'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString(),
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString(),
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString(),
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString(),
+      number: json['number'] is String
+          ? json['number']
+          : json['number']?.toString(),
+      diagnosedIssue: json['diagnosedIssue'] is String
+          ? json['diagnosedIssue']
+          : json['diagnosedIssue']?.toString(),
+      repairedMade: json['repairedMade'] is String
+          ? json['repairedMade']
+          : json['repairedMade']?.toString(),
       money: json['money'] != null
           ? InvoiceMoneyModel.fromJson(json['money'])
           : null,
@@ -71,12 +85,24 @@ class AppointmentInvoiceModel {
       dueDate: json['dueDate'],
       paidDate: json['paidDate'],
       issueDate: json['issueDate'],
-      appointmentId: json['appointmentId'],
-      serviceCenterId: json['serviceCenterId'],
-      serviceCenterOwnerId: json['serviceCenterOwnerId'],
-      garageOwnerId: json['garageOwnerId'],
-      serviceId: json['serviceId'],
-      vehicleId: json['vehicleId'],
+      appointmentId: json['appointmentId'] is String
+          ? json['appointmentId']
+          : json['appointmentId']?.toString(),
+      serviceCenterId: json['serviceCenterId'] is String
+          ? json['serviceCenterId']
+          : json['serviceCenterId']?.toString(),
+      serviceCenterOwnerId: json['serviceCenterOwnerId'] is String
+          ? json['serviceCenterOwnerId']
+          : json['serviceCenterOwnerId']?.toString(),
+      garageOwnerId: json['garageOwnerId'] is String
+          ? json['garageOwnerId']
+          : json['garageOwnerId']?.toString(),
+      serviceId: json['serviceId'] is String
+          ? json['serviceId']
+          : json['serviceId']?.toString(),
+      vehicleId: json['vehicleId'] is String
+          ? json['vehicleId']
+          : json['vehicleId']?.toString(),
       billedFromUser: json['billedFromUser'] != null
           ? InvoiceUserModel.fromJson(json['billedFromUser'])
           : null,

@@ -31,7 +31,7 @@ class LoginWithPhoneController extends GetxController {
       validators: {
         // "code": Validators.requiredField,
         "phone": Validators.requiredField,
-        "password": Validators.requiredField,
+        "password": Validators.loginPassword,
       },
       onSubmit: (data) => _loginUseCase.call(LoginCommand(
         phone: PhoneCommand(

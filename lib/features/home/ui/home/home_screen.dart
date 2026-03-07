@@ -10,6 +10,7 @@ import 'package:jappcare/features/home/ui/dashboard/controllers/dashboard_contro
 // import 'package:jappcare/features/home/ui/home/widgets/dismiss_widget.dart'; // Commented out with notification banner
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
 import 'package:jappcare/features/home/ui/home/widgets/tip_modal_bottom.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../core/utils/app_images.dart';
 import 'controllers/home_controller.dart';
@@ -124,7 +125,7 @@ class HomeScreen extends GetView<HomeController> {
                       .buildView({
                     "pageController": controller.pageController,
                     "currentPage": controller.currentPage,
-                    "title": "My Garage",
+                    "title": LocaleKeys.my_garage.tr,
                     'viewCarDetailsOnCardPress': true,
                     'haveAddVehicule': true,
                     "onTapeAddVehicle": () {
@@ -138,12 +139,12 @@ class HomeScreen extends GetView<HomeController> {
                       .buildView({
                     'haveTabBar': false,
                     'haveTitle': true,
-                    'title': 'Upcoming Activities',
+                    'title': LocaleKeys.upcoming_activities.tr,
                     'status': 'NOT_STARTED',
                     'isHorizontal': true,
                     'limit': 3,
                     'noActivitiesPlaceholder':
-                        'You have no upcoming activities at the moment'
+                        LocaleKeys.no_upcoming_activities.tr
                   }),
                 ],
 
@@ -154,7 +155,7 @@ class HomeScreen extends GetView<HomeController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Services',
+                        LocaleKeys.services.tr,
                         style: Get.textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -165,7 +166,7 @@ class HomeScreen extends GetView<HomeController> {
                           Expanded(
                             child: CustomCardService(
                               color: const Color(0xFFFFEDE6),
-                              text: 'Find a Service\nCenter',
+                              text: LocaleKeys.find_service_center.tr,
                               imagePath: AppImages.service,
                               onTap: () {
                                 // controller.goToVehicleFinder();
@@ -177,7 +178,7 @@ class HomeScreen extends GetView<HomeController> {
                           Expanded(
                             child: CustomCardService(
                               color: const Color(0xFFFFDAD4),
-                              text: 'Emergency\nAssistance',
+                              text: LocaleKeys.emergency_assistance.tr,
                               imagePath: AppImages.emergency,
                               onTap: () {
                                 // controller.goToEmergency();

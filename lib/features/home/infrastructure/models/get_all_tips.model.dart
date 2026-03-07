@@ -12,8 +12,7 @@ class GetAllTipsModel {
 
   factory GetAllTipsModel.fromJson(Map<String, dynamic> json) {
     return GetAllTipsModel._(
-      data: List<TipModel>.from(
-          json['data'].map((x) => TipModel.fromJson(x))),
+      data: List<TipModel>.from(json['data'].map((x) => TipModel.fromJson(x))),
       pagination: PaginationModel.fromJson(json['pagination']),
     );
   }
@@ -29,8 +28,7 @@ class GetAllTipsModel {
 
   factory GetAllTipsModel.fromEntity(GetAllTips entity) {
     return GetAllTipsModel._(
-      data: List<TipModel>.from(
-          entity.data.map((x) => TipModel.fromEntity(x))),
+      data: List<TipModel>.from(entity.data.map((x) => TipModel.fromEntity(x))),
       pagination: PaginationModel.fromEntity(entity.pagination),
     );
   }
@@ -53,23 +51,30 @@ class TipModel {
   final String description;
   // final ServiceCenterMode? serviceCenter;
 
-  TipModel._({
-    required this.id,
-    required this.createdBy,
-    required this.updatedBy,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.title,
-    required this.description
-  });
+  TipModel._(
+      {required this.id,
+      required this.createdBy,
+      required this.updatedBy,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.title,
+      required this.description});
 
   factory TipModel.fromJson(Map<String, dynamic> json) {
     return TipModel._(
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
       title: json['title'],
       description: json['description'],
     );

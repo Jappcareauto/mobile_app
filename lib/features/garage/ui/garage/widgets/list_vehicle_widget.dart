@@ -5,6 +5,7 @@ import 'package:jappcare/core/events/app_events_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/domain/entities/get_vehicle_list.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
 import 'car_card_add_vehicle.dart';
 import 'shimmers/garage_name_shimmer.dart';
@@ -38,7 +39,7 @@ class ListVehicleWidget extends StatelessWidget
     this.isSingleCard,
     this.haveTitle = true,
     this.haveTitlePadding = true,
-    this.title = "My Garage",
+    this.title = '',
     this.onSelected,
     this.selectedIndex,
   });
@@ -83,7 +84,7 @@ class ListVehicleWidget extends StatelessWidget
                   return controller.loading.value
                       ? const MyGarageNameShimmer()
                       : Text(
-                          title,
+                          title.isEmpty ? LocaleKeys.my_garage.tr : title,
                           style: Get.textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -131,7 +132,7 @@ class ListVehicleWidget extends StatelessWidget
                                 alpha: 0.1), // Customize highlight color
                             child: Center(
                               child: Text(
-                                '+ Add Vehicle',
+                                LocaleKeys.add_vehicle.tr,
                                 style: TextStyle(
                                     color: Get.theme.primaryColor,
                                     fontSize: 16,

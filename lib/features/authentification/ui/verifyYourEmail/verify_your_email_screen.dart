@@ -5,6 +5,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 // import 'package:jappcare/core/ui/widgets/image_decoration.dart';
 // import 'package:jappcare/core/utils/app_constants.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'package:pinput/pinput.dart';
 import '../../../../core/utils/app_images.dart';
 import 'controllers/verify_your_email_controller.dart';
@@ -19,13 +20,13 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       appBar: CustomAppBar(
         canBack: true,
-        title: "Verify Your\nEmail",
+        title: LocaleKeys.verify_your_email.tr,
         appBarcolor: Get.theme.scaffoldBackgroundColor,
         actions: [
           TextButton(
               onPressed: () {},
-              child: const Text(
-                'Having issues?',
+              child: Text(
+                LocaleKeys.having_issues.tr,
               ))
         ],
       ),
@@ -60,7 +61,7 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                               // const ImageDecoration(
                               //     assetPath: AppConstants.sms),
                               Text(
-                                "We've sent a verification email to ",
+                                LocaleKeys.sent_verification_email.tr,
                                 style: Get.textTheme.bodyLarge
                                     ?.copyWith(fontWeight: FontWeight.bold),
                               ),
@@ -106,10 +107,11 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                                 text: TextSpan(
                                   style: Get.textTheme.bodyMedium,
                                   children: [
-                                    const TextSpan(
-                                        text: 'Didn\'t get the code? '),
                                     TextSpan(
-                                      text: 'Resend it',
+                                        text:
+                                            LocaleKeys.didnt_get_code.tr + ' '),
+                                    TextSpan(
+                                      text: LocaleKeys.resend_it.tr,
                                       style: Get.textTheme.bodyMedium?.copyWith(
                                         color: Get.theme.primaryColor,
                                       ),
@@ -125,7 +127,7 @@ class VerifyYourEmailScreen extends GetView<VerifyYourEmailController> {
                         ],
                       ),
                       CustomButton(
-                        text: 'Continue',
+                        text: LocaleKeys.continue_button.tr,
                         isLoading: controller.verifyEmailFormHelper.isLoading,
                         onPressed: controller.verifyEmailFormHelper.submit,
                       ),

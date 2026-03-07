@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/home/ui/home/controllers/home_controller.dart';
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'package:shimmer/shimmer.dart';
 import '../interfaces/feature_widget_interface.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,11 +39,11 @@ class AppBarWithAvatarAndSalutation extends StatelessWidget {
                   ? Shimmer.fromColors(
                       baseColor: Colors.grey,
                       highlightColor: Colors.white,
-                      child: const Text('Loading...',
-                          style: TextStyle(fontSize: 20)),
+                      child: Text(LocaleKeys.loading.tr,
+                          style: const TextStyle(fontSize: 20)),
                     )
                   : Text(
-                      "Hi, ${profileController.userInfos?.name ?? ''}",
+                      "${LocaleKeys.hi.tr}, ${profileController.userInfos?.name ?? ''}",
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

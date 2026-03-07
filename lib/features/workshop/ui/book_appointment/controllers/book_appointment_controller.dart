@@ -39,7 +39,7 @@ class BookAppointmentController extends GetxController {
   var selectedYear = DateTime.now().year.obs; // Année actuelle
   var selectedMonth = DateTime.now().month.obs; // Mois actuel
   RxString selectedTime = "MORNING".obs;
-  RxString selectedTimeRange = "8am-12am".obs;
+  RxString selectedTimeRange = "8am-12pm".obs;
 
   var selectedImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();
@@ -173,6 +173,28 @@ class BookAppointmentController extends GetxController {
 
   void selectDate(DateTime date) {
     selectedDate.value = date;
+    // Auto-adjust time selection if the selected time slot is no longer available
+    _adjustTimeSelectionForDate(date);
+  }
+
+  /// Adjusts the time selection when date changes to ensure a valid time slot is selected
+  void _adjustTimeSelectionForDate(DateTime date) {
+    final now = DateTime.now();
+    final isToday =
+        date.year == now.year && date.month == now.month && date.day == now.day;
+
+    if (isToday) {
+      final isMorningPast = now.hour >= 12;
+      final isAfternoonPast = now.hour >= 17;
+
+      // If morning is selected but it's past noon, switch to afternoon
+      if (selectedTime.value == "MORNING" &&
+          isMorningPast &&
+          !isAfternoonPast) {
+        selectedTime.value = "AFTERNOON";
+        selectedTimeRange.value = "12pm-5pm";
+      }
+    }
   }
 
   void selectMonth(int month) {
@@ -227,7 +249,6 @@ class BookAppointmentController extends GetxController {
       selectedImages.value =
           pickedFiles.map((file) => File(file.path)).toList();
     } else {
-      print('No image selected.');
     }
   }
 

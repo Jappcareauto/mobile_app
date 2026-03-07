@@ -8,6 +8,7 @@ import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.da
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/workshop_shimmer_widgets.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/shimmers/services_shimmer.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import 'controllers/workshop_controller.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class WorkshopScreen extends GetView<WorkshopController>
     return Scaffold(
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
-        title: "Service Centers",
+        title: LocaleKeys.service_centers.tr,
         canBack: false,
         // actions: [
         //   if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
@@ -57,7 +58,7 @@ class WorkshopScreen extends GetView<WorkshopController>
                                 .controllers['name'],
                             borderRadius: 32,
                             filColor: AppColors.white,
-                            hintText: "Search Centers",
+                            hintText: LocaleKeys.filter_by_research.tr,
                             prefix: const Icon(FluentIcons.search_24_regular),
                             validator: controller
                                 .getServiceCentersFormHelper.validators['name'],
@@ -88,9 +89,10 @@ class WorkshopScreen extends GetView<WorkshopController>
                       ),
                     ],
                   ),
-                  const Text(
-                    "Specialized Services",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  Text(
+                    LocaleKeys.specialized_services.tr,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Obx(() {
                     // Show shimmer while loading
@@ -121,7 +123,7 @@ class WorkshopScreen extends GetView<WorkshopController>
                       );
                     }
                     // Show empty state
-                    return const Text('No services available');
+                    return Text(LocaleKeys.no_services_available.tr);
                   }),
                   Obx(
                     () {
@@ -162,14 +164,15 @@ class WorkshopScreen extends GetView<WorkshopController>
                                                 serviceCenter.available ??
                                                     false,
                                             locationName:
-                                                serviceCenter.location?.name);
+                                                serviceCenter.location?.name,
+                                            imageUrl: serviceCenter.imageUrl);
                                       },
                                     );
                                   }).toList()
                                 : [
-                                    const Text(
-                                      'No service centers available',
-                                      style: TextStyle(
+                                    Text(
+                                      LocaleKeys.no_services_available.tr,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey,
                                       ),

@@ -9,7 +9,10 @@ import '../entities/reset_password.dart';
 abstract class AuthentificationRepository {
   //Add methods here
   Future<Either<AuthentificationException, Login>> login(
-      {String? email, PhoneCommand? phone, required String password, bool? extend});
+      {String? email,
+      PhoneCommand? phone,
+      required String password,
+      bool? extend});
 
   Future<Either<AuthentificationException, Login>> googleLogin(
       {required String bearerId});
@@ -26,6 +29,13 @@ abstract class AuthentificationRepository {
   Future<Either<AuthentificationException, Login>> googleSignIn();
 
   Future<Either<AuthentificationException, Register>> googleSignUp();
+
+  Future<Either<AuthentificationException, Login>> appleSignIn();
+
+  Future<Either<AuthentificationException, Login>> appleSignUp();
+
+  Future<Either<AuthentificationException, Login>> appleLogin(
+      {required String identityToken, String? fullName});
 
   Future<Either<AuthentificationException, Register>> register(
       {required String name,

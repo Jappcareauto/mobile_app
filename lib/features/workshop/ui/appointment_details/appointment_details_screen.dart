@@ -12,6 +12,7 @@ import 'package:jappcare/features/home/ui/home/widgets/notification_widget.dart'
 import 'package:jappcare/features/workshop/ui/appointment_details/controllers/appointment_details_controller.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/widgets/appointment_invoice_widget.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/widgets/expendend_container_widget.dart';
+import 'package:jappcare/generated/locales.g.dart';
 // import 'package:jappcare/features/workshop/ui/book_appointment/widgets/chat_widget.dart';
 // import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 
@@ -26,7 +27,7 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
     return Scaffold(
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
-        title: 'Appointment\nDetails',
+        title: LocaleKeys.appointment_details.tr,
         actions: [
           if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
             Get.find<FeatureWidgetInterface>(tag: 'AvatarWidget').buildView(),
@@ -91,10 +92,14 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                               backgroundColor:
                                   Get.theme.primaryColor.withValues(alpha: .2),
                               bodyText:
-                                  'Your repair from the Japcare Autotech shop is ready, and available for pickup',
+                                  LocaleKeys.appointment_ready_pickup.trParams({
+                                'serviceCenterName': controller
+                                        .appointment.serviceCenter?.name ??
+                                    'the service center',
+                              }),
                               coloriage: Get.theme.primaryColor,
                               icon: FluentIcons.alert_12_regular,
-                              title: 'Notification'),
+                              title: LocaleKeys.notification.tr),
                           const SizedBox(
                             height: 20,
                           ),
@@ -329,6 +334,8 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
                                             'PARTIALLY_PAID')
                                     ? () => controller.goToInvoice()
                                     : null,
+                            onViewAllPayments: () =>
+                                controller.viewAllPayments(),
                           ),
                         ],
                         const SizedBox(

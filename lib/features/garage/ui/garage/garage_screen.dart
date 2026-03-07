@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/list_vehicle_widget.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../core/ui/interfaces/feature_widget_interface.dart';
 import 'controllers/garage_controller.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,7 @@ class GarageScreen extends GetView<GarageController>
         return Scaffold(
             appBar: CustomAppBar(
               appBarcolor: Get.theme.scaffoldBackgroundColor,
-              title: "My Garage",
+              title: LocaleKeys.my_garage.tr,
               canBack: false,
               actions: [
                 if (Get.isRegistered<FeatureWidgetInterface>(

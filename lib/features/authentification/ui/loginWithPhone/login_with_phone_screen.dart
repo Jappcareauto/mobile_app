@@ -8,6 +8,7 @@ import 'package:jappcare/core/ui/widgets/image_decoration.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/app_dimensions.dart';
 import 'package:jappcare/features/authentification/ui/authentification/controllers/authentification_controller.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../core/ui/widgets/custom_text_field.dart';
 import '../../../../core/utils/app_images.dart';
 import 'controllers/login_with_phone_controller.dart';
@@ -21,9 +22,10 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
     return Scaffold(
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
-        title: 'Sign In',
+        title: LocaleKeys.sign_in.tr,
         actions: [
-          TextButton(onPressed: () => {}, child: const Text('Having Issues?'))
+          TextButton(
+              onPressed: () => {}, child: Text(LocaleKeys.having_issues.tr))
         ],
       ),
       body: MixinBuilder<LoginWithPhoneController>(
@@ -65,71 +67,78 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                           //   },
                           // ),
                           Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: [
-                                Text(
-                                  "Phone",
-                                  style: Theme.of(context)
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 8,
+                            children: [
+                              Text(
+                                LocaleKeys.phone_number.tr,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: Colors.black),
+                              ),
+                              // const SizedBox(height: 8),
+                              IntlPhoneField(
+                                controller: controller
+                                    .loginFormHelper.controllers['phone'],
+                                validator: (phoneNumber) {
+                                  final validator = controller
+                                      .loginFormHelper.validators['phone'];
+                                  print(
+                                      'phone: $phoneNumber, validator: ${phoneNumber?.number}');
+                                  return validator != null
+                                      ? validator(phoneNumber?.number)
+                                      : null;
+                                },
+                                style: Theme.of(context).textTheme.bodyMedium,
+                                decoration: InputDecoration(
+                                  hintText: 'Ex. 655002200',
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  errorStyle:
+                                      const TextStyle(color: Color(0XFFFF553B)),
+                                  hintStyle: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
-                                      ?.copyWith(color: Colors.black),
-                                ),
-                                // const SizedBox(height: 8),
-                                IntlPhoneField(
-                                  controller: controller
-                                      .loginFormHelper.controllers['phone'],
-                                  validator: (phoneNumber) {
-                                    final validator = controller.loginFormHelper.validators['phone'];
-                                    print('phone: $phoneNumber, validator: ${phoneNumber?.number}');
-                                    return validator != null
-                                        ? validator(phoneNumber?.number)
-                                        : null;
-                                  },
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                  decoration: InputDecoration(
-                                    hintText: 'Ex. 655002200',
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    errorStyle: const TextStyle(color: Color(0XFFFF553B)),
-                                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          AppDimensions.radiusSmall),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          AppDimensions.radiusSmall),
-                                      borderSide: const BorderSide(
-                                          color: Color(0xFFE5E2E1)),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          AppDimensions.radiusSmall),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          AppDimensions.radiusSmall),
-                                      borderSide: BorderSide(
-                                          color: Get.theme.primaryColor),
-                                    ),
+                                      ?.copyWith(color: Colors.grey),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        AppDimensions.radiusSmall),
+                                    borderSide: BorderSide.none,
                                   ),
-                                  initialCountryCode:
-                                      'CM', // Set a default country code, e.g., for Cameroon
-                                  onChanged: (phone) {
-                                    // You can get the full phone number with country code here
-                                    print(phone.completeNumber);
-                                    controller.phoneCode.value = phone.countryCode;
-                                  },
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        AppDimensions.radiusSmall),
+                                    borderSide: const BorderSide(
+                                        color: Color(0xFFE5E2E1)),
+                                  ),
+                                  disabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        AppDimensions.radiusSmall),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        AppDimensions.radiusSmall),
+                                    borderSide: BorderSide(
+                                        color: Get.theme.primaryColor),
+                                  ),
                                 ),
-                              ],
-                            ),
+                                initialCountryCode:
+                                    'CM', // Set a default country code, e.g., for Cameroon
+                                onChanged: (phone) {
+                                  // You can get the full phone number with country code here
+                                  print(phone.completeNumber);
+                                  controller.phoneCode.value =
+                                      phone.countryCode;
+                                },
+                              ),
+                            ],
+                          ),
                           CustomFormField(
-                            label: 'Password',
+                            label: LocaleKeys.password.tr,
                             isPassword: true,
-                            hintText: 'Enter your password',
+                            hintText: LocaleKeys.enter_your_password.tr,
                             controller: controller
                                 .loginFormHelper.controllers['password'],
                             validator: controller
@@ -144,17 +153,17 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                           TextButton(
                               onPressed: Get.find<AuthentificationController>()
                                   .navigateToForgotPassword,
-                              child: const Text('Forgot Password?')),
+                              child: Text(LocaleKeys.forgot_password.tr)),
                         ],
                       ),
                       Column(spacing: 16, children: [
                         CustomButton(
                           isLoading: controller.loginFormHelper.isLoading,
-                          text: 'Login',
+                          text: LocaleKeys.login.tr,
                           onPressed: controller.loginFormHelper.submit,
                         ),
                         CustomButton(
-                          text: 'Continue',
+                          text: LocaleKeys.continue_button.tr,
                           haveBorder: true,
                           prefixIcon: const ImageComponent(
                               assetPath: AppImages.google, width: 25),
@@ -162,14 +171,24 @@ class LoginWithPhoneScreen extends GetView<LoginWithPhoneController> {
                               .loadingGoogle,
                           onPressed: null,
                         ),
+                        CustomButton(
+                          text: 'Continue with Apple',
+                          haveBorder: true,
+                          prefixIcon: const Icon(Icons.apple,
+                              size: 25, color: Colors.black),
+                          isLoading: Get.find<AuthentificationController>()
+                              .loadingApple,
+                          onPressed:
+                              Get.find<AuthentificationController>().appleLogin,
+                        ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text('Don\'t have an account?'),
+                              Text(LocaleKeys.dont_have_account.tr),
                               TextButton(
                                   onPressed:
                                       controller.navigateToSignUpWithPhone,
-                                  child: const Text('Register'))
+                                  child: Text(LocaleKeys.register.tr))
                             ])
                       ])
                     ],

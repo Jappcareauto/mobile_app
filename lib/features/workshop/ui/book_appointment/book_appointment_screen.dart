@@ -7,6 +7,7 @@ import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/custom_text_field.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/workshop/globalcontroller/globalcontroller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 // import 'package:jappcare/features/workshop/ui/book_appointment/widgets/add_image_widget.dart';
@@ -14,6 +15,7 @@ import 'package:jappcare/features/workshop/ui/book_appointment/widgets/booking_w
 // import 'package:jappcare/features/workshop/ui/book_appointment/widgets/custom_map_widget.dart';
 // import 'package:jappcare/features/workshop/ui/book_appointment/widgets/form_location_widget.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.dart';
+import 'package:jappcare/generated/locales.g.dart';
 // import 'package:jappcare/features/garage/ui/garage/widgets/vehicle_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/services_list_widget.dart';
 // import 'package:jappcare/features/workshop/ui/workshop/widgets/service_center_services_list_widget.dart';
@@ -28,7 +30,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: 'Book Appointment',
+          title: LocaleKeys.book_appointment.tr,
           appBarcolor: Get.theme.scaffoldBackgroundColor,
           actions: [
             if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
@@ -47,25 +49,112 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 10,
                     children: [
-                      if (Get.isRegistered<FeatureWidgetInterface>(
-                          tag: 'ListVehicleWidget'))
-                        Get.find<FeatureWidgetInterface>(
-                                tag: 'ListVehicleWidget')
-                            .buildView({
-                          "pageController": controller.pageController,
-                          "currentPage": controller.currentPage,
-                          "haveAddVehicule": false,
-                          "title": "Select Vehicle",
-                          "viewCarDetailsOnCardPress": false,
-                          "onSelected": (selectedCar) {
-                            controller.vehicleId.value = selectedCar.id;
-                            controller.vehicleVin.value = selectedCar.vin;
-                            controller.globalControllerWorkshop
-                                .addVehicle(selectedCar);
-                            print(
-                                "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
-                          },
-                        }),
+                      // Vehicle Selection Section with empty state handling
+                      Obx(() {
+                        final garageController = Get.find<GarageController>();
+                        final hasVehicles =
+                            garageController.vehicleList.isNotEmpty;
+                        final isLoading = garageController.vehicleLoading.value;
+
+                        if (isLoading) {
+                          return const SizedBox.shrink();
+                        }
+
+                        if (!hasVehicles) {
+                          // Show Add Vehicle prompt when no vehicles available
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  LocaleKeys.select_vehicle.tr,
+                                  style: Get.textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  height: 190,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Get.theme.primaryColor,
+                                      width: 1.3,
+                                    ),
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      onTap: () =>
+                                          garageController.goToAddVehicle(),
+                                      borderRadius: BorderRadius.circular(24),
+                                      splashColor: Get.theme.primaryColor
+                                          .withValues(alpha: 0.2),
+                                      highlightColor: Get.theme.primaryColor
+                                          .withValues(alpha: 0.1),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.directions_car_outlined,
+                                            size: 48,
+                                            color: Get.theme.primaryColor,
+                                          ),
+                                          const SizedBox(height: 12),
+                                          Text(
+                                            LocaleKeys.no_vehicles_found.tr,
+                                            style: TextStyle(
+                                              color: AppColors.greyText,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 8),
+                                          Text(
+                                            LocaleKeys.add_vehicle.tr,
+                                            style: TextStyle(
+                                              color: Get.theme.primaryColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
+                        // Show vehicle list when vehicles are available
+                        if (Get.isRegistered<FeatureWidgetInterface>(
+                            tag: 'ListVehicleWidget')) {
+                          return Get.find<FeatureWidgetInterface>(
+                                  tag: 'ListVehicleWidget')
+                              .buildView({
+                            "pageController": controller.pageController,
+                            "currentPage": controller.currentPage,
+                            "haveAddVehicule": true,
+                            "title": LocaleKeys.select_vehicle.tr,
+                            "viewCarDetailsOnCardPress": false,
+                            "onSelected": (selectedCar) {
+                              controller.vehicleId.value = selectedCar.id;
+                              controller.vehicleVin.value = selectedCar.vin;
+                              controller.globalControllerWorkshop
+                                  .addVehicle(selectedCar);
+                              print(
+                                  "Current page: ${controller.currentPage.value}, Car ID: ${selectedCar.name}");
+                            },
+                          });
+                        }
+                        return const SizedBox.shrink();
+                      }),
 
                       // Padding(
                       //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -82,7 +171,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Select Service",
+                                LocaleKeys.select_service.tr,
                                 style: Get.textTheme.bodyLarge?.copyWith(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -141,7 +230,7 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                                           },
                                         );
                                       })
-                                    : const Text('No services available'),
+                                    : Text(LocaleKeys.no_services_available.tr),
                               ),
                             ]),
                       ),
@@ -205,27 +294,43 @@ class BookAppointmentScreen extends GetView<BookAppointmentController> {
                               AppColors.greyText.withValues(alpha: .1),
                           filColor: AppColors.white,
                           maxLine: 7,
-                          hintText: 'Add a Note (Optional)',
+                          hintText: LocaleKeys.add_note.tr,
                         ),
                       ),
 
                       // const AddImageWidget(),
                       // EstimatedInspectionFee(),
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: CustomButton(
-                            text: 'Continue',
-                            onPressed: () {
-                              if (controller.formKey.currentState?.validate() ??
-                                  false) {
-                                controller.gotToConfirmAppointment();
-                              } else {
-                                Get.showCustomSnackBar(
-                                    'Veuillez remplir tous les champs');
-                              }
-                            }),
-                      ),
+                      Obx(() {
+                        final hasVehicleSelected =
+                            controller.vehicleId.value.isNotEmpty;
+                        return Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: CustomButton(
+                              text: LocaleKeys.continue_button.tr,
+                              color: hasVehicleSelected
+                                  ? null
+                                  : Colors.grey.shade400,
+                              onPressed: () {
+                                if (!hasVehicleSelected) {
+                                  Get.showCustomSnackBar(
+                                    LocaleKeys.select_vehicle_first.tr,
+                                    title: LocaleKeys.no_vehicle_selected.tr,
+                                    type: CustomSnackbarType.info,
+                                  );
+                                  return;
+                                }
+                                if (controller.formKey.currentState
+                                        ?.validate() ??
+                                    false) {
+                                  controller.gotToConfirmAppointment();
+                                } else {
+                                  Get.showCustomSnackBar(
+                                      LocaleKeys.fill_all_fields.tr);
+                                }
+                              }),
+                        );
+                      }),
                     ],
                   ),
                 ),

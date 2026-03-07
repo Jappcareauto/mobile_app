@@ -1,6 +1,5 @@
 //Don't translate me
 class ProfileConstants {
-
   static const String featureName = 'profile';
   static const String featureVersion = '1.0.0';
 
@@ -9,4 +8,5 @@ class ProfileConstants {
   static const String updateProfileImagePutUri = '/user';
   static const String updateUserDetailsUri = '/user/update-details';
   static const String uploadImagesUri = '/file/chat-update-multiple';
+  static const String deleteUserUri = '/user';
 }

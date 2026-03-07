@@ -8,6 +8,7 @@ import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_dimensions.dart';
 import 'package:jappcare/core/utils/app_images.dart';
 import 'package:jappcare/features/authentification/ui/authentification/controllers/authentification_controller.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../core/ui/widgets/custom_button.dart';
 import '../../../../core/ui/widgets/custom_date_form_filed.dart';
 import 'controllers/sign_up_with_phone_controller.dart';
@@ -20,7 +21,7 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Register',
+        title: LocaleKeys.register.tr,
         appBarcolor: Get.theme.scaffoldBackgroundColor,
       ),
       body: MixinBuilder<SignUpWithPhoneController>(
@@ -37,14 +38,13 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                       spacing: 20,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                            'Hey there! Sign up with phone number. We will send your verification code there.'),
+                        Text(LocaleKeys.signup_subtitle.tr),
                         Column(
                           spacing: 20,
                           children: [
                             CustomFormField(
-                              label: 'Name',
-                              hintText: 'Enter your name',
+                              label: LocaleKeys.name.tr,
+                              hintText: LocaleKeys.enter_your_name.tr,
                               controller: controller
                                   .registerFormHelper.controllers['name'],
                               validator: controller
@@ -76,7 +76,7 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                               spacing: 8,
                               children: [
                                 Text(
-                                  "Phone",
+                                  LocaleKeys.phone_number.tr,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
@@ -87,8 +87,10 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                                   controller: controller
                                       .registerFormHelper.controllers['phone'],
                                   validator: (phoneNumber) {
-                                    final validator = controller.registerFormHelper.validators['phone'];
-                                    print('phone: $phoneNumber, validator: ${phoneNumber?.number}');
+                                    final validator = controller
+                                        .registerFormHelper.validators['phone'];
+                                    print(
+                                        'phone: $phoneNumber, validator: ${phoneNumber?.number}');
                                     return validator != null
                                         ? validator(phoneNumber?.number)
                                         : null;
@@ -98,8 +100,12 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                                     hintText: 'Ex. 655002200',
                                     fillColor: Colors.white,
                                     filled: true,
-                                    errorStyle: const TextStyle(color: Color(0XFFFF553B)),
-                                    hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                                    errorStyle: const TextStyle(
+                                        color: Color(0XFFFF553B)),
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(color: Colors.grey),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(
                                           AppDimensions.radiusSmall),
@@ -128,15 +134,16 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                                   onChanged: (phone) {
                                     // You can get the full phone number with country code here
                                     print(phone.completeNumber);
-                                    controller.phoneCode.value = phone.countryCode;
+                                    controller.phoneCode.value =
+                                        phone.countryCode;
                                   },
                                 ),
                               ],
                             ),
                             CustomFormField(
-                              label: 'Password',
+                              label: LocaleKeys.password.tr,
                               isPassword: true,
-                              hintText: 'Enter your password',
+                              hintText: LocaleKeys.enter_your_password.tr,
                               controller: controller
                                   .registerFormHelper.controllers['password'],
                               validator: controller
@@ -144,7 +151,7 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                               obscureText: true,
                             ),
                             CustomDateFormField(
-                              label: 'Date of Birth',
+                              label: LocaleKeys.date_of_birth.tr,
                               controller: controller.registerFormHelper
                                   .controllers['dateOfBirth'],
                               validator: controller
@@ -193,11 +200,12 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                                     text: TextSpan(
                                       style: Get.textTheme.bodySmall,
                                       children: [
-                                        const TextSpan(
-                                            text:
-                                                'By continuing, you agree to our '),
                                         TextSpan(
-                                          text: 'Terms & Conditions',
+                                            text:
+                                                '${LocaleKeys.terms_agreement.tr} '),
+                                        TextSpan(
+                                          text: LocaleKeys
+                                              .terms_and_conditions.tr,
                                           style:
                                               Get.textTheme.bodySmall?.copyWith(
                                             color: Get.theme.primaryColor,
@@ -222,11 +230,11 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                             CustomButton(
                               isLoading:
                                   controller.registerFormHelper.isLoading,
-                              text: 'Register',
+                              text: LocaleKeys.register.tr,
                               onPressed: controller.registerFormHelper.submit,
                             ),
                             CustomButton(
-                              text: 'Continue',
+                              text: LocaleKeys.continue_button.tr,
                               haveBorder: true,
                               prefixIcon: const ImageComponent(
                                   assetPath: AppImages.google, width: 25),
@@ -235,13 +243,23 @@ class SignUpWithPhoneScreen extends GetView<SignUpWithPhoneController> {
                               onPressed: Get.find<AuthentificationController>()
                                   .googleSignup,
                             ),
+                            CustomButton(
+                              text: 'Continue with Apple',
+                              haveBorder: true,
+                              prefixIcon: const Icon(Icons.apple,
+                                  size: 25, color: Colors.black),
+                              isLoading: Get.find<AuthentificationController>()
+                                  .loadingApple,
+                              onPressed: Get.find<AuthentificationController>()
+                                  .appleLogin,
+                            ),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text('Don\'t have an account?'),
+                                  Text(LocaleKeys.dont_have_account.tr),
                                   TextButton(
                                       onPressed: controller.goToLoginPage,
-                                      child: const Text('Login'))
+                                      child: Text(LocaleKeys.login.tr))
                                 ])
                           ],
                         ),

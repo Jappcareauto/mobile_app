@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/core/services/location/location_permission_service.dart';
 import 'package:jappcare/features/error/ui/commingSoon/comming_soon_screen.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../../../core/services/localServices/local_storage_service.dart';
@@ -27,11 +29,27 @@ class DashboardController extends GetxController {
     loading.value = true;
     if (_localService.read(AppConstants.tokenKey) == null) {
       await Future.delayed(const Duration(seconds: 1));
-      await _appNavigation
-          .toNamedAndReplaceAll(HomePrivateRoutes.selectLanguage);
+      await _appNavigation.toNamedAndReplaceAll(HomePrivateRoutes.onboarding);
       loading.value = false;
     } else {
       loading.value = false;
+      // Defer the location permission flow until after the first frame so
+      // the Dashboard route has fully settled in the Navigator before we
+      // try to push a modal bottom sheet.  Calling showModalBottomSheet
+      // while the Navigator is still locked (during route binding) throws
+      // the "!_debugLocked" assertion.
+      // Only trigger the location permission flow if the user has never
+      // completed the prominent disclosure (i.e. first launch after install).
+      // On subsequent launches we skip to avoid showing popups every time.
+      final locationService = LocationPermissionService.instance;
+      if (!locationService.hasSeenDisclosure) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          final BuildContext? ctx = Get.context;
+          if (ctx != null && ctx.mounted) {
+            await locationService.requestLocationPermissions(ctx);
+          }
+        });
+      }
     }
   }
 

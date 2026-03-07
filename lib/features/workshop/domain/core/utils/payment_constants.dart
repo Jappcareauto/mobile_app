@@ -4,6 +4,7 @@ class PaymentConstants {
   static const String payInvoicePostUri = '/payment/invoice';
   static const String payOrderPostUri = '/payment/order';
   static const String getPaymentsUri = '/payment';
+  static const String getPaymentsByAppointmentUri = '/payment/appointment';
 }
 
 /// Payment method enum values

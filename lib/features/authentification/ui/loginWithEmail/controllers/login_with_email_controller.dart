@@ -35,7 +35,7 @@ class LoginWithEmailController extends GetxController {
       },
       validators: {
         "email": Validators.email,
-        "password": Validators.password,
+        "password": Validators.loginPassword,
       },
       onSubmit: (data) => _loginUseCase.call(LoginCommand(
         email: data['email']!,
@@ -47,12 +47,15 @@ class LoginWithEmailController extends GetxController {
         print("🔴 [LoginWithEmailController] Error: $e");
         print("🔴 [LoginWithEmailController] Error type: ${e.runtimeType}");
         print("🔴 [LoginWithEmailController] Error message: ${e.message}");
-        print("🔴 [LoginWithEmailController] About to call Get.showCustomSnackBar...");
+        print(
+            "🔴 [LoginWithEmailController] About to call Get.showCustomSnackBar...");
         try {
           Get.showCustomSnackBar(e.message);
-          print("🔴 [LoginWithEmailController] Get.showCustomSnackBar called successfully");
+          print(
+              "🔴 [LoginWithEmailController] Get.showCustomSnackBar called successfully");
         } catch (ex, stack) {
-          print("❌❌❌ [LoginWithEmailController] EXCEPTION calling showCustomSnackBar!");
+          print(
+              "❌❌❌ [LoginWithEmailController] EXCEPTION calling showCustomSnackBar!");
           print("❌ [LoginWithEmailController] Exception: $ex");
           print("❌ [LoginWithEmailController] Stack: $stack");
         }

@@ -10,6 +10,7 @@ import 'package:jappcare/features/workshop/ui/workshop/widgets/service_widget.da
 import 'package:jappcare/features/workshop/ui/workshopDetails/views/workshop_custom_map_view.dart';
 import 'package:jappcare/features/workshop/ui/workshopDetails/widgets/text_shimmer.dart';
 import 'package:jappcare/features/workshop/ui/workshop/widgets/shimmers/services_shimmer.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../widgets/workshop_carrousel.dart';
 import 'controllers/workshop_details_controller.dart';
 import 'package:get/get.dart';
@@ -32,14 +33,21 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    child: const ImageCarousel(
-                      positionIndicator: MainAxisAlignment.center,
-                      imageUrls: [
-                        AppImages.shopCar,
-                        AppImages.carWhite,
-                        AppImages.shopCar
-                      ],
-                    ),
+                    child: globalcontrollerWorkshop.workshopData['imageUrl'] !=
+                            null
+                        ? ImageCarousel(
+                            positionIndicator: MainAxisAlignment.center,
+                            isNetworkImage: true,
+                            imageUrls: [
+                              globalcontrollerWorkshop.workshopData['imageUrl'],
+                            ],
+                          )
+                        : const ImageCarousel(
+                            positionIndicator: MainAxisAlignment.center,
+                            imageUrls: [
+                              AppImages.shopCar,
+                            ],
+                          ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -91,8 +99,8 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                           label: Text(
                             globalcontrollerWorkshop
                                     .workshopData["availability"]
-                                ? 'Available'
-                                : "Not Available",
+                                ? LocaleKeys.available.tr
+                                : LocaleKeys.not_available.tr,
                             style: TextStyle(
                                 color: globalcontrollerWorkshop
                                         .workshopData["availability"]
@@ -175,9 +183,9 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                     spacing: 12,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Specialized Services",
-                        style: TextStyle(
+                      Text(
+                        LocaleKeys.specialized_services.tr,
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Obx(() {
@@ -193,7 +201,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                                       haveBorder: true,
                                       showAllOption: false,
                                     )
-                                  : const Text('No services available'),
+                                  : Text(LocaleKeys.no_services_available.tr),
                         );
                       }),
                     ]),
@@ -219,7 +227,7 @@ class WorkshopDetailsScreen extends GetView<WorkshopDetailsController> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Obx(
                   () => CustomButton(
-                    text: 'Book Appointment',
+                    text: LocaleKeys.book_appointment.tr,
                     onPressed: controller.serviceCenterServices.isNotEmpty
                         ? () {
                             controller.gotoBookAppointment();

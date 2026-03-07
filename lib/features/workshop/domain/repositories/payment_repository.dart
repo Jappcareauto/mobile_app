@@ -28,4 +28,10 @@ abstract class PaymentRepository {
     String? invoiceId,
     String? orderId,
   });
+
+  /// Get all payments for an appointment
+  Future<Either<PaymentException, List<PaymentEntity>>>
+      getPaymentsByAppointmentId({
+    required String appointmentId,
+  });
 }

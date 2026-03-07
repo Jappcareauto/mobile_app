@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:jappcare/core/utils/app_dimensions.dart';
 import 'package:jappcare/features/home/ui/home/widgets/service_widget.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../../../../core/ui/widgets/custom_app_bar.dart';
 import '../../../../core/ui/widgets/image_component.dart';
@@ -19,7 +20,7 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
     return Scaffold(
       appBar: CustomAppBar(
         appBarcolor: Get.theme.scaffoldBackgroundColor,
-        title: "My Garage",
+        title: LocaleKeys.my_garage.tr,
         canBack: true,
         actions: [
           if (Get.isRegistered<FeatureWidgetInterface>(tag: 'AvatarWidget'))
@@ -133,46 +134,44 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
                       spacing: 10,
                       children: [
                         DetailItem(
-                            title: "Make",
-                            value: vhcle.detail?.make ?? 'Unknow'),
+                            title: LocaleKeys.make.tr,
+                            value: vhcle.detail?.make ?? LocaleKeys.unknown.tr),
                         DetailItem(
-                            title: "Model",
-                            value: vhcle.detail?.model ?? 'Unknow'),
+                            title: LocaleKeys.model.tr,
+                            value:
+                                vhcle.detail?.model ?? LocaleKeys.unknown.tr),
                       ],
                     ),
                     Row(
                       spacing: 10,
                       children: [
-                        // DetailItem(
-                        //     title: "Trim",
-                        //     value: vhcle.detail?.trim ?? 'Unknown'),
                         DetailItem(
-                            title: "Transmission",
-                            value: vhcle.detail?.transmission ?? 'Unknown'),
+                            title: LocaleKeys.transmission.tr,
+                            value: vhcle.detail?.transmission ??
+                                LocaleKeys.unknown.tr),
                         DetailItem(
-                            title: "Year",
-                            value: vhcle.detail?.year ?? 'Unknown'),
+                            title: LocaleKeys.year.tr,
+                            value: vhcle.detail?.year ?? LocaleKeys.unknown.tr),
                       ],
                     ),
                     Row(
                       spacing: 10,
                       children: [
-                        // DetailItem(
-                        //     title: "Trim",
-                        //     value: vhcle.detail?.trim ?? 'Unknown'),
                         DetailItem(
-                            title: "Body Type",
-                            value: vhcle.detail?.bodyType ?? 'Unknown'),
+                            title: LocaleKeys.body_type.tr,
+                            value: vhcle.detail?.bodyType ??
+                                LocaleKeys.unknown.tr),
                         DetailItem(
-                            title: "Licence Plate Number",
+                            title: LocaleKeys.licence_plate.tr,
                             value: vhcle.registrationNumber),
                       ],
                     ),
                     Row(
                       children: [
                         DetailItem(
-                            title: "Drive",
-                            value: vhcle.detail?.driveTrain ?? 'Unknown'),
+                            title: LocaleKeys.drive_train.tr,
+                            value: vhcle.detail?.driveTrain ??
+                                LocaleKeys.unknown.tr),
                       ],
                     ),
                   ],
@@ -199,14 +198,14 @@ class VehicleDetailsScreen extends GetView<VehicleDetailsController> {
               const SizedBox(height: 10),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Find a service for your car',
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                      LocaleKeys.find_service_for_car.tr,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 16),
                     )
                   ],
                 ),

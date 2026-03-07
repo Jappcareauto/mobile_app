@@ -7,6 +7,7 @@ import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/shimmers/list_vehicle_shimmer.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/generated/locales.g.dart';
 
 import '../../../../../core/ui/interfaces/feature_widget_interface.dart';
 import '../../../../../core/ui/widgets/custom_tab_bar.dart';
@@ -14,7 +15,7 @@ import 'car_card_widget.dart';
 
 class RecentActivitiesWidget extends StatefulWidget
     implements FeatureWidgetInterface {
-  final String title;
+  final String? title;
   final String? noActivitiesPlaceholder;
   final String? vehicleId;
   final bool haveTitle;
@@ -25,7 +26,7 @@ class RecentActivitiesWidget extends StatefulWidget
 
   const RecentActivitiesWidget({
     super.key,
-    this.title = "Recent Activities",
+    this.title,
     this.noActivitiesPlaceholder,
     this.haveTitle = true,
     this.haveTabBar = true,
@@ -50,7 +51,7 @@ class RecentActivitiesWidget extends StatefulWidget
       return RecentActivitiesWidget(
         haveTabBar: args['haveTabBar'] ?? true,
         haveTitle: args['haveTitle'] ?? true,
-        title: args['title'] ?? 'Recent Activities',
+        title: args['title'],
         isHorizontal: args['isHorizontal'] ?? false,
         status: args['status'],
         limit: args['limit'],
@@ -129,8 +130,9 @@ class _RecentActivitiesWidgetState extends State<RecentActivitiesWidget> {
             longitude: e.location?.longitude ?? 0,
             date: DateFormat('MMM d, yyyy').format(DateTime.parse(e.date)),
             time: DateFormat('HH:mm').format(DateTime.parse(e.date)),
-            localisation:
-                e.locationType == "SERVICE_CENTER" ? "On Site" : e.locationType,
+            localisation: e.locationType == "SERVICE_CENTER"
+                ? LocaleKeys.on_site.tr
+                : e.locationType,
             nameCar: carName.isNotEmpty
                 ? carName
                 : (e.vehicle?.name ?? 'Unknown Vehicle'),
@@ -158,7 +160,7 @@ class _RecentActivitiesWidgetState extends State<RecentActivitiesWidget> {
             Padding(
               padding: const EdgeInsets.only(left: 20),
               child: Text(
-                widget.title,
+                widget.title ?? LocaleKeys.recent_activities.tr,
                 style: Get.textTheme.bodyLarge
                     ?.copyWith(fontWeight: FontWeight.bold),
               ),
@@ -226,7 +228,7 @@ class _RecentActivitiesWidgetState extends State<RecentActivitiesWidget> {
                   ),
                   Text(
                     widget.noActivitiesPlaceholder ??
-                        "You have no recent activities at the moment",
+                        LocaleKeys.no_recent_activities.tr,
                     textAlign: TextAlign.center,
                   ),
                 ],

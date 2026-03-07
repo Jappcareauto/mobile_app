@@ -1,7 +1,6 @@
 import '../../domain/entities/emergency.dart';
 
 class EmergencyModel {
-
   final String serviceCenterId;
   final String vehicleId;
   final String title;
@@ -30,17 +29,29 @@ class EmergencyModel {
 
   factory EmergencyModel.fromJson(Map<String, dynamic> json) {
     return EmergencyModel._(
-      serviceCenterId: json['serviceCenterId'],
-      vehicleId: json['vehicleId'],
+      serviceCenterId: json['serviceCenterId'] is String
+          ? json['serviceCenterId']
+          : json['serviceCenterId']?.toString() ?? '',
+      vehicleId: json['vehicleId'] is String
+          ? json['vehicleId']
+          : json['vehicleId']?.toString() ?? '',
       title: json['title'],
       note: json['note'],
       status: json['status'],
       location: LocationModel.fromJson(json['location']),
       id: json['id'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
     );
   }
 
@@ -51,7 +62,7 @@ class EmergencyModel {
     data['title'] = title;
     data['note'] = note;
     data['status'] = status;
-     data['location'] = location.toJson();
+    data['location'] = location.toJson();
     data['id'] = id;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
@@ -84,16 +95,16 @@ class EmergencyModel {
       note: note,
       status: status,
       location: location.toEntity(),
-        id: id,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        createdBy: createdBy,
-        updatedBy: updatedBy,
+      id: id,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      createdBy: createdBy,
+      updatedBy: updatedBy,
     );
   }
 }
-class LocationModel {
 
+class LocationModel {
   final double latitude;
   final double longitude;
   final String description;
@@ -107,7 +118,7 @@ class LocationModel {
     required this.latitude,
     required this.longitude,
     required this.description,
-     this.id,
+    this.id,
     required this.createdBy,
     required this.updatedBy,
     required this.createdAt,
@@ -120,10 +131,18 @@ class LocationModel {
       longitude: json['longitude'],
       description: json['description'],
       id: json['id'],
-      createdBy: json['createdBy'],
-      updatedBy: json['updatedBy'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'],
+      createdBy: json['createdBy'] is String
+          ? json['createdBy']
+          : json['createdBy']?.toString() ?? '',
+      updatedBy: json['updatedBy'] is String
+          ? json['updatedBy']
+          : json['updatedBy']?.toString() ?? '',
+      createdAt: json['createdAt'] is String
+          ? json['createdAt']
+          : json['createdAt']?.toString() ?? '',
+      updatedAt: json['updatedAt'] is String
+          ? json['updatedAt']
+          : json['updatedAt']?.toString() ?? '',
     );
   }
 
