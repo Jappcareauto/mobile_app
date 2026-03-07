@@ -40,12 +40,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
+	<!-- iPad orientations removed as the app is iPhone‑only for now -->
+	<key>UIDeviceFamily</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
+		<integer>1</integer>
 	</array>
   	<key>CFBundleTypeRole</key>
   	<string>Editor</string>
