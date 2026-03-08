@@ -24,6 +24,10 @@
 	<string>Jappcare uses your location to help you find nearby vehicle workshops and services.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Jappcare uses your location to help you discover nearby workshops and vehicle services even when the app is active.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera to upload profile photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app allows users to select photos to upload.</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -56,5 +60,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
