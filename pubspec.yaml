@@ -1,5 +1,5 @@
 name: jappcare
-version: 1.0.0+7
+version: 1.0.0+8
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -49,6 +49,7 @@ dependencies:
   flutter_map: ^8.1.1
   google_sign_in: ^7.1.1
   sign_in_with_apple: ^6.1.3
+  url_launcher: ^6.3.1
   crypto: ^3.0.6
   stomp_dart_client: ^3.0.1
   record: ^6.0.0

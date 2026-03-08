@@ -21,9 +21,9 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app needs microphone access to record voice messages</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to your location to show it on the map.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to your location to show it on the map.</string>
+	<string>Jappcare uses your location to help you find nearby vehicle workshops and services.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Jappcare uses your location to help you discover nearby workshops and vehicle services even when the app is active.</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
