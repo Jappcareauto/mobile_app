@@ -1,8 +1,11 @@
 //Don't translate me
+import 'dart:async';
 import 'dart:io';
 
+import 'package:jappcare/core/services/deep_link_service.dart';
 import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/repositories/authentification_repository.dart';
 import '../../../../core/services/networkServices/network_service.dart';
@@ -385,6 +388,16 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
 
   @override
   Future<Either<AuthentificationException, Login>> appleSignIn() async {
+    if (Platform.isAndroid) {
+      return _appleSignInAndroid();
+    } else {
+      return _appleSignInIOS();
+    }
+  }
+
+  // ── Apple Sign-In: iOS (native flow) ──────────────────────────────────
+
+  Future<Either<AuthentificationException, Login>> _appleSignInIOS() async {
     try {
       final credential = await SignInWithApple.getAppleIDCredential(
         scopes: [
@@ -418,6 +431,116 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     } catch (e) {
       return Left(AuthentificationException(e.toString(), 0));
     }
+  }
+
+  // ── Apple Sign-In: Android (web redirect flow) ────────────────────────
+  //
+  // 1. Opens Apple's authorization URL in the device's default browser.
+  // 2. Apple POSTs id_token + code + user to backend callback:
+  //    https://bpi.jappcare.com/api/v1/auth/oauth/apple/callback
+  // 3. Backend verifies the token, creates/finds user, generates JWTs.
+  // 4. Backend redirects (302) to deep link:
+  //    jappcare://auth/apple/callback?accessToken=...&refreshToken=...
+  // 5. Android's intent system delivers the deep link to the app.
+  // 6. app_links receives the URI on its stream.
+  // 7. We parse the tokens from query parameters.
+
+  static const String _appleServiceId = 'com.jappcareautotech.jappcare.login';
+  static const String _appleRedirectUri =
+      'https://bpi.jappcare.com/api/v1/auth/oauth/apple/callback';
+
+  Future<Either<AuthentificationException, Login>> _appleSignInAndroid() async {
+    StreamSubscription<Uri>? linkSub;
+    try {
+      final appleAuthUrl = Uri.https('appleid.apple.com', '/auth/authorize', {
+        'client_id': _appleServiceId,
+        'redirect_uri': _appleRedirectUri,
+        'response_type': 'code id_token',
+        'response_mode': 'form_post',
+        'scope': 'name email',
+      });
+
+      print('[AppleSignIn-Android] Opening Apple auth URL in browser...');
+
+      // Completer that resolves when the deep link arrives
+      final completer = Completer<Uri>();
+
+      // Listen for deep links via native EventChannel (MainActivity.kt)
+      linkSub = DeepLinkService.instance.linkStream.listen((uri) {
+        print('[AppleSignIn-Android] Deep link received: $uri');
+        if (uri.scheme == 'jappcare' &&
+            uri.host == 'auth' &&
+            uri.path.startsWith('/apple/callback') &&
+            !completer.isCompleted) {
+          completer.complete(uri);
+        }
+      });
+
+      // Open Apple's auth page in the device's default browser
+      final launched = await launchUrl(
+        appleAuthUrl,
+        mode: LaunchMode.externalApplication,
+      );
+
+      if (!launched) {
+        throw Exception('Could not open Apple Sign-In page in browser');
+      }
+
+      // Wait for the backend to redirect back via jappcare:// deep link
+      final callbackUri = await completer.future.timeout(
+        const Duration(minutes: 5),
+        onTimeout: () {
+          throw TimeoutException('Apple Sign-In timed out');
+        },
+      );
+
+      final result = _handleAppleCallback(callbackUri);
+
+      result.fold(
+        (error) => print('[AppleSignIn-Android] Error: ${error.message}'),
+        (login) => print('[AppleSignIn-Android] Success: tokens received'),
+      );
+
+      return result;
+    } on BaseException catch (e) {
+      print('[AppleSignIn-Android] BaseException: ${e.message}');
+      return Left(AuthentificationException(e.message, e.statusCode));
+    } catch (e) {
+      print('[AppleSignIn-Android] Exception: $e');
+      if (e is TimeoutException) {
+        return Left(AuthentificationException(
+            'Apple Sign-In timed out. Please try again.', 0));
+      }
+      return Left(AuthentificationException(e.toString(), 0));
+    } finally {
+      await linkSub?.cancel();
+    }
+  }
+
+  /// Parses tokens from the deep link callback URI.
+  ///
+  /// Success: jappcare://auth/apple/callback?accessToken=...&refreshToken=...&accessTokenExpiry=...
+  /// Failure: jappcare://auth/apple/callback?error=...
+  Either<AuthentificationException, Login> _handleAppleCallback(Uri uri) {
+    // Check for error first
+    final error = uri.queryParameters['error'];
+    if (error != null) {
+      return Left(AuthentificationException(error, 0));
+    }
+
+    final accessToken = uri.queryParameters['accessToken'];
+    final refreshToken = uri.queryParameters['refreshToken'];
+
+    if (accessToken == null || refreshToken == null) {
+      return Left(AuthentificationException(
+          'Missing tokens in Apple callback response', 0));
+    }
+
+    // Tokens received directly from backend via deep link — no extra API call needed
+    return Right(Login.create(
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    ));
   }
 
   @override

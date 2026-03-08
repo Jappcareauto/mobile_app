@@ -69,6 +69,14 @@
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+
+      <!-- Deep link: Apple Sign-In callback from backend redirect -->
+      <intent-filter android:autoVerify="false">
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="jappcare" android:host="auth" android:pathPrefix="/apple/callback" />
+      </intent-filter>
     </activity>
 
     <!-- ================================================================
