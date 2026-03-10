@@ -68,7 +68,7 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                                     // const ImageDecoration(
                                     //     assetPath: AppConstants.sms),
                                     Text(
-                                      "We've sent a code to the email ",
+                                      LocaleKeys.otp_sent_to.tr,
                                       style: Get.textTheme.bodyLarge?.copyWith(
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -113,8 +113,9 @@ class ResetPasswordScreen extends GetView<ResetPasswordController> {
                                       text: TextSpan(
                                         style: Get.textTheme.bodyMedium,
                                         children: [
-                                          const TextSpan(
-                                              text: 'Didn\'t get the code? '),
+                                          TextSpan(
+                                              text:
+                                                  LocaleKeys.didnt_get_code.tr),
                                           TextSpan(
                                             text: LocaleKeys.resend_code.tr,
                                             style: Get.textTheme.bodyMedium

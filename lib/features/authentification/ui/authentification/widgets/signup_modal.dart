@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../../core/ui/widgets/custom_button.dart';
 import '../../../../../core/ui/widgets/image_component.dart';
 import '../../../../../core/utils/app_images.dart';
@@ -29,31 +30,31 @@ class SignUpModalWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 28),
-                const Text("Register",
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(LocaleKeys.create_account.tr,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 28),
                 CustomButton(
-                  text: "Continue",
+                  text: LocaleKeys.continue_with_google.tr,
                   prefixIcon: const ImageComponent(
                     assetPath: AppImages.google,
                     height: 25,
                   ),
-                  isLoading: controller.loadingGoogle,
-                  onPressed: controller.googleLogin,
+                  isLoading: controller.loadingGoogleSignup,
+                  onPressed: controller.googleSignup,
                 ),
                 const SizedBox(height: 16),
                 CustomButton(
-                  text: "Continue with Apple",
+                  text: LocaleKeys.continue_with_apple.tr,
                   haveBorder: true,
                   prefixIcon:
                       const Icon(Icons.apple, size: 25, color: Colors.black),
-                  isLoading: controller.loadingApple,
-                  onPressed: controller.appleLogin,
+                  isLoading: controller.loadingAppleSignup,
+                  onPressed: controller.appleSignup,
                 ),
                 const SizedBox(height: 16),
                 CustomButton(
-                    text: "Create Account with Email",
+                    text: LocaleKeys.create_account_with_email.tr,
                     haveBorder: true,
                     onPressed: controller.goToSignUpWithEmail),
                 // const SizedBox(height: 16),

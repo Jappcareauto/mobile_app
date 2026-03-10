@@ -58,4 +58,9 @@ abstract class AuthentificationRepository {
       {required String email,
       required String code,
       required String newPassword});
+
+  Future<Either<AuthentificationException, bool>> changePassword(
+      {required String oldPassword,
+      required String newPassword,
+      required String confirmPassword});
 }

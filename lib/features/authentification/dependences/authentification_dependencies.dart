@@ -21,6 +21,8 @@ import '../application/usecases/forgot_password_usecase.dart';
 
 import '../application/usecases/reset_password_usecase.dart';
 
+import '../application/usecases/change_password_usecase.dart';
+
 class AuthentificationDependencies {
   static void init() {
     Get.lazyPut<AuthentificationRepository>(
@@ -40,5 +42,6 @@ class AuthentificationDependencies {
     Get.lazyPut(() => GoogleSignupUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => AppleLoginUseCase(Get.find()), fenix: true);
     Get.lazyPut(() => AppleSignupUseCase(Get.find()), fenix: true);
+    Get.lazyPut(() => ChangePasswordUseCase(Get.find()), fenix: true);
   }
 }

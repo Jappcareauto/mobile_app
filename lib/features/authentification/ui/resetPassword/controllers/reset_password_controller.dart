@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
@@ -6,6 +7,7 @@ import 'package:jappcare/core/services/form/validators.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../../core/navigation/app_navigation.dart';
 import '../../../domain/core/exceptions/authentification_exception.dart';
 import '../../../application/usecases/forgot_password_usecase.dart';
@@ -58,11 +60,11 @@ class ResetPasswordController extends GetxController {
         _localStorageService.write(
             AppConstants.refreshTokenKey, response.refreshToken);
         Get.showCustomSnackBar(
-          "Your password has been reset successfully",
+          LocaleKeys.password_changed_success.tr,
           title: "Success",
           type: CustomSnackbarType.success,
         );
-        _appNavigation.toNamed(AppRoutes.home);
+        _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
       },
     );
 
@@ -95,10 +97,10 @@ class ResetPasswordController extends GetxController {
         "code": Validators.requiredField,
       },
       onSubmit: (data) async {
-        await Future.delayed(const Duration(seconds: 2));
         codeController.text = data['code']!;
         index(2);
-        return Future.value(null);
+        update();
+        return Right(ForgotPassword.create(state: true, message: ''));
       },
     );
   }

@@ -303,5 +303,23 @@
   "tc_s12_body": "Jappcare may update these Terms at any time. Continued use of the App after changes constitutes acceptance of the updated Terms.",
 
   "tc_s13_title": "13. Contact Information",
-  "tc_s13_body": "Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroon\nEmail: jappcareautotech@gmail.com"
+  "tc_s13_body": "Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroon\nEmail: jappcareautotech@gmail.com",
+
+  "create_account": "Create Account",
+  "continue_with_google": "Continue with Google",
+  "continue_with_apple": "Continue with Apple",
+  "login_with_email": "Login with Email",
+  "create_account_with_email": "Create Account with Email",
+  "otp_sent_to": "We've sent a code to the email ",
+  "didnt_get_code": "Didn't get the code? ",
+  "security_and_privacy": "Security & Privacy",
+  "change_password": "Change Password",
+  "old_password": "Old Password",
+  "new_password": "New Password",
+  "confirm_password": "Confirm Password",
+  "enter_old_password": "Enter your current password",
+  "enter_new_password": "Enter your new password",
+  "confirm_new_password": "Confirm your new password",
+  "password_changed_success": "Your password has been changed successfully",
+  "passwords_do_not_match": "Passwords do not match"
 }

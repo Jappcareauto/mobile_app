@@ -369,6 +369,23 @@ class LocaleKeys {
   static const tc_s12_body = 'tc_s12_body';
   static const tc_s13_title = 'tc_s13_title';
   static const tc_s13_body = 'tc_s13_body';
+
+  // Auth modal translations
+  static const create_account = 'create_account';
+  static const continue_with_google = 'continue_with_google';
+  static const continue_with_apple = 'continue_with_apple';
+  static const login_with_email = 'login_with_email';
+  static const create_account_with_email = 'create_account_with_email';
+  static const otp_sent_to = 'otp_sent_to';
+
+  // Security & Privacy
+  static const security_and_privacy = 'security_and_privacy';
+  static const old_password = 'old_password';
+  static const enter_old_password = 'enter_old_password';
+  static const enter_new_password = 'enter_new_password';
+  static const confirm_new_password = 'confirm_new_password';
+  static const password_changed_success = 'password_changed_success';
+  static const passwords_do_not_match = 'passwords_do_not_match';
 }
 
 class Locales {
@@ -740,6 +757,19 @@ class Locales {
     'tc_s13_title': '13. Coordonnées',
     'tc_s13_body':
         'Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroun\nEmail : jappcareautotech@gmail.com',
+    'create_account': 'Créer un compte',
+    'continue_with_google': 'Continuer avec Google',
+    'continue_with_apple': 'Continuer avec Apple',
+    'login_with_email': 'Se connecter avec Email',
+    'create_account_with_email': 'Créer un compte avec Email',
+    'otp_sent_to': 'Nous avons envoyé un code à l\'email ',
+    'security_and_privacy': 'Sécurité et confidentialité',
+    'old_password': 'Ancien mot de passe',
+    'enter_old_password': 'Entrez votre mot de passe actuel',
+    'enter_new_password': 'Entrez votre nouveau mot de passe',
+    'confirm_new_password': 'Confirmez votre nouveau mot de passe',
+    'password_changed_success': 'Votre mot de passe a été changé avec succès',
+    'passwords_do_not_match': 'Les mots de passe ne correspondent pas',
   };
 
   static const en = {
@@ -1102,5 +1132,18 @@ class Locales {
     'tc_s13_title': '13. Contact Information',
     'tc_s13_body':
         'Jappcare Technologies\nGrand Moulin Deido, Douala, Cameroon\nEmail: jappcareautotech@gmail.com',
+    'create_account': 'Create Account',
+    'continue_with_google': 'Continue with Google',
+    'continue_with_apple': 'Continue with Apple',
+    'login_with_email': 'Login with Email',
+    'create_account_with_email': 'Create Account with Email',
+    'otp_sent_to': 'We\'ve sent a code to the email ',
+    'security_and_privacy': 'Security & Privacy',
+    'old_password': 'Old Password',
+    'enter_old_password': 'Enter your current password',
+    'enter_new_password': 'Enter your new password',
+    'confirm_new_password': 'Confirm your new password',
+    'password_changed_success': 'Your password has been changed successfully',
+    'passwords_do_not_match': 'Passwords do not match',
   };
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import 'package:jappcare/features/authentification/ui/authentification/controllers/authentification_controller.dart';
 
 import '../../../../../core/utils/app_images.dart';
@@ -30,12 +31,12 @@ class LoginModalWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 28),
-                const Text("Login",
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(LocaleKeys.login.tr,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 28),
                 CustomButton(
-                  text: "Continue",
+                  text: LocaleKeys.continue_with_google.tr,
                   prefixIcon: const ImageComponent(
                     assetPath: AppImages.google,
                     height: 25,
@@ -45,7 +46,7 @@ class LoginModalWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 CustomButton(
-                  text: "Continue with Apple",
+                  text: LocaleKeys.continue_with_apple.tr,
                   haveBorder: true,
                   prefixIcon:
                       const Icon(Icons.apple, size: 25, color: Colors.black),
@@ -54,7 +55,7 @@ class LoginModalWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 CustomButton(
-                    text: "Login with Email",
+                    text: LocaleKeys.login_with_email.tr,
                     haveBorder: true,
                     onPressed: controller.goToLoginWithEmail),
               ],

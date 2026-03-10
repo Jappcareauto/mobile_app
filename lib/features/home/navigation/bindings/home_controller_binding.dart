@@ -5,10 +5,11 @@ import '../../ui/dashboard/controllers/dashboard_controller.dart';
 class HomeControllerBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<HomeController>(() => HomeController(Get.find()));
+    Get.lazyPut<HomeController>(() => HomeController(Get.find()), fenix: true);
     // DashboardController is needed by HomeScreen for navigation
     if (!Get.isRegistered<DashboardController>()) {
-      Get.lazyPut<DashboardController>(() => DashboardController(Get.find()));
+      Get.lazyPut<DashboardController>(() => DashboardController(Get.find()),
+          fenix: true);
     }
   }
 }

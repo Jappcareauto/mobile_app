@@ -1,5 +1,3 @@
-// import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/events/app_events_service.dart';
@@ -7,6 +5,7 @@ import 'package:jappcare/core/navigation/routes/app_routes.dart';
 import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 import 'package:jappcare/core/utils/app_constants.dart';
 import 'package:jappcare/core/utils/getx_extensions.dart';
+import 'package:jappcare/features/authentification/domain/core/exceptions/authentification_exception.dart';
 import 'package:jappcare/features/authentification/navigation/private/authentification_private_routes.dart';
 import 'package:jappcare/features/authentification/ui/authentification/widgets/signup_modal.dart';
 import 'package:jappcare/features/profile/navigation/private/profile_private_routes.dart';
@@ -93,15 +92,12 @@ class AuthentificationController extends GetxController {
 
     response.fold((e) {
       loadingGoogle.value = false;
-      if (Get.context != null) {
+      if (!_isCancelled(e)) {
         Get.showCustomSnackBar(e.message);
       }
-      update();
     }, (success) {
       loadingGoogle.value = false;
-      // print(response);
       _localStorageService.write(AppConstants.tokenKey, success.accessToken);
-      // _localStorageService.write(AppConstants.userId, success.id);
       _localStorageService.write(
           AppConstants.refreshTokenKey, success.refreshToken);
       _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
@@ -116,7 +112,7 @@ class AuthentificationController extends GetxController {
 
     response.fold((e) {
       loadingGoogle.value = false;
-      if (Get.context != null) {
+      if (!_isCancelled(e)) {
         Get.showCustomSnackBar(e.message);
       }
     }, (success) {
@@ -142,10 +138,9 @@ class AuthentificationController extends GetxController {
 
     response.fold((e) {
       loadingApple.value = false;
-      if (Get.context != null) {
+      if (!_isCancelled(e)) {
         Get.showCustomSnackBar(e.message);
       }
-      update();
     }, (success) {
       loadingApple.value = false;
       _localStorageService.write(AppConstants.tokenKey, success.accessToken);
@@ -163,7 +158,7 @@ class AuthentificationController extends GetxController {
 
     response.fold((e) {
       loadingAppleSignup.value = false;
-      if (Get.context != null) {
+      if (!_isCancelled(e)) {
         Get.showCustomSnackBar(e.message);
       }
     }, (success) {
@@ -175,5 +170,12 @@ class AuthentificationController extends GetxController {
       Get.find<AppEventService>()
           .emit<String>(AppConstants.userLoginEvent, success.accessToken);
     });
+  }
+
+  /// Returns `true` when the error represents a user-initiated cancellation
+  /// so the caller can skip showing an error message.
+  bool _isCancelled(dynamic error) {
+    if (error is AuthentificationException) return error.isCancelled;
+    return false;
   }
 }

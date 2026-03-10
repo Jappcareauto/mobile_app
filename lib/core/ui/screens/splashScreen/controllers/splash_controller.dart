@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jappcare/core/navigation/routes/app_routes.dart';
+import 'package:jappcare/core/services/localServices/local_storage_service.dart';
 import 'package:jappcare/core/services/location/location_permission_service.dart';
+import 'package:jappcare/core/utils/app_constants.dart';
+import 'package:jappcare/features/home/navigation/private/home_private_routes.dart';
 import '../../../../navigation/app_navigation.dart';
 
 class SplashController extends GetxController {
@@ -47,6 +50,17 @@ class SplashController extends GetxController {
       }
     }
 
-    _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
+    _appNavigation.toNamedAndReplaceAll(_nextRoute());
+  }
+
+  String _nextRoute() {
+    final localStorageService = Get.find<LocalStorageService>();
+    final savedLanguage =
+        localStorageService.read(AppConstants.languageKey) as String?;
+
+    if (savedLanguage == null || savedLanguage.isEmpty) {
+      return HomePrivateRoutes.selectLanguage;
+    }
+    return AppRoutes.home;
   }
 }

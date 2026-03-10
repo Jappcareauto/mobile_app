@@ -16,8 +16,7 @@ class HomeController extends GetxController {
   final AppNavigation _appNavigation;
   HomeController(this._appNavigation);
 
-  final GarageController garageController =
-      GarageController(Get.find(), Get.find());
+  GarageController get garageController => Get.find<GarageController>();
 
   // TIps loader
   final RxBool tipsLoading = true.obs;

@@ -12,4 +12,6 @@ class ProfilePrivateRoutes {
   static const String addMomoPaymentMethod = '$home/payments/add/momo';
   static const String addCardPaymentMethod = '$home/payments/add/card';
   static const String language = '$home/language';
+  static const String securityAndPrivacy = '$home/securityAndPrivacy';
+  static const String changePassword = '$home/changePassword';
 }

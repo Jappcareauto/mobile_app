@@ -4,6 +4,7 @@ import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_dimensions.dart';
+import 'package:jappcare/generated/locales.g.dart';
 import '../../../../core/utils/app_images.dart';
 import 'controllers/authentification_controller.dart';
 
@@ -39,14 +40,14 @@ class AuthentificationScreen extends GetView<AuthentificationController>
             children: [
               Flexible(
                 child: CustomButton(
-                  text: 'Login',
+                  text: LocaleKeys.login.tr,
                   haveBorder: true,
                   onPressed: controller.openSignInModal,
                 ),
               ),
               Flexible(
                 child: CustomButton(
-                  text: 'Create Account',
+                  text: LocaleKeys.create_account.tr,
                   onPressed: controller.openSignUpModal,
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dartz/dartz.dart';
@@ -57,12 +58,13 @@ class FormHelper<L, R> {
             (error) {
               if (onError != null) {
                 try {
-                  // Check if error has a message property (dynamic check, no import needed)
-                  try {
-                    final errorMessage = (error as dynamic).message;
-                  } catch (_) {}
                   onError!(error);
-                } catch (e, stackTrace) {}
+                } catch (e, stackTrace) {
+                  debugPrint('FormHelper onError callback failed: $e');
+                  debugPrintStack(stackTrace: stackTrace);
+                  Get.snackbar('Error', error.toString(),
+                      snackPosition: SnackPosition.BOTTOM);
+                }
               } else {
                 Get.snackbar('Error', error.toString(),
                     snackPosition: SnackPosition.BOTTOM);

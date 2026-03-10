@@ -90,7 +90,9 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
           'newPassword': newPassword,
         },
       );
-      return Right(ResetPasswordModel.fromJson(response).toEntity());
+      return Right(ResetPasswordModel.fromJson(
+        response['data'] ?? response,
+      ).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message, e.statusCode));
     }
@@ -296,7 +298,9 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       final GoogleSignInAccount? account = await signInWithGoogle();
 
       if (account == null) {
-        throw Exception('The account was not found'); // user aborted
+        // User cancelled the sign-in flow
+        return Left(AuthentificationException('Sign-in cancelled', 0,
+            isCancelled: true));
       }
 
       final GoogleSignInAuthentication auth = account.authentication;
@@ -318,7 +322,9 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       await _initializeGoogleSignIn();
       final GoogleSignInAccount? account = await signInWithGoogle();
       if (account == null) {
-        throw Exception('The account was not found'); // user aborted
+        // User cancelled the sign-up flow
+        return Left(AuthentificationException('Sign-up cancelled', 0,
+            isCancelled: true));
       }
 
       final GoogleSignInAuthentication auth = account.authentication;
@@ -426,9 +432,22 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       }
 
       return await appleLogin(identityToken: identityToken, fullName: fullName);
+    } on SignInWithAppleAuthorizationException catch (e) {
+      if (e.code == AuthorizationErrorCode.canceled ||
+          e.code == AuthorizationErrorCode.unknown) {
+        return Left(AuthentificationException('Sign-in cancelled', 0,
+            isCancelled: true));
+      }
+      return Left(AuthentificationException(e.message, 0));
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message, e.statusCode));
     } catch (e) {
+      // Detect cancellation from generic exceptions (e.g. PlatformException)
+      final msg = e.toString().toLowerCase();
+      if (msg.contains('cancel') || msg.contains('user denied')) {
+        return Left(AuthentificationException('Sign-in cancelled', 0,
+            isCancelled: true));
+      }
       return Left(AuthentificationException(e.toString(), 0));
     }
   }
@@ -551,4 +570,25 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   }
 
   //Add methods here
+
+  @override
+  Future<Either<AuthentificationException, bool>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    try {
+      await networkService.post(
+        AuthentificationConstants.changePasswordPostUri,
+        body: {
+          'oldPassword': oldPassword,
+          'newPassword': newPassword,
+          'confirmPassword': confirmPassword,
+        },
+      );
+      return const Right(true);
+    } on BaseException catch (e) {
+      return Left(AuthentificationException(e.message, e.statusCode));
+    }
+  }
 }

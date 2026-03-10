@@ -1,7 +1,11 @@
 import 'package:get/get.dart';
 import 'package:jappcare/features/profile/ui/payments/addPaymentMethod/add_payment_method_screen.dart';
+import '../bindings/change_password_controller_binding.dart';
 import '../bindings/manage_account_controller_binding.dart';
+import '../bindings/security_and_privacy_controller_binding.dart';
+import '../../ui/changePassword/change_password_screen.dart';
 import '../../ui/manageAccount/manage_account_screen.dart';
+import '../../ui/securityAndPrivacy/security_and_privacy_screen.dart';
 import '../bindings/language_settings_controller_binding.dart';
 import '../../ui/language/language_settings_screen.dart';
 
@@ -84,6 +88,16 @@ class ProfilePages implements FeaturePages {
           name: ProfilePrivateRoutes.language,
           page: () => const LanguageSettingsScreen(),
           binding: LanguageSettingsControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.securityAndPrivacy,
+          page: () => const SecurityAndPrivacyScreen(),
+          binding: SecurityAndPrivacyControllerBinding(),
+        ),
+        GetPage(
+          name: ProfilePrivateRoutes.changePassword,
+          page: () => const ChangePasswordScreen(),
+          binding: ChangePasswordControllerBinding(),
         ),
         // Add other routes here
       ];

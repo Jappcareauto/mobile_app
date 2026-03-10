@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/app_bar_with_salutation.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
-import 'package:jappcare/features/garage/ui/garage/controllers/garage_controller.dart';
 import 'package:jappcare/features/home/domain/entities/get_tips_list.entity.dart';
 import 'package:jappcare/features/home/ui/dashboard/controllers/dashboard_controller.dart';
 // import 'package:jappcare/features/home/ui/home/widgets/dismiss_widget.dart'; // Commented out with notification banner
@@ -17,16 +16,14 @@ import 'controllers/home_controller.dart';
 import 'widgets/notification_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  final GarageController garageController = Get.find<GarageController>();
-
-  final DashboardController dashboardController =
-      Get.find<DashboardController>();
-
   HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(HomeController(Get.find()));
+    // Ensure HomeController is available even after Get.offAllNamed clears routes.
+    if (!Get.isRegistered<HomeController>()) {
+      Get.put(HomeController(Get.find()), permanent: true);
+    }
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) =>
@@ -170,8 +167,12 @@ class HomeScreen extends GetView<HomeController> {
                               imagePath: AppImages.service,
                               onTap: () {
                                 // controller.goToVehicleFinder();
-                                dashboardController.onItemTapped(2);
-                                // controller.goToVehicleFinder();
+                                if (Get.isRegistered<DashboardController>()) {
+                                  Get.find<DashboardController>()
+                                      .onItemTapped(2);
+                                } else {
+                                  controller.goToVehicleFinder();
+                                }
                               },
                             ),
                           ),

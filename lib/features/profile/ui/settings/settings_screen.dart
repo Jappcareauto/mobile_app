@@ -50,6 +50,11 @@ class SettingsScreen extends GetView<SettingsController> {
                   onTap: controller.goToLanguage,
                 ),
                 SettingItem(
+                  title: LocaleKeys.security_and_privacy.tr,
+                  icon: FluentIcons.shield_lock_24_regular,
+                  onTap: controller.goToSecurityAndPrivacy,
+                ),
+                SettingItem(
                   title: LocaleKeys.privacy_policy.tr,
                   icon: FluentIcons.document_24_regular,
                   onTap: controller.goToPrivacyPolicy,

@@ -15,4 +15,5 @@ class AuthentificationConstants {
   static const String forgotPasswordPostUri = '/auth/forgot-password';
   static const String resetPasswordPostUri = '/auth/reset-password';
   static const String refreshTokenPostUri = '/auth/refresh-token';
+  static const String changePasswordPostUri = '/auth/change-password';
 }
