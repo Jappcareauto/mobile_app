@@ -72,8 +72,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                                   Text(controller.currentUser?.name ??
                                       'Unknown'),
                                   const SizedBox(width: 5),
-                                  const AvatarWidget(
-                                      size: 40, canEdit: false),
+                                  const AvatarWidget(size: 40, canEdit: false),
                                 ],
                               ),
                               ChatAppointmentSummary(

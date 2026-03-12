@@ -8,7 +8,6 @@ class PhoneInfo {
 }
 
 class GetUserInfos {
-
   final String name;
   final String email;
   final String? dateOfBirth;
@@ -67,5 +66,4 @@ class GetUserInfos {
       phone: phone,
     );
   }
-
 }

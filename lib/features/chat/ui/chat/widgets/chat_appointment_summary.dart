@@ -14,8 +14,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ChatDetailsController>(
-        builder: (controller) {
+    return GetBuilder<ChatDetailsController>(builder: (controller) {
       final appt = appointmentData ?? controller.appointment;
       return Container(
           decoration: BoxDecoration(
@@ -92,9 +91,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                   const Text('Service ID',
                       style: TextStyle(
                           fontSize: 12, fontWeight: FontWeight.normal)),
-                  Text(
-                      appt.service?.id.toString() ??
-                          "Unknown",
+                  Text(appt.service?.id.toString() ?? "Unknown",
                       style: const TextStyle(
                           fontSize: 14, fontWeight: FontWeight.bold)),
                 ],
@@ -119,9 +116,8 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                               ),
                               Text(
                                 appt.createdAt != null
-                                    ? DateFormat('EEE, MMM dd, yyyy').format(
-                                        DateTime.parse(
-                                            appt.createdAt!))
+                                    ? DateFormat('EEE, MMM dd, yyyy')
+                                        .format(DateTime.parse(appt.createdAt!))
                                     : '',
                                 style: const TextStyle(
                                   fontSize: 14,
@@ -144,8 +140,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                           )
                         ]),
                   ]),
-              if (appt.note != null &&
-                  appt.note!.isNotEmpty)
+              if (appt.note != null && appt.note!.isNotEmpty)
                 Column(
                   spacing: 5,
                   mainAxisAlignment: MainAxisAlignment.start,
