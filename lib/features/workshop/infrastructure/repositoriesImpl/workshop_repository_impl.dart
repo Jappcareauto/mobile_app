@@ -270,4 +270,19 @@ class WorkshopRepositoryImpl implements WorkshopRepository {
       return Left(WorkshopException(e.message, e.statusCode));
     }
   }
+
+  @override
+  Future<Either<WorkshopException, void>> cancelAppointment(
+      {required String appointmentId}) async {
+    try {
+      await networkService.put(
+        '${WorkshopConstants.cancelAppointmentPutUri}/$appointmentId/status/decline',
+      );
+      return const Right(null);
+    } on BaseException catch (e) {
+      return Left(WorkshopException(e.message, e.statusCode));
+    } catch (e) {
+      return Left(WorkshopException(e.toString(), 500));
+    }
+  }
 }

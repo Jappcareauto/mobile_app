@@ -34,7 +34,7 @@ class NotificationsScreen extends GetView<NotificationsController> {
                         controller.notifications.asMap().entries.map((entry) {
                       final index = entry.key;
                       final notification = entry.value;
-        
+
                       return Dismissible(
                         // key: Key(index.toString()),
                         key: UniqueKey(),
@@ -52,6 +52,19 @@ class NotificationsScreen extends GetView<NotificationsController> {
                         ),
                       );
                     }).toList(),
+                  ),
+                ] else ...[
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+                  const Icon(Icons.notifications_off_outlined,
+                      size: 64, color: Colors.grey),
+                  const SizedBox(height: 16),
+                  const Text(
+                    "No notifications yet",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey,
+                    ),
                   ),
                 ],
               ],

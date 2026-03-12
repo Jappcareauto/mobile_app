@@ -55,8 +55,9 @@ class WorkshopDependencies {
         () => PayWithPhoneController(Get.find()));
     Get.lazyPut<SuccessPaymentController>(
         () => SuccessPaymentController(Get.find()));
-    Get.lazyPut<AppointmentDetailsController>(
-        () => AppointmentDetailsController(Get.find(), Get.find(), Get.find()));
+    Get.lazyPut<AppointmentDetailsController>(() =>
+        AppointmentDetailsController(
+            Get.find(), Get.find(), Get.find(), Get.find()));
     Get.lazyPut<MapController>(() => MapController(Get.find()));
     // Use cases
     Get.lazyPut(() => GetAllServicesCenterUseCase(Get.find()), fenix: true);

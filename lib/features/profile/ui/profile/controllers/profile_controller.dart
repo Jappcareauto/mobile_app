@@ -97,7 +97,18 @@ class ProfileController extends GetxController {
     result.fold(
       (e) {
         updateImageLoading.value = false;
-        if (Get.context != null) Get.showCustomSnackBar(e.message);
+        // Check for 413 (Request Entity Too Large) error
+        if (e.statusCode == 413) {
+          if (Get.context != null) {
+            Get.showCustomSnackBar(
+              "Profile image must be smaller than 5MB.",
+              title: "File Too Large",
+              type: CustomSnackbarType.error,
+            );
+          }
+        } else {
+          if (Get.context != null) Get.showCustomSnackBar(e.message);
+        }
       },
       (response) {
         updateImageLoading.value = false;
@@ -116,7 +127,31 @@ class ProfileController extends GetxController {
     final imgs = await Get.getImage(many: true);
     print("Selected image path: ${imgs?.first.path}");
     if (imgs != null && imgs.isNotEmpty) {
-      file.value = imgs.first;
+      final selectedFile = imgs.first;
+
+      // Validate file type (jpeg, jpg, png only)
+      final fileExtension = selectedFile.path.split('.').last.toLowerCase();
+      const allowedExtensions = ['jpeg', 'jpg', 'png'];
+      if (!allowedExtensions.contains(fileExtension)) {
+        Get.showCustomSnackBar(
+          "Invalid file type. Please select a JPEG or PNG image.",
+          type: CustomSnackbarType.error,
+        );
+        return;
+      }
+
+      // Validate image size (max 5MB)
+      final fileSize = await selectedFile.length();
+      const maxSize = 5 * 1024 * 1024; // 5MB
+      if (fileSize > maxSize) {
+        final sizeMB = (fileSize / (1024 * 1024)).toStringAsFixed(1);
+        Get.showCustomSnackBar(
+          "Profile image must be smaller than 5MB. Selected image is $sizeMB MB.",
+          type: CustomSnackbarType.error,
+        );
+        return;
+      }
+      file.value = selectedFile;
       update();
       updateProfileImage();
     }

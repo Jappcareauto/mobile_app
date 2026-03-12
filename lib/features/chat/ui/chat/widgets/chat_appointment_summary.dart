@@ -5,15 +5,18 @@ import 'package:jappcare/features/chat/ui/chat/controllers/chat_details_controll
 import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/features/profile/ui/profile/widgets/avatar_widget.dart';
+import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 
 class ChatAppointmentSummary extends GetView<ChatDetailsController> {
-  const ChatAppointmentSummary({super.key});
+  final AppointmentEntity? appointmentData;
+
+  const ChatAppointmentSummary({super.key, this.appointmentData});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ChatDetailsController>(
-        // initState: (_) {},
         builder: (controller) {
+      final appt = appointmentData ?? controller.appointment;
       return Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -41,7 +44,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                   const Text('Service Offered by',
                       style: TextStyle(
                           fontSize: 12, fontWeight: FontWeight.normal)),
-                  Text(controller.appointment.serviceCenter?.name ?? "Unknown",
+                  Text(appt.serviceCenter?.name ?? "Unknown",
                       style: const TextStyle(
                           fontSize: 14, fontWeight: FontWeight.bold)),
                 ],
@@ -55,7 +58,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                       style: TextStyle(
                           fontSize: 12, fontWeight: FontWeight.normal)),
                   Text(
-                      '${controller.appointment.service?.title.toString().replaceAll("_", " ").capitalizeFirst} Appointment',
+                      '${appt.service?.title.toString().replaceAll("_", " ").capitalizeFirst} Appointment',
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 ],
@@ -90,7 +93,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                       style: TextStyle(
                           fontSize: 12, fontWeight: FontWeight.normal)),
                   Text(
-                      controller.appointment.service?.id.toString() ??
+                      appt.service?.id.toString() ??
                           "Unknown",
                       style: const TextStyle(
                           fontSize: 14, fontWeight: FontWeight.bold)),
@@ -115,10 +118,10 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                                 size: 24,
                               ),
                               Text(
-                                controller.appointment.createdAt != null
+                                appt.createdAt != null
                                     ? DateFormat('EEE, MMM dd, yyyy').format(
                                         DateTime.parse(
-                                            controller.appointment.createdAt!))
+                                            appt.createdAt!))
                                     : '',
                                 style: const TextStyle(
                                   fontSize: 14,
@@ -133,7 +136,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                                 FluentIcons.clock_12_regular,
                                 size: 24,
                               ),
-                              Text(controller.appointment.timeOfDay ?? '',
+                              Text(appt.timeOfDay ?? '',
                                   style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400)),
@@ -141,8 +144,8 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                           )
                         ]),
                   ]),
-              if (controller.appointment.note != null &&
-                  controller.appointment.note!.isNotEmpty)
+              if (appt.note != null &&
+                  appt.note!.isNotEmpty)
                 Column(
                   spacing: 5,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -151,7 +154,7 @@ class ChatAppointmentSummary extends GetView<ChatDetailsController> {
                     const Text('Note',
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.normal)),
-                    Text(controller.appointment.note!,
+                    Text(appt.note!,
                         style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.normal)),
                   ],

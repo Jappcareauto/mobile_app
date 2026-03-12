@@ -386,6 +386,10 @@ class LocaleKeys {
   static const confirm_new_password = 'confirm_new_password';
   static const password_changed_success = 'password_changed_success';
   static const passwords_do_not_match = 'passwords_do_not_match';
+  static const confirm = 'confirm';
+  static const cancel_appointment = 'cancel_appointment';
+  static const cancel_appointment_confirm = 'cancel_appointment_confirm';
+  static const appointment_cancelled_success = 'appointment_cancelled_success';
 }
 
 class Locales {
@@ -770,6 +774,12 @@ class Locales {
     'confirm_new_password': 'Confirmez votre nouveau mot de passe',
     'password_changed_success': 'Votre mot de passe a été changé avec succès',
     'passwords_do_not_match': 'Les mots de passe ne correspondent pas',
+    'confirm': 'Confirmer',
+    'cancel_appointment': 'Annuler le rendez-vous',
+    'cancel_appointment_confirm':
+        '\u00cates-vous s\u00fbr de vouloir annuler ce rendez-vous ? Cette action est irr\u00e9versible.',
+    'appointment_cancelled_success':
+        'Votre rendez-vous a \u00e9t\u00e9 annul\u00e9 avec succ\u00e8s',
   };
 
   static const en = {
@@ -1145,5 +1155,11 @@ class Locales {
     'confirm_new_password': 'Confirm your new password',
     'password_changed_success': 'Your password has been changed successfully',
     'passwords_do_not_match': 'Passwords do not match',
+    'confirm': 'Confirm',
+    'cancel_appointment': 'Cancel Appointment',
+    'cancel_appointment_confirm':
+        'Are you sure you want to cancel this appointment? This action cannot be undone.',
+    'appointment_cancelled_success':
+        'Your appointment has been cancelled successfully',
   };
 }

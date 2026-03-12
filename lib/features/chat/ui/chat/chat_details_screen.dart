@@ -45,45 +45,43 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
                           1, // +1 for welcome message
                       itemBuilder: (context, index) {
                         if (index == 0) {
-                          return Column(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.all(20),
-                                child: const Text(
-                                  'This is the beginning of your conversation with Jappcare AutoShop',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.grey,
-                                  ),
-                                ),
+                          return Container(
+                            margin: const EdgeInsets.all(20),
+                            child: const Text(
+                              'This is the beginning of your conversation with Jappcare AutoShop',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.grey,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(controller.currentUser?.name ??
-                                          'Unknown'),
-                                      const SizedBox(width: 5),
-                                      const AvatarWidget(
-                                          size: 40, canEdit: false),
-                                    ],
-                                  ),
-                                  const ChatAppointmentSummary(),
-                                ],
-                              ),
-                              const SizedBox(height: 20),
-                            ],
+                            ),
                           );
                         }
 
                         final itemIndex = index - 1;
                         final item = controller.flattenedItems[itemIndex];
 
-                        if (item is DateHeaderItem) {
+                        if (item is AppointmentItem) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(controller.currentUser?.name ??
+                                      'Unknown'),
+                                  const SizedBox(width: 5),
+                                  const AvatarWidget(
+                                      size: 40, canEdit: false),
+                                ],
+                              ),
+                              ChatAppointmentSummary(
+                                  appointmentData: item.appointment),
+                              const SizedBox(height: 20),
+                            ],
+                          );
+                        } else if (item is DateHeaderItem) {
                           return _buildDateHeader(item.date);
                         } else if (item is MessageItem) {
                           final message = item.message;

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/controllers/book_appointment_controller.dart';
 import 'package:jappcare/features/workshop/ui/book_appointment/widgets/location_option_widget.dart';
-import 'package:jappcare/features/workshop/ui/book_appointment/widgets/time_slot_widget.dart';
 
 class BookingWidget extends GetView<BookAppointmentController> {
   const BookingWidget({super.key});
@@ -51,48 +50,123 @@ class BookingWidget extends GetView<BookAppointmentController> {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
+          const Text(
+            "Morning",
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
           Obx(() {
-            final now = DateTime.now();
-            final selectedDate = controller.selectedDate.value;
-            final isToday = selectedDate.year == now.year &&
-                selectedDate.month == now.month &&
-                selectedDate.day == now.day;
-            final isMorningPast = isToday && now.hour >= 12;
-            final isAfternoonPast = isToday && now.hour >= 17;
+            // Morning hours: 8am - 11am
+            return Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: List.generate(4, (index) {
+                final hour = 8 + index;
+                final isDisabled = controller.isHourDisabled(hour);
+                final isSelected = controller.selectedHour.value == hour;
+                final label = hour > 12
+                    ? '${hour - 12}:00 PM'
+                    : hour == 12
+                        ? '12:00 PM'
+                        : '$hour:00 AM';
 
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: TimeSlot(
-                    label: "Morning",
-                    timeRange: "8:00 AM - 12:00 PM",
-                    isSelected: controller.selectedTime.value == "MORNING",
-                    isDisabled: isMorningPast,
-                    onTap: isMorningPast
-                        ? null
-                        : () => {
-                              controller.selectedTimeRange.value = "8am-12pm",
-                              controller.selectTime("MORNING")
-                            },
+                return GestureDetector(
+                  onTap: isDisabled ? null : () => controller.selectHour(hour),
+                  child: Opacity(
+                    opacity: isDisabled ? 0.4 : 1.0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: isDisabled
+                            ? Colors.grey.withValues(alpha: 0.1)
+                            : isSelected
+                                ? Get.theme.primaryColor.withValues(alpha: .2)
+                                : Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isDisabled
+                              ? Colors.grey.withValues(alpha: 0.3)
+                              : isSelected
+                                  ? Colors.orange
+                                  : const Color(0xF6EFF3FF)
+                                      .withValues(alpha: .95),
+                        ),
+                      ),
+                      child: Text(
+                        label,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: isDisabled
+                              ? Colors.grey
+                              : isSelected
+                                  ? Colors.orange
+                                  : Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: TimeSlot(
-                    label: "Afternoon",
-                    timeRange: "12:00 PM - 5:00 PM",
-                    isSelected: controller.selectedTime.value == "AFTERNOON",
-                    isDisabled: isAfternoonPast,
-                    onTap: isAfternoonPast
-                        ? null
-                        : () => {
-                              controller.selectedTimeRange.value = "12pm-5pm",
-                              controller.selectTime("AFTERNOON")
-                            },
+                );
+              }),
+            );
+          }),
+          const SizedBox(height: 12),
+          const Text(
+            "Afternoon",
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
+          Obx(() {
+            // Afternoon hours: 12pm - 4pm
+            return Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: List.generate(5, (index) {
+                final hour = 12 + index;
+                final isDisabled = controller.isHourDisabled(hour);
+                final isSelected = controller.selectedHour.value == hour;
+                final label = hour > 12 ? '${hour - 12}:00 PM' : '12:00 PM';
+
+                return GestureDetector(
+                  onTap: isDisabled ? null : () => controller.selectHour(hour),
+                  child: Opacity(
+                    opacity: isDisabled ? 0.4 : 1.0,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 10),
+                      decoration: BoxDecoration(
+                        color: isDisabled
+                            ? Colors.grey.withValues(alpha: 0.1)
+                            : isSelected
+                                ? Get.theme.primaryColor.withValues(alpha: .2)
+                                : Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: isDisabled
+                              ? Colors.grey.withValues(alpha: 0.3)
+                              : isSelected
+                                  ? Colors.orange
+                                  : const Color(0xF6EFF3FF)
+                                      .withValues(alpha: .95),
+                        ),
+                      ),
+                      child: Text(
+                        label,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                          color: isDisabled
+                              ? Colors.grey
+                              : isSelected
+                                  ? Colors.orange
+                                  : Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                );
+              }),
             );
           }),
           const SizedBox(height: 20),

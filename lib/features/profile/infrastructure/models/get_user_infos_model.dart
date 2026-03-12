@@ -14,6 +14,8 @@ class GetUserInfosModel {
   final String? createdAt;
   final String? updatedAt;
   final LocationModel? location;
+  final String? phoneCode;
+  final String? phoneNumber;
 
   GetUserInfosModel._({
     required this.name,
@@ -27,9 +29,19 @@ class GetUserInfosModel {
     this.createdAt,
     this.updatedAt,
     this.location,
+    this.phoneCode,
+    this.phoneNumber,
   });
 
   factory GetUserInfosModel.fromJson(Map<String, dynamic> json) {
+    // Parse phone data - API may return as { "code": "237", "number": "691121881" }
+    String? phoneCode;
+    String? phoneNumber;
+    if (json['phone'] != null && json['phone'] is Map) {
+      phoneCode = json['phone']['code']?.toString();
+      phoneNumber = json['phone']['number']?.toString();
+    }
+
     return GetUserInfosModel._(
       name: json['name'],
       email: json['email'],
@@ -53,6 +65,8 @@ class GetUserInfosModel {
       location: json['location'] != null
           ? LocationModel.fromJson(json['location'])
           : null,
+      phoneCode: phoneCode,
+      phoneNumber: phoneNumber,
     );
   }
 
@@ -97,6 +111,8 @@ class GetUserInfosModel {
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
       location: entity.location?.toModel(),
+      phoneCode: entity.phone?.code,
+      phoneNumber: entity.phone?.number,
     );
   }
 
@@ -113,6 +129,9 @@ class GetUserInfosModel {
       createdAt: createdAt,
       updatedAt: updatedAt,
       location: location?.toEntity(),
+      phone: (phoneCode != null || phoneNumber != null)
+          ? PhoneInfo(code: phoneCode, number: phoneNumber)
+          : null,
     );
   }
 }

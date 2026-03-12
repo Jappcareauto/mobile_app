@@ -1,5 +1,5 @@
 name: jappcare
-version: 1.0.0+9
+version: 1.0.0+10
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -62,6 +62,7 @@ dependencies:
 
 dev_dependencies:
   icons_launcher: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter

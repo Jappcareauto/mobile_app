@@ -55,4 +55,7 @@ abstract class WorkshopRepository {
 
   Future<Either<WorkshopException, GeocodePosition>> getAddressFromLatLng(
       double lat, double lng);
+
+  Future<Either<WorkshopException, void>> cancelAppointment(
+      {required String appointmentId});
 }

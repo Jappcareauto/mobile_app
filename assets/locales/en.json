@@ -321,5 +321,9 @@
   "enter_new_password": "Enter your new password",
   "confirm_new_password": "Confirm your new password",
   "password_changed_success": "Your password has been changed successfully",
-  "passwords_do_not_match": "Passwords do not match"
+  "passwords_do_not_match": "Passwords do not match",
+  "confirm": "Confirm",
+  "cancel_appointment": "Cancel Appointment",
+  "cancel_appointment_confirm": "Are you sure you want to cancel this appointment? This action cannot be undone.",
+  "appointment_cancelled_success": "Your appointment has been cancelled successfully"
 }

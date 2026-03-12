@@ -1,5 +1,12 @@
 import 'package:jappcare/core/ui/domain/entities/location.entity.dart';
 
+class PhoneInfo {
+  final String? code;
+  final String? number;
+
+  PhoneInfo({this.code, this.number});
+}
+
 class GetUserInfos {
 
   final String name;
@@ -13,6 +20,7 @@ class GetUserInfos {
   final String? createdAt;
   final String? updatedAt;
   final LocationEntity? location;
+  final PhoneInfo? phone;
 
   GetUserInfos._({
     required this.name,
@@ -25,7 +33,8 @@ class GetUserInfos {
     this.updatedBy,
     this.createdAt,
     this.updatedAt,
-    this.location
+    this.location,
+    this.phone,
   });
 
   factory GetUserInfos.create({
@@ -40,6 +49,7 @@ class GetUserInfos {
     String? createdAt,
     String? updatedAt,
     LocationEntity? location,
+    PhoneInfo? phone,
   }) {
     // Add any validation or business logic here
     return GetUserInfos._(
@@ -54,6 +64,7 @@ class GetUserInfos {
       createdAt: createdAt,
       updatedAt: updatedAt,
       location: location,
+      phone: phone,
     );
   }
 

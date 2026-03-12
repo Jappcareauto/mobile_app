@@ -40,6 +40,7 @@ class BookAppointmentController extends GetxController {
   var selectedMonth = DateTime.now().month.obs; // Mois actuel
   RxString selectedTime = "MORNING".obs;
   RxString selectedTimeRange = "8am-12pm".obs;
+  RxInt selectedHour = (-1).obs;
 
   var selectedImages = <File>[].obs;
   final ImagePicker _picker = ImagePicker();
@@ -184,6 +185,13 @@ class BookAppointmentController extends GetxController {
         date.year == now.year && date.month == now.month && date.day == now.day;
 
     if (isToday) {
+      // If the currently selected hour is in the past, reset it
+      if (selectedHour.value != -1 && selectedHour.value <= now.hour) {
+        selectedHour.value = -1;
+        selectedTime.value = "";
+        selectedTimeRange.value = "";
+      }
+
       final isMorningPast = now.hour >= 12;
       final isAfternoonPast = now.hour >= 17;
 
@@ -193,7 +201,34 @@ class BookAppointmentController extends GetxController {
           !isAfternoonPast) {
         selectedTime.value = "AFTERNOON";
         selectedTimeRange.value = "12pm-5pm";
+        selectedHour.value = -1;
       }
+    }
+  }
+
+  /// Check if a specific hour is disabled (in the past for today)
+  bool isHourDisabled(int hour) {
+    final now = DateTime.now();
+    final selectedDateValue = selectedDate.value;
+    final isToday = selectedDateValue.year == now.year &&
+        selectedDateValue.month == now.month &&
+        selectedDateValue.day == now.day;
+
+    if (isToday) {
+      return hour <= now.hour;
+    }
+    return false;
+  }
+
+  void selectHour(int hour) {
+    selectedHour.value = hour;
+    // Determine the time of day category based on hour
+    if (hour < 12) {
+      selectedTime.value = "MORNING";
+      selectedTimeRange.value = "8am-12pm";
+    } else {
+      selectedTime.value = "AFTERNOON";
+      selectedTimeRange.value = "12pm-5pm";
     }
   }
 
@@ -248,8 +283,7 @@ class BookAppointmentController extends GetxController {
       // Si des images sont sélectionnées, convertir chaque image en File et les ajouter à une liste
       selectedImages.value =
           pickedFiles.map((file) => File(file.path)).toList();
-    } else {
-    }
+    } else {}
   }
 
   Future<void> getPlaceDetails(String placeId) async {

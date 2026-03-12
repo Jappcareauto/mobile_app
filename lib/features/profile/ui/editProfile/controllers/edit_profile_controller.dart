@@ -57,12 +57,16 @@ class EditProfileController extends GetxController {
         lng: currentUserController.userInfos!.location!.longitude!,
       );
     }
+    // Initialize phone code from existing user info
+    if (currentUserController.userInfos?.phone?.code != null) {
+      phoneCode.value = currentUserController.userInfos!.phone!.code!;
+    }
     editProfileFormHelper = FormHelper<ProfileException, UpdateUserDetails>(
       fields: {
         "name": currentUserController.userInfos?.name,
         "email": currentUserController.userInfos?.email,
         "address": currentUserController.userInfos?.location?.name,
-        "phoneNumber": null,
+        "phoneNumber": currentUserController.userInfos?.phone?.number,
         "dateOfBirth": currentUserController.userInfos?.dateOfBirth,
       },
       validators: {

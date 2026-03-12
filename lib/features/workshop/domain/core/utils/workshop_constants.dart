@@ -10,6 +10,7 @@ class WorkshopConstants {
   static const String getServiceCenterGetUri = '/service-centers';
   static const String getAllServicesCenterGetUri = '/service-center/list';
   static const String bookAppointmentPostUri = '/appointment';
+  static const String cancelAppointmentPutUri = '/appointment';
   static const String createdRomeChatPostUri = '/chatroom';
 
   static const String sendMessagePostUri = '/chat-message';

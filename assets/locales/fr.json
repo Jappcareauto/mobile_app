@@ -321,6 +321,10 @@
   "enter_new_password": "Entrez votre nouveau mot de passe",
   "confirm_new_password": "Confirmez votre nouveau mot de passe",
   "password_changed_success": "Votre mot de passe a été changé avec succès",
-  "passwords_do_not_match": "Les mots de passe ne correspondent pas"
+  "passwords_do_not_match": "Les mots de passe ne correspondent pas",
+  "confirm": "Confirmer",
+  "cancel_appointment": "Annuler le rendez-vous",
+  "cancel_appointment_confirm": "Êtes-vous sûr de vouloir annuler ce rendez-vous ? Cette action est irréversible.",
+  "appointment_cancelled_success": "Votre rendez-vous a été annulé avec succès"
 }
 }

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jappcare/core/ui/interfaces/feature_widget_interface.dart';
 import 'package:jappcare/core/ui/widgets/custom_app_bar.dart';
-// import 'package:jappcare/core/ui/widgets/custom_button.dart'; // Commented out with Mark as Complete button
+import 'package:jappcare/core/ui/widgets/custom_button.dart';
 import 'package:jappcare/core/ui/widgets/image_component.dart';
 import 'package:jappcare/core/utils/app_colors.dart';
 import 'package:jappcare/features/garage/ui/garage/widgets/chip_widget.dart';
@@ -355,8 +355,21 @@ class AppointmentDetailScreen extends GetView<AppointmentDetailsController> {
               //       onPressed: () => controller.markAsComplete(),
               //     ),
               //   ),
+              if (controller.canCancelAppointment)
+                Positioned(
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                  child: CustomButton(
+                    text: LocaleKeys.cancel_appointment.tr,
+                    onPressed: () => controller.cancelAppointment(),
+                    color: Colors.red,
+                  ),
+                ),
               Positioned(
-                bottom: appointment.invoice != null ? 90 : 20,
+                bottom: controller.canCancelAppointment
+                    ? 90
+                    : (appointment.invoice != null ? 90 : 20),
                 right: 20,
                 child: FloatingActionButton(
                   backgroundColor: Get.theme.primaryColor,

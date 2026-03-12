@@ -40,7 +40,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final loading = isLoading ?? false.obs;
     return Obx(() => SizedBox(
-          width: strech ? Get.context!.width : width,
+          width: strech ? double.infinity : width,
           height: height,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(

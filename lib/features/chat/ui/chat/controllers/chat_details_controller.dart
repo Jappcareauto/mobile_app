@@ -23,6 +23,7 @@ import 'package:jappcare/features/chat/domain/entities/get_all_chat_room_message
 import 'package:jappcare/features/profile/ui/profile/controllers/profile_controller.dart';
 import 'package:jappcare/features/workshop/application/usecases/get_vehicul_by_id_usecase.dart';
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
+import 'package:jappcare/features/workshop/infrastructure/models/get_all_appointments_model.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/ui/confirme_appoinment/controllers/confirm_appointment_controller.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
@@ -69,6 +70,7 @@ class ChatDetailsController extends GetxController {
   final RxList<ChatListItem> flattenedItems = <ChatListItem>[].obs;
 
   late AppointmentEntity appointment;
+  final RxList<AppointmentEntity> appointments = <AppointmentEntity>[].obs;
   late ChatRoomEntity chatRoom;
   final currentUser = Get.find<ProfileController>().userInfos;
 
@@ -131,6 +133,10 @@ class ChatDetailsController extends GetxController {
     super.onInit();
     loading.value = true;
     appointment = Get.arguments;
+    // Add the current appointment to the list of appointments
+    if (!appointments.any((a) => a.id == appointment.id)) {
+      appointments.add(appointment);
+    }
     _initialize();
   }
 
@@ -413,9 +419,49 @@ class ChatDetailsController extends GetxController {
     final groupedMessages = groupMessages(messages);
     final items = <ChatListItem>[];
 
+    // Sort appointments by creation date
+    final sortedAppointments = List<AppointmentEntity>.from(appointments)
+      ..sort((a, b) {
+        final aDate = a.createdAt != null
+            ? DateTime.tryParse(a.createdAt!) ?? DateTime.now()
+            : DateTime.now();
+        final bDate = b.createdAt != null
+            ? DateTime.tryParse(b.createdAt!) ?? DateTime.now()
+            : DateTime.now();
+        return aDate.compareTo(bDate);
+      });
+
+    // Track which appointments have been inserted
+    int appointmentIndex = 0;
+
     for (final entry in groupedMessages.entries) {
+      // Insert any appointments that were created before or on this date group
+      while (appointmentIndex < sortedAppointments.length) {
+        final appt = sortedAppointments[appointmentIndex];
+        final apptDate = appt.createdAt != null
+            ? DateTime.tryParse(appt.createdAt!)
+                    ?.toLocal()
+                    .toString()
+                    .split(' ')[0] ??
+                entry.key
+            : entry.key;
+
+        if (apptDate.compareTo(entry.key) <= 0) {
+          items.add(AppointmentItem(appt));
+          appointmentIndex++;
+        } else {
+          break;
+        }
+      }
+
       items.add(DateHeaderItem(entry.key));
       items.addAll(entry.value.map((m) => MessageItem(m)));
+    }
+
+    // Add remaining appointments that are after all messages
+    while (appointmentIndex < sortedAppointments.length) {
+      items.add(AppointmentItem(sortedAppointments[appointmentIndex]));
+      appointmentIndex++;
     }
 
     flattenedItems.value = items;
@@ -1098,6 +1144,14 @@ class ChatDetailsController extends GetxController {
         },
         (response) {
           chatRoom = response;
+
+          // ── Load ALL appointments associated with this chatroom ──────
+          // The chatroom's appointmentDTO may contain a single appointment
+          // object or a list of appointment objects. Parse them and add to
+          // the appointments list so that every historical appointment card
+          // is displayed in the conversation thread.
+          _loadChatRoomAppointments(response);
+
           getAllMessages(chatRoom.id);
           _connectToWebSocket();
           appointmentLoading.value = false;
@@ -1106,6 +1160,42 @@ class ChatDetailsController extends GetxController {
     } catch (e) {
       // Debug log removed
       appointmentLoading.value = false;
+    }
+  }
+
+  /// Parses the chatroom's [appointmentDTO] field and populates the
+  /// [appointments] list with all historical appointments for this chat.
+  /// This ensures that all appointment cards remain visible in the
+  /// conversation history, not just the most recently navigated one.
+  void _loadChatRoomAppointments(ChatRoomEntity room) {
+    try {
+      final dto = room.appointmentDTO;
+      if (dto == null) return;
+
+      List<dynamic> rawAppointments = [];
+
+      if (dto is List) {
+        rawAppointments = dto;
+      } else if (dto is Map<String, dynamic>) {
+        // Single appointment object
+        rawAppointments = [dto];
+      }
+
+      for (final raw in rawAppointments) {
+        if (raw is Map<String, dynamic>) {
+          try {
+            final appt = AppointmentModel.fromJson(raw).toEntity();
+            if (!appointments.any((a) => a.id == appt.id)) {
+              appointments.add(appt);
+            }
+          } catch (_) {
+            // Skip malformed appointment entries
+          }
+        }
+      }
+    } catch (_) {
+      // If appointmentDTO parsing fails, we still have at least the
+      // current appointment that was added in onInit.
     }
   }
 

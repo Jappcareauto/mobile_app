@@ -7,15 +7,18 @@ import 'package:jappcare/features/garage/domain/repositories/garage_repository.d
 import 'package:jappcare/features/workshop/domain/entities/get_all_appointments.dart';
 import 'package:jappcare/features/workshop/domain/entities/payment.entity.dart';
 import 'package:jappcare/features/workshop/domain/repositories/payment_repository.dart';
+import 'package:jappcare/features/workshop/domain/repositories/workshop_repository.dart';
 import 'package:jappcare/features/workshop/navigation/private/workshop_private_routes.dart';
 import 'package:jappcare/features/workshop/ui/appointment_details/widgets/appointment_payments_modal.dart';
+import 'package:jappcare/generated/locales.g.dart';
 
 class AppointmentDetailsController extends GetxController {
   final AppNavigation _appNavigation;
   final GarageRepository _garageRepository;
   final PaymentRepository _paymentRepository;
-  AppointmentDetailsController(
-      this._appNavigation, this._garageRepository, this._paymentRepository);
+  final WorkshopRepository _workshopRepository;
+  AppointmentDetailsController(this._appNavigation, this._garageRepository,
+      this._paymentRepository, this._workshopRepository);
   RxBool isExpanded = true.obs;
   RxBool isExpandedReportDetail = true.obs;
   RxBool isLoading = false.obs;
@@ -79,6 +82,56 @@ class AppointmentDetailsController extends GetxController {
       'This feature will be implemented soon.',
       snackPosition: SnackPosition.BOTTOM,
     );
+  }
+
+  /// Whether the appointment can be cancelled (only before it starts)
+  bool get canCancelAppointment {
+    final status = _appointment.value.status;
+    return status == 'NOT_STARTED';
+  }
+
+  /// Cancels the appointment after user confirmation
+  Future<void> cancelAppointment() async {
+    final confirmed = await Get.dialog<bool>(
+      AlertDialog(
+        title: Text(LocaleKeys.cancel_appointment.tr),
+        content: Text(LocaleKeys.cancel_appointment_confirm.tr),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(result: false),
+            child: Text(LocaleKeys.cancel.tr),
+          ),
+          TextButton(
+            onPressed: () => Get.back(result: true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(LocaleKeys.confirm.tr),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    isLoading.value = true;
+    final result = await _workshopRepository.cancelAppointment(
+      appointmentId: _appointment.value.id,
+    );
+    result.fold(
+      (failure) {
+        Get.showCustomSnackBar(failure.message,
+            title: 'Error', type: CustomSnackbarType.error);
+      },
+      (_) {
+        // Refresh appointment details to reflect new status
+        fetchAppointmentDetails();
+        Get.showCustomSnackBar(
+          LocaleKeys.appointment_cancelled_success.tr,
+          title: LocaleKeys.success.tr,
+          type: CustomSnackbarType.success,
+        );
+      },
+    );
+    isLoading.value = false;
   }
 
   /// Shows a modal with all payments made for this appointment
