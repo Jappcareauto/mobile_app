@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:jappcare/core/services/deep_link_service.dart';
 import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -27,23 +28,36 @@ import '../models/reset_password_model.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 
-
 final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
-// Client ID from Google Cloud Console for Web application (used in both Android & iOS flows)
-const String _serverClientId =
+// OAuth client ID for iOS app (Google Cloud Console iOS client).
+const String _iosClientId =
     "500790497314-m49h2ib7v66eh8mhcf4luh8h9svp3k8d.apps.googleusercontent.com";
 
+// OAuth client ID for backend server token exchange.
+const String _serverClientId =
+    "500790497314-6gbpppq0khotsi1lo119jdhmle30u37s.apps.googleusercontent.com";
+
 Future<void> _initializeGoogleSignIn() async {
+  final String? clientId = Platform.isIOS ? _iosClientId : null;
   try {
-    await _googleSignIn.initialize(serverClientId: _serverClientId);
+    debugPrint(
+      'GoogleSignIn initialize start: platform=${Platform.operatingSystem}, clientId=${clientId ?? 'null'}, serverClientId=$_serverClientId',
+    );
+    await _googleSignIn.initialize(
+      clientId: clientId,
+      serverClientId: _serverClientId,
+    );
+    debugPrint('GoogleSignIn initialize success');
   } catch (e) {
-    // Google Sign-In initialization failed
+    debugPrint('GoogleSignIn initialize failed: $e');
+    rethrow;
   }
 }
 
 Future<GoogleSignInAccount?> signInWithGoogle() async {
   try {
+    debugPrint('GoogleSignIn authenticate start');
     // Disconnect first to clear any cached credentials and force fresh account picker
     try {
       await _googleSignIn.disconnect();
@@ -52,10 +66,15 @@ Future<GoogleSignInAccount?> signInWithGoogle() async {
     }
 
     // It now throws a `GoogleSignInException` if the user cancels.
-    return await _googleSignIn.authenticate(
+    final GoogleSignInAccount? account = await _googleSignIn.authenticate(
       scopeHint: ['email', 'profile'],
     );
+    debugPrint('GoogleSignIn authenticate success: email=${account?.email}');
+    return account;
   } on GoogleSignInException catch (e) {
+    debugPrint(
+      'GoogleSignIn exception: code=${e.code.name}, description=${e.description ?? 'none'}',
+    );
     // You can now check the error code for specific cases, like cancellation.
     if (e.code == GoogleSignInExceptionCode.canceled) {
       // User cancelled
@@ -66,6 +85,7 @@ Future<GoogleSignInAccount?> signInWithGoogle() async {
     rethrow;
   }
 }
+
 class AuthentificationRepositoryImpl implements AuthentificationRepository {
   final NetworkService networkService;
 
