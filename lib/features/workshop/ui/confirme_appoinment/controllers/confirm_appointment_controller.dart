@@ -111,6 +111,7 @@ class ConfirmAppointmentController extends GetxController {
 
   Future<void> booknewAppointment(
       {required DateTime date,
+      required int selectedHour,
       required String locationType,
       required LocationEntity? location,
       required String note,
@@ -119,9 +120,21 @@ class ConfirmAppointmentController extends GetxController {
       required String serviceCenterId,
       required String timeOfDay,
       required String selectedTimeRange}) async {
+    if (selectedHour < 0) {
+      Get.showCustomSnackBar("Please select an appointment time.");
+      return;
+    }
+
+    final DateTime appointmentDateTime = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      selectedHour,
+    );
+
     loading.value = true;
     final result = await bookAppointmentUseCase.call(BookAppointmentCommand(
-      date: date.toUtc().toIso8601String(),
+      date: appointmentDateTime.toIso8601String(),
       locationType: locationType,
       location: locationType == "HOME" ? location : null,
       note: note,

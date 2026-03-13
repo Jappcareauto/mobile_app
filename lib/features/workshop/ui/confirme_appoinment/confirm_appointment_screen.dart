@@ -72,6 +72,8 @@ class ConfirmeAppointmentScreen extends GetView<ConfirmAppointmentController> {
                       controller.booknewAppointment(
                         date: controller.globalControllerWorkshop
                             .workshopData['selectedDate'],
+                        selectedHour: controller.globalControllerWorkshop
+                            .workshopData['selectedHour'],
                         location: location,
                         locationType: controller.globalControllerWorkshop
                             .workshopData['selectedLocation'],

@@ -250,6 +250,7 @@ class BookAppointmentController extends GetxController {
     // print(vehicles[currentPage.value]);
     globalControllerWorkshop.addMultipleData({
       "selectedDate": selectedDate.value,
+      "selectedHour": selectedHour.value,
       "selectedLocation": selectedLocation.value,
       "serviceName": selectedServiceName.value,
       "servicePrice": selectedServicePrice.value,
