@@ -56,12 +56,10 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.500790497314-6gbpppq0khotsi1lo119jdhmle30u37s</string>
+      		<string>com.googleusercontent.apps.500790497314-m49h2ib7v66eh8mhcf4luh8h9svp3k8d</string>
 			</array>
 		</dict>
 	</array>
-	<key>GIDServerClientID</key>
-	<string>500790497314-6gbpppq0khotsi1lo119jdhmle30u37s.apps.googleusercontent.com</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

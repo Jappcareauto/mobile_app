@@ -27,17 +27,15 @@ import '../models/reset_password_model.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 
+
 final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
-// This is the Web Client ID from Google Cloud Console
-// The backend MUST use this same clientId to verify the ID token
+// Client ID from Google Cloud Console for Web application (used in both Android & iOS flows)
 const String _serverClientId =
-    "500790497314-6gbpppq0khotsi1lo119jdhmle30u37s.apps.googleusercontent.com";
+    "500790497314-m49h2ib7v66eh8mhcf4luh8h9svp3k8d.apps.googleusercontent.com";
 
 Future<void> _initializeGoogleSignIn() async {
   try {
-    print(
-        "========================================================================");
     await _googleSignIn.initialize(serverClientId: _serverClientId);
   } catch (e) {
     // Google Sign-In initialization failed
@@ -68,7 +66,6 @@ Future<GoogleSignInAccount?> signInWithGoogle() async {
     rethrow;
   }
 }
-
 class AuthentificationRepositoryImpl implements AuthentificationRepository {
   final NetworkService networkService;
 
