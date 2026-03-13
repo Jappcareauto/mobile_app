@@ -26,6 +26,7 @@ import '../models/forgot_password_model.dart';
 import '../../domain/entities/reset_password.dart';
 import '../models/reset_password_model.dart';
 
+import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
@@ -38,7 +39,16 @@ const String _iosClientId =
 const String _serverClientId =
     "500790497314-6gbpppq0khotsi1lo119jdhmle30u37s.apps.googleusercontent.com";
 
+// Guard: google_sign_in v7 requires initialize() to be called EXACTLY ONCE.
+// Calling it more than once is explicitly documented as undefined behavior.
+bool _googleSignInInitialized = false;
+
 Future<void> _initializeGoogleSignIn() async {
+  if (_googleSignInInitialized) return;
+  _googleSignInInitialized = true;
+
+  // On iOS the clientId can also be set via GIDClientID in Info.plist;
+  // passing it here ensures it takes precedence and is explicit.
   final String? clientId = Platform.isIOS ? _iosClientId : null;
   try {
     debugPrint(
@@ -50,34 +60,68 @@ Future<void> _initializeGoogleSignIn() async {
     );
     debugPrint('GoogleSignIn initialize success');
   } catch (e) {
+    // Reset flag so a retry is possible if init genuinely fails.
+    _googleSignInInitialized = false;
     debugPrint('GoogleSignIn initialize failed: $e');
     rethrow;
+  }
+}
+
+/// Decodes the payload section of a JWT for debug logging only.
+/// Never use this for security-sensitive validation.
+Map<String, dynamic>? _decodeJwtPayload(String token) {
+  try {
+    final parts = token.split('.');
+    if (parts.length != 3) return null;
+    // Base64Url decode with padding
+    final payload = parts[1];
+    final normalized = base64Url.normalize(payload);
+    final decoded = utf8.decode(base64Url.decode(normalized));
+    return jsonDecode(decoded) as Map<String, dynamic>;
+  } catch (_) {
+    return null;
   }
 }
 
 Future<GoogleSignInAccount?> signInWithGoogle() async {
   try {
     debugPrint('GoogleSignIn authenticate start');
-    // Disconnect first to clear any cached credentials and force fresh account picker
+    // Use signOut() (clears local keychain only) rather than disconnect()
+    // which also REVOKES server-side tokens. On iOS, disconnect() followed
+    // immediately by authenticate() can leave GIDSignIn in a transitional
+    // state and return stale or revoked tokens.
     try {
-      await _googleSignIn.disconnect();
+      await _googleSignIn.signOut();
     } catch (_) {
-      // Ignore disconnect errors
+      // Ignore sign-out errors; not fatal.
     }
 
-    // It now throws a `GoogleSignInException` if the user cancels.
+    // authenticate() throws a GoogleSignInException if the user cancels.
     final GoogleSignInAccount? account = await _googleSignIn.authenticate(
       scopeHint: ['email', 'profile'],
     );
     debugPrint('GoogleSignIn authenticate success: email=${account?.email}');
+
+    if (account != null) {
+      // --- Debug: log idToken claims to verify audience and expiry ---
+      final String? idToken = account.authentication.idToken;
+      if (idToken != null) {
+        final payload = _decodeJwtPayload(idToken);
+        debugPrint('GoogleSignIn idToken audience (aud): ${payload?['aud']}');
+        debugPrint('GoogleSignIn idToken issued_at  (iat): ${payload?['iat']}');
+        debugPrint('GoogleSignIn idToken expires_at (exp): ${payload?['exp']}');
+        debugPrint('GoogleSignIn idToken subject    (sub): ${payload?['sub']}');
+      } else {
+        debugPrint('GoogleSignIn WARNING: idToken is null after authenticate');
+      }
+    }
+
     return account;
   } on GoogleSignInException catch (e) {
     debugPrint(
       'GoogleSignIn exception: code=${e.code.name}, description=${e.description ?? 'none'}',
     );
-    // You can now check the error code for specific cases, like cancellation.
     if (e.code == GoogleSignInExceptionCode.canceled) {
-      // User cancelled
       return null;
     }
     rethrow;
@@ -323,6 +367,15 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       final GoogleSignInAuthentication auth = account.authentication;
       final String? idToken = auth.idToken;
 
+      // NOTE: On iOS, idToken.aud == iOS client ID
+      //       On Android, idToken.aud == serverClientId (web client ID)
+      // If the backend validates aud against only the web client ID it will
+      // reject iOS tokens → "User session has expired". The backend must
+      // accept the iOS client ID as a valid audience when Platform == Ios,
+      // OR the validation must be updated to allow both client IDs.
+      debugPrint(
+          'GoogleSignIn sending idToken to backend (platform=${Platform.operatingSystem})');
+
       if (idToken == null) throw Exception('Missing Google ID Token');
 
       return await googleLogin(bearerId: idToken);
@@ -347,15 +400,18 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       final GoogleSignInAuthentication auth = account.authentication;
       final String? idToken = auth.idToken;
 
+      // NOTE: Same iOS idToken audience caveat as googleSignIn() above.
+      debugPrint(
+          'GoogleSignUp sending idToken to backend (platform=${Platform.operatingSystem})');
+
       if (idToken == null) throw Exception('Missing Google ID Token');
 
-      // return await googleRegister(bearerId: idToken);
       return await googleRegister2(
           bearerId: idToken,
           email: account.email,
           name: account.displayName ?? "");
     } on BaseException catch (e) {
-      print(e);
+      debugPrint('GoogleSignUp BaseException: $e');
       return Left(AuthentificationException(e.message, e.statusCode));
     } catch (e) {
       return Left(AuthentificationException(e.toString(), 0));
