@@ -73,6 +73,7 @@ class CustomFormField extends StatefulWidget {
 class _CustomFormFieldState extends State<CustomFormField> {
   bool _obscureText = false;
   late FocusNode _focusNode;
+
   @override
   void initState() {
     super.initState();
@@ -120,6 +121,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
           style: Theme.of(context).textTheme.bodyMedium,
           onChanged: widget.onChanged,
           onTap: widget.onTap,
+          onTapOutside: (_) => _focusNode.unfocus(),
           maxLength: widget.maxLength,
           inputFormatters: widget.forceUpperCase
               ? [

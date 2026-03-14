@@ -28,7 +28,7 @@ abstract class AuthentificationRepository {
 
   Future<Either<AuthentificationException, Login>> googleSignIn();
 
-  Future<Either<AuthentificationException, Register>> googleSignUp();
+  Future<Either<AuthentificationException, Login>> googleSignUp();
 
   Future<Either<AuthentificationException, Login>> appleSignIn();
 

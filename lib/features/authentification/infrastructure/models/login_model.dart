@@ -1,7 +1,6 @@
 import '../../domain/entities/login.dart';
 
 class LoginModel {
-
   final String accessToken;
   final String refreshToken;
 
@@ -12,8 +11,8 @@ class LoginModel {
 
   factory LoginModel.fromJson(Map<String, dynamic> json) {
     return LoginModel._(
-      accessToken: json['accessToken'],
-      refreshToken: json['refreshToken'],
+      accessToken: json['accessToken']?.toString() ?? '',
+      refreshToken: json['refreshToken']?.toString() ?? '',
     );
   }
 

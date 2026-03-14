@@ -107,16 +107,22 @@ class AuthentificationController extends GetxController {
   }
 
   void googleSignup() async {
-    loadingGoogle.value = true;
+    loadingGoogleSignup.value = true;
     final response = await _googleSignupUseCase.call();
 
     response.fold((e) {
-      loadingGoogle.value = false;
+      loadingGoogleSignup.value = false;
       if (!_isCancelled(e)) {
         Get.showCustomSnackBar(e.message);
       }
     }, (success) {
-      loadingGoogle.value = false;
+      loadingGoogleSignup.value = false;
+      _localStorageService.write(AppConstants.tokenKey, success.accessToken);
+      _localStorageService.write(
+          AppConstants.refreshTokenKey, success.refreshToken);
+      _appNavigation.toNamedAndReplaceAll(AppRoutes.home);
+      Get.find<AppEventService>()
+          .emit<String>(AppConstants.userLoginEvent, success.accessToken);
     });
   }
 

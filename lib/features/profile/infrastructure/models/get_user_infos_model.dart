@@ -34,22 +34,32 @@ class GetUserInfosModel {
   });
 
   factory GetUserInfosModel.fromJson(Map<String, dynamic> json) {
-    // Parse phone data - API may return as { "code": "237", "number": "691121881" }
+    // Parse phone data.
+    // New API format returns phones: [{code, number}, ...]
+    // Legacy format returned phone: {code, number}
     String? phoneCode;
     String? phoneNumber;
-    if (json['phone'] != null && json['phone'] is Map) {
+
+    final dynamic phones = json['phones'];
+    if (phones is List && phones.isNotEmpty) {
+      final dynamic firstPhone = phones.first;
+      if (firstPhone is Map) {
+        phoneCode = firstPhone['code']?.toString();
+        phoneNumber = firstPhone['number']?.toString();
+      }
+    } else if (json['phone'] != null && json['phone'] is Map) {
       phoneCode = json['phone']['code']?.toString();
       phoneNumber = json['phone']['number']?.toString();
     }
 
     return GetUserInfosModel._(
-      name: json['name'],
-      email: json['email'],
-      dateOfBirth: json['dateOfBirth'],
-      image: json['profileImageUrl'],
+      name: json['name']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
+      dateOfBirth: json['dateOfBirth']?.toString(),
+      image: json['profileImageUrl']?.toString(),
       // verified: json['verified'],
       verified: true,
-      id: json['id'],
+      id: json['id']?.toString() ?? '',
       createdBy: json['createdBy'] is String
           ? json['createdBy']
           : json['createdBy']?.toString(),

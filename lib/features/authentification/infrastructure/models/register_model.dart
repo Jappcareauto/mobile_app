@@ -23,9 +23,9 @@ class RegisterModel {
 
   factory RegisterModel.fromJson(Map<String, dynamic> json) {
     return RegisterModel._(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
+      id: json['id']?.toString() ?? '',
+      name: json['name']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
       verified: json['verified'],
       createdBy: json['createdBy'] is String
           ? json['createdBy']

@@ -39,18 +39,22 @@ class Main extends StatelessWidget {
         initTheme: AppThemeLight.theme,
         builder: (context, myTheme) {
           return GetMaterialApp(
-              builder: (context, child) => ResponsiveBreakpoints.builder(
-                    child: child!,
-                    breakpoints: [
-                      const Breakpoint(start: 0, end: 450, name: MOBILE),
-                      const Breakpoint(start: 451, end: 800, name: TABLET),
-                      const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-                      const Breakpoint(
-                          start: 1921,
-                          end: double.infinity,
-                          name: '4K'), //Don't translate line
-                    ],
-                  ),
+              scrollBehavior: const AppScrollBehavior(),
+              builder: (context, child) {
+                final Widget content = ResponsiveBreakpoints.builder(
+                  child: child!,
+                  breakpoints: [
+                    const Breakpoint(start: 0, end: 450, name: MOBILE),
+                    const Breakpoint(start: 451, end: 800, name: TABLET),
+                    const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+                    const Breakpoint(
+                        start: 1921,
+                        end: double.infinity,
+                        name: '4K'), //Don't translate line
+                  ],
+                );
+                return DismissKeyboardOnInteraction(child: content);
+              },
               debugShowCheckedModeBanner: false,
               title: 'Jappcare',
               initialRoute: initialRoute,
@@ -71,5 +75,26 @@ class MyHttpOverrides extends HttpOverrides {
     return super.createHttpClient(context)
       ..badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
+  }
+}
+
+class DismissKeyboardOnInteraction extends StatelessWidget {
+  final Widget child;
+
+  const DismissKeyboardOnInteraction({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
+  }
+}
+
+class AppScrollBehavior extends MaterialScrollBehavior {
+  const AppScrollBehavior();
+
+  @override
+  ScrollViewKeyboardDismissBehavior getKeyboardDismissBehavior(
+      BuildContext context) {
+    return ScrollViewKeyboardDismissBehavior.onDrag;
   }
 }

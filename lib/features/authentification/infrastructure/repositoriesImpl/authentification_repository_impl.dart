@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:jappcare/core/services/deep_link_service.dart';
 import 'package:jappcare/features/authentification/application/usecases/phone_command.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -26,10 +25,17 @@ import '../models/forgot_password_model.dart';
 import '../../domain/entities/reset_password.dart';
 import '../models/reset_password_model.dart';
 
-import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+
+Map<String, dynamic> _asMap(dynamic value) {
+  if (value is Map<String, dynamic>) return value;
+  if (value is Map) {
+    return Map<String, dynamic>.from(value);
+  }
+  return <String, dynamic>{};
+}
 
 // OAuth client ID for iOS app (Google Cloud Console iOS client).
 const String _iosClientId =
@@ -51,41 +57,19 @@ Future<void> _initializeGoogleSignIn() async {
   // passing it here ensures it takes precedence and is explicit.
   final String? clientId = Platform.isIOS ? _iosClientId : null;
   try {
-    debugPrint(
-      'GoogleSignIn initialize start: platform=${Platform.operatingSystem}, clientId=${clientId ?? 'null'}, serverClientId=$_serverClientId',
-    );
     await _googleSignIn.initialize(
       clientId: clientId,
       serverClientId: _serverClientId,
     );
-    debugPrint('GoogleSignIn initialize success');
   } catch (e) {
     // Reset flag so a retry is possible if init genuinely fails.
     _googleSignInInitialized = false;
-    debugPrint('GoogleSignIn initialize failed: $e');
     rethrow;
-  }
-}
-
-/// Decodes the payload section of a JWT for debug logging only.
-/// Never use this for security-sensitive validation.
-Map<String, dynamic>? _decodeJwtPayload(String token) {
-  try {
-    final parts = token.split('.');
-    if (parts.length != 3) return null;
-    // Base64Url decode with padding
-    final payload = parts[1];
-    final normalized = base64Url.normalize(payload);
-    final decoded = utf8.decode(base64Url.decode(normalized));
-    return jsonDecode(decoded) as Map<String, dynamic>;
-  } catch (_) {
-    return null;
   }
 }
 
 Future<GoogleSignInAccount?> signInWithGoogle() async {
   try {
-    debugPrint('GoogleSignIn authenticate start');
     // Use signOut() (clears local keychain only) rather than disconnect()
     // which also REVOKES server-side tokens. On iOS, disconnect() followed
     // immediately by authenticate() can leave GIDSignIn in a transitional
@@ -97,30 +81,12 @@ Future<GoogleSignInAccount?> signInWithGoogle() async {
     }
 
     // authenticate() throws a GoogleSignInException if the user cancels.
-    final GoogleSignInAccount? account = await _googleSignIn.authenticate(
+    final GoogleSignInAccount account = await _googleSignIn.authenticate(
       scopeHint: ['email', 'profile'],
     );
-    debugPrint('GoogleSignIn authenticate success: email=${account?.email}');
-
-    if (account != null) {
-      // --- Debug: log idToken claims to verify audience and expiry ---
-      final String? idToken = account.authentication.idToken;
-      if (idToken != null) {
-        final payload = _decodeJwtPayload(idToken);
-        debugPrint('GoogleSignIn idToken audience (aud): ${payload?['aud']}');
-        debugPrint('GoogleSignIn idToken issued_at  (iat): ${payload?['iat']}');
-        debugPrint('GoogleSignIn idToken expires_at (exp): ${payload?['exp']}');
-        debugPrint('GoogleSignIn idToken subject    (sub): ${payload?['sub']}');
-      } else {
-        debugPrint('GoogleSignIn WARNING: idToken is null after authenticate');
-      }
-    }
 
     return account;
   } on GoogleSignInException catch (e) {
-    debugPrint(
-      'GoogleSignIn exception: code=${e.code.name}, description=${e.description ?? 'none'}',
-    );
     if (e.code == GoogleSignInExceptionCode.canceled) {
       return null;
     }
@@ -290,7 +256,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
                 ? 'Ios'
                 : 'Web',
       });
-      final data = response['data'] as Map<String, dynamic>;
+      final data = _asMap(response['data'] ?? response);
       return Right(LoginModel.fromJson(data).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message, e.statusCode));
@@ -305,11 +271,12 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
     try {
       final response = await networkService
           .post(AuthentificationConstants.googleLoginPostUri2, headers: {
-        'Authorization': 'BearerId# $bearerId',
+        'Authorization': 'BearerId $bearerId',
         'Email': email,
         'Name': name,
       });
-      return Right(LoginModel.fromJson(response['data']).toEntity());
+      final data = _asMap(response['data'] ?? response);
+      return Right(LoginModel.fromJson(data).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message, e.statusCode));
     }
@@ -328,7 +295,8 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
                 ? 'Ios'
                 : 'Web',
       });
-      return Right(RegisterModel.fromJson(response).toEntity());
+      final data = _asMap(response['data'] ?? response);
+      return Right(RegisterModel.fromJson(data).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message, e.statusCode));
     }
@@ -340,13 +308,22 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       required String email,
       required String name}) async {
     try {
+      // Single known-good backend path:
+      // POST /auth/oauth2/google/login2 with Authorization: BearerId# <idToken>
       final response = await networkService
           .post(AuthentificationConstants.googleLoginPostUri2, headers: {
         'Authorization': 'BearerId# $bearerId',
         'Email': email,
         'Name': name,
+        'Platform': Platform.isAndroid
+            ? 'Android'
+            : Platform.isIOS
+                ? 'Ios'
+                : 'Web',
       });
-      return Right(RegisterModel.fromJson(response).toEntity());
+
+      final data = _asMap(response['data'] ?? response);
+      return Right(RegisterModel.fromJson(data).toEntity());
     } on BaseException catch (e) {
       return Left(AuthentificationException(e.message, e.statusCode));
     }
@@ -367,15 +344,6 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       final GoogleSignInAuthentication auth = account.authentication;
       final String? idToken = auth.idToken;
 
-      // NOTE: On iOS, idToken.aud == iOS client ID
-      //       On Android, idToken.aud == serverClientId (web client ID)
-      // If the backend validates aud against only the web client ID it will
-      // reject iOS tokens → "User session has expired". The backend must
-      // accept the iOS client ID as a valid audience when Platform == Ios,
-      // OR the validation must be updated to allow both client IDs.
-      debugPrint(
-          'GoogleSignIn sending idToken to backend (platform=${Platform.operatingSystem})');
-
       if (idToken == null) throw Exception('Missing Google ID Token');
 
       return await googleLogin(bearerId: idToken);
@@ -387,7 +355,7 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
   }
 
   @override
-  Future<Either<AuthentificationException, Register>> googleSignUp() async {
+  Future<Either<AuthentificationException, Login>> googleSignUp() async {
     try {
       await _initializeGoogleSignIn();
       final GoogleSignInAccount? account = await signInWithGoogle();
@@ -400,18 +368,22 @@ class AuthentificationRepositoryImpl implements AuthentificationRepository {
       final GoogleSignInAuthentication auth = account.authentication;
       final String? idToken = auth.idToken;
 
-      // NOTE: Same iOS idToken audience caveat as googleSignIn() above.
-      debugPrint(
-          'GoogleSignUp sending idToken to backend (platform=${Platform.operatingSystem})');
-
       if (idToken == null) throw Exception('Missing Google ID Token');
 
-      return await googleRegister2(
+      // 1) Ensure account exists (or is created)
+      final registerResult = await googleRegister2(
           bearerId: idToken,
           email: account.email,
           name: account.displayName ?? "");
+
+      return await registerResult.fold(
+        (e) async => Left(e),
+        (_) async {
+          // 2) Login with the SAME idToken; no second Google prompt required.
+          return await googleLogin(bearerId: idToken);
+        },
+      );
     } on BaseException catch (e) {
-      debugPrint('GoogleSignUp BaseException: $e');
       return Left(AuthentificationException(e.message, e.statusCode));
     } catch (e) {
       return Left(AuthentificationException(e.toString(), 0));

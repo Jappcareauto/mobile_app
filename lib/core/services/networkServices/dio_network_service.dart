@@ -245,6 +245,22 @@ class DioNetworkService extends NetworkService {
     throw BaseException(errorMessage, statusCode);
   }
 
+  bool _isPseudoSuccessPayload(dynamic data) {
+    if (data is! Map<String, dynamic>) return false;
+    final meta = data['meta'];
+    if (meta is! Map<String, dynamic>) return false;
+
+    final int? statusCode = meta['statusCode'] is int
+        ? meta['statusCode'] as int
+        : int.tryParse(meta['statusCode']?.toString() ?? '');
+    final String statusDescription =
+        (meta['statusDescription']?.toString() ?? '').toUpperCase();
+
+    return statusCode == 200 ||
+        statusCode == 201 ||
+        statusDescription == 'SUCCESS';
+  }
+
   /// Converts API error messages to user-friendly messages
   String _getUserFriendlyErrorMessage(String? apiMessage, int? statusCode) {
     if (apiMessage == null || apiMessage.isEmpty) {
@@ -349,6 +365,11 @@ class DioNetworkService extends NetworkService {
       );
       return response.data;
     } catch (e) {
+      if (e is DioException && _isPseudoSuccessPayload(e.response?.data)) {
+        print(
+            'DioNetworkService: treating non-2xx response as success based on meta payload for $url');
+        return e.response?.data;
+      }
       _handleError(e);
       print("error in dio network services");
       print(e);
